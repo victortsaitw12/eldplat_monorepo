@@ -1,0 +1,90 @@
+{
+  "login_welcome": {
+    "defaultMessage": "ยินดีต้อนรับ !"
+  },
+  "login_guest": {
+    "defaultMessage": "เพื่อนของ Lion Express"
+  },
+  "login_account": {
+    "defaultMessage": "บัญชี"
+  },
+  "login_password": {
+    "defaultMessage": "รหัสผ่าน"
+  },
+  "login_login": {
+    "defaultMessage": "เข้าสู่ระบบ"
+  },
+  "login_forgetPassword": {
+    "defaultMessage": "ลืมรหัสผ่าน"
+  },
+
+  "header_notification": {
+    "defaultMessage": "การแจ้งเตือน"
+  },
+  "header_plan": {
+    "defaultMessage": "วางแผน"
+  },
+  "header_setting": {
+    "defaultMessage": "การตั้งค่า"
+  },
+
+  "planInfo_title": {
+    "defaultMessage": "ข้อมูลการวางแผน"
+  },
+  "planInfo_companyName": {
+    "defaultMessage": "ชื่อ บริษัท"
+  },
+  "planInfo_userName": {
+    "defaultMessage": "ชื่อผู้ใช้"
+  },
+  "planInfo_startDate": {
+    "defaultMessage": "วันที่เริ่มโครงการ"
+  },
+  "planInfo_endDate": {
+    "defaultMessage": "วันที่สิ้นสุดโครงการ"
+  },
+  "planInfo_companyNo": {
+    "defaultMessage": "เลขที่บริษัท"
+  },
+  "planInfo_contact": {
+    "defaultMessage": "หากคุณต้องการต่ออายุสัญญา โปรดติดต่อกับเจ้าหน้าที่ของเรา"
+  },
+
+  "dataManage_basic": {
+    "defaultMessage": "การจัดการข้อมูลเบื้องต้น"
+  },
+  "dataManage_employee": {
+    "defaultMessage": "การจัดการข้อมูลพนักงาน"
+  },
+  "dataManage_driver": {
+    "defaultMessage": "ขับเคลื่อนการจัดการข้อมูล"
+  },
+  "dataManage_client": {
+    "defaultMessage": "การจัดการโปรไฟล์ลูกค้า"
+  },
+  "dataManage_bus": {
+    "defaultMessage": "การจัดการข้อมูลทะเบียนรถ"
+  },
+  "dataManage_busSupplier": {
+    "defaultMessage": "การจัดการซัพพลายเออร์ยานพาหนะ"
+  },
+  "dataManage_supplier": {
+    "defaultMessage": "การจัดการซัพพลายเออร์ทั่วไป"
+  },
+
+  "member_title": {
+    "defaultMessage": "ชื่อสมาชิก"
+  },
+  "member_sub1": {
+    "defaultMessage": "ข้อความสมาชิก1"
+  },
+  "member_sub2": {
+    "defaultMessage": "ข้อความสมาชิก2"
+  },
+  "member_sub3": {
+    "defaultMessage": "ข้อความสมาชิก3"
+  },
+  "member_sub4": {
+    "defaultMessage": "ข้อความสมาชิก4"
+  }
+}

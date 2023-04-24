@@ -1,0 +1,36 @@
+{
+  "login_welcome": { "defaultMessage": "Welcome !" },
+  "login_guest": { "defaultMessage": "The friends of Lion Express" },
+  "login_account": { "defaultMessage": "Account" },
+  "login_password": { "defaultMessage": "Password" },
+  "login_login": { "defaultMessage": "Login" },
+  "login_forgetPassword": { "defaultMessage": "Forgot Password" },
+
+  "header_notification": { "defaultMessage": "Notification" },
+  "header_plan": { "defaultMessage": "Plan" },
+  "header_setting": { "defaultMessage": "Settings" },
+
+  "planInfo_title": { "defaultMessage": "Planning Informations" },
+  "planInfo_companyName": { "defaultMessage": "Company Name" },
+  "planInfo_userName": { "defaultMessage": "User Name" },
+  "planInfo_startDate": { "defaultMessage": "Starting date of project" },
+  "planInfo_endDate": { "defaultMessage": "Ending date of project" },
+  "planInfo_companyNo": { "defaultMessage": "Company No." },
+  "planInfo_contact": {
+    "defaultMessage": "If you want to extend your contract, please contact with our staff members."
+  },
+
+  "dataManage_basic": { "defaultMessage": "Basic Profile" },
+  "dataManage_employee": { "defaultMessage": "Employees Profile" },
+  "dataManage_driver": { "defaultMessage": "Drivers Profile" },
+  "dataManage_client": { "defaultMessage": "Client Profile" },
+  "dataManage_bus": { "defaultMessage": "Buses Profile" },
+  "dataManage_busSupplier": { "defaultMessage": "Bus Suppliers" },
+  "dataManage_supplier": { "defaultMessage": "Sppliers" },
+
+  "member_title": { "defaultMessage": "Member Title" },
+  "member_sub1": { "defaultMessage": "Member Message1" },
+  "member_sub2": { "defaultMessage": "Member Message2" },
+  "member_sub3": { "defaultMessage": "Member Message3" },
+  "member_sub4": { "defaultMessage": "Member Message4" }
+}
