@@ -20,16 +20,24 @@ interface I_certificationType {
 function EmployeeInfo({
   handleEmployeeChange,
   insertData,
-  setInsertData
+  setInsertData,
+  editData
 }: I_Content_Props) {
-  const [untilnowChecked, setUntilnowChecked] = useState(false);
-  const [inviteActive, setInviteActive] = useState<boolean>(false);
-  const [inviteDate, setInviteDate] = useState<string>("");
-
   // 證照陣列
   const [certificationArr, setCertificationArr] = useState<
     I_certificationType[]
   >([]);
+
+  // 一進來先抓資料庫原本就有的證照資料
+  useEffect(() => {
+    console.log("editData::::", editData);
+    editData &&
+      setCertificationArr(
+        editData?.license_name.map((v: string, i: number) => {
+          return { id: i, value: v };
+        })
+      );
+  }, [editData]);
 
   // 存取證照欄位input值
   const handleValue = (e: any, id: number) => {
@@ -75,17 +83,8 @@ function EmployeeInfo({
     setInsertData(newData);
   };
 
-  // useEffect(() => {
-  //   let newDate = new Date();
-  //   setInviteDate(formatDate(newDate));
-  // }, []);
-
-  // const handleInvite = () => {
-  //   setInviteActive(true);
-  //   const newData = { ...insertData };
-  //   newData["invt_date"] = inviteDate;
-  //   setInsertData(newData);
-  // };
+  console.log("🈹certificationArr", certificationArr);
+  console.log("☯insertData", insertData);
 
   return (
     <BodySTY>

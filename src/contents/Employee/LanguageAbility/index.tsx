@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 // import { language_DATA } from "./data";
 import NewLanguage from "./NewLanguage";
 import { BodySTY } from "./style";
+import { language_DATA } from "./data";
 
 interface I_languageType {
   languag: string;

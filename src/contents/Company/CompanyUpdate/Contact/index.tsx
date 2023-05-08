@@ -247,6 +247,64 @@ function Contact() {
             </Pane>
           </Pane>
         </Pane>
+        <Pane height={1} width={100} backgroundColor="#AFC3DA"></Pane>
+        <Pane className="input-line">
+          <Text className="">聯絡人2</Text>
+          <TextInput
+            name="contact_Name"
+            value={C_data.companyData.company_Dt.contact_Name}
+            onChange={C_data.handleCompanyContactChange}
+          />
+        </Pane>
+        <Pane className="input-line">
+          <Text className="">主要聯絡人電話</Text>
+          <Pane>
+            <Pane className="phone-input">
+              <Paragraph size={200}>市話</Paragraph>
+              <TextInput
+                type="tel"
+                className="country-number"
+                name="country_num_Tel"
+                placeholder="ex:+886"
+                value={C_data.countryNumInput.contactTel}
+                onChange={handleCountryNum}
+                required
+              />
+              <TextInput
+                className="contact-tel"
+                name="contact_Tel"
+                value={C_data.companyData.company_Dt.contact_Tel}
+                onChange={C_data.handleCompanyContactChange}
+                required
+              />
+              {C_data.errMsg["errField"] === "contact_Tel" && (
+                <Text color="red !important">{C_data.errMsg["errText"]}</Text>
+              )}
+            </Pane>
+            <Pane className="phone-input">
+              <Paragraph size={200}>手機</Paragraph>
+              <TextInput
+                className="country-number"
+                name="country_num_Phone"
+                placeholder="ex:+886"
+                value={C_data.countryNumInput.contactPhone}
+                onChange={handleCountryNum}
+                required
+              />
+              <TextInput
+                className="contact-phone"
+                name="contact_Phone"
+                value={C_data.companyData.company_Dt.contact_Phone}
+                onChange={C_data.handleCompanyContactChange}
+                required
+              />
+              {C_data.errMsg["errField"] === "contact_Phone" && (
+                <Text color="red !important">{C_data.errMsg["errText"]}</Text>
+              )}
+            </Pane>
+          </Pane>
+        </Pane>
+
         {/* <Pane className="input-line">
           <Pane className="phone-input">
             <Text>手機</Text>
