@@ -54,13 +54,11 @@ function EmployeeInfo({
   // 加一欄證照
   const handleInputAdd = () => {
     const idx = certificationArr.length;
-    console.log("⚾idx", idx);
     setCertificationArr((prev) => [...prev, { id: idx, value: "" }]);
   };
 
   // 移除一欄證照
   const handleInputRemove = (id: number) => {
-    console.log("⚽id", id);
     const newData = { ...insertData };
     const newArr = certificationArr.filter((v, i) => {
       return v.id !== id;
@@ -88,8 +86,6 @@ function EmployeeInfo({
   //   newData["invt_date"] = inviteDate;
   //   setInsertData(newData);
   // };
-
-  console.log("certificationArr", certificationArr);
 
   return (
     <BodySTY>
@@ -195,7 +191,6 @@ function EmployeeInfo({
             <Button
               className="add-license-btn"
               onClick={(e: any) => {
-                console.log("eeeeeeeeeeeeeee", e);
                 e.preventDefault();
                 handleInputAdd();
                 // handleInputAdd(item.id);

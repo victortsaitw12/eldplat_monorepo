@@ -66,7 +66,6 @@ const Page: NextPageWithLayout<never> = () => {
   useEffect(() => {
     const isCanceled = false;
     getAllEmployees(filter).then((data) => {
-      console.log("💡get employees data from api :", data);
       const newData = data.contentList.map((item: any, index: any) => {
         return {
           // user_No: item["user_No"],
@@ -110,10 +109,11 @@ const Page: NextPageWithLayout<never> = () => {
       }
       setEmployeeListData(newData);
     });
-  }, [filter]);
+  }, [filter, initializeFilter]);
   const goToCreatePage = () => {
     router.push("/employee/create");
   };
+
   return (
     <BodySTY addEmployeeActive={addEmployeeActive}>
       <MainBookmark

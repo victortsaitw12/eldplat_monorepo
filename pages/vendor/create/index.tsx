@@ -15,7 +15,6 @@ const Page: NextPageWithLayout<never> = () => {
     setLoading(true);
     try {
       const res = await createVendor(data);
-      console.log("response of vendor create: ", res);
       router.push("/vendor");
     } catch (e: any) {
       console.log(e);

@@ -3,7 +3,7 @@ import MainBookmark from "@contents/MainBookmark";
 import SideBookMark from "@contents/SideBookmark";
 import Vendor from "@contents/Vendor";
 import { getAllVendors } from "@services/vendor/getAllVendors";
-import { useFilterStore } from "@contexts/filter/busFilterStore";
+import { useBusStore } from "@contexts/filter/busStore";
 import { I_Add_Vendors_Type } from "@typings/vendors_type";
 import { Pane } from "evergreen-ui";
 import { NextPageWithLayout } from "next";
@@ -17,9 +17,9 @@ const Page: NextPageWithLayout<never> = () => {
   const [vendorDATA, setVendorDATA] = useState<
     I_Add_Vendors_Type[] | I_Data[] | any
   >();
-  const filter = useFilterStore((state) => state.filter);
-  const updateFilter = useFilterStore((state) => state.updateFilter);
-  const initializeFilter = useFilterStore((state) => state.initializeFilter);
+  const filter = useBusStore((state) => state.subFilter);
+  const updateFilter = useBusStore((state) => state.updateSubFilter);
+  const initializeFilter = useBusStore((state) => state.initializeSubFilter);
 
   useEffect(() => {
     let isCanceled = false;

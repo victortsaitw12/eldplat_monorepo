@@ -69,8 +69,6 @@ function HealthFirst({
     }
   };
 
-  console.log("healthListArr", healthListArr);
-
   return (
     <BodySTY>
       <Pane className="health-title">

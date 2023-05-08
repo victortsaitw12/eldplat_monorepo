@@ -15,7 +15,6 @@ const Page: NextPageWithLayout<never> = () => {
     setLoading(true);
     try {
       const res = await createEmployee(data);
-      console.log("response of vendor create: ", res);
       router.push("/employee");
     } catch (e: any) {
       console.log(e);
@@ -25,6 +24,7 @@ const Page: NextPageWithLayout<never> = () => {
   const cancelFormHandler = useCallback(() => {
     router.push("/employee");
   }, [router]);
+
   return (
     <BodySTY>
       {/* Put your component here */}

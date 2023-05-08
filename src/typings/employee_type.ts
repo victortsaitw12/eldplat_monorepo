@@ -23,28 +23,24 @@ export interface I_Add_Employees_Type {
   group: string;
   arrive_date: string;
   license_name: string[];
-  languags: [
-    {
-      languag: string;
-      listen: string;
-      read: string;
-      speak: string;
-      write: string;
-    }
-  ];
-  healths: [
-    {
-      // user_no: string;
-      heal_date: string;
-      heal_typ: string;
-      heal_agency: string;
-      heal_status: string;
-      heal_examine_date: string;
-      heal_filename: string;
-      invalid: string;
-      invalid_remark: string;
-    }
-  ];
+  languags: {
+    languag: string;
+    listen: string;
+    read: string;
+    speak: string;
+    write: string;
+  }[];
+  healths: {
+    // user_no: string;
+    heal_date: string;
+    heal_typ: string;
+    heal_agency: string;
+    heal_status: string;
+    heal_examine_date: string;
+    heal_filename: string;
+    invalid: string;
+    invalid_remark: string;
+  }[];
 }
 
 export interface I_Content_Props {

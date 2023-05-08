@@ -1,15 +1,21 @@
 /* eslint-disable react/display-name */
 import Head from "next/head";
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode, useEffect } from "react";
 //
-import Header from "../Header";
-import SideBar from "../SideBar";
+import Header from "./Header";
+import SideBar from "./SideBar";
 import { BodySTY, ContainerSTY } from "./style";
 import { fetchMenuData, MenuDataType } from "../../mock-data/side-bar/data";
 //
-const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
+const MainLayout: FC<{
+  children: ReactNode;
+  layoutProps: any;
+}> = ({ children, layoutProps }) => {
   const menuData: MenuDataType = fetchMenuData();
-  console.log("render MainLayout");
+
+  // useEffect(() => {
+  //   layoutProps.setLocale("en-us");
+  // }, []);
   return (
     <BodySTY>
       <Head>
@@ -18,11 +24,13 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
       </Head>
       <SideBar menuData={menuData} />
       <ContainerSTY>
-        <Header />
+        <Header layoutProps={layoutProps} />
         <div className="content">{children}</div>
       </ContainerSTY>
     </BodySTY>
   );
 };
 
-export const getLayout = (page: ReactNode) => <MainLayout>{page}</MainLayout>;
+export const getLayout = (page: ReactNode, layoutProps: any) => (
+  <MainLayout layoutProps={layoutProps}>{page}</MainLayout>
+);

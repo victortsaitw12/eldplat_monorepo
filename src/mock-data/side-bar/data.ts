@@ -14,6 +14,17 @@ type MENU = {
 };
 const homePageData = [
   {
+    name: "公司設定",
+    url: "/",
+    subList: [
+      {
+        name: "公司清單",
+        url: "/company",
+        subList: null
+      }
+    ]
+  },
+  {
     name: "供應商",
     url: "/",
     subList: [

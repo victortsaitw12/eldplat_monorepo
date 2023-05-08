@@ -10,7 +10,6 @@ export const BodySTY = styled.div`
   .top-bookmark {
     .main-filter {
       margin-left: 6px;
-
       span {
         color: #59728e;
         font-size: 14px;

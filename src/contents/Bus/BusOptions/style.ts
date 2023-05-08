@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-const StyledButton = styled.button<{ active: boolean }>`
+const StyledButton = styled.button<{
+  active: boolean;
+  invalid: boolean;
+}>`
   cursor: pointer;
   padding: 12px 16px;
   border: none;
@@ -9,12 +12,15 @@ const StyledButton = styled.button<{ active: boolean }>`
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
-  color: ${({ active, theme }) =>
-    active ? theme.color.N900 : theme.color.N600};
-  box-shadow: ${({ active, theme }) =>
-    `inset 3px 0 ${active ? theme.color.B600 : theme.color.N0}`};
+  color: ${({ active, invalid, theme }) =>
+    invalid ? theme.color.R400 : active ? theme.color.N900 : theme.color.N600};
+  box-shadow: ${({ active, invalid, theme }) =>
+    `inset 3px 0 0 ${
+      invalid ? theme.color.R400 : active ? theme.color.B600 : theme.color.N0
+    }`};
   &:hover {
-    color: ${({ theme }) => theme.color.N900};
+    color: ${({ invalid, theme }) =>
+      invalid ? theme.color.R400 : theme.color.N900};
   }
   .option-label {
     display: flex;

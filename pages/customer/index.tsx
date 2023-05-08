@@ -4,15 +4,14 @@ import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
 import MainBookmark from "@contents/MainBookmark";
 import CustomerList from "@contents/Customer/CustomerList";
-import { getAllCustomers } from "@services/customer/getAllCustomers";
-import LoadingSpinner from "@components/LoadingSpinner";
-
-import { useFilterStore } from "@contexts/filter/customerFilterStore";
 import {
+  getAllCustomers,
   customerParser,
-  customerPattern,
-  mappingQueryData
-} from "@utils/mappingQueryData";
+  customerPattern
+} from "@services/customer/getAllCustomers";
+import LoadingSpinner from "@components/LoadingSpinner";
+import { useFilterStore } from "@contexts/filter/customerFilterStore";
+import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
@@ -61,7 +60,7 @@ const Page: NextPageWithLayout<never> = () => {
     router.push("/customer/create");
   };
 
-  const deleteItemHandler = (id: string) => {
+  const deleteItemHandler = async (id: string) => {
     deleteCustomer(id).then((res) => {
       console.log("res", res);
       fetchCustomerData(false);

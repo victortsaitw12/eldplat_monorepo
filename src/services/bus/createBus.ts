@@ -1,22 +1,20 @@
+import { flattenObject } from "@utils/flattenObject";
+import { filterNullData } from "@utils/filterNullData";
 export const createBus = async (busData: any) => {
-  const filteredNullData: { [key: string]: string | null } = {};
-  for (const key in busData) {
-    if (busData[key] !== null && busData[key].trim() !== "") {
-      filteredNullData[key] = busData[key];
-    }
-  }
+  console.log("busData", busData);
+  const flattenBusData = flattenObject(busData);
+  console.log("flattenBusData", flattenBusData);
+  const filteredData = filterNullData(flattenBusData);
+  console.log(filteredData);
   try {
-    const res = await fetch(
-      "https://localhost:7188/Gateway_BusStream/MutationResolver/CreateBus/api/CreateBus/1",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        // body: JSON.stringify(DUMMY_INPUTS),
-        body: JSON.stringify(filteredNullData)
-      }
-    );
+    const res = await fetch("https://localhost:7188/Gateway_Bus/CreateBus", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+      },
+      body: JSON.stringify(filteredData)
+    });
     const data = await res.json();
     return data;
   } catch (err) {
@@ -25,16 +23,18 @@ export const createBus = async (busData: any) => {
 };
 // prettier-ignore
 const DUMMY_INPUTS = {
-  "bus_name": "國光-1",
-  "vin": "55688",
-  "license_plate": "99661155",
-  "type": "c1",
-  "status": "01",
-  "ownership": "02",
-  "driver_seat": "1",
-  "bus_seat": "42",
-  "bus_seat_row": "20",
-  "primary_meter": "3",
-  "fuel_unit": 1,
-  "estimated_resale": "100"
+  bus_name: "國光-1",
+  vin: "55688",
+  license_plate: "99661155",
+  type: "c1",
+  status: "01",
+  ownership: "02",
+  // driver_seat: "1", //no
+  // bus_seat: "42", //no
+  // bus_seat_row: "20", //no
+  primary_meter: "3",
+  fuel_unit: "1",
+  measurement_units: "2",
+  // oil_capacity: "100", // no
+  estimated_resale: "100"
 };

@@ -14,11 +14,13 @@ export const getAllEmployees = async (filter: { [key: string]: any } = {}) => {
   console.log("employeeFilter", employeeFilter);
 
   const res = await fetch(
-    "https://localhost:7188/Gateway_AccountDriver/Account/QueryAccountList/api/QueryAccountList/1",
+    "https://localhost:7188/Gateway_AccountDriver/QueryAccountList",
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX05vIjoiVVNSMjAyMzA0MTIwMDAxIiwiTmFtZSI6IlNob2hlaSIsIkNvbXBhbnlfTm8iOiJCSDQ5MjAyMzAyMDIwMDAxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi6Kq_5bqm576k57WEIiwiZXhwIjoxNjg0NDg5MjczLCJpc3MiOiJsb2NhbGhvc3Q6NzA3NiIsImF1ZCI6ImxvY2FsaG9zdDo3MDc2In0.BbFT4yOL9o_sieeujOJnrw-e-kns8GPFWC0R32eh3Ok"
       },
       body: JSON.stringify({
         filters: employeeFilter,

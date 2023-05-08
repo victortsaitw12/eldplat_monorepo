@@ -19,6 +19,7 @@ import HealthFirst from "./HealthFirst";
 import HealthSecond from "./HealthSecond";
 import LanguageAbility from "./LanguageAbility";
 import { BodySTY } from "./style";
+// import { useForm } from "react-hook-form";
 
 interface I_AddEmployee_Props {
   // setAddEmployeeActive: (t: any) => void;
@@ -31,7 +32,6 @@ function AddEmployee({
   submitForm
 }: I_AddEmployee_Props) {
   const [countryNum, setCountryNum] = useState<string>("(+886)");
-
   const [insertData, setInsertData] = useState<I_Add_Employees_Type | any>({
     user_name: "",
     user_first_name: "",
@@ -96,12 +96,9 @@ function AddEmployee({
   };
 
   const handleSaveAll = () => {
-    // createEmployee(insertData);
-    console.log("🧨Employee insertData :", insertData);
     submitForm(insertData);
   };
 
-  console.log("🧨Employee insertData :", insertData);
   return (
     <BodySTY>
       <Pane display="flex" justifyContent="space-between" className="title-bar">

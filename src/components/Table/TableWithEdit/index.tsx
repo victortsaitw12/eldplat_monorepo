@@ -4,6 +4,7 @@ import TableActionButton from "@components/Table/TableActionButton";
 // import { useRouter } from "next/router";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
+import { FormattedMessage } from "react-intl";
 import { TableSTY, TableContainerSTY, StyledDot } from "./style";
 //
 interface I_Data {
@@ -11,7 +12,7 @@ interface I_Data {
 }
 
 interface I_Table {
-  tableName: string;
+  tableName: string | any;
   titles: Array<string | number | React.ReactNode>;
   data: I_Data[];
   onCheck?: (items: any) => void;
@@ -84,13 +85,12 @@ function Table({
               );
             })}
             <th>
-              <span>操作</span>
+              <span>{<FormattedMessage key="action" id="action" />}</span>
             </th>
           </tr>
         </thead>
         <tbody>
           {data.map((item: any) => {
-            console.log("item", item);
             return (
               <tr key={uuid()}>
                 {/* <td>
@@ -108,21 +108,6 @@ function Table({
                         <span className="no-data">
                           <div />
                         </span>
-                      </td>
-                    );
-                  }
-                  if (key === "vendor_website") {
-                    return (
-                      <td key={item.id + key}>
-                        <div className="data-row">
-                          <a
-                            href={item[key].value}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            {item[key].label}
-                          </a>
-                        </div>
                       </td>
                     );
                   }

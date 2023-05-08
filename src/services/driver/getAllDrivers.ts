@@ -18,7 +18,8 @@ export const getAllDriver = async (filter: { [key: string]: any } = {}) => {
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
       },
       // body: JSON.stringify(data),
       body: JSON.stringify({

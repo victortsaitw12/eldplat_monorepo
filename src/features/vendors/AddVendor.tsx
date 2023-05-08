@@ -89,8 +89,6 @@ function AddVendor({ setAddVendorActive }: I_addVendorProps) {
     setInsertData(newInsert);
   };
 
-  console.log("🧨insertData : ", insertData);
-
   return (
     <Pane marginX="20px">
       <FormCard formTitle="新增供應商">

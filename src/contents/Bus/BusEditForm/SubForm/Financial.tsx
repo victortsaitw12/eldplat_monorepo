@@ -8,37 +8,55 @@ import {
 } from "evergreen-ui";
 import FormCard from "@components/FormCard";
 import RadioGroupRow, { RadioField } from "@components/RadioGroupRow";
-
+import {
+  UseFormRegister,
+  FieldValues,
+  FieldErrors,
+  useFormContext
+} from "react-hook-form";
+import { BusDataTypes } from "../busDefaultData";
 interface Props {
   hide?: boolean;
+  register: UseFormRegister<BusDataTypes>;
+  errors: FieldErrors<BusDataTypes>;
 }
-function Financial({ hide }: Props) {
+function Financial({ hide, register, errors }: Props) {
   const [financingTab, setFinancingTab] = useState("3");
-
   const handleFinancingTabChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFinancingTab(e.target.value);
   };
+  console.log("render Finacial");
   return (
     <Pane marginX="20px" display={hide ? "none" : "block"}>
       <FormCard formTitle="購買詳情">
         <div className="w100">
-          <TextInputField label="採購供應商" name="vendor_no" />
+          <TextInputField
+            label="採購供應商"
+            {...register("finacial.vendor_no", {
+              required: "請填寫採購供應商"
+            })}
+            validationMessage={errors.finacial?.vendor_no?.message}
+          />
         </div>
         <div className="w50">
-          <TextInputField label="購買日期" name="purchase_date" type="date" />
+          <TextInputField
+            label="購買日期"
+            type="date"
+            {...register("finacial.purchase_date")}
+          />
           <TextInputField
             label="購買價格"
-            name="purchase_price"
             type="number"
+            {...register("finacial.purchase_price")}
           />
         </div>
 
         <div className="w100">
-          <TextInputField label="里程表" name="odometer" />
+          <TextInputField label="里程表" {...register("finacial.odometer")} />
         </div>
 
         <div className="w100">
-          <TextareaField label="備註" name="notes" />
+          <TextareaField label="備註" {...register("finacial.notes")} />
         </div>
       </FormCard>
 
@@ -46,15 +64,15 @@ function Financial({ hide }: Props) {
         <div className="w50">
           <TextInputField
             label="截止日期"
-            name="warranty_expiration_date"
             hint="保固期限的最後一天"
             type="date"
+            {...register("finacial.warranty_expiration_date")}
           />
           <TextInputField
             label="最大里程數值"
-            name="warranty_max_meter"
             type="number"
             hint="保固期限允許的最大里程數"
+            {...register("finacial.warranty_max_meter")}
           />
         </div>
       </FormCard>

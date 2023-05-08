@@ -13,16 +13,8 @@ function DetailsHistory() {
     <DetailsHistorySTY>
       <FormCard formTitle="Details">
         <div className="w100 input-wrap">
-          <SelectField label="Vehicle" placeholder="請選擇">
-            <option selected disabled>
-              請選擇
-            </option>
-          </SelectField>
-          <SelectField label="Service Task" placeholder="請選擇">
-            <option selected disabled>
-              請選擇
-            </option>
-          </SelectField>
+          <SelectField label="Vehicle" placeholder="請選擇"></SelectField>
+          <SelectField label="Service Task" placeholder="請選擇"></SelectField>
         </div>
         <div className="w50 input-wrap">
           <div className="w50 input-wrap">
@@ -46,19 +38,14 @@ function DetailsHistory() {
               <option value="bar">week(s)</option>
             </Select>
           </div>
-          <SelectField label="Primary Meter Interval" placeholder="請選擇">
-            <option selected disabled>
-              請選擇
-            </option>
-          </SelectField>
+          <SelectField
+            label="Primary Meter Interval"
+            placeholder="請選擇"
+          ></SelectField>
           <SelectField
             label="Primary Meter Due Soon Threshold"
             placeholder="請選擇"
-          >
-            <option selected disabled>
-              請選擇
-            </option>
-          </SelectField>
+          ></SelectField>
         </div>
         <div className="w100 no-line">
           <Checkbox
@@ -109,9 +96,7 @@ function DetailsHistory() {
               })
             }
           />
-          <SelectField label="Watchers" width="100%" disabled>
-            <option selected>請選擇</option>
-          </SelectField>
+          <SelectField label="Watchers" width="100%" disabled></SelectField>
         </div>
         <StepControlSTY className="step-control">
           <button>Cancel</button>

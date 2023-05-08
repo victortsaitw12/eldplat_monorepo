@@ -40,7 +40,6 @@ function NewLanguage({
   }); // 代碼物件
   const [languageLabel, setLanguageLabel] =
     useState<I_languageType>(defaultData); // 文字物件
-  console.log("defaultData", defaultData);
   // 下拉選語言別或是程度時
   const handleChangeLang = (
     select: { value: string; label: string },
@@ -53,14 +52,11 @@ function NewLanguage({
   };
 
   const handleAdd = () => {
-    console.log(" add languageValue fn", handleSave);
     handleSave(languageLabel);
 
     setLangForApi((prev: any) => [...prev, languageValue]); // 存代碼形式進陣列物件
   };
 
-  console.log("🎭languageValue", languageValue);
-  console.log("👓languageLabel", languageLabel);
   return (
     <BodySTY>
       <Pane className="add-language">

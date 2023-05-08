@@ -48,8 +48,7 @@ const TableContainerSTY = styled.div`
 
 // 表格本身
 const TableSTY = styled.table`
-  /* width: 100%; */
-  min-width: 100%;
+  /* min-width: 100%; */
   border: 1px solid ${({ theme }) => theme.color.N300};
   /* border-collapse: collapse; */
   border-radius: 4px;

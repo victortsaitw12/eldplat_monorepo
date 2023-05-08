@@ -88,8 +88,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
 ) => {
   const { params } = context;
-  let custormerData;
-  console.log(custormerData);
   return {
     props: {
       customer_id: params ? params.id : ""

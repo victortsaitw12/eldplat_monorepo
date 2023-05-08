@@ -1,19 +1,26 @@
 import React, { useCallback } from "react";
-import { NextPageWithLayout } from "next";
+import {
+  NextPageWithLayout,
+  GetServerSideProps,
+  InferGetServerSidePropsType
+} from "next";
 //
 import { getLayout } from "@layout/MainLayout";
 import { Pane } from "evergreen-ui";
-import CustomerEditForm from "@contents/Customer/CustomerEditForm";
+import BusEditForm from "@contents/Bus/BusEditForm";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
+import { ParsedUrlQuery } from "querystring";
 //
-const Page: NextPageWithLayout<never> = () => {
+const Page: NextPageWithLayout<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ busId }) => {
   const router = useRouter();
   const asyncSubmitForm = async (data: any) => {
     console.log("data", data);
   };
   const cancelFormHandler = useCallback(() => {
-    router.push("/customer");
+    router.push("/bus");
   }, [router]);
   return (
     <BodySTY>
@@ -26,7 +33,7 @@ const Page: NextPageWithLayout<never> = () => {
           overflow="auto"
         >
           {/* Put your component here */}
-          <CustomerEditForm
+          <BusEditForm
             submitForm={asyncSubmitForm}
             onCancel={cancelFormHandler}
           />
@@ -35,5 +42,24 @@ const Page: NextPageWithLayout<never> = () => {
     </BodySTY>
   );
 };
+
+interface Props {
+  busId: string;
+}
+interface Params extends ParsedUrlQuery {
+  id: string;
+}
+
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  context
+) => {
+  const { params } = context;
+  return {
+    props: {
+      busId: params ? params.id : ""
+    }
+  };
+};
+
 Page.getLayout = getLayout;
 export default Page;

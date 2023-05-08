@@ -6,12 +6,14 @@ interface Props extends CheckboxOwnProps {
   name?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean
 }
 const StyledCheckBox: BoxComponent<Props, "input"> = ({
   label,
   name,
   value,
-  onChange
+  onChange,
+  disabled
 }: Props) => {
   const [checked, setChecked] = React.useState(false);
   return (
@@ -24,6 +26,7 @@ const StyledCheckBox: BoxComponent<Props, "input"> = ({
         setChecked(e.target.checked);
         onChange && onChange(e);
       }}
+      disabled={disabled}
     />
   );
 };

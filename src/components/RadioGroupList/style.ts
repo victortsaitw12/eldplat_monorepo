@@ -14,10 +14,18 @@ const RadioGroupListSTY = styled.div`
     font-size: 12px;
     margin-bottom: 12px;
   }
+
+  .radio-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 `;
 
 const RadioListFieldSTY = styled.div`
   color: #101840;
 `;
 
-export { RadioGroupListSTY, RadioListFieldSTY };
+const RadioItemSTY = styled.input.attrs({ type: "radio" })``;
+
+export { RadioGroupListSTY, RadioListFieldSTY, RadioItemSTY };

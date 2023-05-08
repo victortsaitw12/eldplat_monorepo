@@ -7,6 +7,7 @@ import FilterPannel from "./FilterPannel";
 // import { useFilterStore } from "@stores/busFilterStore";
 // TODO: 測試用，之後可以拿掉
 interface I_MainBookmark {
+  beforeChildren?: React.ReactNode;
   children?: React.ReactNode;
   updateFilter: (key: string, value: string) => void;
   resetFilter?: () => void;
@@ -18,6 +19,7 @@ interface I_MainBookmark {
 // ];
 
 function MainBookmark({
+  beforeChildren,
   children,
   resetFilter,
   updateFilter,
@@ -49,6 +51,7 @@ function MainBookmark({
   return (
     <BodySTY>
       <Pane height="100%">
+        {beforeChildren}
         {/* 主頁籤 */}
         {/* <Tablist
           flexBasis={240}

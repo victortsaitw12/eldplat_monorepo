@@ -52,7 +52,6 @@ function Charactor({ insertData, setInsertData }: I_Content_Props) {
 
   // 按下卡牌x
   const handleRemove = (newItem: any) => {
-    // console.log("remove newItem : ", newItem);
     setCharactorArr(
       charactorArr.filter((v: any, i: any) => {
         return v.id !== newItem.id;
@@ -66,10 +65,7 @@ function Charactor({ insertData, setInsertData }: I_Content_Props) {
     newData.group_no = charactorValue;
     setInsertData(newData);
   };
-  console.log("charactorSelected", charactorSelected);
-  console.log("charactorArr", charactorArr);
-  console.log("charactorValue", charactorValue);
-  console.log("newData", newData);
+
   return (
     <BodySTY>
       <Heading is="h4">指定角色</Heading>

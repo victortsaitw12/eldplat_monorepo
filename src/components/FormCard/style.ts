@@ -20,6 +20,8 @@ export const FormCardSTY = styled.div`
   .formCard_wrapper {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
     flex-wrap: wrap;
 
     .w100 {

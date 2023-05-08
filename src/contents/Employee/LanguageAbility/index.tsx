@@ -44,19 +44,14 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
     return (lang: I_languageType) => {
       const newLangs = [...insertLang];
       newLangs[idx] = { ...lang, saved: true };
-      console.log("newLangs", newLangs);
       setInsertLang(newLangs);
     };
   };
 
   // 移除該欄語言
   const handleRemoveLang = (idx: number, e: any) => {
-    console.log("idx-------", idx);
-
-    console.log("e", e);
     setInsertLang(
       insertLang.filter((item, i) => {
-        console.log("新增的i", i);
         return i !== idx;
       })
     );
@@ -98,12 +93,8 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
   useEffect(() => {
     const newData = { ...insertData };
     newData.languags = LangForApi;
-    console.log("newData", newData);
     setInsertData(newData);
   }, [LangForApi, setInsertData]);
-
-  console.log("🎗insertLang", insertLang);
-  console.log("🎨LangForApi", LangForApi);
 
   return (
     <BodySTY>
@@ -121,8 +112,6 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
       </Pane>
 
       {insertLang.map((lang_line, idx) => {
-        console.log("lang_line", lang_line);
-
         if (lang_line.saved)
           return (
             <Pane className="input-line">

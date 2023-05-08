@@ -4,13 +4,21 @@ import FormCard from "@components/FormCard";
 import RadioGroupColumn, {
   RadioColumnField
 } from "@components/RadioGroupColumn";
-
+import {
+  UseFormRegister,
+  FieldValues,
+  FieldErrors,
+  useFormContext
+} from "react-hook-form";
+import { BusDataTypes } from "../busDefaultData";
 interface Props {
   hide?: boolean;
+  register: UseFormRegister<BusDataTypes>;
+  errors: FieldErrors<BusDataTypes>;
 }
-function Maintenance({ hide }: Props) {
+function Maintenance({ hide, register, errors }: Props) {
   const [schedule, setSchedule] = useState("0");
-
+  console.log("render Maintenance");
   return (
     <Pane marginX="20px" display={hide ? "none" : "block"}>
       <FormCard formTitle="維修計畫">

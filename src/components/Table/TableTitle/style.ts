@@ -1,7 +1,8 @@
 import styled from "styled-components";
-// 包裹整個表格的容器
-const TableTitleSTY = styled.div`
+
+export const TableTitleSTY = styled.div`
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -23,34 +24,66 @@ const TableTitleSTY = styled.div`
         font-size: ${({ theme }) => theme.fontSize.Heading500};
         font-weight: ${({ theme }) => theme.fontWeight.Heading500};
         color: ${({ theme }) => theme.color.N700};
-        //styleName: Headline/H-500;
+        margin-right: 16px;
       }
     }
-  }
-  .container-pagination {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0px;
-    gap: 8px;
-    span {
-      font-size: ${({ theme }) => theme.fontSize.Paragraph100};
-      font-weight: ${({ theme }) => theme.fontWeight.Paragraph100};
+    .container-header-right {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
     }
-    .actions {
+  }
+  .container-sub {
+    max-width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .subTitle {
+      max-width: calc(75%);
+      position: relative;
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: flex-start;
+      max-width: calc(70% -180px);
+      &:nth-child(n) {
+        max-width: calc(100% / 7);
+      }
+    }
+    .container-pagination {
+      max-width: calc(25%);
+      position: relative;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+      align-items: center;
       padding: 0px;
-      gap: 4px;
-      button {
-        cursor: pointer;
-        padding: 10px;
-        border: none;
-        background: none;
+      gap: 8px;
+      position: relative;
+      span {
+        max-width: calc(100%);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: ${({ theme }) => theme.fontSize.Paragraph100};
+        font-weight: ${({ theme }) => theme.fontWeight.Paragraph100};
+      }
+      .actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0px;
+        gap: 4px;
+        button {
+          cursor: pointer;
+          padding: 10px;
+          border: none;
+          background: none;
+        }
       }
     }
   }
 `;
-
-export { TableTitleSTY };

@@ -8,6 +8,7 @@ interface I_vendorType {
   [key: string]: string | number | React.ReactNode;
 }
 
+// ✨✨✨: 此檔案暫時無用
 function Vendor({ data }: I_vendorType) {
   const [addVendorActive, setAddVendorActive] = useState<boolean>(false);
 

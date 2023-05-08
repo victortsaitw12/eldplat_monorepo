@@ -1,3 +1,4 @@
+import { PatternType } from "@utils/mappingQueryData";
 export const getAllBuses = async (filter: { [key: string]: any } = {}) => {
   console.log("getAllBuses", filter);
   const busFilter = [];
@@ -12,19 +13,25 @@ export const getAllBuses = async (filter: { [key: string]: any } = {}) => {
     }
   }
   console.log("bus_Filter", busFilter);
-  const res = await fetch(
-    "https://localhost:7188/Gateway_BusStream/QueryResolver/GetBusList/api/GetBus/1",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        bus_Filter: busFilter,
-        filter_Needed: true
-      })
-    }
-  );
+  console.log("accessToken", process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+  const res = await fetch("https://localhost:7188/Gateway_Bus/GetBusList", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    },
+    body: JSON.stringify({
+      bus_Filter: busFilter,
+      filter_Needed: true,
+      pageInfo: {
+        page_index: 1,
+        page_size: 10,
+        orderby: "bus_No",
+        arrangement: "asc"
+      }
+    })
+  });
+  console.log("res", res);
   return res.json();
 };
 
@@ -42,4 +49,34 @@ export const getBusTitle = () => {
     "標籤"
   ];
   return DUMMY_TITLES;
+};
+
+export const busPattern: PatternType = {
+  id: true,
+  bus_No: true,
+  type: true,
+  make: true,
+  model: true,
+  license_Plate: true,
+  year: true,
+  bus_Group: true,
+  operator: true,
+  status: true,
+  labels: true
+};
+
+export const busParser = (
+  data: any,
+  key: string
+): { label: any; value: any } => {
+  if (key === "id") {
+    return {
+      label: data["bus_No"] || null,
+      value: data["bus_No"] || null
+    };
+  }
+  return {
+    label: data[key] || null,
+    value: data[key] || null
+  };
 };
