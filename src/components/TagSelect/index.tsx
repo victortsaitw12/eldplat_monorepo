@@ -10,42 +10,43 @@ interface Option {
 interface Props {
   options: Option[];
   handleCustomData: (t: any) => void;
-  apiData?: any;
+  editData?: any;
 }
 
 // { value: "TW", label: "台灣" },
 // { value: "JP", label: "日本" }
 
-const TagSelect: React.FC<Props> = ({ options, handleCustomData, apiData }) => {
+const TagSelect: React.FC<Props> = ({
+  options,
+  handleCustomData,
+  editData
+}) => {
+  console.log("🧡editData", editData);
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 
-  // useEffect(() => {
-  //   console.log("apiData", apiData);
-  //   // 語言
-  //   const updateLangData = apiData?.map(
-  //     (obj: { language_Code: string; language_Name: string }) => {
-  //       return {
-  //         value: obj.language_Code,
-  //         label: obj.language_Name
-  //       };
-  //     }
-  //   );
-  //   setSelectedOptions(updateLangData);
-  //   console.log("🎃🎃🎃🎃🎃🎃🎃");
-  // }, [apiData]);
+  useEffect(() => {
+    editData && setSelectedOptions(editData);
+  }, [editData]);
 
-  const handleChangeSelect = (e: any) => {
+  console.log("💛selectedOptions", selectedOptions);
+
+  const handleChangeSelect = async (e: any) => {
     // console.log("e", e); // e.target.value => "TW"
     const optArr = options.filter((v) => {
       if (e.target.value === "no") return;
       return v.value === e.target.value;
     });
-    optArr.filter((opt) => {
-      if (selectedOptions.includes(opt)) {
+    await optArr.filter((opt) => {
+      const repeatVal = selectedOptions.find((v) => {
+        return v.value === opt.value;
+      });
+      if (repeatVal) {
         return;
       } else {
+        console.log("old selcet", [...selectedOptions]);
+        console.log("update select", [...selectedOptions, optArr[0]]);
         setSelectedOptions((prev) => [...prev, optArr[0]]);
-        handleCustomData((prev: any) => [...prev, optArr[0]]);
+        handleCustomData((prev: any) => [...selectedOptions, optArr[0]]);
       }
     });
   };

@@ -4,8 +4,6 @@ import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
 import { useRouter } from "next/router";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { createEmployee } from "@services/employee/createEmployee";
-import AddEmployee from "@contents/Employee";
 import { BodySTY } from "./style";
 import CompanyUpdate from "@contents/Company/CompanyUpdate";
 import CompanyProvider from "@contexts/companyContext/companyProvider";

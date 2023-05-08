@@ -7,7 +7,10 @@ import {
   TextInput,
   SelectField,
   Button,
-  PlusIcon
+  PlusIcon,
+  IconButton,
+  TrashIcon,
+  majorScale
 } from "evergreen-ui";
 
 import { BodySTY } from "./style";
@@ -17,8 +20,27 @@ import {
 } from "@contexts/companyContext/companyProvider";
 import { convertCountryNum } from "@utils/convertValueToText";
 
+interface I_ContactTYP {
+  contact_name: string;
+  contact_phone_code: string;
+  contact_phone: string;
+  contact_tel_code: string;
+  contact_tel: string;
+  contact_email: string;
+}
+
 function Contact() {
   const C_data = useContext<I_Company_Context>(CompanyContext);
+  const [contactArr, setContactArr] = useState<I_ContactTYP[]>([
+    {
+      contact_name: "",
+      contact_phone_code: "",
+      contact_phone: "",
+      contact_tel_code: "",
+      contact_tel: "",
+      contact_email: ""
+    }
+  ]);
   const [countryNum, setCountryNum] = useState<string | undefined>("");
 
   // 可變動的國碼欄位
@@ -41,6 +63,22 @@ function Contact() {
   // 新增聯絡人按鈕
   const handleAddContact = (e: any) => {
     e.preventDefault();
+    setContactArr((prev: any) => [
+      ...prev,
+      {
+        contact_name: "",
+        contact_phone_code: "",
+        contact_phone: "",
+        contact_tel_code: "",
+        contact_tel: "",
+        contact_email: ""
+      }
+    ]);
+  };
+
+  // 移除一個聯絡人
+  const handleRemoveContact = (val: string) => {
+    console.log("val", val);
   };
 
   return (
@@ -191,7 +229,100 @@ function Contact() {
             )}
           </Pane>
         </Pane>
-        <Pane className="input-line">
+
+        {contactArr.map((value, idx) => {
+          return (
+            <>
+              <Pane className="input-line">
+                <Text className="">
+                  {idx === 0 ? "主要聯絡人" : `聯絡人${idx + 1}`}
+                </Text>
+                <Pane className="contact-first">
+                  <TextInput
+                    name="contact_Name"
+                    value={C_data.companyData.company_Dt.contact_Name}
+                    onChange={C_data.handleCompanyContactChange}
+                  />
+                  {idx !== 0 && (
+                    <IconButton
+                      icon={TrashIcon}
+                      onClick={() => {
+                        handleRemoveContact(value.contact_name);
+                      }}
+                    />
+                  )}
+                </Pane>
+              </Pane>
+              <Pane className="input-line">
+                <Text className="">
+                  {idx === 0 ? "主要聯絡人電話" : `聯絡人${idx + 1}電話`}
+                </Text>
+                <Pane>
+                  <Pane className="phone-input">
+                    <Paragraph size={200}>市話</Paragraph>
+                    <TextInput
+                      type="tel"
+                      className="country-number"
+                      name="country_num_Tel"
+                      placeholder="ex:+886"
+                      value={C_data.countryNumInput.contactTel}
+                      onChange={handleCountryNum}
+                      required
+                    />
+                    <TextInput
+                      className="contact-tel"
+                      name="contact_Tel"
+                      value={C_data.companyData.company_Dt.contact_Tel}
+                      onChange={C_data.handleCompanyContactChange}
+                      required
+                    />
+                    {C_data.errMsg["errField"] === "contact_Tel" && (
+                      <Text color="red !important">
+                        {C_data.errMsg["errText"]}
+                      </Text>
+                    )}
+                  </Pane>
+                  <Pane className="phone-input">
+                    <Paragraph size={200}>手機</Paragraph>
+                    <TextInput
+                      className="country-number"
+                      name="country_num_Phone"
+                      placeholder="ex:+886"
+                      value={C_data.countryNumInput.contactPhone}
+                      onChange={handleCountryNum}
+                      required
+                    />
+                    <TextInput
+                      className="contact-phone"
+                      name="contact_Phone"
+                      value={C_data.companyData.company_Dt.contact_Phone}
+                      onChange={C_data.handleCompanyContactChange}
+                      required
+                    />
+                    {C_data.errMsg["errField"] === "contact_Phone" && (
+                      <Text color="red !important">
+                        {C_data.errMsg["errText"]}
+                      </Text>
+                    )}
+                  </Pane>
+                </Pane>
+              </Pane>
+              <Pane className="input-line">
+                <Text className="">
+                  {idx === 0 ? "主要聯絡人信箱" : `聯絡人${idx + 1}信箱`}
+                </Text>
+                <TextInput
+                  name="contact_email"
+                  // value={C_data.companyData.company_Dt.contact_Name}
+                  onChange={C_data.handleCompanyContactChange}
+                />
+              </Pane>
+
+              <Pane height={1} width={100} backgroundColor="#AFC3DA"></Pane>
+            </>
+          );
+        })}
+        {/* <Pane className="input-line">
           <Text className="">主要聯絡人</Text>
           <TextInput
             name="contact_Name"
@@ -247,8 +378,18 @@ function Contact() {
             </Pane>
           </Pane>
         </Pane>
-        <Pane height={1} width={100} backgroundColor="#AFC3DA"></Pane>
         <Pane className="input-line">
+          <Text className="">信箱</Text>
+          <TextInput
+            name="contact_email"
+            // value={C_data.companyData.company_Dt.contact_Name}
+            onChange={C_data.handleCompanyContactChange}
+          />
+        </Pane>
+
+        <Pane height={1} width={100} backgroundColor="#AFC3DA"></Pane> */}
+
+        {/* <Pane className="input-line">
           <Text className="">聯絡人2</Text>
           <TextInput
             name="contact_Name"
@@ -303,7 +444,7 @@ function Contact() {
               )}
             </Pane>
           </Pane>
-        </Pane>
+        </Pane> */}
 
         {/* <Pane className="input-line">
           <Pane className="phone-input">

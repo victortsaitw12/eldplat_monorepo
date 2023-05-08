@@ -26,13 +26,39 @@ const currencyOptions = [
 function CountrySet() {
   const C_data = useContext<I_Company_Context>(CompanyContext);
   const company_language_data = C_data?.companyData?.company_Language;
+  const [editLangData, setEditLangData] = useState<any[]>();
+  const company_currency_data = C_data?.companyData?.company_Currency;
+  const [editCurData, setEditCurData] = useState<any[]>();
   const [langData, setLangData] = useState<any[]>([]);
   const [currencyData, setCurrencyData] = useState<any[]>([]);
+
+  useEffect(() => {
+    // 一進來先抓資料庫裡有語言的資料
+    const newLangData = company_language_data.map((v) => {
+      return {
+        label: v.language_Name,
+        value: v.language_Code
+      };
+    });
+    setEditLangData(newLangData);
+  }, [, company_language_data]);
+
+  useEffect(() => {
+    // 一進來先抓資料庫裡有幣別的資料
+    const newCurData = company_currency_data.map((v) => {
+      return {
+        label: v.currency_Name,
+        value: v.currency_Code
+      };
+    });
+    setEditCurData(newCurData);
+  }, [company_currency_data]);
+
   // 把選出的語系陣列更新回要打API的大物件
   useEffect(() => {
     const apiData = { ...C_data.companyData };
     // 語言
-    const newLangData = langData.map((obj) => {
+    const newLangData = langData?.map((obj) => {
       return {
         language_Code: obj.value,
         language_Name: obj.label
@@ -41,7 +67,7 @@ function CountrySet() {
     apiData["company_Language"] = newLangData;
 
     // 貨幣
-    const newCurData = currencyData.map((obj) => {
+    const newCurData = currencyData?.map((obj) => {
       return {
         currency_Code: obj.value,
         currency_Name: obj.label
@@ -51,7 +77,7 @@ function CountrySet() {
 
     C_data.setCompanyData(apiData);
   }, [langData, currencyData]);
-
+  console.log("C_data in LALALALA", C_data);
   return (
     <BodySTY>
       <Heading is="h4">國別 / 語系 / 幣別設定</Heading>
@@ -77,7 +103,7 @@ function CountrySet() {
           <TagSelect
             options={languageOptions}
             handleCustomData={setLangData}
-            // apiData={company_language_data}
+            editData={editLangData}
           />
         </Pane>
         <Pane className="input-line">
@@ -85,6 +111,7 @@ function CountrySet() {
           <TagSelect
             options={currencyOptions}
             handleCustomData={setCurrencyData}
+            editData={editCurData}
           />
         </Pane>
       </form>

@@ -69,6 +69,20 @@ export const BodySTY = styled.div`
           width: 100%;
         }
       }
+
+      .contact-first {
+        button {
+          width: fit-content;
+          background-color: transparent;
+          border: none;
+          margin-left: 6px;
+
+          &:hover {
+            background-color: transparent !important;
+            border: none !important;
+          }
+        }
+      }
     }
     .required {
       &::before {
