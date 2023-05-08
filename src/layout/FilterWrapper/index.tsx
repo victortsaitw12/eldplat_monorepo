@@ -12,7 +12,7 @@ interface I_MainBookmark {
   filter: any;
 }
 
-function MainBookmark({
+function FilterWrapper({
   children,
   resetFilter,
   updateFilter,
@@ -103,4 +103,4 @@ function MainBookmark({
   );
 }
 
-export default MainBookmark;
+export default FilterWrapper;
