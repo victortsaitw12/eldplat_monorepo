@@ -1,14 +1,6 @@
-import {
-  Pane,
-  Tablist,
-  Tab,
-  ChevronDownIcon,
-  Icon,
-  FullscreenIcon,
-  CrossIcon
-} from "evergreen-ui";
+import { ChevronDownIcon, Icon, FullscreenIcon, CrossIcon } from "evergreen-ui";
 import React from "react";
-import { BodySTY, FilterItemSTY, ContentSTY } from "./style";
+import { BodySTY, FilterItemSTY } from "./style";
 interface Props {
   children?: React.ReactNode;
   onChangeTab?: (value: string) => void;
@@ -64,7 +56,7 @@ function TableWrapper({
           />
         </div>
       </div>
-      <ContentSTY>{children}</ContentSTY>
+      {children}
     </BodySTY>
   );
 }
