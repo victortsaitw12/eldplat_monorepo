@@ -6,21 +6,37 @@ import {
 } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
+import { useFormContext } from "react-hook-form";
+import { Pane, TextInputField, SelectField, TagInput } from "evergreen-ui";
+import {
+  emailValidation,
+  numberValidation,
+  textValidation
+} from "@utils/inputValidation";
 
 interface I_infoData {
   req?: boolean;
   value?: string;
-  title?: string;
+  label?: string;
 }
 
 export interface I_InfoBoxProps {
+  isEdit: Boolean;
   infoTitle?: string;
   infoData?: I_infoData[];
   infoType?: string;
   children?: React.ReactNode;
 }
 
-function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
+function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
+  const { register } = useFormContext(); // retrieve all hook methods
+
+  console.log("🎶🎶🎶🎶🎶🎶這些是InfoBox裡面的props", {
+    isEdit: isEdit,
+    infoTitle: infoTitle,
+    infoData: infoData,
+    infoType: infoType
+  });
 
   const r_switch_info = (type?: string) => {
     switch (type) {
@@ -52,14 +68,15 @@ function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
       return false;
     }
     return infoData.map((child: any, i: number) => {
-      const { req, value, title, key } = child
+      const { req, value, label, name } = child
       return (
         <ListItem key={value + i}>
           <Text>
-            {req && title !== "" && <span className="req">*</span>}
-            {title}
+            {req && label !== "" && <span className="req">*</span>}
+            {label}
           </Text>
-          <Text>{value}</Text>
+          {isEdit && name ? <TextInputField {...register(name)} /> : <Text>{value}</Text>}
+
         </ListItem>
       )
     })
@@ -87,7 +104,7 @@ function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
     return infoData.map((child: any, i: number) => {
       return (
         <ListItem key={child.value + i}>
-          <Checkbox label={child.title} disabled={true} />
+          <Checkbox label={child.label} disabled={isEdit ? false : true} />
         </ListItem>
       )
     })
@@ -95,7 +112,7 @@ function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
 
   return (
     <InfoBoxSTY>
-      <Text className="title">{infoTitle}</Text>
+      <Text className="label">{infoTitle}</Text>
       {r_switch_info(infoType)}
     </InfoBoxSTY>
   );
