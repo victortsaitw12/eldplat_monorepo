@@ -4,7 +4,8 @@
 import InfoBox from "@components/InfoBox";
 import VendorLayout from "../VendorLayout";
 
-interface Props {
+interface I_Props {
+  isEdit: boolean;
   vendorData: any;
   goToCreatePage?: () => void;
   goToDetailPage?: (id: string) => void;
@@ -12,7 +13,7 @@ interface Props {
   deleteItemHandler?: (id: string) => void;
 }
 
-const ClientList = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler }: Props) => {
+const ClientList = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler }: I_Props) => {
   console.log("@@@@@@@@@@@vendor data", vendorData);
 
   const basic_info = [

@@ -1,22 +1,32 @@
-import { I_Data } from "@components/Table/Table";
-import MainBookmark from "@contents/MainBookmark";
-import Vendor from "@contents/Vendor";
-import { getAllVendors } from "@services/vendor/getAllVendors";
-import { useFilterStore } from "@contexts/filter/vendorFilterStore";
 import {
   I_Add_Vendors_Type,
   I_Select_Vendors_Type
 } from "@typings/vendors_type";
 import { Pane, GlobeIcon } from "evergreen-ui";
 import { NextPageWithLayout } from "next";
-import React, { useEffect, useState } from "react";
-import { getLayout } from "@layout/MainLayout";
-import VendorList from "@contents/Vendor/VendorList";
+import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
-import { BodySTY } from "./style";
-import { deleteVendor } from "@services/vendor/deleteVendor";
 import { FormattedMessage } from "react-intl";
-import TitlteBar from "@components/TitleBar";
+import { BodySTY } from "./style";
+
+//@layout
+import { getLayout } from "@layout/MainLayout";
+import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
+
+//@contents
+import VendorList from "@contents/Vendor/VendorList";
+import VendorCreateForm from "@contents/Vendor/VendorCreateForm";
+// import Vendor from "@contents/Vendor";
+//@services
+import { deleteVendor } from "@services/vendor/deleteVendor";
+import { getAllVendors } from "@services/vendor/getAllVendors";
+//@components
+import Drawer from "@components/Drawer";
+import { I_Data } from "@components/Table/Table";
+
+//新版的store
+import { useVendorStore } from "@contexts/filter/vendorStore";
 
 const isFullWidth = false;
 
@@ -26,9 +36,17 @@ const Page: NextPageWithLayout<{
 }> = ({ locale, setPageType }) => {
   const router = useRouter();
   const [data, setData] = useState<I_Select_Vendors_Type[] | I_Data[] | any>();
-  const filter = useFilterStore((state) => state.filter);
-  const updateFilter = useFilterStore((state) => state.updateFilter);
-  const initializeFilter = useFilterStore((state) => state.initializeFilter);
+
+  const {
+    initializeSubFilter,
+    mainFilter,
+    updateMainFilter,
+    subFilter,
+    updateSubFilter,
+    isDrawerOpen,
+    setDrawerOpen
+  } = useVendorStore();
+
   interface Vendor extends I_Select_Vendors_Type {
     vendor_No: string;
   }
@@ -39,7 +57,7 @@ const Page: NextPageWithLayout<{
 
   useEffect(() => {
     let isCanceled = false;
-    getAllVendors(filter).then((data) => {
+    getAllVendors(subFilter).then((data) => {
       const vendorData = data.contentList.map((vendors: Vendor) => {
         return {
           id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
@@ -85,24 +103,24 @@ const Page: NextPageWithLayout<{
         console.log("canceled");
         return;
       }
-      if (!filter) {
+      if (!subFilter) {
         localStorage.setItem(
           "vendorInitFilter",
           JSON.stringify(data.conditionList)
         );
-        initializeFilter();
+        initializeSubFilter();
       }
       setData(vendorData);
     });
     return () => {
       isCanceled = true;
     };
-  }, [filter]);
+  }, [subFilter]);
 
   const reloadResult = async () => {
     setData([])
     try {
-      const res = await getAllVendors(filter)
+      const res = await getAllVendors(subFilter)
       const vendorData = res.contentList.map((vendors: Vendor) => {
         return {
           id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
@@ -151,7 +169,8 @@ const Page: NextPageWithLayout<{
   }
 
   const goToCreatePage = () => {
-    router.push("/vendor/create");
+    // router.push("/vendor/create");
+    setDrawerOpen(true)
   };
   //進入供應商詳細頁
   const goToDetailPage = (id: string) => {
@@ -173,29 +192,56 @@ const Page: NextPageWithLayout<{
     }
     router.push("/vendor");
   }
+  //套用新版filter
+  const changeMainFilterHandler = () => {
+  }
+  //
+  const mainFilterArray = useMemo(
+    () => [
+      { id: 1, label: "全部", value: "all" },
+      { id: 2, label: "停用", value: "seal" },
+      { id: 3, label: "tab3", value: "tab3" },
+      { id: 3, label: "tab4", value: "tab4" }
+    ],
+    []
+  );
+
   return (
     <BodySTY>
       {!isFullWidth ? (
         <>
-          <MainBookmark
-            beforeChildren={<TitlteBar titleLabel="全部" />}
-            filter={filter}
-            updateFilter={updateFilter}
-            resetFilter={() => {
-              initializeFilter();
-            }}
+          <TableWrapper
+            onChangeTab={changeMainFilterHandler}
+            mainFilter={"all"}
+            mainFilterArray={mainFilterArray}
           >
-            {/* Put your component here */}
-            {/* <Vendor data={data}></Vendor> */}
-            <FormattedMessage id="vendor_name" />
-            <VendorList
-              vendorData={data}
-              goToDetailPage={goToDetailPage}
-              goToCreatePage={goToCreatePage}
-              goToEditPageHandler={goToEditPageHandler}
-              deleteItemHandler={deleteItemHandler}
-            ></VendorList>
-          </MainBookmark>
+            <FilterWrapper
+              updateFilter={updateSubFilter}
+              resetFilter={() => {
+                initializeSubFilter();
+              }}
+              filter={subFilter}
+            >
+              {/* <FormattedMessage id="vendor_name" /> */}
+              <VendorList
+                vendorData={data}
+                goToDetailPage={goToDetailPage}
+                goToCreatePage={goToCreatePage}
+                goToEditPageHandler={goToEditPageHandler}
+                deleteItemHandler={deleteItemHandler}
+              ></VendorList>
+            </FilterWrapper>
+          </TableWrapper>
+          {isDrawerOpen && (
+            <Drawer
+              tabName={["新增供應商"]}
+              closeDrawer={() => {
+                setDrawerOpen(false);
+              }}
+            >
+              <VendorCreateForm />
+            </Drawer>
+          )}
           {/* <SideBookMark /> */}
         </>
       ) : (
