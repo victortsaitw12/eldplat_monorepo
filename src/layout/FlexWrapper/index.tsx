@@ -2,8 +2,7 @@ import React from "react";
 import { BodySTY } from "./style";
 import { Pane } from "evergreen-ui";
 interface Props {
-    // column: number,
-    style: any;
+    style?: React.CSSProperties;
     children: React.ReactNode;
     padding?: string;
     gap?: string;
@@ -17,10 +16,8 @@ const FlexWrapper = ({
     gap = "10px",
     flexDirection = "row"
 }: Props) => {
-    // console.log("🎶🎶🎶🎶🎶🎶children number:", children)
-    // console.log(style)
     return (
-        <BodySTY padding={padding} gap={gap} flexDirection={flexDirection}>
+        <BodySTY style={style} padding={padding} gap={gap} flexDirection={flexDirection}>
             {children}
         </BodySTY>
     );

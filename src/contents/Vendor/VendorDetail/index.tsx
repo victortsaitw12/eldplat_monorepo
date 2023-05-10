@@ -171,7 +171,7 @@ const VendorDetail = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPage
         <FlexWrapper>
           <div>
             <InfoBox isEdit={isEdit} infoData={basic_info} infoTitle="基本資料" />
-            <FlexWrapper padding="10px 0">
+            <FlexWrapper style={{ padding: "10px 0" }} padding="10px 0">
               <InfoBox isEdit={isEdit} infoData={category_info} infoType="checkbox" infoTitle="分類" />
               <InfoBox isEdit={isEdit} infoData={label_info} infoType="label" infoTitle="標籤" />
             </FlexWrapper>
