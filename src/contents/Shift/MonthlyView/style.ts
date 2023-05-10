@@ -2,86 +2,70 @@ import styled from "styled-components";
 
 export const MonthlySTY = styled.div<{ rows: number }>`
   flex-grow: 10;
-  .container {
-    border: 1px solid ${({ theme }) => theme.color.N300};
-    border-radius: 5px;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    overflow-x: scroll;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    display: grid;
-    grid-template-columns: repeat(7, minmax(100px, 1fr));
-    grid-template-rows: 32px repeat(
-        auto-fill,
-        calc((100% - 32px) / ${(props) => props.rows})
-      );
 
-    .cell__header {
+  border: 1px solid ${({ theme }) => theme.color.N300};
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  overflow-x: scroll;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .headerCells {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+    z-index: 99;
+    .headerCell {
+      height: 32px;
+      width: calc(100% / 7);
       background: ${({ theme }) => theme.color.N100};
       text-align: center;
-      height: 32px;
     }
     .weekend {
       color: ${({ theme }) => theme.color.R300};
       background: ${({ theme }) => theme.color.R50};
     }
-    .monthly-date {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      border-top: 1px solid ${({ theme }) => theme.color.N300};
+  }
+  .dateCells {
+    width: 100%;
+    height: calc(100% - 32px);
+    display: grid;
+    grid-template-columns: repeat(7, calc(100% / 7));
+    grid-template-rows: repeat(
+      ${(props) => props.rows},
+      calc(100% / ${(props) => props.rows})
+    );
+  }
+
+  .cell {
+    border-left: 1px solid ${({ theme }) => theme.color.N300};
+    padding: 8px;
+    z-index: 10;
+    pointer-events: none;
+    * {
+      pointer-events: auto;
     }
-    .cell {
-      border-left: 1px solid ${({ theme }) => theme.color.N300};
-      padding: 8px;
-      z-index: 10;
-      pointer-events: none;
-      * {
-        pointer-events: auto;
-      }
-      /* position: relative; */
-      &:nth-child(7n + 1) {
-        border-left: none;
-      }
-      .cell__date {
-        width: 100%;
-        text-align: right;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .cell__unfold-btn {
-        flex-grow: 10;
-      }
-      .cell__date-btn {
-        min-width: 20px;
-        min-height: 20px;
-        border-radius: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        &:hover {
-          background: ${({ theme }) => theme.color.N200};
-        }
-      }
+    &:nth-child(7n + 1) {
+      border-left: none;
     }
-    .highlight:not(.start) {
-      background: ${({ theme }) => theme.color.N100};
-      position: relative;
-      z-index: 0;
-    }
-    .start {
-      background: ${({ theme }) => theme.color.N100};
-      position: relative;
-      z-index: 1;
-    }
+  }
+
+  .highlight:not(.start) {
+    background: ${({ theme }) => theme.color.N100};
+    position: relative;
+    z-index: 0;
+  }
+  .start {
+    background: ${({ theme }) => theme.color.N100};
+    position: relative;
+    z-index: 1;
   }
 
   .disabled {

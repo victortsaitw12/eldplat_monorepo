@@ -24,13 +24,16 @@ const EventBars = ({
   const timeFrame = 1000 * 60 * 60 * 2; //2hour
 
   React.useEffect(() => {
+    const cellDateStart = new Date(cellTimestamp);
+    const cellDateEnd = new Date(cellTimestamp + 1000 * 60 * 60 * 24);
+
     const eventsInDate = monthlyData?.filter((shift: any) => {
-      const cellDate = new Date(cellTimestamp);
       const eventStart = new Date(shift.schd_Start_Time);
       const eventEnd = new Date(shift.schd_End_Time);
       return (
-        (cellDate <= eventStart && eventStart <= getDayEnd(cellDate)) ||
-        (cellDate <= eventEnd && eventEnd <= getDayEnd(cellDate))
+        (eventStart <= cellDateStart && cellDateStart <= eventEnd) ||
+        (cellDateStart <= eventEnd && eventEnd <= cellDateEnd) ||
+        (cellDateStart <= eventStart && cellDateEnd <= eventEnd)
       );
     });
 

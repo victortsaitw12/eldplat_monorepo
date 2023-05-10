@@ -43,6 +43,7 @@ const DrawerContent = ({
     <>
       {isOpenDrawer && (
         <Drawer
+          
           tabName={[UI.drawerType.title]}
           closeDrawer={() => {
             setIsOpenDrawer(false);

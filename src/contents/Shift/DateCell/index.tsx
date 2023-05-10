@@ -17,14 +17,17 @@ const DateCell = ({
   setIsOpenDrawer,
   monthlyData,
   date,
-  view
+  view,
+  rows
 }: {
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   date: DateArrItem;
   view: "monthly" | "daily";
+  rows: number;
 }) => {
   const UI = React.useContext(UIContext);
+  const [hiddenCount, setHiddenCount] = React.useState(0);
 
   //------ functions ------//
 
@@ -70,7 +73,9 @@ const DateCell = ({
   return (
     <>
       <CellSTY
-        className={`monthly-date cell ${date.disabled ? "disabled" : ""} ${
+        className={`monthly-date cell dateCell ${
+          date.disabled ? "disabled" : ""
+        } ${
           checkDateInsideSelection.call(null, date.timestamp) ? "highlight" : ""
         }  
             ${checkDateStart.call(null, date.timestamp) ? "start" : ""}`}
@@ -83,6 +88,8 @@ const DateCell = ({
             cellTimestamp={date.timestamp}
             monthlyData={monthlyData}
             setIsOpenDrawer={setIsOpenDrawer}
+            setHiddenCount={setHiddenCount}
+            rows={rows}
           />
         ) : (
           ""
@@ -90,7 +97,15 @@ const DateCell = ({
 
         <CreateEventBtn cellTimestamp={date.timestamp} view={view} />
         <div className="cell__date">
-          <span className="cell__unfold-btn"></span>
+          <span className="cell__date-info">
+            {hiddenCount > 0 ? (
+              <button className="cell__unfold-btn">
+                還有 {hiddenCount} 個
+              </button>
+            ) : (
+              ""
+            )}
+          </span>
           <span
             className="cell__date-btn"
             onClick={renderAllDayEventStatus.bind(null, date.timestamp)}

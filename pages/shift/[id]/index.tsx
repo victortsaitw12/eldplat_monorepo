@@ -3,7 +3,7 @@ import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { Pane } from "evergreen-ui";
-import { ViewSTY } from "./style";
+import { ViewIdSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
 import { getLayout } from "@layout/MainLayout";
@@ -23,13 +23,18 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const [monthlyData, setMonthlyData] = React.useState<MonthlyData[] | null>(
     null
   );
-  const [view, setView] = React.useState<"monthly" | "daily">("daily");
+  const [view, setView] = React.useState<"monthly" | "daily">("monthly");
+  const [isExpend, setIsExpand] = React.useState(false);
+
 
   const initialMonthFirst = new Date(
     Array.isArray(cur) ? cur[0] : cur || Date.now()
   );
   const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
-
+  //------ functions ------//
+  const handleZoombar = (value: boolean) => {
+    setIsExpand(value);
+  };
   //------ render ------//
   const tableName = [
     <MonthPicker key="monthpicker" initialMonthFirst={initialMonthFirst} />,
@@ -37,7 +42,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
       {monthlyData ? (
         <>
           <span>{monthlyData[0]?.user_Name}</span>
-          <span style={{ color: "red" }}>
+          <span className="red">
             休假天數 {monthlyData[0]?.total_Leave_Days} 天
           </span>
         </>
@@ -49,17 +54,20 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
 
   return (
     <UIProvider>
-      <ViewSTY isOpenDrawer={isOpenDrawer}>
+      <ViewIdSTY isOpenDrawer={isOpenDrawer}>
         <Head>
           <title>駕駛排班 - 個人</title>
         </Head>
-        <Pane className="wrap">
-          <Tabs titles={["全部"]} />
+        <Pane className="wrapMain">
+          <Tabs 
+            titles={["全部"]}
+            setIsOpenDrawer={setIsOpenDrawer}
+            isOpenDrawer={isOpenDrawer} />
           <Pane className="pageContent">
             <TableTitle
               tableName={tableName}
               control={[
-                <ZoomBar key="zoombar" />,
+                <ZoomBar key="zoombar"  setState={handleZoombar} />,
                 <LayoutControl
                   key="layoutControl"
                   view={view}
@@ -94,7 +102,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
           setIsOpenDrawer={setIsOpenDrawer}
           view={view}
         />
-      </ViewSTY>
+      </ViewIdSTY>
     </UIProvider>
   );
 };

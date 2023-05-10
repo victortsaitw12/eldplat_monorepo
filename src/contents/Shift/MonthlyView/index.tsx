@@ -26,6 +26,7 @@ const MonthlyView = ({
   UI.setId(router.query.id);
   const { cur } = router.query;
 
+  const wkDays = ["日", "一", "二", "三", "四", "五", "六"];
   const curMonthFirst: Date = new Date(
     initialMonthFirst.getFullYear(),
     initialMonthFirst.getMonth() + UI.monthCount,
@@ -61,17 +62,6 @@ const MonthlyView = ({
     });
     setIsOpenDrawer(true);
   };
-
-  //------ render header ------//
-  const header = ["日", "一", "二", "三", "四", "五", "六"];
-  const headerCells = header.map((item, i) => (
-    <div
-      key={`header-${i}`}
-      className={`cell cell__header ${i === 0 || i === 6 ? "weekend" : ""}`}
-    >
-      {item}
-    </div>
-  ));
 
   //------ render body ------//
   const dateArr: Array<DateArrItem> = [];
@@ -112,22 +102,34 @@ const MonthlyView = ({
     }
   }
 
-  const dateCells = dateArr.map((date, i) => (
-    <DateCell
-      key={`datecell-${i}`}
-      date={date}
-      setIsOpenDrawer={setIsOpenDrawer}
-      monthlyData={monthlyData}
-      view={view}
-    />
-  ));
+  // const dateCells = ;
 
   return (
     <MonthlySTY rows={dateArr.length / 7}>
-      <div className="container">
-        {headerCells}
-        {dateCells}
+      <div className="headerCells">
+        {wkDays.map((item, i) => (
+          <div
+            key={`header-${i}`}
+            className={`cell headerCell ${i === 0 || i === 6 ? "weekend" : ""}`}
+          >
+            {item}
+          </div>
+        ))}
       </div>
+      <div className="dateCells">
+        {dateArr.map((date, i) => (
+          <DateCell
+            key={`datecell-${i}`}
+            date={date}
+            setIsOpenDrawer={setIsOpenDrawer}
+            monthlyData={monthlyData}
+            view={view}
+            rows={dateArr.length / 7}
+          />
+        ))}
+      </div>
+
+      {/* {dateCells} */}
     </MonthlySTY>
   );
 };

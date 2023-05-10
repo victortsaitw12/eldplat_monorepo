@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { DailyViewSTY } from "./style";
 import { MonthlyData, TimeItem } from "../shift.typing";
 import { WKDAY_LABEL } from "@contents/Shift/shift.data";
+import { getDayEnd } from "../shift.util";
+
 import { UIContext } from "@contexts/UIProvider";
 import { getScheduleList } from "@services/schedule/getScheduleList";
 import EventBars from "@contents/Shift/EventBars";
@@ -56,6 +58,12 @@ const DailyView = ({
   }, [UI.isSelect]);
 
   //------ functions ------//
+  const handleCreateFullDayEvent = (timestamp:number) => {
+    const selectedDT = new Date(timestamp);
+    UI.setStartDate(selectedDT);
+    UI.setEndDate(getDayEnd(selectedDT));
+    renderCreateForm();
+  }
 
   const renderCreateForm = () => {
     UI.setIsSelect(false);
@@ -95,10 +103,10 @@ const DailyView = ({
   return (
     <DailyViewSTY cellWidth={cellWidth}>
       <div className="headerCell__row">
-        <div className="headerCell__row-date">日期</div>
+        <div className="headerCell__row-date date">日期</div>
         <div className="headerCell__row-times">
           {times.map((item, i) => (
-            <div key={`header-${i}`} className="headerCell">
+            <div key={`header-${i}`} className="headerCell time">
               <span className="headerCell-hhmm">{`${item.hh}:${item.mm}`}</span>
               <span className="headerCell-aa">{`${item.aa}`}</span>
             </div>
@@ -109,9 +117,10 @@ const DailyView = ({
         {dateArr.map((date: any, i: number) => (
           <div key={`datecell-${i}`} className="dateCell__row">
             <div
-              className={`dateCell__row-date ${
+              className={`dateCell__row-date date ${
                 date.day.weekend ? "weekend" : ""
               }`}
+              onClick={handleCreateFullDayEvent.bind(null, date.timestamp)}
             >
               <span>{date.date}</span>
               <span>{date.day.label}</span>
@@ -123,12 +132,13 @@ const DailyView = ({
                 setIsOpenDrawer={setIsOpenDrawer}
                 cellWidth={cellWidth}
               />
-              {times.map((item, index) => {
+              {times.map((item, index ) => {
                 if (i === 0 && index === 1) {
                 }
                 return (
                   <TimeCell
                     key={`canvas-${i}-${index}`}
+                    // className="dateCell__row-canvas-cell time"
                     setIsOpenDrawer={setIsOpenDrawer}
                     cellTimestamp={date.timestamp + index * UI.timeFrame}
                     view={view}

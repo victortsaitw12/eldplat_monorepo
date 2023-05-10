@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const CellSTY = styled.div`
+export const TimeCellSTY = styled.div`
+  min-width: 70px;
   position: relative;
   button {
     cursor: pointer;
@@ -29,6 +30,12 @@ export const CellSTY = styled.div`
       svg {
         opacity: 0;
       }
+    }
+    &.selected {
+      opacity: 1;
+      margin-left: 5px;
+      margin-right: 5px;
+      border-radius: 4px;
     }
   }
 `;

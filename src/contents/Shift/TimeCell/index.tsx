@@ -1,5 +1,5 @@
 import React from "react";
-import { CellSTY } from "./style";
+import { TimeCellSTY } from "./style";
 
 import { formatDate, formatDateForAPI } from "../shift.util";
 import { UIContext } from "@contexts/UIProvider";
@@ -29,6 +29,11 @@ const TimeCell = ({
     const timeEnd = new Date(timestamp + UI.timeFrame);
     if (
       UI.startDate >= timeStart &&
+      UI.endDate <= timeEnd
+    )
+      return "selected";
+    if (
+      UI.startDate >= timeStart &&
       UI.startDate < timeEnd &&
       UI.endDate >= timeEnd
     )
@@ -40,36 +45,15 @@ const TimeCell = ({
       UI.endDate <= timeEnd
     )
       return "end";
+
   };
 
-  const renderAllDayEventStatus = async (timestamp: string | number) => {
-    const schd_date = formatDateForAPI(new Date(timestamp));
-    const driver_no = UI.id;
-    // 1) UI render drawer
-    UI.resetState();
-    UI.setIsLoading(true);
-    UI.setDrawerType({
-      type: "view",
-      title: formatDate(new Date(timestamp)),
-      timestamp: timestamp
-    });
-    setIsOpenDrawer(true);
-    try {
-      // 2) fetch API
-      const result = await getScheduleSidebar(schd_date, driver_no);
-      result.data.timestamp = timestamp;
-      // 3) update UI
-      UI.setViewEventList(result.data);
-      UI.setIsLoading(false);
-    } catch (e) {
-      alert(e);
-    }
-  };
+
 
   return (
     <>
-      <CellSTY
-        className="dateCell__row-canvas-cell"
+      <TimeCellSTY
+        className="dateCell__row-canvas-cell time"
         onMouseEnter={() => {
           if (UI.isSelect) handleSelectEndDate(cellTimestamp);
         }}
@@ -80,7 +64,7 @@ const TimeCell = ({
           selectType={checkSelectType.call(null, cellTimestamp)}
           view={view}
         />
-      </CellSTY>
+      </TimeCellSTY>
     </>
   );
 };

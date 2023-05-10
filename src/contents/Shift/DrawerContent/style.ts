@@ -5,6 +5,16 @@ export const FormSTY = styled.form<{ color?: string }>`
   &::-webkit-scrollbar {
     display: none;
   }
+  label {
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: ${({ theme }) => theme.fontWeight.Paragraph200};
+    font-size: ${({ theme }) => theme.fontSize.Paragraph200};
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+  }
+
   .form__startTime {
   }
   .form__endTime {

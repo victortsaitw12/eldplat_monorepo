@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { NextPageWithLayout } from "next";
 import {
   Pane,
   Text,

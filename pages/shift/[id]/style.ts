@@ -1,18 +1,28 @@
 import styled from "styled-components";
 import { ShiftSTY } from "../style";
 
-export const ViewSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
-  .wrap {
+export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
+  .wrapMain {
     width: ${(props) => (props.isOpenDrawer ? "calc(100% - 300px)" : "100%")};
     transition: width 0.2s ease-in-out;
   }
   .pageContent {
     display: flex;
     flex-direction: column;
+    .container-header-left {
+    .red {
+      color:${({theme})=>theme.color.R400}
+    }
   }
-  .drawer__content {
+  }
+  .drawer__container{
+    height: calc(100vh - 60px - 10PX * 2);
+    position: sticky;
+    top:0;
+    .drawer__content {
     overflow: hidden;
     padding: 20px;
+    border-radius: 10px;
     .drawer__btn {
       height: 32px;
       width: 100%;
@@ -65,4 +75,7 @@ export const ViewSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
       }
     }
   }
+  }
+
+
 `;
