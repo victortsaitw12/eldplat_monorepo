@@ -1,6 +1,6 @@
 export const getEmployeeById = async (user_no: string) => {
   const response = await fetch(
-    `https://localhost:7188/Gateway_AccountDriver/QueryUpdateList/api/QueryUpdateList/1?user_no=${user_no}`,
+    `https://localhost:7088/ATR/QueryUpdateList/api/QueryUpdateList/1?user_no=${user_no}`,
     {
       method: "POST",
       body: JSON.stringify({

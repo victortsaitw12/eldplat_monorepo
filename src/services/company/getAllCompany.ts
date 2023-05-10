@@ -2,38 +2,32 @@ import { I_Company_Update_Type } from "@typings/company_type";
 
 // 取得單一公司資料
 export const getSingleCompany = async (company_No: string) => {
-  const res = await fetch(
-    "https://localhost:7188/Gateway_AccountDriver/QueryCompany",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX05vIjoiVVNSMjAyMzA0MTIwMDAxIiwiTmFtZSI6IlNob2hlaSIsIkNvbXBhbnlfTm8iOiJCSDQ5MjAyMzAyMDIwMDAxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi6Kq_5bqm576k57WEIiwiZXhwIjoxNjg1MDY2NjYwLCJpc3MiOiJsb2NhbGhvc3Q6NzA3NiIsImF1ZCI6ImxvY2FsaG9zdDo3MDc2In0.TmrkcZZGF1pTw1VxAZX0ritaIIyi0ZH7wdz4x8vUBmA"
-      },
-      body: JSON.stringify({
-        company_No: company_No
-      })
-    }
-  );
+  const res = await fetch("https://localhost:7088/ATR/QueryCompany", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX05vIjoiVVNSMjAyMzA0MTIwMDAxIiwiTmFtZSI6IlNob2hlaSIsIkNvbXBhbnlfTm8iOiJCSDQ5MjAyMzAyMDIwMDAxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi6Kq_5bqm576k57WEIiwiZXhwIjoxNjg1MDY2NjYwLCJpc3MiOiJsb2NhbGhvc3Q6NzA3NiIsImF1ZCI6ImxvY2FsaG9zdDo3MDc2In0.TmrkcZZGF1pTw1VxAZX0ritaIIyi0ZH7wdz4x8vUBmA"
+    },
+    body: JSON.stringify({
+      company_No: company_No
+    })
+  });
 
   return res.json();
 };
 
 // 更新公司資料
 export const updateCompany = async (companyData: I_Company_Update_Type) => {
-  const res = await fetch(
-    "https://localhost:7188/Gateway_AccountDriver/UpdateCompany",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX05vIjoiVVNSMjAyMzA0MTIwMDAxIiwiTmFtZSI6IlNob2hlaSIsIkNvbXBhbnlfTm8iOiJCSDQ5MjAyMzAyMDIwMDAxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi6Kq_5bqm576k57WEIiwiZXhwIjoxNjg1MDY2NjYwLCJpc3MiOiJsb2NhbGhvc3Q6NzA3NiIsImF1ZCI6ImxvY2FsaG9zdDo3MDc2In0.TmrkcZZGF1pTw1VxAZX0ritaIIyi0ZH7wdz4x8vUBmA"
-      },
-      body: JSON.stringify(companyData)
-    }
-  );
+  const res = await fetch("https://localhost:7088/ATR/UpdateCompany", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX05vIjoiVVNSMjAyMzA0MTIwMDAxIiwiTmFtZSI6IlNob2hlaSIsIkNvbXBhbnlfTm8iOiJCSDQ5MjAyMzAyMDIwMDAxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi6Kq_5bqm576k57WEIiwiZXhwIjoxNjg1MDY2NjYwLCJpc3MiOiJsb2NhbGhvc3Q6NzA3NiIsImF1ZCI6ImxvY2FsaG9zdDo3MDc2In0.TmrkcZZGF1pTw1VxAZX0ritaIIyi0ZH7wdz4x8vUBmA"
+    },
+    body: JSON.stringify(companyData)
+  });
   return res.json();
 };
 

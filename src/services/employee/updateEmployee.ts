@@ -7,7 +7,7 @@ export const updateEmployee = async (user_No: string, userData: any) => {
   filteredNullData["user_No"] = user_No;
   console.log("filteredNullData", filteredNullData);
   const res = await fetch(
-    `https://localhost:7188/Gateway_AccountDriver/UpdateAccount/api/UpdateAccount/1?user_no=${user_No}`,
+    `https://localhost:7088/ATR/UpdateAccount/api/UpdateAccount/1?user_no=${user_No}`,
     {
       method: "POST",
       headers: {
