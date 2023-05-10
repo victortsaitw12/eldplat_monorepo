@@ -33,6 +33,10 @@ export const InfoBoxSTY = styled.div`
       }
       span:last-child{
         flex: 3;
+      }
+      div{
+        flex: 3;
+        margin-bottom: 0;
       }  
     }
   } 

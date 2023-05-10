@@ -1,8 +1,10 @@
 // import TableWithEdit from "@components/Table/TableWithEdit";
 // import { getVendorTitle } from "@services/vendor/getAllVendors";
 // import { FormattedMessage } from "react-intl";
+import React, { useState } from "react";
 import InfoBox from "@components/InfoBox";
-import VendorLayout from "../VendorLayout";
+import FlexWrapper from "@layout/FlexWrapper";
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
 interface I_Props {
   isEdit: boolean;
@@ -13,73 +15,81 @@ interface I_Props {
   deleteItemHandler?: (id: string) => void;
 }
 
-const ClientList = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler }: I_Props) => {
+const VendorDetail = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler }: Props) => {
   console.log("@@@@@@@@@@@vendor data", vendorData);
+  const [fuelValue, setFuelValue] = useState<string[]>(["03"]);
+  const [isEdit, setIsEdit] = useState(false);
+  const methods = useForm({ defaultValues: vendorData });
 
   const basic_info = [
     {
-      title: "供應商號碼",
+      readonly: true,
+      name: "vendor_No",
+      label: "供應商號碼",
       value: vendorData.vendor_No
     },
     {
       req: true,
-      title: "名稱",
+      name: "vendor_Name",
+      label: "名稱",
       value: vendorData.vendor_Name
     },
     {
       req: true,
-      title: "統一編號",
+      name: "updid",
+      label: "統一編號",
       value: vendorData.updid
     },
     {
       req: true,
-      title: "負責人",
+      name: "company_No",
+      label: "負責人",
       value: vendorData.company_No
     }
   ]
 
   const category_info = [
     {
-      title: "外部車隊",
+      label: "外部車隊",
       value: "",
     },
     {
-      title: "設備庫存",
+      label: "設備庫存",
       value: ""
     },
     {
-      title: "維修廠",
+      label: "維修廠",
       value: ""
     },
     {
-      title: "保險",
+      label: "保險",
       value: ""
     },
     {
-      title: "燃料",
+      label: "燃料",
       value: ""
     },
     {
-      title: "其他",
+      label: "其他",
       value: ""
     },
     {
-      title: "etag",
+      label: "etag",
       value: ""
     }
   ]
 
   const label_info = [
     {
-      title: "加油",
+      label: "加油",
       value: "加油"
     },
     {
-      title: "加油",
+      label: "加油",
       value: "加油"
     },
     {
-      title: "加油",
+      label: "加油",
       value: "加油"
     }
   ]
@@ -87,70 +97,106 @@ const ClientList = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPageHa
   const contact_info = [
     {
       req: true,
-      title: "公司地址",
+      name: "vendor_Address",
+      label: "公司地址",
+      subLabel: <span>地址1</span>,
       value: vendorData.vendor_Address
     },
     {
       req: false,
-      title: "",
+      name: "vendor_Address2",
+      label: "",
+      subLabel: <span>地址2</span>,
       value: vendorData.vendor_Address2
     },
     {
       req: false,
-      title: "",
+      name: "vendor_City",
+      label: "",
       value: vendorData.vendor_City
     },
     {
       req: false,
-      title: "",
+      name: "vendor_Contact_Name",
+      label: "",
       value: vendorData.vendor_Contact_Name
     },
     {
       req: true,
-      title: "公司電話",
+      name: "vendor_Contact_Phone",
+      label: "公司電話",
       value: vendorData.vendor_Contact_Phone
     },
     {
       req: false,
-      title: "公司傳真",
+      name: "vendor_Contact_Phone",
+      label: "公司傳真",
       value: vendorData.vendor_Contact_Phone
     },
     {
       req: false,
-      title: "公司信箱",
+      name: "vendor_Contact_Email",
+      label: "公司信箱",
       value: vendorData.vendor_Contact_Email
     },
     {
       req: false,
-      title: "公司網址",
+      name: "vendor_Website",
+      label: "公司網址",
       value: vendorData.vendor_Website
     },
     {
       req: true,
-      title: "主要聯絡人",
+      name: "vendor_Contact_Name",
+      label: "主要聯絡人",
       value: vendorData.vendor_Contact_Name
     },
     {
       req: false,
-      title: "主要聯絡人電話",
+      label: "主要聯絡人電話",
       value: "市話 ---"
     },
     {
       req: false,
-      title: "",
+      label: "",
       value: "手機 +886 900111888"
     },
   ]
 
   return (<>
-    <VendorLayout
-      basicSection={<InfoBox infoData={basic_info} infoTitle="基本資料" />}
-      categorySection={<InfoBox infoData={category_info} infoType="checkbox" infoTitle="分類" />}
-      labelSection={<InfoBox infoData={label_info} infoType="label" infoTitle="標籤" />}
-      contactSection={<InfoBox infoData={contact_info} infoTitle="聯絡方式" />}
-    />
+    <FormProvider {...methods} >
+      <form
+        onSubmit={methods.handleSubmit((data) => {
+          console.log("🕯️🕯️🕯️🕯️🕯️🕯️這是用form-hook的data:", { ...data, vendor_Code: fuelValue });
+        })}
+      >
+        <FlexWrapper>
+          <div>
+            <InfoBox isEdit={isEdit} infoData={basic_info} infoTitle="基本資料" />
+            <FlexWrapper style={{ padding: "10px 0" }} padding="10px 0">
+              <InfoBox isEdit={isEdit} infoData={category_info} infoType="checkbox" infoTitle="分類" />
+              <InfoBox isEdit={isEdit} infoData={label_info} infoType="label" infoTitle="標籤" />
+            </FlexWrapper>
+          </div>
+          <InfoBox isEdit={isEdit} infoData={contact_info} infoTitle="聯絡方式" />
+        </FlexWrapper>
+        <button
+          onClick={() => {
+            setIsEdit(!isEdit)
+          }}
+        >
+          編輯/檢視切換
+        </button>
+        <button
+          className="fill"
+          type="submit"
+        >
+          儲存供應商
+        </button>
+      </form>
+    </FormProvider>
   </>
   );
 }
 
-export default ClientList;
+export default VendorDetail;
