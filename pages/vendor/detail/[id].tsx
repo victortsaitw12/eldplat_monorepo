@@ -7,6 +7,7 @@ import { Pane } from "evergreen-ui";
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 //@services
+import { updateVendor } from "@services/vendor/updateVendor";
 import { getVendorById } from "@services/vendor/getVendorById";
 
 import VendorDetail from "@contents/Vendor/VendorDetail";
@@ -16,9 +17,12 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //
 const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
+  const router = useRouter();
+  const { editPage } = router.query;//是否為編輯頁的判斷1或0
+
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(editPage === '1' || false);
   //TableWrapper
   const changeMainFilterHandler = () => {
     console.log('changeMainFilterHandler');
@@ -30,20 +34,20 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     ],
     []
   );
-  const router = useRouter();
-  // const asyncSubmitForm = async (data: any) => {
-  //   console.log("edited data", data);
-  //   setLoading(true);
-  //   try {
-  //     const res = await updateVendor(vendor_id, data);
-  //     console.log("response of vendor edit: ", res);
-  //     router.push("/vendor");
-  //   } catch (e: any) {
-  //     console.log(e);
-  //     alert(e.message);
-  //   }
-  //   setLoading(false);
-  // };
+
+  const asyncSubmitForm = async (data: any) => {
+    console.log("edited data", data);
+    setLoading(true);
+    try {
+      const res = await updateVendor(vendor_id, data);
+      console.log("response of vendor edit: ", res);
+      router.push("/vendor");
+    } catch (e: any) {
+      console.log(e);
+      alert(e.message);
+    }
+    setLoading(false);
+  };
 
   //
   useEffect(() => {
@@ -59,10 +63,6 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     };
     getCustomerData();
   }, [vendor_id]);
-
-  useEffect(() => {
-    console.log('現在是否是編輯呢？', isEdit);
-  }, [isEdit])
 
   return (
     <BodySTY>
@@ -84,7 +84,11 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
             mainFilter={"all"}
             mainFilterArray={mainFilterArray}
           >
-            {!isEdit && <VendorDetail isEdit={isEdit} vendorData={oldVendorData} />}
+            <VendorDetail
+              submitForm={asyncSubmitForm}
+              isEdit={isEdit}
+              vendorData={oldVendorData}
+            />
           </TableWrapper>
         </Pane>
       }

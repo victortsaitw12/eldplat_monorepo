@@ -29,7 +29,37 @@ const homePageData = [
     url: "/",
     subList: [
       {
-        name: "供應商清單",
+        name: "外部車隊",
+        url: "/vendor",
+        subList: null
+      },
+      {
+        name: "維修廠",
+        url: "/vendor",
+        subList: null
+      },
+      {
+        name: "燃料",
+        url: "/vendor",
+        subList: null
+      },
+      {
+        name: "Etag",
+        url: "/vendor",
+        subList: null
+      },
+      {
+        name: "設備庫存",
+        url: "/vendor",
+        subList: null
+      },
+      {
+        name: "保險",
+        url: "/vendor",
+        subList: null
+      },
+      {
+        name: "其他",
         url: "/vendor",
         subList: null
       }

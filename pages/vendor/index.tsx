@@ -178,7 +178,7 @@ const Page: NextPageWithLayout<{
   }
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push("/vendor/edit/" + id);
+    router.push("/vendor/detail/" + id + '?editPage=1');
   }
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {

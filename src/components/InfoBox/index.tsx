@@ -3,21 +3,16 @@ import {
   Text,
   UnorderedList,
   ListItem,
+  Pane
 } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
-import { useFormContext } from "react-hook-form";
-import { Pane, TextInputField, SelectField, TagInput } from "evergreen-ui";
-import {
-  emailValidation,
-  numberValidation,
-  textValidation
-} from "@utils/inputValidation";
 
 interface I_infoData {
+  editEle?: React.ReactNode;
   readonly?: boolean;//只讀
   req?: boolean;//必填
-  value?: string;//值
+  value?: string | Array<string>;//值
   label?: string;//label文字
   subLabel?: string | React.ReactNode;//上下的label
   inputType?: string;
@@ -32,7 +27,6 @@ export interface I_InfoBoxProps {
 }
 
 function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
-  const { register } = useFormContext(); // retrieve all hook methods
 
   console.log("🎶🎶🎶🎶🎶🎶這些是InfoBox裡面的props", {
     isEdit: isEdit,
@@ -66,36 +60,24 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
     }
   }
 
-  const r_edit = (type: string, name: string, subLabel: any,) => {
-    switch (type) {
-      case "null":
-        return (
-          <></>
-        )
-        break;
-
-      default:
-        return (
-          <TextInputField label={subLabel} {...register(name)} />
-        )
-
-        break;
-    }
-  }
   //文字
   const r_text = () => {
     if (!infoData) {
       return false;
     }
     return infoData.map((child: any, i: number) => {
-      const { subLabel, readonly, req, value, label, name } = child
+      const { req, value, label, editEle } = child
+      console.log("💕💕💕💕💕💕💕infoData的child", child);
+
       return (
         <ListItem key={value + i}>
           <Text>
             {req && label !== "" && <span className="req">*</span>}
             {label}
           </Text>
-          {isEdit && name && !readonly ? <TextInputField label={<span>{subLabel}</span>} {...register(name)} /> : <Text>{value}</Text>}
+          <Pane>
+            {isEdit && editEle ? editEle : <Text>{value}</Text>}
+          </Pane>
         </ListItem>
       )
     })
@@ -115,7 +97,7 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
     })
   }
 
-  //傻逼一般的checkbox-編輯模式待處理
+  //checkbox-編輯模式待處理
   const r_checkbox = () => {
     if (!infoData) {
       return false
@@ -131,7 +113,7 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
 
   return (
     <InfoBoxSTY>
-      <Text className="label">{infoTitle}</Text>
+      <Text className="info-title">{infoTitle}</Text>
       {r_switch_info(infoType)}
     </InfoBoxSTY>
   );

@@ -4,8 +4,11 @@ import { ItemSTY, FormSTY } from "./style";
 //@sevices
 import { createVendor } from "@services/vendor/createVendor";
 import FiledInput from "./FieldInput";
+import { HelpIcon, PlusIcon, ErrorIcon, Text } from "evergreen-ui";
+import { IconLeft } from "@components/Button/Primary";
 
 export interface CreateVendorPayload {
+    updid: string;
     vendor_Name: string;
     vendor_Label: string;
     vendor_Phone: string;
@@ -66,7 +69,7 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
     return (
         <FormSTY onSubmit={handleSubmit((data) => {
             console.log('create Vendor Data!:', data);
-            asyncSubmitForm({ ...data });
+            // asyncSubmitForm({ ...data });
         })}>
             <FiledInput
                 controlProps={{
@@ -74,9 +77,139 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
                     control,
                     rules: { required: "此欄位必填" }
                 }}
-                label="測試input"
-                hint="這是hint"
+                label="名稱"
             />
+            <FiledInput
+                controlProps={{
+                    name: "updid",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="統一編號"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Contact_Name",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="負責人"
+            />
+            <Text>
+                <span style={{ color: '#D14343' }}>* </span>
+                公司地址
+            </Text>
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Address",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="地址1"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Address2",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="地址2"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_City",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="城市"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_State",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="州/省/區域"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Zip",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="郵遞區號"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Country",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="國家"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Country",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="國家"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Country",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="國家"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Country",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="國家"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Country",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="國家"
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Country",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label="國家"
+            />
+            <Text>
+                <span style={{ color: '#D14343' }}>* </span>
+                公司電話
+            </Text>
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Country",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label=""
+            />
+            <FiledInput
+                controlProps={{
+                    name: "vendor_Country",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+                label=""
+            />
+            <IconLeft text={"新增供應商"} type="submit">
+                <PlusIcon size={14} />
+            </IconLeft>
         </FormSTY>
     )
 }

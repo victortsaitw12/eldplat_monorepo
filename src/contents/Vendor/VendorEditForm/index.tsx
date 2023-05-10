@@ -36,7 +36,7 @@ const defaultValues = {
   vendor_Contact_Email: "",
   vendor_Code: ["01"],
 };
-
+//🕯️🕯️🕯️此component未來會刪除
 function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
   const defaultFormValue = oldData ? oldData : defaultValues;
   const {
