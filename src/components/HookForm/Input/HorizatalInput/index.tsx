@@ -1,6 +1,6 @@
 import React, { forwardRef, memo } from "react";
 import type { InputHTMLAttributes } from "react";
-import { StyledLabel } from "./style";
+import { StyledInput, HorizatalLabelSTY } from "../style";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   description?: string;
@@ -13,15 +13,15 @@ const TextInput = memo(
     ref
   ) {
     return (
-      <StyledLabel>
+      <HorizatalLabelSTY>
         <span className="title">{label}</span>
         {/* {description && <span className="description">{description}</span>} */}
         <div>
-          <input className="input" ref={ref} {...rest}></input>
+          <StyledInput ref={ref} {...rest}></StyledInput>
           {errorMessage && <div className="error">{errorMessage}</div>}
         </div>
         {hint && <span className="hint">{hint}</span>}
-      </StyledLabel>
+      </HorizatalLabelSTY>
     );
   })
 );

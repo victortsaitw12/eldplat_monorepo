@@ -1,35 +1,46 @@
 import React, { forwardRef, memo } from "react";
+import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import Select from "react-select";
 import type { InputHTMLAttributes } from "react";
-import { StyledLabel } from "./style";
-interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
+
+// interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
+//   value: string;
+//   options: string[];
+//   description?: string;
+//   errorMessage?: string;
+//   hint?: string;
+//   onFormChange: (value: string) => void;
+// }
+
+function ControlledSelect<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+  name,
+  control,
+  options,
+  label,
+  description,
+  errorMessage,
+  hint
+}: {
+  name: TName;
+  control?: Control<TFieldValues>;
+  options: any;
   label: string;
-  options: string[];
   description?: string;
   errorMessage?: string;
   hint?: string;
+}) {
+  return (
+    <Controller
+      control={control}
+      name={name}
+      render={({ field: { onChange, value } }) => (
+        <Select options={options} onChange={onChange} />
+      )}
+    />
+  );
 }
 
-const Select = memo(
-  forwardRef<HTMLSelectElement, SelectProps>(function TextInput(
-    { label, options, description, errorMessage, hint, ...rest },
-    ref
-  ) {
-    return (
-      <StyledLabel>
-        <span className="title">{label}</span>
-        {description && <span className="description">{description}</span>}
-        <select className="select" ref={ref} {...rest}>
-          {options.map((value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-        {errorMessage && <span className="error">{errorMessage}</span>}
-        {hint && <span className="hint">{hint}</span>}
-      </StyledLabel>
-    );
-  })
-);
-
-export default Select;
+export default ControlledSelect;
