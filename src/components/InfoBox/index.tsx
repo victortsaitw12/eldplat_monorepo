@@ -15,9 +15,12 @@ import {
 } from "@utils/inputValidation";
 
 interface I_infoData {
-  req?: boolean;
-  value?: string;
-  label?: string;
+  readonly?: boolean;//只讀
+  req?: boolean;//必填
+  value?: string;//值
+  label?: string;//label文字
+  subLabel?: string | React.ReactNode;//上下的label
+  inputType?: string;
 }
 
 export interface I_InfoBoxProps {
@@ -62,21 +65,37 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
         )
     }
   }
+
+  const r_edit = (type: string, name: string, subLabel: any,) => {
+    switch (type) {
+      case "null":
+        return (
+          <></>
+        )
+        break;
+
+      default:
+        return (
+          <TextInputField label={subLabel} {...register(name)} />
+        )
+
+        break;
+    }
+  }
   //文字
   const r_text = () => {
     if (!infoData) {
       return false;
     }
     return infoData.map((child: any, i: number) => {
-      const { req, value, label, name } = child
+      const { subLabel, readonly, req, value, label, name } = child
       return (
         <ListItem key={value + i}>
           <Text>
             {req && label !== "" && <span className="req">*</span>}
             {label}
           </Text>
-          {isEdit && name ? <TextInputField {...register(name)} /> : <Text>{value}</Text>}
-
+          {isEdit && name && !readonly ? <TextInputField label={<span>{subLabel}</span>} {...register(name)} /> : <Text>{value}</Text>}
         </ListItem>
       )
     })

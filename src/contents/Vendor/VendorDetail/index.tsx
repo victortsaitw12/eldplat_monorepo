@@ -3,7 +3,7 @@
 // import { FormattedMessage } from "react-intl";
 import React, { useState } from "react";
 import InfoBox from "@components/InfoBox";
-import VendorLayout from "../VendorLayout";
+import FlexWrapper from "@layout/FlexWrapper";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 interface Props {
   vendorData: any;
@@ -21,6 +21,7 @@ const VendorDetail = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPage
 
   const basic_info = [
     {
+      readonly: true,
       name: "vendor_No",
       label: "供應商號碼",
       value: vendorData.vendor_No
@@ -96,12 +97,14 @@ const VendorDetail = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPage
       req: true,
       name: "vendor_Address",
       label: "公司地址",
+      subLabel: <span>地址1</span>,
       value: vendorData.vendor_Address
     },
     {
       req: false,
       name: "vendor_Address2",
       label: "",
+      subLabel: <span>地址2</span>,
       value: vendorData.vendor_Address2
     },
     {
@@ -165,12 +168,16 @@ const VendorDetail = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPage
           console.log("🕯️🕯️🕯️🕯️🕯️🕯️這是用form-hook的data:", { ...data, vendor_Code: fuelValue });
         })}
       >
-        <VendorLayout
-          basicSection={<InfoBox isEdit={isEdit} infoData={basic_info} infoTitle="基本資料" />}
-          categorySection={<InfoBox isEdit={isEdit} infoData={category_info} infoType="checkbox" infoTitle="分類" />}
-          labelSection={<InfoBox isEdit={isEdit} infoData={label_info} infoType="label" infoTitle="標籤" />}
-          contactSection={<InfoBox isEdit={isEdit} infoData={contact_info} infoTitle="聯絡方式" />}
-        />
+        <FlexWrapper>
+          <div>
+            <InfoBox isEdit={isEdit} infoData={basic_info} infoTitle="基本資料" />
+            <FlexWrapper padding="10px 0">
+              <InfoBox isEdit={isEdit} infoData={category_info} infoType="checkbox" infoTitle="分類" />
+              <InfoBox isEdit={isEdit} infoData={label_info} infoType="label" infoTitle="標籤" />
+            </FlexWrapper>
+          </div>
+          <InfoBox isEdit={isEdit} infoData={contact_info} infoTitle="聯絡方式" />
+        </FlexWrapper>
         <button
           onClick={() => {
             setIsEdit(!isEdit)
