@@ -7,6 +7,7 @@ import { MonthlyData, DateArrItem } from "../shift.typing";
 import { UIContext } from "@contexts/UIProvider";
 import { getScheduleList } from "@services/schedule/getScheduleList";
 import DateCell from "@contents/Shift/DateCell";
+import DateCellCanvas from "@contents/Shift/DateCellCanvas";
 
 const MonthlyView = ({
   initialMonthFirst,
@@ -116,10 +117,24 @@ const MonthlyView = ({
           </div>
         ))}
       </div>
+      <div
+        className="dateCells dateCells--selected"
+        style={{ position: "absolute", top: "33px", pointerEvents: "none" }}
+      >
+        {dateArr.map((date, i) => (
+          <DateCellCanvas
+            key={`datecell-${i}`}
+            i={i}
+            date={date}
+            rows={dateArr.length / 7}
+          />
+        ))}
+      </div>
       <div className="dateCells">
         {dateArr.map((date, i) => (
           <DateCell
             key={`datecell-${i}`}
+            i={i}
             date={date}
             setIsOpenDrawer={setIsOpenDrawer}
             monthlyData={monthlyData}
@@ -128,8 +143,6 @@ const MonthlyView = ({
           />
         ))}
       </div>
-
-      {/* {dateCells} */}
     </MonthlySTY>
   );
 };

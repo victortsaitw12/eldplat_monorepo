@@ -14,7 +14,7 @@ const EventBars = ({
   setIsOpenDrawer,
   cellWidth
 }: {
-  cellTimestamp: string;
+  cellTimestamp: number;
   monthlyData: MonthlyData[] | null;
   setIsOpenDrawer: (value: boolean) => void;
   cellWidth: number;
@@ -86,27 +86,29 @@ const EventBars = ({
     }
   };
 
-  const getEventDuration = (item: MonthlyData): number =>
-    Math.ceil(
+  const getEventDuration = (item: MonthlyData): number => {
+    if (
+      new Date(item.schd_End_Time).valueOf() - cellTimestamp >=
+      1000 * 60 * 60 * 24 - 1000 * 60
+    )
+      return (1000 * 60 * 60 * 24) / timeFrame;
+    // TODO 目前假設要滿格顯示，再問UI半格顯示畫面
+    return Math.ceil(
       (new Date(item.schd_End_Time).valueOf() -
         new Date(item.schd_Start_Time).valueOf()) /
         timeFrame
     );
+  };
 
-  const getEventStart = (item: MonthlyData): number =>
-    Math.ceil(
+  const getEventStart = (item: MonthlyData): number => {
+    if (new Date(item.schd_Start_Time).valueOf() - cellTimestamp < 0) return 0;
+    return Math.ceil(
       (new Date(item.schd_Start_Time).valueOf() -
         getDayStart(new Date(cellTimestamp)).valueOf()) /
         timeFrame
     );
+  };
   const eventBtns = items?.map((item, i) => {
-    // <div className={`test ${getEventDuration(item)}`}>test</div>
-    // if (
-    //   new Date(item.schd_Start_Time).valueOf() >= 1683302400000 &&
-    //   new Date(item.schd_End_Time).valueOf() <= 1683388740000
-    // )
-    //   console.log("start:", item.schd_Start_Time);
-
     return (
       <EventBarSTY
         key={`event-${cellTimestamp}-${i}`}

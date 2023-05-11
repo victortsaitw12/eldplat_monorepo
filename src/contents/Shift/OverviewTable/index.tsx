@@ -29,8 +29,6 @@ const OverviewTable = ({
     )
       .toString()
       .padStart(2, "0")}`;
-    console.log("queryString:",queryString );
-
     const fetchData = async () => {
       const result = await getAllDriverScheduleList(queryString);
       setAllData(result.data);
@@ -55,7 +53,6 @@ const OverviewTable = ({
   };
 
   const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
-    console.log(new Date(date.timestamp.valueOf()));
     const shiftsOnGivenDate = scheduleInfo.filter(
       (item: ScheduleInfoData) =>
         getDayStart(new Date(item.schd_Start_Time)) <=

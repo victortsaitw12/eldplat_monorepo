@@ -6,7 +6,6 @@ export const EventListSTY = styled.div<{ maxEventCount?: number }>`
   `}
   min-height: min-content;
   max-height: calc(100% - var(--minBtnHeight) * 2);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -19,6 +18,7 @@ export const EventBtnSTY = styled.div<{
   color?: string;
 }>`
   min-height: var(--minBtnHeight);
+  min-width: 100%;
 
   .reminder {
     animation: 200ms ease-out 200ms infinite alternate reminder;
@@ -56,7 +56,6 @@ export const EventBtnSTY = styled.div<{
     border: none;
     border-radius: 4px;
     color: ${({ theme }) => theme.color.N0};
-    z-index: 1;
     padding: 4px 8px;
     white-space: nowrap;
     overflow: hidden;

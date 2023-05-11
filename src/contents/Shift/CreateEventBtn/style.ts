@@ -12,6 +12,7 @@ export const CreateEventBtnSTY = styled.button<{
   border-radius: 4px;
   flex-grow: 10;
   z-index: 1;
+  cursor: pointer;
   &:hover {
     opacity: 1;
   }

@@ -18,17 +18,15 @@ const DateCell = ({
   setIsOpenDrawer,
   monthlyData,
   date,
-  view,
-  rows
+  view
 }: {
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   date: DateArrItem;
   view: "monthly" | "daily";
-  rows: number;
 }) => {
   const UI = React.useContext(UIContext);
-  const [placeholderNum, setPlaceholderNum] = React.useState<number>(0);
+  const [placeholders, setPlaceholders] = React.useState<MonthlyData[]>([]);
   const [items, setItems] = React.useState<MonthlyData[]>([]);
   const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
   // const [hiddenCount, setHiddenCount] = React.useState(0);
@@ -98,9 +96,7 @@ const DateCell = ({
         ref={dateCellRef}
         className={`monthly-date cell dateCell ${
           date.disabled ? "disabled" : ""
-        } ${
-          checkDateInsideSelection.call(null, date.timestamp) ? "highlight" : ""
-        }  
+        }   
             ${checkDateStart.call(null, date.timestamp) ? "start" : ""}`}
         onMouseEnter={() => {
           if (UI.isSelect) handleSelectEndDate(date.timestamp);
@@ -111,9 +107,8 @@ const DateCell = ({
             cellTimestamp={date.timestamp}
             monthlyData={monthlyData}
             setIsOpenDrawer={setIsOpenDrawer}
-            rows={rows}
-            placeholderNum={placeholderNum}
-            setPlaceholderNum={setPlaceholderNum}
+            placeholders={placeholders}
+            setPlaceholders={setPlaceholders}
             items={items}
             setItems={setItems}
             maxEventCount={maxEventCount}
@@ -125,9 +120,9 @@ const DateCell = ({
         <CreateEventBtn cellTimestamp={date.timestamp} view={view} />
         <div className="cell__date">
           <span className="cell__date-info">
-            {placeholderNum + items.length - maxEventCount > 0 ? (
+            {placeholders.length + items.length - maxEventCount > 0 ? (
               <button className="cell__unfold-btn">
-                還有 {placeholderNum + items.length - maxEventCount} 個
+                還有 {placeholders.length + items.length - maxEventCount} 個
               </button>
             ) : (
               ""

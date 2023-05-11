@@ -43,17 +43,15 @@ export const MonthlySTY = styled.div<{ rows: number }>`
       calc(100% / ${(props) => props.rows})
     );
   }
+  .dateCells--selected {
+  }
 
   .cell {
-    border-left: 1px solid ${({ theme }) => theme.color.N300};
     padding: 8px;
     z-index: 10;
     pointer-events: none;
     * {
       pointer-events: auto;
-    }
-    &:nth-child(7n + 1) {
-      border-left: none;
     }
   }
 
