@@ -5,7 +5,8 @@ import {
   getDayStart,
   getDayEnd,
   formatDate,
-  formatDateForAPI
+  formatDateForAPI,
+  debounce
 } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 import { UIContext } from "@contexts/UIProvider";
@@ -27,7 +28,28 @@ const DateCell = ({
   rows: number;
 }) => {
   const UI = React.useContext(UIContext);
-  const [hiddenCount, setHiddenCount] = React.useState(0);
+  const [placeholderNum, setPlaceholderNum] = React.useState<number>(0);
+  const [items, setItems] = React.useState<MonthlyData[]>([]);
+  const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
+  // const [hiddenCount, setHiddenCount] = React.useState(0);
+  const dateCellRef = React.useRef(null);
+
+  const handleEventCount = React.useCallback(() => {
+    const updateMaxEventCount =
+      Math.floor((dateCellRef.current?.offsetHeight - 8 * 2) / (20 + 4)) - 2;
+    setMaxEventCount(updateMaxEventCount);
+  }, []);
+
+  React.useEffect(() => {
+    handleEventCount();
+  }, [handleEventCount]);
+
+  React.useEffect(() => {
+    window.addEventListener("resize", debounce(handleEventCount, 250));
+    return () => {
+      window.removeEventListener("resize", debounce(handleEventCount, 250));
+    };
+  }, [handleEventCount]);
 
   //------ functions ------//
 
@@ -73,13 +95,14 @@ const DateCell = ({
   return (
     <>
       <CellSTY
+        ref={dateCellRef}
         className={`monthly-date cell dateCell ${
           date.disabled ? "disabled" : ""
         } ${
           checkDateInsideSelection.call(null, date.timestamp) ? "highlight" : ""
         }  
             ${checkDateStart.call(null, date.timestamp) ? "start" : ""}`}
-        onMouseEnter={(e) => {
+        onMouseEnter={() => {
           if (UI.isSelect) handleSelectEndDate(date.timestamp);
         }}
       >
@@ -88,8 +111,12 @@ const DateCell = ({
             cellTimestamp={date.timestamp}
             monthlyData={monthlyData}
             setIsOpenDrawer={setIsOpenDrawer}
-            setHiddenCount={setHiddenCount}
             rows={rows}
+            placeholderNum={placeholderNum}
+            setPlaceholderNum={setPlaceholderNum}
+            items={items}
+            setItems={setItems}
+            maxEventCount={maxEventCount}
           />
         ) : (
           ""
@@ -98,9 +125,9 @@ const DateCell = ({
         <CreateEventBtn cellTimestamp={date.timestamp} view={view} />
         <div className="cell__date">
           <span className="cell__date-info">
-            {hiddenCount > 0 ? (
+            {placeholderNum + items.length - maxEventCount > 0 ? (
               <button className="cell__unfold-btn">
-                還有 {hiddenCount} 個
+                還有 {placeholderNum + items.length - maxEventCount} 個
               </button>
             ) : (
               ""

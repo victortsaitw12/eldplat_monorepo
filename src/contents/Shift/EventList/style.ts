@@ -5,9 +5,6 @@ export const EventListSTY = styled.div<{ maxEventCount?: number }>`
     --minBtnHeight: ${"calc(" + theme.fontSize.Heading200 + " + 4px * 2)"}};
   `}
   min-height: min-content;
-  height: calc(
-    (var(--minBtnHeight) + "4px") * ${({ maxEventCount }) => maxEventCount}
-  );
   max-height: calc(100% - var(--minBtnHeight) * 2);
   overflow: hidden;
   display: flex;

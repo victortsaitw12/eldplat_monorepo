@@ -144,3 +144,40 @@ export const formatLocal = (date: Date) => {
   });
   return localTime;
 };
+
+/* -------------------
+ 5. debounce/ throttle/ observer
+------------------- */
+export const debounce = (fn: (args?: any) => void, delay: number) => {
+  let timer: any = null;
+
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+};
+
+export const throttle = (fn: (args?: any) => void, delay: number) => {
+  let timer;
+  let lastExecTime = 0;
+
+  return function (...args) {
+    const currentTime = Date.now();
+
+    const execute = () => {
+      fn.apply(this, args);
+      lastExecTime = currentTime;
+    };
+
+    if (currentTime - lastExecTime >= delay) {
+      execute();
+    } else {
+      clearTimeout(timer);
+      timer = setTimeout(execute, delay);
+    }
+  };
+};
+
+export default throttle;

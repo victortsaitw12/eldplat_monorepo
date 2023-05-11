@@ -1,7 +1,7 @@
 import React from "react";
 import { TagIcon } from "evergreen-ui";
-
 import { EventListSTY, EventBtnSTY } from "./style";
+
 import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS } from "../shift.data";
 import { formatDate } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
@@ -12,22 +12,23 @@ const EventList = ({
   cellTimestamp,
   monthlyData,
   setIsOpenDrawer,
-  setHiddenCount,
-  rows
+  placeholderNum,
+  setPlaceholderNum,
+  items,
+  setItems,
+  maxEventCount
 }: {
   cellTimestamp: number;
   monthlyData: MonthlyData[] | null;
   setIsOpenDrawer: (value: boolean) => void;
-  setHiddenCount: (value: number) => void;
-  rows: number;
+  placeholderNum: number;
+  setPlaceholderNum: (value: number) => void;
+  items: MonthlyData[];
+  setItems: (value: MonthlyData[]) => void;
+  maxEventCount: number;
 }) => {
-  const [placeholderNum, setPlaceholderNum] = React.useState<number>(0);
-  const [items, setItems] = React.useState<MonthlyData[] | null>([]);
   const UI = React.useContext(UIContext);
-  const maxEventCount = 2;
-  // Math.floor((cell height) / event min-height - 2)
-  // ((100%-32px)/rows) / (${({ theme }) => "calc(" + theme.fontSize.Heading200 + " + 4px * 2)"})
-  //
+
   React.useEffect(() => {
     const cellDateStart = new Date(cellTimestamp);
     const cellDateEnd = new Date(cellTimestamp + 1000 * 60 * 60 * 24);
@@ -37,7 +38,6 @@ const EventList = ({
         const eventStart = new Date(shift.schd_Start_Time);
         const eventEnd = new Date(shift.schd_End_Time);
         return cellDateStart > eventStart && cellDateStart <= eventEnd;
-        // return cellDate > eventStart && cellDate <= eventEnd;
       }) || [];
     const eventsStartsFromDate =
       monthlyData?.filter((shift: any) => {
@@ -59,9 +59,6 @@ const EventList = ({
     setPlaceholderNum(eventsthroughDate.length);
     setItems(eventsStartsFromDate.concat(eventsInsideDate));
   }, [monthlyData, UI.monthCount, UI.flag]);
-  React.useEffect(() => {
-    setHiddenCount(placeholderNum + items.length - maxEventCount);
-  }, [placeholderNum, items, setHiddenCount, maxEventCount]);
 
   //------ functions ------//
   const renderEventStatus = async (drv_Schedule_No: string) => {
@@ -121,7 +118,7 @@ const EventList = ({
       key={`event-${cellTimestamp}-${i}`}
       color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
       duration={getEventDuration(item)}
-      className={`${placeholderNum + i > maxEventCount ? "hide" : ""}`}
+      className={`${placeholderNum + i + 1 > maxEventCount ? "hide" : ""}`}
     >
       <button
         value={item.drv_Schedule_No}
