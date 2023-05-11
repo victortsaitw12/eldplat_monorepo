@@ -36,7 +36,6 @@ function LeaveSet() {
   // 加一欄假別
   const handleInputAdd = () => {
     const idx = leaveArr.length;
-    console.log("idx", idx);
     setLeaveArr((prev) => [
       ...prev,
       {
@@ -79,8 +78,6 @@ function LeaveSet() {
     const newData = { ...C_data };
     newData.companyData.company_Leave = leaveArr;
   };
-  console.log("C_data", C_data);
-  console.log("leaveData", leaveData);
 
   return (
     <BodySTY>
@@ -90,7 +87,6 @@ function LeaveSet() {
           <Text marginTop="16px">排休種類 </Text>
           <Pane>
             {leaveArr.map((item, index) => {
-              console.log("item", item);
               return (
                 <Pane key={index}>
                   <TextInput

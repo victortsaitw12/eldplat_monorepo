@@ -30,7 +30,6 @@ function EmployeeInfo({
 
   // 一進來先抓資料庫原本就有的證照資料
   useEffect(() => {
-    console.log("editData::::", editData);
     editData &&
       setCertificationArr(
         editData?.license_name.map((v: string, i: number) => {
@@ -82,9 +81,6 @@ function EmployeeInfo({
     newData.license_name = licenseArr;
     setInsertData(newData);
   };
-
-  console.log("🈹certificationArr", certificationArr);
-  console.log("☯insertData", insertData);
 
   return (
     <BodySTY>

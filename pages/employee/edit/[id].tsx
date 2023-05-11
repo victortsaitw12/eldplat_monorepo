@@ -27,7 +27,6 @@ const Page: NextPageWithLayout<
   const cancelFormHandler = useCallback(() => {
     router.push("/employee");
   }, [router]);
-  console.log("userId", userId);
 
   useEffect(() => {
     setLoading(true);
@@ -73,8 +72,7 @@ const Page: NextPageWithLayout<
             listen: item.listen,
             read: item.read,
             speak: item.speak,
-            write: item.write,
-            saved: true
+            write: item.write
           };
         }),
         healths: newData.healths.map((item: any) => {
@@ -92,12 +90,10 @@ const Page: NextPageWithLayout<
       };
       setEditData(result);
       setLoading(false);
-      console.log("result", result);
     });
   }, [userId]);
 
   const asyncSubmitForm = async (data: any) => {
-    console.log("💦data", data);
     // setLoading(true);
     try {
       const res = await updateEmployee(userId, data);

@@ -105,9 +105,6 @@ function Contact() {
     setCompanyData(copyData);
   };
 
-  console.log("🔆contactArr", contactArr);
-  console.log("🔟companyData", companyData);
-
   return (
     <BodySTY>
       <Heading is="h4">公司聯絡資訊</Heading>

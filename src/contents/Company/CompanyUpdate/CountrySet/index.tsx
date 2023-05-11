@@ -77,7 +77,6 @@ function CountrySet() {
 
     C_data.setCompanyData(apiData);
   }, [langData, currencyData]);
-  console.log("C_data in LALALALA", C_data);
   return (
     <BodySTY>
       <Heading is="h4">國別 / 語系 / 幣別設定</Heading>

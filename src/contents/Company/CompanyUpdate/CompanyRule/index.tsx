@@ -81,8 +81,6 @@ function CompanyRule() {
     newData.companyData.company_Working_Hours = ruleArr;
   };
 
-  console.log("C_data RULE", C_data);
-
   return (
     <BodySTY>
       <Heading is="h4">公司制度</Heading>

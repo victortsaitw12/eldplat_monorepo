@@ -20,20 +20,14 @@ import HealthSecond from "./HealthSecond";
 import LanguageAbility from "./LanguageAbility";
 import { BodySTY } from "./style";
 import LoadingSpinner from "@components/LoadingSpinner";
-// import { useForm } from "react-hook-form";
 
 interface I_AddEmployee_Props {
-  // setAddEmployeeActive: (t: any) => void;
   submitForm: (data: any) => void;
   onCancel: () => void;
   editData?: any | I_Add_Employees_Type;
 }
 
-function AddEmployee({
-  // setAddEmployeeActive,
-  submitForm,
-  editData
-}: I_AddEmployee_Props) {
+function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
   const [countryNum, setCountryNum] = useState<string>("(+886)");
   const [insertData, setInsertData] = useState<I_Add_Employees_Type>(
     {
@@ -107,8 +101,6 @@ function AddEmployee({
   // 打API還沒取到資料前先展示spinner
   if (!insertData) return <LoadingSpinner />;
 
-  console.log("🈸insertData", insertData);
-
   return (
     <BodySTY>
       <Pane display="flex" justifyContent="space-between" className="title-bar">
@@ -152,7 +144,7 @@ function AddEmployee({
             insertData={insertData}
             setInsertData={setInsertData}
           />
-          <HealthSecond />
+          {/* <HealthSecond /> */}
         </Pane>
         <Pane className="right-blocks">
           <Contact
@@ -169,6 +161,7 @@ function AddEmployee({
           <LanguageAbility
             insertData={insertData}
             setInsertData={setInsertData}
+            editData={editData}
           />
         </Pane>
       </Pane>

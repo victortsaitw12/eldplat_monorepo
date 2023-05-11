@@ -21,14 +21,11 @@ const TagSelect: React.FC<Props> = ({
   handleCustomData,
   editData
 }) => {
-  console.log("🧡editData", editData);
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 
   useEffect(() => {
     editData && setSelectedOptions(editData);
   }, [editData]);
-
-  console.log("💛selectedOptions", selectedOptions);
 
   const handleChangeSelect = async (e: any) => {
     // console.log("e", e); // e.target.value => "TW"
@@ -43,8 +40,6 @@ const TagSelect: React.FC<Props> = ({
       if (repeatVal) {
         return;
       } else {
-        console.log("old selcet", [...selectedOptions]);
-        console.log("update select", [...selectedOptions, optArr[0]]);
         setSelectedOptions((prev) => [...prev, optArr[0]]);
         handleCustomData((prev: any) => [...selectedOptions, optArr[0]]);
       }

@@ -52,6 +52,7 @@ function NewLanguage({
     setLanguageLabel(newLabelData); // 文字版
   };
 
+  // 按下打勾時
   const handleAdd = () => {
     handleSave(languageLabel);
     setLangForApi((prev: any) => [...prev, languageValue]); // 存代碼形式進陣列物件
