@@ -15,13 +15,15 @@ const DailyView = ({
   setIsOpenDrawer,
   monthlyData,
   setMonthlyData,
-  view
+  view,
+  isExpend
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
+  isExpend: boolean;
 }) => {
   const UI = React.useContext(UIContext);
   const router = useRouter();
@@ -57,13 +59,18 @@ const DailyView = ({
     };
   }, [UI.isSelect]);
 
+  React.useEffect(() => {
+    isExpend
+      ? UI.setTimeFrame(1000 * 60 * 60 * 1) //1hour
+      : UI.setTimeFrame(1000 * 60 * 60 * 2); //2hour
+  }, [isExpend]);
   //------ functions ------//
-  const handleCreateFullDayEvent = (timestamp:number) => {
+  const handleCreateFullDayEvent = (timestamp: number) => {
     const selectedDT = new Date(timestamp);
     UI.setStartDate(selectedDT);
     UI.setEndDate(getDayEnd(selectedDT));
     renderCreateForm();
-  }
+  };
 
   const renderCreateForm = () => {
     UI.setIsSelect(false);
@@ -77,7 +84,7 @@ const DailyView = ({
   //------ render body ------//
 
   const times: Array<TimeItem> = [];
-  for (let h = 0; h < 24; h += 2) {
+  for (let h = 0; h < 24; h += UI.timeFrame / (1000 * 60 * 60 * 1)) {
     const hour = h === 0 ? 12 : h > 12 ? h - 12 : h;
     const timeslot = h < 12 ? "AM" : "PM";
     const time = {
@@ -132,7 +139,7 @@ const DailyView = ({
                 setIsOpenDrawer={setIsOpenDrawer}
                 cellWidth={cellWidth}
               />
-              {times.map((item, index ) => {
+              {times.map((item, index) => {
                 if (i === 0 && index === 1) {
                 }
                 return (
@@ -142,6 +149,7 @@ const DailyView = ({
                     setIsOpenDrawer={setIsOpenDrawer}
                     cellTimestamp={date.timestamp + index * UI.timeFrame}
                     view={view}
+                    isExpend={isExpend}
                   />
                 );
               })}

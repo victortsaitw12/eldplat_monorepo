@@ -9,7 +9,8 @@ import CreateEventBtn from "@contents/Shift/CreateEventBtn";
 const TimeCell = ({
   setIsOpenDrawer,
   cellTimestamp,
-  view
+  view,
+  isExpend
 }: {
   setIsOpenDrawer: (value: boolean) => void;
   cellTimestamp: number;
@@ -27,11 +28,7 @@ const TimeCell = ({
     if (!UI.startDate || !UI.endDate) return;
     const timeStart = new Date(timestamp);
     const timeEnd = new Date(timestamp + UI.timeFrame);
-    if (
-      UI.startDate >= timeStart &&
-      UI.endDate <= timeEnd
-    )
-      return "selected";
+    if (UI.startDate >= timeStart && UI.endDate <= timeEnd) return "selected";
     if (
       UI.startDate >= timeStart &&
       UI.startDate < timeEnd &&
@@ -45,10 +42,7 @@ const TimeCell = ({
       UI.endDate <= timeEnd
     )
       return "end";
-
   };
-
-
 
   return (
     <>

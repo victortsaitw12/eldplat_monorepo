@@ -21,7 +21,7 @@ const EventBars = ({
 }) => {
   const [items, setItems] = React.useState<MonthlyData[]>([]);
   const UI = React.useContext(UIContext);
-  const timeFrame = 1000 * 60 * 60 * 2; //2hour
+  // const UI.timeFrame = 1000 * 60 * 60 * 2; //2hour
 
   React.useEffect(() => {
     const cellDateStart = new Date(cellTimestamp);
@@ -91,12 +91,12 @@ const EventBars = ({
       new Date(item.schd_End_Time).valueOf() - cellTimestamp >=
       1000 * 60 * 60 * 24 - 1000 * 60
     )
-      return (1000 * 60 * 60 * 24) / timeFrame;
+      return (1000 * 60 * 60 * 24) / UI.timeFrame;
     // TODO 目前假設要滿格顯示，再問UI半格顯示畫面
     return Math.ceil(
       (new Date(item.schd_End_Time).valueOf() -
         new Date(item.schd_Start_Time).valueOf()) /
-        timeFrame
+        UI.timeFrame
     );
   };
 
@@ -105,7 +105,7 @@ const EventBars = ({
     return Math.ceil(
       (new Date(item.schd_Start_Time).valueOf() -
         getDayStart(new Date(cellTimestamp)).valueOf()) /
-        timeFrame
+        UI.timeFrame
     );
   };
   const eventBtns = items?.map((item, i) => {
