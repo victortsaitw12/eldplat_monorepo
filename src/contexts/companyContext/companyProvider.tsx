@@ -100,12 +100,18 @@ export const CompanyProvider = ({ children }: any) => {
           district: data.company_Dt.district,
           zip_Code: data.company_Dt.zip_Code,
           user_Address1: data.company_Dt.user_Address1,
-          user_Address2: data.company_Dt.user_Address2,
-          contact_Name: data.company_Dt.contact_Name,
-          contact_Tel: data.company_Dt.contact_Tel,
-          country_Code: data.company_Dt.country_Code,
-          contact_Phone: data.company_Dt.contact_Phone
+          user_Address2: data.company_Dt.user_Address2
         },
+        company_Contact: [
+          {
+            contact_name: "",
+            contact_phone_code: "",
+            contact_phone: "",
+            contact_tel_code: "",
+            contact_tel: "",
+            contact_email: ""
+          }
+        ],
         company_Currency: data.company_Currency,
         company_Language: data.company_Language,
         company_Leave: data.company_Leave,
@@ -210,43 +216,41 @@ export const CompanyProvider = ({ children }: any) => {
 
 export default CompanyProvider;
 
-// const newData = data.map((item: any, index: any) => {
-//   return {
-//     company_No: item.company.company_No,
-//     company: {
-//       administrator: item.company.administrator,
-//       agent_No: item.company.agent_No,
-//       invoice_No: item.company.invoice_No,
-//       corporation_Code: item.company.corporation_Code,
-//       company_Typ: item.company.company_Typ,
-//       com_Name: item.company.com_Name,
-//       com_Country: item.company.com_Country,
-//       owner: item.company.owner,
-//       com_Logo_Link: item.company.com_Logo_Link,
-//       plf_Typ: item.company.plf_Typ,
-//       plan_Typ: item.company.plan_Typ,
-//       sub_Status: item.company.sub_Status,
-//       sub_Time: item.company.sub_Time,
-//       com_Status: item.company.com_Status
-//     },
-//     company_Dt: {
-//       tel: item.company_Dt.tel,
-//       com_Email: item.company_Dt.coM_EMAIL,
-//       com_Fax: item.company_Dt.com_Fax,
-//       country: item.company_Dt.country,
-//       city: item.company_Dt.city,
-//       district: item.company_Dt.district,
-//       zip_Code: item.company_Dt.zip_Code,
-//       user_Address1: item.company_Dt.user_Address1,
-//       user_Address2: item.company_Dt.user_Address2,
-//       contact_Name: item.company_Dt.contact_Name,
-//       contact_Tel: item.company_Dt.contact_Tel,
-//       country_Code: item.company_Dt.country_Code,
-//       contact_Phone: item.company_Dt.contact_Phone
-//     },
-//     company_Currency: item.company_Currency,
-//     company_Language: item.company_Language,
-//     company_Leave: item.company_Leave,
-//     company_Working_Hours: item.company_Working_Hours
-//   };
-// });
+// {
+//   company_No: data.company.company_No,
+//   company: {
+//     administrator: data.company.administrator,
+//     agent_No: data.company.agent_No,
+//     invoice_No: data.company.invoice_No,
+//     corporation_Code: data.company.corporation_Code,
+//     company_Typ: data.company.company_Typ,
+//     com_Name: data.company.com_Name,
+//     com_Country: data.company.com_Country,
+//     owner: data.company.owner,
+//     com_Logo_Link: data.company.com_Logo_Link,
+//     plf_Typ: data.company.plf_Typ,
+//     plan_Typ: data.company.plan_Typ,
+//     sub_Status: data.company.sub_Status,
+//     sub_Time: data.company.sub_Time,
+//     com_Status: data.company.com_Status
+//   },
+//   company_Dt: {
+//     tel: data.company_Dt.tel,
+//     com_Email: data.company_Dt.coM_EMAIL,
+//     com_Fax: data.company_Dt.com_Fax,
+//     country: data.company_Dt.country,
+//     city: data.company_Dt.city,
+//     district: data.company_Dt.district,
+//     zip_Code: data.company_Dt.zip_Code,
+//     user_Address1: data.company_Dt.user_Address1,
+//     user_Address2: data.company_Dt.user_Address2,
+//     contact_Name: data.company_Dt.contact_Name,
+//     contact_Tel: data.company_Dt.contact_Tel,
+//     country_Code: data.company_Dt.country_Code,
+//     contact_Phone: data.company_Dt.contact_Phone
+//   },
+//   company_Currency: data.company_Currency,
+//   company_Language: data.company_Language,
+//   company_Leave: data.company_Leave,
+//   company_Working_Hours: data.company_Working_Hours
+// }

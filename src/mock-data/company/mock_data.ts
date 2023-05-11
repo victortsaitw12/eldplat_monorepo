@@ -31,12 +31,18 @@ export const mock_company_data = {
     district: "",
     zip_Code: "",
     user_Address1: "",
-    user_Address2: "",
-    contact_Name: "",
-    contact_Tel: "",
-    country_Code: "",
-    contact_Phone: ""
+    user_Address2: ""
   },
+  company_Contact: [
+    {
+      contact_name: "",
+      contact_phone_code: "",
+      contact_phone: "",
+      contact_tel_code: "",
+      contact_tel: "",
+      contact_email: ""
+    }
+  ],
   company_Language: [
     {
       language_Code: "",
@@ -56,6 +62,13 @@ export const mock_company_data = {
     }
   ]
 };
+
+// contact_Name: "",
+// contact_Tel: "",
+// country_Code: "",
+// contact_Phone: ""
+
+////////////////////
 
 /*company_No: "BH49202304190001",
   company: {

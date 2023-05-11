@@ -31,6 +31,7 @@ interface I_ContactTYP {
 
 function Contact() {
   const C_data = useContext<I_Company_Context>(CompanyContext);
+  const { companyData, setCompanyData } = C_data;
   const [contactArr, setContactArr] = useState<I_ContactTYP[]>([
     {
       contact_name: "",
@@ -77,9 +78,35 @@ function Contact() {
   };
 
   // 移除一個聯絡人
-  const handleRemoveContact = (val: string) => {
-    console.log("val", val);
+  const handleRemoveContact = (val: I_ContactTYP) => {
+    const copyData = { ...companyData };
+    // 找到聯絡人姓名一樣的把他篩掉
+    const filterContact = contactArr.filter((v, i) => {
+      return val.contact_name !== v.contact_name;
+    });
+    copyData["company_Contact"] = filterContact;
+    setContactArr(filterContact);
+    setCompanyData(copyData);
   };
+
+  // 存取多個聯絡人欄位裡的資料
+  const handleContactsChange = (e: any, val: I_ContactTYP, idx: number) => {
+    const copyData = { ...companyData };
+    // 把原始陣列展開後找到要輸入的那格去更改value
+    const updatedContact = contactArr.map((v, i) => {
+      const newData = { ...v };
+      if (idx === i) {
+        newData[e.target.name] = e.target.value;
+      }
+      return newData;
+    });
+    copyData["company_Contact"] = updatedContact;
+    setContactArr(updatedContact);
+    setCompanyData(copyData);
+  };
+
+  console.log("🔆contactArr", contactArr);
+  console.log("🔟companyData", companyData);
 
   return (
     <BodySTY>
@@ -239,15 +266,17 @@ function Contact() {
                 </Text>
                 <Pane className="contact-first">
                   <TextInput
-                    name="contact_Name"
-                    value={C_data.companyData.company_Dt.contact_Name}
-                    onChange={C_data.handleCompanyContactChange}
+                    name="contact_name"
+                    value={value.contact_name}
+                    onChange={(e: any) => {
+                      handleContactsChange(e, value, idx);
+                    }}
                   />
                   {idx !== 0 && (
                     <IconButton
                       icon={TrashIcon}
                       onClick={() => {
-                        handleRemoveContact(value.contact_name);
+                        handleRemoveContact(value);
                       }}
                     />
                   )}
@@ -263,17 +292,23 @@ function Contact() {
                     <TextInput
                       type="tel"
                       className="country-number"
-                      name="country_num_Tel"
+                      name="contact_tel_code"
                       placeholder="ex:+886"
-                      value={C_data.countryNumInput.contactTel}
-                      onChange={handleCountryNum}
+                      // value={C_data.countryNumInput.contactTel}
+                      // onChange={handleCountryNum}
+                      value={value.contact_tel_code}
+                      onChange={(e: any) => {
+                        handleContactsChange(e, value, idx);
+                      }}
                       required
                     />
                     <TextInput
                       className="contact-tel"
-                      name="contact_Tel"
-                      value={C_data.companyData.company_Dt.contact_Tel}
-                      onChange={C_data.handleCompanyContactChange}
+                      name="contact_tel"
+                      value={value.contact_tel}
+                      onChange={(e: any) => {
+                        handleContactsChange(e, value, idx);
+                      }}
                       required
                     />
                     {C_data.errMsg["errField"] === "contact_Tel" && (
@@ -286,17 +321,25 @@ function Contact() {
                     <Paragraph size={200}>手機</Paragraph>
                     <TextInput
                       className="country-number"
-                      name="country_num_Phone"
+                      name="contact_phone_code"
                       placeholder="ex:+886"
-                      value={C_data.countryNumInput.contactPhone}
-                      onChange={handleCountryNum}
+                      // value={C_data.countryNumInput.contactPhone}
+                      // onChange={handleCountryNum}
+                      value={value.contact_phone_code}
+                      onChange={(e: any) => {
+                        handleContactsChange(e, value, idx);
+                      }}
                       required
                     />
                     <TextInput
                       className="contact-phone"
-                      name="contact_Phone"
-                      value={C_data.companyData.company_Dt.contact_Phone}
-                      onChange={C_data.handleCompanyContactChange}
+                      name="contact_phone"
+                      // value={C_data.companyData.company_Dt.contact_Phone}
+                      // onChange={C_data.handleCompanyContactChange}
+                      value={value.contact_phone}
+                      onChange={(e: any) => {
+                        handleContactsChange(e, value, idx);
+                      }}
                       required
                     />
                     {C_data.errMsg["errField"] === "contact_Phone" && (
@@ -313,8 +356,10 @@ function Contact() {
                 </Text>
                 <TextInput
                   name="contact_email"
-                  // value={C_data.companyData.company_Dt.contact_Name}
-                  onChange={C_data.handleCompanyContactChange}
+                  value={value.contact_email}
+                  onChange={(e: any) => {
+                    handleContactsChange(e, value, idx);
+                  }}
                 />
               </Pane>
 

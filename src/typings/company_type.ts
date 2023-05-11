@@ -30,11 +30,15 @@ export interface I_Company_Update_Type {
     zip_Code: string;
     user_Address1: string;
     user_Address2: string;
-    contact_Name: string;
-    contact_Tel: string;
-    country_Code: string;
-    contact_Phone: string;
   };
+  company_Contact: {
+    contact_name: string;
+    contact_phone_code: string;
+    contact_phone: string;
+    contact_tel_code: string;
+    contact_tel: string;
+    contact_email: string;
+  }[];
   company_Language: {
     language_Code: string;
     language_Name: string;
