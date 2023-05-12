@@ -25,15 +25,22 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   );
   const [view, setView] = React.useState<"monthly" | "daily">("monthly");
   const [isExpend, setIsExpand] = React.useState(false);
+  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
 
   const initialMonthFirst = new Date(
     Array.isArray(cur) ? cur[0] : cur || Date.now()
   );
-  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
+
   //------ functions ------//
   const handleZoombar = (value: boolean) => {
     setIsExpand(value);
   };
+  const handleLayout = (type: "monthly" | "daily") => {
+    setView(type);
+    setIsOpenDrawer(false);
+    setIsExpand(false);
+  };
+
   //------ render ------//
   const tableName = [
     <MonthPicker key="monthpicker" initialMonthFirst={initialMonthFirst} />,
@@ -55,7 +62,9 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     <UIProvider>
       <ViewIdSTY isOpenDrawer={isOpenDrawer}>
         <Head>
-          <title>駕駛排班 - 個人</title>
+          <title>
+            駕駛排班 - {monthlyData ? monthlyData[0]?.user_Name : ""}
+          </title>
         </Head>
         <Pane className="wrapMain">
           <Tabs
@@ -67,13 +76,12 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
             <TableTitle
               tableName={tableName}
               control={[
-                <ZoomBar key="zoombar" setState={handleZoombar} />,
-                <LayoutControl
-                  key="layoutControl"
-                  view={view}
-                  setView={setView}
-                  setIsOpenDrawer={setIsOpenDrawer}
-                />
+                <ZoomBar
+                  key="zoombar"
+                  initScale={isExpend ? 100 : 0}
+                  setState={handleZoombar}
+                />,
+                <LayoutControl key="layoutControl" setState={handleLayout} />
               ]}
               sub={[]}
               page={false}

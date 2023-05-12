@@ -53,6 +53,7 @@ export const CellSTY = styled.div`
       color: ${({ theme }) => theme.color.N700};
       font-weight: ${({ theme }) => theme.fontWeight.Heading200};
       min-width: 20px;
+      min-height: 20px;
       border-radius: 1rem;
       display: flex;
       justify-content: center;

@@ -9,31 +9,25 @@ import { LayoutControlSTY } from "./style";
 import { UIContext } from "@contexts/UIProvider";
 
 const LayoutControl = ({
-  view,
-  setView,
-  setIsOpenDrawer
+  setState
 }: {
-  view: "monthly" | "daily";
-  setView: (arg: "monthly" | "daily") => void;
-  setIsOpenDrawer: (value: boolean) => void;
+  setState: (arg: "monthly" | "daily") => void;
 }) => {
   const UI = React.useContext(UIContext);
   const renderToggleView = (type: "monthly" | "daily") => {
-    setView(type);
+    setState(type);
     UI.resetState();
-    setIsOpenDrawer(false);
+    UI.setTimeFrame(1000 * 60 * 60 * 2);
   };
   return (
     <LayoutControlSTY>
       <Group>
         <IconButton
           icon={GridViewIcon}
-          className={`${view === "monthly" ? "currentView" : "notCurrent"}`}
           onClick={renderToggleView.bind(null, "monthly")}
         />
         <IconButton
           icon={HorizontalBarChartIcon}
-          className={`${view === "daily" ? "currentView" : "notCurrent"}`}
           onClick={renderToggleView.bind(null, "daily")}
         />
       </Group>

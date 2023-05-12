@@ -25,6 +25,7 @@ const MonthlyView = ({
   isExpend: boolean;
 }) => {
   const UI = React.useContext(UIContext);
+  const dateCellRef = React.useRef(null);
   const router = useRouter();
   UI.setId(router.query.id);
   const { cur } = router.query;
@@ -61,7 +62,10 @@ const MonthlyView = ({
   }, [isExpend]);
 
   //------ functions ------//
-
+  const handleTESTFowardRef = () => {
+    console.log("called");
+    console.log(dateCellRef.current?.offsetHeight);
+  };
   const renderCreateForm = () => {
     UI.setIsSelect(false);
     UI.setDrawerType({
@@ -128,6 +132,7 @@ const MonthlyView = ({
           maxEventCount={maxEventCount}
           setMaxEventCount={setMaxEventCount}
           isExpend={isExpend}
+          dateCellRef={dateCellRef}
         />
       );
       rowShadow.push(
@@ -135,7 +140,6 @@ const MonthlyView = ({
           key={`datecell-${i}`}
           rowIndex={Math.floor(i / 7)}
           date={dateArr[i]}
-          rows={dateArr.length / 7}
         />
       );
       if (i % 7 === 6) {
@@ -143,18 +147,9 @@ const MonthlyView = ({
         rowArr.push(
           <div
             key={`row-${rowIndex}`}
-            className={`dateCell__row dateCell__row-${rowIndex}`}
+            className={`dateCell__row row-${rowIndex}`}
           >
-            <div
-              className="dateCell__canvas"
-              style={{
-                position: "absolute",
-                pointerEvents: "none"
-              }}
-            >
-              {" "}
-              {rowShadow}
-            </div>
+            <div className="dateCell__canvas">{rowShadow}</div>
             <div className="dateCell__content"> {row}</div>
           </div>
         );
@@ -167,10 +162,10 @@ const MonthlyView = ({
 
   return (
     <MonthlySTY rows={dateArr.length / 7}>
-      <div className="headerCells">
+      <div className="headerCells" onClick={handleTESTFowardRef}>
         {wkDays.map((item, i) => (
           <div
-            key={`header-${i}`}
+            key={`day-${i}`}
             className={`cell headerCell ${i === 0 || i === 6 ? "weekend" : ""}`}
           >
             {item}

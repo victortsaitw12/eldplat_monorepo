@@ -12,10 +12,10 @@ import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
 
 const OverviewTable = ({
   initialMonthFirst,
-  isTextShown
+  isExpand
 }: {
   initialMonthFirst: Date;
-  isTextShown: boolean;
+  isExpand: boolean;
 }) => {
   const UI = React.useContext(UIContext);
   const router = useRouter();
@@ -71,7 +71,7 @@ const OverviewTable = ({
         return (
           <EventTag
             key={`shift-${i}`}
-            className="shift-btn"
+            className={`shift-btn ${i >= 3 ? "hidden" : ""}`}
             value={EVENT_TYPE.get(eventTypeCode)}
           />
         );
@@ -100,10 +100,10 @@ const OverviewTable = ({
     </Table.TextHeaderCell>
   ));
   return (
-    <TableSTY className="table-viewport" isTextShown={isTextShown}>
+    <TableSTY className="table-viewport" isExpand={isExpand}>
       <Table className="eg-table">
         <Table.Head className="eg-head">
-          <Checkbox className="eg-th" key="selectAll" label="" />
+          <Checkbox className="eg-th checkbox" key="selectAll" label="" />
           <Table.TextHeaderCell className="eg-th">
             駕駛姓名
           </Table.TextHeaderCell>
@@ -124,7 +124,7 @@ const OverviewTable = ({
               )}
             >
               <Checkbox
-                className="eg-td"
+                className="eg-td checkbox"
                 key={"check-" + item.driverLeaveInfo.driver_No}
                 label=""
               />
@@ -141,9 +141,9 @@ const OverviewTable = ({
                     date.day.weekend ? "weekend" : ""
                   }`}
                 >
-                  <span className="eventTag-container">
+                  <div className="eventTag-container">
                     {renderShifts(date, item.scheduleInfo)}
-                  </span>
+                  </div>
                 </Table.TextCell>
               ))}
             </Table.Row>

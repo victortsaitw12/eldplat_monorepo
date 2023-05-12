@@ -14,11 +14,11 @@ import { EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
 
 const ShiftPage: NextPageWithLayout<{}> = () => {
-  const [isTextShown, setIsTextShown] = React.useState(false);
+  const [isExpand, setIsExpand] = React.useState(false);
 
   //------ functions ------//
-  const handleZoombar = (input: boolean) => {
-    setIsTextShown(input);
+  const handleZoombar = (value: boolean) => {
+    setIsExpand(value);
   };
 
   //------ get current month from user ------//
@@ -57,7 +57,7 @@ const ShiftPage: NextPageWithLayout<{}> = () => {
             />
             <OverviewTable
               initialMonthFirst={initialMonthFirst}
-              isTextShown={isTextShown}
+              isExpand={isExpand}
             />
             {/* <Test />  for dnd*/}
           </Pane>

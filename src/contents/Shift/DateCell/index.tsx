@@ -1,20 +1,19 @@
 import React from "react";
 import { CellSTY } from "./style";
-
 import {
-  getDayStart,
   getDayEnd,
   formatDate,
   formatDateForAPI,
   debounce
 } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
+
 import { UIContext } from "@contexts/UIProvider";
 import { getScheduleSidebar } from "@services/schedule/getScheduleSidebar";
 import EventList from "@contents/Shift/EventList";
 import CreateEventBtn from "@contents/Shift/CreateEventBtn";
 
-const DateCell = ({
+const DateCell = React.forwardRef(function DateCell({
   setIsOpenDrawer,
   monthlyData,
   date,
@@ -22,7 +21,8 @@ const DateCell = ({
   maxEventCount,
   setMaxEventCount,
   rowIndex,
-  isExpend
+  isExpend,
+  dateCellRef
 }: {
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
@@ -32,7 +32,7 @@ const DateCell = ({
   setMaxEventCount: (value: number) => void;
   rowIndex: number;
   isExpend: boolean;
-}) => {
+}) {
   const UI = React.useContext(UIContext);
   const [placeholders, setPlaceholders] = React.useState<MonthlyData[]>([]);
   const [items, setItems] = React.useState<MonthlyData[]>([]);
@@ -40,7 +40,7 @@ const DateCell = ({
     null
   );
   // const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
-  const dateCellRef = React.useRef(null);
+  // const dateCellRef = React.useRef(null);
 
   const handleEventCount = React.useCallback(() => {
     const updateMaxEventCount =
@@ -72,11 +72,6 @@ const DateCell = ({
     UI.setEndDate(selectedDT);
   };
 
-  const checkDateInsideSelection = (timestamp: string | number) => {
-    if (!UI.startDate || !UI.endDate) return false;
-    const date = new Date(timestamp);
-    return date >= getDayStart(UI.startDate) && getDayStart(date) <= UI.endDate;
-  };
   const checkDateStart = (timestamp: string | number) => {
     if (!UI.startDate) return false;
     return timestamp == UI.startDate.valueOf();
@@ -107,62 +102,59 @@ const DateCell = ({
   };
 
   return (
-    <>
-      <CellSTY
-        ref={dateCellRef}
-        className={`monthly-date cell dateCell ${
-          date.disabled ? "disabled" : ""
-        }   
+    <CellSTY
+      ref={dateCellRef}
+      className={`monthly-date cell dateCell ${
+        date.disabled ? "disabled" : ""
+      }   
             ${checkDateStart.call(null, date.timestamp) ? "start" : ""}
             row-${rowIndex}`}
-        onMouseEnter={() => {
-          if (UI.isSelect) handleSelectEndDate(date.timestamp);
-        }}
-      >
-        {monthlyData ? (
-          <EventList
-            cellTimestamp={date.timestamp}
-            monthlyData={monthlyData}
-            setIsOpenDrawer={setIsOpenDrawer}
-            placeholders={placeholders}
-            setPlaceholders={setPlaceholders}
-            items={items}
-            setItems={setItems}
-            maxEventCount={singleRowExpand ? singleRowExpand : maxEventCount}
-          />
-        ) : (
-          ""
-        )}
+      onMouseEnter={() => {
+        if (UI.isSelect) handleSelectEndDate(date.timestamp);
+      }}
+    >
+      {monthlyData ? (
+        <EventList
+          cellTimestamp={date.timestamp}
+          monthlyData={monthlyData}
+          setIsOpenDrawer={setIsOpenDrawer}
+          placeholders={placeholders}
+          setPlaceholders={setPlaceholders}
+          items={items}
+          setItems={setItems}
+          maxEventCount={singleRowExpand ? singleRowExpand : maxEventCount}
+        />
+      ) : (
+        ""
+      )}
 
-        <CreateEventBtn cellTimestamp={date.timestamp} view={view} />
-        <div className="cell__date">
-          <span className="cell__date-info">
-            {placeholders.length + items.length - maxEventCount > 0 ? (
-              <button
-                className="cell__unfold-btn"
-                onClick={handleSingleRowExpand}
-              >
-                {singleRowExpand
-                  ? "收合"
-                  : `還有 ${
-                      placeholders.length + items.length - maxEventCount
-                    } 個`}
-                {/* 還有 {placeholders.length + items.length - maxEventCount} 個 */}
-              </button>
-            ) : (
-              ""
-            )}
-          </span>
-          <span
-            className="cell__date-btn"
-            onClick={renderAllDayEventStatus.bind(null, date.timestamp)}
-          >
-            {date.date}
-          </span>
-        </div>
-      </CellSTY>
-    </>
+      <CreateEventBtn cellTimestamp={date.timestamp} view={view} />
+      <div className="cell__date">
+        <span className="cell__date-info">
+          {placeholders.length + items.length - maxEventCount > 0 ? (
+            <button
+              className="cell__unfold-btn"
+              onClick={handleSingleRowExpand}
+            >
+              {singleRowExpand
+                ? "收合"
+                : `還有 ${
+                    placeholders.length + items.length - maxEventCount
+                  } 個`}
+            </button>
+          ) : (
+            ""
+          )}
+        </span>
+        <span
+          className="cell__date-btn"
+          onClick={renderAllDayEventStatus.bind(null, date.timestamp)}
+        >
+          {date.date}
+        </span>
+      </div>
+    </CellSTY>
   );
-};
+});
 
 export default DateCell;

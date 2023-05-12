@@ -15,7 +15,7 @@ const DateCellCanvas = ({
   const UI = React.useContext(UIContext);
 
   //------ functions ------//
-  const checkDateInsideSelection = (timestamp: string | number) => {
+  const checkDateSelected = (timestamp: string | number) => {
     if (!UI.startDate || !UI.endDate) return false;
     const date = new Date(timestamp);
     return date >= getDayStart(UI.startDate) && getDayStart(date) <= UI.endDate;
@@ -30,9 +30,7 @@ const DateCellCanvas = ({
       <CellSTY
         className={`monthly-date cell dateCell ${
           date.disabled ? "disabled" : ""
-        } ${
-          checkDateInsideSelection.call(null, date.timestamp) ? "highlight" : ""
-        }  
+        } ${checkDateSelected.call(null, date.timestamp) ? "highlight" : ""}  
             ${checkDateStart.call(null, date.timestamp) ? "start" : ""}
             row-${rowIndex}`}
       ></CellSTY>

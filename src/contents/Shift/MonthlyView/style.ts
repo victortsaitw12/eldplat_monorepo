@@ -53,13 +53,7 @@ export const MonthlySTY = styled.div<{ rows: number }>`
       display: flex;
       flex-direction: row;
       border-bottom: 1px solid ${({ theme }) => theme.color.N300};
-      .dateCell__canvas {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-      }
+      .dateCell__canvas,
       .dateCell__content {
         height: 100%;
         width: 100%;
@@ -67,55 +61,48 @@ export const MonthlySTY = styled.div<{ rows: number }>`
         flex-direction: row;
         flex-wrap: nowrap;
       }
+      .dateCell__canvas {
+        position: absolute;
+        pointer-events: none;
+      }
       .cell {
-        width: calc(100 / 7 * 100%);
         padding: 8px;
         z-index: 10;
+      }
+
+      .highlight {
+        background: ${({ theme }) => theme.color.N100};
+        position: relative;
+        z-index: 0;
+      }
+
+      .disabled {
+        position: relative;
+        cursor: not-allowed;
         pointer-events: none;
-        * {
+        &::after {
+          content: " ";
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: #fff;
+          opacity: 0.5;
+          z-index: 99;
+          cursor: not-allowed;
           pointer-events: auto;
         }
       }
     }
-    /* display: grid;
-    grid-template-columns: repeat(7, calc(100% / 7));
-    grid-template-rows: repeat(
-      ${(props) => props.rows},
-      calc(100% / ${(props) => props.rows})
-    ); */
-  }
-  .highlight {
-    background: ${({ theme }) => theme.color.N100};
-    position: relative;
-    z-index: 0;
   }
 
-  /* .highlight:not(.start) {
-    background: ${({ theme }) => theme.color.N100};
-    position: relative;
-    z-index: 0;
-  }
-  .start {
-    background: ${({ theme }) => theme.color.N100};
-    position: relative;
-    z-index: 1;
-  } */
+  /* shared style in headerCells & dateCells */
+  .cell {
+    width: calc(100% / 7);
 
-  .disabled {
-    position: relative;
-    cursor: not-allowed;
     pointer-events: none;
-    &::after {
-      content: " ";
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: #fff;
-      opacity: 0.5;
-      z-index: 99;
-      cursor: not-allowed;
+    * {
       pointer-events: auto;
     }
   }
