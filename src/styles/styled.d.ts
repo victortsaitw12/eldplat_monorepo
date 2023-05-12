@@ -1,4 +1,4 @@
-import {} from "styled-components";
+// import {} from "styled-components";
 import { ThemeType } from "./theme";
 // Import type from above file
 declare module "styled-components" {

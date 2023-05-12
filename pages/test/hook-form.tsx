@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useId } from "react";
 import { useForm } from "react-hook-form";
 import VerticalInput from "@components/HookForm/Input/VerticalInput";
 import HorizatalInput from "@components/HookForm/Input/HorizatalInput";
 import SingleInput from "@components/HookForm/Input/SingleInput";
 import Select from "@components/HookForm/Select";
 import Radio from "@components/HookForm/Radio";
-import CheckBox from "@components/HookForm/CheckBox";
+import CheckBox from "@components/HookForm/CheckBox/SingleCheckBox";
+type SelectOption = {
+  value: string;
+  label: string;
+};
 interface FormValues {
   firstName: string;
   lastName: string;
   nickName: string;
   gender: string;
   education: string;
-  fruit: Array<string>;
+  isMarried: boolean;
 }
 const selectOptions = [
   { value: "male", label: "男" },
@@ -20,7 +24,6 @@ const selectOptions = [
   { value: "unknown", label: "多元" }
 ];
 const radioOptions = ["國小", "國中", "高中", "大學", "碩士", "博士"];
-const checkBoxOptions = ["蘋果", "香蕉", "橘子"];
 //
 const Page = () => {
   const [isEdit, setIsEdit] = React.useState<boolean>(true);
@@ -36,7 +39,7 @@ const Page = () => {
       nickName: "小明",
       gender: "male",
       education: "國小",
-      fruit: ["蘋果"]
+      isMarried: false
     }
   });
   function submitDataHandler(data: any) {
@@ -64,13 +67,12 @@ const Page = () => {
             errorMessage={errors.lastName?.message}
           />
           <SingleInput {...register("nickName", { required: "必填" })} />
-          {isEdit && <button type="submit">submit</button>}
+
           <Select
-            label="性別"
             control={control}
-            description="生理性別"
-            {...register("gender", { required: "必選" })}
             options={selectOptions}
+            isDisabled={!isEdit}
+            name="gender"
           />
           <Radio
             label="教育程度"
@@ -78,12 +80,11 @@ const Page = () => {
             name="education"
             options={radioOptions}
           />
-          <CheckBox
-            label="喜歡的水果"
-            control={control}
-            name="fruit"
-            options={checkBoxOptions}
-          />
+          <div>
+            <label>已婚:</label>
+            <CheckBox control={control} name="isMarried" />
+          </div>
+          {isEdit && <button type="submit">submit</button>}
         </form>
       </fieldset>
       <button

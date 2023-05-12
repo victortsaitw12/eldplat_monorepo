@@ -1,5 +1,7 @@
 import { InputHTMLAttributes, useState } from "react";
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import styled from "styled-components";
+import { StyledCheckBoxContainer } from "./style";
 interface CheckBoxProps extends InputHTMLAttributes<HTMLSelectElement> {
   label: string;
   options: string[];
@@ -19,11 +21,10 @@ const CheckBox = ({
   description
 }: CheckBoxProps) => {
   return (
-    <div>
+    <>
       <div>{label}</div>
       {options.map((checkBoxValue) => (
-        <label key={checkBoxValue}>
-          {checkBoxValue}
+        <StyledCheckBoxContainer key={checkBoxValue}>
           <input
             type="checkbox"
             value={checkBoxValue}
@@ -36,9 +37,10 @@ const CheckBox = ({
               }
             }}
           />
-        </label>
+          <label>{checkBoxValue}</label>
+        </StyledCheckBoxContainer>
       ))}
-    </div>
+    </>
   );
 };
 
