@@ -91,6 +91,7 @@ const Page: NextPageWithLayout<
           handleSubmit={handleSubmit}
           register={register}
           control={control}
+          isDisabled={true}
         />
       </BodySTY>
     </TableWrapper>
