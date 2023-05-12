@@ -18,18 +18,28 @@ const DateCell = ({
   setIsOpenDrawer,
   monthlyData,
   date,
-  view
+  view,
+  maxEventCount,
+  setMaxEventCount,
+  rowIndex,
+  isExpend
 }: {
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   date: DateArrItem;
   view: "monthly" | "daily";
+  maxEventCount: number;
+  setMaxEventCount: (value: number) => void;
+  rowIndex: number;
+  isExpend: boolean;
 }) => {
   const UI = React.useContext(UIContext);
   const [placeholders, setPlaceholders] = React.useState<MonthlyData[]>([]);
   const [items, setItems] = React.useState<MonthlyData[]>([]);
-  const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
-  // const [hiddenCount, setHiddenCount] = React.useState(0);
+  const [singleRowExpand, setSingleRowExpand] = React.useState<number | null>(
+    null
+  );
+  // const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
   const dateCellRef = React.useRef(null);
 
   const handleEventCount = React.useCallback(() => {
@@ -49,8 +59,14 @@ const DateCell = ({
     };
   }, [handleEventCount]);
 
-  //------ functions ------//
+  React.useEffect(() => {
+    if (!isExpend) handleEventCount();
+  }, [isExpend]);
 
+  //------ functions ------//
+  const handleSingleRowExpand = () => {
+    singleRowExpand ? setSingleRowExpand(null) : setSingleRowExpand(99);
+  };
   const handleSelectEndDate = (timestamp: string | number) => {
     const selectedDT = getDayEnd(new Date(timestamp));
     UI.setEndDate(selectedDT);
@@ -97,7 +113,8 @@ const DateCell = ({
         className={`monthly-date cell dateCell ${
           date.disabled ? "disabled" : ""
         }   
-            ${checkDateStart.call(null, date.timestamp) ? "start" : ""}`}
+            ${checkDateStart.call(null, date.timestamp) ? "start" : ""}
+            row-${rowIndex}`}
         onMouseEnter={() => {
           if (UI.isSelect) handleSelectEndDate(date.timestamp);
         }}
@@ -111,7 +128,7 @@ const DateCell = ({
             setPlaceholders={setPlaceholders}
             items={items}
             setItems={setItems}
-            maxEventCount={maxEventCount}
+            maxEventCount={singleRowExpand ? singleRowExpand : maxEventCount}
           />
         ) : (
           ""
@@ -121,8 +138,16 @@ const DateCell = ({
         <div className="cell__date">
           <span className="cell__date-info">
             {placeholders.length + items.length - maxEventCount > 0 ? (
-              <button className="cell__unfold-btn">
-                還有 {placeholders.length + items.length - maxEventCount} 個
+              <button
+                className="cell__unfold-btn"
+                onClick={handleSingleRowExpand}
+              >
+                {singleRowExpand
+                  ? "收合"
+                  : `還有 ${
+                      placeholders.length + items.length - maxEventCount
+                    } 個`}
+                {/* 還有 {placeholders.length + items.length - maxEventCount} 個 */}
               </button>
             ) : (
               ""

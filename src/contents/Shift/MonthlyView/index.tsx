@@ -14,18 +14,21 @@ const MonthlyView = ({
   setIsOpenDrawer,
   monthlyData,
   setMonthlyData,
-  view
+  view,
+  isExpend
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
+  isExpend: boolean;
 }) => {
   const UI = React.useContext(UIContext);
   const router = useRouter();
   UI.setId(router.query.id);
   const { cur } = router.query;
+  const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
 
   const wkDays = ["日", "一", "二", "三", "四", "五", "六"];
   const curMonthFirst: Date = new Date(
@@ -52,6 +55,10 @@ const MonthlyView = ({
       document.removeEventListener("mouseup", renderCreateForm);
     };
   }, [UI.isSelect]);
+
+  React.useEffect(() => {
+    if (isExpend) setMaxEventCount(99);
+  }, [isExpend]);
 
   //------ functions ------//
 
@@ -103,7 +110,60 @@ const MonthlyView = ({
     }
   }
 
-  // const dateCells = ;
+  // separate rows
+  const renderRow = () => {
+    const rowArr = [];
+    let row = [];
+    let rowShadow = [];
+
+    for (let i = 0; i < dateArr.length; i++) {
+      row.push(
+        <DateCell
+          key={`datecell-${i}`}
+          rowIndex={Math.floor(i / 7)}
+          date={dateArr[i]}
+          setIsOpenDrawer={setIsOpenDrawer}
+          monthlyData={monthlyData}
+          view={view}
+          maxEventCount={maxEventCount}
+          setMaxEventCount={setMaxEventCount}
+          isExpend={isExpend}
+        />
+      );
+      rowShadow.push(
+        <DateCellCanvas
+          key={`datecell-${i}`}
+          rowIndex={Math.floor(i / 7)}
+          date={dateArr[i]}
+          rows={dateArr.length / 7}
+        />
+      );
+      if (i % 7 === 6) {
+        const rowIndex = Math.floor(i / 7);
+        rowArr.push(
+          <div
+            key={`row-${rowIndex}`}
+            className={`dateCell__row dateCell__row-${rowIndex}`}
+          >
+            <div
+              className="dateCell__canvas"
+              style={{
+                position: "absolute",
+                pointerEvents: "none"
+              }}
+            >
+              {" "}
+              {rowShadow}
+            </div>
+            <div className="dateCell__content"> {row}</div>
+          </div>
+        );
+        row = [];
+        rowShadow = [];
+      }
+    }
+    return rowArr;
+  };
 
   return (
     <MonthlySTY rows={dateArr.length / 7}>
@@ -117,32 +177,7 @@ const MonthlyView = ({
           </div>
         ))}
       </div>
-      <div
-        className="dateCells dateCells--selected"
-        style={{ position: "absolute", top: "33px", pointerEvents: "none" }}
-      >
-        {dateArr.map((date, i) => (
-          <DateCellCanvas
-            key={`datecell-${i}`}
-            i={i}
-            date={date}
-            rows={dateArr.length / 7}
-          />
-        ))}
-      </div>
-      <div className="dateCells">
-        {dateArr.map((date, i) => (
-          <DateCell
-            key={`datecell-${i}`}
-            i={i}
-            date={date}
-            setIsOpenDrawer={setIsOpenDrawer}
-            monthlyData={monthlyData}
-            view={view}
-            rows={dateArr.length / 7}
-          />
-        ))}
-      </div>
+      <div className="dateCells">{renderRow()}</div>
     </MonthlySTY>
   );
 };

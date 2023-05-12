@@ -20,6 +20,8 @@ export const CellSTY = styled.div`
     justify-content: space-between;
     align-items: center;
     text-align: right;
+    position: sticky;
+    bottom: 0;
     .cell__date-info {
       flex-grow: 10;
       text-align: start;

@@ -5,7 +5,13 @@ import { getDayStart } from "../shift.util";
 import { DateArrItem } from "../shift.typing";
 import { UIContext } from "@contexts/UIProvider";
 
-const DateCellCanvas = ({ date }: { date: DateArrItem }) => {
+const DateCellCanvas = ({
+  date,
+  rowIndex
+}: {
+  date: DateArrItem;
+  rowIndex: number;
+}) => {
   const UI = React.useContext(UIContext);
 
   //------ functions ------//
@@ -27,7 +33,8 @@ const DateCellCanvas = ({ date }: { date: DateArrItem }) => {
         } ${
           checkDateInsideSelection.call(null, date.timestamp) ? "highlight" : ""
         }  
-            ${checkDateStart.call(null, date.timestamp) ? "start" : ""}`}
+            ${checkDateStart.call(null, date.timestamp) ? "start" : ""}
+            row-${rowIndex}`}
       ></CellSTY>
     </>
   );
