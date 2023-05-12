@@ -7,12 +7,14 @@ import {
   Lifecycle,
   Maintenance,
   Settings,
-  Specifications
+  Specifications,
+  SwitchableDetails
 } from "./SubForm";
 import {
   UseFormHandleSubmit,
   UseFormRegister,
-  FieldErrors
+  FieldErrors,
+  Control
 } from "react-hook-form";
 import { BusDataTypes } from "./busDefaultData";
 //
@@ -20,9 +22,11 @@ interface Props {
   submitForm: (data: any) => void;
   onCancel: () => void;
   formType: string;
+  control: Control<BusDataTypes, any>;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   handleSubmit: UseFormHandleSubmit<BusDataTypes>;
+  isDisabled?: boolean;
 }
 //
 function BusEditForm({
@@ -31,7 +35,9 @@ function BusEditForm({
   formType,
   register,
   errors,
-  handleSubmit
+  handleSubmit,
+  control,
+  isDisabled = false
 }: Props) {
   const [visibleForm, setVisibleForm] = useState("");
   const submitFormHandler = (data: any) => {
@@ -46,48 +52,52 @@ function BusEditForm({
   console.log("errors: ", errors);
   return (
     <BodySTY>
-      <form onSubmit={handleSubmit(submitFormHandler)}>
-        <Details
-          hide={visibleForm !== "Detail"}
-          register={register}
-          errors={errors}
-        />
-        <Maintenance
-          hide={visibleForm !== "Maintenance"}
-          register={register}
-          errors={errors}
-        />
-        <Lifecycle
-          hide={visibleForm !== "Lifecycle"}
-          register={register}
-          errors={errors}
-        />
-        <Financial
-          hide={visibleForm !== "Financial"}
-          register={register}
-          errors={errors}
-        />
-        <Specifications
-          hide={visibleForm !== "Specifications"}
-          register={register}
-          errors={errors}
-        />
-        <Settings
-          hide={visibleForm !== "Settings"}
-          register={register}
-          errors={errors}
-        />
-        <StepControlSTY>
-          <button type="button" onClick={onCancel}>
-            取消
-          </button>
-          <div className="next-step">
-            <button className="fill" type="submit">
-              儲存車輛
+      <fieldset style={{ border: "none" }} disabled={isDisabled}>
+        <form onSubmit={handleSubmit(submitFormHandler)}>
+          <SwitchableDetails
+            hide={visibleForm !== "Detail"}
+            register={register}
+            errors={errors}
+            control={control}
+            isDisabled={isDisabled}
+          />
+          <Maintenance
+            hide={visibleForm !== "Maintenance"}
+            register={register}
+            errors={errors}
+          />
+          <Lifecycle
+            hide={visibleForm !== "Lifecycle"}
+            register={register}
+            errors={errors}
+          />
+          <Financial
+            hide={visibleForm !== "Financial"}
+            register={register}
+            errors={errors}
+          />
+          <Specifications
+            hide={visibleForm !== "Specifications"}
+            register={register}
+            errors={errors}
+          />
+          <Settings
+            hide={visibleForm !== "Settings"}
+            register={register}
+            errors={errors}
+          />
+          <StepControlSTY>
+            <button type="button" onClick={onCancel}>
+              取消
             </button>
-          </div>
-        </StepControlSTY>
-      </form>
+            <div className="next-step">
+              <button className="fill" type="submit">
+                儲存車輛
+              </button>
+            </div>
+          </StepControlSTY>
+        </form>
+      </fieldset>
     </BodySTY>
   );
 }

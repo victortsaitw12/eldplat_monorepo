@@ -67,13 +67,15 @@ const Page = () => {
             errorMessage={errors.lastName?.message}
           />
           <SingleInput {...register("nickName", { required: "必填" })} />
-
-          <Select
-            control={control}
-            options={selectOptions}
-            isDisabled={!isEdit}
-            name="gender"
-          />
+          <div>
+            <div>性別</div>
+            <Select
+              control={control}
+              options={selectOptions}
+              isDisabled={!isEdit}
+              name="gender"
+            />
+          </div>
           <Radio
             label="教育程度"
             control={control}
