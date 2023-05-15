@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Heading, Pane, Text } from "evergreen-ui";
 
 import { BodySTY } from "./style";
@@ -9,9 +9,9 @@ import {
 import { handleCountrySwitch } from "@pages/company";
 
 function CountrySet() {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
-  const company_language_data = C_data.companyData.company_Language;
-  const company_currency_data = C_data.companyData.company_Currency;
+  const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const company_language_data = companyData.company_language;
+  const company_currency_data = companyData.company_currency;
 
   return (
     <BodySTY>
@@ -19,16 +19,14 @@ function CountrySet() {
       <form>
         <Pane className="input-line">
           <Text className="">國別</Text>
-          <Text>
-            {handleCountrySwitch(C_data.companyData.company.com_Country)}
-          </Text>
+          <Text>{handleCountrySwitch(companyData.company_country)}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">語系</Text>
           <Pane className="option-tags">
-            {company_language_data.map((item) => (
-              <div key={item.language_Code} className="tags">
-                <Text>{item.language_Name}</Text>
+            {company_language_data?.map((item) => (
+              <div key={item.language_code} className="tags">
+                <Text>{item.language_name}</Text>
               </div>
             ))}
           </Pane>
@@ -36,9 +34,9 @@ function CountrySet() {
         <Pane className="input-line">
           <Text className="">幣別</Text>
           <Pane className="option-tags">
-            {company_currency_data.map((item) => (
-              <div key={item.currency_Code} className="tags">
-                <Text>{item.currency_Name}</Text>
+            {company_currency_data?.map((item) => (
+              <div key={item.currency_code} className="tags">
+                <Text>{item.currency_name}</Text>
               </div>
             ))}
           </Pane>

@@ -1,6 +1,9 @@
 import { mock_company_data } from "@mock-data/company/mock_data";
 import { getSingleCompany } from "@services/company/getAllCompany";
-import { I_Company_Update_Type } from "@typings/company_type";
+import {
+  I_Company_Contact_Type,
+  I_Company_Update_Type
+} from "@typings/company_type";
 import {
   phoneValidation,
   numberValidation,
@@ -71,53 +74,56 @@ export const CompanyProvider = ({ children }: any) => {
 
   const companyNo = "BH49202304190001";
   useEffect(() => {
-    getSingleCompany(companyNo).then((data) => {
+    getSingleCompany().then((data) => {
       console.log("company data", data);
-      const newData = {
-        company_No: data.company.company_No,
-        company: {
-          administrator: data.company.administrator,
-          agent_No: data.company.agent_No,
-          invoice_No: data.company.invoice_No,
-          corporation_Code: data.company.corporation_Code,
-          company_Typ: data.company.company_Typ,
-          com_Name: data.company.com_Name,
-          com_Country: data.company.com_Country,
-          owner: data.company.owner,
-          com_Logo_Link: data.company.com_Logo_Link,
-          plf_Typ: data.company.plf_Typ,
-          plan_Typ: data.company.plan_Typ,
-          sub_Status: data.company.sub_Status,
-          sub_Time: data.company.sub_Time,
-          com_Status: data.company.com_Status
-        },
-        company_Dt: {
-          tel: data.company_Dt.tel,
-          com_Email: data.company_Dt.coM_EMAIL,
-          com_Fax: data.company_Dt.com_Fax,
-          country: data.company_Dt.country,
-          city: data.company_Dt.city,
-          district: data.company_Dt.district,
-          zip_Code: data.company_Dt.zip_Code,
-          user_Address1: data.company_Dt.user_Address1,
-          user_Address2: data.company_Dt.user_Address2
-        },
-        company_Contact: [
-          {
-            contact_name: "",
-            contact_phone_code: "",
-            contact_phone: "",
-            contact_tel_code: "",
-            contact_tel: "",
-            contact_email: ""
-          }
-        ],
-        company_Currency: data.company_Currency,
-        company_Language: data.company_Language,
-        company_Leave: data.company_Leave,
-        company_Working_Hours: data.company_Working_Hours
-      };
-      setCompanyData(newData);
+      // const newData = {
+      //   company: {
+      //     address1: data.company.address1,
+      //     address2: data.company.address2,
+      //     administrator: data.company.administrator,
+      //     agent_No: data.company.agent_No,
+      //     company_area: data.company.company_area,
+      //     company_city: data.company.company_city,
+      //     company_contact: data.company.company_contact,
+      //     company_country: data.company.company_country,
+      //     company_country2: data.company.company_country2,
+      //     company_currency: data.company.company_currency,
+      //     company_district_code: data.company.company_district_code,
+      //     company_email: data.company.company_email,
+      //     company_fax: data.company.company_fax,
+      //     company_fax_code: data.company.company_fax_code,
+      //     company_gui_no:data.company.company_gui_no,
+      //     company_language:data.company.company_language,
+
+      //     invoice_No: data.company.invoice_No,
+      //     corporation_Code: data.company.corporation_Code,
+      //     company_Typ: data.company.company_Typ,
+      //     com_Name: data.company.com_Name,
+      //     com_Country: data.company.com_Country,
+      //     owner: data.company.owner,
+      //     com_Logo_Link: data.company.com_Logo_Link,
+      //     plf_Typ: data.company.plf_Typ,
+      //     plan_Typ: data.company.plan_Typ,
+      //     sub_Status: data.company.sub_Status,
+      //     sub_Time: data.company.sub_Time,
+      //     com_Status: data.company.com_Status
+      //   },
+      //   company_Dt: {
+      //     tel: data.company_Dt.tel,
+      //     com_Email: data.company_Dt.coM_EMAIL,
+      //     com_Fax: data.company_Dt.com_Fax,
+      //     country: data.company_Dt.country,
+      //     city: data.company_Dt.city,
+      //     district: data.company_Dt.district,
+      //     zip_Code: data.company_Dt.zip_Code,
+      //     user_Address1: data.company_Dt.user_Address1,
+      //     user_Address2: data.company_Dt.user_Address2
+      //   },
+      //   company_Language: data.company_Language,
+      //   company_Leave: data.company_Leave,
+      //   company_Working_Hours: data.company_Working_Hours
+      // };
+      setCompanyData(data.company);
     });
   }, [countryNumInput]);
 
@@ -130,10 +136,10 @@ export const CompanyProvider = ({ children }: any) => {
     setCompanyData(newData);
 
     // 設定error message
-    const comNameValid = textValidation(companyData.company["com_Name"]);
+    const comNameValid = textValidation(companyData["company_name"]);
     if (comNameValid !== true) {
       return setErrMsg({
-        errField: "com_Name",
+        errField: "company_name",
         errText: comNameValid
       });
     } else {
@@ -150,20 +156,16 @@ export const CompanyProvider = ({ children }: any) => {
     setCompanyData(newData);
 
     // 設定error message
-    const telValid = numberValidation(companyData.company_Dt["tel"]);
-    const comFaxValid = numberValidation(companyData.company_Dt["com_Fax"]);
-    const comEmailValid = emailValidation(companyData.company_Dt["com_Email"]);
-    const contactTelValid = numberValidation(
-      companyData.company_Dt["contact_Tel"]
-    );
-    const mobileValid = phoneValidation(
-      companyData.company_Dt["contact_Phone"]
-    );
+    const telValid = numberValidation(companyData["company_tel"]);
+    const comFaxValid = numberValidation(companyData["company_fax"]);
+    const comEmailValid = emailValidation(companyData["company_email"]);
+    const contactTelValid = numberValidation(companyData["contact_tel"]);
+    const mobileValid = phoneValidation(companyData["contact_phone"]);
 
     // 聯絡人手機
     if (mobileValid !== true) {
       return setErrMsg({
-        errField: "contact_Phone",
+        errField: "contact_phone",
         errText: mobileValid
       });
     } // 聯絡人電話
@@ -171,13 +173,13 @@ export const CompanyProvider = ({ children }: any) => {
       return setErrMsg({ errField: "contact_Tel", errText: contactTelValid });
     } // 公司電話
     else if (telValid !== true) {
-      return setErrMsg({ errField: "tel", errText: telValid });
+      return setErrMsg({ errField: "company_tel", errText: telValid });
     } // 公司傳真
     else if (comFaxValid !== true) {
-      return setErrMsg({ errField: "com_Fax", errText: comFaxValid });
+      return setErrMsg({ errField: "company_fax", errText: comFaxValid });
     } // 公司email
     else if (comEmailValid !== true) {
-      return setErrMsg({ errField: "com_Email", errText: comEmailValid });
+      return setErrMsg({ errField: "company_email", errText: comEmailValid });
     } else {
       setErrMsg(false);
     }
@@ -216,41 +218,48 @@ export const CompanyProvider = ({ children }: any) => {
 
 export default CompanyProvider;
 
-// {
-//   company_No: data.company.company_No,
-//   company: {
-//     administrator: data.company.administrator,
-//     agent_No: data.company.agent_No,
-//     invoice_No: data.company.invoice_No,
-//     corporation_Code: data.company.corporation_Code,
-//     company_Typ: data.company.company_Typ,
-//     com_Name: data.company.com_Name,
-//     com_Country: data.company.com_Country,
-//     owner: data.company.owner,
-//     com_Logo_Link: data.company.com_Logo_Link,
-//     plf_Typ: data.company.plf_Typ,
-//     plan_Typ: data.company.plan_Typ,
-//     sub_Status: data.company.sub_Status,
-//     sub_Time: data.company.sub_Time,
-//     com_Status: data.company.com_Status
-//   },
-//   company_Dt: {
-//     tel: data.company_Dt.tel,
-//     com_Email: data.company_Dt.coM_EMAIL,
-//     com_Fax: data.company_Dt.com_Fax,
-//     country: data.company_Dt.country,
-//     city: data.company_Dt.city,
-//     district: data.company_Dt.district,
-//     zip_Code: data.company_Dt.zip_Code,
-//     user_Address1: data.company_Dt.user_Address1,
-//     user_Address2: data.company_Dt.user_Address2,
-//     contact_Name: data.company_Dt.contact_Name,
-//     contact_Tel: data.company_Dt.contact_Tel,
-//     country_Code: data.company_Dt.country_Code,
-//     contact_Phone: data.company_Dt.contact_Phone
-//   },
-//   company_Currency: data.company_Currency,
-//   company_Language: data.company_Language,
-//   company_Leave: data.company_Leave,
-//   company_Working_Hours: data.company_Working_Hours
-// }
+// 0516換新的GET company前的資料物件
+/* {
+  company_No: data.company.company_No,
+  company: {
+    administrator: data.company.administrator,
+    agent_No: data.company.agent_No,
+    invoice_No: data.company.invoice_No,
+    corporation_Code: data.company.corporation_Code,
+    company_Typ: data.company.company_Typ,
+    com_Name: data.company.com_Name,
+    com_Country: data.company.com_Country,
+    owner: data.company.owner,
+    com_Logo_Link: data.company.com_Logo_Link,
+    plf_Typ: data.company.plf_Typ,
+    plan_Typ: data.company.plan_Typ,
+    sub_Status: data.company.sub_Status,
+    sub_Time: data.company.sub_Time,
+    com_Status: data.company.com_Status
+  },
+  company_Dt: {
+    tel: data.company_Dt.tel,
+    com_Email: data.company_Dt.coM_EMAIL,
+    com_Fax: data.company_Dt.com_Fax,
+    country: data.company_Dt.country,
+    city: data.company_Dt.city,
+    district: data.company_Dt.district,
+    zip_Code: data.company_Dt.zip_Code,
+    user_Address1: data.company_Dt.user_Address1,
+    user_Address2: data.company_Dt.user_Address2
+  },
+  company_Contact: [
+    {
+      contact_name: "",
+      contact_phone_code: "",
+      contact_phone: "",
+      contact_tel_code: "",
+      contact_tel: "",
+      contact_email: ""
+    }
+  ],
+  company_Currency: data.company_Currency,
+  company_Language: data.company_Language,
+  company_Leave: data.company_Leave,
+  company_Working_Hours: data.company_Working_Hours
+};  */

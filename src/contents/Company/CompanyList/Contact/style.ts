@@ -19,6 +19,16 @@ export const BodySTY = styled.div`
           margin: 4px 0;
         }
       }
+
+      // 主要聯絡人電話那邊
+      .contact-phone-detail {
+        display: flex;
+        flex-wrap: wrap;
+        span {
+          width: 100%;
+          margin-bottom: 6px;
+        }
+      }
     }
     .required {
       &::before {

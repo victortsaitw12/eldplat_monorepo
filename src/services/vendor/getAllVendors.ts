@@ -11,7 +11,7 @@ export const getAllVendors = async (filter: { [key: string]: any } = {}) => {
       });
     }
   }
-  const res = await fetch("https://localhost:7188/Gateway_Vendor/GetVendor", {
+  const res = await fetch("https://localhost:7088/VNR/GetVendor", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

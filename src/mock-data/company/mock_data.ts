@@ -1,5 +1,56 @@
 export const mock_company_data = {
-  company_No: "",
+  address1: "",
+  address2: "",
+  administrator: "",
+  agent_no: "",
+  company_area: "",
+  company_city: "",
+  company_contact: [
+    {
+      contact_name: "",
+      contact_phone_code: "",
+      contact_phone: "",
+      contact_tel_code: "",
+      contact_tel: "",
+      contact_email: "",
+      contact_sort: ""
+    }
+  ],
+  company_country: "",
+  company_country2: "",
+  company_currency: [
+    {
+      currency_code: "",
+      currency_name: ""
+    }
+  ],
+  company_district_code: "",
+  company_email: "",
+  company_fax: "",
+  company_fax_code: "",
+  company_gui_no: "",
+  company_language: [
+    {
+      language_code: "",
+      language_name: ""
+    }
+  ],
+  company_leave: [{ leave_code: "", leave_name: "" }],
+  company_logo_link: "",
+  company_name: "",
+  company_no: "",
+  company_owner: "",
+  company_tel: "",
+  company_tel_code: "",
+  company_typ: "",
+  company_working_hours: [{ working_hours_code: "", working_hours_name: "" }],
+  no: 1,
+  user_name: ""
+};
+
+////////////////////
+
+/* company_No: "",
   company: {
     agent_No: "",
     invoice_No: "",
@@ -60,69 +111,4 @@ export const mock_company_data = {
       working_Hours_Code: "",
       working_Hours_Name: ""
     }
-  ]
-};
-
-// contact_Name: "",
-// contact_Tel: "",
-// country_Code: "",
-// contact_Phone: ""
-
-////////////////////
-
-/*company_No: "BH49202304190001",
-  company: {
-    agent_No: "008",
-    invoice_No: "25698569",
-    corporation_Code: "",
-    company_Typ: "1",
-    com_Name: "雄獅通運澎湖站",
-    com_Country: "JP",
-    owner: "張老闆",
-    administrator: "管理員",
-    com_Logo_Link: "ooooooooooooooo",
-    plf_Typ: "1",
-    plan_Typ: "1",
-    sub_Status: "1",
-    sub_Time: "2023-04-19T03:37:22.078Z",
-    com_Status: "1"
-  },
-  company_Currency: [
-    {
-      currency_Code: "NT",
-      currency_Name: "新台幣"
-    }
-  ],
-  company_Dt: {
-    tel: "0985698569",
-    com_Email: "test@gmail.com",
-    com_Fax: "0225696321",
-    country: "TW",
-    city: "澎湖縣",
-    district: "馬公市",
-    zip_Code: "880",
-    user_Address1: "明遠路2號",
-    user_Address2: "",
-    contact_Name: "小丁",
-    contact_Tel: "0226589632",
-    country_Code: "TW",
-    contact_Phone: "0987474587"
-  },
-  company_Language: [
-    {
-      language_Code: "zh",
-      language_Name: "中文"
-    }
-  ],
-  company_Leave: [
-    {
-      leave_Code: "1",
-      leave_Name: "事假"
-    }
-  ],
-  company_Working_Hours: [
-    {
-      working_Hours_Code: "1",
-      working_Hours_Name: "一例一休"
-    }
-  ]*/
+  ] */

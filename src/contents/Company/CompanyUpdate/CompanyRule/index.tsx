@@ -15,18 +15,14 @@ import {
   I_Company_Context,
   CompanyContext
 } from "@contexts/companyContext/companyProvider";
-
-export interface I_RuleType {
-  working_Hours_Code: any | string;
-  working_Hours_Name: string;
-}
+import { I_Company_Working_Type } from "@typings/company_type";
 
 function CompanyRule() {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
-  const ruleData = C_data?.companyData?.company_Working_Hours;
+  const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const ruleData = companyData?.company_working_hours;
   // 公司制度陣列
-  const [ruleArr, setRuleArr] = useState<I_RuleType[]>(
-    ruleData ? ruleData : [{ working_Hours_Code: "01", working_Hours_Name: "" }]
+  const [ruleArr, setRuleArr] = useState<I_Company_Working_Type[]>(
+    ruleData ? ruleData : [{ working_hours_code: "01", working_hours_name: "" }]
   );
 
   useEffect(() => {
@@ -40,11 +36,11 @@ function CompanyRule() {
       return [
         ...prev,
         {
-          working_Hours_Code:
+          working_hours_code:
             idx >= 9
-              ? (prev[idx - 1].working_Hours_Code * 1 + 1).toString()
-              : `0${(prev[idx - 1].working_Hours_Code * 1 + 1).toString()}`,
-          working_Hours_Name: ""
+              ? (prev[idx - 1].working_hours_code * 1 + 1).toString()
+              : `0${(prev[idx - 1].working_hours_code * 1 + 1).toString()}`,
+          working_hours_name: ""
         }
       ];
     });
@@ -53,21 +49,21 @@ function CompanyRule() {
   // 移除一欄制度
   const handleInputRemove = (id: string) => {
     const newArr = ruleArr.filter((v) => {
-      return v.working_Hours_Code !== id.toString();
+      return v.working_hours_code !== id.toString();
     });
     setRuleArr(newArr); // 處理畫面增減邏輯
 
     // 按下"-"刪除已輸入過的制度名稱後，也移除陣列的該值
-    const newData = { ...C_data };
-    newData.companyData.company_Working_Hours = newArr;
+    const newData = { ...companyData };
+    newData.company_working_hours = newArr;
   };
 
   // 存取制度欄位input值
   const handleValue = (e: any, id: string) => {
     const updatedArray = ruleArr.map((item) => {
-      if (item.working_Hours_Code === id.toString()) {
+      if (item.working_hours_code === id.toString()) {
         const updateItem = item;
-        updateItem.working_Hours_Name = e.target.value;
+        updateItem.working_hours_name = e.target.value;
         return updateItem;
       }
       return item;
@@ -77,8 +73,8 @@ function CompanyRule() {
 
   // 新增制度邏輯
   const handleChangeRule = (e: any) => {
-    const newData = { ...C_data };
-    newData.companyData.company_Working_Hours = ruleArr;
+    const newData = { ...companyData };
+    newData.company_working_hours = ruleArr;
   };
 
   return (
@@ -92,12 +88,12 @@ function CompanyRule() {
               return (
                 <Pane key={index}>
                   <TextInput
-                    name="company_Working_Hours"
+                    name="company_working_hours"
                     marginTop={10}
                     placeholder="新增工時設定"
-                    value={item.working_Hours_Name}
+                    value={item.working_hours_name}
                     onChange={(e: any) => {
-                      handleValue(e, item.working_Hours_Code);
+                      handleValue(e, item.working_hours_code);
                       handleChangeRule(e);
                     }}
                   />
@@ -107,7 +103,7 @@ function CompanyRule() {
                     marginLeft={16}
                     cursor="pointer"
                     onClick={() => {
-                      handleInputRemove(item.working_Hours_Code);
+                      handleInputRemove(item.working_hours_code);
                     }}
                   />
                 </Pane>

@@ -49,7 +49,7 @@ export const BodySTY = styled.div`
           font-size: 12px;
         }
         .city,
-        .district {
+        .company_area {
           margin-top: -10px;
         }
       }

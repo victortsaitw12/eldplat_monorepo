@@ -15,18 +15,14 @@ import {
   I_Company_Context,
   CompanyContext
 } from "@contexts/companyContext/companyProvider";
-
-export interface I_LeaveType {
-  leave_Code: any | string;
-  leave_Name: string;
-}
+import { I_Company_Leave_Type } from "@typings/company_type";
 
 function LeaveSet() {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
-  const leaveData = C_data.companyData.company_Leave;
+  const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const leaveData = companyData.company_leave;
   // 假別設定陣列
-  const [leaveArr, setLeaveArr] = useState<I_LeaveType[]>(
-    leaveData ? leaveData : [{ leave_Code: "01", leave_Name: "" }]
+  const [leaveArr, setLeaveArr] = useState<I_Company_Leave_Type[]>(
+    leaveData ? leaveData : [{ leave_code: "01", leave_name: "" }]
   );
 
   useEffect(() => {
@@ -39,11 +35,11 @@ function LeaveSet() {
     setLeaveArr((prev) => [
       ...prev,
       {
-        leave_Code:
+        leave_code:
           idx >= 9
-            ? (prev[idx - 1].leave_Code * 1 + 1).toString()
-            : `0${(prev[idx - 1].leave_Code * 1 + 1).toString()}`,
-        leave_Name: ""
+            ? (prev[idx - 1].leave_code * 1 + 1).toString()
+            : `0${(prev[idx - 1].leave_code * 1 + 1).toString()}`,
+        leave_name: ""
       }
     ]);
   };
@@ -51,21 +47,21 @@ function LeaveSet() {
   // 移除一欄假別
   const handleInputRemove = (id: string) => {
     const newArr = leaveArr.filter((v, i) => {
-      return v.leave_Code !== id.toString();
+      return v.leave_code !== id.toString();
     });
     setLeaveArr(newArr); // 處理畫面增減邏輯
 
     // 按下"-"刪除已輸入過的假別名稱後，也移除陣列的該值
-    const newData = { ...C_data };
-    newData.companyData.company_Leave = newArr;
+    const newData = { ...companyData };
+    newData.company_leave = newArr;
   };
 
   // 存取假別欄位input值
   const handleValue = (e: any, id: string) => {
     const updatedArray = leaveArr.map((item) => {
-      if (item.leave_Code === id.toString()) {
+      if (item.leave_code === id.toString()) {
         const updateItem = item;
-        updateItem.leave_Name = e.target.value;
+        updateItem.leave_name = e.target.value;
         return updateItem;
       }
       return item;
@@ -75,8 +71,8 @@ function LeaveSet() {
 
   // 新增假別邏輯
   const handleChangeRule = (e: any) => {
-    const newData = { ...C_data };
-    newData.companyData.company_Leave = leaveArr;
+    const newData = { ...companyData };
+    newData.company_leave = leaveArr;
   };
 
   return (
@@ -90,12 +86,12 @@ function LeaveSet() {
               return (
                 <Pane key={index}>
                   <TextInput
-                    name="leave_Name"
+                    name="leave_name"
                     marginTop={10}
                     placeholder="新增排休種類"
-                    value={item.leave_Name}
+                    value={item.leave_name}
                     onChange={(e: any) => {
-                      handleValue(e, item.leave_Code);
+                      handleValue(e, item.leave_code);
                       handleChangeRule(e);
                     }}
                   />
@@ -105,14 +101,14 @@ function LeaveSet() {
                     marginLeft={16}
                     cursor="pointer"
                     onClick={() => {
-                      handleInputRemove(item.leave_Code);
+                      handleInputRemove(item.leave_code);
                     }}
                   />
                   {/* <Text
                     marginLeft={16}
                     cursor="pointer"
                     onClick={() => {
-                      handleInputRemove(item.leave_Code);
+                      handleInputRemove(item.leave_code);
                     }}
                   >
                     –

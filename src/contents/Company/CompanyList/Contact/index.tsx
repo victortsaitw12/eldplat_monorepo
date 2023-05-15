@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useState } from "react";
-import { Heading, Pane, Text } from "evergreen-ui";
+import React, { useContext } from "react";
+import { Heading, Pane, Paragraph, Text } from "evergreen-ui";
 
 import { BodySTY } from "./style";
 import {
@@ -9,8 +9,7 @@ import {
 import { handleCountrySwitch } from "@pages/company";
 
 function Contact() {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
-  const company_contact_data = C_data.companyData.company_Dt;
+  const { companyData } = useContext<I_Company_Context>(CompanyContext);
 
   return (
     <BodySTY>
@@ -18,46 +17,55 @@ function Contact() {
       <form>
         <Pane className="input-line">
           <Text className="">公司電話</Text>
-          <Text>{company_contact_data.tel}</Text>
+          <Text>{companyData.company_tel}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">公司傳真</Text>
-          <Text>{company_contact_data.com_Fax}</Text>
+          <Text>{companyData.company_fax}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">公司地址</Text>
           <Pane className="address">
-            <Text>{company_contact_data.user_Address1}</Text>
-            <Text>{company_contact_data.user_Address2}</Text>
+            <Text>{companyData.address1}</Text>
+            <Text>{companyData.address2}</Text>
             <Pane display="flex">
-              <Text>{company_contact_data.city}</Text>
-              <Text>{company_contact_data.district}</Text>
+              <Text>{companyData.company_city}</Text>
+              <Text>{companyData.company_area}</Text>
             </Pane>
             <Pane display="flex">
-              <Text>{company_contact_data.zip_Code}</Text>
-              <Text>
-                {handleCountrySwitch(company_contact_data.country_Code)}
-              </Text>
+              <Text>{companyData.company_district_code}</Text>
+              <Text>{handleCountrySwitch(companyData.company_country)}</Text>
             </Pane>
           </Pane>
         </Pane>
 
         <Pane className="input-line">
           <Text className="">公司E-Mail</Text>
-          <Text>{company_contact_data.com_Email}</Text>
+          <Text>{companyData.company_email}</Text>
         </Pane>
-        <Pane className="input-line">
-          <Text className="">聯絡人姓名</Text>
-          <Text>{company_contact_data.contact_Name}</Text>
-        </Pane>
-        <Pane className="input-line">
-          <Text className="">聯絡人電話</Text>
-          <Text>{company_contact_data.contact_Tel}</Text>
-        </Pane>
-        <Pane className="input-line">
-          <Text className="">聯絡人手機</Text>
-          <Text>{company_contact_data.contact_Phone}</Text>
-        </Pane>
+        {companyData?.company_contact?.map((v) => {
+          if (v.contact_sort === "1") {
+            return (
+              <>
+                <Pane key={v.contact_name} className="input-line">
+                  <Text className="">主要聯絡人</Text>
+                  <Text>{v.contact_name}</Text>
+                </Pane>
+                <Pane className="input-line">
+                  <Text className="">主要聯絡人電話</Text>
+                  <Pane className="contact-phone-detail">
+                    <Text>市話 {v.contact_tel}</Text>
+                    <Text>手機 {v.contact_phone}</Text>
+                  </Pane>
+                </Pane>
+                <Pane className="input-line">
+                  <Text className="">主要聯絡人手機</Text>
+                  <Text>{v.contact_phone}</Text>
+                </Pane>
+              </>
+            );
+          }
+        })}
       </form>
     </BodySTY>
   );
