@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { Checkbox, Table } from "evergreen-ui";
 
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getAllDriverScheduleList } from "@services/schedule/getAllDriverScheduleList";
 import { TableSTY } from "./style";
 import { WKDAY_LABEL, EVENT_TYPE } from "@contents/Shift/shift.data";

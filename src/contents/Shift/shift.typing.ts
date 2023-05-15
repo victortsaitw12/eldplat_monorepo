@@ -126,7 +126,7 @@ export interface UItyping {
   setFlag: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  timeFrame: number;
+  timeframe: number;
   setTimeframe: React.Dispatch<React.SetStateAction<number>>;
   resetState: () => void;
 }

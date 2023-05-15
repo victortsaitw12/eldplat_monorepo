@@ -6,7 +6,7 @@ import {
   SCHD_TYPE,
   CHECK_STATUS
 } from "@contents/Shift/shift.data";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const LeaveTypePicker = () => {
   const UI = React.useContext(UIContext);

@@ -106,4 +106,24 @@ export const MonthlySTY = styled.div<{ rows: number }>`
       pointer-events: auto;
     }
   }
+
+  .coverAll {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: ${({ theme }) => theme.color.N0};
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    z-index: 999;
+    .spinner {
+      opacity: 1;
+    }
+  }
 `;

@@ -5,7 +5,7 @@ import { EventBarsSTY, EventBarSTY } from "./style";
 import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS } from "../shift.data";
 import { formatDate, getDayStart, getDayEnd } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 
 const EventBars = ({
@@ -21,7 +21,6 @@ const EventBars = ({
 }) => {
   const [items, setItems] = React.useState<MonthlyData[]>([]);
   const UI = React.useContext(UIContext);
-  // const UI.timeFrame = 1000 * 60 * 60 * 2; //2hour
 
   React.useEffect(() => {
     const cellDateStart = new Date(cellTimestamp);
@@ -91,12 +90,12 @@ const EventBars = ({
       new Date(item.schd_End_Time).valueOf() - cellTimestamp >=
       1000 * 60 * 60 * 24 - 1000 * 60
     )
-      return (1000 * 60 * 60 * 24) / UI.timeFrame;
+      return (1000 * 60 * 60 * 24) / UI.timeframe;
     // TODO 目前假設要滿格顯示，再問UI半格顯示畫面
     return Math.ceil(
       (new Date(item.schd_End_Time).valueOf() -
         new Date(item.schd_Start_Time).valueOf()) /
-        UI.timeFrame
+        UI.timeframe
     );
   };
 
@@ -105,7 +104,7 @@ const EventBars = ({
     return Math.ceil(
       (new Date(item.schd_Start_Time).valueOf() -
         getDayStart(new Date(cellTimestamp)).valueOf()) /
-        UI.timeFrame
+        UI.timeframe
     );
   };
   const eventBtns = items?.map((item, i) => {
@@ -138,7 +137,9 @@ const EventBars = ({
           </span>
           {item.leave_Code || item.check_Status ? <TagIcon /> : ""}
           <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
-          {item.schd_Type === "04" ? item.leave_Description : ""}
+          <span className="text-wrapper">
+            <span>{item.schd_Type === "04" ? item.leave_Description : ""}</span>
+          </span>
         </button>
       </EventBarSTY>
     );

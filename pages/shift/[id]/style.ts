@@ -1,3 +1,4 @@
+import { translation } from "./../../../src/contexts/i18n/lan";
 import styled from "styled-components";
 import { ShiftSTY } from "../style";
 
@@ -23,6 +24,26 @@ export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
       overflow: hidden;
       padding: 20px;
       border-radius: 10px;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        /* display:none; */
+        width: 7px;
+        position: fixed;
+      }
+      &::-webkit-scrollbar-button {
+        background: transparent;
+        border-radius: 4px;
+      }
+      &::-webkit-scrollbar-track-piece {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: ${({ theme }) => theme.color.N400};
+      }
+      &::-webkit-scrollbar-track {
+        box-shadow: transparent;
+      }
       .drawer__btn {
         height: 32px;
         width: 100%;

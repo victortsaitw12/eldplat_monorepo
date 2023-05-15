@@ -3,7 +3,7 @@ import { CellSTY } from "./style";
 
 import { getDayStart } from "../shift.util";
 import { DateArrItem } from "../shift.typing";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const DateCellCanvas = ({
   date,

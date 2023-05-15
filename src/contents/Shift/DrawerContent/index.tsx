@@ -4,7 +4,7 @@ import Drawer from "@components/Drawer";
 import CreateForm from "@contents/Shift/DrawerContent/CreateForm";
 import EditForm from "@contents/Shift/DrawerContent/EditForm";
 import EventStatus from "@contents/Shift/DrawerContent/EventStatus";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const DrawerContent = ({
   isOpenDrawer,
@@ -43,7 +43,6 @@ const DrawerContent = ({
     <>
       {isOpenDrawer && (
         <Drawer
-          
           tabName={[UI.drawerType.title]}
           closeDrawer={() => {
             setIsOpenDrawer(false);

@@ -1,14 +1,9 @@
 import React from "react";
 import { CellSTY } from "./style";
-import {
-  getDayEnd,
-  formatDate,
-  formatDateForAPI,
-  debounce
-} from "../shift.util";
+import { getDayEnd, formatDate, formatDateForAPI } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleSidebar } from "@services/schedule/getScheduleSidebar";
 import EventList from "@contents/Shift/EventList";
 import CreateEventBtn from "@contents/Shift/CreateEventBtn";
@@ -19,9 +14,7 @@ const DateCell = React.forwardRef(function DateCell({
   date,
   view,
   maxEventCount,
-  setMaxEventCount,
   rowIndex,
-  isExpend,
   dateCellRef
 }: {
   setIsOpenDrawer: (value: boolean) => void;
@@ -29,9 +22,8 @@ const DateCell = React.forwardRef(function DateCell({
   date: DateArrItem;
   view: "monthly" | "daily";
   maxEventCount: number;
-  setMaxEventCount: (value: number) => void;
   rowIndex: number;
-  isExpend: boolean;
+  dateCellRef: React.RefObject<HTMLDivElement>;
 }) {
   const UI = React.useContext(UIContext);
   const [placeholders, setPlaceholders] = React.useState<MonthlyData[]>([]);
@@ -39,29 +31,6 @@ const DateCell = React.forwardRef(function DateCell({
   const [singleRowExpand, setSingleRowExpand] = React.useState<number | null>(
     null
   );
-  // const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
-  // const dateCellRef = React.useRef(null);
-
-  const handleEventCount = React.useCallback(() => {
-    const updateMaxEventCount =
-      Math.floor((dateCellRef.current?.offsetHeight - 8 * 2) / (20 + 4)) - 2;
-    setMaxEventCount(updateMaxEventCount);
-  }, []);
-
-  React.useEffect(() => {
-    handleEventCount();
-  }, [handleEventCount]);
-
-  React.useEffect(() => {
-    window.addEventListener("resize", debounce(handleEventCount, 250));
-    return () => {
-      window.removeEventListener("resize", debounce(handleEventCount, 250));
-    };
-  }, [handleEventCount]);
-
-  React.useEffect(() => {
-    if (!isExpend) handleEventCount();
-  }, [isExpend]);
 
   //------ functions ------//
   const handleSingleRowExpand = () => {

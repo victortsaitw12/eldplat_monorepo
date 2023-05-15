@@ -2,7 +2,7 @@ import React from "react";
 import { EditIcon, TrashIcon, Spinner, Pane } from "evergreen-ui";
 import { ViewSTY } from "./style";
 
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 import { formatTime, getDayEnd } from "../shift.util";
 import { SCHD_TYPE, LEAVE_CODE, EVENT_TYPE } from "../shift.data";

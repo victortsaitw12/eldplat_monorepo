@@ -5,7 +5,7 @@ import { EventListSTY, EventBtnSTY } from "./style";
 import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS } from "../shift.data";
 import { formatDate } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 
 const EventList = ({

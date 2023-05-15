@@ -1,10 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { Spinner, Pane } from "evergreen-ui";
 import { MonthlySTY } from "./style";
-import { getTotalDays, getLastMonthTotalDays } from "../shift.util";
+import { getTotalDays, getLastMonthTotalDays, debounce } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleList } from "@services/schedule/getScheduleList";
 import DateCell from "@contents/Shift/DateCell";
 import DateCellCanvas from "@contents/Shift/DateCellCanvas";
@@ -25,12 +26,14 @@ const MonthlyView = ({
   isExpend: boolean;
 }) => {
   const UI = React.useContext(UIContext);
-  const dateCellRef = React.useRef(null);
   const router = useRouter();
   UI.setId(router.query.id);
   const { cur } = router.query;
+  const dateCellRef = React.useRef<HTMLDivElement>(null);
   const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
+  //------ variables ------//
   const wkDays = ["日", "一", "二", "三", "四", "五", "六"];
   const curMonthFirst: Date = new Date(
     initialMonthFirst.getFullYear(),
@@ -38,34 +41,7 @@ const MonthlyView = ({
     1
   );
 
-  React.useEffect(() => {
-    if (!UI.id) return;
-    const updated = { ...UI.insertData };
-    updated.driver_no = UI.id;
-    UI.setInsertData(updated);
-    const fetchData = async () => {
-      const result = await getScheduleList(UI.id);
-      setMonthlyData(result.data);
-    };
-    fetchData();
-  }, [UI.id, cur, UI.flag, setMonthlyData]);
-
-  React.useEffect(() => {
-    if (UI.isSelect) document.addEventListener("mouseup", renderCreateForm);
-    return () => {
-      document.removeEventListener("mouseup", renderCreateForm);
-    };
-  }, [UI.isSelect]);
-
-  React.useEffect(() => {
-    if (isExpend) setMaxEventCount(99);
-  }, [isExpend]);
-
   //------ functions ------//
-  const handleTESTFowardRef = () => {
-    console.log("called");
-    console.log(dateCellRef.current?.offsetHeight);
-  };
   const renderCreateForm = () => {
     UI.setIsSelect(false);
     UI.setDrawerType({
@@ -75,9 +51,54 @@ const MonthlyView = ({
     setIsOpenDrawer(true);
   };
 
-  //------ render body ------//
+  const handleEventCount = React.useCallback(() => {
+    const updateMaxEventCount =
+      Math.floor((dateCellRef.current?.offsetHeight - 8 * 2) / (20 + 4)) - 2;
+    setMaxEventCount(updateMaxEventCount);
+  }, []);
+
+  // monitor window for eventCount shown
+  React.useEffect(() => {
+    handleEventCount();
+  }, [handleEventCount]);
+
+  React.useEffect(() => {
+    window.addEventListener("resize", debounce(handleEventCount, 250));
+    return () => {
+      window.removeEventListener("resize", debounce(handleEventCount, 250));
+    };
+  }, [handleEventCount]);
+
+  React.useEffect(() => {
+    isExpend ? setMaxEventCount(99) : handleEventCount();
+  }, [isExpend]);
+
+  // fetch data from db
+  React.useEffect(() => {
+    if (!UI.id) return;
+    setIsLoading(true);
+    const updated = { ...UI.insertData };
+    updated.driver_no = UI.id;
+    UI.setInsertData(updated);
+    const fetchData = async () => {
+      const result = await getScheduleList(UI.id);
+      setMonthlyData(result.data);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [UI.id, cur, UI.flag, setMonthlyData]);
+
+  // handle isSelect end
+  React.useEffect(() => {
+    if (UI.isSelect) document.addEventListener("mouseup", renderCreateForm);
+    return () => {
+      document.removeEventListener("mouseup", renderCreateForm);
+    };
+  }, [UI.isSelect]);
+
+  //------ render ------//
   const dateArr: Array<DateArrItem> = [];
-  // last month
+  // prev month
   const lastSundayDate =
     getLastMonthTotalDays(curMonthFirst) - curMonthFirst.getDay() + 1;
   const padCount = curMonthFirst.getDay();
@@ -130,8 +151,6 @@ const MonthlyView = ({
           monthlyData={monthlyData}
           view={view}
           maxEventCount={maxEventCount}
-          setMaxEventCount={setMaxEventCount}
-          isExpend={isExpend}
           dateCellRef={dateCellRef}
         />
       );
@@ -162,7 +181,7 @@ const MonthlyView = ({
 
   return (
     <MonthlySTY rows={dateArr.length / 7}>
-      <div className="headerCells" onClick={handleTESTFowardRef}>
+      <div className="headerCells">
         {wkDays.map((item, i) => (
           <div
             key={`day-${i}`}
@@ -173,6 +192,20 @@ const MonthlyView = ({
         ))}
       </div>
       <div className="dateCells">{renderRow()}</div>
+
+      {isLoading ? (
+        <Pane
+          className="coverAll"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={400}
+        >
+          <Spinner className="spinner" />
+        </Pane>
+      ) : (
+        ""
+      )}
     </MonthlySTY>
   );
 };

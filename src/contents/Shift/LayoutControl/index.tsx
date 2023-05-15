@@ -6,7 +6,7 @@ import {
   HorizontalBarChartIcon
 } from "evergreen-ui";
 import { LayoutControlSTY } from "./style";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const LayoutControl = ({
   setState
@@ -17,7 +17,7 @@ const LayoutControl = ({
   const renderToggleView = (type: "monthly" | "daily") => {
     setState(type);
     UI.resetState();
-    UI.setTimeFrame(1000 * 60 * 60 * 2);
+    UI.setTimeframe(1000 * 60 * 60 * 2);
   };
   return (
     <LayoutControlSTY>

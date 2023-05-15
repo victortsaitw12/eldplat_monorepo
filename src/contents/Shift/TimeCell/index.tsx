@@ -1,18 +1,13 @@
 import React from "react";
 import { TimeCellSTY } from "./style";
 
-import { formatDate, formatDateForAPI } from "../shift.util";
-import { UIContext } from "@contexts/UIProvider";
-import { getScheduleSidebar } from "@services/schedule/getScheduleSidebar";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import CreateEventBtn from "@contents/Shift/CreateEventBtn";
 
 const TimeCell = ({
-  setIsOpenDrawer,
   cellTimestamp,
-  view,
-  isExpend
+  view
 }: {
-  setIsOpenDrawer: (value: boolean) => void;
   cellTimestamp: number;
   view: "monthly" | "daily";
 }) => {
@@ -20,14 +15,14 @@ const TimeCell = ({
   //------ functions ------//
 
   const handleSelectEndDate = (timestamp: number) => {
-    const selectedDT = new Date(timestamp + UI.timeFrame);
+    const selectedDT = new Date(timestamp + UI.timeframe);
     UI.setEndDate(selectedDT);
   };
 
   const checkSelectType = (timestamp: number) => {
     if (!UI.startDate || !UI.endDate) return;
     const timeStart = new Date(timestamp);
-    const timeEnd = new Date(timestamp + UI.timeFrame);
+    const timeEnd = new Date(timestamp + UI.timeframe);
     if (UI.startDate >= timeStart && UI.endDate <= timeEnd) return "selected";
     if (
       UI.startDate >= timeStart &&

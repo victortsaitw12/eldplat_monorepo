@@ -1,11 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { Spinner, Pane } from "evergreen-ui";
 import { DailyViewSTY } from "./style";
 import { MonthlyData, TimeItem } from "../shift.typing";
 import { WKDAY_LABEL } from "@contents/Shift/shift.data";
 import { getDayEnd } from "../shift.util";
 
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleList } from "@services/schedule/getScheduleList";
 import EventBars from "@contents/Shift/EventBars";
 import TimeCell from "@contents/Shift/TimeCell";
@@ -25,6 +26,8 @@ const DailyView = ({
   view: "monthly" | "daily";
   isExpend: boolean;
 }) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const UI = React.useContext(UIContext);
   const router = useRouter();
   UI.setId(router.query.id);
@@ -42,12 +45,14 @@ const DailyView = ({
 
   React.useEffect(() => {
     if (!UI.id) return;
+    setIsLoading(true);
     const updated = { ...UI.insertData };
     updated.driver_no = UI.id;
     UI.setInsertData(updated);
     const fetchData = async () => {
       const result = await getScheduleList(UI.id);
       setMonthlyData(result.data);
+      setIsLoading(false);
     };
     fetchData();
   }, [UI.id, cur, UI.flag]);
@@ -61,8 +66,8 @@ const DailyView = ({
 
   React.useEffect(() => {
     isExpend
-      ? UI.setTimeFrame(1000 * 60 * 60 * 1) //1hour
-      : UI.setTimeFrame(1000 * 60 * 60 * 2); //2hour
+      ? UI.setTimeframe(1000 * 60 * 60 * 1) //1hour
+      : UI.setTimeframe(1000 * 60 * 60 * 2); //2hour
   }, [isExpend]);
   //------ functions ------//
   const handleCreateFullDayEvent = (timestamp: number) => {
@@ -84,7 +89,7 @@ const DailyView = ({
   //------ render body ------//
 
   const times: Array<TimeItem> = [];
-  for (let h = 0; h < 24; h += UI.timeFrame / (1000 * 60 * 60 * 1)) {
+  for (let h = 0; h < 24; h += UI.timeframe / (1000 * 60 * 60 * 1)) {
     const hour = h === 0 ? 12 : h > 12 ? h - 12 : h;
     const timeslot = h < 12 ? "AM" : "PM";
     const time = {
@@ -145,11 +150,8 @@ const DailyView = ({
                 return (
                   <TimeCell
                     key={`canvas-${i}-${index}`}
-                    // className="dateCell__row-canvas-cell time"
-                    setIsOpenDrawer={setIsOpenDrawer}
-                    cellTimestamp={date.timestamp + index * UI.timeFrame}
+                    cellTimestamp={date.timestamp + index * UI.timeframe}
                     view={view}
-                    isExpend={isExpend}
                   />
                 );
               })}
@@ -157,6 +159,19 @@ const DailyView = ({
           </div>
         ))}
       </div>
+      {isLoading ? (
+        <Pane
+          className="coverAll"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={400}
+        >
+          <Spinner className="spinner" />
+        </Pane>
+      ) : (
+        ""
+      )}
     </DailyViewSTY>
   );
 };

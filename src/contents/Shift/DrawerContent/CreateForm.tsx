@@ -9,7 +9,7 @@ import {
 } from "evergreen-ui";
 import { FormSTY } from "./style";
 
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import Timepicker from "@components/Timepicker";
 import LeaveTypePicker from "@contents/Shift/LeaveTypePicker";
 import { createSchedule } from "@services/schedule/createSchedule";

@@ -37,7 +37,7 @@ export const UIProvider = ({ children }: any) => {
   const [insertData, setInsertData] = React.useState<InsertData>(initData);
   const [flag, setFlag] = React.useState<boolean>(true);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [timeFrame, setTimeFrame] = React.useState<number>(1000 * 60 * 60 * 2); //2hour
+  const [timeframe, setTimeframe] = React.useState<number>(1000 * 60 * 60 * 2); //2hour
 
   const resetState = (): void => {
     console.log("< Reset state >");
@@ -77,8 +77,8 @@ export const UIProvider = ({ children }: any) => {
     setFlag,
     isLoading,
     setIsLoading,
-    timeFrame,
-    setTimeFrame,
+    timeframe,
+    setTimeframe,
     // 共用 function
     resetState
   };

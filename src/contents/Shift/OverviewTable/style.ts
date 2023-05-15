@@ -5,7 +5,7 @@ const freezeColWidth = 72;
 
 export const TableSTY = styled.div<{ isExpand: boolean }>`
   ${({ isExpand }) => `
-    --cellWidth: ${isExpand ? "108px" : "72px"};
+    --cellWidth: ${isExpand ? "140px" : "72px"};
   `}
 
   width: 100%;
@@ -18,7 +18,6 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
   &::-webkit-scrollbar {
     display: none;
   }
-
   .eg-table {
     width: fit-content;
     height: fit-content;

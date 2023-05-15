@@ -15,14 +15,6 @@ export const FormSTY = styled.form<{ color?: string }>`
     align-items: center;
   }
 
-  .form__startTime {
-  }
-  .form__endTime {
-  }
-  .form__leaveCode {
-  }
-  .form__description {
-  }
   .form_signOff {
     .form_signOff-container {
       display: flex;

@@ -19,5 +19,6 @@ export const BtnSTY = styled.button<{ color: string }>`
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: calc(100% - 20px);
+    padding: 0 4px;
   }
 `;

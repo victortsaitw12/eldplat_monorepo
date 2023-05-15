@@ -7,7 +7,7 @@ import { ViewIdSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
 import { getLayout } from "@layout/MainLayout";
-import UIProvider from "@contexts/UIProvider";
+import UIProvider from "@contexts/scheduleContext/UIProvider";
 import MonthPicker from "@contents/Shift/MonthPicker";
 import MonthlyView from "@contents/Shift/MonthlyView";
 import DrawerContent from "@contents/Shift/DrawerContent";
