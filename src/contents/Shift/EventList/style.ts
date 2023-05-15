@@ -19,7 +19,6 @@ export const EventBtnSTY = styled.div<{
 }>`
   min-height: var(--minBtnHeight);
   min-width: 100%;
-
   .reminder {
     animation: 200ms ease-out 200ms infinite alternate reminder;
     /* animation-delay: 200ms;

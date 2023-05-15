@@ -100,7 +100,6 @@ export const MonthlySTY = styled.div<{ rows: number }>`
   /* shared style in headerCells & dateCells */
   .cell {
     width: calc(100% / 7);
-
     pointer-events: none;
     * {
       pointer-events: auto;

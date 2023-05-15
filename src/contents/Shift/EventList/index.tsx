@@ -197,7 +197,10 @@ const EventList = ({
   );
 
   return (
-    <EventListSTY maxEventCount={maxEventCount}>
+    <EventListSTY
+      maxEventCount={maxEventCount}
+      style={{ pointerEvents: "none" }}
+    >
       {prevEventBtns}
       {eventBtns}
     </EventListSTY>
