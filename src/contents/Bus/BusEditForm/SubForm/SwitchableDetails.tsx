@@ -11,9 +11,10 @@ import FormCard from "@components/FormCard";
 import { FilePickBtnSTY } from "@components/FormCard/style";
 import { UseFormRegister, FieldErrors, Control } from "react-hook-form";
 import { BusDataTypes } from "../busDefaultData";
-import HorizatalInput from "@components/HookForm/Input/HorizatalInput";
 import VerticalInput from "@components/HookForm/Input/VerticalInput";
+import HorizatalInput from "@components/HookForm/Input/HorizatalInput";
 import Select from "@components/HookForm/Select";
+import Card from "@components/Card";
 interface Props {
   hide?: boolean;
   register: UseFormRegister<BusDataTypes>;
@@ -29,33 +30,24 @@ function Details({
   isDisabled = false
 }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
-  console.log("render Details");
   return (
-    <Pane marginX="20px" display={hide ? "none" : "block"}>
-      <FormCard formTitle="新增一個識別碼?">
-        <div className="w100">
-          <Pane display="flex" gap="20px">
-            <VerticalInput
-              width="100%"
-              label="識別碼/序列號"
-              hint={"車輛識別號或序列號"}
-              errorMessage={errors?.detail?.vin?.message as string}
-              {...register("detail.vin", { required: "請輸入車輛識別碼" })}
-            />
-            <Button disabled={false} marginTop="25px">
-              解碼識別碼
-            </Button>
-          </Pane>
-        </div>
-      </FormCard>
+    <div>
+      <Card title="身分識別">
+        <HorizatalInput
+          width="100%"
+          label="車輛編號"
+          errorMessage={errors?.detail?.vin?.message as string}
+          {...register("detail.vin", { required: "請輸入車輛識別碼" })}
+        />
+        <VerticalInput
+          label="車輛名稱"
+          hint={" 輸入暱稱以在 Fleetio 中區分此車輛"}
+          errorMessage={errors?.detail?.bus_name?.message as string}
+          {...register("detail.bus_name", { required: "請輸入車輛名稱" })}
+        />
+      </Card>
       <FormCard formTitle="身分識別">
         <div className="w100">
-          <VerticalInput
-            label="車輛名稱"
-            hint={" 輸入暱稱以在 Fleetio 中區分此車輛"}
-            errorMessage={errors?.detail?.bus_name?.message as string}
-            {...register("detail.bus_name", { required: "請輸入車輛名稱" })}
-          />
           <VerticalInput
             label="牌照"
             errorMessage={errors?.detail?.license_plate?.message as string}
@@ -234,7 +226,7 @@ function Details({
           </SelectField>
         </div>
       </FormCard>
-    </Pane>
+    </div>
   );
 }
 

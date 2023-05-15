@@ -18,7 +18,6 @@ interface Props {
 }
 function Details({ hide, register, errors }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
-  console.log("render Details");
   return (
     <Pane marginX="20px" display={hide ? "none" : "block"}>
       <FormCard formTitle="新增一個識別碼?">

@@ -3,37 +3,33 @@ function flatternAndLowerCaseInputData(oriBusData: any) {
    * bus, bus_Specifications,bus_Lifecycle
    * flattern data and concat to one string
    */
+  console.log("oriBusData", oriBusData);
   let flatternData: { [key: string]: any } = {};
   // import bus
-  flatternData = Object.assign(flatternData, oriBusData.bus[0]);
+  flatternData = Object.assign(flatternData, oriBusData.bus);
   // import bus_Specifications
-  flatternData = Object.assign(flatternData, oriBusData.bus_Specifications[0]);
+  flatternData = Object.assign(flatternData, oriBusData.bus_specifications);
   // import bus_Lifecycle
-  flatternData = Object.assign(flatternData, oriBusData.bus_Lifecycle[0]);
+  flatternData = Object.assign(flatternData, oriBusData.bus_lifecycle);
+  // import bus_loan_lease
+  flatternData = Object.assign(flatternData, oriBusData.bus_loan_lease);
   console.log("flatternData", flatternData);
-  /**
-   * Transform key to lower case
-   */
-  const lowerCaseData: { [key: string]: any } = {};
-  for (const key in flatternData) {
-    lowerCaseData[key.toLowerCase()] = flatternData[key];
-  }
-  console.log("lowerCaseData", lowerCaseData);
-  return lowerCaseData;
+  return flatternData;
 }
-export const getBusById = async (bus_No: string) => {
-  const response = await fetch("https://localhost:7188/Gateway_Bus/GetOneBus", {
-    method: "POST",
-    body: JSON.stringify({
-      bus_No: bus_No
-    }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+export const getBusById = async (bus_no: string) => {
+  const response = await fetch(
+    `https://localhost:7088/CAR/GetOneBus/${bus_no}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+      }
     }
-  });
+  );
   const data = await response.json();
-  const flatternLowerCaseData = flatternAndLowerCaseInputData(data);
+  console.log("data", data);
+  const flatternLowerCaseData = flatternAndLowerCaseInputData(data.oneBus);
   return mappingData(flatternLowerCaseData, busPattern);
 };
 

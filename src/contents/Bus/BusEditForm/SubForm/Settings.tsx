@@ -15,8 +15,6 @@ interface Props {
   errors: FieldErrors<BusDataTypes>;
 }
 function Settings({ hide, register, errors }: Props) {
-  // console.log("errors", errors);
-  console.log("render Settings");
   return (
     <Pane marginX="20px" display={hide ? "none" : "block"}>
       <FormCard formTitle="設定">

@@ -41,6 +41,7 @@ const Page: NextPageWithLayout<never> = () => {
           busPattern,
           busParser
         );
+        console.log("busesData", busesData);
         if (isCanceled) {
           console.log("canceled");
           return;

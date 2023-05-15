@@ -16,6 +16,7 @@ function BusList({
   goToEditPageHandler
 }: Props) {
   const busTitle = getBusTitle();
+  console.log(busData);
   return (
     <BodySTY>
       <TableWithEdit

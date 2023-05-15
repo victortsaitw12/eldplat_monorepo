@@ -25,7 +25,6 @@ function Financial({ hide, register, errors }: Props) {
   const handleFinancingTabChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFinancingTab(e.target.value);
   };
-  console.log("render Finacial");
   return (
     <Pane marginX="20px" display={hide ? "none" : "block"}>
       <FormCard formTitle="購買詳情">
