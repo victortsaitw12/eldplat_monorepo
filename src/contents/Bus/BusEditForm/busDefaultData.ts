@@ -238,6 +238,7 @@ const busDefaultData: BusDataTypes = {
 };
 
 export function getBusDefaultData(inputQueryData?: { [key: string]: any }) {
+  const oldResultObj = busDefaultData;
   const resultObj = deepClone(busDefaultData);
   if (!inputQueryData) return resultObj;
   for (const subFormKey in resultObj) {
@@ -247,5 +248,7 @@ export function getBusDefaultData(inputQueryData?: { [key: string]: any }) {
       }
     }
   }
+  console.log("Is new Data?", oldResultObj === resultObj);
+  console.log("resultObj", resultObj);
   return resultObj;
 }
