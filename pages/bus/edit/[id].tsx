@@ -27,6 +27,10 @@ const mainFilterArray = [
   { id: 5, label: "規格", value: "Specifications" }
 ];
 //
+function fakeSubmit(data: any) {
+  console.log("data", data);
+}
+//
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ busId }) => {
@@ -55,13 +59,11 @@ const Page: NextPageWithLayout<
     setLoading(true);
     console.log("asyncSubmitForm", data);
     try {
-      // for nesting obj only
       const flatternObj: { [key: string]: any } = {};
       for (const key in data) {
         Object.assign(flatternObj, data[key]);
       }
       console.log("flatternObj", flatternObj);
-      // end
       const res = await updateBus(busId, flatternObj);
       console.log("response of bus update: ", res);
       router.push("/bus");
@@ -81,6 +83,7 @@ const Page: NextPageWithLayout<
       onChangeTab={changeMainFilterHandler}
       mainFilter={mainFilter}
       mainFilterArray={mainFilterArray}
+      onSave={handleSubmit(fakeSubmit)}
     >
       <BodySTY>
         <BusEditForm

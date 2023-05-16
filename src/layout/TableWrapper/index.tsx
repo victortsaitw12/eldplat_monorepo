@@ -1,4 +1,10 @@
-import { ChevronDownIcon, Icon, FullscreenIcon, CrossIcon } from "evergreen-ui";
+import {
+  ChevronDownIcon,
+  Icon,
+  FullscreenIcon,
+  CrossIcon,
+  FloppyDiskIcon
+} from "evergreen-ui";
 import React from "react";
 import { BodySTY, FilterItemSTY } from "./style";
 interface Props {
@@ -10,6 +16,8 @@ interface Props {
     label: string;
     value: string;
   }[];
+  onSave?: () => void;
+  onClose?: () => void;
 }
 
 function TableWrapper({
@@ -18,7 +26,8 @@ function TableWrapper({
   mainFilter,
   onChangeTab = (value: string) => {
     console.log(value);
-  }
+  },
+  onSave
 }: Props) {
   return (
     <BodySTY>
@@ -40,6 +49,27 @@ function TableWrapper({
           })}
         </div>
         <div className="tab-options">
+          {onSave && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                onSave();
+              }}
+            >
+              <Icon
+                icon={FloppyDiskIcon}
+                size={16}
+                marginY="auto"
+                marginX="10px"
+                color="#91A9C5"
+              />
+              <div>全部儲存</div>
+            </div>
+          )}
           <Icon
             icon={FullscreenIcon}
             size={16}

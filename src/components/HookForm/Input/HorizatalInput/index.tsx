@@ -1,6 +1,8 @@
 import React, { forwardRef, memo } from "react";
 import type { InputHTMLAttributes } from "react";
+import { HelpIcon } from "evergreen-ui";
 import { StyledInput, HorizatalLabelSTY } from "../style";
+import Tooltip from "@components/Tooltip";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   description?: string;
@@ -14,13 +16,19 @@ const TextInput = memo(
   ) {
     return (
       <HorizatalLabelSTY>
-        <span className="title">{label}</span>
+        <div className="title">
+          <span>{label}</span>
+          {!!hint && (
+            <Tooltip text={hint}>
+              <HelpIcon />
+            </Tooltip>
+          )}
+        </div>
         {/* {description && <span className="description">{description}</span>} */}
         <div>
           <StyledInput ref={ref} {...rest}></StyledInput>
           {errorMessage && <div className="error">{errorMessage}</div>}
         </div>
-        {hint && <span className="hint">{hint}</span>}
       </HorizatalLabelSTY>
     );
   })

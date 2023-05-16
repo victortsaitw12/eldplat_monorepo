@@ -5,7 +5,7 @@ export interface BusDataTypes {
     bus_name: string;
     vin: string;
     license_plate: string;
-    type: string;
+    bus_type: string;
     year: number;
     make: string;
     model: string;
@@ -125,7 +125,7 @@ const busDefaultData: BusDataTypes = {
     bus_name: "",
     vin: "",
     license_plate: "",
-    type: "",
+    bus_type: "",
     year: 0,
     make: "",
     model: "",

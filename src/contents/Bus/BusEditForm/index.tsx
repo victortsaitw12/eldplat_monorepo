@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { StepControlSTY } from "@components/FormCard/style";
 import { BodySTY } from "./style";
 import {
-  Details,
-  Financial,
-  Lifecycle,
-  Maintenance,
-  Settings,
-  Specifications,
-  SwitchableDetails
+  SwitchableDetails,
+  SwitchableLifeCycle,
+  SwitchableMaintenance,
+  SwitchableSpecifications,
+  SwitchableFinancial
 } from "./SubForm";
 import {
   UseFormHandleSubmit,
@@ -61,41 +59,34 @@ function BusEditForm({
             control={control}
             isDisabled={isDisabled}
           />
-          <Maintenance
+          <SwitchableMaintenance
             hide={visibleForm !== "Maintenance"}
             register={register}
             errors={errors}
+            control={control}
+            isDisabled={isDisabled}
           />
-          <Lifecycle
+          <SwitchableLifeCycle
             hide={visibleForm !== "Lifecycle"}
             register={register}
             errors={errors}
+            control={control}
+            isDisabled={isDisabled}
           />
-          <Financial
+          <SwitchableFinancial
             hide={visibleForm !== "Financial"}
             register={register}
             errors={errors}
+            control={control}
+            isDisabled={isDisabled}
           />
-          <Specifications
+          <SwitchableSpecifications
             hide={visibleForm !== "Specifications"}
             register={register}
             errors={errors}
+            control={control}
+            isDisabled={isDisabled}
           />
-          <Settings
-            hide={visibleForm !== "Settings"}
-            register={register}
-            errors={errors}
-          />
-          <StepControlSTY>
-            <button type="button" onClick={onCancel}>
-              取消
-            </button>
-            <div className="next-step">
-              <button className="fill" type="submit">
-                儲存車輛
-              </button>
-            </div>
-          </StepControlSTY>
         </form>
       </fieldset>
     </BodySTY>

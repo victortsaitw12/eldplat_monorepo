@@ -22,6 +22,8 @@ const HorizatalLabelSTY = styled.div`
   align-items: center;
   gap: 20px;
   .title {
+    display: flex;
+    align-items: center;
     font-weight: 600;
     width: 160px;
     color: ${({ theme }) => theme.color.N800};
@@ -29,8 +31,6 @@ const HorizatalLabelSTY = styled.div`
   .error {
     margin-top: 8px;
     color: ${({ theme }) => theme.color.R400};
-  }
-  .hint {
   }
   .description {
     margin-top: 4px;
