@@ -12,8 +12,7 @@ import {
   numberValidation,
   textValidation
 } from "@utils/inputValidation";
-import VendorLayout from "../VendorLayout";
-
+import FlexWrapper from "@layout/FlexWrapper";
 interface I_addVendorProps {
   submitForm: (data: any) => void;
   onCancel: () => void;
@@ -37,7 +36,7 @@ const defaultValues = {
   vendor_Contact_Email: "",
   vendor_Code: ["01"],
 };
-
+//🕯️🕯️🕯️此component未來會刪除
 function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
   const defaultFormValue = oldData ? oldData : defaultValues;
   const {
@@ -73,8 +72,8 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
           submitForm({ ...data, vendor_Code: fuelValue });
         })}
       >
-        <VendorLayout
-          basicSection={
+        <FlexWrapper>
+          <div>
             <FormCard formTitle="基本資料">
               <div className="w100">
                 <TextInputField
@@ -167,68 +166,64 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                 </SelectField>
               </div>
             </FormCard>
-          }
-          categorySection={
-            <FormCard formTitle="分類">
-              {MOCK_FUEL_DATA.map((item) => {
-                // 現在是供應商(車) => 所以只有03可選
-                if (item.value === "03")
-                  return (
-                    <div key={item.label} className="w100">
-                      <CheckboxField
-                        label={item.label}
-                        hint={item.hint}
-                        item={item}
-                        checked={fuelValue.includes(item.value)}
-                        toggleFuelValue={toggleFuelValue}
-                      />
-                    </div>
-                  );
-              })}
-            </FormCard>
-          }
-          labelSection={
-            <FormCard formTitle="標籤">
-              <TagInput
-                inputProps={{ placeholder: "標籤上限2字元" }}
-                values={tags}
-                // width="100%"
-                onChange={(values) => {
-                  setTags(values)
-                }}
+            <FlexWrapper padding="10px 0">
+              <FormCard formTitle="分類">
+                {MOCK_FUEL_DATA.map((item) => {
+                  // 現在是供應商(車) => 所以只有03可選
+                  if (item.value === "03")
+                    return (
+                      <div key={item.label} className="w100">
+                        <CheckboxField
+                          label={item.label}
+                          hint={item.hint}
+                          item={item}
+                          checked={fuelValue.includes(item.value)}
+                          toggleFuelValue={toggleFuelValue}
+                        />
+                      </div>
+                    );
+                })}
+              </FormCard>
+              <FormCard formTitle="標籤">
+                <TagInput
+                  inputProps={{ placeholder: "標籤上限2字元" }}
+                  values={tags}
+                  // width="100%"
+                  onChange={(values) => {
+                    setTags(values)
+                  }}
+                />
+              </FormCard>
+            </FlexWrapper>
+          </div>
+          <FormCard formTitle="聯絡方式">
+            <div className="w100">
+              <TextInputField
+                label="聯絡人"
+                {...register("vendor_Contact_Name", {
+                  required: "必填",
+                })}
               />
-            </FormCard>
-          }
-          contactSection={
-            <FormCard formTitle="聯絡方式">
-              <div className="w100">
-                <TextInputField
-                  label="聯絡人"
-                  {...register("vendor_Contact_Name", {
-                    required: "必填",
-                  })}
-                />
-              </div>
-              <div className="w50">
-                <TextInputField
-                  label="電話"
-                  hint="聯絡人的專線或手機號碼"
-                  {...register("vendor_Contact_Phone", {
-                    required: "必填",
-                    validate: numberValidation
-                  })}
-                />
-                <TextInputField
-                  label="信箱"
-                  {...register("vendor_Contact_Email", {
-                    required: "必填",
-                    validate: emailValidation
-                  })}
-                />
-              </div>
-            </FormCard>
-          }
-        />
+            </div>
+            <div className="w50">
+              <TextInputField
+                label="電話"
+                hint="聯絡人的專線或手機號碼"
+                {...register("vendor_Contact_Phone", {
+                  required: "必填",
+                  validate: numberValidation
+                })}
+              />
+              <TextInputField
+                label="信箱"
+                {...register("vendor_Contact_Email", {
+                  required: "必填",
+                  validate: emailValidation
+                })}
+              />
+            </div>
+          </FormCard>
+        </FlexWrapper>
         <StepControlSTY>
           <button onClick={onCancel}>取消</button>
           <div className="next-step">
