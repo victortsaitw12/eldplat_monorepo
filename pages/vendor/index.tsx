@@ -178,7 +178,7 @@ const Page: NextPageWithLayout<{
   }
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push("/vendor/detail/" + id + '?editPage=1');
+    router.push("/vendor/detail/" + id + "?editPage=1");
   }
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {
@@ -194,14 +194,13 @@ const Page: NextPageWithLayout<{
   }
   //套用新版filter
   const changeMainFilterHandler = () => {
+    console.log("changeMainFilterHandler");
   }
   //
   const mainFilterArray = useMemo(
     () => [
       { id: 1, label: "全部", value: "all" },
-      { id: 2, label: "停用", value: "seal" },
-      { id: 3, label: "tab3", value: "tab3" },
-      { id: 3, label: "tab4", value: "tab4" }
+      { id: 2, label: "停用", value: "seal" }
     ],
     []
   );

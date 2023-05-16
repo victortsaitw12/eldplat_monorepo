@@ -68,7 +68,7 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
 
     return (
         <FormSTY onSubmit={handleSubmit((data) => {
-            console.log('create Vendor Data!:', data);
+            console.log("🎶🎶🎶create Vendor Data!:", data);
             // asyncSubmitForm({ ...data });
         })}>
             <FiledInput
@@ -96,10 +96,11 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
                 label="負責人"
             />
             <Text>
-                <span style={{ color: '#D14343' }}>* </span>
+                <span style={{ color: "#D14343" }}>* </span>
                 公司地址
             </Text>
             <FiledInput
+                horizonLabel={true}
                 controlProps={{
                     name: "vendor_Address",
                     control,
@@ -108,6 +109,7 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
                 label="地址1"
             />
             <FiledInput
+                horizonLabel={true}
                 controlProps={{
                     name: "vendor_Address2",
                     control,
@@ -116,6 +118,7 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
                 label="地址2"
             />
             <FiledInput
+                horizonLabel={true}
                 controlProps={{
                     name: "vendor_City",
                     control,
@@ -124,6 +127,7 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
                 label="城市"
             />
             <FiledInput
+                horizonLabel={true}
                 controlProps={{
                     name: "vendor_State",
                     control,
@@ -131,7 +135,12 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
                 }}
                 label="州/省/區域"
             />
+            <Text>
+                <span style={{ color: "#D14343" }}>* </span>
+                公司電話
+            </Text>
             <FiledInput
+                horizonLabel={true}
                 controlProps={{
                     name: "vendor_Zip",
                     control,
@@ -140,6 +149,7 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
                 label="郵遞區號"
             />
             <FiledInput
+                horizonLabel={true}
                 controlProps={{
                     name: "vendor_Country",
                     control,
@@ -188,7 +198,7 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
                 label="國家"
             />
             <Text>
-                <span style={{ color: '#D14343' }}>* </span>
+                <span style={{ color: "#D14343" }}>* </span>
                 公司電話
             </Text>
             <FiledInput

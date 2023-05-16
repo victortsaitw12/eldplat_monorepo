@@ -1,5 +1,10 @@
-import styled from "styled-components";
-const ItemSTY = styled.label`
+import styled, { css } from "styled-components";
+
+interface I_StyInputProps {
+  horizonLabel?: boolean;
+}
+
+const ItemSTY = styled.label<I_StyInputProps>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -22,6 +27,25 @@ const ItemSTY = styled.label`
     gap: 0.5rem;
     color: ${({ theme }) => theme.color.R400};
   }
+  ${(props) => getHorizonStyles(props)}
 `;
-
+const getHorizonStyles = (props: any) =>
+  props.horizonLabel
+    ? css`
+         flex-direction: row;
+         flex-wrap: wrap;
+         input{
+          display: block;
+          width: calc(60% - 12px);
+         }
+         .field-title {
+          width: 40%;
+         }
+         .error-message{
+          width: 100%;
+         }
+      `
+    : css`
+        
+      `;
 export { ItemSTY };

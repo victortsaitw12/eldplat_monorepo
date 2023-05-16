@@ -19,7 +19,7 @@ interface I_infoData {
 }
 
 export interface I_InfoBoxProps {
-  isEdit: Boolean;
+  isEdit: boolean;
   infoTitle?: string;
   infoData?: I_infoData[];
   infoType?: string;

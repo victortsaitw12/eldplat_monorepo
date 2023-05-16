@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { TextInputField, TextInput, SelectField, Pane } from "evergreen-ui";
+import { TextInputField, TextInput, SelectField } from "evergreen-ui";
 import { MOCK_FUEL_DATA } from "./FuelData";
 
 //@components
@@ -30,7 +30,7 @@ interface I_Props {
 }
 
 const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler, submitForm }: I_Props) => {
-  console.log("@@@@@@@@@@@vendor data", vendorData);
+  console.log("💫💫💫原本的供應商資料：", vendorData);
   const [fuelValue, setFuelValue] = useState<string[]>(["03"]);
   const methods = useForm({ defaultValues: vendorData });
   //分類的選法
@@ -128,8 +128,8 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       label: "",
       value: [vendorData.vendor_City, vendorData.vendor_State],
       editEle: [
-
         <SelectField
+          key="vendor_City"
           label="城市"
           {...methods.register("vendor_City", {
             required: "必填",
@@ -143,6 +143,7 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
         </SelectField >
         ,
         <SelectField
+          key="vendor_State"
           label="州/省/區"
           {...methods.register("vendor_State", {
             required: "必填",
@@ -162,6 +163,7 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       value: [vendorData.vendor_Zip, vendorData.vendor_Country],
       editEle: [
         <TextInputField
+          key="vendor_Zip"
           label="郵遞區號"
           {...methods.register("vendor_Zip", {
             validate: textValidation
@@ -169,6 +171,7 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
           marginBottom="0"
         />,
         <SelectField
+          key="vendor_Country"
           label="國家"
           {...methods.register("vendor_Country", {
             required: "必填",
@@ -186,8 +189,8 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       label: "公司電話",
       value: vendorData.vendor_Contact_Phone || "---",
       editEle: [
-        <TextInput disabled={true} style={{ width: '60px' }} value="+886" />,
-        <TextInput {...methods.register("vendor_Contact_Phone", {
+        <TextInput key="company_phone_1" disabled={true} style={{ width: "60px" }} value="+886" />,
+        <TextInput key="company_phone_2" {...methods.register("vendor_Contact_Phone", {
           validate: numberValidation
         })} />
       ],
@@ -197,8 +200,8 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       label: "公司傳真",
       value: vendorData.vendor_Contact_Phone || "---",
       editEle: [
-        <TextInput disabled={true} style={{ width: '60px' }} value="+886" />,
-        <TextInput {...methods.register("vendor_Contact_Phone", {
+        <TextInput key="company_fax_1" disabled={true} style={{ width: "60px" }} value="+886" />,
+        <TextInput key="company_fax_2" {...methods.register("vendor_Contact_Phone", {
           validate: numberValidation
         })} />
       ],
@@ -208,7 +211,7 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       label: "公司信箱",
       value: vendorData.vendor_Contact_Email || "---",
       editEle: [
-        <TextInput {...methods.register("vendor_Contact_Email", {
+        <TextInput key="company_email" {...methods.register("vendor_Contact_Email", {
           validate: emailValidation
         })} />
       ],
@@ -218,7 +221,7 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       label: "公司網址",
       value: vendorData.vendor_Website || "---",
       editEle: [
-        <TextInput {...methods.register("vendor_Website", {
+        <TextInput key="vendor_Website" {...methods.register("vendor_Website", {
           validate: textValidation
         })} />
       ],
@@ -228,7 +231,7 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       label: "主要聯絡人",
       value: vendorData.vendor_Contact_Name || "---",
       editEle: [
-        <TextInput {...methods.register("vendor_Contact_Name", {
+        <TextInput key="vendor_Contact_Name" {...methods.register("vendor_Contact_Name", {
           validate: textValidation
         })} />
       ],
@@ -238,8 +241,8 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       label: "主要聯絡人電話(市話)",
       value: "---",
       editEle: [
-        <TextInput disabled={true} style={{ width: '60px' }} />,
-        <TextInput />
+        <TextInput key="vendor_Contact_Phone_1" disabled={true} style={{ width: "60px" }} />,
+        <TextInput key="vendor_Contact_Phone_2" />
       ],
     },
     {
@@ -247,8 +250,8 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
       label: "主要聯絡人電話(手機)",
       value: "+886 900111888",
       editEle: [
-        <TextInput disabled={true} style={{ width: '60px' }} />,
-        <TextInput />
+        <TextInput key="vendor_Contact_Mobile_1" disabled={true} style={{ width: "60px" }} />,
+        <TextInput key="vendor_Contact_Mobile_2" />
       ],
     },
   ]
@@ -261,6 +264,12 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
             submitForm({ ...data, vendor_Code: fuelValue });
           })}
         >
+          <button
+            className="fill"
+            type="submit"
+          >
+            儲存供應商
+          </button>
           <FlexWrapper padding="0">
             <div>
               <InfoBox isEdit={isEdit} infoData={basic_info} infoTitle="基本資料" />
@@ -271,12 +280,6 @@ const VendorDetail = ({ isEdit, vendorData, goToDetailPage, goToCreatePage, goTo
             </div>
             <InfoBox isEdit={isEdit} infoData={contact_info} infoTitle="聯絡方式" />
           </FlexWrapper>
-          <button
-            className="fill"
-            type="submit"
-          >
-            儲存供應商
-          </button>
         </form>
       </FormProvider >
     </>
