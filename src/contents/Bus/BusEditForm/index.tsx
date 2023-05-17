@@ -47,7 +47,6 @@ function BusEditForm({
     setVisibleForm(formType);
   }, [formType]);
   //
-  console.log("errors: ", errors);
   return (
     <BodySTY>
       <fieldset style={{ border: "none" }} disabled={isDisabled}>
