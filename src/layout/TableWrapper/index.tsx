@@ -43,7 +43,7 @@ function TableWrapper({
                 isActive={item.value === mainFilter}
               >
                 <span>{item.label}</span>
-                <ChevronDownIcon />
+                {item.value === mainFilter && <ChevronDownIcon />}
               </FilterItemSTY>
             );
           })}

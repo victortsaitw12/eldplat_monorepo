@@ -9,6 +9,16 @@ const BodySTY = styled.div`
   padding: 30px 20px;
   background-color: #fff;
   margin-bottom: 10px;
+  .title {
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    gap: 20px;
+  }
 `;
 
 const Card = ({
@@ -20,8 +30,8 @@ const Card = ({
 }) => {
   return (
     <BodySTY>
-      <h2>{title}</h2>
-      {children}
+      <div className="title">{title}</div>
+      <div className="content">{children}</div>
     </BodySTY>
   );
 };

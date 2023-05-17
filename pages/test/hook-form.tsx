@@ -1,11 +1,12 @@
 import React, { useId } from "react";
 import { useForm } from "react-hook-form";
 import VerticalInput from "@components/HookForm/Input/VerticalInput";
-import HorizatalInput from "@components/HookForm/Input/HorizatalInput";
+import HorizatalInput from "@components/HookForm/Input/HorizontalInput";
 import SingleInput from "@components/HookForm/Input/SingleInput";
-import Select from "@components/HookForm/Select";
+import Select from "@components/HookForm/Select/SingleSelect";
 import Radio from "@components/HookForm/Radio";
 import CheckBox from "@components/HookForm/CheckBox/SingleCheckBox";
+import DottedSelect from "@components/HookForm/Select/DottedSelect";
 type SelectOption = {
   value: string;
   label: string;
@@ -17,6 +18,7 @@ interface FormValues {
   gender: string;
   education: string;
   isMarried: boolean;
+  color: string;
 }
 const selectOptions = [
   { value: "male", label: "男" },
@@ -39,7 +41,8 @@ const Page = () => {
       nickName: "小明",
       gender: "male",
       education: "國小",
-      isMarried: false
+      isMarried: false,
+      color: "01"
     }
   });
   function submitDataHandler(data: any) {
@@ -52,7 +55,12 @@ const Page = () => {
       <fieldset style={{ border: "none" }} disabled={!isEdit}>
         <form
           onSubmit={handleSubmit(submitDataHandler)}
-          style={{ width: "600px", border: "1px solid", padding: "20px" }}
+          style={{
+            width: "600px",
+            height: "500px",
+            border: "1px solid",
+            padding: "20px"
+          }}
         >
           <VerticalInput
             label="姓氏"
@@ -86,6 +94,19 @@ const Page = () => {
             <label>已婚:</label>
             <CheckBox control={control} name="isMarried" />
           </div>
+          <DottedSelect
+            control={control}
+            isDisabled={!isEdit}
+            name="color"
+            label="顏色"
+            options={[
+              { label: "活躍中", value: "01", color: "#52BD94" },
+              { label: "已售出", value: "02", color: "#8EA8C7" },
+              { label: "終止服務", value: "03", color: "#D14343" },
+              { label: "在維修廠", value: "04", color: "#FFB020" },
+              { label: "閒置中", value: "05", color: "#3670C9" }
+            ]}
+          />
           {isEdit && <button type="submit">submit</button>}
         </form>
       </fieldset>

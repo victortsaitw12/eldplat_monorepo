@@ -8,7 +8,6 @@ export default function Tooltip({
   text: string;
 }) {
   const [show, setShow] = React.useState(false);
-  console.log("show", show);
   return (
     <BodySTY>
       <div

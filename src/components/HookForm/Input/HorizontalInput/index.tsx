@@ -8,16 +8,20 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   description?: string;
   errorMessage?: string;
   hint?: string;
+  isRequire?: boolean;
 }
 const TextInput = memo(
   forwardRef<HTMLInputElement, InputProps>(function TextInput(
-    { label, description, errorMessage, hint, ...rest },
+    { label, description, errorMessage, hint, isRequire, ...rest },
     ref
   ) {
     return (
       <HorizatalLabelSTY>
         <div className="title">
-          <span>{label}</span>
+          <div className="title-content">
+            {!!isRequire && <span className="required">*</span>}
+            {label}
+          </div>
           {!!hint && (
             <Tooltip text={hint}>
               <HelpIcon />

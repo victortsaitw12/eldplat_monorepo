@@ -9,7 +9,6 @@ const BodySTY = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
     margin: 0 30px;
   }
   &::-webkit-scrollbar {
