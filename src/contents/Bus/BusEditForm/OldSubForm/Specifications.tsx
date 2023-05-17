@@ -14,7 +14,6 @@ interface Props {
   errors: FieldErrors<BusDataTypes>;
 }
 function Specifications({ hide, register, errors }: Props) {
-  console.log("render Specifications");
   return (
     <Pane marginX="20px" display={hide ? "none" : "block"}>
       <FormCard formTitle="尺寸">

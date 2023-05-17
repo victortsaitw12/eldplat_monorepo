@@ -18,7 +18,6 @@ interface Props {
 }
 function Maintenance({ hide, register, errors }: Props) {
   const [schedule, setSchedule] = useState("0");
-  console.log("render Maintenance");
   return (
     <Pane marginX="20px" display={hide ? "none" : "block"}>
       <FormCard formTitle="維修計畫">

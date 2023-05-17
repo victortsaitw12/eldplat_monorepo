@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -14,6 +14,12 @@ import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
+//
+const mainFilterArray = [
+  { id: 1, label: "全部", value: "all" },
+  { id: 2, label: "停用", value: "seal" }
+];
+//
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
@@ -26,45 +32,43 @@ const Page: NextPageWithLayout<never> = () => {
     isDrawerOpen,
     setDrawerOpen
   } = useBusStore();
+  //
+  const fetchBusData = useCallback(
+    async (isCanceled: boolean) => {
+      getAllBuses(subFilter).then((res) => {
+        const busesData = mappingQueryData(
+          res.contentList,
+          busPattern,
+          busParser
+        );
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "busInitFilter",
+            JSON.stringify(res.conditionList)
+          );
+          initializeSubFilter();
+        }
+        setData(busesData);
+      });
+    },
+    [initializeSubFilter, subFilter]
+  );
+  //
   useEffect(() => {
     updateMainFilter("all");
-  }, []);
+  }, [updateMainFilter]);
+  //
   useEffect(() => {
     let isCanceled = false;
     fetchBusData(isCanceled);
     return () => {
       isCanceled = true;
     };
-  }, [mainFilter, subFilter, initializeSubFilter]);
-  //
-  const mainFilterArray = useMemo(
-    () => [
-      { id: 1, label: "全部", value: "all" },
-      { id: 2, label: "停用", value: "seal" }
-    ],
-    []
-  );
-  const fetchBusData = async (isCanceled: boolean) => {
-    getAllBuses(subFilter).then((res) => {
-      const busesData = mappingQueryData(
-        res.contentList,
-        busPattern,
-        busParser
-      );
-      if (isCanceled) {
-        console.log("canceled");
-        return;
-      }
-      if (!subFilter) {
-        localStorage.setItem(
-          "busInitFilter",
-          JSON.stringify(res.conditionList)
-        );
-        initializeSubFilter();
-      }
-      setData(busesData);
-    });
-  };
+  }, [fetchBusData]);
   //
   if (!data) {
     return <LoadingSpinner />;

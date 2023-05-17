@@ -1,5 +1,6 @@
 export const updateBus = async (bus_No: string, busData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
+  console.log("busData", busData);
   for (const key in busData) {
     if (busData[key] !== null && busData[key].trim() !== "") {
       filteredNullData[key] = busData[key];
