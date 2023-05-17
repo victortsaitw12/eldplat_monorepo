@@ -13,7 +13,7 @@ import VendorEditForm from "@contents/Vendor/VendorEditForm";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
-//
+//🕯️🕯️🕯️此頁面未來會刪除
 const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);

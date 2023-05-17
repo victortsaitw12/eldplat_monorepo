@@ -3,24 +3,37 @@ import {
   Text,
   UnorderedList,
   ListItem,
+  Pane
 } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
 
 interface I_infoData {
-  req?: boolean;
-  value?: string;
-  title?: string;
+  editEle?: React.ReactNode;
+  readonly?: boolean;//只讀
+  req?: boolean;//必填
+  value?: string | Array<string>;//值
+  label?: string;//label文字
+  subLabel?: string | React.ReactNode;//上下的label
+  inputType?: string;
 }
 
 export interface I_InfoBoxProps {
+  isEdit: boolean;
   infoTitle?: string;
   infoData?: I_infoData[];
   infoType?: string;
   children?: React.ReactNode;
 }
 
-function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
+function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
+
+  console.log("🎶🎶🎶🎶🎶🎶這些是InfoBox裡面的props", {
+    isEdit: isEdit,
+    infoTitle: infoTitle,
+    infoData: infoData,
+    infoType: infoType
+  });
 
   const r_switch_info = (type?: string) => {
     switch (type) {
@@ -46,20 +59,25 @@ function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
         )
     }
   }
+
   //文字
   const r_text = () => {
     if (!infoData) {
       return false;
     }
     return infoData.map((child: any, i: number) => {
-      const { req, value, title, key } = child
+      const { req, value, label, editEle } = child
+      console.log("💕💕💕💕💕💕💕infoData的child", child);
+
       return (
         <ListItem key={value + i}>
           <Text>
-            {req && title !== "" && <span className="req">*</span>}
-            {title}
+            {req && label !== "" && <span className="req">*</span>}
+            {label}
           </Text>
-          <Text>{value}</Text>
+          <Pane>
+            {isEdit && editEle ? editEle : <Text>{value}</Text>}
+          </Pane>
         </ListItem>
       )
     })
@@ -79,7 +97,7 @@ function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
     })
   }
 
-  //傻逼一般的checkbox-編輯模式待處理
+  //checkbox-編輯模式待處理
   const r_checkbox = () => {
     if (!infoData) {
       return false
@@ -87,7 +105,7 @@ function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
     return infoData.map((child: any, i: number) => {
       return (
         <ListItem key={child.value + i}>
-          <Checkbox label={child.title} disabled={true} />
+          <Checkbox label={child.label} disabled={isEdit ? false : true} />
         </ListItem>
       )
     })
@@ -95,7 +113,7 @@ function InfoBox({ infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
 
   return (
     <InfoBoxSTY>
-      <Text className="title">{infoTitle}</Text>
+      <Text className="info-title">{infoTitle}</Text>
       {r_switch_info(infoType)}
     </InfoBoxSTY>
   );

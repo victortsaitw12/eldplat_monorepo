@@ -17,7 +17,6 @@ export const BodySTY = styled.div`
     gap: 12px;
     flex-grow: 1;
     border-top: 1px solid #d6e2f0;
-    /* overflow: hidden; */
     overflow-x: hidden;
     overflow-y: scroll;
     &::-webkit-scrollbar {

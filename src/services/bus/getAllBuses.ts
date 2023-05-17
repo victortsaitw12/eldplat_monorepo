@@ -14,16 +14,17 @@ export const getAllBuses = async (filter: { [key: string]: any } = {}) => {
   }
   console.log("bus_Filter", busFilter);
   console.log("accessToken", process.env.NEXT_PUBLIC_ACCESS_TOKEN);
-  const res = await fetch("https://localhost:7188/Gateway_Bus/GetBusList", {
+  const res = await fetch("https://localhost:7088/CAR/GetBusList", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
     body: JSON.stringify({
+      bus_status: "1",
       bus_Filter: busFilter,
       filter_Needed: true,
-      pageInfo: {
+      page_Info: {
         page_index: 1,
         page_size: 10,
         orderby: "bus_No",
@@ -53,13 +54,13 @@ export const getBusTitle = () => {
 
 export const busPattern: PatternType = {
   id: true,
-  bus_No: true,
+  bus_no: true,
   type: true,
   make: true,
   model: true,
-  license_Plate: true,
+  license_plate: true,
   year: true,
-  bus_Group: true,
+  bus_group: true,
   operator: true,
   status: true,
   labels: true
@@ -71,8 +72,8 @@ export const busParser = (
 ): { label: any; value: any } => {
   if (key === "id") {
     return {
-      label: data["bus_No"] || null,
-      value: data["bus_No"] || null
+      label: data["bus_no"] || null,
+      value: data["bus_no"] || null
     };
   }
   return {

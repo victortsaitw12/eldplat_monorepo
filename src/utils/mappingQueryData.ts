@@ -5,6 +5,7 @@ export const mappingQueryData = (
   pattern: PatternType,
   parser: (data: any, key: string) => { label: any; value: any }
 ) => {
+  console.log("data", data);
   const result: { [key: string]: any }[] = [];
   for (const item of data) {
     const mappedItem: { [key: string]: any } = {};
