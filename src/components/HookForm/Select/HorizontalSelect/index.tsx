@@ -75,6 +75,7 @@ function StyledSelect<
             ...baseStyles,
             display: state.isDisabled ? "none" : "block"
           }),
+
           singleValue: (baseStyles, state) => ({
             ...baseStyles,
             color: state.isDisabled ? "#567190" : "#718BAA"

@@ -18,8 +18,10 @@ const TextInput = memo(
     return (
       <HorizatalLabelSTY>
         <div className="title">
-          {!!isRequire && <span className="required">*</span>}
-          <span>{label}</span>
+          <div className="title-content">
+            {!!isRequire && <span className="required">*</span>}
+            {label}
+          </div>
           {!!hint && (
             <Tooltip text={hint}>
               <HelpIcon />

@@ -39,12 +39,13 @@ function Details({
               isRequire={true}
               {...register("bus.vin")}
             />
-            <HorizatalInput
-              label="車種"
-              errorMessage={errors?.bus?.bus_type?.message}
+            <HorizontalSelect
+              control={control}
+              isDisabled={isDisabled}
               isRequire={true}
-              hint="對這輛車進行分類"
-              {...register("bus.bus_type")}
+              label="車種"
+              name="bus.bus_type"
+              options={[{ label: "小客車", value: "01" }]}
             />
             <HorizatalInput
               label="座位數"
@@ -52,16 +53,20 @@ function Details({
               isRequire={true}
               {...register("bus.bus_seat")}
             />
-            <HorizatalInput
-              label="品牌"
-              errorMessage={errors?.bus?.make?.message}
+            <HorizontalSelect
+              control={control}
+              isDisabled={isDisabled}
               isRequire={true}
-              {...register("bus.make")}
+              label="品牌"
+              name="bus.make"
+              options={[{ label: "Volvo", value: "01" }]}
             />
-            <HorizatalInput
-              label="車型"
-              errorMessage={errors?.bus?.model?.message}
-              {...register("bus.model")}
+            <HorizontalSelect
+              control={control}
+              isDisabled={isDisabled}
+              label="品牌"
+              name="bus.model"
+              options={[{ label: "BOSS", value: "01" }]}
             />
             <HorizatalInput
               label="車牌"

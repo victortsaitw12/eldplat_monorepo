@@ -36,7 +36,7 @@ const StyledTextArea = styled.textarea`
 const HorizatalLabelSTY = styled.div`
   display: flex;
   align-items: center;
-  height: 32px;
+  /* height: 32px; */
   gap: 20px;
   .title {
     display: flex;
