@@ -1,33 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { getAllDriver } from "@services/driver/getAllDrivers";
 import { insertDriverInfo } from "@services/driver/createDriver";
 import {
   NextPageWithLayout,
   GetServerSideProps,
   InferGetServerSidePropsType
 } from "next";
+import { useRouter } from "next/router";
+// import { useForm } from "react-hook-form";
+
+import { DriverInfoTypes } from "@contents/driver/driver.typing";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
-import { useRouter } from "next/router";
+import { useDriverStore } from "@contexts/filter/driverStore";
+import { getDriverById } from "@services/driver/getDriverById";
 import DriverEditForm from "@contents/Driver/DriverEditForm";
 import { BodySTY } from "./style";
 
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ driverID }) => {
+> = ({ userId }) => {
   const router = useRouter();
-  const [, setLoading] = useState<boolean>(false);
-  const [currentUserInfo, setCurrentUserInfo] = useState({});
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   control,
+  //   handleSubmit
+  // } = useForm<DriverInfoTypes>({
+  //   // defaultValues: async () => getDefaultValuesHandler()
+  //   defaultValues: async () => void
+  // });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { mainFilter, updateMainFilter } = useDriverStore();
+  const [currentUserInfo, setCurrentUserInfo] = useState<DriverInfoTypes>({});
+
   useEffect(() => {
-    const filter = {
-      filter_Needed: true
-    };
-    getAllDriver(filter).then((res) => {
-      console.log("getAllDriver", res);
-      console.log("res.contentList", res.contentList);
-      const updatedCurrentUserInfo = res.contentList.find(
-        (item: any) => item.user_No === router.query.id
-      );
+    updateMainFilter("Detail");
+  }, [updateMainFilter]);
+
+  useEffect(() => {
+    console.log("start getDriverById");
+    getDriverById(userId).then((res) => {
+      const updatedCurrentUserInfo = res.info;
       if (!updatedCurrentUserInfo) {
         console.log("查無此使用者");
         router.push("/driver");
@@ -37,7 +50,7 @@ const Page: NextPageWithLayout<
     });
   }, [router]);
   const asyncSubmitForm = async (data: any) => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       await insertDriverInfo(data);
       console.log("新增駕駛成功");
@@ -45,22 +58,29 @@ const Page: NextPageWithLayout<
     } catch (e: any) {
       console.log(e);
     }
-    setLoading(false);
+    setIsLoading(false);
   };
 
   return (
     <BodySTY>
       <DriverEditForm
+        userId={userId}
         currentUserInfo={currentUserInfo}
         submitForm={asyncSubmitForm}
-        driverID={driverID}
+        // onCancel={cancelFormHandler}
+        formType={mainFilter}
+        // errors={errors}
+        // handleSubmit={handleSubmit}
+        // register={register}
+        // control={control}
+        isDisabled={false}
       />
     </BodySTY>
   );
 };
 
 interface Props {
-  driverID: string;
+  userId: string;
 }
 interface Params extends ParsedUrlQuery {
   id: string;
@@ -72,7 +92,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   const { params } = context;
   return {
     props: {
-      driverID: params!.id
+      userId: params!.id
     }
   };
 };

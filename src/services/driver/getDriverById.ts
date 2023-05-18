@@ -1,21 +1,18 @@
 import { token } from "./token";
 
-export const getCustomerById = async (customer_No: string) => {
+export const getDriverById = async (user_No: string) => {
   const response = await fetch(
-    "https://localhost:7188/Gateway_Customer/GetOneCustomer",
+    `https://localhost:7088/ATR/QueryDriverInfo?userNo=${user_No}`,
     {
       method: "POST",
-      body: JSON.stringify({
-        customer_No
-      }),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       }
     }
   );
   const data = await response.json();
-  console.log(mappingData(data.contentList[0], customerPattern));
-  return data.contentList[0];
+  return data.data;
 };
 
 type PatternType = { [key: string]: string };

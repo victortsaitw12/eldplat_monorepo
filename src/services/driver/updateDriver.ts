@@ -1,26 +1,21 @@
 import { token } from "./token";
 
-export const updateCustomer = async (
-  customer_No: string,
-  customerData: any
-) => {
+export const updateDriver = async (user_No: string, driverData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
-  for (const key in customerData) {
-    if (customerData[key] !== null && customerData[key].trim() !== "") {
-      filteredNullData[key] = customerData[key];
+  for (const key in driverData) {
+    if (driverData[key] !== null && driverData[key].trim() !== "") {
+      filteredNullData[key] = driverData[key];
     }
   }
-  filteredNullData["customer_No"] = customer_No;
+  filteredNullData["customer_No"] = user_No;
   console.log("filteredNullData", filteredNullData);
-  const res = await fetch(
-    "https://localhost:7188/Gateway_Customer/UpdateCustomer",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(filteredNullData)
-    }
-  );
+  const res = await fetch("https://localhost:7088/ATR/InsertDriver", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(filteredNullData)
+  });
   return res.json();
 };

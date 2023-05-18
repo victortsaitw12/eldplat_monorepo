@@ -8,7 +8,8 @@ import {
   SmallCrossIcon,
   FloppyDiskIcon
 } from "evergreen-ui";
-import { DRIVER_TYPE } from "@typings/driver_type";
+import { DriverInfoTypes } from "@contents/driver/driver.typing";
+// import { DRIVER_TYPE } from "@typings/driver_type";
 import Basic from "./SubForm/Basic";
 import DriverResume from "./SubForm/DriverResume";
 import DriverLicense from "./SubForm/DriverLicense";
@@ -19,13 +20,23 @@ interface Props {
   submitForm: (data: any) => void;
   onCancel?: () => void;
   currentUserInfo: any;
-  driverID: string;
+  userId: string;
+  formType: "info" | "health";
+  isDisabled: boolean;
 }
-function DriverEditForm({ submitForm, driverID, currentUserInfo }: Props) {
-  const [insertData, setInsertData] = useState<DRIVER_TYPE>({
+function DriverEditForm({
+  userId,
+  currentUserInfo,
+  submitForm,
+  formType,
+  isDisabled
+}: Props) {
+  const [visibleForm, setVisibleForm] = useState("info");
+
+  const [insertData, setInsertData] = useState<DriverInfoTypes>({
     // <DriverResume />, TABLE: DRIVER
-    user_no: "",
-    driver_no: driverID,
+    user_no: userId,
+    driver_no: "",
     license_no: "",
     license_area: "",
     license_lvl: "",
@@ -84,11 +95,13 @@ function DriverEditForm({ submitForm, driverID, currentUserInfo }: Props) {
         <Pane className="left-blocks">
           <Basic currentUserInfo={currentUserInfo} />
           <DriverResume
+            userId={userId}
             insertData={insertData}
             currentUserInfo={currentUserInfo}
             setInsertData={setInsertData}
             handleInputChange={handleInputChange}
             handleMultiSelect={handleMultiSelect}
+            isDisabled={isDisabled}
           />
         </Pane>
         <Pane className="right-blocks">
@@ -96,8 +109,9 @@ function DriverEditForm({ submitForm, driverID, currentUserInfo }: Props) {
             insertData={insertData}
             setInsertData={setInsertData}
             handleInputChange={handleInputChange}
+            isDisabled={isDisabled}
           />
-          <LanguageAbility />
+          <LanguageAbility isDisabled={isDisabled} />
           <HealthFirst
             setInsertData={(data) => {
               console.log(data);
@@ -105,6 +119,7 @@ function DriverEditForm({ submitForm, driverID, currentUserInfo }: Props) {
             handleEmployeeChange={(e) => {
               console.log(e);
             }}
+            isDisabled={isDisabled}
           />
         </Pane>
       </Pane>

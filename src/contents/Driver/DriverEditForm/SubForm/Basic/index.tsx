@@ -22,8 +22,8 @@ function Basic({ currentUserInfo }) {
         <Pane className="input-line">
           <Text>手機</Text>
           <Text>
-            {currentUserInfo && currentUserInfo.user_phone
-              ? currentUserInfo.user_phone
+            {currentUserInfo && currentUserInfo.user_Phone
+              ? currentUserInfo.user_Phone
               : "---"}
           </Text>
         </Pane>

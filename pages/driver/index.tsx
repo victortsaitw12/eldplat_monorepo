@@ -15,7 +15,7 @@ import { BodySTY, StyledDot, UserSTY } from "./style";
 import Drawer from "@components/Drawer";
 import Tabs from "@components/Tabs";
 
-const Page: NextPageWithLayout<never> = () => {
+const Page: NextPageWithLayout<never> = ({ user }) => {
   const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
   const {
