@@ -1,11 +1,15 @@
+import { token } from "./token";
+
 // 新增駕駛編號 (未填寫資料)  InsertFilterUserToDriver
 export const createDriverNO = async (data: any) => {
+  console.log("dataInsert:", data);
   const res = await fetch(
-    `https://localhost:7188/Gateway_AccountDriver/Driver/InsertFilterUserToDriver/api/InsertFilterUserToDriver/1?userNO=${data}`,
+    `https://localhost:7088/ATR/InsertFilterUserToDriver?userNo=${data}`,
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       }
     }
   );
@@ -29,7 +33,8 @@ export const insertDriverInfo = async (driverData: any) => {
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(filteredNullData)
     }

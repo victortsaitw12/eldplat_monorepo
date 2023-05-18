@@ -16,6 +16,7 @@ import TableTitle from "@components/Table/TableTitle";
 import ZoomBar from "@components/ZoomBar";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
+import AlertBox from "@components/AlertBox";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -113,6 +114,12 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
           view={view}
         />
       </ViewIdSTY>
+      {/* <AlertBox
+        type="none"
+        title="提示"
+        description="點擊員工列，檢視個別排班資訊。。"
+        isRemoveable={true}
+      /> */}
     </UIProvider>
   );
 };

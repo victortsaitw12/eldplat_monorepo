@@ -19,13 +19,13 @@ interface Props {
   submitForm: (data: any) => void;
   onCancel?: () => void;
   currentUserInfo: any;
-  userId: string;
+  driverID: string;
 }
-function DriverEditForm({ submitForm, userId, currentUserInfo }: Props) {
+function DriverEditForm({ submitForm, driverID, currentUserInfo }: Props) {
   const [insertData, setInsertData] = useState<DRIVER_TYPE>({
     // <DriverResume />, TABLE: DRIVER
-    user_no: userId,
-    driver_no: "",
+    user_no: "",
+    driver_no: driverID,
     license_no: "",
     license_area: "",
     license_lvl: "",

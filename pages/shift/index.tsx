@@ -2,7 +2,7 @@ import React from "react";
 import { NextPageWithLayout } from "next";
 import Head from "next/head";
 import { Pane } from "evergreen-ui";
-import { ShiftSTY } from "./style";
+import { ShiftSTY, AlertSTY } from "./style";
 import { getLayout } from "@layout/MainLayout";
 import UIProvider from "@contexts/scheduleContext/UIProvider";
 import MonthPicker from "@contents/Shift/MonthPicker";
@@ -12,6 +12,7 @@ import OverviewTable from "@contents/Shift/OverviewTable";
 import ZoomBar from "@components/ZoomBar";
 import { EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
+import AlertBox from "@components/AlertBox";
 
 const ShiftPage: NextPageWithLayout<never> = () => {
   const [isExpand, setIsExpand] = React.useState(false);

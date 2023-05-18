@@ -102,6 +102,17 @@ const TableSTY = styled.table`
     border-radius: 50%;
     background-color: green;
   }
+  .noDataShown {
+    min-height: 32px;
+    div {
+      width: 100%;
+      height: 32px;
+      vertical-align: middle;
+      line-height: 32px;
+      position: absolute;
+      text-align: center;
+    }
+  }
 `;
 
 const StyledDot = styled.div<{ value: string }>`

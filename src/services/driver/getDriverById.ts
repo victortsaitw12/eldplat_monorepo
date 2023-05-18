@@ -1,3 +1,5 @@
+import { token } from "./token";
+
 export const getCustomerById = async (customer_No: string) => {
   const response = await fetch(
     "https://localhost:7188/Gateway_Customer/GetOneCustomer",
