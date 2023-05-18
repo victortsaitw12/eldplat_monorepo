@@ -14,7 +14,6 @@ interface Props {
   errors: FieldErrors<BusDataTypes>;
 }
 function Lifecycle({ hide, register, errors }: Props) {
-  console.log("render Lifecycle");
   return (
     <Pane marginX="20px" display={hide ? "none" : "block"}>
       <FormCard formTitle="在職">
