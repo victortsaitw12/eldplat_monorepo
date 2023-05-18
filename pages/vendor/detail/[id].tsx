@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-//
-import { getLayout } from "@layout/MainLayout";
 import { Pane } from "evergreen-ui";
 
-// import { updateVendor } from "@services/vendor/updateVendor";
+//@layout
+import { getLayout } from "@layout/MainLayout";
+import TableWrapper from "@layout/TableWrapper";
+//@services
+import { updateVendor } from "@services/vendor/updateVendor";
 import { getVendorById } from "@services/vendor/getVendorById";
 
-import TitlteBar from "@components/TitleBar";
 import VendorDetail from "@contents/Vendor/VendorDetail";
 
 import { BodySTY } from "./style";
@@ -16,23 +17,37 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //
 const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
+  const router = useRouter();
+  const { editPage } = router.query;//是否為編輯頁的判斷1或0
+
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);
+  const [isEdit, setIsEdit] = useState(editPage === "1" || false);
+  //TableWrapper
+  const changeMainFilterHandler = () => {
+    console.log("changeMainFilterHandler");
+  };
+  //
+  const mainFilterArray = useMemo(
+    () => [
+      { id: 1, label: "供應商資料", value: "all" }
+    ],
+    []
+  );
 
-  const router = useRouter();
-  // const asyncSubmitForm = async (data: any) => {
-  //   console.log("edited data", data);
-  //   setLoading(true);
-  //   try {
-  //     const res = await updateVendor(vendor_id, data);
-  //     console.log("response of vendor edit: ", res);
-  //     router.push("/vendor");
-  //   } catch (e: any) {
-  //     console.log(e);
-  //     alert(e.message);
-  //   }
-  //   setLoading(false);
-  // };
+  const asyncSubmitForm = async (data: any) => {
+    console.log("edited data", data);
+    setLoading(true);
+    try {
+      const res = await updateVendor(vendor_id, data);
+      console.log("response of vendor edit: ", res);
+      router.push("/vendor");
+    } catch (e: any) {
+      console.log(e);
+      alert(e.message);
+    }
+    setLoading(false);
+  };
 
   //
   useEffect(() => {
@@ -48,6 +63,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     };
     getCustomerData();
   }, [vendor_id]);
+
   return (
     <BodySTY>
       {!loading && oldVendorData &&
@@ -56,13 +72,24 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
           height="100%"
           overflow="auto"
         >
-          <TitlteBar
-            titleLabel="供應商資料"
-            clickCancel={() => { router.push("/vendor"); }}
-            clickEdit={() => { router.push("/vendor/edit/" + vendor_id); }}
-            clickZoom={() => { console.log("點擊放大"); }}
-          />
-          <VendorDetail vendorData={oldVendorData} />
+          <button onClick={
+            () => {
+              setIsEdit(!isEdit);
+            }
+          }>
+            編輯
+          </button>
+          <TableWrapper
+            onChangeTab={changeMainFilterHandler}
+            mainFilter={"all"}
+            mainFilterArray={mainFilterArray}
+          >
+            <VendorDetail
+              submitForm={asyncSubmitForm}
+              isEdit={isEdit}
+              vendorData={oldVendorData}
+            />
+          </TableWrapper>
         </Pane>
       }
     </BodySTY>

@@ -8,7 +8,7 @@ export const InfoBoxSTY = styled.div`
   border-radius:10px;
   overflow:auto;
   padding:35px 20px;
-  & > .title{
+  & > .info-title{
     display: inline-block;
     font-size: 16px;
     font-weight: 600;
@@ -33,7 +33,17 @@ export const InfoBoxSTY = styled.div`
       }
       span:last-child{
         flex: 3;
+      }
+     & > div{
+        display: flex;
+        flex: 3;
+        margin-bottom: 0;
+        gap: 10px;
+        & > div{
+          flex-direction: column;
+        }
       }  
+  
     }
   } 
   //標籤

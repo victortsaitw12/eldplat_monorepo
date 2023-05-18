@@ -26,6 +26,7 @@ const defaultValues = {
 //
 function CustomerEditForm({ onCancel, oldData, submitForm }: Props) {
   const defaultFormValue = oldData ? oldData : defaultValues;
+  console.log("defaultFormValue", defaultFormValue);
   const {
     register,
     handleSubmit,

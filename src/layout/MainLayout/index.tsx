@@ -12,10 +12,6 @@ const MainLayout: FC<{
   layoutProps: any;
 }> = ({ children, layoutProps }) => {
   const menuData: MenuDataType = fetchMenuData();
-
-  // useEffect(() => {
-  //   layoutProps.setLocale("en-us");
-  // }, []);
   return (
     <BodySTY>
       <Head>
