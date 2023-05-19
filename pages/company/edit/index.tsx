@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -8,6 +8,7 @@ import { BodySTY } from "./style";
 import CompanyUpdate from "@contents/Company/CompanyUpdate";
 import CompanyProvider from "@contexts/companyContext/companyProvider";
 import { updateCompany } from "@services/company/getAllCompany";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 
 const Page: NextPageWithLayout<never> = () => {
@@ -30,17 +31,19 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <CompanyProvider>
-      <BodySTY>
-        {/* Put your component here */}
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          <CompanyUpdate
-            submitForm={asyncSubmitForm}
-            onCancel={cancelFormHandler}
-          />
-        )}
-      </BodySTY>
+      <RegionProvider>
+        <BodySTY>
+          {/* Put your component here */}
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <CompanyUpdate
+              submitForm={asyncSubmitForm}
+              onCancel={cancelFormHandler}
+            />
+          )}
+        </BodySTY>
+      </RegionProvider>
     </CompanyProvider>
   );
 };

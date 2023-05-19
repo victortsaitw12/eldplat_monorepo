@@ -7,6 +7,10 @@ import {
   CompanyContext
 } from "@contexts/companyContext/companyProvider";
 import TagSelect from "@components/TagSelect";
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 
 const languageOptions = [
   { value: "no", label: "請選擇" },
@@ -26,6 +30,8 @@ const currencyOptions = [
 function CountrySet() {
   const { companyData, setCompanyData, handleCompanyCountrySetChange } =
     useContext<I_Company_Context>(CompanyContext);
+  const { allCountries, setAllCountries } =
+    useContext<I_Region_Context>(RegionContext);
   const company_language_data = companyData?.company_language;
   const [editLangData, setEditLangData] = useState<any[]>();
   const company_currency_data = companyData?.company_currency;
@@ -86,8 +92,23 @@ function CountrySet() {
           <Text className="">國別</Text>
           <SelectField
             className="com_Country"
+            label=""
+            name="company_country"
+            value={companyData.company_country}
+            onChange={(e: any) => {
+              handleCompanyCountrySetChange(e);
+            }}
+          >
+            {allCountries?.map((item) => (
+              <option key={item.areaNo} value={item.areaNo}>
+                {item.regionName}
+              </option>
+            ))}
+          </SelectField>
+          {/* <SelectField
+            className="com_Country"
             marginBottom="0px"
-            name="com_Country"
+            name="company_country"
             value={companyData.company_country}
             onChange={(e: any) => {
               handleCompanyCountrySetChange(e);
@@ -96,7 +117,7 @@ function CountrySet() {
             <option value="TW">台灣</option>
             <option value="JP">日本</option>
             <option value="US">美國</option>
-          </SelectField>
+          </SelectField> */}
         </Pane>
         <Pane className="input-line">
           <Text className="">語系</Text>

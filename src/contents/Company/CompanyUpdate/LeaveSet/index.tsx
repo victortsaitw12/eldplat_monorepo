@@ -18,7 +18,8 @@ import {
 import { I_Company_Leave_Type } from "@typings/company_type";
 
 function LeaveSet() {
-  const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const { companyData, setCompanyData } =
+    useContext<I_Company_Context>(CompanyContext);
   const leaveData = companyData.company_leave;
   // 假別設定陣列
   const [leaveArr, setLeaveArr] = useState<I_Company_Leave_Type[]>(
@@ -72,7 +73,8 @@ function LeaveSet() {
   // 新增假別邏輯
   const handleChangeRule = (e: any) => {
     const newData = { ...companyData };
-    newData.company_leave = leaveArr;
+    newData["company_leave"] = leaveArr;
+    setCompanyData(newData);
   };
 
   return (

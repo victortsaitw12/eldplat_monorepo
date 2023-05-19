@@ -132,7 +132,7 @@ export const CompanyProvider = ({ children }: any) => {
     e: React.ChangeEvent<HTMLInputElement> | any
   ) => {
     const newData = { ...companyData };
-    newData.company[e.target.name] = e.target.value;
+    newData[e.target.name] = e.target.value;
     setCompanyData(newData);
 
     // 設定error message
@@ -152,7 +152,7 @@ export const CompanyProvider = ({ children }: any) => {
     e: React.ChangeEvent<HTMLInputElement> | any
   ) => {
     const newData = { ...companyData };
-    newData.company_Dt[e.target.name] = e.target.value;
+    newData[e.target.name] = e.target.value;
     setCompanyData(newData);
 
     // 設定error message
@@ -190,7 +190,7 @@ export const CompanyProvider = ({ children }: any) => {
     e: React.ChangeEvent<HTMLInputElement> | any
   ) => {
     const newData = { ...companyData };
-    newData.company[e.target.name] = e.target.value;
+    newData[e.target.name] = e.target.value;
     // newData.company_Dt[e.target.name] = e.target.value;
     setCompanyData(newData);
   };

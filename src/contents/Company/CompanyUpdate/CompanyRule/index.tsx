@@ -18,7 +18,8 @@ import {
 import { I_Company_Working_Type } from "@typings/company_type";
 
 function CompanyRule() {
-  const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const { companyData, setCompanyData } =
+    useContext<I_Company_Context>(CompanyContext);
   const ruleData = companyData?.company_working_hours;
   // 公司制度陣列
   const [ruleArr, setRuleArr] = useState<I_Company_Working_Type[]>(
@@ -74,7 +75,8 @@ function CompanyRule() {
   // 新增制度邏輯
   const handleChangeRule = (e: any) => {
     const newData = { ...companyData };
-    newData.company_working_hours = ruleArr;
+    newData["company_working_hours"] = ruleArr;
+    setCompanyData(newData);
   };
 
   return (

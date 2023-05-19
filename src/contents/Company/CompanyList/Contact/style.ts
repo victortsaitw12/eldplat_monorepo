@@ -13,10 +13,12 @@ export const BodySTY = styled.div`
       }
 
       .address {
-        span {
+        .company_area_city,
+        .company_country_code {
           display: flex;
-          flex-wrap: wrap;
-          margin: 4px 0;
+          span {
+            margin: 4px 12px 0px 0;
+          }
         }
       }
 

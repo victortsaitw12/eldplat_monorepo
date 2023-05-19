@@ -18,6 +18,13 @@ import {
 } from "@contexts/companyContext/companyProvider";
 import { convertCountryNum } from "@utils/convertValueToText";
 import { I_Company_Contact_Type } from "@typings/company_type";
+import { getAllRegions } from "@services/region/getRegion";
+import {
+  I_AllRegions_Type,
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
+import { filterStates } from "@utils/regionMethods";
 
 function Contact() {
   const {
@@ -28,7 +35,8 @@ function Contact() {
     countryNumInput,
     setCountryNumInput
   } = useContext<I_Company_Context>(CompanyContext);
-  const [contactArr, setContactArr] = useState<I_Company_Contact_Type[]>([
+  const { allCountries } = useContext<I_Region_Context>(RegionContext);
+  const [contactArr, setContactArr] = useState<I_Company_Contact_Type[] | any>([
     {
       contact_name: "",
       contact_phone_code: "",
@@ -40,17 +48,12 @@ function Contact() {
     }
   ]);
   const [countryNum, setCountryNum] = useState<string | undefined>("");
-
-  // 可變動的國碼欄位
-  const handleCountryNum = (e: any) => {
-    const newData = { ...countryNumInput };
-    if (e.target.name === "country_num_Tel") {
-      newData["contactTel"] = e.target.value;
-    } else if (e.target.name === "country_num_Phone") {
-      newData["contactPhone"] = e.target.value;
-    }
-    setCountryNumInput(newData);
-  };
+  const [allStates, setAllStates] = useState<I_AllRegions_Type[]>([
+    { regionName: "請選擇", areaNo: "0" }
+  ]);
+  const [allCities, setAllCities] = useState<I_AllRegions_Type[]>([
+    { regionName: "請選擇", areaNo: "0" }
+  ]);
 
   // 不可變動的國碼欄位
   const countryCode = companyData.company_country;
@@ -79,9 +82,11 @@ function Contact() {
   const handleRemoveContact = (val: I_Company_Contact_Type, idx: number) => {
     const copyData = { ...companyData };
     // 找到聯絡人姓名一樣的把他篩掉
-    const filterContact = contactArr.filter((v, i) => {
-      return val.contact_name !== v.contact_name;
-    });
+    const filterContact = contactArr.filter(
+      (v: { contact_name: string }, i: any) => {
+        return val.contact_name !== v.contact_name;
+      }
+    );
     copyData["company_contact"] = filterContact;
     setContactArr(filterContact);
     setCompanyData(copyData);
@@ -95,7 +100,7 @@ function Contact() {
   ) => {
     const copyData = { ...companyData };
     // 把原始陣列展開後找到要輸入的那格去更改value
-    const updatedContact = contactArr.map((v, i) => {
+    const updatedContact = contactArr.map((v: any, i: number) => {
       const newData = { ...v };
       if (idx === i) {
         newData[e.target.name] = e.target.value;
@@ -107,7 +112,68 @@ function Contact() {
     setCompanyData(copyData);
   };
 
+  // 如果州省或城市的欄位是空的，就顯示請選擇
+  useEffect(() => {
+    if (allStates.length === 0) {
+      setAllStates([{ regionName: "請選擇", areaNo: "0" }]);
+    } else if (allCities.length === 0) {
+      setAllCities([{ regionName: "請選擇", areaNo: "0" }]);
+    }
+  }, [allCities.length, allStates.length]);
+
+  // 偵測選取國家後要改顯示對應的州
+  const handleStateChange = (e: any) => {
+    const area_no = e.target.value.substring(0, 4);
+    const level_num = "3";
+    if (!filterStates(area_no)) {
+      getAllRegions(area_no, level_num).then((data) => {
+        setAllStates([]);
+        setAllCities([]);
+        console.log("data for states", data);
+        data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
+          if (v.area_Name_Tw !== "")
+            return setAllStates((prev: I_AllRegions_Type[]) => [
+              ...prev,
+              { regionName: v.area_Name_Tw, areaNo: v.area_No }
+            ]);
+        });
+      });
+    } else {
+      setAllStates([]);
+      setAllCities([]);
+      getAllRegions(area_no, level_num).then((data) => {
+        data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
+          if (v.area_Name_Tw !== "")
+            return setAllCities((prev: I_AllRegions_Type[]) => [
+              ...prev,
+              { regionName: v.area_Name_Tw, areaNo: v.area_No }
+            ]);
+        });
+      });
+    }
+  };
+
+  // 州、省變動後設城市
+  const handleCityChange = (e: any) => {
+    const area_no = e.target.value.substring(0, 7);
+    const level_num = "4";
+    getAllRegions(area_no, level_num).then((data) => {
+      setAllCities([]);
+      console.log("data for cities", data);
+      data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
+        if (v.area_Name_Tw !== "")
+          return setAllCities((prev: any) => [
+            ...prev,
+            { regionName: v.area_Name_Tw, areaNo: v.area_No }
+          ]);
+      });
+    });
+  };
+
   console.log("🎈contactArr", contactArr);
+  console.log("🎃allRegions", allCountries);
+  console.log("⚽allStates", allStates);
+  console.log("⚾allCities", allCities);
 
   return (
     <BodySTY>
@@ -191,10 +257,11 @@ function Contact() {
                     handleCompanyContactChange(e);
                   }}
                 >
-                  <option value="1">台北市</option>
-                  <option value="2">新北市</option>
-                  <option value="3">桃園市</option>
-                  <option value="4">新竹市</option>
+                  {allCities?.map((item: any, idx: number) => (
+                    <option key={idx} value={item.areaNo}>
+                      {item.regionName}
+                    </option>
+                  ))}
                 </SelectField>
               </Pane>
               <Pane>
@@ -206,12 +273,14 @@ function Contact() {
                   value={companyData.company_area}
                   onChange={(e: any) => {
                     handleCompanyContactChange(e);
+                    handleCityChange(e);
                   }}
                 >
-                  <option value="1">南港區</option>
-                  <option value="2">信義區</option>
-                  <option value="3">大安區</option>
-                  <option value="4">大同區</option>
+                  {allStates?.map((item: any, idx: number) => (
+                    <option key={idx} value={item.areaNo}>
+                      {item.regionName}
+                    </option>
+                  ))}
                 </SelectField>
               </Pane>
             </Pane>
@@ -229,16 +298,18 @@ function Contact() {
                 <SelectField
                   className="country"
                   label=""
-                  name="company_country"
-                  value={companyData.company_country}
+                  name="company_country2"
+                  value={companyData.company_country2}
                   onChange={(e: any) => {
                     handleCompanyContactChange(e);
+                    handleStateChange(e);
                   }}
                 >
-                  <option value="TW">台灣</option>
-                  <option value="JP">日本</option>
-                  <option value="US">美國</option>
-                  <option value="TH">泰國</option>
+                  {allCountries?.map((item, idx) => (
+                    <option key={idx} value={item.areaNo}>
+                      {item.regionName}
+                    </option>
+                  ))}
                 </SelectField>
               </Pane>
             </Pane>
@@ -258,7 +329,7 @@ function Contact() {
           </Pane>
         </Pane>
 
-        {contactArr.map((value, idx) => {
+        {contactArr.map((value: I_Company_Contact_Type, idx: number) => {
           return (
             <>
               <Pane className="input-line">

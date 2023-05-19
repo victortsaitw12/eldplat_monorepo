@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Heading, Pane, Text } from "evergreen-ui";
 
 import { BodySTY } from "./style";
@@ -6,10 +6,14 @@ import {
   I_Company_Context,
   CompanyContext
 } from "@contexts/companyContext/companyProvider";
-import { handleCountrySwitch } from "@pages/company";
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 
 function CountrySet() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const { handleCountrySwitch } = useContext<I_Region_Context>(RegionContext);
   const company_language_data = companyData.company_language;
   const company_currency_data = companyData.company_currency;
 

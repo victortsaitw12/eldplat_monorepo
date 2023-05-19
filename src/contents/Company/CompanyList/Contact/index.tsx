@@ -1,15 +1,20 @@
-import React, { useContext } from "react";
-import { Heading, Pane, Paragraph, Text } from "evergreen-ui";
+import React, { useContext, useEffect } from "react";
+import { Heading, Pane, Text } from "evergreen-ui";
 
 import { BodySTY } from "./style";
 import {
   I_Company_Context,
   CompanyContext
 } from "@contexts/companyContext/companyProvider";
-import { handleCountrySwitch } from "@pages/company";
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 
 function Contact() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const { handleCountrySwitch, handleStateSwitch, handleCitySwitch } =
+    useContext<I_Region_Context>(RegionContext);
 
   return (
     <BodySTY>
@@ -28,11 +33,11 @@ function Contact() {
           <Pane className="address">
             <Text>{companyData.address1}</Text>
             <Text>{companyData.address2}</Text>
-            <Pane display="flex">
-              <Text>{companyData.company_city}</Text>
-              <Text>{companyData.company_area}</Text>
+            <Pane className="company_area_city">
+              <Text>{handleCitySwitch(companyData.company_city)}</Text>
+              <Text>{handleStateSwitch(companyData.company_area)}</Text>
             </Pane>
-            <Pane display="flex">
+            <Pane className="company_country_code">
               <Text>{companyData.company_district_code}</Text>
               <Text>{handleCountrySwitch(companyData.company_country)}</Text>
             </Pane>
