@@ -40,6 +40,7 @@ function NewLanguage({
   }); // 代碼物件
   const [languageLabel, setLanguageLabel] =
     useState<I_languageType>(defaultData); // 文字物件
+
   // 下拉選語言別或是程度時
   const handleChangeLang = (
     select: { value: string; label: string },
@@ -51,9 +52,9 @@ function NewLanguage({
     setLanguageLabel(newLabelData); // 文字版
   };
 
+  // 按下打勾時
   const handleAdd = () => {
     handleSave(languageLabel);
-
     setLangForApi((prev: any) => [...prev, languageValue]); // 存代碼形式進陣列物件
   };
 

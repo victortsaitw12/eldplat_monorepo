@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { BodySTY } from "./style";
 import {
   Pane,
@@ -11,7 +11,6 @@ import {
   SmallCrossIcon,
   Heading
 } from "evergreen-ui";
-import { useRouter } from "next/router";
 
 import Basic from "./Basic";
 import CountrySet from "./CountrySet";
@@ -31,19 +30,11 @@ interface I_UpdateCompany_Props {
 }
 
 function CompanyUpdate({ submitForm, onCancel }: I_UpdateCompany_Props) {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
+  const { companyData } = useContext<I_Company_Context>(CompanyContext);
   const [errMsg, setErrMsg] = useState<string | boolean>("");
 
-  const contactTelValid = numberValidation(
-    C_data.companyData.company_Dt.contact_Tel
-  );
-
   const handleSaveAll = () => {
-    if (contactTelValid !== true) {
-      return setErrMsg(contactTelValid);
-    } else {
-      submitForm(C_data.companyData);
-    }
+    submitForm(companyData);
   };
 
   return (

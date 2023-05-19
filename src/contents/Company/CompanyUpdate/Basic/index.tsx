@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Heading, Pane, Text, TextInput } from "evergreen-ui";
 
 import { BodySTY } from "./style";
@@ -8,7 +8,8 @@ import {
 } from "@contexts/companyContext/companyProvider";
 
 function Basic({}) {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
+  const { companyData, handleCompanyBasicChange, errMsg } =
+    useContext<I_Company_Context>(CompanyContext);
 
   return (
     <BodySTY>
@@ -20,28 +21,28 @@ function Basic({}) {
         </Pane>
         <Pane className="input-line">
           <Text className="">公司編號</Text>
-          <Text>{C_data.companyData.company_No}</Text>
+          <Text>{companyData.company_no}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">代理商編號</Text>
-          <Text>{C_data.companyData.company.agent_No}</Text>
+          <Text>{companyData.agent_no}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">公司名稱</Text>
           <Pane>
             <TextInput
-              name="com_Name"
-              value={C_data.companyData.company.com_Name}
-              onChange={C_data.handleCompanyBasicChange}
+              name="company_name"
+              value={companyData.company_name}
+              onChange={handleCompanyBasicChange}
             />
-            {C_data.errMsg["errField"] === "com_Name" && (
-              <Text color="red !important">{C_data.errMsg["errText"]}</Text>
+            {errMsg["errField"] === "company_name" && (
+              <Text color="red !important">{errMsg["errText"]}</Text>
             )}
           </Pane>
         </Pane>
         <Pane className="input-line">
           <Text className="">統一編號</Text>
-          <Text>{C_data.companyData.company.invoice_No}</Text>
+          <Text>{companyData.company_gui_no}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">公司類型</Text>
@@ -51,8 +52,8 @@ function Basic({}) {
           <Text className="">負責人</Text>
           <TextInput
             name="owner"
-            value={C_data.companyData.company.owner}
-            onChange={C_data.handleCompanyBasicChange}
+            value={companyData.company_owner}
+            onChange={handleCompanyBasicChange}
           />
         </Pane>
       </form>

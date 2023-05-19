@@ -13,10 +13,22 @@ import React, { useState, useEffect } from "react";
 import { charactor_DATA, charactor_Card } from "./data";
 import { BodySTY } from "./style";
 
-function Charactor({ insertData, setInsertData }: I_Content_Props) {
+export interface I_Charactor {
+  id: string;
+  title: string;
+  description: string;
+}
+
+function Charactor({ insertData, setInsertData, editData }: I_Content_Props) {
   const [charactorSelected, setCharactorSelected] = useState<any>(null);
-  const [charactorArr, setCharactorArr] = useState<any[]>([]);
+  const [charactorArr, setCharactorArr] = useState<I_Charactor[]>([]);
   const [charactorValue, setCharactorValue] = useState<any[]>([]);
+
+  // 一進來先抓資料庫原本就有的角色資料
+  useEffect(() => {
+    editData && setCharactorArr(editData?.group_no);
+    editData && setCharactorValue(editData?.group_no.map((v) => v.id));
+  }, [editData]);
 
   const newData = { ...insertData };
   // 選了哪個角色類型
@@ -40,11 +52,10 @@ function Charactor({ insertData, setInsertData }: I_Content_Props) {
     });
 
     // 把選到的角色value存進一個陣列，再設回group_no物件
-
-    setCharactorValue((prev: any) => [...prev, newItem.value]);
+    setCharactorValue((prev: any) => [...prev, newItem.charactor_id]);
   };
 
-  // 把健康資訊物件設回最大物件
+  // 把角色物件設回最大物件
   useEffect(() => {
     newData.group_no = charactorValue;
     setInsertData(newData);
@@ -59,7 +70,7 @@ function Charactor({ insertData, setInsertData }: I_Content_Props) {
     );
     setCharactorValue(
       charactorValue.filter((v: any) => {
-        return v !== newItem.value;
+        return v !== newItem.id;
       })
     );
     newData.group_no = charactorValue;
@@ -83,7 +94,7 @@ function Charactor({ insertData, setInsertData }: I_Content_Props) {
 
       {charactorArr.map((item: any, idx: number) => {
         return (
-          <Pane key={item.id} className="charactor-card">
+          <Pane key={item.title} className="charactor-card">
             <Pane className="card-title">
               <Text>{item.title}</Text>
               <IconButton

@@ -8,8 +8,7 @@ import {
 } from "@contexts/companyContext/companyProvider";
 
 function Basic() {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
-  const company_basic_data = C_data.companyData.company;
+  const { companyData } = useContext<I_Company_Context>(CompanyContext);
 
   return (
     <BodySTY>
@@ -21,27 +20,27 @@ function Basic() {
         </Pane>
         <Pane className="input-line">
           <Text className="">公司編號</Text>
-          <Text>{C_data.companyData.company_No}</Text>
+          <Text>{companyData.company_no}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">代理商編號</Text>
-          <Text>{company_basic_data.agent_No}</Text>
+          <Text>{companyData.agent_no}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">公司名稱</Text>
-          <Text>{company_basic_data.com_Name}</Text>
+          <Text>{companyData.company_name}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">統一編號</Text>
-          <Text>{company_basic_data.invoice_No}</Text>
+          <Text>{companyData.company_gui_no}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">公司類型</Text>
-          <Text>{company_basic_data.company_Typ === "1" && "運輸業"}</Text>
+          <Text>{companyData.company_typ === "1" && "運輸業"}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">負責人</Text>
-          <Text>{company_basic_data.owner}</Text>
+          <Text>{companyData.company_owner}</Text>
         </Pane>
       </form>
     </BodySTY>

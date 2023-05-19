@@ -35,14 +35,6 @@ function HealthFirst({ handleEmployeeChange, setInsertData }: I_Content_Props) {
     setHealthData(newData);
   };
 
-  // useEffect(() => {
-  //   const newData: any = { ...insertData };
-  //   newData["healths"] = healthListArr;
-  //   setInsertData(newData);
-  // }, [healthListArr]);
-
-  console.log("healthListArr", healthListArr);
-
   return (
     <BodySTY>
       <Pane className="health-title">
