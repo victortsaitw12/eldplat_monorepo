@@ -269,11 +269,11 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     {
       req: true,
       label: "主要聯絡人",
-      value: vendorData?.vendor_Contact_List[0]?.contact_name || "---",
+      value: vendorData?.vendor_Contact_List[0]?.contact_Name || "---",
       editEle: [
         <TextInput
-          key="vendor_Contact_List.0.contact_name"
-          {...methods.register("vendor_Contact_List.0.contact_name", {
+          key="vendor_Contact_List.0.contact_Name"
+          {...methods.register("vendor_Contact_List.0.contact_Name", {
             validate: textValidation
           })}
         />
@@ -285,14 +285,14 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       value: "---",
       editEle: [
         <TextInput
-          key="vendor_Contact_List.0.contact_tel_code"
+          key="vendor_Contact_List.0.contact_Tel_Code"
           disabled={true}
           style={{ width: "60px" }}
-          {...methods.register("vendor_Contact_List.0.contact_tel_code")}
+          {...methods.register("vendor_Contact_List.0.contact_Tel_Code")}
         />,
         <TextInput
-          key="vendor_Contact_List.0.contact_tel"
-          {...methods.register("vendor_Contact_List.0.contact_tel")}
+          key="vendor_Contact_List.0.contact_Tel"
+          {...methods.register("vendor_Contact_List.0.contact_Tel")}
         />
       ],
     },
@@ -302,14 +302,14 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       value: "+886 900111888",
       editEle: [
         <TextInput
-          key="vendor_Contact_List.0.contact_phone_code"
+          key="vendor_Contact_List.0.contact_Phone_Code"
           disabled={true}
           style={{ width: "60px" }}
-          {...methods.register("vendor_Contact_List.0.contact_phone_code")}
+          {...methods.register("vendor_Contact_List.0.contact_Phone_Code")}
         />,
         <TextInput
-          key="vendor_Contact_List.0.contact_phone"
-          {...methods.register("vendor_Contact_List.0.contact_phone")}
+          key="vendor_Contact_List.0.contact_Phone"
+          {...methods.register("vendor_Contact_List.0.contact_Phone")}
         />
       ],
     },
