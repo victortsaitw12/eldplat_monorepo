@@ -47,6 +47,7 @@ const Page: NextPageWithLayout<
     register,
     formState: { errors },
     control,
+    getValues,
     handleSubmit
   } = useForm<CustomerDataTypes>({
     defaultValues: async () => getDefaultValuesHandler()

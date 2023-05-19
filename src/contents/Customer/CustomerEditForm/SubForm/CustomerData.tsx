@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import HorizatalInput from "@components/HookForm/Input/HorizontalInput";
 import HorizontalSelect from "@components/HookForm/Select/HorizontalSelect";
 import Card from "@components/Card";
-import { SubFromProps } from "./type";
+import { SubFromProps } from "../../customer.type";
 import FlexWrapper from "@layout/FlexWrapper";
 import ContactRender from "./ContactEdit/Render";
 import ContactEdit from "./ContactEdit/Edit";

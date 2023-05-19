@@ -6,7 +6,7 @@ import HorizontalSelect from "@components/HookForm/Select/HorizontalSelect";
 import VerticalSelect from "@components/HookForm/Select/VerticalSelect";
 import VerticalInput from "@components/HookForm/Input/VerticalInput";
 import Card from "@components/Card";
-import { SubFromProps } from "../../type";
+import { SubFromProps } from "../../../../customer.type";
 import DottedSelect from "@components/HookForm/Select/DottedSelect";
 import FlexWrapper from "@layout/FlexWrapper";
 import { BodySYT } from "./style";

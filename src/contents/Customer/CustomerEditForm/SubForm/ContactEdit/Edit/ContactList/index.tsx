@@ -1,5 +1,5 @@
 import React from "react";
-import { SubFromProps } from "../../../type";
+import { SubFromProps } from "../../../../../customer.type";
 import { useFieldArray } from "react-hook-form";
 import HorizontalInput from "@components/HookForm/Input/HorizontalInput";
 import SingleInput from "@components/HookForm/Input/SingleInput";
