@@ -1,4 +1,3 @@
-import TagSelect from "@components/TagSelect";
 import {
   Checkbox,
   Heading,
@@ -6,11 +5,22 @@ import {
   Select,
   Text,
   Textarea,
-  TextInput
+  TextInput,
+  SmallTickIcon,
+  SmallCrossIcon
 } from "evergreen-ui";
 import React, { useState } from "react";
-import { region_DATA, city_DATA, driver_DT_DATA } from "./data";
+import { useFormContext } from "react-hook-form";
 import { BodySTY } from "./style";
+
+import {
+  emailValidation,
+  numberValidation,
+  textValidation
+} from "@utils/inputValidation";
+import { region_DATA, city_DATA, driver_DT_DATA } from "./data";
+import HorizatalInput from "@components/HookForm/Input/HorizontalInput";
+import HorizontalSelect from "@components/HookForm/Select/HorizontalSelect";
 
 function DriverResume({
   userId,
@@ -21,17 +31,17 @@ function DriverResume({
   isDisabled
 }: any) {
   const [blackChecked, setBlackChecked] = useState<boolean>(false);
-  console.log("DriverResume:", userId);
+  const { register, errors, control, handleSubmit } = useFormContext();
   return (
     <BodySTY>
       <Heading is="h4">駕駛履歷</Heading>
-      <form>
+      <div className="form">
         <Pane className="input-line">
           <Text>使用者編號</Text>
           <Text>{(currentUserInfo && currentUserInfo?.user_No) || userId}</Text>
         </Pane>
+
         <Pane className="input-line">
-          <Text>駕照編號</Text>
           {isDisabled ? (
             <Text>
               {currentUserInfo && currentUserInfo.license_No
@@ -39,15 +49,17 @@ function DriverResume({
                 : "---"}
             </Text>
           ) : (
-            <TextInput
-              name="license_no"
-              value={insertData.license_no}
-              onChange={handleInputChange}
+            <HorizatalInput
+              label="駕照編號"
+              errorMessage={errors.license_no ? "必填欄位" : ""}
+              {...register("license_no", {
+                validate: textValidation
+              })}
             />
           )}
         </Pane>
         <Pane className="input-line">
-          <Text>執照州/省/地區</Text>
+          {/* <Text>執照州/省/地區</Text> */}
           {isDisabled ? (
             <Text>
               {currentUserInfo && currentUserInfo.license_Area
@@ -55,38 +67,42 @@ function DriverResume({
                 : "---"}
             </Text>
           ) : (
-            <Select
-              width="100%"
+            <HorizontalSelect
+              control={control}
+              isDisabled={isDisabled}
+              isRequire={true}
+              label="執照州/省/地區"
               name="license_area"
-              value={insertData.license_area}
-              onChange={handleInputChange}
-            >
-              {region_DATA.map((value, index) => {
-                return (
-                  <option key={index} value={value}>
-                    {value}
-                  </option>
-                );
-              })}
-            </Select>
+              options={region_DATA}
+            />
           )}
         </Pane>
+
         <Pane className="input-line">
-          <Text>牌照等級</Text>
           {isDisabled ? (
-            <Text>{insertData.license_Lvl}</Text>
+            <Text>
+              {currentUserInfo && currentUserInfo.license_Lvl
+                ? currentUserInfo.license_Lvl
+                : "---"}
+            </Text>
           ) : (
-            <TextInput
-              name="license_lvl"
-              value={insertData.license_lvl}
-              onChange={handleInputChange}
+            <HorizatalInput
+              label="牌照等級"
+              errorMessage={errors.license_lvl ? "必填欄位" : ""}
+              {...register("license_lvl", {
+                validate: textValidation
+              })}
             />
           )}
         </Pane>
         <Pane className="input-line">
           <Text>駕駛資歷(年)</Text>
           {isDisabled ? (
-            <Text>{insertData.driver_Seniority}</Text>
+            <Text>
+              {currentUserInfo && currentUserInfo.driver_seniority
+                ? currentUserInfo.driver_seniority
+                : "---"}
+            </Text>
           ) : (
             <TextInput
               name="driver_seniority"
@@ -96,21 +112,13 @@ function DriverResume({
           )}
         </Pane>
         <Pane className="input-line">
-          <Text>駕駛分類</Text>
-          {isDisabled ? (
-            <Text>{insertData.driver_typ}</Text>
-          ) : (
-            <TagSelect
-              name="driver_typ"
-              handleMultiSelect={handleMultiSelect}
-              optionData={driver_DT_DATA}
-            />
-          )}
-        </Pane>
-        <Pane className="input-line">
           <Text>派遣區域</Text>
           {isDisabled ? (
-            <Text>{insertData.dsph_area}</Text>
+            <Text>
+              {currentUserInfo && currentUserInfo.dsph_area
+                ? currentUserInfo.dsph_area
+                : "---"}
+            </Text>
           ) : (
             <Select
               width="100%"
@@ -118,7 +126,7 @@ function DriverResume({
               value={insertData.dsph_area}
               onChange={handleInputChange}
             >
-              {region_DATA.map((value, index) => {
+              {city_DATA.map((value, index) => {
                 return (
                   <option key={index} value={value}>
                     {value}
@@ -131,7 +139,11 @@ function DriverResume({
         <Pane className="input-line">
           <Text>派遣都市</Text>
           {isDisabled ? (
-            <Text>{insertData.dsph_city}</Text>
+            <Text>
+              {currentUserInfo && currentUserInfo.dsph_city
+                ? currentUserInfo.dsph_city
+                : "---"}
+            </Text>
           ) : (
             <Select
               width="100%"
@@ -152,10 +164,16 @@ function DriverResume({
         <Pane className="input-line">
           <Text>黑名單註記</Text>
           {isDisabled ? (
-            <Text>{insertData.license_Area}</Text>
+            <Text>
+              {currentUserInfo && currentUserInfo.blocklist_mark === "1" ? (
+                <SmallTickIcon style={{ color: "#8EA8C7" }} />
+              ) : (
+                <SmallCrossIcon style={{ color: "#8EA8C7" }} />
+              )}
+            </Text>
           ) : (
             <Checkbox
-              name="blocklist_Mark"
+              name="blocklist_mark"
               label=""
               checked={blackChecked}
               onChange={(e: any) => setBlackChecked(e.target.checked)}
@@ -165,7 +183,11 @@ function DriverResume({
         <Pane className="input-line">
           <Text>黑名單註記</Text>
           {isDisabled ? (
-            <Text>{insertData.license_Area}</Text>
+            <Text>
+              {currentUserInfo && currentUserInfo.remark
+                ? currentUserInfo.remark
+                : "---"}
+            </Text>
           ) : (
             <Textarea
               name="remark"
@@ -174,7 +196,7 @@ function DriverResume({
             />
           )}
         </Pane>
-      </form>
+      </div>
     </BodySTY>
   );
 }

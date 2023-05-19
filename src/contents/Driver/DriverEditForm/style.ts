@@ -1,5 +1,3 @@
 import styled from "styled-components";
 
-export const BodySTY = styled.div`
-  padding: 1rem;
-`;
+export const FormSTY = styled.form``;

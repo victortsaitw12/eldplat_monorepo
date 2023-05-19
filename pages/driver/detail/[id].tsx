@@ -6,49 +6,62 @@ import {
   InferGetServerSidePropsType
 } from "next";
 import { useRouter } from "next/router";
-// import { useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { BodySTY } from "./style";
 
-import { DriverInfoTypes } from "@contents/driver/driver.typing";
+import { I_driverInfo, DUMMY_DRIVERINFO } from "@contents/driver/driver.typing";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import { getDriverById } from "@services/driver/getDriverById";
 import DriverEditForm from "@contents/Driver/DriverEditForm";
-import { BodySTY } from "./style";
+import TableWrapper from "@layout/TableWrapper";
 
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ userId }) => {
+  // ------- variables + useState ------- //
   const router = useRouter();
-  // const {
-  //   register,
-  //   formState: { errors },
-  //   control,
-  //   handleSubmit
-  // } = useForm<DriverInfoTypes>({
-  //   // defaultValues: async () => getDefaultValuesHandler()
-  //   defaultValues: async () => void
-  // });
+  const {
+    register,
+    formState: { errors },
+    control,
+    handleSubmit
+  } = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { mainFilter, updateMainFilter } = useDriverStore();
-  const [currentUserInfo, setCurrentUserInfo] = useState<DriverInfoTypes>({});
+  const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
+  const mainFilterArray = [
+    { id: 1, label: "駕駛資訊", value: "info" },
+    { id: 2, label: "健康紀錄", value: "health" }
+  ];
 
+  // ------- useEffect ------- //
   useEffect(() => {
-    updateMainFilter("Detail");
+    updateMainFilter("info");
   }, [updateMainFilter]);
 
   useEffect(() => {
     console.log("start getDriverById");
-    getDriverById(userId).then((res) => {
-      const updatedCurrentUserInfo = res.info;
-      if (!updatedCurrentUserInfo) {
-        console.log("查無此使用者");
-        router.push("/driver");
-      }
-      console.log("updatedCurrentUserInfo:", updatedCurrentUserInfo);
-      setCurrentUserInfo(updatedCurrentUserInfo);
-    });
+    // 暫代資料
+    setCurrentUserInfo(DUMMY_DRIVERINFO);
+    // TODO 接API
+    // getDriverById(userId).then((res) => {
+    //   const updatedCurrentUserInfo = res.info;
+    //   if (!updatedCurrentUserInfo) {
+    //     console.log("查無此使用者");
+    //     router.push("/driver");
+    //   }
+    //   console.log("updatedCurrentUserInfo:", updatedCurrentUserInfo);
+    //   setCurrentUserInfo(updatedCurrentUserInfo);
+    // });
   }, [router]);
+
+  // ------- function ------- //
+  const fakeSubmit = (data: any) => console.log("data", data);
+
+  const changeMainFilterHandler = (value: string) => updateMainFilter(value);
+
   const asyncSubmitForm = async (data: any) => {
     setIsLoading(true);
     try {
@@ -62,20 +75,30 @@ const Page: NextPageWithLayout<
   };
 
   return (
-    <BodySTY>
-      <DriverEditForm
-        userId={userId}
-        currentUserInfo={currentUserInfo}
-        submitForm={asyncSubmitForm}
-        // onCancel={cancelFormHandler}
-        formType={mainFilter}
-        // errors={errors}
-        // handleSubmit={handleSubmit}
-        // register={register}
-        // control={control}
-        isDisabled={true}
-      />
-    </BodySTY>
+    <FormProvider {...{ register, errors, control, handleSubmit }}>
+      <BodySTY>
+        <TableWrapper
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={mainFilter}
+          mainFilterArray={mainFilterArray}
+          onSave={handleSubmit(fakeSubmit)}
+        >
+          <DriverEditForm
+            userId={userId}
+            currentUserInfo={currentUserInfo}
+            submitForm={asyncSubmitForm}
+            register={register}
+            // onCancel={cancelFormHandler}
+            formType={mainFilter}
+            // errors={errors}
+            // handleSubmit={handleSubmit}
+            // register={register}
+            // control={control}
+            isDisabled={true}
+          />
+        </TableWrapper>
+      </BodySTY>
+    </FormProvider>
   );
 };
 

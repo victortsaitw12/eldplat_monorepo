@@ -8,7 +8,10 @@ import {
   SmallCrossIcon,
   FloppyDiskIcon
 } from "evergreen-ui";
-import { DriverInfoTypes } from "@contents/driver/driver.typing";
+import { useForm } from "react-hook-form";
+import { FormSTY } from "./style";
+
+import { I_driverInfo } from "@contents/driver/driver.typing";
 // import { DRIVER_TYPE } from "@typings/driver_type";
 import Basic from "./SubForm/Basic";
 import DriverResume from "./SubForm/DriverResume";
@@ -31,9 +34,15 @@ function DriverEditForm({
   formType,
   isDisabled
 }: Props) {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors }
+  } = useForm<I_driverInfo>();
   const [visibleForm, setVisibleForm] = useState("info");
 
-  const [insertData, setInsertData] = useState<DriverInfoTypes>({
+  const [insertData, setInsertData] = useState<I_driverInfo>({
     // <DriverResume />, TABLE: DRIVER
     user_no: userId,
     driver_no: "",
@@ -58,10 +67,10 @@ function DriverEditForm({
     invalid: "N",
     invalid_remark: ""
   });
-  const submitFormHandler = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("insertData", insertData);
-    submitForm(insertData);
+  const submitFormHandler = (data: I_driverInfo) => {
+    // e.preventDefault();
+    console.log("data:", data);
+    // submitForm(insertData);
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newData: any = { ...insertData };
@@ -76,54 +85,39 @@ function DriverEditForm({
     setInsertData(newData);
   };
   return (
-    <>
-      <Pane display="flex" justifyContent="space-between" className="title-bar">
-        <Text className="title-label">駕駛資訊</Text>
-        <Pane className="right-function">
-          <Button
-            iconBefore={FloppyDiskIcon}
-            className="save"
-            onClick={submitFormHandler}
-          >
-            全部儲存
-          </Button>
-          <IconButton icon={FullscreenIcon} />
-          <IconButton icon={SmallCrossIcon} />
-        </Pane>
+    <FormSTY className="add-blocks" onSubmit={handleSubmit(submitFormHandler)}>
+      <Pane className="left-blocks">
+        <Basic currentUserInfo={currentUserInfo} />
+        <DriverResume
+          userId={userId}
+          insertData={insertData}
+          currentUserInfo={currentUserInfo}
+          setInsertData={setInsertData}
+          handleInputChange={handleInputChange}
+          handleMultiSelect={handleMultiSelect}
+          isDisabled={isDisabled}
+        />
       </Pane>
-      <Pane className="add-blocks">
-        <Pane className="left-blocks">
-          <Basic currentUserInfo={currentUserInfo} />
-          <DriverResume
-            userId={userId}
-            insertData={insertData}
-            currentUserInfo={currentUserInfo}
-            setInsertData={setInsertData}
-            handleInputChange={handleInputChange}
-            handleMultiSelect={handleMultiSelect}
-            isDisabled={isDisabled}
-          />
-        </Pane>
-        <Pane className="right-blocks">
-          <DriverLicense
-            insertData={insertData}
-            setInsertData={setInsertData}
-            handleInputChange={handleInputChange}
-            isDisabled={isDisabled}
-          />
-          <LanguageAbility isDisabled={isDisabled} />
-          <HealthFirst
-            setInsertData={(data) => {
-              console.log(data);
-            }}
-            handleEmployeeChange={(e) => {
-              console.log(e);
-            }}
-            isDisabled={isDisabled}
-          />
-        </Pane>
+      <Pane className="right-blocks">
+        <DriverLicense
+          currentUserInfo={currentUserInfo}
+          insertData={insertData}
+          setInsertData={setInsertData}
+          handleInputChange={handleInputChange}
+          isDisabled={isDisabled}
+        />
+        <LanguageAbility isDisabled={isDisabled} />
+        <HealthFirst
+          setInsertData={(data) => {
+            console.log(data);
+          }}
+          handleEmployeeChange={(e) => {
+            console.log(e);
+          }}
+          isDisabled={isDisabled}
+        />
       </Pane>
-    </>
+    </FormSTY>
   );
 }
 

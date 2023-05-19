@@ -2,12 +2,13 @@ import React from "react";
 import { BtnSTY } from "./style";
 
 const EventTag = ({ value, className }: { value: any; className?: string }) => {
+  console.log("val:", value);
   return (
-    <BtnSTY key={value.label} color={value.color} className={className}>
+    <BtnSTY key={value?.label} color={value?.color} className={className}>
       {
         <>
-          {value.icon}
-          <span>{value.label}</span>
+          {value?.icon || null}
+          <span>{value?.label || null}</span>
         </>
       }
     </BtnSTY>

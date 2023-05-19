@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  form {
+  .form {
+    .email {
+      text-decoration: none;
+      color: ${({ theme }) => theme.color.B400};
+    }
     .input-line {
       display: grid;
       grid-template-columns: 1fr 2fr;

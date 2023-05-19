@@ -41,8 +41,6 @@ function HealthFirst({ handleEmployeeChange, setInsertData }: I_Content_Props) {
   //   setInsertData(newData);
   // }, [healthListArr]);
 
-  console.log("healthListArr", healthListArr);
-
   return (
     <BodySTY>
       <Pane className="health-title">

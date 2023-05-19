@@ -32,6 +32,7 @@ const OverviewTable = ({
     const fetchData = async () => {
       const result = await getAllDriverScheduleList(queryString);
       setAllData(result.data);
+      console.log("data:", result.data);
     };
     fetchData();
   }, [initialMonthFirst, UI.monthCount]);
