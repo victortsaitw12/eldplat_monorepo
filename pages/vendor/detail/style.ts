@@ -8,4 +8,7 @@ export const BodySTY = styled.div`
   .title-bar{
     margin-bottom: -1rem;
   }
+  &>div{
+    border: none;
+  }
 `;

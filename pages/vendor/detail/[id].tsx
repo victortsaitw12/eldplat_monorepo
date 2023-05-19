@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
+import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/router";
-import { Pane } from "evergreen-ui";
+import { Pane, Icon, FloppyDiskIcon, EditIcon } from "evergreen-ui";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
@@ -17,6 +18,7 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //
 const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
+  const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
   const { editPage } = router.query;//是否為編輯頁的判斷1或0
 
@@ -41,12 +43,13 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     try {
       const res = await updateVendor(vendor_id, data);
       console.log("response of vendor edit: ", res);
-      router.push("/vendor");
+
     } catch (e: any) {
       console.log(e);
       alert(e.message);
     }
     setLoading(false);
+    router.push("/vendor");
   };
 
   //
@@ -55,8 +58,10 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
       setLoading(true);
       try {
         const data = await getVendorById(vendor_id);
+        console.log("✨✨✨✨✨Get data by id", data);
         setOldVendorData(data);
       } catch (e: any) {
+        console.log("取單一供應商data的時候錯了", e)
         console.log(e);
       }
       setLoading(false);
@@ -64,35 +69,70 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     getCustomerData();
   }, [vendor_id]);
 
+  const r_editBtn = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          cursor: "pointer"
+        }}
+        onClick={() => setIsEdit(!isEdit)}
+      >
+        <Icon
+          icon={EditIcon}
+          size={16}
+          marginY="auto"
+          marginX="10px"
+          color="#91A9C5"
+        />
+        <div>編輯</div>
+      </div>
+    )
+  }
+  const r_saveBtn = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          cursor: "pointer"
+        }}
+        onClick={() => {
+          setIsEdit(!isEdit)
+          // submitRef.current && submitRef.current.click();
+        }}
+      >
+        <Icon
+          icon={FloppyDiskIcon}
+          size={16}
+          marginY="auto"
+          marginX="10px"
+          color="#91A9C5"
+        />
+        <div>全部儲存</div>
+      </div>
+    )
+  }
   return (
     <BodySTY>
       {!loading && oldVendorData &&
-        <Pane
-          width="100%"
-          height="100%"
-          overflow="auto"
+        <TableWrapper
+          optionsEle={!isEdit ? r_editBtn() : r_saveBtn()}
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={"all"}
+          mainFilterArray={mainFilterArray}
+          onSave={() => { console.log("點擊儲存") }}
         >
-          <button onClick={
-            () => {
-              setIsEdit(!isEdit);
-            }
-          }>
-            編輯
-          </button>
-          <TableWrapper
-            onChangeTab={changeMainFilterHandler}
-            mainFilter={"all"}
-            mainFilterArray={mainFilterArray}
-          >
-            <VendorDetail
-              submitForm={asyncSubmitForm}
-              isEdit={isEdit}
-              vendorData={oldVendorData}
-            />
-          </TableWrapper>
-        </Pane>
+          <VendorDetail
+            submitRef={submitRef}
+            submitForm={asyncSubmitForm}
+            isEdit={isEdit}
+            vendorData={oldVendorData}
+          />
+        </TableWrapper>
       }
-    </BodySTY>
+    </BodySTY >
   );
 };
 interface Props {
