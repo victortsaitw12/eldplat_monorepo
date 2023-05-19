@@ -17,11 +17,11 @@ const FiledInput = ({ horizonLabel = false, label, controlProps, hint }: FiledIn
   } = useController(controlProps);
   return (
     <ItemSTY horizonLabel={horizonLabel}>
-      <div className="field-title">
+      {label && label !== "" && <div className="field-title">
         <span className="requier-icon">*</span>
         <span>{label}</span>
         {!!hint && <HelpIcon />}
-      </div>
+      </div>}
       <input type="string" {...field} />
       {error && (
         <div className="error-message">

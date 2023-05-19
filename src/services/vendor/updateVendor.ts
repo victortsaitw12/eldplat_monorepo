@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 // 更新供應商資料
 export const updateVendor = async (
     vendor_No: string,
@@ -10,9 +11,9 @@ export const updateVendor = async (
         }
     }
     filteredNullData["vendor_No"] = vendor_No;
-    console.log("filteredNullData", filteredNullData);
+    // console.log("filteredNullData", filteredNullData);
     const res = await fetch(
-        "https://localhost:7188/Gateway_Vendor/UpdateVendor",
+        API_Path["UpdateVendor"],
         {
             method: "POST",
             headers: {

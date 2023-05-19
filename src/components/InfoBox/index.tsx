@@ -19,6 +19,7 @@ interface I_infoData {
 }
 
 export interface I_InfoBoxProps {
+  style?: React.CSSProperties;
   isEdit: boolean;
   infoTitle?: string;
   infoData?: I_infoData[];
@@ -26,7 +27,7 @@ export interface I_InfoBoxProps {
   children?: React.ReactNode;
 }
 
-function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
+function InfoBox({ style, isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
 
   console.log("🎶🎶🎶🎶🎶🎶這些是InfoBox裡面的props", {
     isEdit: isEdit,
@@ -112,7 +113,7 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
   }
 
   return (
-    <InfoBoxSTY>
+    <InfoBoxSTY style={style}>
       <Text className="info-title">{infoTitle}</Text>
       {r_switch_info(infoType)}
     </InfoBoxSTY>

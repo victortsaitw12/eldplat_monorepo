@@ -1,7 +1,8 @@
+import API_Path from "./apiPath";
 // 刪除供應商資料
 export const deleteVendor = async (vendor_No: string) => {
     const response = await fetch(
-        "https://localhost:7188/Gateway_Vendor/DeleteVendor",
+        API_Path["DeleteVendor"],
         {
             method: "POST",
             body: JSON.stringify({

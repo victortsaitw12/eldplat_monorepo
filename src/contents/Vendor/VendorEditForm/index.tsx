@@ -61,7 +61,6 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
     setFuelValue(newData);
   };
   const [tags, setTags] = React.useState(["Kauri", "Willow"])
-  // console.log("🧨🧨insertData", insertData);
   console.log("🧨🧨insertData", getValues());
   console.log("🧨🧨🧨🧨form errors", errors);
   return (

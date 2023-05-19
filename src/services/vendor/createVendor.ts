@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 // 新增供應商
 export const createVendor = async (vendorData: any) => {
   //
@@ -15,7 +16,7 @@ export const createVendor = async (vendorData: any) => {
   }
   //
   const res = await fetch(
-    "https://localhost:7188/Gateway_Vendor/CreateVendor",
+    API_Path["CreateVendor"],
     {
       method: "POST",
       headers: {

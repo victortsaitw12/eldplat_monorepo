@@ -59,8 +59,11 @@ const Page: NextPageWithLayout<{
     let isCanceled = false;
     getAllVendors(subFilter).then((data) => {
       const vendorData = data.contentList.map((vendors: Vendor) => {
+        console.log("💫💫💫💫💫💫vendors的資料", vendors);
         return {
           id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+          vendor_no: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+          vendor_data: { label: "無", value: "無" },
           vendor_name: {
             label: vendors["vendor_Name"],
             value: vendors["vendor_Name"]
@@ -72,6 +75,18 @@ const Page: NextPageWithLayout<{
           vendor_phone: {
             label: vendors["vendor_Phone"],
             value: vendors["vendor_Phone"]
+          },
+          vendor_email: {
+            label: vendors["vendor_Email"],
+            value: vendors["vendor_Email"]
+          },
+          vendor_contact_name: {
+            label: vendors["vendor_Contact_Name"],
+            value: vendors["vendor_Contact_Name"],
+          },
+          vendor_contact_phone: {
+            label: vendors["vendor_Contact_Phone"],
+            value: vendors["vendor_Contact_Phone"],
           },
           vendor_website: {
             label: (
@@ -85,16 +100,14 @@ const Page: NextPageWithLayout<{
             ),
             value: vendors["vendor_Website"]
           },
-          vendor_contact_name: {
-            label: vendors["vendor_Contact_Name"],
-            value: vendors["vendor_Contact_Name"]
-          },
-          vendor_contact_email: {
-            label: vendors["vendor_Contact_Email"],
-            value: vendors["vendor_Contact_Email"]
-          },
           vendor_label: {
-            label: vendors["vendor_Label"],
+            label: (
+              <span
+                className="vendor-label"
+              >
+                服務讚
+              </span>
+            ),
             value: vendors["vendor_Label"]
           }
         };
@@ -117,13 +130,14 @@ const Page: NextPageWithLayout<{
     };
   }, [subFilter]);
 
-  const reloadResult = async () => {
-    setData([])
+  const getResult = async () => {
     try {
       const res = await getAllVendors(subFilter)
       const vendorData = res.contentList.map((vendors: Vendor) => {
         return {
           id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+          vendor_no: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+          vendor_data: { label: "無", value: "無" },
           vendor_name: {
             label: vendors["vendor_Name"],
             value: vendors["vendor_Name"]
@@ -136,6 +150,18 @@ const Page: NextPageWithLayout<{
             label: vendors["vendor_Phone"],
             value: vendors["vendor_Phone"]
           },
+          vendor_email: {
+            label: vendors["vendor_Email"],
+            value: vendors["vendor_Email"]
+          },
+          vendor_contact_name: {
+            label: vendors["vendor_Contact_Name"],
+            value: vendors["vendor_Contact_Name"],
+          },
+          vendor_contact_phone: {
+            label: vendors["vendor_Contact_Phone"],
+            value: vendors["vendor_Contact_Phone"],
+          },
           vendor_website: {
             label: (
               <a
@@ -147,14 +173,6 @@ const Page: NextPageWithLayout<{
               </a>
             ),
             value: vendors["vendor_Website"]
-          },
-          vendor_contact_name: {
-            label: vendors["vendor_Contact_Name"],
-            value: vendors["vendor_Contact_Name"]
-          },
-          vendor_contact_email: {
-            label: vendors["vendor_Contact_Email"],
-            value: vendors["vendor_Contact_Email"]
           },
           vendor_label: {
             label: vendors["vendor_Label"],
@@ -185,7 +203,8 @@ const Page: NextPageWithLayout<{
     try {
       const res = await deleteVendor(id);
       console.log("response of vendor edit: ", res);
-      reloadResult();
+      setData([])
+      getResult();
     } catch (e: any) {
       console.log(e);
       alert("删除供應商失敗：" + e.message);
@@ -238,7 +257,12 @@ const Page: NextPageWithLayout<{
                 setDrawerOpen(false);
               }}
             >
-              <VendorCreateForm />
+              <VendorCreateForm
+                reloadData={() => {
+                  setData([])
+                  getResult();
+                }}
+              />
             </Drawer>
           )}
           {/* <SideBookMark /> */}
