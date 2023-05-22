@@ -3,7 +3,8 @@ import {
   Icon,
   FullscreenIcon,
   CrossIcon,
-  FloppyDiskIcon
+  FloppyDiskIcon,
+  EditIcon
 } from "evergreen-ui";
 import React from "react";
 import { BodySTY, FilterItemSTY } from "./style";
@@ -17,7 +18,9 @@ interface Props {
     label: string;
     value: string;
   }[];
+  isEdit?: boolean;
   onSave?: () => void;
+  onEdit?: () => void;
   onClose?: () => void;
 }
 
@@ -29,8 +32,12 @@ function TableWrapper({
   onChangeTab = (value: string) => {
     console.log(value);
   },
-  onSave
+  isEdit,
+  onSave,
+  onEdit
 }: Props) {
+  console.log("OnSave", onSave);
+  console.log("onEdit", onEdit);
   return (
     <BodySTY>
       <div className="filter-header">
@@ -52,27 +59,32 @@ function TableWrapper({
         </div>
         <div className="tab-options">
           {optionsEle}
-          {onSave && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer"
-              }}
-              onClick={() => {
-                onSave();
-              }}
-            >
-              <Icon
-                icon={FloppyDiskIcon}
-                size={16}
-                marginY="auto"
-                marginX="10px"
-                color="#91A9C5"
-              />
-              <div>全部儲存</div>
-            </div>
-          )}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer"
+            }}
+            onClick={() => {
+              console.log("mode", isEdit);
+              if (isEdit) {
+                console.log("save data");
+                onSave && onSave();
+              } else {
+                onEdit && onEdit();
+              }
+            }}
+          >
+            <Icon
+              icon={isEdit ? FloppyDiskIcon : EditIcon}
+              size={16}
+              marginY="auto"
+              marginX="10px"
+              color="#91A9C5"
+            />
+            <div>{isEdit ? "全部儲存" : "編輯"}</div>
+          </div>
+
           <Icon
             icon={FullscreenIcon}
             size={16}

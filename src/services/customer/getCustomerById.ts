@@ -1,6 +1,6 @@
 export const getCustomerById = async (customer_no: string) => {
   const response = await fetch(
-    `https://localhost:7088/CTR/GetOneCustomer?customer_no=${customer_no}`,
+    `https://localhost:7088/CTR/GetOneCustomer/${customer_no}`,
     {
       method: "POST",
       headers: {

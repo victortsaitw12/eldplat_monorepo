@@ -70,6 +70,9 @@ const Page: NextPageWithLayout<never> = () => {
   const goToEditPageHandler = (id: string) => {
     router.push(`/customer/edit/${id}`);
   };
+  const goToDetailPageHandler = (id: string) => {
+    router.push(`/customer/detail/${id}`);
+  };
 
   if (!data) {
     return <LoadingSpinner />;
@@ -89,6 +92,7 @@ const Page: NextPageWithLayout<never> = () => {
           goToCreatePage={goToCreatePageHandler}
           deleteItemHandler={deleteItemHandler}
           goToEditPageHandler={goToEditPageHandler}
+          goToDetailPage={goToDetailPageHandler}
         />
       </MainBookmark>
     </BodySTY>

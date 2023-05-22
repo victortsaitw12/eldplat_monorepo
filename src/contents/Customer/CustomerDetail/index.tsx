@@ -1,55 +1,32 @@
 import React, { useState } from "react";
-import {
-  useForm,
-  FormProvider,
-  Control,
-  UseFormRegister,
-  FieldErrors,
-  UseFormHandleSubmit,
-  UseFormGetValues
-} from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { TextInputField, TextInput, SelectField } from "evergreen-ui";
-
 //@components
 import InfoBox from "@components/InfoBox";
 // import FormCard from "@components/FormCard";
 
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
-
 //@service
-
 //@utils
 import {
   emailValidation,
   numberValidation,
   textValidation
 } from "@utils/inputValidation";
-
+//
+import ContactList from "@contents/Customer/ContactList/Edit";
 import { CustomerDataTypes } from "../customer.type";
 interface I_Props {
-  submitRef: React.RefObject<HTMLButtonElement>;
   isEdit: boolean;
-  customerData: CustomerDataTypes;
-  submitForm: (data: any) => void;
-  control: Control<CustomerDataTypes, any>;
-  register: UseFormRegister<CustomerDataTypes>;
-  errors: FieldErrors<CustomerDataTypes>;
-  handleSubmit: UseFormHandleSubmit<CustomerDataTypes>;
-  getValues: UseFormGetValues<CustomerDataTypes>;
 }
-
-const CustomerDetail = ({
-  submitRef,
-  isEdit,
-  customerData,
-  register,
-  control,
-  submitForm,
-  handleSubmit,
-  getValues
-}: I_Props) => {
-  console.log("💫💫💫原本的供應商資料：", customerData);
+const CustomerDetail = ({ isEdit }: I_Props) => {
+  const {
+    register,
+    control,
+    formState: { errors },
+    getValues
+  } = useFormContext<CustomerDataTypes>();
   //TODO 分類的選法
 
   //基本資料
@@ -57,15 +34,15 @@ const CustomerDetail = ({
     {
       readonly: true,
       label: "顧客號碼",
-      value: getValues("customer_No")
+      value: getValues("customer_no")
     },
     {
       req: true,
       label: "名稱",
-      value: vendor_Name,
+      value: getValues("customer_name"),
       editEle: (
         <TextInput
-          {...methods.register("vendor_Name", {
+          {...register("customer_name", {
             required: "必填",
             validate: textValidation
           })}
@@ -75,10 +52,10 @@ const CustomerDetail = ({
     {
       req: true,
       label: "統一編號",
-      value: vendor_Gui_No,
+      value: getValues("customer_gui_no"),
       editEle: (
         <TextInput
-          {...methods.register("vendor_Gui_No", {
+          {...register("customer_gui_no", {
             validate: textValidation
           })}
         />
@@ -87,10 +64,10 @@ const CustomerDetail = ({
     {
       req: true,
       label: "負責人",
-      value: vendor_Owner,
+      value: getValues("customer_owner"),
       editEle: (
         <TextInput
-          {...methods.register("vendor_Owner", {
+          {...register("customer_owner", {
             validate: textValidation
           })}
         />
@@ -98,28 +75,39 @@ const CustomerDetail = ({
     }
   ];
   //分類 vendor_Code_List
-  const category_info = vendor_Code_List.map((child, i) => {
-    return { label: child.vendor_Code_Name, value: child.vendor_Code };
-  });
+  const category_info = [
+    {
+      req: true,
+      value: getValues("customer_typ"),
+      editEle: (
+        <TextInput
+          {...register("customer_typ", {
+            required: "必填"
+          })}
+        />
+      )
+    }
+  ];
   //標籤 label_Name(?)
-  const label_info = label_Name
-    ? [
-        {
-          label: label_Name,
-          value: label_Name
-        }
-      ]
-    : undefined;
+  // const label_info = getValues("labels")
+  //   ? [
+  //       {
+  //         label: getValues("labels")[0].label_name,
+  //         value: getValues("labels")[0].label_name
+  //       }
+  //     ]
+  //   : undefined;
   //聯絡方式
+
   const contact_info = [
     {
       req: true,
       label: "公司地址",
       subLabel: <span>地址1</span>,
-      value: address1,
+      value: getValues("address1"),
       editEle: (
         <TextInput
-          {...methods.register("address1", {
+          {...register("address1", {
             validate: textValidation
           })}
         />
@@ -129,10 +117,10 @@ const CustomerDetail = ({
       req: false,
       label: "",
       subLabel: <span>地址2</span>,
-      value: address2,
+      value: getValues("address2"),
       editEle: (
         <TextInput
-          {...methods.register("address2", {
+          {...register("address2", {
             validate: textValidation
           })}
         />
@@ -141,12 +129,12 @@ const CustomerDetail = ({
     {
       req: false,
       label: "",
-      value: [vendor_City, vendor_Area],
+      value: [getValues("customer_city"), getValues("customer_area")],
       editEle: [
         <SelectField
-          key="vendor_City"
+          key="customer_city"
           label="城市"
-          {...methods.register("vendor_City", {
+          {...register("customer_city", {
             required: "必填"
           })}
           marginBottom="0"
@@ -157,9 +145,9 @@ const CustomerDetail = ({
           <option value="TY">桃園</option>
         </SelectField>,
         <SelectField
-          key="vendor_Area"
+          key="customer_area"
           label="州/省/區"
-          {...methods.register("vendor_Area", {
+          {...register("customer_area", {
             required: "必填"
           })}
           marginBottom="0"
@@ -174,20 +162,23 @@ const CustomerDetail = ({
     {
       req: false,
       label: "",
-      value: [vendor_District_Code, vendor_Country],
+      value: [
+        getValues("customer_district_code"),
+        getValues("customer_country")
+      ],
       editEle: [
         <TextInputField
-          key="vendor_District_Code"
+          key="customer_district_code"
           label="郵遞區號"
-          {...methods.register("vendor_District_Code", {
+          {...register("customer_district_code", {
             validate: textValidation
           })}
           marginBottom="0"
         />,
         <SelectField
-          key="vendor_Country"
+          key="customer_country"
           label="國家"
-          {...methods.register("vendor_Country", {
+          {...register("customer_country", {
             required: "必填"
           })}
           marginBottom="0"
@@ -201,17 +192,19 @@ const CustomerDetail = ({
     {
       req: true,
       label: "公司電話",
-      value: vendor_Tel ? vendor_Tel_Code + " " + vendor_Tel : "---",
+      value: getValues("customer_tel")
+        ? getValues("customer_tel_code") + " " + getValues("customer_tel")
+        : "---",
       editEle: [
         <TextInput
-          key="vendor_Tel_Code"
-          {...methods.register("vendor_Tel_Code")}
+          key="customer_tel_code"
+          {...register("customer_tel_code")}
           disabled={true}
           style={{ width: "60px" }}
         />,
         <TextInput
-          key="vendor_Tel"
-          {...methods.register("vendor_Tel", {
+          key="customer_tel"
+          {...register("customer_tel", {
             validate: numberValidation
           })}
         />
@@ -220,17 +213,19 @@ const CustomerDetail = ({
     {
       req: false,
       label: "公司傳真",
-      value: vendor_Fax ? vendor_Fax_Code + " " + vendor_Fax : "---",
+      value: getValues("customer_fax")
+        ? getValues("customer_fax_code") + " " + getValues("customer_fax")
+        : "---",
       editEle: [
         <TextInput
-          key="vendor_Fax_Code"
+          key="customer_fax_code"
           disabled={true}
           style={{ width: "60px" }}
-          {...methods.register("vendor_Fax_Code")}
+          {...register("customer_fax_code")}
         />,
         <TextInput
-          key="vendor_Fax"
-          {...methods.register("vendor_Fax", {
+          key="customer_fax"
+          {...register("customer_fax", {
             validate: numberValidation
           })}
         />
@@ -239,11 +234,11 @@ const CustomerDetail = ({
     {
       req: false,
       label: "公司信箱",
-      value: vendor_Email || "---",
+      value: getValues("customer_email") || "---",
       editEle: [
         <TextInput
-          key="vendor_Email"
-          {...methods.register("vendor_Email", {
+          key="customer_email"
+          {...register("customer_email", {
             validate: emailValidation
           })}
         />
@@ -252,11 +247,11 @@ const CustomerDetail = ({
     {
       req: false,
       label: "公司網址",
-      value: vendor_Url || "---",
+      value: getValues("customer_url") || "---",
       editEle: [
         <TextInput
-          key="vendor_Url"
-          {...methods.register("vendor_Url", {
+          key="customer_url"
+          {...register("customer_url", {
             required: "必填"
           })}
         />
@@ -264,101 +259,48 @@ const CustomerDetail = ({
     },
     // TODO:主要聯絡人區塊 因為變成Array所以先緩緩再做。
     {
-      req: true,
-      label: "主要聯絡人",
-      value: vendorData?.vendor_Contact_List[0]?.contact_Name || "---",
-      editEle: [
-        <TextInput
-          key="vendor_Contact_List.0.contact_Name"
-          {...methods.register("vendor_Contact_List.0.contact_Name", {
-            validate: textValidation
-          })}
-        />
-      ]
-    },
-    {
       req: false,
-      label: "主要聯絡人電話(市話)",
-      value: "---",
+      inputType: "custom",
       editEle: [
-        <TextInput
-          key="vendor_Contact_List.0.contact_Tel_Code"
-          disabled={true}
-          style={{ width: "60px" }}
-          {...methods.register("vendor_Contact_List.0.contact_Tel_Code")}
-        />,
-        <TextInput
-          key="vendor_Contact_List.0.contact_Tel"
-          {...methods.register("vendor_Contact_List.0.contact_Tel")}
-        />
-      ]
-    },
-    {
-      req: false,
-      label: "主要聯絡人電話(手機)",
-      value: "+886 900111888",
-      editEle: [
-        <TextInput
-          key="vendor_Contact_List.0.contact_Phone_Code"
-          disabled={true}
-          style={{ width: "60px" }}
-          {...methods.register("vendor_Contact_List.0.contact_Phone_Code")}
-        />,
-        <TextInput
-          key="vendor_Contact_List.0.contact_Phone"
-          {...methods.register("vendor_Contact_List.0.contact_Phone")}
+        <ContactList
+          key="contact_list"
+          hide={false}
+          control={control}
+          errors={errors}
+          register={register}
+          isEdit={isEdit}
         />
       ]
     }
   ];
   return (
-    <>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit((data) => {
-            console.log("🕯️🕯️🕯️🕯️🕯️🕯️這是用form-hook的data:", {
-              ...data,
-              vendor_Code: fuelValue
-            });
-            // submitForm({ ...data, vendor_Code: fuelValue });
-          })}
-          name="vendor"
-        >
-          <button ref={submitRef} type="submit" style={{ display: "none" }}>
-            儲存
-          </button>
-          <FlexWrapper padding="0">
-            <div style={{ flex: "1" }}>
-              <InfoBox
-                isEdit={isEdit}
-                infoData={basic_info}
-                infoTitle="基本資料"
-              />
-              <FlexWrapper style={{ padding: "10px 0" }} padding="10px 0">
-                <InfoBox
-                  isEdit={isEdit}
-                  infoData={category_info}
-                  infoType="checkbox"
-                  infoTitle="分類"
-                />
-                <InfoBox
-                  isEdit={isEdit}
-                  infoData={label_info}
-                  infoType="label"
-                  infoTitle="標籤"
-                />
-              </FlexWrapper>
-            </div>
+    <form>
+      <FlexWrapper padding="0">
+        <div style={{ flex: "1" }}>
+          <InfoBox isEdit={isEdit} infoData={basic_info} infoTitle="基本資料" />
+          <FlexWrapper style={{ padding: "10px 0" }} padding="10px 0">
             <InfoBox
-              style={{ flex: "1" }}
               isEdit={isEdit}
-              infoData={contact_info}
-              infoTitle="聯絡方式"
+              infoData={category_info}
+              infoType="checkbox"
+              infoTitle="分類"
             />
+            {/* <InfoBox
+              isEdit={isEdit}
+              infoData={label_info}
+              infoType="label"
+              infoTitle="標籤"
+            /> */}
           </FlexWrapper>
-        </form>
-      </FormProvider>
-    </>
+        </div>
+        <InfoBox
+          style={{ flex: "1" }}
+          isEdit={isEdit}
+          infoData={contact_info}
+          infoTitle="聯絡方式"
+        />
+      </FlexWrapper>
+    </form>
   );
 };
 

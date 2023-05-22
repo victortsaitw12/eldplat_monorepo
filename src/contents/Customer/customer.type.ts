@@ -5,7 +5,7 @@ export interface SubFromProps {
   register: UseFormRegister<CustomerDataTypes>;
   errors: FieldErrors<CustomerDataTypes>;
   control: Control<CustomerDataTypes, any>;
-  isDisabled?: boolean;
+  isEdit?: boolean;
 }
 
 export interface CustomerDataTypes {
@@ -22,6 +22,7 @@ export interface CustomerDataTypes {
   customer_city: string;
   customer_area: string;
   customer_district_code: string;
+  customer_country: string;
   customer_tel_code: string;
   customer_tel: string;
   customer_fax_code: string;
@@ -51,6 +52,7 @@ const customerDefaultData: CustomerDataTypes = {
   customer_city: "",
   customer_area: "",
   customer_district_code: "",
+  customer_country: "",
   customer_tel_code: "",
   customer_tel: "",
   customer_fax_code: "",

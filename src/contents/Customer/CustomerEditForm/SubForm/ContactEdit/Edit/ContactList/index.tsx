@@ -11,7 +11,7 @@ const ContactList = ({
   errors,
   control,
   register,
-  isDisabled = false
+  isEdit: isDisabled = false
 }: SubFromProps) => {
   const { fields, append, remove } = useFieldArray({
     control,

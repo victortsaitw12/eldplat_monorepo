@@ -12,7 +12,7 @@ function Details({
   register,
   errors,
   control,
-  isDisabled = false
+  isEdit: isDisabled = false
 }: SubFromProps) {
   return (
     <FlexWrapper>
