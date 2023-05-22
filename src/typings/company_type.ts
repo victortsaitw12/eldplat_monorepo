@@ -1,50 +1,55 @@
+export interface I_Company_Contact_Type {
+  contact_name: string;
+  contact_phone_code: string;
+  contact_phone: string;
+  contact_tel_code: string;
+  contact_tel: string;
+  contact_email: string;
+  contact_sort: string;
+}
+
+export interface I_Company_Working_Type {
+  working_hours_code: any | string;
+  working_hours_name: string;
+}
+
+export interface I_Company_Leave_Type {
+  leave_code: any | string;
+  leave_name: string;
+}
+
 export interface I_Company_Update_Type {
-  company_No: string;
-  company: {
-    administrator: string;
-    agent_No: string;
-    invoice_No: string;
-    corporation_Code: string;
-    company_Typ: string;
-    com_Name: string;
-    com_Country: string;
-    owner: string;
-    com_Logo_Link: string;
-    plf_Typ: string;
-    plan_Typ: string;
-    sub_Status: string;
-    sub_Time: string;
-    com_Status: string;
-  };
-  company_Currency: {
-    currency_Code: string;
-    currency_Name: string;
+  address1: string;
+  address2: string;
+  administrator: string;
+  agent_no: string;
+  company_area: string;
+  company_city: string;
+  company_contact: I_Company_Contact_Type[];
+  company_country: string;
+  company_country2: string;
+  company_currency: {
+    currency_code: string;
+    currency_name: string;
   }[];
-  company_Dt: {
-    tel: string;
-    com_Email: string;
-    com_Fax: string;
-    country: string;
-    city: string;
-    district: string;
-    zip_Code: string;
-    user_Address1: string;
-    user_Address2: string;
-    contact_Name: string;
-    contact_Tel: string;
-    country_Code: string;
-    contact_Phone: string;
-  };
-  company_Language: {
-    language_Code: string;
-    language_Name: string;
+  company_district_code: string;
+  company_email: string;
+  company_fax: string;
+  company_fax_code: string;
+  company_gui_no: string;
+  company_language: {
+    language_code: string;
+    language_name: string;
   }[];
-  company_Leave: {
-    leave_Code: string;
-    leave_Name: string;
-  }[];
-  company_Working_Hours: {
-    working_Hours_Code: string;
-    working_Hours_Name: string;
-  }[];
+  company_leave: I_Company_Leave_Type[];
+  company_logo_link: string;
+  company_name: string;
+  company_no: string;
+  company_owner: string;
+  company_tel: string;
+  company_tel_code: string;
+  company_typ: string;
+  company_working_hours: I_Company_Working_Type[];
+  no: number;
+  user_name: string;
 }

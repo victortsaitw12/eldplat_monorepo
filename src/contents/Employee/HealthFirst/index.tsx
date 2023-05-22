@@ -30,6 +30,11 @@ function HealthFirst({
   });
   const [healthListArr, setHealthListArr] = useState<I_Health_TYPE[]>([]);
 
+  // 一進來先抓資料庫原本就有的健康資料
+  useEffect(() => {
+    insertData && setHealthListArr(insertData?.healths);
+  }, [insertData]);
+
   const handleHealthChange = (e: any) => {
     const newData: any = { ...healthData };
     newData[e.target.name] = e.target.value;

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Avatar, Heading, Pane, Text } from "evergreen-ui";
 
 import { BodySTY } from "./style";
@@ -8,7 +8,7 @@ import {
 } from "@contexts/companyContext/companyProvider";
 
 function CountrySet() {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
+  const { companyData } = useContext<I_Company_Context>(CompanyContext);
 
   return (
     <BodySTY>
@@ -20,7 +20,7 @@ function CountrySet() {
             name="Alan Turing"
             size={40}
           />
-          <Text>{C_data.companyData.company.owner}(你)</Text>
+          <Text>{companyData.company_owner}(你)</Text>
         </Pane>
       </form>
     </BodySTY>

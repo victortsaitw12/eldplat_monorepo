@@ -49,7 +49,7 @@ export const BodySTY = styled.div`
           font-size: 12px;
         }
         .city,
-        .district {
+        .company_area {
           margin-top: -10px;
         }
       }
@@ -67,6 +67,20 @@ export const BodySTY = styled.div`
         }
         input {
           width: 100%;
+        }
+      }
+
+      .contact-first {
+        button {
+          width: fit-content;
+          background-color: transparent;
+          border: none;
+          margin-left: 6px;
+
+          &:hover {
+            background-color: transparent !important;
+            border: none !important;
+          }
         }
       }
     }
