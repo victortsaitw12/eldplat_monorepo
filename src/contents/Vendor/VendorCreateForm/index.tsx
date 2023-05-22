@@ -293,6 +293,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     label=""
                 />
             </FlexWrapper>
+            {/* 從外部車隊進來的時候要先預選外部車隊,如果要加入其他分類則到細節頁裡面新增 */}
             <Text>
                 <span style={{ color: "#D14343" }}>* </span>
                 分類

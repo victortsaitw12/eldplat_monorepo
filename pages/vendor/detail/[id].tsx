@@ -122,7 +122,10 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
           onChangeTab={changeMainFilterHandler}
           mainFilter={"all"}
           mainFilterArray={mainFilterArray}
-          onSave={() => { console.log("點擊儲存") }}
+          onSave={() => {
+            // setIsEdit(!isEdit)
+            submitRef.current && submitRef.current.click();
+          }}
         >
           <VendorDetail
             submitRef={submitRef}

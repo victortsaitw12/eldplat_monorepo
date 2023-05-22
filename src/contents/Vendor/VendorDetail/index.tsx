@@ -1,8 +1,8 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, forwardRef, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { TextInputField, TextInput, SelectField } from "evergreen-ui";
 import { MOCK_FUEL_DATA } from "./FuelData";
-
+import VerticalInput from "@components/HookForm/Input/VerticalInput";
 //@components
 import InfoBox from "@components/InfoBox";
 // import FormCard from "@components/FormCard";
@@ -31,9 +31,47 @@ interface I_Props {
   submitForm: (data: any) => void;
 }
 
+//供應商分類列表
+const vendor_code_list = [
+  {
+    vendor_code: "01",
+    vendor_code_name: "外部車隊"
+  },
+  {
+    vendor_code: "02",
+    vendor_code_name: "設備庫存"
+  },
+  {
+    vendor_code: "03",
+    vendor_code_name: "維修廠"
+  },
+  {
+    vendor_code: "04",
+    vendor_code_name: "保險"
+  },
+  {
+    vendor_code: "05",
+    vendor_code_name: "燃料"
+  },
+  {
+    vendor_code: "06",
+    vendor_code_name: "其他"
+  },
+]
+
+const vedor_code_text: { [key: string]: string } = {
+  "01": "外部車隊",
+  "02": "設備庫存",
+  "03": "維修廠",
+  "04": "保險",
+  "05": "燃料",
+  "06": "其他",
+}
+
 const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler, submitForm }: I_Props) => {
   console.log("💫💫💫原本的供應商資料：", vendorData);
-  const [fuelValue, setFuelValue] = useState<string[]>(["03"]);
+  const defaultFuelValue = vendorData.vendor_Code_List.map((child) => { return child.vendor_Code });
+  const [fuelValue, setFuelValue] = useState<string[]>(defaultFuelValue);
   const methods = useForm({ defaultValues: vendorData });
   const {
     label_Name,
@@ -53,17 +91,17 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     vendor_Fax_Code,
     vendor_Email,
     vendor_Url,
-    vendor_Code_List,
-    vendor_Contact_List
+    vendor_Code_List, //供應商列表
+    vendor_Contact_List //聯絡人列表
   } = { ...vendorData }
   //分類的選法
-  const toggleFuelValue = (value: string) => {
+  const toggleCodelist = (name: string, checked: boolean) => {
     const newData = [...fuelValue];
-    const idx = fuelValue.indexOf(value);
+    const idx = fuelValue.indexOf(name);
     // 如果在fuelValue陣列抓不到該value，idx會是-1，然後就push一個新的value，反之則刪去
-    if (idx === -1) {
-      newData.push(value);
-    } else {
+    if (checked && idx === -1) {
+      newData.push(name);
+    } else if (!checked && idx !== -1) {
       newData.splice(idx, 1);
     }
     setFuelValue(newData);
@@ -80,7 +118,8 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       label: "名稱",
       value: vendor_Name,
       editEle:
-        <TextInput
+        <VerticalInput
+          label=''
           {...methods.register("vendor_Name", {
             required: "必填",
             validate: textValidation
@@ -111,7 +150,16 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     }
   ]
   //分類 vendor_Code_List
-  const category_info = vendor_Code_List.map((child, i) => { return { label: child.vendor_Code_Name, value: child.vendor_Code } })
+  const category_info = vendor_code_list.map((child, i) => {
+    return {
+      label: child.vendor_code_name,
+      value: child.vendor_code,
+      checked: defaultFuelValue.indexOf(child.vendor_code) !== -1,
+      onChange: (e: any) => {
+        toggleCodelist(e.target.name, e.target.checked);
+      },
+    }
+  })
   //標籤 label_Name(?)
   const label_info = label_Name ? [
     {
@@ -209,7 +257,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       editEle: [
         <TextInput key="vendor_Tel_Code"
           {...methods.register("vendor_Tel_Code")}
-          disabled={true}
+          // disabled={true}
           style={{ width: "60px" }}
         />,
         <TextInput
@@ -227,7 +275,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       editEle: [
         <TextInput
           key="vendor_Fax_Code"
-          disabled={true}
+          // disabled={true}
           style={{ width: "60px" }}
           {...methods.register("vendor_Fax_Code")}
         />,
@@ -269,11 +317,11 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     {
       req: true,
       label: "主要聯絡人",
-      value: vendorData?.vendor_Contact_List[0]?.contact_Name || "---",
+      value: vendorData?.vendor_Contact_List[0]?.contact_name || "---",
       editEle: [
         <TextInput
-          key="vendor_Contact_List.0.contact_Name"
-          {...methods.register("vendor_Contact_List.0.contact_Name", {
+          key="vendor_Contact_List.0.contact_name"
+          {...methods.register("vendor_Contact_List.0.contact_name", {
             validate: textValidation
           })}
         />
@@ -285,14 +333,14 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       value: "---",
       editEle: [
         <TextInput
-          key="vendor_Contact_List.0.contact_Tel_Code"
-          disabled={true}
+          key="vendor_Contact_List.0.contact_tel_code"
+          // disabled={true}
           style={{ width: "60px" }}
-          {...methods.register("vendor_Contact_List.0.contact_Tel_Code")}
+          {...methods.register("vendor_Contact_List.0.contact_tel_code")}
         />,
         <TextInput
           key="vendor_Contact_List.0.contact_Tel"
-          {...methods.register("vendor_Contact_List.0.contact_Tel")}
+          {...methods.register("vendor_Contact_List.0.contact_tel")}
         />
       ],
     },
@@ -303,24 +351,43 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       editEle: [
         <TextInput
           key="vendor_Contact_List.0.contact_Phone_Code"
-          disabled={true}
+          // disabled={true}
           style={{ width: "60px" }}
-          {...methods.register("vendor_Contact_List.0.contact_Phone_Code")}
+          {...methods.register("vendor_Contact_List.0.contact_phone_code")}
         />,
         <TextInput
           key="vendor_Contact_List.0.contact_Phone"
-          {...methods.register("vendor_Contact_List.0.contact_Phone")}
+          {...methods.register("vendor_Contact_List.0.contact_phone")}
         />
       ],
     },
   ]
+  useEffect(() => {
+    console.log("😊😊😊😊😊", fuelValue);
+  }, [fuelValue])
   return (
     <>
       <FormProvider {...methods} >
         <form
           onSubmit={methods.handleSubmit((data) => {
-            console.log("🕯️🕯️🕯️🕯️🕯️🕯️這是用form-hook的data:", { ...data, vendor_Code: fuelValue });
-            // submitForm({ ...data, vendor_Code: fuelValue });
+            // console.log("🕯️🕯️🕯️🕯️🕯️🕯️這是用form-hook的data:", {
+            //   ...data,
+            //   vendor_Code_List: fuelValue.map((child) => {
+            //     return ({
+            //       vendor_Code: child,
+            //       vendor_Code_Name: vedor_code_text[child]
+            //     })
+            //   })
+            // });
+            submitForm({
+              ...data,
+              vendor_Code_List: fuelValue.map((child) => {
+                return ({
+                  vendor_Code: child,
+                  vendor_Code_Name: vedor_code_text[child]
+                })
+              })
+            });
           })}
           name="vendor"
         >

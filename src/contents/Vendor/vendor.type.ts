@@ -1,11 +1,11 @@
 export interface I_contactData {
-    contact_Name: string;
-    contact_Phone_Code: string;
-    contact_Phone: string;
-    contact_Tel_Code: string;
-    contact_Tel: string;
-    contact_Email: string;
-    contact_Sort: string;
+    contact_name: string;
+    contact_phone_code: string;
+    contact_phone: string;
+    contact_tel_code: string;
+    contact_tel: string;
+    contact_email: string;
+    contact_sort: string;
 }
 
 export interface I_vendorData {
