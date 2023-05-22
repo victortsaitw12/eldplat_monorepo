@@ -17,7 +17,6 @@ import Basic from "./SubForm/Basic";
 import DriverResume from "./SubForm/DriverResume";
 import DriverLicense from "./SubForm/DriverLicense";
 import LanguageAbility from "./SubForm/LanguageAbility";
-import HealthFirst from "./SubForm/HealthFirst";
 //
 interface Props {
   submitForm: (data: any) => void;
@@ -107,15 +106,6 @@ function DriverEditForm({
           isDisabled={isDisabled}
         />
         <LanguageAbility isDisabled={isDisabled} />
-        <HealthFirst
-          setInsertData={(data) => {
-            console.log(data);
-          }}
-          handleEmployeeChange={(e) => {
-            console.log(e);
-          }}
-          isDisabled={isDisabled}
-        />
       </Pane>
     </FormSTY>
   );

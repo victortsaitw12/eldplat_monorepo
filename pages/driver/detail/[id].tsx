@@ -16,6 +16,8 @@ import { useDriverStore } from "@contexts/filter/driverStore";
 import { getDriverById } from "@services/driver/getDriverById";
 import DriverEditForm from "@contents/Driver/DriverEditForm";
 import TableWrapper from "@layout/TableWrapper";
+// import HealthFirst from "@contents/Driver/DriverEditForm/SubForm/HealthFirst";
+import HealthFirst from "@contents/Employee/HealthFirst";
 
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -83,19 +85,31 @@ const Page: NextPageWithLayout<
           mainFilterArray={mainFilterArray}
           onSave={handleSubmit(fakeSubmit)}
         >
-          <DriverEditForm
-            userId={userId}
-            currentUserInfo={currentUserInfo}
-            submitForm={asyncSubmitForm}
-            register={register}
-            // onCancel={cancelFormHandler}
-            formType={mainFilter}
-            // errors={errors}
-            // handleSubmit={handleSubmit}
-            // register={register}
-            // control={control}
-            isDisabled={true}
-          />
+          {mainFilter === "info" && (
+            <DriverEditForm
+              userId={userId}
+              currentUserInfo={currentUserInfo}
+              submitForm={asyncSubmitForm}
+              register={register}
+              // onCancel={cancelFormHandler}
+              formType={mainFilter}
+              // errors={errors}
+              // handleSubmit={handleSubmit}
+              // register={register}
+              // control={control}
+              isDisabled={true}
+            />
+          )}
+          {mainFilter === "health" && (
+            <HealthFirst
+              setInsertData={(data) => {
+                console.log(data);
+              }}
+              handleEmployeeChange={(e) => {
+                console.log(e);
+              }}
+            />
+          )}
         </TableWrapper>
       </BodySTY>
     </FormProvider>
