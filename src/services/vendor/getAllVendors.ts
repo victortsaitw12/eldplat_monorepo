@@ -37,7 +37,7 @@ export const getAllVendors = async (filter: { [key: string]: any } = {}) => {
 // 取得Vendor List頁多國語系
 export const getVendorsLang = async (lang: string, page: string) => {
   const res = await fetch(
-    `https://localhost:7188/Gateway_Vendor/ProduceVendorLanguage/${lang}, ${page}`,
+    `https://localhost:7088/COM/ProduceMultilingual/${lang}, ${page}`,
     {
       method: "GET",
       headers: {

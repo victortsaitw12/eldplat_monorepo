@@ -88,6 +88,7 @@ export const RegionProvider = ({ children }: any) => {
     const showCountry = allCountries?.filter((v) => {
       return country === v.areaNo;
     });
+    console.log("showCountry", showCountry);
     return showCountry[0]?.regionName;
   };
 

@@ -15,7 +15,9 @@ export const getSingleCompany = async () => {
 };
 
 // 更新公司資料
-export const updateCompany = async (companyData: I_Company_Update_Type) => {
+export const updateCompany = async (
+  companyData: I_Company_Update_Type
+): Promise<any> => {
   const res = await fetch("https://localhost:7088/ATR/UpdateCompany", {
     method: "POST",
     headers: {

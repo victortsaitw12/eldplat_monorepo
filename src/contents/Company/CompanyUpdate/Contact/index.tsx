@@ -380,6 +380,7 @@ function Contact() {
                       value={value.contact_tel}
                       onChange={(e: any) => {
                         handleContactsChange(e, value, idx);
+                        handleCompanyContactChange(e);
                       }}
                       required
                     />
@@ -409,6 +410,7 @@ function Contact() {
                       value={value.contact_phone}
                       onChange={(e: any) => {
                         handleContactsChange(e, value, idx);
+                        handleCompanyContactChange(e);
                       }}
                       required
                     />
