@@ -1,16 +1,51 @@
 import LightBox from "@components/Lightbox";
 import { I_Content_Props, I_Health_TYPE } from "@typings/employee_type";
+import Table from "@components/Table/Table";
+import PaginationField from "@components/PaginationField/";
 import {
-  Button,
   Heading,
   Pane,
-  PlusIcon,
-  SearchIcon,
-  Table
+  DocumentIcon,
+  CogIcon,
 } from "evergreen-ui";
 import React, { useState } from "react";
 import AddHealth from "./AddHealth";
 import { BodySTY } from "./style";
+
+const table_title = [
+  "日期",
+  "分類",
+  "機構",
+  "結果",
+  "報告"
+]
+
+const table_data = [
+  {
+    id: "USR202302020002",
+    health_date: "2023/05/22",
+    health_cate: "一般體格檢查",
+    health_org: "起薪診所",
+    health_res: "正常",
+    health_rep: <DocumentIcon size={12} color="#718BAA" onClick={() => { console.log("下載PDF") }} />
+  },
+  {
+    id: "USR202302020003",
+    health_date: "2023/05/22",
+    health_cate: "一般體格檢查",
+    health_org: "起薪診所",
+    health_res: "正常",
+    health_rep: <DocumentIcon size={12} color="#718BAA" onClick={() => { console.log("下載PDF") }} />
+  },
+  {
+    id: "USR202302020004",
+    health_date: "2023/05/22",
+    health_cate: "一般體格檢查",
+    health_org: "起薪診所",
+    health_res: "正常",
+    health_rep: <DocumentIcon size={12} color="#718BAA" onClick={() => { console.log("下載PDF") }} />
+  }
+]
 
 function HealthFirst({ handleEmployeeChange, setInsertData }: I_Content_Props) {
   const [showHealthModal, setShowHealthModal] = useState<boolean>(false);
@@ -44,47 +79,18 @@ function HealthFirst({ handleEmployeeChange, setInsertData }: I_Content_Props) {
   return (
     <BodySTY>
       <Pane className="health-title">
-        <Heading is="h4">健康紀錄</Heading>
-        <Pane className="health-title-right">
-          <Button
-            marginRight={12}
-            iconBefore={PlusIcon}
-            onClick={() => {
-              setShowHealthModal(true);
-            }}
-          >
-            新增健康紀錄
-          </Button>
-          <Button marginRight={12} iconBefore={SearchIcon}>
-            查看更多
-          </Button>
-        </Pane>
+        <Heading is="h4">
+          鐘筑月
+        </Heading>
       </Pane>
-      <Table className="health-table">
-        <Table.Head>
-          {/* <Table.SearchHeaderCell /> */}
-          <Table.TextHeaderCell>日期</Table.TextHeaderCell>
-          <Table.TextHeaderCell>分類</Table.TextHeaderCell>
-          <Table.TextHeaderCell>機構</Table.TextHeaderCell>
-          <Table.TextHeaderCell>結果</Table.TextHeaderCell>
-          <Table.TextHeaderCell>報告</Table.TextHeaderCell>
-        </Table.Head>
-        <Table.Body height="fit-content">
-          {healthListArr &&
-            healthListArr.map((data, idx) => {
-              return (
-                <Table.Row key={idx} isSelectable>
-                  <Table.TextCell>{data?.heal_date}</Table.TextCell>
-                  <Table.TextCell>{data?.heal_typ}</Table.TextCell>
-                  <Table.TextCell>{data?.heal_agency}</Table.TextCell>
-                  <Table.TextCell>{data?.heal_status}</Table.TextCell>
-                  <Table.TextCell>{data?.heal_filename}</Table.TextCell>
-                </Table.Row>
-              );
-            })}
-        </Table.Body>
-      </Table>
-
+      <Pane className="health-title-right">
+        <PaginationField />
+        <CogIcon color="#718BAA" size={11} />
+      </Pane>
+      <Table
+        titles={table_title}
+        data={table_data}
+      />
       {/* 新增健康紀錄的光箱 */}
       <LightBox
         title="新增健康紀錄"
@@ -103,7 +109,7 @@ function HealthFirst({ handleEmployeeChange, setInsertData }: I_Content_Props) {
           setHealthListArr={setHealthListArr}
         />
       </LightBox>
-    </BodySTY>
+    </BodySTY >
   );
 }
 

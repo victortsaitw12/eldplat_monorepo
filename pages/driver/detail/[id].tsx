@@ -16,6 +16,7 @@ import { useDriverStore } from "@contexts/filter/driverStore";
 import { getDriverById } from "@services/driver/getDriverById";
 import DriverEditForm from "@contents/Driver/DriverEditForm";
 import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
 import HealthFirst from "@contents/Driver/DriverEditForm/SubForm/HealthFirst";
 // import HealthFirst from "@contents/Employee/HealthFirst";
 
@@ -31,7 +32,7 @@ const Page: NextPageWithLayout<
     handleSubmit
   } = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { mainFilter, updateMainFilter } = useDriverStore();
+  const { mainFilter, updateMainFilter, subFilter, updateSubFilter, initializeSubFilter } = useDriverStore();
   const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
   const mainFilterArray = [
     { id: 1, label: "駕駛資訊", value: "info" },
@@ -101,6 +102,13 @@ const Page: NextPageWithLayout<
             />
           )}
           {mainFilter === "health" && (
+            // <FilterWrapper
+            //   updateFilter={updateSubFilter}
+            //   resetFilter={() => {
+            //     initializeSubFilter();
+            //   }}
+            //   filter={subFilter}
+            // >
             <HealthFirst
               setInsertData={(data) => {
                 console.log(data);
@@ -109,6 +117,7 @@ const Page: NextPageWithLayout<
                 console.log(e);
               }}
             />
+            // </FilterWrapper>
           )}
         </TableWrapper>
       </BodySTY>
