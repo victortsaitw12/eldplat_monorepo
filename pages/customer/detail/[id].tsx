@@ -41,7 +41,6 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
     () => [{ id: 1, label: "顧客資料", value: "all" }],
     []
   );
-
   const asyncSubmitForm = async (data: any) => {
     console.log("edited data", data);
     setLoading(true);
@@ -51,7 +50,7 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
       alert(e.message);
     }
     setLoading(false);
-    // router.push("/customer");
+    router.push("/customer");
   };
   //
   async function getDefaultValuesHandler() {
@@ -64,6 +63,10 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
     defaultValues: async () => getDefaultValuesHandler()
   });
   const { register, formState, control, getValues, handleSubmit } = method;
+  //
+  const onCancelHandler = () => {
+    router.push("/customer");
+  };
   //
   useEffect(() => {
     const getCustomerData = async () => {
@@ -93,6 +96,7 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
           setIsEdit(true);
         }}
         isEdit={isEdit}
+        onClose={onCancelHandler}
       >
         <FormProvider {...method}>
           <CustomerDetail isEdit={isEdit} />

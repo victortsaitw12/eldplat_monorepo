@@ -17,6 +17,7 @@ import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
+import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
 //
 const mainFilterArray = [
   { id: 1, label: "全部", value: "all" },
@@ -67,9 +68,9 @@ const Page: NextPageWithLayout<never> = () => {
       fetchCustomerData(false);
     });
   };
-
+  //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push(`/customer/edit/${id}`);
+    router.push("/customer/detail/" + id + "?editPage=1");
   };
   const goToDetailPageHandler = (id: string) => {
     router.push(`/customer/detail/${id}`);
@@ -78,11 +79,21 @@ const Page: NextPageWithLayout<never> = () => {
     alert(value);
     updateMainFilter(value);
   };
-
+  //
+  useEffect(() => {
+    updateMainFilter("all");
+  }, [updateMainFilter]);
+  //
+  useEffect(() => {
+    let isCanceled = false;
+    fetchCustomerData(isCanceled);
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
   if (!data) {
     return <LoadingSpinner />;
   }
-
   return (
     <BodySTY>
       <TableWrapper
@@ -115,10 +126,10 @@ const Page: NextPageWithLayout<never> = () => {
             setDrawerOpen(false);
           }}
         >
-          <VendorCreateForm
+          <CustomerCreateForm
             reloadData={() => {
               setData([]);
-              getResult("1");
+              fetchCustomerData(false);
             }}
           />
         </Drawer>

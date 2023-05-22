@@ -34,7 +34,8 @@ function TableWrapper({
   },
   isEdit,
   onSave,
-  onEdit
+  onEdit,
+  onClose
 }: Props) {
   console.log("mainFilterArray", mainFilterArray);
   console.log("mainFilter", mainFilter);
@@ -87,6 +88,7 @@ function TableWrapper({
 
           <Icon
             icon={FullscreenIcon}
+            style={{ cursor: "pointer" }}
             size={16}
             marginY="auto"
             marginX="10px"
@@ -94,10 +96,14 @@ function TableWrapper({
           />
           <Icon
             icon={CrossIcon}
+            style={{ cursor: "pointer" }}
             size={18}
             marginY="auto"
             marginX="10px"
             color="#91A9C5"
+            onClick={() => {
+              onClose && onClose();
+            }}
           />
         </div>
       </div>
