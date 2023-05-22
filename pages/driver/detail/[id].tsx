@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { insertDriverInfo } from "@services/driver/createDriver";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -14,6 +13,7 @@ import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import { getDriverById } from "@services/driver/getDriverById";
+import { updateDriver } from "@services/driver/updateDriver";
 import DriverEditForm from "@contents/Driver/DriverEditForm";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
@@ -32,7 +32,13 @@ const Page: NextPageWithLayout<
     handleSubmit
   } = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { mainFilter, updateMainFilter, subFilter, updateSubFilter, initializeSubFilter } = useDriverStore();
+  const {
+    mainFilter,
+    updateMainFilter,
+    subFilter,
+    updateSubFilter,
+    initializeSubFilter
+  } = useDriverStore();
   const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
   const mainFilterArray = [
     { id: 1, label: "駕駛資訊", value: "info" },
@@ -47,17 +53,17 @@ const Page: NextPageWithLayout<
   useEffect(() => {
     console.log("start getDriverById");
     // 暫代資料
-    setCurrentUserInfo(DUMMY_DRIVERINFO);
+    // setCurrentUserInfo(DUMMY_DRIVERINFO);
     // TODO 接API
-    // getDriverById(userId).then((res) => {
-    //   const updatedCurrentUserInfo = res.info;
-    //   if (!updatedCurrentUserInfo) {
-    //     console.log("查無此使用者");
-    //     router.push("/driver");
-    //   }
-    //   console.log("updatedCurrentUserInfo:", updatedCurrentUserInfo);
-    //   setCurrentUserInfo(updatedCurrentUserInfo);
-    // });
+    getDriverById(userId).then((res) => {
+      const updatedCurrentUserInfo = res.info;
+      if (!updatedCurrentUserInfo) {
+        console.log("查無此使用者");
+        router.push("/driver");
+      }
+      console.log("updatedCurrentUserInfo:", updatedCurrentUserInfo);
+      setCurrentUserInfo(updatedCurrentUserInfo);
+    });
   }, [router]);
 
   // ------- function ------- //
@@ -68,7 +74,10 @@ const Page: NextPageWithLayout<
   const asyncSubmitForm = async (data: any) => {
     setIsLoading(true);
     try {
-      await insertDriverInfo(data);
+      console.log("updateDriver:", data);
+
+      // await insertDriverInfo(data);
+      await updateDriver(userId, data);
       console.log("新增駕駛成功");
       router.push("/driver");
     } catch (e: any) {

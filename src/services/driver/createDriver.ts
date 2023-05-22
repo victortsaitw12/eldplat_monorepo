@@ -16,8 +16,8 @@ export const createDriverNO = async (data: any) => {
   return res.json();
 };
 
-// 新增駕駛資料 InsertDriver
-export const insertDriverInfo = async (driverData: any) => {
+// 新增駕駛資料 updateDriverInfo
+export const updateDriverInfo = async (driverData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
   for (const key in driverData) {
     console.log("key", key);

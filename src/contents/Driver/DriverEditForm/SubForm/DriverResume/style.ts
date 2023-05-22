@@ -18,11 +18,6 @@ export const BodySTY = styled.div`
         font-size: 14px;
         font-weight: 500;
       }
-      input {
-        /* border: 1px solid ${({ theme }) => theme.color.N400}; */
-        width: 100%;
-        border-radius: 4px;
-      }
     }
     .inline-line > div > div:not(.title) {
       border: 1px solid red;
@@ -37,5 +32,24 @@ export const BodySTY = styled.div`
   .form > div > div:nth-child(2) {
     border: 1px solid ${({ theme }) => theme.color.N400};
     border-radius: 4px;
+  }
+  .checkbox {
+    background: ${({ theme }) => theme.color.B400};
+    height: 16px;
+    width: 16px;
+    left: 0px;
+    top: 0px;
+    border-radius: 4px;
+    border: 1px solid ${({ theme }) => theme.color.N400};
+    outline: none;
+  }
+  input {
+    border: none;
+    outline: none;
+    border-radius: 4px;
+  }
+  textarea {
+    border: none;
+    margin-top: 0px;
   }
 `;

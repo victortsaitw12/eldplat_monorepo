@@ -17,6 +17,7 @@ import { getDriverById } from "@services/driver/getDriverById";
 import DriverEditForm from "@contents/Driver/DriverEditForm";
 import TableWrapper from "@layout/TableWrapper";
 import HealthFirst from "@contents/Driver/DriverEditForm/SubForm/HealthFirst";
+import { updateDriver } from "@services/driver/updateDriver";
 // import HealthFirst from "@contents/Employee/HealthFirst";
 
 const Page: NextPageWithLayout<
@@ -29,7 +30,9 @@ const Page: NextPageWithLayout<
     formState: { errors },
     control,
     handleSubmit
-  } = useForm();
+  } = useForm({
+    defaultValues: async () => getDefaultValuesHandler()
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { mainFilter, updateMainFilter } = useDriverStore();
   const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
@@ -44,31 +47,31 @@ const Page: NextPageWithLayout<
   }, [updateMainFilter]);
 
   useEffect(() => {
-    console.log("start getDriverById");
     // 暫代資料
-    setCurrentUserInfo(DUMMY_DRIVERINFO);
+    // setCurrentUserInfo(DUMMY_DRIVERINFO);
     // TODO 接API
-    // getDriverById(userId).then((res) => {
-    //   const updatedCurrentUserInfo = res.info;
-    //   if (!updatedCurrentUserInfo) {
-    //     console.log("查無此使用者");
-    //     router.push("/driver");
-    //   }
-    //   console.log("updatedCurrentUserInfo:", updatedCurrentUserInfo);
-    //   setCurrentUserInfo(updatedCurrentUserInfo);
-    // });
-  }, [router]);
+    getDriverById(userId).then((res) => {
+      const updatedCurrentUserInfo = res.info;
+      if (!updatedCurrentUserInfo) {
+        console.log("查無此使用者");
+        router.push("/driver");
+      }
+      setCurrentUserInfo(updatedCurrentUserInfo);
+    });
+  }, [userId, router]);
 
   // ------- function ------- //
-  const fakeSubmit = (data: any) => console.log("data", data);
+  const getDefaultValuesHandler = () => currentUserInfo;
+  const fakeSubmit = (data: any) => console.log("fakeSubmit", data);
 
   const changeMainFilterHandler = (value: string) => updateMainFilter(value);
 
   const asyncSubmitForm = async (data: any) => {
+    console.log("asyncSubmitForm", data);
     setIsLoading(true);
     try {
-      await insertDriverInfo(data);
-      console.log("新增駕駛成功");
+      await updateDriver(userId, data);
+      console.log("updated成功");
       router.push("/driver");
     } catch (e: any) {
       console.log(e);
@@ -90,6 +93,7 @@ const Page: NextPageWithLayout<
               userId={userId}
               currentUserInfo={currentUserInfo}
               submitForm={asyncSubmitForm}
+              handleSubmit={handleSubmit}
               register={register}
               // onCancel={cancelFormHandler}
               formType={mainFilter}
@@ -103,7 +107,7 @@ const Page: NextPageWithLayout<
           {mainFilter === "health" && (
             <HealthFirst
               setInsertData={(data) => {
-                console.log(data);
+                console.log("HealthFirst");
               }}
               handleEmployeeChange={(e) => {
                 console.log(e);

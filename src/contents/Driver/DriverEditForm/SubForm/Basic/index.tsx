@@ -26,12 +26,12 @@ function Basic({ currentUserInfo }: { currentUserInfo: I_driverInfo }) {
       <div className="form">
         <Pane className="input-line">
           <Text>姓名</Text>
-          <Text>{currentUserInfo ? currentUserInfo.user_name : ""}</Text>
+          <Text>{currentUserInfo?.user_name}</Text>
         </Pane>
         <Pane className="input-line">
           <Text>E-mail</Text>
           <Text>
-            {currentUserInfo ? formatEmail(currentUserInfo.user_email) : ""}
+            {currentUserInfo && formatEmail(currentUserInfo.user_email)}
           </Text>
         </Pane>
         <Pane className="input-line">

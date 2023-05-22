@@ -21,13 +21,13 @@ import {
 import { region_DATA, city_DATA, driver_DT_DATA } from "./data";
 import HorizatalInput from "@components/HookForm/Input/HorizontalInput";
 import HorizontalSelect from "@components/HookForm/Select/HorizontalSelect";
+import HorizontalTextArea from "@components/HookForm/Input/HorizontalTextArea";
 
 function DriverResume({
   userId,
   insertData,
   currentUserInfo,
   handleInputChange,
-  handleMultiSelect,
   isDisabled
 }: any) {
   const [blackChecked, setBlackChecked] = useState<boolean>(false);
@@ -102,21 +102,22 @@ function DriverResume({
               </Text>
             </Pane>
             <Pane className="input-line">
-              <Text>黑名單註記</Text>
-              {isDisabled ? (
-                <Text>
-                  {currentUserInfo && currentUserInfo.remark
-                    ? currentUserInfo.remark
-                    : "---"}
-                </Text>
-              ) : (
-                <Textarea
-                  name="remark"
-                  value={insertData.remark}
-                  onChange={handleInputChange}
-                />
-              )}
+              <Text>黑名單備註</Text>
+              <Text>
+                {currentUserInfo && currentUserInfo.remark
+                  ? currentUserInfo.remark
+                  : "---"}
+              </Text>
             </Pane>
+            {/*  05/19 光:現在已經沒有 driver_type 這欄位 之後會另外開發標籤的功能 在使用 
+            <Pane className="input-line">   
+              <Text>標籤</Text>
+              <Text>
+                {currentUserInfo && currentUserInfo.remark
+                  ? currentUserInfo.remark
+                  : "---"}
+              </Text>
+            </Pane> */}
           </>
         ) : (
           <>
@@ -172,29 +173,24 @@ function DriverResume({
 
             <Pane className="input-line">
               <Text>黑名單註記</Text>
-              <Checkbox
-                name="blocklist_mark"
-                label=""
-                checked={blackChecked}
-                onChange={(e: any) => setBlackChecked(e.target.checked)}
+              <input
+                className="checkbox"
+                type="checkbox"
+                // checked={currentUserInfo.blocklist_mark}
+                {...register("blocklist_mark", {
+                  validate: textValidation
+                })}
               />
             </Pane>
-            <Pane className="input-line">
-              <Text>黑名單備註</Text>
-              <Textarea
-                name="remark"
-                value={insertData.remark}
-                onChange={handleInputChange}
-              />
-            </Pane>
-
+            <HorizontalTextArea label="黑名單備註" {...register("remark")} />
+            {/* 05/19 光:現在已經沒有 driver_type 這欄位 之後會另外開發標籤的功能 在使用 
             <HorizontalSelect
               control={control}
               label="標籤"
               isDisabled={isDisabled}
               name="bus.label"
               options={driver_DT_DATA}
-            />
+            /> */}
           </>
         )}
       </div>

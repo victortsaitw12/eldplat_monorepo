@@ -1,13 +1,17 @@
 import { token } from "./token";
 
-export const updateDriver = async (user_No: string, driverData: any) => {
+export const updateDriver = async (userId: string, driverData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
   for (const key in driverData) {
-    if (driverData[key] !== null && driverData[key].trim() !== "") {
+    if (
+      driverData[key] !== null &&
+      typeof driverData[key] === "string" &&
+      driverData[key].trim() !== ""
+    ) {
       filteredNullData[key] = driverData[key];
     }
   }
-  filteredNullData["customer_No"] = user_No;
+  filteredNullData["user_no"] = userId;
   console.log("filteredNullData", filteredNullData);
   const res = await fetch("https://localhost:7088/ATR/InsertDriver", {
     method: "POST",

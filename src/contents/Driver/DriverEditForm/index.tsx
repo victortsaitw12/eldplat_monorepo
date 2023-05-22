@@ -28,14 +28,14 @@ interface Props {
 }
 function DriverEditForm({
   userId,
-  currentUserInfo,
   submitForm,
+  handleSubmit,
+  currentUserInfo,
   formType,
   isDisabled
 }: Props) {
   const {
     register,
-    handleSubmit,
     watch,
     formState: { errors }
   } = useForm<I_driverInfo>();
@@ -48,7 +48,7 @@ function DriverEditForm({
     license_no: "",
     license_area: "",
     license_lvl: "",
-    driver_seniority: "0",
+    driver_seniority: 0,
     driver_typ: [""],
     dsph_area: "",
     dsph_city: "",
@@ -67,9 +67,9 @@ function DriverEditForm({
     invalid_remark: ""
   });
   const submitFormHandler = (data: I_driverInfo) => {
-    // e.preventDefault();
     console.log("data:", data);
-    // submitForm(insertData);
+    submitForm(data);
+    console.log("called");
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newData: any = { ...insertData };
@@ -77,12 +77,18 @@ function DriverEditForm({
     setInsertData(newData);
   };
 
-  const handleMultiSelect = (key: string, updatedValue: any[]) => {
-    const newData: any = { ...insertData };
-    const updatedStringArr = updatedValue.map((item: any) => item.value);
-    newData[key] = updatedStringArr;
-    setInsertData(newData);
-  };
+  // const asyncSubmitForm = async (data: any) => {
+  //   setIsLoading(true);
+  //   try {
+  //     await insertDriverInfo(data);
+  //     console.log("updated成功");
+  //     router.push("/driver");
+  //   } catch (e: any) {
+  //     console.log(e);
+  //   }
+  //   setIsLoading(false);
+  // };
+
   return (
     <FormSTY className="add-blocks" onSubmit={handleSubmit(submitFormHandler)}>
       <Pane className="left-blocks">
@@ -93,7 +99,6 @@ function DriverEditForm({
           currentUserInfo={currentUserInfo}
           setInsertData={setInsertData}
           handleInputChange={handleInputChange}
-          handleMultiSelect={handleMultiSelect}
           isDisabled={isDisabled}
         />
       </Pane>

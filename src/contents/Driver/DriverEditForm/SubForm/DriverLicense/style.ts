@@ -1,15 +1,22 @@
 import styled from "styled-components";
 
+const ref = styled.div``;
+
 export const BodySTY = styled.div`
   .form {
     .input-line {
+      width: 100%;
       min-height: 32px;
       display: grid;
       grid-template-columns: 2fr 3fr;
       margin: 16px auto;
       align-items: center;
       position: relative;
-
+      .title {
+        width: 160px;
+        font-weight: ${({ theme }) => theme.fontWeight.Paragraph200};
+        letter-spacing: 1px;
+      }
       span {
         font-size: 14px;
         font-weight: 500;
@@ -61,5 +68,27 @@ export const BodySTY = styled.div`
         }
       }
     }
+    .inline-line > div > div:not(.title) {
+      border: 1px solid red;
+      flex-grow: 10;
+    }
+  }
+  .form > div > div:nth-child(2) {
+    border: 1px solid ${({ theme }) => theme.color.N400};
+    border-radius: 4px;
+  }
+  .form > div {
+    &:nth-child(n) {
+      margin: 16px auto;
+    }
+  }
+  input {
+    border: none;
+    outline: none;
+    border-radius: 4px;
+  }
+  textarea {
+    border: none;
+    margin-top: 0px;
   }
 `;
