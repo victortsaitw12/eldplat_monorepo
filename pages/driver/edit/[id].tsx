@@ -6,6 +6,7 @@ import {
   InferGetServerSidePropsType
 } from "next";
 import { useRouter } from "next/router";
+import { toaster } from "evergreen-ui";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { BodySTY } from "./style";
 
@@ -25,17 +26,18 @@ const Page: NextPageWithLayout<
 > = ({ userId }) => {
   // ------- variables + useState ------- //
   const router = useRouter();
+  const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
+
   const {
     register,
     formState: { errors },
     control,
     handleSubmit
   } = useForm({
-    defaultValues: async () => getDefaultValuesHandler()
+    defaultValues: currentUserInfo
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { mainFilter, updateMainFilter } = useDriverStore();
-  const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
   const mainFilterArray = [
     { id: 1, label: "駕駛資訊", value: "info" },
     { id: 2, label: "健康紀錄", value: "health" }
@@ -50,12 +52,15 @@ const Page: NextPageWithLayout<
     // 暫代資料
     // setCurrentUserInfo(DUMMY_DRIVERINFO);
     // TODO 接API
+    setIsLoading(true);
     getDriverById(userId).then((res) => {
       const updatedCurrentUserInfo = res.info;
       if (!updatedCurrentUserInfo) {
         console.log("查無此使用者");
         router.push("/driver");
       }
+      setIsLoading(false);
+      console.log("edit:", updatedCurrentUserInfo);
       setCurrentUserInfo(updatedCurrentUserInfo);
     });
   }, [userId, router]);
@@ -72,7 +77,8 @@ const Page: NextPageWithLayout<
     try {
       await updateDriver(userId, data);
       console.log("updated成功");
-      router.push("/driver");
+      toaster.success("Your source is now sending data");
+      router.push(`/driver/edit/${id}`);
     } catch (e: any) {
       console.log(e);
     }
@@ -86,14 +92,13 @@ const Page: NextPageWithLayout<
           onChangeTab={changeMainFilterHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
-          onSave={handleSubmit(fakeSubmit)}
+          onSave={handleSubmit(asyncSubmitForm)}
         >
           {mainFilter === "info" && (
             <DriverEditForm
               userId={userId}
               currentUserInfo={currentUserInfo}
               submitForm={asyncSubmitForm}
-              handleSubmit={handleSubmit}
               register={register}
               // onCancel={cancelFormHandler}
               formType={mainFilter}
@@ -102,6 +107,7 @@ const Page: NextPageWithLayout<
               // register={register}
               // control={control}
               isDisabled={false}
+              isLoading={isLoading}
             />
           )}
           {mainFilter === "health" && (

@@ -29,13 +29,14 @@ interface Props {
 function DriverEditForm({
   userId,
   submitForm,
-  handleSubmit,
   currentUserInfo,
   formType,
-  isDisabled
+  isDisabled,
+  isLoading
 }: Props) {
   const {
     register,
+    handleSubmit,
     watch,
     formState: { errors }
   } = useForm<I_driverInfo>();
@@ -92,7 +93,7 @@ function DriverEditForm({
   return (
     <FormSTY className="add-blocks" onSubmit={handleSubmit(submitFormHandler)}>
       <Pane className="left-blocks">
-        <Basic currentUserInfo={currentUserInfo} />
+        <Basic currentUserInfo={currentUserInfo} isLoading={isLoading} />
         <DriverResume
           userId={userId}
           insertData={insertData}

@@ -45,16 +45,16 @@ function DriverResume({
             <Pane className="input-line">
               <Text className="title">駕照編號</Text>
               <Text>
-                {currentUserInfo && currentUserInfo.license_No
-                  ? currentUserInfo.license_No
+                {currentUserInfo && currentUserInfo.license_no
+                  ? currentUserInfo.license_no
                   : "---"}
               </Text>
             </Pane>
             <Pane className="input-line">
               <Text>執照州/省/地區</Text>
               <Text>
-                {currentUserInfo && currentUserInfo.license_Area
-                  ? currentUserInfo.license_Area
+                {currentUserInfo && currentUserInfo.license_area
+                  ? currentUserInfo.license_area
                   : "---"}
               </Text>
             </Pane>
@@ -62,7 +62,7 @@ function DriverResume({
               <Text>牌照等級</Text>
               <Text>
                 {currentUserInfo && currentUserInfo.license_Lvl
-                  ? currentUserInfo.license_Lvl
+                  ? currentUserInfo.license_lvl
                   : "---"}
               </Text>
             </Pane>
@@ -123,7 +123,6 @@ function DriverResume({
           <>
             <HorizatalInput
               label="駕照編號"
-              errorMessage={errors.license_no ? "必填欄位" : ""}
               {...register("license_no", {
                 validate: textValidation
               })}
@@ -139,7 +138,6 @@ function DriverResume({
 
             <HorizatalInput
               label="牌照等級"
-              errorMessage={errors.license_lvl ? "必填欄位" : ""}
               {...register("license_lvl", {
                 validate: textValidation
               })}
@@ -147,7 +145,6 @@ function DriverResume({
 
             <HorizatalInput
               label="駕駛資歷(年)"
-              errorMessage={errors.driver_seniority ? "必填欄位" : ""}
               {...register("driver_seniority", {
                 validate: textValidation
               })}

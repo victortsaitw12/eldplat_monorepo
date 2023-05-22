@@ -51,20 +51,21 @@ const Page: NextPageWithLayout<
   }, [updateMainFilter]);
 
   useEffect(() => {
-    console.log("start getDriverById");
     // 暫代資料
     // setCurrentUserInfo(DUMMY_DRIVERINFO);
     // TODO 接API
+    setIsLoading(true);
     getDriverById(userId).then((res) => {
       const updatedCurrentUserInfo = res.info;
       if (!updatedCurrentUserInfo) {
         console.log("查無此使用者");
         router.push("/driver");
       }
-      console.log("updatedCurrentUserInfo:", updatedCurrentUserInfo);
+      setIsLoading(false);
+      console.log("detail:", updatedCurrentUserInfo);
       setCurrentUserInfo(updatedCurrentUserInfo);
     });
-  }, [router]);
+  }, [userId, router]);
 
   // ------- function ------- //
   const fakeSubmit = (data: any) => console.log("data", data);

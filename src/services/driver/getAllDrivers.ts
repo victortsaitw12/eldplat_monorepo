@@ -27,11 +27,12 @@ export const getAllDriver = async (filter: { [key: string]: any } = {}) => {
       pageInfo: {
         page_Index: 1,
         page_Size: 10,
-        orderby: "user_No",
+        orderby: "user_no",
         arrangement: "asc",
         total: 0,
         last_page: 0
-      }
+      },
+      driver_status: "1"
     })
   });
   return res.json();

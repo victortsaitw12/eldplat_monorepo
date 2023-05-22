@@ -221,10 +221,10 @@ function DriverLicense({
             </Pane>
             <Pane className="input-line">
               <Text>失效</Text>
-              <SingleCheckBox
+              <input
+                className="checkbox"
                 type="checkbox"
-                placeholder="invalid"
-                checked={invalidChecked}
+                // checked={currentUserInfo.blocklist_mark}
                 {...register("invalid")}
               />
             </Pane>

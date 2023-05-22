@@ -91,4 +91,16 @@ export const BodySTY = styled.div`
     border: none;
     margin-top: 0px;
   }
+  .checkbox {
+    width: 16px;
+    background: ${({ theme }) => theme.color.B400};
+    height: 16px;
+    width: 16px;
+    left: 0px;
+    top: 0px;
+    border-radius: 4px;
+    border: 1px solid ${({ theme }) => theme.color.N400};
+    outline: none;
+    justify-self: flex-start;
+  }
 `;
