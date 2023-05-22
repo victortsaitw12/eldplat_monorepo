@@ -13,6 +13,7 @@ import FilterWrapper from "@layout/FilterWrapper";
 import TableWrapper from "@layout/TableWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
+import { createEmployee } from "@services/employee/createEmployee";
 
 //
 const fakeData = [
@@ -82,6 +83,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [employeeListData, setEmployeeListData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   // const initializeFilter = useFilterStore((state) => state.initializeFilter);
   // const updateFilter = useFilterStore((state) => state.updateFilter);
@@ -128,7 +130,7 @@ const Page: NextPageWithLayout<never> = () => {
       if (!filter) {
         localStorage.setItem(
           "employeeInitFilter",
-          JSON.stringify(data.conditionList)
+          JSON.stringify(data.contentList)
         );
         initializeSubFilter();
       }
@@ -157,7 +159,18 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const createEmployeeHandler = async (employeeData: any) => {
-    console.log("employeeData", employeeData);
+    console.log("1️⃣employeeData", employeeData);
+    const newEmployeeData = { ...employeeData, group_no: ["default"] };
+    console.log("4️⃣newEmployeeData", newEmployeeData);
+    setLoading(true);
+    try {
+      const res = await createEmployee(newEmployeeData);
+      console.log("3️⃣res", res);
+    } catch (e: any) {
+      console.log(e);
+      alert(e.message);
+    }
+    setLoading(false);
   };
   return (
     <BodySTY>
