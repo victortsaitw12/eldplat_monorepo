@@ -19,22 +19,14 @@ interface I_infoData {
 }
 
 export interface I_InfoBoxProps {
+  style?: React.CSSProperties;
   isEdit: boolean;
   infoTitle?: string;
   infoData?: I_infoData[];
   infoType?: string;
-  children?: React.ReactNode;
 }
 
-function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
-
-  console.log("🎶🎶🎶🎶🎶🎶這些是InfoBox裡面的props", {
-    isEdit: isEdit,
-    infoTitle: infoTitle,
-    infoData: infoData,
-    infoType: infoType
-  });
-
+function InfoBox({ style, isEdit, infoTitle, infoData, infoType }: I_InfoBoxProps) {
   const r_switch_info = (type?: string) => {
     switch (type) {
       case "label":
@@ -68,7 +60,6 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
     return infoData.map((child: any, i: number) => {
       const { req, value, label, editEle } = child
       console.log("💕💕💕💕💕💕💕infoData的child", child);
-
       return (
         <ListItem key={value + i}>
           <Text>
@@ -105,14 +96,20 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
     return infoData.map((child: any, i: number) => {
       return (
         <ListItem key={child.value + i}>
-          <Checkbox label={child.label} disabled={isEdit ? false : true} />
+          <Checkbox
+            disabled={isEdit ? false : true}
+            name={child.value}
+            label={child.label}
+            defaultChecked={child.checked}
+            onChange={child.onChange}
+          />
         </ListItem>
       )
     })
   }
 
   return (
-    <InfoBoxSTY>
+    <InfoBoxSTY style={style}>
       <Text className="info-title">{infoTitle}</Text>
       {r_switch_info(infoType)}
     </InfoBoxSTY>

@@ -9,6 +9,14 @@ const ItemSTY = styled.label<I_StyInputProps>`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  input {
+    width: 100%;
+    padding:0 12px;
+    border: 1px solid #AFC3DA;
+    border-radius: 4px;
+    line-height: 32px;
+    color: #718BAA;
+  }
   input: focus {
     outline: none;
   }

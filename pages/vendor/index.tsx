@@ -36,7 +36,7 @@ const Page: NextPageWithLayout<{
 }> = ({ locale, setPageType }) => {
   const router = useRouter();
   const [data, setData] = useState<I_Select_Vendors_Type[] | I_Data[] | any>();
-
+  const [nowTab, setNowTab] = useState("1");
   const {
     initializeSubFilter,
     mainFilter,
@@ -46,7 +46,6 @@ const Page: NextPageWithLayout<{
     isDrawerOpen,
     setDrawerOpen
   } = useVendorStore();
-
   interface Vendor extends I_Select_Vendors_Type {
     vendor_No: string;
   }
@@ -57,10 +56,13 @@ const Page: NextPageWithLayout<{
 
   useEffect(() => {
     let isCanceled = false;
-    getAllVendors(subFilter).then((data) => {
+    getAllVendors(subFilter, "1").then((data) => {
       const vendorData = data.contentList.map((vendors: Vendor) => {
+        console.log("💫💫💫💫💫💫vendors的資料", vendors);
         return {
           id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+          vendor_no: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+          vendor_data: { label: "無", value: "無" },
           vendor_name: {
             label: vendors["vendor_Name"],
             value: vendors["vendor_Name"]
@@ -72,6 +74,18 @@ const Page: NextPageWithLayout<{
           vendor_phone: {
             label: vendors["vendor_Phone"],
             value: vendors["vendor_Phone"]
+          },
+          vendor_email: {
+            label: vendors["vendor_Email"],
+            value: vendors["vendor_Email"]
+          },
+          vendor_contact_name: {
+            label: vendors["vendor_Contact_Name"],
+            value: vendors["vendor_Contact_Name"],
+          },
+          vendor_contact_phone: {
+            label: vendors["vendor_Contact_Phone"],
+            value: vendors["vendor_Contact_Phone"],
           },
           vendor_website: {
             label: (
@@ -85,16 +99,14 @@ const Page: NextPageWithLayout<{
             ),
             value: vendors["vendor_Website"]
           },
-          vendor_contact_name: {
-            label: vendors["vendor_Contact_Name"],
-            value: vendors["vendor_Contact_Name"]
-          },
-          vendor_contact_email: {
-            label: vendors["vendor_Contact_Email"],
-            value: vendors["vendor_Contact_Email"]
-          },
           vendor_label: {
-            label: vendors["vendor_Label"],
+            label: (
+              <span
+                className="vendor-label"
+              >
+                服務讚
+              </span>
+            ),
             value: vendors["vendor_Label"]
           }
         };
@@ -117,13 +129,14 @@ const Page: NextPageWithLayout<{
     };
   }, [subFilter]);
 
-  const reloadResult = async () => {
-    setData([])
+  const getResult = async (type: string) => {
     try {
-      const res = await getAllVendors(subFilter)
+      const res = await getAllVendors(subFilter, type)
       const vendorData = res.contentList.map((vendors: Vendor) => {
         return {
           id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+          vendor_no: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+          vendor_data: { label: "無", value: "無" },
           vendor_name: {
             label: vendors["vendor_Name"],
             value: vendors["vendor_Name"]
@@ -136,6 +149,18 @@ const Page: NextPageWithLayout<{
             label: vendors["vendor_Phone"],
             value: vendors["vendor_Phone"]
           },
+          vendor_email: {
+            label: vendors["vendor_Email"],
+            value: vendors["vendor_Email"]
+          },
+          vendor_contact_name: {
+            label: vendors["vendor_Contact_Name"],
+            value: vendors["vendor_Contact_Name"],
+          },
+          vendor_contact_phone: {
+            label: vendors["vendor_Contact_Phone"],
+            value: vendors["vendor_Contact_Phone"],
+          },
           vendor_website: {
             label: (
               <a
@@ -147,14 +172,6 @@ const Page: NextPageWithLayout<{
               </a>
             ),
             value: vendors["vendor_Website"]
-          },
-          vendor_contact_name: {
-            label: vendors["vendor_Contact_Name"],
-            value: vendors["vendor_Contact_Name"]
-          },
-          vendor_contact_email: {
-            label: vendors["vendor_Contact_Email"],
-            value: vendors["vendor_Contact_Email"]
           },
           vendor_label: {
             label: vendors["vendor_Label"],
@@ -185,7 +202,8 @@ const Page: NextPageWithLayout<{
     try {
       const res = await deleteVendor(id);
       console.log("response of vendor edit: ", res);
-      reloadResult();
+      setData([])
+      getResult("1");
     } catch (e: any) {
       console.log(e);
       alert("删除供應商失敗：" + e.message);
@@ -193,14 +211,16 @@ const Page: NextPageWithLayout<{
     router.push("/vendor");
   }
   //套用新版filter
-  const changeMainFilterHandler = () => {
-    console.log("changeMainFilterHandler");
+  const changeMainFilterHandler = (value: string) => {
+    setNowTab(value);
+    setData([]);
+    getResult(value);
   }
   //
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "全部", value: "all" },
-      { id: 2, label: "停用", value: "seal" }
+      { id: 1, label: "啟用", value: "1" },
+      { id: 2, label: "停用", value: "2" }
     ],
     []
   );
@@ -211,7 +231,7 @@ const Page: NextPageWithLayout<{
         <>
           <TableWrapper
             onChangeTab={changeMainFilterHandler}
-            mainFilter={"all"}
+            mainFilter={nowTab}
             mainFilterArray={mainFilterArray}
           >
             <FilterWrapper
@@ -238,7 +258,12 @@ const Page: NextPageWithLayout<{
                 setDrawerOpen(false);
               }}
             >
-              <VendorCreateForm />
+              <VendorCreateForm
+                reloadData={() => {
+                  setData([])
+                  getResult("1");
+                }}
+              />
             </Drawer>
           )}
           {/* <SideBookMark /> */}
