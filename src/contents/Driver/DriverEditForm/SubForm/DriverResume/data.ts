@@ -1,9 +1,13 @@
 export const region_DATA = [
-  { label: "TW", value: "01" },
-  { label: "JP", value: "02" },
-  { label: "US", value: "03" }
+  { label: "台灣", value: "01" },
+  { label: "日本", value: "02" }
 ];
-export const city_DATA = ["", "TP", "AK"];
+export const city_DATA = [
+  { label: "台北", value: "01" },
+  { label: "高雄", value: "02" },
+  { label: "東京", value: "02" },
+  { label: "大阪", value: "03" }
+];
 export const driver_DT_DATA = [
   { value: "01", label: "特優" },
   { value: "02", label: "親切" }

@@ -66,7 +66,7 @@ const Page: NextPageWithLayout<never> = ({ user }) => {
               <Avatar name={data["user_Name"]} size={32} />
               <Link
                 href={{
-                  pathname: "/driver/create/[id]",
+                  pathname: "/driver/edit/[id]",
                   query: { id: data["user_No"] }
                 }}
               >
