@@ -16,8 +16,8 @@ import { useDriverStore } from "@contexts/filter/driverStore";
 import { getDriverById } from "@services/driver/getDriverById";
 import DriverEditForm from "@contents/Driver/DriverEditForm";
 import TableWrapper from "@layout/TableWrapper";
-// import HealthFirst from "@contents/Driver/DriverEditForm/SubForm/HealthFirst";
-import HealthFirst from "@contents/Employee/HealthFirst";
+import HealthFirst from "@contents/Driver/DriverEditForm/SubForm/HealthFirst";
+// import HealthFirst from "@contents/Employee/HealthFirst";
 
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
