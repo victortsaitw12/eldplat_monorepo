@@ -1,16 +1,8 @@
 import React from "react";
-import { SubFromProps } from "../../customer.type";
+import { SubFromProps } from "../customer.type";
 import { useFieldArray } from "react-hook-form";
 import { IconLeft } from "@components/Button/Primary";
-import {
-  PlusIcon,
-  TrashIcon,
-  TextInputField,
-  TextInput,
-  SelectField,
-  Text,
-  Pane
-} from "evergreen-ui";
+import { PlusIcon, TrashIcon, TextInput, Text, Pane } from "evergreen-ui";
 import { BodySTY, ItemSTY } from "./style";
 import ArrayInfoBox from "@components/ArrayInfoBox";
 import { textValidation } from "@utils/inputValidation";
@@ -99,7 +91,7 @@ const ContactList = ({
         return (
           <ItemSTY key={item.id}>
             <ArrayInfoBox infoData={contactItem} isEdit={isEdit} />
-            {isEdit && (
+            {isEdit && index !== 0 && (
               <button className="delete" onClick={() => remove(index)}>
                 <TrashIcon />
               </button>
@@ -110,6 +102,7 @@ const ContactList = ({
       {isEdit && (
         <IconLeft
           text="新增聯絡人"
+          type="button"
           onClick={() =>
             append({
               contact_email: "",

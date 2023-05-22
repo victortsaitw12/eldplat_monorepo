@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
-import MainBookmark from "@contents/MainBookmark";
 import CustomerList from "@contents/Customer/CustomerList";
 import {
   getAllCustomers,
@@ -10,56 +9,58 @@ import {
   customerPattern
 } from "@services/customer/getAllCustomers";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { useFilterStore } from "@contexts/filter/customerFilterStore";
+import { useCustomerStore } from "@contexts/filter/customerStore";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
+import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
+import Drawer from "@components/Drawer";
+//
+const mainFilterArray = [
+  { id: 1, label: "全部", value: "all" },
+  { id: 2, label: "停用", value: "seal" }
+];
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
-  const initializeFilter = useFilterStore(
-    (state: any) => state.initializeFilter
-  );
-  const updateFilter = useFilterStore((state: any) => state.updateFilter);
-  const filter = useFilterStore((state: any) => state.filter);
+  const {
+    initializeSubFilter,
+    mainFilter,
+    updateMainFilter,
+    subFilter,
+    updateSubFilter,
+    isDrawerOpen,
+    setDrawerOpen
+  } = useCustomerStore();
   //
-  useEffect(() => {
-    let isCanceled = false;
-    fetchCustomerData(isCanceled);
-    return () => {
-      isCanceled = true;
-    };
-  }, [filter, initializeFilter]);
-  //
-  const fetchCustomerData = async (isCanceled: boolean) => {
-    getAllCustomers(filter).then((res) => {
-      console.log("res", res);
-      const customerData = mappingQueryData(
-        res.contentList,
-        customerPattern,
-        customerParser
-      );
-      if (isCanceled) {
-        console.log("canceled");
-        return;
-      }
-      if (!filter) {
-        localStorage.setItem(
-          "customerInitFilter",
-          JSON.stringify(res.conditionList)
+  const fetchCustomerData = useCallback(
+    async (isCanceled: boolean) => {
+      getAllCustomers(subFilter).then((res) => {
+        const customerData = mappingQueryData(
+          res.contentList,
+          customerPattern,
+          customerParser
         );
-        initializeFilter();
-      }
-      setData(customerData);
-    });
-  };
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "customerInitFilter",
+            JSON.stringify(res.conditionList)
+          );
+          initializeSubFilter();
+        }
+        setData(customerData);
+      });
+    },
+    [initializeSubFilter, subFilter]
+  );
   //
-  const goToCreatePageHandler = () => {
-    router.push("/customer/create");
-  };
-
   const deleteItemHandler = async (id: string) => {
     deleteCustomer(id).then((res) => {
       console.log("res", res);
@@ -73,6 +74,10 @@ const Page: NextPageWithLayout<never> = () => {
   const goToDetailPageHandler = (id: string) => {
     router.push(`/customer/detail/${id}`);
   };
+  const changeMainFilterHandler = (value: string) => {
+    alert(value);
+    updateMainFilter(value);
+  };
 
   if (!data) {
     return <LoadingSpinner />;
@@ -80,21 +85,44 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <MainBookmark
-        filter={filter}
-        updateFilter={updateFilter}
-        resetFilter={() => {
-          initializeFilter();
-        }}
+      <TableWrapper
+        onChangeTab={changeMainFilterHandler}
+        mainFilter={mainFilter}
+        mainFilterArray={mainFilterArray}
       >
-        <CustomerList
-          clientData={data}
-          goToCreatePage={goToCreatePageHandler}
-          deleteItemHandler={deleteItemHandler}
-          goToEditPageHandler={goToEditPageHandler}
-          goToDetailPage={goToDetailPageHandler}
-        />
-      </MainBookmark>
+        <FilterWrapper
+          updateFilter={updateSubFilter}
+          resetFilter={() => {
+            initializeSubFilter();
+          }}
+          filter={subFilter}
+        >
+          <CustomerList
+            clientData={data}
+            goToCreatePage={() => {
+              setDrawerOpen(true);
+            }}
+            deleteItemHandler={deleteItemHandler}
+            goToEditPageHandler={goToEditPageHandler}
+            goToDetailPage={goToDetailPageHandler}
+          />
+        </FilterWrapper>
+      </TableWrapper>
+      {isDrawerOpen && (
+        <Drawer
+          tabName={["新增供應商"]}
+          closeDrawer={() => {
+            setDrawerOpen(false);
+          }}
+        >
+          <VendorCreateForm
+            reloadData={() => {
+              setData([]);
+              getResult("1");
+            }}
+          />
+        </Drawer>
+      )}
     </BodySTY>
   );
 };

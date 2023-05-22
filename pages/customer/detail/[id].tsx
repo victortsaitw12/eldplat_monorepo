@@ -29,6 +29,9 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
   const [loading, setLoading] = useState(false);
   const [oldCustomerData, setOldCustomerData] = useState(null);
   const [isEdit, setIsEdit] = useState(editPage === "1" || false);
+  useEffect(() => {
+    updateMainFilter("all");
+  }, [updateMainFilter]);
   //TableWrapper
   const changeMainFilterHandler = () => {
     console.log("changeMainFilterHandler");
@@ -84,7 +87,6 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
-        // onSave={handleSubmit(asyncSubmitForm)}
         onSave={handleSubmit(asyncSubmitForm)}
         onEdit={() => {
           console.log("set is Edit to true");

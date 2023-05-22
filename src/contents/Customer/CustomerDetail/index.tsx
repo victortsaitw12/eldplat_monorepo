@@ -15,7 +15,7 @@ import {
   textValidation
 } from "@utils/inputValidation";
 //
-import ContactList from "@contents/Customer/ContactList/Edit";
+import ContactList from "@contents/Customer/ContactList";
 import { CustomerDataTypes } from "../customer.type";
 interface I_Props {
   isEdit: boolean;
@@ -28,12 +28,15 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
     getValues
   } = useFormContext<CustomerDataTypes>();
   //TODO 分類的選法
-
+  console.log("getValues", getValues("labels"));
+  if (getValues("customer_no") === undefined) {
+    return <div></div>;
+  }
   //基本資料
   const basic_info = [
     {
       readonly: true,
-      label: "顧客號碼",
+      label: "客戶號碼",
       value: getValues("customer_no")
     },
     {
@@ -43,8 +46,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
       editEle: (
         <TextInput
           {...register("customer_name", {
-            required: "必填",
-            validate: textValidation
+            required: "必填"
           })}
         />
       )
@@ -56,7 +58,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
       editEle: (
         <TextInput
           {...register("customer_gui_no", {
-            validate: textValidation
+            required: "必填"
           })}
         />
       )
@@ -68,23 +70,29 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
       editEle: (
         <TextInput
           {...register("customer_owner", {
-            validate: textValidation
+            required: "必填"
           })}
         />
       )
     }
   ];
+  console.log("basic_info", basic_info);
   //分類 vendor_Code_List
   const category_info = [
     {
       req: true,
-      value: getValues("customer_typ"),
+      label: "",
+      value: getValues("customer_typ") ? getValues("customer_typ") : "---",
       editEle: (
-        <TextInput
-          {...register("customer_typ", {
-            required: "必填"
-          })}
-        />
+        <SelectField
+          key="customer_typ"
+          {...register("customer_typ")}
+          label=""
+          marginBottom="0"
+        >
+          <option value="01">公司</option>
+          <option value="02">個人</option>
+        </SelectField>
       )
     }
   ];
@@ -92,8 +100,12 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
   // const label_info = getValues("labels")
   //   ? [
   //       {
-  //         label: getValues("labels")[0].label_name,
-  //         value: getValues("labels")[0].label_name
+  //         label: getValues("labels")
+  //           ? getValues("labels")[0].label_name
+  //           : undefined,
+  //         value: getValues("labels")
+  //           ? getValues("labels")[0].label_name
+  //           : undefined
   //       }
   //     ]
   //   : undefined;
@@ -108,7 +120,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
       editEle: (
         <TextInput
           {...register("address1", {
-            validate: textValidation
+            required: "必填"
           })}
         />
       )
@@ -118,13 +130,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
       label: "",
       subLabel: <span>地址2</span>,
       value: getValues("address2"),
-      editEle: (
-        <TextInput
-          {...register("address2", {
-            validate: textValidation
-          })}
-        />
-      )
+      editEle: <TextInput {...register("address2")} />
     },
     {
       req: false,
@@ -134,9 +140,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
         <SelectField
           key="customer_city"
           label="城市"
-          {...register("customer_city", {
-            required: "必填"
-          })}
+          {...register("customer_city")}
           marginBottom="0"
         >
           <option value="LA">洛杉磯</option>
@@ -147,9 +151,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
         <SelectField
           key="customer_area"
           label="州/省/區"
-          {...register("customer_area", {
-            required: "必填"
-          })}
+          {...register("customer_area")}
           marginBottom="0"
         >
           <option value="CA">CA區</option>
@@ -170,17 +172,13 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
         <TextInputField
           key="customer_district_code"
           label="郵遞區號"
-          {...register("customer_district_code", {
-            validate: textValidation
-          })}
+          {...register("customer_district_code")}
           marginBottom="0"
         />,
         <SelectField
           key="customer_country"
           label="國家"
-          {...register("customer_country", {
-            required: "必填"
-          })}
+          {...register("customer_country")}
           marginBottom="0"
         >
           <option value="TW">台灣</option>
@@ -204,9 +202,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
         />,
         <TextInput
           key="customer_tel"
-          {...register("customer_tel", {
-            validate: numberValidation
-          })}
+          {...register("customer_tel", { required: "必填！" })}
         />
       ]
     },
@@ -223,12 +219,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
           style={{ width: "60px" }}
           {...register("customer_fax_code")}
         />,
-        <TextInput
-          key="customer_fax"
-          {...register("customer_fax", {
-            validate: numberValidation
-          })}
-        />
+        <TextInput key="customer_fax" {...register("customer_fax")} />
       ]
     },
     {
@@ -236,26 +227,14 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
       label: "公司信箱",
       value: getValues("customer_email") || "---",
       editEle: [
-        <TextInput
-          key="customer_email"
-          {...register("customer_email", {
-            validate: emailValidation
-          })}
-        />
+        <TextInput key="customer_email" {...register("customer_email")} />
       ]
     },
     {
       req: false,
       label: "公司網址",
       value: getValues("customer_url") || "---",
-      editEle: [
-        <TextInput
-          key="customer_url"
-          {...register("customer_url", {
-            required: "必填"
-          })}
-        />
-      ]
+      editEle: [<TextInput key="customer_url" {...register("customer_url")} />]
     },
     // TODO:主要聯絡人區塊 因為變成Array所以先緩緩再做。
     {
@@ -282,7 +261,6 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
             <InfoBox
               isEdit={isEdit}
               infoData={category_info}
-              infoType="checkbox"
               infoTitle="分類"
             />
             {/* <InfoBox
