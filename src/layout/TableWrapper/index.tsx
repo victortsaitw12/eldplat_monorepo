@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { BodySTY, FilterItemSTY } from "./style";
 interface Props {
+  optionsEle?: React.ReactNode;
   children?: React.ReactNode;
   onChangeTab?: (value: string) => void;
   mainFilter?: string;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 function TableWrapper({
+  optionsEle,
   children,
   mainFilterArray,
   mainFilter,
@@ -49,6 +51,7 @@ function TableWrapper({
           })}
         </div>
         <div className="tab-options">
+          {optionsEle}
           {onSave && (
             <div
               style={{

@@ -85,7 +85,8 @@ function Table({
               );
             })}
             <th>
-              <span>{<FormattedMessage key="action" id="action" />}</span>
+              {/* <span>{<FormattedMessage key="action" id="action" />}</span> */}
+              <span>操作</span>
             </th>
           </tr>
         </thead>
