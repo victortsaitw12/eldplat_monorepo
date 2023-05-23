@@ -32,10 +32,10 @@ function DriverList({ driverData, goToCreatePage, handleDeleteDriver }: Props) {
         data={driverData}
         goToCreatePage={goToCreatePage}
         viewItem={(id) => {
-          router.push(`/driver/edit/${id}`);
+          router.push(`/driver/detail/${id}`);
         }}
         goToEditPage={(id) => {
-          router.push(`/driver/edit/${id}`);
+          router.push(`/driver/detail/${id}?editPage=edit`);
         }}
         deleteItem={(id) => {
           handleDeleteDriver(id);

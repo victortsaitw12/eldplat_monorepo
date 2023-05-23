@@ -14,6 +14,7 @@ interface Props {
   isEdit: boolean;
   currentUserInfo: any;
   isLoading: boolean;
+  submitRef: React.RefObject<HTMLButtonElement>;
 }
 
 // userId={userId}
@@ -27,7 +28,8 @@ function DriverEditForm({
   submitForm,
   isEdit,
   currentUserInfo,
-  isLoading
+  isLoading,
+  submitRef
 }: Props) {
   const {
     register,
@@ -37,7 +39,12 @@ function DriverEditForm({
   } = useForm({
     defaultValues: currentUserInfo
   });
-
+  React.useEffect(() => {
+    if (errors) {
+      // do the your logic here
+      console.log(errors);
+    }
+  }, [errors]);
   return (
     <FormProvider {...{ register, errors, control, handleSubmit }}>
       <FormSTY
@@ -47,6 +54,9 @@ function DriverEditForm({
           submitForm({ ...data });
         })}
       >
+        <button ref={submitRef} type="submit" style={{ display: "none" }}>
+          儲存
+        </button>
         <Pane className="left-blocks">
           <Basic currentUserInfo={currentUserInfo} isLoading={isLoading} />
           <DriverResume

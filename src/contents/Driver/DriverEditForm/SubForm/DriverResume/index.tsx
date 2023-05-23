@@ -1,13 +1,21 @@
 import { SelectField, Textarea, TextInput } from "evergreen-ui";
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import { SmallCrossIcon, SmallTickIcon } from "evergreen-ui";
 
 import {
   emailValidation,
   numberValidation,
   textValidation
 } from "@utils/inputValidation";
-import { region_DATA, city_DATA, country_DATA } from "./data";
+import {
+  region_DATA,
+  region_MAP,
+  city_DATA,
+  city_MAP,
+  country_DATA,
+  country_MAP
+} from "./data";
 import InfoBox from "@components/InfoBox";
 
 interface Props {
@@ -37,6 +45,7 @@ function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
       value: currentUserInfo.license_no,
       editEle: (
         <TextInput
+          key="license_no"
           {...register("license_no", {
             validate: textValidation
           })}
@@ -46,7 +55,7 @@ function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
     {
       req: true,
       label: "執照州/省/地區",
-      value: currentUserInfo.license_area,
+      value: country_MAP.get(currentUserInfo.license_area)?.label,
       editEle: (
         <SelectField
           className="inputField"
@@ -69,6 +78,7 @@ function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
       value: currentUserInfo.license_lvl,
       editEle: (
         <TextInput
+          key="license_lvl"
           {...register("license_lvl", {
             validate: textValidation
           })}
@@ -79,12 +89,14 @@ function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
       req: true,
       label: "駕駛資歷(年)",
       value: currentUserInfo.driver_seniority,
-      editEle: <TextInput {...register("driver_seniority")} />
+      editEle: (
+        <TextInput key="driver_seniority" {...register("driver_seniority")} />
+      )
     },
     {
       req: true,
       label: "派遣區域",
-      value: currentUserInfo.dsph_area,
+      value: region_MAP.get(currentUserInfo.dsph_area)?.label,
       editEle: (
         <SelectField
           key="dsph_area"
@@ -103,7 +115,7 @@ function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
     {
       req: true,
       label: "派遣都市",
-      value: currentUserInfo.dsph_city,
+      value: city_MAP.get(currentUserInfo.dsph_city)?.label,
       editEle: (
         <SelectField
           key="dsph_city"
@@ -122,11 +134,16 @@ function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
     {
       req: false,
       label: "黑名單註記",
-      value: currentUserInfo.dsph_city,
+      value: currentUserInfo.blocklist_mark ? (
+        <SmallTickIcon />
+      ) : (
+        <SmallCrossIcon />
+      ),
       editEle: (
         <input
           className="checkbox"
           type="checkbox"
+          key="blocklist_mark"
           // checked={currentUserInfo.blocklist_mark}
           {...register("blocklist_mark", {
             validate: textValidation
@@ -137,8 +154,8 @@ function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
     {
       req: false,
       label: "黑名單備註",
-      value: currentUserInfo.dsph_city,
-      editEle: <Textarea {...register("remark")} />
+      value: currentUserInfo.remark || "---",
+      editEle: <Textarea key="remark" {...register("remark")} />
     }
   ];
   return (

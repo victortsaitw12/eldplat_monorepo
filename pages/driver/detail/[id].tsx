@@ -24,22 +24,13 @@ const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ userId }) => {
   // ------- variables + useState ------- //
+  const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷"edit"
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const { mainFilter, updateMainFilter } = useDriverStore();
-
-  // TODO move to DriverEditForm
-  // const {
-  //   register,
-  //   formState: { errors },
-  //   control,
-  //   handleSubmit
-  // } = useForm({
-  //   defaultValues: currentUserInfo
-  // });
 
   const mainFilterArray = [
     { id: 1, label: "駕駛資訊", value: "info" },
@@ -66,17 +57,15 @@ const Page: NextPageWithLayout<
   }, [userId, router]);
 
   // ------- function ------- //
-  const fakeSubmit = (data: any) => console.log("data", data);
-
   const changeMainFilterHandler = (value: string) => updateMainFilter(value);
 
   const asyncSubmitForm = async (data: any) => {
-    console.log("submit data:", data);
+    console.log("asyncSubmitForm:", JSON.stringify(data));
     setIsLoading(true);
     try {
       const res = await updateDriver(userId, data);
       console.log("新增駕駛:", res);
-      router.push("/driver");
+      // router.push("/driver");
     } catch (e: any) {
       console.log(e);
       toaster.success(e.message);
@@ -86,31 +75,15 @@ const Page: NextPageWithLayout<
 
   return (
     <BodySTY>
-      {isLoading && (
-        <Pane
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height={400}
-          style={{ padding: 5 }}
-        >
-          <Spinner />
-        </Pane>
-      )}
-      {!isLoading && currentUserInfo && (
+      {(!isLoading && currentUserInfo && (
         <Pane width="100%" height="100%" overflow="auto">
-          <button
-            onClick={() => {
-              setIsEdit(!isEdit);
-            }}
-          >
-            編輯
-          </button>
           <TableWrapper
             onChangeTab={changeMainFilterHandler}
             mainFilter={mainFilter}
             mainFilterArray={mainFilterArray}
-            // onSave={handleSubmit(fakeSubmit)}
+            onSave={() => {
+              submitRef.current && submitRef.current.click();
+            }}
           >
             {mainFilter === "info" && (
               <DriverEditForm
@@ -120,6 +93,7 @@ const Page: NextPageWithLayout<
                 currentUserInfo={currentUserInfo}
                 formType={mainFilter}
                 isLoading={isLoading}
+                submitRef={submitRef}
               />
             )}
             {mainFilter === "health" && (
@@ -133,6 +107,16 @@ const Page: NextPageWithLayout<
               />
             )}
           </TableWrapper>
+        </Pane>
+      )) || (
+        <Pane
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={400}
+          style={{ padding: 5 }}
+        >
+          <Spinner />
         </Pane>
       )}
     </BodySTY>
