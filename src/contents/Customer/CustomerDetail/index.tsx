@@ -15,7 +15,7 @@ import {
   textValidation
 } from "@utils/inputValidation";
 //
-import ContactList from "@contents/Customer/ContactList";
+import ContactList from "@components/ContactList";
 import { CustomerDataTypes } from "../customer.type";
 interface I_Props {
   isEdit: boolean;

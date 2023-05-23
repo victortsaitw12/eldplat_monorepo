@@ -1,5 +1,5 @@
 import React from "react";
-import { SubFromProps } from "../customer.type";
+import { SubFromProps } from "../../contents/Customer/customer.type";
 import { useFieldArray } from "react-hook-form";
 import { IconLeft } from "@components/Button/Primary";
 import { PlusIcon, TrashIcon, TextInput, Text, Pane } from "evergreen-ui";
