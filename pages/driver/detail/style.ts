@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
+  /* display: flex;
+  height: calc(100% - 20px); */
   margin: 10px;
-  &:first-child div {
+  .title-bar {
+    margin-bottom: -1rem;
+  }
+  div:first-child > div {
     border: none;
   }
   // 最上面標題欄

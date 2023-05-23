@@ -5,7 +5,7 @@ import {
   InferGetServerSidePropsType
 } from "next";
 import { useRouter } from "next/router";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { toaster, Pane, Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { I_driverInfo, DUMMY_DRIVERINFO } from "@contents/driver/driver.typing";
@@ -25,21 +25,22 @@ const Page: NextPageWithLayout<
 > = ({ userId }) => {
   // ------- variables + useState ------- //
   const router = useRouter();
-  const {
-    register,
-    formState: { errors },
-    control,
-    handleSubmit
-  } = useForm();
+  const { editPage } = router.query; //是否為編輯頁的判斷"edit"
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const {
-    mainFilter,
-    updateMainFilter,
-    subFilter,
-    updateSubFilter,
-    initializeSubFilter
-  } = useDriverStore();
   const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
+  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const { mainFilter, updateMainFilter } = useDriverStore();
+
+  // TODO move to DriverEditForm
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   control,
+  //   handleSubmit
+  // } = useForm({
+  //   defaultValues: currentUserInfo
+  // });
+
   const mainFilterArray = [
     { id: 1, label: "駕駛資訊", value: "info" },
     { id: 2, label: "健康紀錄", value: "health" }
@@ -47,24 +48,21 @@ const Page: NextPageWithLayout<
 
   // ------- useEffect ------- //
   useEffect(() => {
-    updateMainFilter("info");
-  }, [updateMainFilter]);
-
-  useEffect(() => {
-    // 暫代資料
-    // setCurrentUserInfo(DUMMY_DRIVERINFO);
-    // TODO 接API
-    setIsLoading(true);
-    getDriverById(userId).then((res) => {
-      const updatedCurrentUserInfo = res.info;
-      if (!updatedCurrentUserInfo) {
-        console.log("查無此使用者");
-        router.push("/driver");
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getDriverById(userId);
+        if (!data.info) {
+          toaster.success("查無此使用者，請重新選擇");
+          router.push("/driver");
+        }
+        setCurrentUserInfo(data.info);
+      } catch (e: any) {
+        console.log(e);
       }
       setIsLoading(false);
-      console.log("detail:", updatedCurrentUserInfo);
-      setCurrentUserInfo(updatedCurrentUserInfo);
-    });
+    };
+    fetchData();
   }, [userId, router]);
 
   // ------- function ------- //
@@ -73,65 +71,71 @@ const Page: NextPageWithLayout<
   const changeMainFilterHandler = (value: string) => updateMainFilter(value);
 
   const asyncSubmitForm = async (data: any) => {
+    console.log("submit data:", data);
     setIsLoading(true);
     try {
-      console.log("updateDriver:", data);
-
-      // await insertDriverInfo(data);
-      await updateDriver(userId, data);
-      console.log("新增駕駛成功");
+      const res = await updateDriver(userId, data);
+      console.log("新增駕駛:", res);
       router.push("/driver");
     } catch (e: any) {
       console.log(e);
+      toaster.success(e.message);
     }
     setIsLoading(false);
   };
 
   return (
-    <FormProvider {...{ register, errors, control, handleSubmit }}>
-      <BodySTY>
-        <TableWrapper
-          onChangeTab={changeMainFilterHandler}
-          mainFilter={mainFilter}
-          mainFilterArray={mainFilterArray}
-          onSave={handleSubmit(fakeSubmit)}
+    <BodySTY>
+      {isLoading && (
+        <Pane
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={400}
+          style={{ padding: 5 }}
         >
-          {mainFilter === "info" && (
-            <DriverEditForm
-              userId={userId}
-              currentUserInfo={currentUserInfo}
-              submitForm={asyncSubmitForm}
-              register={register}
-              // onCancel={cancelFormHandler}
-              formType={mainFilter}
-              // errors={errors}
-              // handleSubmit={handleSubmit}
-              // register={register}
-              // control={control}
-              isDisabled={true}
-            />
-          )}
-          {mainFilter === "health" && (
-            // <FilterWrapper
-            //   updateFilter={updateSubFilter}
-            //   resetFilter={() => {
-            //     initializeSubFilter();
-            //   }}
-            //   filter={subFilter}
-            // >
-            <HealthFirst
-              setInsertData={(data) => {
-                console.log(data);
-              }}
-              handleEmployeeChange={(e) => {
-                console.log(e);
-              }}
-            />
-            // </FilterWrapper>
-          )}
-        </TableWrapper>
-      </BodySTY>
-    </FormProvider>
+          <Spinner />
+        </Pane>
+      )}
+      {!isLoading && currentUserInfo && (
+        <Pane width="100%" height="100%" overflow="auto">
+          <button
+            onClick={() => {
+              setIsEdit(!isEdit);
+            }}
+          >
+            編輯
+          </button>
+          <TableWrapper
+            onChangeTab={changeMainFilterHandler}
+            mainFilter={mainFilter}
+            mainFilterArray={mainFilterArray}
+            // onSave={handleSubmit(fakeSubmit)}
+          >
+            {mainFilter === "info" && (
+              <DriverEditForm
+                userId={userId}
+                submitForm={asyncSubmitForm}
+                isEdit={isEdit}
+                currentUserInfo={currentUserInfo}
+                formType={mainFilter}
+                isLoading={isLoading}
+              />
+            )}
+            {mainFilter === "health" && (
+              <HealthFirst
+                setInsertData={(data) => {
+                  console.log(data);
+                }}
+                handleEmployeeChange={(e) => {
+                  console.log(e);
+                }}
+              />
+            )}
+          </TableWrapper>
+        </Pane>
+      )}
+    </BodySTY>
   );
 };
 

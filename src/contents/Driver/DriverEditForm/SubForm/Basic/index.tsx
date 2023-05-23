@@ -28,12 +28,17 @@ function Basic({
         基本資料
         <Icon icon={EyeOpenIcon} size={12} marginLeft="6px" />
       </Heading>
-      {!currentUserInfo && isLoading && (
-        <div className="spinner">
-          <Spinner />
-        </div>
-      )}
+
       <div className="form">
+        {!currentUserInfo && isLoading && (
+          <Pane className="input-line " style={{ position: "absolute" }}>
+            <Text>{""} </Text>
+            <Text style={{ width: "300px" }}>
+              {" "}
+              <Spinner />
+            </Text>
+          </Pane>
+        )}
         <Pane className="input-line">
           <Text>姓名</Text>
           <Text>{currentUserInfo?.user_name}</Text>

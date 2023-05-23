@@ -1,197 +1,152 @@
-import {
-  Checkbox,
-  Heading,
-  Pane,
-  Select,
-  Text,
-  Textarea,
-  TextInput,
-  SmallTickIcon,
-  SmallCrossIcon
-} from "evergreen-ui";
-import React, { useState } from "react";
+import { SelectField, Textarea, TextInput } from "evergreen-ui";
+import React from "react";
 import { useFormContext } from "react-hook-form";
-import { BodySTY } from "./style";
 
 import {
   emailValidation,
   numberValidation,
   textValidation
 } from "@utils/inputValidation";
-import { region_DATA, city_DATA, driver_DT_DATA } from "./data";
-import HorizatalInput from "@components/HookForm/Input/HorizontalInput";
-import HorizontalSelect from "@components/HookForm/Select/HorizontalSelect";
-import HorizontalTextArea from "@components/HookForm/Input/HorizontalTextArea";
+import { region_DATA, city_DATA, country_DATA } from "./data";
+import InfoBox from "@components/InfoBox";
 
-function DriverResume({
-  userId,
-  insertData,
-  currentUserInfo,
-  handleInputChange,
-  isDisabled
-}: any) {
-  const [blackChecked, setBlackChecked] = useState<boolean>(false);
+interface Props {
+  userId: string;
+  isEdit: boolean;
+  currentUserInfo: any;
+  isLoading: boolean;
+}
+
+// userId={userId}
+// isEdit={isEdit}
+// currentUserInfo={currentUserInfo}
+// isLoading={isLoading}
+
+function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
   const { register, errors, control, handleSubmit } = useFormContext();
+
+  const resume_info = [
+    {
+      readonly: true,
+      label: "使用者編號",
+      value: currentUserInfo?.user_No || userId
+    },
+    {
+      req: true,
+      label: "駕照編號",
+      value: currentUserInfo.license_no,
+      editEle: (
+        <TextInput
+          {...register("license_no", {
+            validate: textValidation
+          })}
+        />
+      )
+    },
+    {
+      req: true,
+      label: "執照州/省/地區",
+      value: currentUserInfo.license_area,
+      editEle: (
+        <SelectField
+          className="inputField"
+          key="license_area"
+          {...register("license_area", {
+            required: "必填"
+          })}
+        >
+          {country_DATA.map((item) => (
+            <option key={`city-${item.value}`} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </SelectField>
+      )
+    },
+    {
+      req: true,
+      label: "牌照等級",
+      value: currentUserInfo.license_lvl,
+      editEle: (
+        <TextInput
+          {...register("license_lvl", {
+            validate: textValidation
+          })}
+        />
+      )
+    },
+    {
+      req: true,
+      label: "駕駛資歷(年)",
+      value: currentUserInfo.driver_seniority,
+      editEle: <TextInput {...register("driver_seniority")} />
+    },
+    {
+      req: true,
+      label: "派遣區域",
+      value: currentUserInfo.dsph_area,
+      editEle: (
+        <SelectField
+          key="dsph_area"
+          {...register("dsph_area", {
+            required: "必填"
+          })}
+        >
+          {region_DATA.map((item) => (
+            <option key={`city-${item.value}`} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </SelectField>
+      )
+    },
+    {
+      req: true,
+      label: "派遣都市",
+      value: currentUserInfo.dsph_city,
+      editEle: (
+        <SelectField
+          key="dsph_city"
+          {...register("dsph_city", {
+            required: "必填"
+          })}
+        >
+          {city_DATA.map((item) => (
+            <option key={`city-${item.value}`} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </SelectField>
+      )
+    },
+    {
+      req: false,
+      label: "黑名單註記",
+      value: currentUserInfo.dsph_city,
+      editEle: (
+        <input
+          className="checkbox"
+          type="checkbox"
+          // checked={currentUserInfo.blocklist_mark}
+          {...register("blocklist_mark", {
+            validate: textValidation
+          })}
+        />
+      )
+    },
+    {
+      req: false,
+      label: "黑名單備註",
+      value: currentUserInfo.dsph_city,
+      editEle: <Textarea {...register("remark")} />
+    }
+  ];
   return (
-    <BodySTY>
-      <Heading is="h4">駕駛履歷</Heading>
-      <div className="form">
-        <Pane className="input-line">
-          <Text>使用者編號</Text>
-          <Text>{(currentUserInfo && currentUserInfo?.user_No) || userId}</Text>
-        </Pane>
-        {isDisabled ? (
-          <>
-            <Pane className="input-line">
-              <Text className="title">駕照編號</Text>
-              <Text>
-                {currentUserInfo && currentUserInfo.license_no
-                  ? currentUserInfo.license_no
-                  : "---"}
-              </Text>
-            </Pane>
-            <Pane className="input-line">
-              <Text>執照州/省/地區</Text>
-              <Text>
-                {currentUserInfo && currentUserInfo.license_area
-                  ? currentUserInfo.license_area
-                  : "---"}
-              </Text>
-            </Pane>
-            <Pane className="input-line">
-              <Text>牌照等級</Text>
-              <Text>
-                {currentUserInfo && currentUserInfo.license_Lvl
-                  ? currentUserInfo.license_lvl
-                  : "---"}
-              </Text>
-            </Pane>
-            <Pane className="input-line">
-              <Text>駕駛資歷(年)</Text>
-              <Text>
-                {currentUserInfo && currentUserInfo.driver_seniority
-                  ? currentUserInfo.driver_seniority
-                  : "---"}
-              </Text>
-            </Pane>
-            <Pane className="input-line">
-              <Text>派遣區域</Text>
-              <Text>
-                {currentUserInfo && currentUserInfo.dsph_area
-                  ? currentUserInfo.dsph_area
-                  : "---"}
-              </Text>
-            </Pane>
-            <Pane className="input-line">
-              <Text>派遣都市</Text>
-
-              <Text>
-                {currentUserInfo && currentUserInfo.dsph_city
-                  ? currentUserInfo.dsph_city
-                  : "---"}
-              </Text>
-            </Pane>
-            <Pane className="input-line">
-              <Text>黑名單註記</Text>
-              <Text>
-                {currentUserInfo && currentUserInfo.blocklist_mark === "1" ? (
-                  <SmallTickIcon style={{ color: "#8EA8C7" }} />
-                ) : (
-                  <SmallCrossIcon style={{ color: "#8EA8C7" }} />
-                )}
-              </Text>
-            </Pane>
-            <Pane className="input-line">
-              <Text>黑名單備註</Text>
-              <Text>
-                {currentUserInfo && currentUserInfo.remark
-                  ? currentUserInfo.remark
-                  : "---"}
-              </Text>
-            </Pane>
-            {/*  05/19 光:現在已經沒有 driver_type 這欄位 之後會另外開發標籤的功能 在使用 
-            <Pane className="input-line">   
-              <Text>標籤</Text>
-              <Text>
-                {currentUserInfo && currentUserInfo.remark
-                  ? currentUserInfo.remark
-                  : "---"}
-              </Text>
-            </Pane> */}
-          </>
-        ) : (
-          <>
-            <HorizatalInput
-              label="駕照編號"
-              {...register("license_no", {
-                validate: textValidation
-              })}
-            />
-            <HorizontalSelect
-              control={control}
-              isDisabled={isDisabled}
-              isRequire={true}
-              label="執照州/省/地區"
-              name="license_area"
-              options={region_DATA}
-            />
-
-            <HorizatalInput
-              label="牌照等級"
-              {...register("license_lvl", {
-                validate: textValidation
-              })}
-            />
-
-            <HorizatalInput
-              label="駕駛資歷(年)"
-              {...register("driver_seniority", {
-                validate: textValidation
-              })}
-            />
-
-            <HorizontalSelect
-              control={control}
-              isDisabled={isDisabled}
-              isRequire={true}
-              label="派遣區域"
-              name="dsph_area"
-              options={city_DATA}
-            />
-
-            <HorizontalSelect
-              control={control}
-              isDisabled={isDisabled}
-              isRequire={true}
-              label="派遣都市"
-              name="dsph_city"
-              options={city_DATA}
-            />
-
-            <Pane className="input-line">
-              <Text>黑名單註記</Text>
-              <input
-                className="checkbox"
-                type="checkbox"
-                // checked={currentUserInfo.blocklist_mark}
-                {...register("blocklist_mark", {
-                  validate: textValidation
-                })}
-              />
-            </Pane>
-            <HorizontalTextArea label="黑名單備註" {...register("remark")} />
-            {/* 05/19 光:現在已經沒有 driver_type 這欄位 之後會另外開發標籤的功能 在使用 
-            <HorizontalSelect
-              control={control}
-              label="標籤"
-              isDisabled={isDisabled}
-              name="bus.label"
-              options={driver_DT_DATA}
-            /> */}
-          </>
-        )}
-      </div>
-    </BodySTY>
+    <>
+      {!isLoading && currentUserInfo && (
+        <InfoBox isEdit={isEdit} infoData={resume_info} infoTitle="駕駛履歷" />
+      )}
+    </>
   );
 }
 

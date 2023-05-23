@@ -49,9 +49,6 @@ const Page: NextPageWithLayout<
   }, [updateMainFilter]);
 
   useEffect(() => {
-    // 暫代資料
-    // setCurrentUserInfo(DUMMY_DRIVERINFO);
-    // TODO 接API
     setIsLoading(true);
     getDriverById(userId).then((res) => {
       const updatedCurrentUserInfo = res.info;
@@ -76,9 +73,8 @@ const Page: NextPageWithLayout<
     setIsLoading(true);
     try {
       await updateDriver(userId, data);
-      console.log("updated成功");
-      toaster.success("Your source is now sending data");
-      router.push(`/driver/edit/${id}`);
+      toaster.success("駕駛履歷更新成功");
+      router.push(`/driver/detail/${userId}`);
     } catch (e: any) {
       console.log(e);
     }
