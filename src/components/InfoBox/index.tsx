@@ -26,8 +26,7 @@ function InfoBox({
   isEdit,
   infoTitle,
   infoData,
-  infoType,
-  children
+  infoType
 }: I_InfoBoxProps) {
   const r_switch_info = (type?: string) => {
     switch (type) {
