@@ -20,7 +20,7 @@ import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
 //
 const mainFilterArray = [
-  { id: 1, label: "全部", value: "1" },
+  { id: 1, label: "啟用", value: "1" },
   { id: 2, label: "停用", value: "2" }
 ];
 //
@@ -39,7 +39,9 @@ const Page: NextPageWithLayout<never> = () => {
   //
   const fetchCustomerData = useCallback(
     async (isCanceled: boolean, mainFilter = "1") => {
+      console.log("mainFilter", mainFilter);
       getAllCustomers(subFilter, mainFilter).then((res) => {
+        console.log("res", res);
         const customerData = mappingQueryData(
           res.contentList,
           customerPattern,
@@ -82,7 +84,7 @@ const Page: NextPageWithLayout<never> = () => {
   useEffect(() => {
     updateMainFilter("1");
   }, [updateMainFilter]);
-  //
+
   useEffect(() => {
     let isCanceled = false;
     fetchCustomerData(isCanceled, mainFilter);

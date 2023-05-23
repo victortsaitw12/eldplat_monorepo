@@ -9,11 +9,6 @@ import InfoBox from "@components/InfoBox";
 import FlexWrapper from "@layout/FlexWrapper";
 //@service
 //@utils
-import {
-  emailValidation,
-  numberValidation,
-  textValidation
-} from "@utils/inputValidation";
 //
 import ContactList from "@components/ContactList";
 import { CustomerDataTypes } from "../customer.type";
@@ -28,7 +23,7 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
     getValues
   } = useFormContext<CustomerDataTypes>();
   //TODO 分類的選法
-  console.log("getValues", getValues("labels"));
+  console.log("getValues", getValues());
   if (getValues("customer_no") === undefined) {
     return <div></div>;
   }
@@ -197,7 +192,6 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
         <TextInput
           key="customer_tel_code"
           {...register("customer_tel_code")}
-          disabled={true}
           style={{ width: "60px" }}
         />,
         <TextInput
@@ -215,7 +209,6 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
       editEle: [
         <TextInput
           key="customer_fax_code"
-          disabled={true}
           style={{ width: "60px" }}
           {...register("customer_fax_code")}
         />,

@@ -48,11 +48,9 @@ const ContactList = ({
               <Pane display="flex" flexDirection="row" gap={10} key={`${arrayName}.${index}.contact_tel`}>
                 <Text>市話</Text>
                 <TextInput
-                  disabled={true}
                   style={{ width: "60px" }}
                   {...register(`${arrayName}.${index}.contact_tel_code`)}
                 />
-
                 <TextInput
                   {...register(`${arrayName}.${index}.contact_tel`)}
                 />
@@ -68,7 +66,6 @@ const ContactList = ({
               <Pane display="flex" flexDirection="row" gap={10} key={`${arrayName}.${index}.contact_phone_code`}>
                 <Text>手機</Text>
                 <TextInput
-                  disabled={true}
                   style={{ width: "60px" }}
                   {...register(`${arrayName}.${index}.contact_phone_code`)}
                 />
