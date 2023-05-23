@@ -24,7 +24,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
 
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);
-  const [isEdit, setIsEdit] = useState(editPage === "1" || false);
+  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   //TableWrapper
   const changeMainFilterHandler = () => {
     console.log("changeMainFilterHandler");
