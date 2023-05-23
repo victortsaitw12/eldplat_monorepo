@@ -14,6 +14,7 @@ export const BtnSTY = styled.button<{ color: string }>`
   justify-content: center;
   align-items: center;
   gap: 4px;
+
   span {
     overflow: hidden;
     white-space: nowrap;

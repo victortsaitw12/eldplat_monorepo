@@ -2,7 +2,6 @@ import React from "react";
 import { BtnSTY } from "./style";
 
 const EventTag = ({ value, className }: { value: any; className?: string }) => {
-  console.log("val:", value);
   return (
     <BtnSTY key={value?.label} color={value?.color} className={className}>
       {

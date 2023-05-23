@@ -27,7 +27,7 @@ const Page: NextPageWithLayout<never> = ({ user }) => {
   } = useDriverStore();
 
   React.useEffect(() => {
-    updateMainFilter("all");
+    updateMainFilter("info");
   }, []);
 
   React.useEffect(() => {
@@ -142,7 +142,7 @@ const Page: NextPageWithLayout<never> = ({ user }) => {
     <BodySTY isOpenDrawer={isOpenDrawer}>
       <Pane className="wrapMain">
         <Tabs
-          titles={["全部", "用戶", "無訪問權限", "停用"]}
+          titles={["啟用", "用戶", "無訪問權限", "停用"]}
           setIsOpenDrawer={setIsOpenDrawer}
           isOpenDrawer={isOpenDrawer}
         />

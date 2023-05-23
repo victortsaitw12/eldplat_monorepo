@@ -72,7 +72,9 @@ const OverviewTable = ({
         return (
           <EventTag
             key={`shift-${i}`}
-            className={`shift-btn ${i >= 3 ? "hidden" : ""}`}
+            className={`shift-btn ${i >= 3 ? "hidden" : ""} ${
+              item.check_Status === "0" ? "reminder" : ""
+            }`}
             value={EVENT_TYPE.get(eventTypeCode)}
           />
         );

@@ -18,6 +18,12 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
   &::-webkit-scrollbar {
     display: none;
   }
+  .reminder {
+    animation: 200ms ease-out 200ms infinite alternate reminder;
+    /* animation-delay: 200ms;
+    animation-timing-function: ease-out;
+    animation-duration: 200msr; */
+  }
   .eg-table {
     width: fit-content;
     height: fit-content;
