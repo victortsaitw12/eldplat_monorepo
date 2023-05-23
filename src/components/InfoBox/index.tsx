@@ -1,20 +1,15 @@
 import React from "react";
-import {
-  Text,
-  UnorderedList,
-  ListItem,
-  Pane
-} from "evergreen-ui";
+import { Text, UnorderedList, ListItem, Pane } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
 
-interface I_infoData {
+export interface I_infoData {
   editEle?: React.ReactNode;
-  readonly?: boolean;//只讀
-  req?: boolean;//必填
-  value?: string | Array<string>;//值
-  label?: string;//label文字
-  subLabel?: string | React.ReactNode;//上下的label
+  readonly?: boolean; //只讀
+  req?: boolean; //必填
+  value?: string | Array<string> | React.ReactNode; //值
+  label?: string; //label文字
+  subLabel?: string | React.ReactNode; //上下的label
   inputType?: string;
 }
 
@@ -26,7 +21,14 @@ export interface I_InfoBoxProps {
   infoType?: string;
 }
 
-function InfoBox({ style, isEdit, infoTitle, infoData, infoType }: I_InfoBoxProps) {
+function InfoBox({
+  style,
+  isEdit,
+  infoTitle,
+  infoData,
+  infoType,
+  children
+}: I_InfoBoxProps) {
   const r_switch_info = (type?: string) => {
     switch (type) {
       case "label":
@@ -34,23 +36,23 @@ function InfoBox({ style, isEdit, infoTitle, infoData, infoType }: I_InfoBoxProp
           <UnorderedList className="info_content type_label">
             {r_label()}
           </UnorderedList>
-        )
+        );
         break;
       case "checkbox":
         return (
           <UnorderedList className="info_content type_checkbox">
             {r_checkbox()}
           </UnorderedList>
-        )
+        );
         break;
       default:
         return (
           <UnorderedList className="info_content type_text">
             {r_text()}
           </UnorderedList>
-        )
+        );
     }
-  }
+  };
 
   //文字
   const r_text = () => {
@@ -58,21 +60,28 @@ function InfoBox({ style, isEdit, infoTitle, infoData, infoType }: I_InfoBoxProp
       return false;
     }
     return infoData.map((child: any, i: number) => {
-      const { req, value, label, editEle } = child
-      console.log("💕💕💕💕💕💕💕infoData的child", child);
+      const { req, value, label, editEle, inputType } = child;
+      if (!value && !editEle) {
+        return;
+      }
+      if (inputType === "custom") {
+        return editEle;
+      }
+      console.log("value", value);
+
       return (
         <ListItem key={value + i}>
-          <Text>
-            {req && label !== "" && <span className="req">*</span>}
-            {label}
-          </Text>
-          <Pane>
-            {isEdit && editEle ? editEle : <Text>{value}</Text>}
-          </Pane>
+          {label && (
+            <Text>
+              {req && label !== "" && <span className="req">*</span>}
+              {label}
+            </Text>
+          )}
+          <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane>
         </ListItem>
-      )
-    })
-  }
+      );
+    });
+  };
 
   //標籤-編輯模式待處理
   const r_label = () => {
@@ -81,17 +90,17 @@ function InfoBox({ style, isEdit, infoTitle, infoData, infoType }: I_InfoBoxProp
     }
     return infoData.map((child: any, i: number) => {
       return (
-        <ListItem key={child.value + i} >
+        <ListItem key={child.value + i}>
           <Text>{child.value}</Text>
         </ListItem>
-      )
-    })
-  }
+      );
+    });
+  };
 
   //checkbox-編輯模式待處理
   const r_checkbox = () => {
     if (!infoData) {
-      return false
+      return false;
     }
     return infoData.map((child: any, i: number) => {
       return (
@@ -104,9 +113,9 @@ function InfoBox({ style, isEdit, infoTitle, infoData, infoType }: I_InfoBoxProp
             onChange={child.onChange}
           />
         </ListItem>
-      )
-    })
-  }
+      );
+    });
+  };
 
   return (
     <InfoBoxSTY style={style}>

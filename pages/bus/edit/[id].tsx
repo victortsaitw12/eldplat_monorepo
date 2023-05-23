@@ -46,6 +46,7 @@ const Page: NextPageWithLayout<
   }, [updateMainFilter]);
   const {
     register,
+    getValues,
     formState: { errors },
     control,
     handleSubmit

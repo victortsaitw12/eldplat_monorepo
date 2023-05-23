@@ -3,7 +3,8 @@ import {
   Icon,
   FullscreenIcon,
   CrossIcon,
-  FloppyDiskIcon
+  FloppyDiskIcon,
+  EditIcon
 } from "evergreen-ui";
 import React from "react";
 import { BodySTY, FilterItemSTY } from "./style";
@@ -17,7 +18,10 @@ interface Props {
     label: string;
     value: string;
   }[];
+  isEdit?: boolean;
+  viewOnly?: boolean;
   onSave?: () => void;
+  onEdit?: () => void;
   onClose?: () => void;
 }
 
@@ -29,8 +33,14 @@ function TableWrapper({
   onChangeTab = (value: string) => {
     console.log(value);
   },
-  onSave
+  isEdit,
+  viewOnly,
+  onSave,
+  onEdit,
+  onClose
 }: Props) {
+  console.log("mainFilterArray", mainFilterArray);
+  console.log("mainFilter", mainFilter);
   return (
     <BodySTY>
       <div className="filter-header">
@@ -52,7 +62,7 @@ function TableWrapper({
         </div>
         <div className="tab-options">
           {optionsEle}
-          {onSave && (
+          {!viewOnly && (
             <div
               style={{
                 display: "flex",
@@ -60,21 +70,28 @@ function TableWrapper({
                 cursor: "pointer"
               }}
               onClick={() => {
-                onSave();
+                console.log("mode", isEdit);
+                if (isEdit) {
+                  console.log("save data");
+                  onSave && onSave();
+                } else {
+                  onEdit && onEdit();
+                }
               }}
             >
               <Icon
-                icon={FloppyDiskIcon}
+                icon={isEdit ? FloppyDiskIcon : EditIcon}
                 size={16}
                 marginY="auto"
                 marginX="10px"
                 color="#91A9C5"
               />
-              <div>全部儲存</div>
+              <div>{isEdit ? "全部儲存" : "編輯"}</div>
             </div>
           )}
           <Icon
             icon={FullscreenIcon}
+            style={{ cursor: "pointer" }}
             size={16}
             marginY="auto"
             marginX="10px"
@@ -82,10 +99,14 @@ function TableWrapper({
           />
           <Icon
             icon={CrossIcon}
+            style={{ cursor: "pointer" }}
             size={18}
             marginY="auto"
             marginX="10px"
             color="#91A9C5"
+            onClick={() => {
+              onClose && onClose();
+            }}
           />
         </div>
       </div>

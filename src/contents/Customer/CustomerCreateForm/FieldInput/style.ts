@@ -11,11 +11,11 @@ const ItemSTY = styled.label<I_StyInputProps>`
   gap: 12px;
   input {
     width: 100%;
-    padding: 0 12px;
-    border: 1px solid #afc3da;
+    padding:0 12px;
+    border: 1px solid #AFC3DA;
     border-radius: 4px;
     line-height: 32px;
-    color: #718baa;
+    color: #718BAA;
   }
   input: focus {
     outline: none;
@@ -40,18 +40,20 @@ const ItemSTY = styled.label<I_StyInputProps>`
 const getHorizonStyles = (props: any) =>
   props.horizonLabel
     ? css`
-        flex-direction: row;
-        flex-wrap: wrap;
-        input {
+         flex-direction: row;
+         flex-wrap: wrap;
+         input{
           display: block;
           width: calc(60% - 12px);
-        }
-        .field-title {
+         }
+         .field-title {
           width: 40%;
-        }
-        .error-message {
+         }
+         .error-message{
           width: 100%;
-        }
+         }
       `
-    : css``;
+    : css`
+        
+      `;
 export { ItemSTY };
