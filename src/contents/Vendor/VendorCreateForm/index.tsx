@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
+import { useRouter } from "next/router";
 //@sevices
 import { createVendor } from "@services/vendor/createVendor";
 import FiledInput from "./FieldInput";
@@ -13,6 +14,9 @@ import FlexWrapper from "@layout/FlexWrapper";
 //@components
 import CheckboxField from "@components/CheckboxField";
 import { I_contactData } from "../vendor.type";
+
+//@mock-data
+import { vedor_code_text } from "@mock-data/vendors/03VendorCodeList";
 export interface CreateVendorPayload {
     vendor_Name: string;
     vendor_City: string;
@@ -60,10 +64,17 @@ interface I_VendorCreateFormProps {
 }
 
 function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
+    const router = useRouter();
+    //供應商的分類
+    const { codeType = "99" } = router.query;
+    console.log("💫💫💫codeType", codeType);
+    console.log("vedor_code_text.codeType", vedor_code_text[codeType as string]);
     const { register, handleSubmit, control } = useForm<CreateVendorPayload>({
         defaultValues
     });
     const [loading, setLoading] = useState(false);
+    const [fuelValue, setFuelValue] = useState(codeType);
+
     const asyncSubmitForm = async (data: any) => {
         setLoading(true);
         try {
@@ -81,12 +92,12 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
             console.log("🎶🎶🎶create Vendor Data!:", data);
             asyncSubmitForm({
                 ...data,
-                vendor_Code_List: [
+                vendor_Code_List: fuelValue ? [
                     {
-                        "vendor_Code": "01",
-                        "vendor_Code_Name": "外部車隊"
+                        "vendor_Code": fuelValue,
+                        "vendor_Code_Name": vedor_code_text[fuelValue as string]
                     }
-                ]
+                ] : []
             });
         })}>
             <FiledInput
@@ -143,7 +154,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                 }}
             >
                 <label htmlFor="">
-                    <span>*</span>
+                    <span style={{ color: "#D14343" }}>*</span>
                     城市
                 </label>
                 <Select
@@ -164,7 +175,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                 }}
             >
                 <label htmlFor="">
-                    <span>*</span>
+                    <span style={{ color: "#D14343" }}>*</span>
                     州/省/區域
                 </label>
                 <Select
@@ -194,7 +205,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                 }}
             >
                 <label htmlFor="">
-                    <span>*</span>
+                    <span style={{ color: "#D14343" }}>*</span>
                     國家
                 </label>
                 <Select
@@ -299,9 +310,9 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                 分類
             </Text>
             <CheckboxField
-                label="外部車隊"
-                item="item"
-                checked={true}
+                label={vedor_code_text[codeType as string]}
+                item={{ value: codeType }}
+                checked={fuelValue == codeType}
                 toggleFuelValue={() => {
                     console.log("toggleFuelValue");
                 }}

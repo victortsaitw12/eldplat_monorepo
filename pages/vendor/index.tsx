@@ -3,11 +3,12 @@ import {
   I_Select_Vendors_Type
 } from "@typings/vendors_type";
 import { Pane, GlobeIcon } from "evergreen-ui";
-import { NextPageWithLayout } from "next";
+import { GetServerSideProps, NextPageWithLayout } from "next";
 import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
 import { FormattedMessage } from "react-intl";
 import { BodySTY } from "./style";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
@@ -191,11 +192,11 @@ const Page: NextPageWithLayout<{
   };
   //進入供應商詳細頁
   const goToDetailPage = (id: string) => {
-    router.push("/vendor/detail/" + id);
+    router.push("/vendor/detail/" + id + "?editPage=view");
   }
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push("/vendor/detail/" + id + "?editPage=1");
+    router.push("/vendor/detail/" + id + "?editPage=edit");
   }
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {
@@ -282,6 +283,20 @@ const Page: NextPageWithLayout<{
     </BodySTY>
   );
 };
-
+interface Props {
+  vendor_id: string;
+};
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  context
+) => {
+  const { params } = context;
+  console.log("context", context)
+  console.log("params", params);
+  return {
+    props: {
+      vendor_id: params ? params.id : ""
+    }
+  };
+};
 Page.getLayout = getLayout;
 export default Page;
