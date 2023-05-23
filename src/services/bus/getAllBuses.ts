@@ -1,5 +1,8 @@
 import { PatternType } from "@utils/mappingQueryData";
-export const getAllBuses = async (filter: { [key: string]: any } = {}) => {
+export const getAllBuses = async (
+  filter: { [key: string]: any } = {},
+  bus_status = "1"
+) => {
   console.log("getAllBuses", filter);
   const busFilter = [];
   for (const key in filter) {
@@ -21,7 +24,7 @@ export const getAllBuses = async (filter: { [key: string]: any } = {}) => {
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
     body: JSON.stringify({
-      bus_status: "1",
+      bus_status,
       bus_Filter: busFilter,
       filter_Needed: true,
       page_Info: {

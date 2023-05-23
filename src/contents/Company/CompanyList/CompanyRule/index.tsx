@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Heading, Pane, Text } from "evergreen-ui";
 
 import { BodySTY } from "./style";
@@ -8,8 +8,8 @@ import {
 } from "@contexts/companyContext/companyProvider";
 
 function CompanyRule() {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
-  const company_rule_data = C_data.companyData.company_Working_Hours;
+  const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const company_rule_data = companyData.company_working_hours;
 
   return (
     <BodySTY>
@@ -18,10 +18,10 @@ function CompanyRule() {
         <Pane className="input-line">
           <Text className="">工時設定</Text>
           <Pane>
-            {company_rule_data.map((item) => {
+            {company_rule_data?.map((item) => {
               return (
-                <Text key={item.working_Hours_Code}>
-                  {item.working_Hours_Name}、
+                <Text key={item.working_hours_code}>
+                  {item.working_hours_name}、
                 </Text>
               );
             })}

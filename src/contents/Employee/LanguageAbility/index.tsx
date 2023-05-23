@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 // import { language_DATA } from "./data";
 import NewLanguage from "./NewLanguage";
 import { BodySTY } from "./style";
+import { language_DATA } from "./data";
 
 interface I_languageType {
   languag: string;
@@ -25,11 +26,49 @@ interface I_languageType {
 interface I_Language_Props {
   insertData: any;
   setInsertData: (insertData: any) => void;
+  editData: any;
 }
 
-function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
-  const [insertLang, setInsertLang] = useState<I_languageType[]>([]);
+function LanguageAbility({
+  insertData,
+  setInsertData,
+  editData
+}: I_Language_Props) {
+  const [insertLang, setInsertLang] = useState<I_languageType[]>([]); // 檢視樣子的:
+  // [{languag:"中文", listen:"聽-精通", read:"讀-精通", saved:true, speak:"說-精通", write:"寫-精通"}]
   const [LangForApi, setLangForApi] = useState<any[]>([]);
+
+  // 一進來有editData的話先設好要顯示的語言們
+  useEffect(() => {
+    const editLangArr = editData?.languags; // 從api取回來的資料是代碼形式的: speak:1 之類的
+    setLangForApi(editLangArr);
+    const transLangArr = editLangArr?.map((v: any) => {
+      const compareLang = language_DATA.languag.find((item) => {
+        return item.value === v.languag;
+      });
+      const compareListen = language_DATA.listen.find((item) => {
+        return item.value === v.listen;
+      });
+      const compareSpeak = language_DATA.speak.find((item) => {
+        return item.value === v.speak;
+      });
+      const compareRead = language_DATA.read.find((item) => {
+        return item.value === v.read;
+      });
+      const compareWrite = language_DATA.write.find((item) => {
+        return item.value === v.write;
+      });
+      return {
+        languag: compareLang?.label,
+        listen: compareListen?.label,
+        speak: compareSpeak?.label,
+        read: compareRead?.label,
+        write: compareWrite?.label,
+        saved: true
+      };
+    });
+    setInsertLang(transLangArr);
+  }, [editData]);
 
   // 新增語言空欄位
   const handleInsertLang = () => {
@@ -111,7 +150,7 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
         </Button>
       </Pane>
 
-      {insertLang.map((lang_line, idx) => {
+      {insertLang?.map((lang_line, idx) => {
         if (lang_line.saved)
           return (
             <Pane className="input-line">

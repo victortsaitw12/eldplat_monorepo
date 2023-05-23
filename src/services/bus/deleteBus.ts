@@ -2,12 +2,9 @@ export const deleteBus = async (bus_No: string): Promise<void> => {
   console.log("bus_No", bus_No);
   try {
     const response = await fetch(
-      "https://localhost:7188/Gateway_Bus/DeleteBus",
+      `https://localhost:7088/CAR/DeleteBus/${bus_No}`,
       {
         method: "POST",
-        body: JSON.stringify({
-          bus_No: bus_No
-        }),
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN

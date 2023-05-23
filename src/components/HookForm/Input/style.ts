@@ -36,7 +36,6 @@ const StyledTextArea = styled.textarea`
 const HorizatalLabelSTY = styled.div`
   display: flex;
   align-items: center;
-  /* height: 32px; */
   gap: 20px;
   .title {
     display: flex;
@@ -65,9 +64,18 @@ const HorizatalLabelSTY = styled.div`
 const VerticalLabelSTY = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 8px;
   .title {
     font-weight: 400;
+    font-size: 14px;
+    width: 160px;
     color: ${({ theme }) => theme.color.N800};
+    .required {
+      color: ${({ theme }) => theme.color.R400};
+    }
+    .title-content {
+      font-weight: 400;
+    }
   }
   .error {
     margin-top: 8px;

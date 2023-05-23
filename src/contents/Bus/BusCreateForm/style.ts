@@ -1,11 +1,24 @@
 import styled from "styled-components";
 
 const FormSTY = styled.form`
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 20px;
+  select {
+    height: 34px;
+    & + svg {
+      margin-top: -10px;
+      height: 20px;
+      width: 20px;
+      border-radius: 4px;
+      background: ${({ theme }) => theme.color.N100};
+      & path {
+        transform: scale(0.8) translateX(2px) translateY(2px);
+      }
+    }
+  }
 `;
 const ItemSTY = styled.label`
   position: relative;

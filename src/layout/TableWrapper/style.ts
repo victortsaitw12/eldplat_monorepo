@@ -3,7 +3,7 @@ import styled from "styled-components";
 const BodySTY = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid ${({ theme }) => theme.color.N100};
+  /* border: 1px solid ${({ theme }) => theme.color.N100}; */
   overflow-y: scroll;
   .filter-header {
     display: flex;
