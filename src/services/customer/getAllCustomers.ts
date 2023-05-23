@@ -1,6 +1,9 @@
 import { PatternType } from "@utils/mappingQueryData";
-
-export const getAllCustomers = async (filter: { [key: string]: any } = {}) => {
+import React, { createElement } from "react";
+export const getAllCustomers = async (
+  filter: { [key: string]: any } = {},
+  customer_status = "1"
+) => {
   console.log("getAllCustomers", filter);
   const customerFilter = [];
   for (const key in filter) {
@@ -21,7 +24,7 @@ export const getAllCustomers = async (filter: { [key: string]: any } = {}) => {
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
     body: JSON.stringify({
-      customer_status: "1",
+      customer_status,
       customer_Filter: customerFilter,
       filter_Needed: true,
       pageInfo: {
@@ -42,8 +45,11 @@ export const getCustomerTitle = () => {
     "名稱",
     "分類",
     "區域",
-    "聯絡電話",
-    "聯絡信箱"
+    "公司電話",
+    "公司信箱",
+    "主要聯絡人",
+    "主要聯絡人電話",
+    "標籤"
   ];
   return DUMMY_TITLES;
 };
@@ -54,22 +60,77 @@ export const customerPattern: PatternType = {
   customer_name: true,
   customer_typ: true,
   customer_area: true,
-  contact_phone: true,
-  contact_email: true
+  customer_tel: true,
+  customer_email: true,
+  contact_name: true,
+  contact_phone_and_tel: true,
+  label_name: true
 };
 
-export const customerParser = (
-  data: any,
-  key: string
-): { label: any; value: any } => {
+export const customerParser = (data: any, key: string) => {
   if (key === "id") {
     return {
       label: data["customer_no"] || null,
       value: data["customer_no"] || null
     };
   }
+  if (key === "customer_typ") {
+    let translatedLabel = "";
+    switch (data[key]) {
+      case "01":
+        translatedLabel = "公司";
+        break;
+      case "02":
+        translatedLabel = "個人";
+        break;
+      case "03":
+        translatedLabel = "旅行社";
+        break;
+      default:
+        translatedLabel = "---";
+    }
+    return {
+      label: translatedLabel,
+      value: data[key] || null
+    };
+  }
+  if (key === "customer_tel") {
+    return {
+      label: data[key] || "---",
+      value: data[key] || null
+    };
+  }
+  if (key === "contact_phone_and_tel") {
+    const lebelElement = createElement(
+      "div",
+      { style: { display: "flex", flexDirection: "column" } },
+      [
+        createElement(
+          "div",
+          {},
+          data["contact_tel"]
+            ? data["contact_tel_code"] + " " + data["contact_tel"]
+            : "---"
+        ),
+        createElement(
+          "div",
+          {},
+          data["contact_phone"]
+            ? data["contact_phone_code"] + " " + data["contact_phone"]
+            : "---"
+        )
+      ]
+    );
+    return {
+      label: lebelElement,
+      value:
+        `${data["contact_tel_code"] + data["contact_tel"]}, ${
+          data["contact_phone_code"] + data["contact_phone"]
+        }` || null
+    };
+  }
   return {
-    label: data[key] || null,
+    label: data[key] || "---",
     value: data[key] || null
   };
 };

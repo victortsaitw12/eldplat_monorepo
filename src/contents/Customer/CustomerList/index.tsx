@@ -18,7 +18,6 @@ function ClientList({
   goToDetailPage
 }: Props) {
   const clientTitle = getCustomerTitle();
-  console.log("clientData", clientData);
   return (
     <BodySTY>
       <TableWithEdit

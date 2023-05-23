@@ -95,7 +95,6 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
           console.log("set is Edit to true");
           setIsEdit(true);
         }}
-        isEdit={isEdit}
         onClose={onCancelHandler}
       >
         <FormProvider {...method}>

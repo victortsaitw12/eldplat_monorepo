@@ -20,8 +20,8 @@ import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
 //
 const mainFilterArray = [
-  { id: 1, label: "全部", value: "all" },
-  { id: 2, label: "停用", value: "seal" }
+  { id: 1, label: "全部", value: "1" },
+  { id: 2, label: "停用", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
@@ -38,8 +38,8 @@ const Page: NextPageWithLayout<never> = () => {
   } = useCustomerStore();
   //
   const fetchCustomerData = useCallback(
-    async (isCanceled: boolean) => {
-      getAllCustomers(subFilter).then((res) => {
+    async (isCanceled: boolean, mainFilter = "1") => {
+      getAllCustomers(subFilter, mainFilter).then((res) => {
         const customerData = mappingQueryData(
           res.contentList,
           customerPattern,
@@ -76,21 +76,20 @@ const Page: NextPageWithLayout<never> = () => {
     router.push(`/customer/detail/${id}`);
   };
   const changeMainFilterHandler = (value: string) => {
-    alert(value);
     updateMainFilter(value);
   };
   //
   useEffect(() => {
-    updateMainFilter("all");
+    updateMainFilter("1");
   }, [updateMainFilter]);
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchCustomerData(isCanceled);
+    fetchCustomerData(isCanceled, mainFilter);
     return () => {
       isCanceled = true;
     };
-  }, []);
+  }, [mainFilter]);
   if (!data) {
     return <LoadingSpinner />;
   }
@@ -100,6 +99,7 @@ const Page: NextPageWithLayout<never> = () => {
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
+        viewOnly={true}
       >
         <FilterWrapper
           updateFilter={updateSubFilter}
@@ -121,15 +121,15 @@ const Page: NextPageWithLayout<never> = () => {
       </TableWrapper>
       {isDrawerOpen && (
         <Drawer
-          tabName={["新增供應商"]}
+          tabName={["新增客戶"]}
           closeDrawer={() => {
             setDrawerOpen(false);
           }}
         >
           <CustomerCreateForm
             reloadData={() => {
-              setData([]);
               fetchCustomerData(false);
+              setDrawerOpen(false);
             }}
           />
         </Drawer>

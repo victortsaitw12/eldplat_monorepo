@@ -6,6 +6,7 @@ import { CreateCustomerPayload } from "../index";
 export interface FiledInputProps {
   horizonLabel?: boolean;
   controlProps: UseControllerProps<CreateCustomerPayload>;
+  required?: boolean;
   label: string | React.ReactNode;
   hint?: string;
 }
@@ -14,7 +15,8 @@ const FiledInput = ({
   horizonLabel = false,
   label,
   controlProps,
-  hint
+  hint,
+  required
 }: FiledInputProps) => {
   const {
     field,
@@ -24,7 +26,7 @@ const FiledInput = ({
     <ItemSTY horizonLabel={horizonLabel}>
       {label && label !== "" && (
         <div className="field-title">
-          <span className="requier-icon">*</span>
+          {required && <span className="requier-icon">*</span>}
           <span>{label}</span>
           {!!hint && <HelpIcon />}
         </div>

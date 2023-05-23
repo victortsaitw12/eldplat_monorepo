@@ -12,7 +12,6 @@ import { IconLeft } from "@components/Button/Primary";
 import FlexWrapper from "@layout/FlexWrapper";
 
 //@components
-import CheckboxField from "@components/CheckboxField";
 // import { I_contactData } from "../vendor.type";
 export interface CreateCustomerPayload {
   customer_name: string;
@@ -60,14 +59,13 @@ interface I_CustomerCreateFormProps {
   reloadData?: () => void;
 }
 
-function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
+function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
   const { register, handleSubmit, control, reset } =
     useForm<CreateCustomerPayload>({
       defaultValues
     });
   const [loading, setLoading] = useState(false);
   const asyncSubmitForm = async (data: any) => {
-    alert("新增顧客");
     setLoading(true);
     try {
       const res = await createCustomer(data);
@@ -76,13 +74,13 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
       alert(e.message);
     }
     setLoading(false);
+    reloadData && reloadData();
     reset();
   };
 
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
-        console.log("🎶🎶🎶create Vendor Data!:", data);
         asyncSubmitForm({
           ...data
         });
@@ -95,6 +93,7 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
           control,
           rules: { required: "此欄位必填" }
         }}
+        required
       />
       <FiledInput
         label="統一編號"
@@ -103,24 +102,30 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
           control,
           rules: { required: "此欄位必填" }
         }}
+        required
       />
-      <SelectField label="負責人" {...register("customer_owner")}>
+      <SelectField
+        label={
+          <div>
+            <span style={{ color: "#D14343" }}>*</span>負責人
+          </div>
+        }
+        {...register("customer_owner", { required: "此欄位必填" })}
+      >
         <option value="負責人1">負責人1</option>
         <option value="負責人2">負責人2</option>
         <option value="負責人3">負責人3</option>
         <option value="負責人4">負責人4</option>
       </SelectField>
       <Text>
-        <span style={{ color: "#D14343" }}>* </span>
-        公司地址
+        <span style={{ color: "#D14343" }}>*</span>公司地址
       </Text>
       <FiledInput
         label="地址1"
         horizonLabel={true}
         controlProps={{
           name: "address1",
-          control,
-          rules: { required: "此欄位必填" }
+          control
         }}
       />
       <FiledInput
@@ -128,8 +133,7 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
         horizonLabel={true}
         controlProps={{
           name: "address2",
-          control,
-          rules: { required: "此欄位必填" }
+          control
         }}
       />
       <FlexWrapper
@@ -139,7 +143,7 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
         }}
       >
         <label htmlFor="">
-          <span>*</span>
+          <span style={{ color: "#D14343" }}>*</span>
           城市
         </label>
         <Select
@@ -159,15 +163,8 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
           alignItems: "center"
         }}
       >
-        <label htmlFor="">
-          <span>*</span>
-          州/省/區域
-        </label>
-        <Select
-          {...register("customer_area", {
-            required: "必填"
-          })}
-        >
+        <label htmlFor="">州/省/區域</label>
+        <Select {...register("customer_area")}>
           <option value="01">基隆市</option>
           <option value="02">台北市</option>
           <option value="03">新北市</option>
@@ -175,12 +172,11 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
         </Select>
       </FlexWrapper>
       <FiledInput
-        label="郵遞區號"
+        label="郵政編碼"
         horizonLabel={true}
         controlProps={{
           name: "customer_district_code",
-          control,
-          rules: { required: "此欄位必填", maxLength: 5 }
+          control
         }}
       />
       <FlexWrapper
@@ -190,7 +186,7 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
         }}
       >
         <label htmlFor="">
-          <span>*</span>
+          <span style={{ color: "#D14343" }}>*</span>
           國家
         </label>
         <Select
@@ -253,8 +249,7 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
         <FiledInput
           controlProps={{
             name: "contact_tel",
-            control,
-            rules: { required: "此欄位必填" }
+            control
           }}
           label=""
         />
@@ -294,6 +289,7 @@ function CustomerCreateForm({ data, reloadData }: I_CustomerCreateFormProps) {
         <Select {...register("customer_typ")}>
           <option value="01">公司</option>
           <option value="02">個人</option>
+          <option value="03">旅行社</option>
         </Select>
       </FlexWrapper>
       <IconLeft text={"新增顧客"} type="submit">

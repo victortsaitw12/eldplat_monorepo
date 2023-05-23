@@ -19,6 +19,7 @@ interface Props {
     value: string;
   }[];
   isEdit?: boolean;
+  viewOnly?: boolean;
   onSave?: () => void;
   onEdit?: () => void;
   onClose?: () => void;
@@ -33,6 +34,7 @@ function TableWrapper({
     console.log(value);
   },
   isEdit,
+  viewOnly,
   onSave,
   onEdit,
   onClose
@@ -60,32 +62,33 @@ function TableWrapper({
         </div>
         <div className="tab-options">
           {optionsEle}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer"
-            }}
-            onClick={() => {
-              console.log("mode", isEdit);
-              if (isEdit) {
-                console.log("save data");
-                onSave && onSave();
-              } else {
-                onEdit && onEdit();
-              }
-            }}
-          >
-            <Icon
-              icon={isEdit ? FloppyDiskIcon : EditIcon}
-              size={16}
-              marginY="auto"
-              marginX="10px"
-              color="#91A9C5"
-            />
-            <div>{isEdit ? "全部儲存" : "編輯"}</div>
-          </div>
-
+          {!viewOnly && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                console.log("mode", isEdit);
+                if (isEdit) {
+                  console.log("save data");
+                  onSave && onSave();
+                } else {
+                  onEdit && onEdit();
+                }
+              }}
+            >
+              <Icon
+                icon={isEdit ? FloppyDiskIcon : EditIcon}
+                size={16}
+                marginY="auto"
+                marginX="10px"
+                color="#91A9C5"
+              />
+              <div>{isEdit ? "全部儲存" : "編輯"}</div>
+            </div>
+          )}
           <Icon
             icon={FullscreenIcon}
             style={{ cursor: "pointer" }}
