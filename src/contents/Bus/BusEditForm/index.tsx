@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { StepControlSTY } from "@components/FormCard/style";
 import { BodySTY } from "./style";
 import {
   SwitchableDetails,

@@ -7,13 +7,15 @@ interface Props {
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
   goToEditPageHandler: (id: string) => void;
+  goToDetailPage: (id: string) => void;
 }
 
 function BusList({
   busData,
   goToCreatePage,
   deleteItemHandler,
-  goToEditPageHandler
+  goToEditPageHandler,
+  goToDetailPage
 }: Props) {
   const busTitle = getBusTitle();
   console.log(busData);
@@ -26,6 +28,7 @@ function BusList({
         goToCreatePage={goToCreatePage}
         deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}
+        viewItem={goToDetailPage}
       />
     </BodySTY>
   );

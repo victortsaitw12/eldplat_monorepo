@@ -19,6 +19,9 @@ import {
   textValidation
 } from "@utils/inputValidation";
 
+//@mock-data
+import { vendor_code_list, vedor_code_text } from "@mock-data/vendors/03VendorCodeList";
+
 import { I_vendorData } from "../vendor.type";
 interface I_Props {
   submitRef: React.RefObject<HTMLButtonElement>;
@@ -31,42 +34,6 @@ interface I_Props {
   submitForm: (data: any) => void;
 }
 
-//供應商分類列表
-const vendor_code_list = [
-  {
-    vendor_code: "01",
-    vendor_code_name: "外部車隊"
-  },
-  {
-    vendor_code: "02",
-    vendor_code_name: "設備庫存"
-  },
-  {
-    vendor_code: "03",
-    vendor_code_name: "維修廠"
-  },
-  {
-    vendor_code: "04",
-    vendor_code_name: "保險"
-  },
-  {
-    vendor_code: "05",
-    vendor_code_name: "燃料"
-  },
-  {
-    vendor_code: "06",
-    vendor_code_name: "其他"
-  },
-]
-
-const vedor_code_text: { [key: string]: string } = {
-  "01": "外部車隊",
-  "02": "設備庫存",
-  "03": "維修廠",
-  "04": "保險",
-  "05": "燃料",
-  "06": "其他",
-}
 
 const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler, submitForm }: I_Props) => {
   console.log("💫💫💫原本的供應商資料：", vendorData);
@@ -330,7 +297,9 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     {
       req: false,
       label: "主要聯絡人電話(市話)",
-      value: "---",
+      value: vendor_Contact_List[0]?.contact_tel ?
+        vendor_Contact_List[0].contact_tel_code + "  " + vendor_Contact_List[0].contact_tel :
+        "---",
       editEle: [
         <TextInput
           key="vendor_Contact_List.0.contact_tel_code"
@@ -347,7 +316,9 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     {
       req: false,
       label: "主要聯絡人電話(手機)",
-      value: "+886 900111888",
+      value: vendor_Contact_List[0]?.contact_phone ?
+        vendor_Contact_List[0].contact_phone_code + "  " + vendor_Contact_List[0].contact_phone :
+        "---",
       editEle: [
         <TextInput
           key="vendor_Contact_List.0.contact_Phone_Code"
@@ -362,9 +333,6 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       ],
     },
   ]
-  useEffect(() => {
-    console.log("😊😊😊😊😊", fuelValue);
-  }, [fuelValue])
   return (
     <>
       <FormProvider {...methods} >

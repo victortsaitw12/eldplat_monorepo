@@ -16,8 +16,8 @@ import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
 //
 const mainFilterArray = [
-  { id: 1, label: "全部", value: "all" },
-  { id: 2, label: "停用", value: "seal" }
+  { id: 1, label: "全部", value: "1" },
+  { id: 2, label: "停用", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
@@ -34,8 +34,8 @@ const Page: NextPageWithLayout<never> = () => {
   } = useBusStore();
   //
   const fetchBusData = useCallback(
-    async (isCanceled: boolean) => {
-      getAllBuses(subFilter).then((res) => {
+    async (isCanceled: boolean, mainFilter = "1") => {
+      getAllBuses(subFilter, mainFilter).then((res) => {
         const busesData = mappingQueryData(
           res.contentList,
           busPattern,
@@ -59,16 +59,16 @@ const Page: NextPageWithLayout<never> = () => {
   );
   //
   useEffect(() => {
-    updateMainFilter("all");
+    updateMainFilter("1");
   }, [updateMainFilter]);
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchBusData(isCanceled);
+    fetchBusData(isCanceled, mainFilter);
     return () => {
       isCanceled = true;
     };
-  }, [fetchBusData]);
+  }, [mainFilter]);
   //
   if (!data) {
     return <LoadingSpinner />;
@@ -76,31 +76,34 @@ const Page: NextPageWithLayout<never> = () => {
   /**
    * CUD handler
    */
-  const createBusHandler = async (busData: any) => {
-    console.log(busData);
+  //進入供應商編輯頁
+  const goToEditPageHandler = (id: string) => {
+    router.push("/bus/detail/" + id + "?editPage=1");
   };
-
+  const goToDetailPageHandler = (id: string) => {
+    router.push(`/bus/detail/${id}`);
+  };
+  const changeMainFilterHandler = (value: string) => {
+    alert(value);
+    updateMainFilter(value);
+  };
+  //
   const deleteItemHandler = async (id: string) => {
     deleteBus(id).then((res) => {
       console.log("res", res);
       fetchBusData(false);
     });
   };
-
-  const goToEditPageHandler = (id: string) => {
-    router.push(`/bus/edit/${id}`);
-  };
-
-  const changeMainFilterHandler = (value: string) => {
-    alert(value);
-    updateMainFilter(value);
-  };
+  if (!data) {
+    return <LoadingSpinner />;
+  }
   return (
     <BodySTY>
       <TableWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
+        viewOnly={true}
       >
         <FilterWrapper
           updateFilter={updateSubFilter}
@@ -116,6 +119,7 @@ const Page: NextPageWithLayout<never> = () => {
             }}
             deleteItemHandler={deleteItemHandler}
             goToEditPageHandler={goToEditPageHandler}
+            goToDetailPage={goToDetailPageHandler}
           />
         </FilterWrapper>
       </TableWrapper>
@@ -126,7 +130,12 @@ const Page: NextPageWithLayout<never> = () => {
             setDrawerOpen(false);
           }}
         >
-          <BusCreateForm createBus={createBusHandler} />
+          <BusCreateForm
+            reloadData={() => {
+              fetchBusData(false);
+              setDrawerOpen(false);
+            }}
+          />
         </Drawer>
       )}
     </BodySTY>

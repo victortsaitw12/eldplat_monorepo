@@ -1,29 +1,27 @@
-export const getCustomerById = async (customer_No: string) => {
+export const getCustomerById = async (customer_no: string) => {
   const response = await fetch(
-    "https://localhost:7188/Gateway_Customer/GetOneCustomer",
+    `https://localhost:7088/CTR/GetOneCustomer/${customer_no}`,
     {
       method: "POST",
-      body: JSON.stringify({
-        customer_No
-      }),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
       }
     }
   );
   const data = await response.json();
-  console.log(mappingData(data.contentList[0], customerPattern));
-  return data.contentList[0];
+  console.log("data", data);
+  return data.dataList[0];
 };
 
 type PatternType = { [key: string]: string };
 export const customerPattern: PatternType = {
-  customer_Gui_No: "customer_Gui_No",
-  customer_Name: "customer_Name",
-  customer_Typ: "customer_Typ",
-  contact_Name: "contact_Name",
-  contact_Phone: "contact_Phone",
-  contact_Email: "contact_Email"
+  customer_gui_no: "customer_Gui_No",
+  customer_name: "customer_Name",
+  customer_typ: "customer_Typ",
+  contact_name: "contact_Name",
+  contact_phone: "contact_Phone",
+  contact_email: "contact_Email"
 };
 
 const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
@@ -33,14 +31,3 @@ const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
   }
   return result;
 };
-
-/*
-const defaultValues = {
-  customer_gui_no: "",
-  customer_name: "",
-  customer_typ: "01",
-  contact_name: "",
-  contact_phone: "",
-  contact_email: ""
-}
-*/

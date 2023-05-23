@@ -5,4 +5,10 @@ export const BodySTY = styled.div`
   /* width: 600px; */
   height: calc(100% - 20px);
   margin: 10px;
+  .title-bar{
+    margin-bottom: -1rem;
+  }
+  &>div{
+    border: none;
+  }
 `;

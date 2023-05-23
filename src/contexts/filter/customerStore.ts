@@ -12,7 +12,8 @@ interface StateTypes {
   updateMainFilter: (value: string) => void;
   updateSelectedForm: (value: string) => void;
 }
-export const useBusStore = create<StateTypes>((set) => ({
+// type FilterTypes = { [key: string]: any }[] | null;
+export const useCustomerStore = create<StateTypes>((set) => ({
   subFilter: null,
   mainFilter: "",
   selectedForm: "",
@@ -26,7 +27,7 @@ export const useBusStore = create<StateTypes>((set) => ({
   },
   initializeSubFilter: () => {
     const filter: any = {};
-    const initFilter = localStorage.getItem("busInitFilter");
+    const initFilter = localStorage.getItem("customerInitFilter");
     if (!initFilter) return;
     for (const item of JSON.parse(initFilter)) {
       filter[item.field_Name] = item;
