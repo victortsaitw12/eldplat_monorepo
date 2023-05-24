@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+// 語言能力
+
 // 駕駛資訊頁
 export const DETAIL_TITLE = "駕駛履歷";
 

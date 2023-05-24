@@ -6,7 +6,7 @@ import { FormSTY } from "./style";
 import Basic from "./SubForm/Basic";
 import DriverResume from "./SubForm/DriverResume";
 import DriverLicense from "./SubForm/DriverLicense";
-import LanguageAbility from "./SubForm/LanguageAbility";
+import LanguageAbility from "@contents/driver/LanguageAbility";
 //
 interface Props {
   userId: string;
@@ -73,7 +73,7 @@ function DriverEditForm({
             currentUserInfo={currentUserInfo}
             isLoading={isLoading}
           />
-          <LanguageAbility />
+          <LanguageAbility currentUserInfo={currentUserInfo} />
         </Pane>
       </FormSTY>
     </FormProvider>

@@ -26,8 +26,8 @@ export interface I_driverInfo {
   invalid?: string | null;
   invalid_remark?: string | null;
   //   };
-  //   languages: any[];
-  //   healths: any[];
+  languages: any[];
+  healths: any[];
 }
 
 // 暫代 queryDriverInfo

@@ -18,6 +18,7 @@ import DriverEditForm from "@contents/Driver/DriverEditForm";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import HealthFirst from "@contents/Driver/DriverEditForm/SubForm/HealthFirst";
+
 // import HealthFirst from "@contents/Employee/HealthFirst";
 
 const Page: NextPageWithLayout<
@@ -47,13 +48,15 @@ const Page: NextPageWithLayout<
           toaster.success("查無此使用者，請重新選擇");
           router.push("/driver");
         }
-        const responseData = data.info;
+        const responseData = { ...data.info };
         responseData.licn_issue = formatedDate(data.info.licn_issue);
         responseData.licn_exp = formatedDate(data.info.licn_exp);
         responseData.licn_examine_Date = formatedDate(
           data.info.licn_examine_Date
         );
-        setCurrentUserInfo(data.info);
+        responseData.languages = data.languages;
+        responseData.healths = data.healths;
+        setCurrentUserInfo(responseData);
       } catch (e: any) {
         console.log(e);
       }

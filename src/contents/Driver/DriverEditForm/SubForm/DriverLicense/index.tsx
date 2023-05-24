@@ -13,7 +13,7 @@ import {
 import React, { useState, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { licn_type_DATA, licn_type_MAP } from "./data";
+import { licn_typ_MAP } from "./data";
 import {
   emailValidation,
   numberValidation,
@@ -56,7 +56,7 @@ function DriverLicense({ userId, isEdit, currentUserInfo, isLoading }: Props) {
     {
       req: true,
       label: "證照種類",
-      value: licn_type_MAP.get(currentUserInfo.licn_typ)?.label || "---",
+      value: licn_typ_MAP.get(currentUserInfo.licn_typ)?.label || "---",
       editEle: (
         <SelectField
           className="inputField"
@@ -65,7 +65,7 @@ function DriverLicense({ userId, isEdit, currentUserInfo, isLoading }: Props) {
             required: "必填"
           })}
         >
-          {Array.from(licn_type_MAP).map(([key, value]) => (
+          {Array.from(licn_typ_MAP).map(([key, value]) => (
             <option key={`licn-${key}`} value={key}>
               {value.label}
             </option>
