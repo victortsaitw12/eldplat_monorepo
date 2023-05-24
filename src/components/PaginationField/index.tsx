@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import cx from "classnames";
+import React from "react";
 import { BodySTY } from "./style";
 
-import { Pagination } from "evergreen-ui";
+import { ChevronLeftIcon, ChevronRightIcon } from "evergreen-ui";
 
 interface I_PaginationField {
     onPageChange?: () => void;
@@ -18,16 +17,19 @@ function PaginationField(props: I_PaginationField) {
     } = props;
     return (
         <BodySTY>
-            <span>
-                第 1 - 3 筆， 共 3 筆
-            </span>
-            <Pagination
-                onPageChange={onPageChange}
-                onNextPage={onClickNext}
-                onPreviousPage={onClickPrevious}
-                page={1}
-                totalPages={35}
-            ></Pagination>
+            <div className="container-pagination">
+                <span>
+                    第{1}-{5}筆, 共{5}筆
+                </span>
+                <div className="actions">
+                    <button>
+                        <ChevronLeftIcon onClick={onClickPrevious} size={12} />
+                    </button>
+                    <button>
+                        <ChevronRightIcon onClick={onClickNext} size={12} />
+                    </button>
+                </div>
+            </div>
         </BodySTY>
     )
 };
