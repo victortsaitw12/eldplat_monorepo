@@ -20,13 +20,15 @@ interface Props {
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
+  isEdit: boolean;
 }
 function Maintenance({
   selected,
   register,
   errors,
   getValues,
-  control
+  control,
+  isEdit
 }: Props) {
   return (
     <FlexWrapper

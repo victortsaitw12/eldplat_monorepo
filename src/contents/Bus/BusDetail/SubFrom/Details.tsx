@@ -18,8 +18,16 @@ interface Props {
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
+  isEdit: boolean;
 }
-function Details({ selected, register, errors, getValues, control }: Props) {
+function Details({
+  selected,
+  register,
+  errors,
+  getValues,
+  control,
+  isEdit
+}: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 身分識別
   const identityInfo = [
@@ -276,11 +284,11 @@ function Details({ selected, register, errors, getValues, control }: Props) {
       padding="0"
       style={{ display: `${selected ? "flex" : "none"}` }}
     >
-      <InfoBox isEdit={true} infoData={identityInfo} infoTitle="身分識別" />
+      <InfoBox isEdit={isEdit} infoData={identityInfo} infoTitle="身分識別" />
       <FlexWrapper flexDirection="column">
-        <InfoBox isEdit={true} infoData={categoryInfo} infoTitle="分類" />
+        <InfoBox isEdit={isEdit} infoData={categoryInfo} infoTitle="分類" />
         <InfoBox
-          isEdit={true}
+          isEdit={isEdit}
           infoData={otherDetailInfo}
           infoTitle="其他細項"
         />

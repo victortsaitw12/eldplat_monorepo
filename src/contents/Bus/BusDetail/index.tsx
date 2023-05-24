@@ -60,6 +60,7 @@ const BusDetail = ({
         errors={errors}
         getValues={getValues}
         control={control}
+        isEdit={isEdit}
       />
       <Maintenance
         selected={visibleForm === "2"}
@@ -67,6 +68,7 @@ const BusDetail = ({
         errors={errors}
         getValues={getValues}
         control={control}
+        isEdit={isEdit}
       />
       <Lifecycle
         selected={visibleForm === "3"}
@@ -74,6 +76,7 @@ const BusDetail = ({
         errors={errors}
         getValues={getValues}
         control={control}
+        isEdit={isEdit}
       />
       <Financial
         selected={visibleForm === "4"}
@@ -81,6 +84,7 @@ const BusDetail = ({
         errors={errors}
         getValues={getValues}
         control={control}
+        isEdit={isEdit}
       />
       <Specifications
         selected={visibleForm === "5"}
@@ -88,6 +92,7 @@ const BusDetail = ({
         errors={errors}
         getValues={getValues}
         control={control}
+        isEdit={isEdit}
       />
     </form>
   );
