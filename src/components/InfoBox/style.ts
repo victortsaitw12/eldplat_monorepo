@@ -46,9 +46,9 @@ export const InfoBoxSTY = styled.div`
         flex: 3;
         margin-bottom: 0;
         gap: 10px;
-        & > div{
+        /* & > div{
           flex-direction: column;
-        }
+        } */
       }  
   
     }

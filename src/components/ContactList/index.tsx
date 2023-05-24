@@ -45,7 +45,7 @@ const ContactList = ({
               ? item.contact_tel_code + " " + item.contact_tel
               : "---",
             editEle: [
-              <>
+              <Pane display="flex" flexDirection="row" gap={10} key={`${arrayName}.${index}.contact_tel`}>
                 <Text>市話</Text>
                 <TextInput
                   disabled={true}
@@ -56,7 +56,7 @@ const ContactList = ({
                 <TextInput
                   {...register(`${arrayName}.${index}.contact_tel`)}
                 />
-              </>
+              </Pane>
             ]
           },
           {
@@ -65,7 +65,7 @@ const ContactList = ({
               ? item.contact_phone_code + " " + item.contact_phone
               : "---",
             editEle: [
-              <>
+              <Pane display="flex" flexDirection="row" gap={10} key={`${arrayName}.${index}.contact_phone_code`}>
                 <Text>手機</Text>
                 <TextInput
                   disabled={true}
@@ -75,7 +75,7 @@ const ContactList = ({
                 <TextInput
                   {...register(`${arrayName}.${index}.contact_phone`)}
                 />
-              </>
+              </Pane>
             ]
           },
           {
@@ -93,7 +93,7 @@ const ContactList = ({
         ];
         return (
           <ItemSTY key={item.id}>
-            <InfoBox style={{ padding: 0 }} infoData={contactItem} isEdit={isEdit} />
+            <InfoBox key={item.id} style={{ padding: 0 }} infoData={contactItem} isEdit={isEdit} />
             {isEdit && index !== 0 && (
               <button className="delete" onClick={() => remove(index)}>
                 <TrashIcon />
