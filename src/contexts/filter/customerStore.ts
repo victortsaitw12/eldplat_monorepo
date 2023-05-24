@@ -15,7 +15,7 @@ interface StateTypes {
 // type FilterTypes = { [key: string]: any }[] | null;
 export const useCustomerStore = create<StateTypes>((set) => ({
   subFilter: null,
-  mainFilter: "",
+  mainFilter: "1",
   selectedForm: "",
   isDrawerOpen: false,
   setDrawerOpen: (value: boolean) => {

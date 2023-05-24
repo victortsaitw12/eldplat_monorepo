@@ -107,14 +107,14 @@ export const customerParser = (data: any, key: string) => {
       [
         createElement(
           "div",
-          {},
+          { key: "contact_tel" },
           data["contact_tel"]
             ? data["contact_tel_code"] + " " + data["contact_tel"]
             : "---"
         ),
         createElement(
           "div",
-          {},
+          { key: "contact_phone" },
           data["contact_phone"]
             ? data["contact_phone_code"] + " " + data["contact_phone"]
             : "---"
@@ -122,6 +122,7 @@ export const customerParser = (data: any, key: string) => {
       ]
     );
     return {
+      // label: lebelElement,
       label: lebelElement,
       value:
         `${data["contact_tel_code"] + data["contact_tel"]}, ${

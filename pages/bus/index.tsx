@@ -84,7 +84,6 @@ const Page: NextPageWithLayout<never> = () => {
     router.push(`/bus/detail/${id}`);
   };
   const changeMainFilterHandler = (value: string) => {
-    alert(value);
     updateMainFilter(value);
   };
   //
