@@ -47,6 +47,12 @@ const Page: NextPageWithLayout<
           toaster.success("查無此使用者，請重新選擇");
           router.push("/driver");
         }
+        const responseData = data.info;
+        responseData.licn_issue = formatedDate(data.info.licn_issue);
+        responseData.licn_exp = formatedDate(data.info.licn_exp);
+        responseData.licn_examine_Date = formatedDate(
+          data.info.licn_examine_Date
+        );
         setCurrentUserInfo(data.info);
       } catch (e: any) {
         console.log(e);
@@ -57,6 +63,7 @@ const Page: NextPageWithLayout<
   }, [userId, router]);
 
   // ------- function ------- //
+  const formatedDate = (dateStr: string) => dateStr.split("T")[0];
   const changeMainFilterHandler = (value: string) => updateMainFilter(value);
 
   const asyncSubmitForm = async (data: any) => {
@@ -64,8 +71,8 @@ const Page: NextPageWithLayout<
     setIsLoading(true);
     try {
       const res = await updateDriver(userId, data);
-      console.log("新增駕駛:", res);
-      // router.push("/driver");
+      toaster.success(`成功更新${data.user_name}駕駛履歷`);
+      setIsEdit(false);
     } catch (e: any) {
       console.log(e);
       toaster.success(e.message);
@@ -81,8 +88,12 @@ const Page: NextPageWithLayout<
             onChangeTab={changeMainFilterHandler}
             mainFilter={mainFilter}
             mainFilterArray={mainFilterArray}
+            isEdit={isEdit}
             onSave={() => {
               submitRef.current && submitRef.current.click();
+            }}
+            onEdit={() => {
+              setIsEdit(true);
             }}
           >
             {mainFilter === "info" && (

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { Spinner, Pane } from "evergreen-ui";
-import { MonthlySTY } from "./style";
+import { MonthlySTY, MouseMenuBtnSTY } from "./style";
 import { getTotalDays, getLastMonthTotalDays, debounce } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 
@@ -16,14 +16,14 @@ const MonthlyView = ({
   monthlyData,
   setMonthlyData,
   view,
-  isExpend
+  isExpand
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
-  isExpend: boolean;
+  isExpand: boolean;
 }) => {
   const UI = React.useContext(UIContext);
   const router = useRouter();
@@ -52,11 +52,18 @@ const MonthlyView = ({
   };
 
   const handleEventCount = React.useCallback(() => {
-    const updateMaxEventCount =
-      Math.floor((dateCellRef.current?.offsetHeight - 8 * 2) / (20 + 4)) - 2;
+    const eventH = 20;
+    const gapH = 4;
+    const cellH = dateCellRef.current?.offsetHeight || 16;
+    const cellPd = 8;
+    const updateMaxEventCount = Math.floor(
+      (cellH - cellPd * 2 - eventH) / (eventH + gapH)
+    );
+    console.log("maxEventCount:", updateMaxEventCount);
     setMaxEventCount(updateMaxEventCount);
   }, []);
 
+  // ------- useEffect ------- //
   // monitor window for eventCount shown
   React.useEffect(() => {
     handleEventCount();
@@ -70,19 +77,23 @@ const MonthlyView = ({
   }, [handleEventCount]);
 
   React.useEffect(() => {
-    isExpend ? setMaxEventCount(99) : handleEventCount();
-  }, [isExpend]);
+    isExpand ? setMaxEventCount(99) : handleEventCount();
+  }, [isExpand]);
 
   // fetch data from db
   React.useEffect(() => {
     if (!UI.id) return;
-    setIsLoading(true);
-    const updated = { ...UI.insertData };
-    updated.driver_no = UI.id;
-    UI.setInsertData(updated);
     const fetchData = async () => {
-      const result = await getScheduleList(UI.id);
-      setMonthlyData(result.data);
+      try {
+        setIsLoading(true);
+        const updated = { ...UI.insertData };
+        updated.driver_no = UI.id;
+        UI.setInsertData(updated);
+        const result = await getScheduleList(UI.id);
+        setMonthlyData(result.data);
+      } catch (e: any) {
+        console.log(e);
+      }
       setIsLoading(false);
     };
     fetchData();
@@ -99,18 +110,18 @@ const MonthlyView = ({
   //------ render ------//
   const dateArr: Array<DateArrItem> = [];
   // prev month
-  const lastSundayDate =
-    getLastMonthTotalDays(curMonthFirst) - curMonthFirst.getDay() + 1;
-  const padCount = curMonthFirst.getDay();
-  for (let i = lastSundayDate; i < lastSundayDate + padCount; i++) {
+  const lastSunday = new Date(
+    curMonthFirst.valueOf() - curMonthFirst.getDay() * 86400000
+  );
+
+  for (let i = 0; i < curMonthFirst.getDay(); i++) {
     dateArr.push({
-      date: i,
-      day: 0,
-      timestamp: curMonthFirst.valueOf() + 86400000 * i,
+      date: lastSunday.getDate() + i,
+      day: i,
+      timestamp: lastSunday.valueOf() + 86400000 * i,
       disabled: true
     });
   }
-  // this month
   for (let i = 0; i < getTotalDays(curMonthFirst); i++) {
     dateArr.push({
       date: i + 1,
@@ -120,19 +131,16 @@ const MonthlyView = ({
     });
   }
   // next month
-  const nextSaturdayDate =
-    7 - ((curMonthFirst.getDay() + getTotalDays(curMonthFirst)) % 7) + 1;
-  if (nextSaturdayDate !== 0) {
-    for (let i = 1; i < nextSaturdayDate; i++) {
-      dateArr.push({
-        date: i,
-        day: 0,
-        timestamp:
-          curMonthFirst.valueOf() +
-          86400000 * (i + getTotalDays(curMonthFirst)),
-        disabled: true
-      });
-    }
+  const curMonthLast = new Date(
+    curMonthFirst.valueOf() + (getTotalDays(curMonthFirst) - 1) * 86400000
+  );
+  for (let i = 1; i <= 6; i++) {
+    dateArr.push({
+      date: i,
+      day: curMonthLast.getDay() + i,
+      timestamp: curMonthLast.valueOf() + 86400000 * i,
+      disabled: true
+    });
   }
 
   // separate rows
@@ -205,6 +213,13 @@ const MonthlyView = ({
         </Pane>
       ) : (
         ""
+      )}
+      {UI.isMouseMenuBtn && (
+        <MouseMenuBtnSTY
+          style={{ top: UI.mousePosition.y, left: UI.mousePosition.x }}
+        >
+          Next Month View
+        </MouseMenuBtnSTY>
       )}
     </MonthlySTY>
   );

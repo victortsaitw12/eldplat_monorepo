@@ -1,6 +1,11 @@
 import React from "react";
 import { CellSTY } from "./style";
-import { getDayEnd, formatDate, formatDateForAPI } from "../shift.util";
+import {
+  getDayEnd,
+  formatDate,
+  formatDateForAPI,
+  formatToDBDate
+} from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
@@ -78,7 +83,7 @@ const DateCell = React.forwardRef(function DateCell({
       }   
             ${checkDateStart.call(null, date.timestamp) ? "start" : ""}
             row-${rowIndex}`}
-      onMouseEnter={() => {
+      onMouseEnter={(e) => {
         if (UI.isSelect) handleSelectEndDate(date.timestamp);
       }}
     >

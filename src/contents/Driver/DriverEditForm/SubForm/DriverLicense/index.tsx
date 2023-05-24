@@ -13,7 +13,7 @@ import {
 import React, { useState, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { licn_type_DATA } from "./data";
+import { licn_type_DATA, licn_type_MAP } from "./data";
 import {
   emailValidation,
   numberValidation,
@@ -48,7 +48,7 @@ function DriverLicense({ userId, isEdit, currentUserInfo, isLoading }: Props) {
   };
   const formatDate = (dateStr: string) => {
     if (!dateStr) return;
-    const formatedDate = dateStr.split("T")[0].replaceAll("-", " / ");
+    const formatedDate = dateStr.replaceAll("-", " / ");
     return formatedDate;
   };
 
@@ -56,7 +56,7 @@ function DriverLicense({ userId, isEdit, currentUserInfo, isLoading }: Props) {
     {
       req: true,
       label: "證照種類",
-      value: currentUserInfo.licn_typ || "---",
+      value: licn_type_MAP.get(currentUserInfo.licn_typ)?.label || "---",
       editEle: (
         <SelectField
           className="inputField"
@@ -65,11 +65,16 @@ function DriverLicense({ userId, isEdit, currentUserInfo, isLoading }: Props) {
             required: "必填"
           })}
         >
-          {licn_type_DATA.map((item) => (
+          {Array.from(licn_type_MAP).map(([key, value]) => (
+            <option key={`licn-${key}`} value={key}>
+              {value.label}
+            </option>
+          ))}
+          {/* {licn_type_DATA.map((item) => (
             <option key={`licn-${item.value}`} value={item.value}>
               {item.label}
             </option>
-          ))}
+          ))} */}
         </SelectField>
       )
     },
@@ -122,8 +127,8 @@ function DriverLicense({ userId, isEdit, currentUserInfo, isLoading }: Props) {
       editEle: (
         <TextInput
           type="date"
-          key="licn_examine_date"
-          {...register("licn_examine_date")}
+          key="licn_examine_Date"
+          {...register("licn_examine_Date")}
         />
       )
     },

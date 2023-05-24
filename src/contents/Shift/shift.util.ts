@@ -101,7 +101,6 @@ export const formatIntl = (date: Date) => {
 };
 
 // ------------------- formate Date => FOR 資料庫相關  ------------------- //
-// ------------------- formate Date => "2023 / 03 / 08" ------------------- //
 export const formatDateForAPI = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -130,6 +129,16 @@ export const formatToDB = (date: Date) => {
   const isoString = offsetNow
     .toISOString()
     .replace(".000Z", timezoneOffsetString);
+  return isoString;
+};
+
+export const formatToDBDate = (date: Date) => {
+  const now = date || new Date(Math.floor(Date.now() / 1000) * 1000);
+  const nowTimestamp = now.valueOf();
+  const timezoneOffset = now.getTimezoneOffset();
+  const timezoneOffsetMiliSeconds = timezoneOffset * 60 * 1000;
+  const offsetNow = new Date(nowTimestamp - timezoneOffsetMiliSeconds);
+  const isoString = offsetNow.toISOString().split("T")[0];
   return isoString;
 };
 

@@ -14,7 +14,7 @@ import Timepicker from "@components/Timepicker";
 import LeaveTypePicker from "@contents/Shift/LeaveTypePicker";
 import { createSchedule } from "@services/schedule/createSchedule";
 
-import { formatToDB, getDayStart } from "../shift.util";
+import { formatToDB, getDayStart, formatToDBDate } from "../shift.util";
 
 const CreateForm = ({
   setIsOpenDrawer,

@@ -25,7 +25,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     null
   );
   const [view, setView] = React.useState<"monthly" | "daily">("monthly");
-  const [isExpend, setIsExpand] = React.useState(false);
+  const [isExpand, setIsExpand] = React.useState(false);
   const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
 
   const initialMonthFirst = new Date(
@@ -79,7 +79,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               control={[
                 <ZoomBar
                   key="zoombar"
-                  initScale={isExpend ? 100 : 0}
+                  initScale={isExpand ? 100 : 0}
                   setState={handleZoombar}
                 />,
                 <LayoutControl key="layoutControl" setState={handleLayout} />
@@ -94,7 +94,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 initialMonthFirst={initialMonthFirst}
                 setIsOpenDrawer={setIsOpenDrawer}
                 view={view}
-                isExpend={isExpend}
+                isExpand={isExpand}
               />
             ) : (
               <DailyView
@@ -103,7 +103,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 initialMonthFirst={initialMonthFirst}
                 setIsOpenDrawer={setIsOpenDrawer}
                 view={view}
-                isExpend={isExpend}
+                isExpand={isExpand}
               />
             )}
           </Pane>

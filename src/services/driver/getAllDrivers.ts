@@ -1,7 +1,10 @@
 import { token } from "./token";
 
 // 取得所有駕駛資料 QueryDriverList
-export const getAllDriver = async (filter: { [key: string]: any } = {}) => {
+export const getAllDriver = async (
+  filter: { [key: string]: any } = {},
+  isDisabled: boolean = true
+) => {
   // console.log("getAllDriver filter:", filter);
   const driverFilter = [];
   for (const key in filter) {
@@ -32,7 +35,7 @@ export const getAllDriver = async (filter: { [key: string]: any } = {}) => {
         total: 0,
         last_page: 0
       },
-      driver_status: "1"
+      driver_status: isDisabled ? "1" : "0"
     })
   });
   return res.json();

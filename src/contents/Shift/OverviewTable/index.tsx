@@ -20,6 +20,7 @@ const OverviewTable = ({
   const UI = React.useContext(UIContext);
   const router = useRouter();
   const [allData, setAllData] = React.useState<DriverData[]>([]);
+  const containerRef = React.useRef(null);
 
   React.useEffect(() => {
     const queryString = `${initialMonthFirst.getFullYear()}-${(
@@ -49,6 +50,13 @@ const OverviewTable = ({
   ).getDate();
 
   //------ functions ------//
+
+  const handleScroll = (event) => {
+    event.preventDefault();
+    const container = containerRef.current;
+    container.scrollLeft += event.deltaY;
+  };
+
   const handleClickUser = (id: string) => {
     router.push(`/shift/${id}?cur=${curMonthFirst}`);
   };
@@ -103,7 +111,12 @@ const OverviewTable = ({
     </Table.TextHeaderCell>
   ));
   return (
-    <TableSTY className="table-viewport" isExpand={isExpand}>
+    <TableSTY
+      className="table-viewport"
+      isExpand={isExpand}
+      ref={containerRef}
+      onWheel={handleScroll}
+    >
       <Table className="eg-table">
         <Table.Head className="eg-head">
           <Checkbox className="eg-th checkbox" key="selectAll" label="" />

@@ -24,6 +24,7 @@ export const EventBarSTY = styled.div<{
   cellWidth: number;
   left: number;
 }>`
+  min-width: ${({ cellWidth }) => cellWidth + "px"};
   width: ${({ duration, cellWidth }) => duration * cellWidth + "%"};
   position: absolute;
   left: ${({ left, cellWidth }) => left * cellWidth + "%"};
@@ -43,6 +44,7 @@ export const EventBarSTY = styled.div<{
     }
   }
   button {
+    max-width: 100%;
     flex-grow: 10;
     display: flex;
     flex-direction: row;
@@ -56,6 +58,7 @@ export const EventBarSTY = styled.div<{
     color: ${({ theme }) => theme.color.N0};
     z-index: 1;
     padding: 4px 8px;
+    overflow: hidden;
     cursor: pointer;
     .text-wrapper {
       overflow: hidden;

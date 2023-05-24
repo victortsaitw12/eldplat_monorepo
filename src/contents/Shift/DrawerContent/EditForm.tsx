@@ -15,7 +15,7 @@ import Timepicker from "@components/Timepicker";
 import LeaveTypePicker from "@contents/Shift/LeaveTypePicker";
 import { updateSchedule } from "@services/schedule/updateSchedule";
 import { updateScheduleSign } from "@services/schedule/updateScheduleSign";
-import { formatToDB, getDayStart } from "../shift.util";
+import { formatToDB, getDayStart, formatToDBDate } from "../shift.util";
 
 const EditForm = ({
   setIsOpenDrawer
@@ -49,16 +49,13 @@ const EditForm = ({
       e.preventDefault();
       const updatedData = { ...UI.insertData };
       updatedData.driver_No = id;
-      updatedData.schd_Date = formatToDB(getDayStart(UI.startDate));
+      updatedData.schd_Date = formatToDBDate(getDayStart(UI.startDate));
       updatedData.schd_Start_Time = formatToDB(UI.startDate);
       updatedData.schd_End_Time = formatToDB(UI.endDate);
       try {
         updatedData.check_Status
           ? await updateScheduleSign(updatedData)
           : await updateSchedule(updatedData);
-        updatedData.check_Status
-          ? console.log("updateScheduleSign")
-          : console.log("updateScheduleSign:", JSON.stringify(updatedData));
         UI.resetState();
         UI.setFlag(!UI.flag);
         setIsOpenDrawer(false);

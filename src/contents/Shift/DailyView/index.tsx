@@ -17,14 +17,14 @@ const DailyView = ({
   monthlyData,
   setMonthlyData,
   view,
-  isExpend
+  isExpand
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
-  isExpend: boolean;
+  isExpand: boolean;
 }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -65,10 +65,10 @@ const DailyView = ({
   }, [UI.isSelect]);
 
   React.useEffect(() => {
-    isExpend
+    isExpand
       ? UI.setTimeframe(1000 * 60 * 60 * 1) //1hour
       : UI.setTimeframe(1000 * 60 * 60 * 2); //2hour
-  }, [isExpend]);
+  }, [isExpand]);
   //------ functions ------//
   const handleCreateFullDayEvent = (timestamp: number) => {
     const selectedDT = new Date(timestamp);

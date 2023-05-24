@@ -15,10 +15,18 @@ const LeaveTypePicker = () => {
 
   //------ functions ------//
   const handleLeaveType = (e: any) => {
-    e.target.value === "03" ? setShowLeaveCode(true) : setShowLeaveCode(false);
     const updatedInsertData = { ...UI.insertData };
     updatedInsertData.schd_Type = e.target.value;
-    if (e.target.value === "04") updatedInsertData.check_Status = "0";
+
+    if (e.target.value !== "03") {
+      setShowLeaveCode(false);
+      updatedInsertData.leave_Code = "";
+    } else {
+      setShowLeaveCode(true);
+    }
+    e.target.value === "04"
+      ? (updatedInsertData.check_Status = "0")
+      : (updatedInsertData.check_Status = "");
     UI.setInsertData(updatedInsertData);
   };
   const handleLeaveCode = (e: any) => {

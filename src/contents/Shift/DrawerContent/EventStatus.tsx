@@ -1,9 +1,8 @@
 import React from "react";
-import { EditIcon, TrashIcon, Spinner, Pane } from "evergreen-ui";
+import { EditIcon, TrashIcon, Spinner, Pane, toaster } from "evergreen-ui";
 import { ViewSTY } from "./style";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-
 import { formatTime, getDayEnd } from "../shift.util";
 import { SCHD_TYPE, LEAVE_CODE, EVENT_TYPE } from "../shift.data";
 import { deleteSchedule } from "@services/schedule/deleteSchedule";
@@ -55,16 +54,17 @@ const EventStatus = ({
   const handleDeleteSchdule = React.useCallback(
     async (event: any) => {
       const drv_schedule_no = event.drv_Schedule_No;
+      UI.setIsLoading(true);
       try {
-        UI.setIsLoading(true);
         await deleteSchedule(drv_schedule_no);
-        UI.setIsLoading(false);
-        UI.setFlag(!UI.flag);
-        setIsOpenDrawer(false);
-        UI.resetState();
+        toaster.success("刪除成功");
       } catch (e: any) {
         alert(e.message);
       }
+      UI.setIsLoading(false);
+      UI.setFlag(!UI.flag);
+      setIsOpenDrawer(false);
+      UI.resetState();
     },
     [UI.id]
   );
