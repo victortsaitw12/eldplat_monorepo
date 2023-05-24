@@ -69,62 +69,20 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     getCustomerData();
   }, [vendor_id]);
 
-  const r_editBtn = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer"
-        }}
-        onClick={() => setIsEdit(!isEdit)}
-      >
-        <Icon
-          icon={EditIcon}
-          size={16}
-          marginY="auto"
-          marginX="10px"
-          color="#91A9C5"
-        />
-        <div>編輯</div>
-      </div>
-    )
-  }
-  const r_saveBtn = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer"
-        }}
-        onClick={() => {
-          setIsEdit(!isEdit)
-          // submitRef.current && submitRef.current.click();
-        }}
-      >
-        <Icon
-          icon={FloppyDiskIcon}
-          size={16}
-          marginY="auto"
-          marginX="10px"
-          color="#91A9C5"
-        />
-        <div>全部儲存</div>
-      </div>
-    )
-  }
   return (
     <BodySTY>
       {!loading && oldVendorData &&
         <TableWrapper
-          optionsEle={!isEdit ? r_editBtn() : r_saveBtn()}
+          isEdit={isEdit}
           onChangeTab={changeMainFilterHandler}
           mainFilter={"all"}
           mainFilterArray={mainFilterArray}
           onSave={() => {
             // setIsEdit(!isEdit)
             submitRef.current && submitRef.current.click();
+          }}
+          onEdit={() => {
+            setIsEdit(true)
           }}
         >
           <VendorDetail

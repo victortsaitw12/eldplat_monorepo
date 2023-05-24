@@ -118,7 +118,7 @@ function InfoBox({
 
   return (
     <InfoBoxSTY style={style}>
-      <Text className="info-title">{infoTitle}</Text>
+      {infoTitle && <Text className="info-title">{infoTitle}</Text>}
       {r_switch_info(infoType)}
     </InfoBoxSTY>
   );
