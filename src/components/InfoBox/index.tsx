@@ -8,7 +8,7 @@ export interface I_infoData {
   readonly?: boolean; //只讀
   req?: boolean; //必填
   value?: string | Array<string> | React.ReactNode; //值
-  label?: string; //label文字
+  label?: string | React.ReactNode; //label文字
   subLabel?: string | React.ReactNode; //上下的label
   inputType?: string;
 }
@@ -70,10 +70,10 @@ function InfoBox({
       return (
         <ListItem key={value + i}>
           {label && (
-            <Text>
+            <Pane>
               {req && label !== "" && <span className="req">*</span>}
               {label}
-            </Text>
+            </Pane>
           )}
           <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane>
         </ListItem>

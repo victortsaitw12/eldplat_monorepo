@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -7,48 +7,38 @@ import {
 //
 import { getLayout } from "@layout/MainLayout";
 import { updateBus } from "@services/bus/updateBus";
-import BusEditForm from "@contents/Bus/BusEditForm";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { ParsedUrlQuery } from "querystring";
-import { useForm } from "react-hook-form";
-import { getBusDefaultData } from "@contents/Bus/BusEditForm/busDefaultData";
-import { BusDataTypes } from "@contents/Bus/BusEditForm/busDefaultData";
+
 import TableWrapper from "@layout/TableWrapper";
 import { useBusStore } from "@contexts/filter/busStore";
-import { getBusById } from "@services/bus/getBusById";
 import LoadingSpinner from "@components/LoadingSpinner";
+import BusDetail from "@contents/Bus/BusDetail";
 //
 const mainFilterArray = [
-  { id: 1, label: "細項", value: "Detail" },
-  { id: 2, label: "維保", value: "Maintenance" },
-  { id: 3, label: "生命週期", value: "Lifecycle" },
-  { id: 4, label: "財務", value: "Financial" },
-  { id: 5, label: "規格", value: "Specifications" }
+  { id: 1, label: "細項", value: "1" },
+  { id: 2, label: "維保", value: "2" },
+  { id: 3, label: "生命週期", value: "3" },
+  { id: 4, label: "財務", value: "4" },
+  { id: 5, label: "規格", value: "5" }
 ];
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ busId }) => {
-  const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
+  const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useBusStore();
-  async function getDefaultValuesHandler() {
-    const lowerCaseFlatternData = await getBusById(busId);
-    return getBusDefaultData(lowerCaseFlatternData);
-  }
+  const router = useRouter();
+  const { editPage } = router.query; //是否為編輯頁的判斷1或0
+
+  const [loading, setLoading] = useState(false);
+  const [isEdit, setIsEdit] = useState(editPage === "1" || false);
   useEffect(() => {
-    updateMainFilter("Detail");
+    updateMainFilter("1");
   }, [updateMainFilter]);
-  const {
-    register,
-    formState: { errors },
-    control,
-    handleSubmit
-  } = useForm<BusDataTypes>({
-    defaultValues: async () => getDefaultValuesHandler()
-  });
   const changeMainFilterHandler = (value: string) => {
+    console.log("changeMainFilterHandler");
     updateMainFilter(value);
   };
   const asyncSubmitForm = async (data: any) => {
@@ -62,7 +52,7 @@ const Page: NextPageWithLayout<
       }
       console.log("flatternObj", flatternObj);
       // end
-      const res = await updateBus(busId, flatternObj);
+      const res = await updateBus(busId);
       console.log("response of bus update: ", res);
       router.push("/bus");
     } catch (e: any) {
@@ -70,31 +60,39 @@ const Page: NextPageWithLayout<
     }
     setLoading(false);
   };
-  const cancelFormHandler = useCallback(() => {
+  const onCancelHandler = () => {
     router.push("/bus");
-  }, [router]);
+  };
   if (loading) {
     return <LoadingSpinner />;
   }
   return (
-    <TableWrapper
-      onChangeTab={changeMainFilterHandler}
-      mainFilter={mainFilter}
-      mainFilterArray={mainFilterArray}
-    >
-      <BodySTY>
-        <BusEditForm
-          submitForm={asyncSubmitForm}
-          onCancel={cancelFormHandler}
+    <BodySTY>
+      <TableWrapper
+        onChangeTab={changeMainFilterHandler}
+        mainFilter={mainFilter}
+        mainFilterArray={mainFilterArray}
+        onSave={() => {
+          console.log("save");
+          console.log("submitRef", submitRef.current);
+          submitRef.current?.click();
+        }}
+        onEdit={() => {
+          console.log("set is Edit to true");
+          setIsEdit(true);
+        }}
+        onClose={onCancelHandler}
+        isEdit={isEdit}
+      >
+        <BusDetail
+          isEdit={isEdit}
+          submitRef={submitRef}
+          asyncSubmitForm={asyncSubmitForm}
+          busId={busId}
           formType={mainFilter}
-          errors={errors}
-          handleSubmit={handleSubmit}
-          register={register}
-          control={control}
-          isDisabled={true}
         />
-      </BodySTY>
-    </TableWrapper>
+      </TableWrapper>
+    </BodySTY>
   );
 };
 

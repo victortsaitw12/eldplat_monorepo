@@ -13,7 +13,7 @@ import {
   FieldErrors,
   Control
 } from "react-hook-form";
-import { BusDataTypes } from "./busDefaultData";
+import { BusDataTypes } from "../busDefaultData";
 //
 interface Props {
   submitForm: (data: any) => void;

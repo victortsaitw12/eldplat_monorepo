@@ -1,5 +1,5 @@
 import React from "react";
-import { BusDataTypes } from "../busDefaultData";
+import { BusDataTypes } from "../../busDefaultData";
 import { SubFromProps } from "./type";
 import Card from "@components/Card";
 import HorizatalInput from "@components/HookForm/Input/HorizontalInput";
