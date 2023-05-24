@@ -4,9 +4,12 @@ import { useFieldArray } from "react-hook-form";
 import { IconLeft } from "@components/Button/Primary";
 import { PlusIcon, TrashIcon, TextInput, Text, Pane } from "evergreen-ui";
 import { BodySTY, ItemSTY } from "./style";
-import ArrayInfoBox from "@components/ArrayInfoBox";
-import { textValidation } from "@utils/inputValidation";
+// import ArrayInfoBox from "@components/ArrayInfoBox";
+import InfoBox from "@components/InfoBox";
+import { textValidation, emailValidation } from "@utils/inputValidation";
+
 const ContactList = ({
+  arrayName = "customer_contact",
   hide,
   errors,
   control,
@@ -15,7 +18,7 @@ const ContactList = ({
 }: SubFromProps) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "customer_contact"
+    name: arrayName
   });
   return (
     <BodySTY>
@@ -29,8 +32,8 @@ const ContactList = ({
             value: item.contact_name || "---",
             editEle: [
               <TextInput
-                key={`customer_contact.${index}.contact_name`}
-                {...register(`customer_contact.${index}.contact_name`, {
+                key={`${arrayName}.${index}.contact_name`}
+                {...register(`${arrayName}.${index}.contact_name`, {
                   validate: textValidation
                 })}
               />
@@ -42,16 +45,16 @@ const ContactList = ({
               ? item.contact_tel_code + " " + item.contact_tel
               : "---",
             editEle: [
-              <Pane key={`customer_contact.${index}.contact_tel_code`}>
+              <Pane display="flex" flexDirection="row" gap={10} key={`${arrayName}.${index}.contact_tel`}>
                 <Text>市話</Text>
                 <TextInput
                   disabled={true}
                   style={{ width: "60px" }}
-                  {...register(`customer_contact.${index}.contact_tel_code`)}
+                  {...register(`${arrayName}.${index}.contact_tel_code`)}
                 />
 
                 <TextInput
-                  {...register(`customer_contact.${index}.contact_tel`)}
+                  {...register(`${arrayName}.${index}.contact_tel`)}
                 />
               </Pane>
             ]
@@ -62,15 +65,15 @@ const ContactList = ({
               ? item.contact_phone_code + " " + item.contact_phone
               : "---",
             editEle: [
-              <Pane key={`customer_contact.${index}.contact_phone_code`}>
+              <Pane display="flex" flexDirection="row" gap={10} key={`${arrayName}.${index}.contact_phone_code`}>
                 <Text>手機</Text>
                 <TextInput
                   disabled={true}
                   style={{ width: "60px" }}
-                  {...register(`customer_contact.${index}.contact_phone_code`)}
+                  {...register(`${arrayName}.${index}.contact_phone_code`)}
                 />
                 <TextInput
-                  {...register(`customer_contact.${index}.contact_phone`)}
+                  {...register(`${arrayName}.${index}.contact_phone`)}
                 />
               </Pane>
             ]
@@ -80,9 +83,9 @@ const ContactList = ({
             value: item.contact_email || "---",
             editEle: [
               <TextInput
-                key={`customer_contact.${index}.contact_email`}
-                {...register(`customer_contact.${index}.contact_email`, {
-                  validate: textValidation
+                key={`${arrayName}.${index}.contact_email`}
+                {...register(`${arrayName}.${index}.contact_email`, {
+                  validate: emailValidation
                 })}
               />
             ]
@@ -90,7 +93,7 @@ const ContactList = ({
         ];
         return (
           <ItemSTY key={item.id}>
-            <ArrayInfoBox infoData={contactItem} isEdit={isEdit} />
+            <InfoBox key={item.id} style={{ padding: 0 }} infoData={contactItem} isEdit={isEdit} />
             {isEdit && index !== 0 && (
               <button className="delete" onClick={() => remove(index)}>
                 <TrashIcon />
@@ -100,23 +103,25 @@ const ContactList = ({
         );
       })}
       {isEdit && (
-        <IconLeft
-          text="新增聯絡人"
-          type="button"
-          onClick={() =>
-            append({
-              contact_email: "",
-              contact_name: "",
-              contact_phone: "",
-              contact_phone_code: "",
-              contact_tel: "",
-              contact_tel_code: "",
-              contact_sort: "1"
-            })
-          }
-        >
-          <PlusIcon />
-        </IconLeft>
+        <Pane>
+          <IconLeft
+            text="新增聯絡人"
+            type="button"
+            onClick={() =>
+              append({
+                contact_email: "",
+                contact_name: "",
+                contact_phone: "",
+                contact_phone_code: "",
+                contact_tel: "",
+                contact_tel_code: "",
+                contact_sort: "1"
+              })
+            }
+          >
+            <PlusIcon />
+          </IconLeft>
+        </Pane>
       )}
     </BodySTY>
   );
