@@ -18,8 +18,16 @@ interface Props {
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
+  isEdit: boolean;
 }
-function Details({ selected, register, errors, getValues, control }: Props) {
+function Details({
+  selected,
+  register,
+  errors,
+  getValues,
+  control,
+  isEdit
+}: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 尺寸
   const sizeInfo = [
@@ -462,23 +470,27 @@ function Details({ selected, register, errors, getValues, control }: Props) {
       style={{ display: `${selected ? "flex" : "none"}` }}
     >
       <FlexWrapper flexDirection="column">
-        <InfoBox isEdit={true} infoData={sizeInfo} infoTitle="尺寸" />
-        <InfoBox isEdit={true} infoData={tireInfo} infoTitle="車輪 & 輪胎" />
+        <InfoBox isEdit={isEdit} infoData={sizeInfo} infoTitle="尺寸" />
+        <InfoBox isEdit={isEdit} infoData={tireInfo} infoTitle="車輪 & 輪胎" />
       </FlexWrapper>
       <FlexWrapper flexDirection="column">
-        <InfoBox isEdit={true} infoData={weightInfo} infoTitle="重量" />
-        <InfoBox isEdit={true} infoData={powerInfo} infoTitle="性能" />
+        <InfoBox isEdit={isEdit} infoData={weightInfo} infoTitle="重量" />
+        <InfoBox isEdit={isEdit} infoData={powerInfo} infoTitle="性能" />
         <InfoBox
-          isEdit={true}
+          isEdit={isEdit}
           infoData={epaInfo}
           infoTitle="燃油經濟性/油耗表現"
         />
-        <InfoBox isEdit={true} infoData={transmissionInfo} infoTitle="變速器" />
-        <InfoBox isEdit={true} infoData={oilInfo} infoTitle="機油" />
+        <InfoBox
+          isEdit={isEdit}
+          infoData={transmissionInfo}
+          infoTitle="變速器"
+        />
+        <InfoBox isEdit={isEdit} infoData={oilInfo} infoTitle="機油" />
       </FlexWrapper>
       <FlexWrapper flexDirection="column">
-        <InfoBox isEdit={true} infoData={engineInfo} infoTitle="引擎" />
-        <InfoBox isEdit={true} infoData={gasInfo} infoTitle="燃料" />
+        <InfoBox isEdit={isEdit} infoData={engineInfo} infoTitle="引擎" />
+        <InfoBox isEdit={isEdit} infoData={gasInfo} infoTitle="燃料" />
       </FlexWrapper>
     </FlexWrapper>
   );

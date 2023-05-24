@@ -1,24 +1,37 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import { Select, Button, FilePicker, TextInput, Textarea } from "evergreen-ui";
-
+import { Select, TextInput, Textarea } from "evergreen-ui";
 import {
   UseFormRegister,
   FieldErrors,
   UseFormGetValues,
-  Control
+  Control,
+  useWatch
 } from "react-hook-form";
 import { BusDataTypes } from "../../busDefaultData";
 import FlexWrapper from "@layout/FlexWrapper";
 import InfoBox from "@components/InfoBox";
+import Radio from "@components/HookForm/Radio";
 interface Props {
   selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
+  isEdit: boolean;
 }
-function Financial({ selected, register, errors, getValues, control }: Props) {
+function Financial({
+  selected,
+  register,
+  errors,
+  getValues,
+  control,
+  isEdit
+}: Props) {
+  useWatch({
+    control,
+    name: "bus_loan_lease.loan_lease"
+  });
+  // console.log("loanLeaseValue", loanLeaseValue);
   const purchaseInfo = [
     {
       req: true,
@@ -80,7 +93,17 @@ function Financial({ selected, register, errors, getValues, control }: Props) {
     {
       req: false,
       inputType: "custom",
-      editEle: [<div key="radio">123</div>]
+      editEle: (
+        <Radio
+          control={control}
+          name="bus_loan_lease.loan_lease"
+          options={[
+            { value: "1", label: "貸款", description: "此車輛與貸款無關" },
+            { value: "2", label: "租賃", description: "此車輛正在租賃中" },
+            { value: "3", label: "無融資", description: "此車輛未被融資" }
+          ]}
+        />
+      )
     }
   ];
   const loanInfo = [
@@ -260,17 +283,17 @@ function Financial({ selected, register, errors, getValues, control }: Props) {
       style={{ display: `${selected ? "flex" : "none"}` }}
     >
       <FlexWrapper flexDirection="column" style={{ flex: "1" }}>
-        <InfoBox isEdit={true} infoData={purchaseInfo} infoTitle="購買詳情" />
-        <InfoBox isEdit={true} infoData={maintainInfo} infoTitle="保固" />
+        <InfoBox isEdit={isEdit} infoData={purchaseInfo} infoTitle="購買詳情" />
+        <InfoBox isEdit={isEdit} infoData={maintainInfo} infoTitle="保固" />
       </FlexWrapper>
       <div style={{ flex: "1" }}>
         <InfoBox
-          isEdit={true}
+          isEdit={isEdit}
           infoData={
             getValues("bus_loan_lease.loan_lease") === "1"
-              ? loanInfo
+              ? [...radioInfo, ...loanInfo]
               : getValues("bus_loan_lease.loan_lease") === "2"
-              ? leaseInfo
+              ? [...radioInfo, ...leaseInfo]
               : radioInfo
           }
           infoTitle="貸款/租賃"

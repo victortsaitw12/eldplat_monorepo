@@ -18,8 +18,16 @@ interface Props {
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
+  isEdit: boolean;
 }
-function Lifecycle({ selected, register, errors, getValues, control }: Props) {
+function Lifecycle({
+  selected,
+  register,
+  errors,
+  getValues,
+  control,
+  isEdit
+}: Props) {
   // 服務中
   const serviceInfo = [
     {
@@ -81,15 +89,15 @@ function Lifecycle({ selected, register, errors, getValues, control }: Props) {
       style={{ display: `${selected ? "flex" : "none"}` }}
     >
       <FlexWrapper flexDirection="column" style={{ flex: "1" }}>
-        <InfoBox isEdit={true} infoData={serviceInfo} infoTitle="服務中" />
+        <InfoBox isEdit={isEdit} infoData={serviceInfo} infoTitle="服務中" />
         <InfoBox
-          isEdit={true}
+          isEdit={isEdit}
           infoData={estimateInfo}
           infoTitle="車輛壽命估計"
         />
       </FlexWrapper>
       <div style={{ flex: "1" }}>
-        <InfoBox isEdit={true} infoData={cancelInfo} infoTitle="終止服務" />
+        <InfoBox isEdit={isEdit} infoData={cancelInfo} infoTitle="終止服務" />
       </div>
     </FlexWrapper>
   );
