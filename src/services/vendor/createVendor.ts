@@ -1,6 +1,12 @@
 import API_Path from "./apiPath";
 // 新增供應商
 export const createVendor = async (vendorData: any) => {
+  // handle vendor_Contact_List
+  for (let i = 0; i < vendorData?.vendor_Contact_List.length; i++) {
+    if (i !== 0) {
+      vendorData.vendor_Contact_List[i]["contact_sort"] = "2";
+    }
+  }
   //
   const filteredNullData: { [key: string]: string | null } = {};
   console.log("vendorData", vendorData);

@@ -4,6 +4,13 @@ export const updateVendor = async (
     vendor_No: string,
     vendorData: any
 ) => {
+    // handle vendor_Contact_List
+    for (let i = 0; i < vendorData.vendor_Contact_List.length; i++) {
+        if (i !== 0) {
+            vendorData.vendor_Contact_List[i]["contact_sort"] = "2";
+        }
+    }
+    console.log("new vendorData", vendorData);
     const filteredNullData: { [key: string]: string | null } = {};
     for (const key in vendorData) {
         if (vendorData[key] !== null) {
