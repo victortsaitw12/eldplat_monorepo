@@ -66,7 +66,6 @@ function InfoBox({
       if (inputType === "custom") {
         return editEle;
       }
-      console.log("value", value);
 
       return (
         <ListItem key={value + i}>
