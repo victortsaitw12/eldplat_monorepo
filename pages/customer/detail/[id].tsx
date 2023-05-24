@@ -22,6 +22,7 @@ function fakeSubmit(data: any) {
 const mainFilterArray = [{ id: 1, label: "客戶資料", value: "CustomerData" }];
 //
 const Index: NextPageWithLayout<never> = ({ customerId }) => {
+  const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useCustomerStore();
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
@@ -36,13 +37,9 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
     console.log("changeMainFilterHandler");
   };
   //
-  const mainFilterArray = useMemo(
-    () => [{ id: 1, label: "顧客資料", value: "all" }],
-    []
-  );
   const asyncSubmitForm = async (data: any) => {
-    console.log("edited data", data);
     setLoading(true);
+    console.log("edited data", data);
     try {
       await updateCustomer(data);
     } catch (e: any) {
@@ -51,47 +48,36 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
     setLoading(false);
     router.push("/customer");
   };
-  const method = useForm<CustomerDataTypes>({
-    defaultValues: async () => getCustomerById(customerId)
-  });
-  const { handleSubmit } = method;
   //
   const onCancelHandler = () => {
     router.push("/customer");
   };
-  //
-  // useEffect(() => {
-  //   const getCustomerData = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const data = await getCustomerById(customerId);
-  //       console.log("✨✨✨✨✨Get data by id", data);
-  //     } catch (e: any) {
-  //       console.log(e);
-  //     }
-  //     setLoading(false);
-  //   };
-  //   getCustomerData();
-  // }, [customerId]);
 
   return (
     <BodySTY>
-      <FormProvider {...method}>
-        <TableWrapper
-          onChangeTab={changeMainFilterHandler}
-          mainFilter={mainFilter}
-          mainFilterArray={mainFilterArray}
-          onSave={handleSubmit(asyncSubmitForm)}
-          onEdit={() => {
-            console.log("set is Edit to true");
-            setIsEdit(true);
-          }}
-          onClose={onCancelHandler}
+      <TableWrapper
+        onChangeTab={changeMainFilterHandler}
+        mainFilter={mainFilter}
+        mainFilterArray={mainFilterArray}
+        onSave={() => {
+          console.log("save");
+          console.log("submitRef", submitRef.current);
+          submitRef.current?.click();
+        }}
+        onEdit={() => {
+          console.log("set is Edit to true");
+          setIsEdit(true);
+        }}
+        onClose={onCancelHandler}
+        isEdit={isEdit}
+      >
+        <CustomerDetail
           isEdit={isEdit}
-        >
-          <CustomerDetail isEdit={isEdit} />
-        </TableWrapper>
-      </FormProvider>
+          submitRef={submitRef}
+          asyncSubmitForm={asyncSubmitForm}
+          customerId={customerId}
+        />
+      </TableWrapper>
     </BodySTY>
   );
 };

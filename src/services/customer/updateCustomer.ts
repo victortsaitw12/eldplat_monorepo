@@ -1,19 +1,16 @@
 export const updateCustomer = async (customerData: any) => {
-  console.log("customerData", customerData);
   for (const key in customerData) {
-    if (!customerData[key]) {
+    if (customerData[key] === "") {
       delete customerData[key];
     }
   }
-  // filter null data in contact
-  // for (const contactItem of customerData.customer_contact) {
-  //   for (const key in contactItem) {
-  //     if (!contactItem[key]) {
-  //       delete contactItem[key];
-  //     }
-  //   }
-  // }
-  console.log("updateCustomer", customerData);
+  // handle customer_contact
+  for (let i = 0; i < customerData.customer_contact.length; i++) {
+    if (i !== 0) {
+      customerData.customer_contact[i]["contact_sort"] = "2";
+    }
+  }
+  //
   const res = await fetch("https://localhost:7088/CTR/UpdateCustomer", {
     method: "POST",
     headers: {
@@ -23,6 +20,5 @@ export const updateCustomer = async (customerData: any) => {
     body: JSON.stringify(customerData)
   });
   const result = await res.json();
-  console.log("update result", result);
   return result;
 };
