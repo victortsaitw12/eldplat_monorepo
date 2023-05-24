@@ -14,7 +14,7 @@ import {
   FieldErrors,
   useFormContext
 } from "react-hook-form";
-import { BusDataTypes } from "../busDefaultData";
+import { BusDataTypes } from "../../busDefaultData";
 interface Props {
   hide?: boolean;
   register: UseFormRegister<BusDataTypes>;

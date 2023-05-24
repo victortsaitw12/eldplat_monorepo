@@ -10,7 +10,7 @@ import {
 //
 import { BodySTY, StyledButton } from "./style";
 import { FieldErrors } from "react-hook-form";
-import { BusDataTypes } from "../BusEditForm/busDefaultData";
+import { BusDataTypes } from "../busDefaultData";
 //
 interface OptionItemProps {
   icon: React.ReactNode;

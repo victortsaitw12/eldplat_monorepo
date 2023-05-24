@@ -91,6 +91,8 @@ export interface BusDataTypes {
   bus_loan_lease: {
     vendor_no: string;
     vendor_name: string;
+    vendor_no_loan_lease: string;
+    vendor_name_loan_lease: string;
     purchase_date: string;
     purchase_price: number;
     odometer: number;
@@ -209,6 +211,8 @@ const busDefaultData: BusDataTypes = {
   bus_loan_lease: {
     vendor_no: "",
     vendor_name: "",
+    vendor_no_loan_lease: "",
+    vendor_name_loan_lease: "",
     purchase_date: "",
     purchase_price: 0,
     odometer: 0,
