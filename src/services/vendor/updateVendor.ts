@@ -8,9 +8,10 @@ export const updateVendor = async (
     for (let i = 0; i < vendorData.vendor_Contact_List.length; i++) {
         if (i !== 0) {
             vendorData.vendor_Contact_List[i]["contact_sort"] = "2";
+        } else {
+            vendorData.vendor_Contact_List[i]["contact_sort"] = "1";
         }
     }
-    console.log("new vendorData", vendorData);
     const filteredNullData: { [key: string]: string | null } = {};
     for (const key in vendorData) {
         if (vendorData[key] !== null) {

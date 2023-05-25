@@ -5,6 +5,8 @@ export const createVendor = async (vendorData: any) => {
   for (let i = 0; i < vendorData?.vendor_Contact_List.length; i++) {
     if (i !== 0) {
       vendorData.vendor_Contact_List[i]["contact_sort"] = "2";
+    } else {
+      vendorData.vendor_Contact_List[i]["contact_sort"] = "1";
     }
   }
   //
