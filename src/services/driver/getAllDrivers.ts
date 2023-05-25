@@ -1,5 +1,3 @@
-import { token } from "./token";
-
 // 取得所有駕駛資料 QueryDriverList
 export const getAllDriver = async (
   filter: { [key: string]: any } = {},
@@ -21,7 +19,7 @@ export const getAllDriver = async (
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
     },
     // body: JSON.stringify(data),
     body: JSON.stringify({
@@ -49,7 +47,7 @@ export const getAllNonDriverEmployee = async () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
     }
   });
   return res.json();

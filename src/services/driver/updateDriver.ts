@@ -1,5 +1,3 @@
-import { token } from "./token";
-
 export const updateDriver = async (userId: string, driverData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
   for (const key in driverData) {
@@ -17,7 +15,7 @@ export const updateDriver = async (userId: string, driverData: any) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
     },
     body: JSON.stringify(filteredNullData)
   });

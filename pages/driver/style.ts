@@ -10,14 +10,54 @@ const BodySTY = styled.div<{ isOpenDrawer: boolean }>`
   font-weight: ${({ theme }) => theme.fontWeight.Paragraph200};
   font-size: ${({ theme }) => theme.fontWeight.Paragraph200};
   line-height: 19px;
+
   & > div {
     border: none;
   }
+  & > div > div:nth-child(2) {
+    background: ${({ theme }) => theme.color.N0};
+    border-radius: 10px;
+  }
   /* fonts */
   .wrapMain {
-    width: ${(props) => (props.isOpenDrawer ? "calc(100% - 300px)" : "100%")};
-    transition: width 0.2s ease-in-out;
+    /* width: ${(props) =>
+      props.isOpenDrawer ? "calc(100% - 300px)" : "100%"}; */
+    width: 100%;
+    height: calc(100% - 51px - 32px);
+    overflow-x: hidden;
+    & > div {
+      height: 100%;
+    }
+    & > div > div {
+      height: 100%;
+      overflow-x: scroll;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .container-header {
+      position: sticky;
+      left: 0;
+    }
+    table {
+      thead {
+      }
+      tbody {
+        tr {
+          &:nth-child(1) {
+            justify-self: left;
+          }
+        }
+      }
+    }
+    .table-row-option {
+    }
+
+    .TableContainerSTY {
+    }
   }
+
   .drawer__container {
     height: calc(100vh - 60px - 10px * 2);
     position: sticky;

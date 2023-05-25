@@ -7,7 +7,7 @@ export const updateSchedule = async (data: any) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
     },
     body: JSON.stringify(data)
   });
