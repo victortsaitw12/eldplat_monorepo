@@ -34,6 +34,7 @@ const RadioItem = ({
         value={radioValue}
         checked={checked}
         marginY={0}
+        disabled={isDisabled}
         onChange={(e) => {
           console.log("e.target.value", e.target.value);
           onFormChange(e.target.value);

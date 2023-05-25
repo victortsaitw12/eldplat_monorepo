@@ -122,6 +122,7 @@ function Financial({
           key={"bus_loan_lease.loan_lease"}
           control={control}
           name="bus_loan_lease.loan_lease"
+          isDisabled={!isEdit}
           options={[
             { value: "1", label: "貸款", description: "此車輛與貸款無關" },
             { value: "2", label: "租賃", description: "此車輛正在租賃中" },

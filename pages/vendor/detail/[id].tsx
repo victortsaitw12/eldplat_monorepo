@@ -21,7 +21,7 @@ import { keysToLowercase } from "@utils/keysToLowercase";
 const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
-  const { editPage } = router.query;//是否為編輯頁的判斷1或0
+  const { editPage } = router.query; //是否為編輯頁的判斷1或0
 
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);
@@ -32,9 +32,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   };
   //
   const mainFilterArray = useMemo(
-    () => [
-      { id: 1, label: "供應商資料", value: "all" }
-    ],
+    () => [{ id: 1, label: "供應商資料", value: "all" }],
     []
   );
 
@@ -44,7 +42,6 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     try {
       const res = await updateVendor(vendor_id, data);
       console.log("response of vendor edit: ", res);
-
     } catch (e: any) {
       console.log(e);
       alert(e.message);
@@ -60,13 +57,14 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
       try {
         const data = await getVendorById(vendor_id);
         console.log("✨✨✨✨✨Get data by id", data);
-        data.vendor_Contact_List = data.vendor_Contact_List.map((
-          child: { [key: string]: string; }) => {
-          return keysToLowercase(child)
-        })
+        data.vendor_Contact_List = data.vendor_Contact_List.map(
+          (child: { [key: string]: string }) => {
+            return keysToLowercase(child);
+          }
+        );
         setOldVendorData(data);
       } catch (e: any) {
-        console.log("取單一供應商data的時候錯了", e)
+        console.log("取單一供應商data的時候錯了", e);
         console.log(e);
       }
       setLoading(false);
@@ -76,7 +74,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
 
   return (
     <BodySTY>
-      {!loading && oldVendorData &&
+      {!loading && oldVendorData && (
         <TableWrapper
           isEdit={isEdit}
           onChangeTab={changeMainFilterHandler}
@@ -87,7 +85,10 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
             submitRef.current && submitRef.current.click();
           }}
           onEdit={() => {
-            setIsEdit(true)
+            setIsEdit(true);
+          }}
+          onClose={() => {
+            router.push("/vendor");
           }}
         >
           <VendorDetail
@@ -97,8 +98,8 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
             vendorData={oldVendorData}
           />
         </TableWrapper>
-      }
-    </BodySTY >
+      )}
+    </BodySTY>
   );
 };
 interface Props {

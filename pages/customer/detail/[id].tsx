@@ -12,14 +12,13 @@ import { updateCustomer } from "@services/customer/updateCustomer";
 //
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { CustomerDataTypes } from "@contents/Customer/customer.type";
 import { useCustomerStore } from "@contexts/filter/customerStore";
 //
 function fakeSubmit(data: any) {
   console.log("data", data);
 }
 //
-const mainFilterArray = [{ id: 1, label: "客戶資料", value: "CustomerData" }];
+const mainFilterArray = [{ id: 1, label: "客戶資料", value: "1" }];
 //
 const Index: NextPageWithLayout<never> = ({ customerId }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
