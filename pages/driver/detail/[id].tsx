@@ -44,6 +44,7 @@ const Page: NextPageWithLayout<
       setIsLoading(true);
       try {
         const data = await getDriverById(userId);
+        console.log("getDriverById:", data);
         if (!data.info) {
           toaster.success("查無此使用者，請重新選擇");
           router.push("/driver");
@@ -90,43 +91,44 @@ const Page: NextPageWithLayout<
   return (
     <BodySTY>
       {(!isLoading && currentUserInfo && (
-        <Pane width="100%" height="100%" overflow="auto">
-          <TableWrapper
-            onChangeTab={changeMainFilterHandler}
-            mainFilter={mainFilter}
-            mainFilterArray={mainFilterArray}
-            isEdit={isEdit}
-            onSave={() => {
-              submitRef.current && submitRef.current.click();
-            }}
-            onEdit={() => {
-              setIsEdit(true);
-            }}
-          >
-            {mainFilter === "info" && (
-              <DriverEditForm
-                userId={userId}
-                submitForm={asyncSubmitForm}
-                isEdit={isEdit}
-                currentUserInfo={currentUserInfo}
-                formType={mainFilter}
-                isLoading={isLoading}
-                submitRef={submitRef}
-              />
-            )}
-            {mainFilter === "health" && (
-              <HealthFirst
-                currentUserInfo={currentUserInfo}
-                setInsertData={(data) => {
-                  console.log(data);
-                }}
-                handleEmployeeChange={(e) => {
-                  console.log(e);
-                }}
-              />
-            )}
-          </TableWrapper>
-        </Pane>
+        <TableWrapper
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={mainFilter}
+          mainFilterArray={mainFilterArray}
+          isEdit={isEdit}
+          onSave={() => {
+            submitRef.current && submitRef.current.click();
+          }}
+          onEdit={() => {
+            setIsEdit(true);
+          }}
+          onClose={() => {
+            router.push("/driver");
+          }}
+        >
+          {mainFilter === "info" && (
+            <DriverEditForm
+              userId={userId}
+              submitForm={asyncSubmitForm}
+              isEdit={isEdit}
+              currentUserInfo={currentUserInfo}
+              formType={mainFilter}
+              isLoading={isLoading}
+              submitRef={submitRef}
+            />
+          )}
+          {mainFilter === "health" && (
+            <HealthFirst
+              currentUserInfo={currentUserInfo}
+              setInsertData={(data) => {
+                console.log(data);
+              }}
+              handleEmployeeChange={(e) => {
+                console.log(e);
+              }}
+            />
+          )}
+        </TableWrapper>
       )) || (
         <Pane
           display="flex"

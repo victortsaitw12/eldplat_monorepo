@@ -10,6 +10,7 @@ export const getDriverById = async (driver_no: string) => {
     }
   );
   const data = await response.json();
+  console.log("service getDriverById data: ", data);
   return data.data;
 };
 
