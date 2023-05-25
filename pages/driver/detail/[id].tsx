@@ -56,6 +56,7 @@ const Page: NextPageWithLayout<
         );
         responseData.languages = data.languages;
         responseData.healths = data.healths;
+        console.log("res:", responseData);
         setCurrentUserInfo(responseData);
       } catch (e: any) {
         console.log(e);
@@ -66,7 +67,10 @@ const Page: NextPageWithLayout<
   }, [userId, router]);
 
   // ------- function ------- //
-  const formatedDate = (dateStr: string) => dateStr.split("T")[0];
+  const formatedDate = (dateStr: string) => {
+    if (dateStr === null || dateStr.trim() === "") return "";
+    return dateStr.split("T")[0];
+  };
   const changeMainFilterHandler = (value: string) => updateMainFilter(value);
 
   const asyncSubmitForm = async (data: any) => {

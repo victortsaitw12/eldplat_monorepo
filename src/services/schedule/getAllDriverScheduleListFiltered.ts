@@ -20,7 +20,7 @@ export const getAllDriverScheduleListFiltered = async (
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
     },
     // body: JSON.stringify(data),
     body: JSON.stringify({
