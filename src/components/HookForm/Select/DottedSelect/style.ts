@@ -25,7 +25,7 @@ export const colourStyles: StylesConfig<ColourOption> = {
       : "1px solid #AFC3DA",
     backgroundColor: isDisabled ? "transparent" : "white",
     boxShadow: isFocused ? "0 0 0 2px #D6E0FF" : "none",
-    width: "270px"
+    width: "120px"
   }),
   indicatorsContainer: (baseStyles, { isDisabled }) => ({
     ...baseStyles,

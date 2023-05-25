@@ -1,19 +1,14 @@
 export const updateBus = async (busData: any) => {
+  console.log("updateBus", busData);
   for (const key in busData) {
-    const subFormData = busData[key];
-    console.log("subFormData", subFormData);
-    for (const subKey in subFormData) {
-      console.log("subKey", subFormData[subKey]);
-      if (
-        !Array.isArray(subFormData[subKey]) &&
-        typeof subFormData[subKey] === "string" &&
-        subFormData[subKey].trim() === ""
-      ) {
-        delete subFormData[subKey];
+    const subForm = busData[key];
+    for (const subKey in subForm) {
+      if (subForm[subKey] === "") {
+        delete subForm[subKey];
       }
     }
-    console.log("subFormData", subFormData);
   }
+  console.log("updateBus", busData);
   const res = await fetch("https://localhost:7088/CAR/UpdateBus", {
     method: "POST",
     headers: {

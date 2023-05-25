@@ -61,7 +61,7 @@ const Page: NextPageWithLayout<never> = () => {
   useEffect(() => {
     console.log("update mainFilter to 1");
     updateMainFilter("1");
-  }, [updateMainFilter]);
+  }, []);
   //
   useEffect(() => {
     let isCanceled = false;

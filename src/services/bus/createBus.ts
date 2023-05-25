@@ -7,7 +7,7 @@ export const createBus = async (busData: any) => {
   const filteredData = filterNullData(flattenBusData);
   console.log(filteredData);
   try {
-    const res = await fetch("https://localhost:7188/Gateway_Bus/CreateBus", {
+    const res = await fetch("https://localhost:7088/CAR/CreateBus", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

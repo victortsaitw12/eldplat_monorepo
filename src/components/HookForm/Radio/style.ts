@@ -4,7 +4,7 @@ const RadioGroupListSTY = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 650px;
+  /* width: 650px; */
   height: 60px;
   /* Neutral/N0 */
   background: #ffffff;
