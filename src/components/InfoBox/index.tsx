@@ -83,16 +83,25 @@ function InfoBox({
 
   //標籤-編輯模式待處理
   const r_label = () => {
+    console.log("sss", infoData);
     if (!infoData) {
       return false;
     }
-    return infoData.map((child: any, i: number) => {
-      return (
-        <ListItem key={child.value + i}>
-          <Text>{child.value}</Text>
-        </ListItem>
-      );
-    });
+    if (isEdit) {
+      return <Pane>{infoData[0].editEle}</Pane>
+    } else {
+      console.log("🎶🎶🎶🎶", infoData[0].value)
+      if (infoData[0].value && Array.isArray(infoData[0].value) && infoData[0].value.length > 0) {
+        return infoData[0].value.map((child: any, i: number) => {
+          return (
+            <ListItem key={child + i}>
+              <Text>{child}</Text>
+            </ListItem>
+          );
+        });
+      }
+
+    }
   };
 
   //checkbox-編輯模式待處理

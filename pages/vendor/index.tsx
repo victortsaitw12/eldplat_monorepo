@@ -14,7 +14,6 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-
 //@contents
 import VendorList from "@contents/Vendor/VendorList";
 import VendorCreateForm from "@contents/Vendor/VendorCreateForm";
@@ -25,8 +24,8 @@ import { getAllVendors } from "@services/vendor/getAllVendors";
 //@components
 import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
-
-//新版的store
+import LabelTag from "@components/LabelTag";
+//@contexts
 import { useVendorStore } from "@contexts/filter/vendorStore";
 
 const isFullWidth = false;
@@ -102,11 +101,7 @@ const Page: NextPageWithLayout<{
           },
           vendor_label: {
             label: (
-              <span
-                className="vendor-label"
-              >
-                服務讚
-              </span>
+              <LabelTag text="服務讚" />
             ),
             value: vendors["vendor_Label"]
           }

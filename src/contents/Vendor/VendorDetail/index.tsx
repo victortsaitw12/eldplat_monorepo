@@ -3,6 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { TextInputField, TextInput, SelectField } from "evergreen-ui";
 import { MOCK_FUEL_DATA } from "./FuelData";
 import VerticalInput from "@components/HookForm/Input/VerticalInput";
+import Select from "react-select";
 //@components
 import InfoBox from "@components/InfoBox";
 import ContactList from "@components/ContactList";
@@ -21,7 +22,7 @@ import {
 } from "@utils/inputValidation";
 
 //@mock-data
-import { vendor_code_list, vedor_code_text } from "@mock-data/vendors/03VendorCodeList";
+import { vendor_code_list, vedor_code_text, vendor_label_option } from "@mock-data/vendors/03VendorCodeList";
 
 import { I_vendorData } from "../vendor.type";
 interface I_Props {
@@ -87,6 +88,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       value: vendor_Name,
       editEle:
         <TextInput
+          key="vendor_Name"
           {...methods.register("vendor_Name", {
             required: "必填",
             validate: textValidation
@@ -99,6 +101,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       value: vendor_Gui_No,
       editEle:
         <TextInput
+          key="vendor_Gui_No"
           {...methods.register("vendor_Gui_No", {
             validate: textValidation
           })}
@@ -110,6 +113,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       value: vendor_Owner,
       editEle:
         <TextInput
+          key="vendor_Owner"
           {...methods.register("vendor_Owner", {
             validate: textValidation
           })}
@@ -128,12 +132,20 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     }
   })
   //標籤 label_Name(?)
-  const label_info = label_Name ? [
+  const label_info = [
     {
-      label: label_Name,
-      value: label_Name
+      label: "",
+      value: label_Name,
+      // editEle: <Select
+      //   defaultValue={[vendor_label_option[2], vendor_label_option[3]]}
+      //   isMulti
+      //   name="labels"
+      //   options={vendor_label_option}
+      //   className="basic-multi-select"
+      //   classNamePrefix="select"
+      // />
     }
-  ] : undefined;
+  ]
   //聯絡方式
   const contact_info = [
     {
@@ -179,10 +191,10 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
           })}
           marginBottom="0"
         >
-          <option value="LA">洛杉磯</option>
-          <option value="TP">台北</option>
-          <option value="TTP">新北</option>
-          <option value="TY">桃園</option>
+          <option value="A">A市</option>
+          <option value="B">B市</option>
+          <option value="C">C市</option>
+          <option value="D">D市</option>
         </SelectField>
         ,
         <SelectField
@@ -193,10 +205,10 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
           })}
           marginBottom="0"
         >
-          <option value="CA">CA區</option>
-          <option value="DA">DA區</option>
-          <option value="EA">EA區</option>
-          <option value="FA">FA區</option>
+          <option value="A">A區</option>
+          <option value="B">B區</option>
+          <option value="C">C區</option>
+          <option value="D">D區</option>
         </SelectField >
       ],
     },
@@ -221,9 +233,9 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
           })}
           marginBottom="0"
         >
-          <option value="TW">台灣</option>
-          <option value="JP">日本</option>
-          <option value="US">美國</option>
+          <option value="A">A國</option>
+          <option value="B">B國</option>
+          <option value="C">C國</option>
         </SelectField >
       ],
     },
@@ -304,61 +316,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
           isEdit={isEdit}
         />
       ]
-    },
-    // TODO:主要聯絡人區塊 因為變成Array所以先緩緩再做。
-    /*
-    {
-      req: true,
-      label: "主要聯絡人",
-      value: vendorData?.vendor_Contact_List[0]?.contact_name || "---",
-      editEle: [
-        <TextInput
-          key="vendor_Contact_List.0.contact_name"
-          {...methods.register("vendor_Contact_List.0.contact_name", {
-            validate: textValidation
-          })}
-        />
-      ],
-    },
-    {
-      req: false,
-      label: "主要聯絡人電話(市話)",
-      value: vendor_Contact_List[0]?.contact_tel ?
-        vendor_Contact_List[0].contact_tel_code + "  " + vendor_Contact_List[0].contact_tel :
-        "---",
-      editEle: [
-        <TextInput
-          key="vendor_Contact_List.0.contact_tel_code"
-          // disabled={true}
-          style={{ width: "60px" }}
-          {...methods.register("vendor_Contact_List.0.contact_tel_code")}
-        />,
-        <TextInput
-          key="vendor_Contact_List.0.contact_Tel"
-          {...methods.register("vendor_Contact_List.0.contact_tel")}
-        />
-      ],
-    },
-    {
-      req: false,
-      label: "主要聯絡人電話(手機)",
-      value: vendor_Contact_List[0]?.contact_phone ?
-        vendor_Contact_List[0].contact_phone_code + "  " + vendor_Contact_List[0].contact_phone :
-        "---",
-      editEle: [
-        <TextInput
-          key="vendor_Contact_List.0.contact_Phone_Code"
-          // disabled={true}
-          style={{ width: "60px" }}
-          {...methods.register("vendor_Contact_List.0.contact_phone_code")}
-        />,
-        <TextInput
-          key="vendor_Contact_List.0.contact_Phone"
-          {...methods.register("vendor_Contact_List.0.contact_phone")}
-        />
-      ],
-    },
-    */
+    }
   ]
   return (
     <>
