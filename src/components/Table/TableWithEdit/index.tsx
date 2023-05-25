@@ -40,12 +40,12 @@ function Table({
     console.log(item);
   }
 }: I_Table) {
-  console.log("data", data);
+  // console.log("data", data);
   // const [checkedItems, setCheckedItems] = useState<Array<string | number>>([]);
   // const router = useRouter();
   if (!data) return <p>Loading</p>;
   return (
-    <TableContainerSTY>
+    <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
         <div className="container-header-left">
           <span>{tableName}列表</span>
@@ -91,45 +91,54 @@ function Table({
           </tr>
         </thead>
         <tbody>
-          {data.map((item: any) => {
-            return (
-              <tr key={uuid()}>
-                {/* <td>
+          {data.length !== 0 ? (
+            data.map((item: any) => {
+              return (
+                <tr key={uuid()}>
+                  {/* <td>
                   <Checkbox
                     checked={checkedItems.includes(item.id)}
                     onChange={() => handleCheck(item.id)}
                   />
                 </td> */}
-                {Object.keys(item).map((key) => {
-                  if (key === "id") return;
+                  {Object.keys(item).map((key) => {
+                    if (key === "id") return;
 
-                  if (!item[key].label) {
+                    if (!item[key].label) {
+                      return (
+                        <td key={item.id + key}>
+                          <span className="no-data">
+                            <div />
+                          </span>
+                        </td>
+                      );
+                    }
                     return (
                       <td key={item.id + key}>
-                        <span className="no-data">
-                          <div />
-                        </span>
+                        <div className="data-row">
+                          {key === "status" && (
+                            <StyledDot value={item[key].value} />
+                          )}
+                          <div>{item[key].label}</div>
+                        </div>
                       </td>
                     );
-                  }
-                  return (
-                    <td key={item.id + key}>
-                      <div className="data-row">
-                        <div>{item[key].label}</div>
-                      </div>
-                    </td>
-                  );
-                })}
-                <td>
-                  <TableActionButton
-                    onView={viewItem.bind(null, item.id.value)}
-                    onEdit={goToEditPage.bind(null, item.id.value)}
-                    onDelete={deleteItem.bind(null, item.id.value)}
-                  />
-                </td>
-              </tr>
-            );
-          })}
+                  })}
+                  <td>
+                    <TableActionButton
+                      onView={viewItem.bind(null, item.id.value)}
+                      onEdit={goToEditPage.bind(null, item.id.value)}
+                      onDelete={deleteItem.bind(null, item.id.value)}
+                    />
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <div className="noDataShown">
+              <div>查無資料</div>
+            </div>
+          )}
         </tbody>
       </TableSTY>
     </TableContainerSTY>

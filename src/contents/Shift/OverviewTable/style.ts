@@ -3,9 +3,9 @@ import styled from "styled-components";
 const checkboxWidth = 36;
 const freezeColWidth = 72;
 
-export const TableSTY = styled.div<{ isTextShown: boolean }>`
-  ${({ isTextShown }) => `
-    --cellWidth: ${isTextShown ? "92px" : "72px"};
+export const TableSTY = styled.div<{ isExpand: boolean }>`
+  ${({ isExpand }) => `
+    --cellWidth: ${isExpand ? "140px" : "72px"};
   `}
 
   width: 100%;
@@ -18,7 +18,12 @@ export const TableSTY = styled.div<{ isTextShown: boolean }>`
   &::-webkit-scrollbar {
     display: none;
   }
-
+  .reminder {
+    animation: 200ms ease-out 200ms infinite alternate reminder;
+    /* animation-delay: 200ms;
+    animation-timing-function: ease-out;
+    animation-duration: 200msr; */
+  }
   .eg-table {
     width: fit-content;
     height: fit-content;
@@ -30,9 +35,8 @@ export const TableSTY = styled.div<{ isTextShown: boolean }>`
       width: fit-content;
       .eg-th {
         background: ${({ theme }) => theme.color.N100};
-        .date-date {
-        }
-        .date-day {
+        span {
+          padding: 0px 4px;
         }
       }
       .weekend {
@@ -57,6 +61,7 @@ export const TableSTY = styled.div<{ isTextShown: boolean }>`
             flex-direction: row;
             justify-content: center;
             flex-grow: 1;
+
             button {
               margin-right: 2px;
             }
@@ -65,6 +70,9 @@ export const TableSTY = styled.div<{ isTextShown: boolean }>`
             }
           }
         }
+      }
+      .hidden {
+        display: none;
       }
     }
 
@@ -77,20 +85,17 @@ export const TableSTY = styled.div<{ isTextShown: boolean }>`
     .eg-td,
     .eg-th {
       width: var(--cellWidth);
-
       min-width: var(--cellWidth);
       border-right: 1px solid ${({ theme }) => theme.color.N300};
-      padding: 0;
+      padding: 4px;
       display: flex;
       flex-direction: row;
-      span {
-        padding: 0px 4px;
-      }
       div {
         /* <Checkbox /> */
         align-self: center;
-        margin: 10px;
+        margin: 0 auto;
       }
+
       &:nth-child(-n + 2) {
         position: sticky;
         left: ${checkboxWidth + "px"};
@@ -108,16 +113,16 @@ export const TableSTY = styled.div<{ isTextShown: boolean }>`
     }
   }
   .shift-btn {
-    width: ${({ isTextShown }) => (isTextShown ? "100%" : "unset")};
+    width: ${({ isExpand }) => (isExpand ? "100%" : "unset")};
     max-width: 100%;
     max-height: 100%;
-    min-width: calc(100% / 3);
+    min-width: calc((100% - 2px * 2) / 3);
     flex-grow: 1;
     svg {
       fill: #fff;
     }
     span {
-      display: ${({ isTextShown }) => (isTextShown ? "inline" : "none")};
+      display: ${({ isExpand }) => (isExpand ? "inline" : "none")};
     }
   }
   .noResultMsg {

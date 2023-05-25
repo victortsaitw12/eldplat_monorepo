@@ -13,7 +13,7 @@ const Drawer = ({ tabName, children, closeDrawer }: DrawerProps) => {
   const titles = tabName || ["輔助視窗"];
 
   return (
-    <DrawerSTY>
+    <DrawerSTY className="drawer__container">
       <DrawerTabs titles={titles} closeDrawer={closeDrawer} />
       <div className="drawer__content">{children}</div>
     </DrawerSTY>

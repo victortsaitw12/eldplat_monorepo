@@ -13,7 +13,7 @@ import theme from "@styles/theme";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { TimepickerSTY } from "./style";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getDayEnd, getDayStart } from "@contents/Shift/shift.util";
 
 const customTheme = mergeTheme(defaultTheme, {

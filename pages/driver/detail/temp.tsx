@@ -19,7 +19,7 @@ function DetailPage() {
 
   const DETAIL_TABS = [
     { index: 0, label: "駕駛資訊", content: <Details /> },
-    { index: 1, label: "異動紀錄", content: <History /> }
+    { index: 1, label: "健康紀錄", content: <History /> }
   ];
 
   return (

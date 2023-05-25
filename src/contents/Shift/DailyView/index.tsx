@@ -1,9 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { Spinner, Pane } from "evergreen-ui";
 import { DailyViewSTY } from "./style";
 import { MonthlyData, TimeItem } from "../shift.typing";
 import { WKDAY_LABEL } from "@contents/Shift/shift.data";
-import { UIContext } from "@contexts/UIProvider";
+import { getDayEnd } from "../shift.util";
+
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleList } from "@services/schedule/getScheduleList";
 import EventBars from "@contents/Shift/EventBars";
 import TimeCell from "@contents/Shift/TimeCell";
@@ -13,14 +16,18 @@ const DailyView = ({
   setIsOpenDrawer,
   monthlyData,
   setMonthlyData,
-  view
+  view,
+  isExpand
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
+  isExpand: boolean;
 }) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const UI = React.useContext(UIContext);
   const router = useRouter();
   UI.setId(router.query.id);
@@ -38,12 +45,14 @@ const DailyView = ({
 
   React.useEffect(() => {
     if (!UI.id) return;
+    setIsLoading(true);
     const updated = { ...UI.insertData };
     updated.driver_no = UI.id;
     UI.setInsertData(updated);
     const fetchData = async () => {
       const result = await getScheduleList(UI.id);
       setMonthlyData(result.data);
+      setIsLoading(false);
     };
     fetchData();
   }, [UI.id, cur, UI.flag]);
@@ -55,7 +64,18 @@ const DailyView = ({
     };
   }, [UI.isSelect]);
 
+  React.useEffect(() => {
+    isExpand
+      ? UI.setTimeframe(1000 * 60 * 60 * 1) //1hour
+      : UI.setTimeframe(1000 * 60 * 60 * 2); //2hour
+  }, [isExpand]);
   //------ functions ------//
+  const handleCreateFullDayEvent = (timestamp: number) => {
+    const selectedDT = new Date(timestamp);
+    UI.setStartDate(selectedDT);
+    UI.setEndDate(getDayEnd(selectedDT));
+    renderCreateForm();
+  };
 
   const renderCreateForm = () => {
     UI.setIsSelect(false);
@@ -69,7 +89,7 @@ const DailyView = ({
   //------ render body ------//
 
   const times: Array<TimeItem> = [];
-  for (let h = 0; h < 24; h += 2) {
+  for (let h = 0; h < 24; h += UI.timeframe / (1000 * 60 * 60 * 1)) {
     const hour = h === 0 ? 12 : h > 12 ? h - 12 : h;
     const timeslot = h < 12 ? "AM" : "PM";
     const time = {
@@ -95,10 +115,10 @@ const DailyView = ({
   return (
     <DailyViewSTY cellWidth={cellWidth}>
       <div className="headerCell__row">
-        <div className="headerCell__row-date">日期</div>
+        <div className="headerCell__row-date date">日期</div>
         <div className="headerCell__row-times">
           {times.map((item, i) => (
-            <div key={`header-${i}`} className="headerCell">
+            <div key={`header-${i}`} className="headerCell time">
               <span className="headerCell-hhmm">{`${item.hh}:${item.mm}`}</span>
               <span className="headerCell-aa">{`${item.aa}`}</span>
             </div>
@@ -109,9 +129,10 @@ const DailyView = ({
         {dateArr.map((date: any, i: number) => (
           <div key={`datecell-${i}`} className="dateCell__row">
             <div
-              className={`dateCell__row-date ${
+              className={`dateCell__row-date date ${
                 date.day.weekend ? "weekend" : ""
               }`}
+              onClick={handleCreateFullDayEvent.bind(null, date.timestamp)}
             >
               <span>{date.date}</span>
               <span>{date.day.label}</span>
@@ -129,8 +150,7 @@ const DailyView = ({
                 return (
                   <TimeCell
                     key={`canvas-${i}-${index}`}
-                    setIsOpenDrawer={setIsOpenDrawer}
-                    cellTimestamp={date.timestamp + index * UI.timeFrame}
+                    cellTimestamp={date.timestamp + index * UI.timeframe}
                     view={view}
                   />
                 );
@@ -139,6 +159,19 @@ const DailyView = ({
           </div>
         ))}
       </div>
+      {isLoading ? (
+        <Pane
+          className="coverAll"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={400}
+        >
+          <Spinner className="spinner" />
+        </Pane>
+      ) : (
+        ""
+      )}
     </DailyViewSTY>
   );
 };

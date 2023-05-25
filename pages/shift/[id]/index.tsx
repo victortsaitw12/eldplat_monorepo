@@ -3,11 +3,11 @@ import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { Pane } from "evergreen-ui";
-import { ViewSTY } from "./style";
+import { ViewIdSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
 import { getLayout } from "@layout/MainLayout";
-import UIProvider from "@contexts/UIProvider";
+import UIProvider from "@contexts/scheduleContext/UIProvider";
 import MonthPicker from "@contents/Shift/MonthPicker";
 import MonthlyView from "@contents/Shift/MonthlyView";
 import DrawerContent from "@contents/Shift/DrawerContent";
@@ -16,6 +16,7 @@ import TableTitle from "@components/Table/TableTitle";
 import ZoomBar from "@components/ZoomBar";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
+import AlertBox from "@components/AlertBox";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -23,12 +24,23 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const [monthlyData, setMonthlyData] = React.useState<MonthlyData[] | null>(
     null
   );
-  const [view, setView] = React.useState<"monthly" | "daily">("daily");
+  const [view, setView] = React.useState<"monthly" | "daily">("monthly");
+  const [isExpand, setIsExpand] = React.useState(false);
+  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
 
   const initialMonthFirst = new Date(
     Array.isArray(cur) ? cur[0] : cur || Date.now()
   );
-  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
+
+  //------ functions ------//
+  const handleZoombar = (value: boolean) => {
+    setIsExpand(value);
+  };
+  const handleLayout = (type: "monthly" | "daily") => {
+    setView(type);
+    setIsOpenDrawer(false);
+    setIsExpand(false);
+  };
 
   //------ render ------//
   const tableName = [
@@ -37,7 +49,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
       {monthlyData ? (
         <>
           <span>{monthlyData[0]?.user_Name}</span>
-          <span style={{ color: "red" }}>
+          <span className="red">
             休假天數 {monthlyData[0]?.total_Leave_Days} 天
           </span>
         </>
@@ -49,23 +61,28 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
 
   return (
     <UIProvider>
-      <ViewSTY isOpenDrawer={isOpenDrawer}>
+      <ViewIdSTY isOpenDrawer={isOpenDrawer}>
         <Head>
-          <title>駕駛排班 - 個人</title>
+          <title>
+            駕駛排班 - {monthlyData ? monthlyData[0]?.user_Name : ""}
+          </title>
         </Head>
-        <Pane className="wrap">
-          <Tabs titles={["全部"]} />
+        <Pane className="wrapMain">
+          <Tabs
+            titles={["全部"]}
+            setIsOpenDrawer={setIsOpenDrawer}
+            isOpenDrawer={isOpenDrawer}
+          />
           <Pane className="pageContent">
             <TableTitle
               tableName={tableName}
               control={[
-                <ZoomBar key="zoombar" />,
-                <LayoutControl
-                  key="layoutControl"
-                  view={view}
-                  setView={setView}
-                  setIsOpenDrawer={setIsOpenDrawer}
-                />
+                <ZoomBar
+                  key="zoombar"
+                  initScale={isExpand ? 100 : 0}
+                  setState={handleZoombar}
+                />,
+                <LayoutControl key="layoutControl" setState={handleLayout} />
               ]}
               sub={[]}
               page={false}
@@ -77,6 +94,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 initialMonthFirst={initialMonthFirst}
                 setIsOpenDrawer={setIsOpenDrawer}
                 view={view}
+                isExpand={isExpand}
               />
             ) : (
               <DailyView
@@ -85,6 +103,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 initialMonthFirst={initialMonthFirst}
                 setIsOpenDrawer={setIsOpenDrawer}
                 view={view}
+                isExpand={isExpand}
               />
             )}
           </Pane>
@@ -94,7 +113,13 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
           setIsOpenDrawer={setIsOpenDrawer}
           view={view}
         />
-      </ViewSTY>
+      </ViewIdSTY>
+      {/* <AlertBox
+        type="none"
+        title="提示"
+        description="點擊員工列，檢視個別排班資訊。。"
+        isRemoveable={true}
+      /> */}
     </UIProvider>
   );
 };

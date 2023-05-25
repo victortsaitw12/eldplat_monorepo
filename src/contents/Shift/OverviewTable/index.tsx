@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { Checkbox, Table } from "evergreen-ui";
 
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getAllDriverScheduleList } from "@services/schedule/getAllDriverScheduleList";
 import { TableSTY } from "./style";
 import { WKDAY_LABEL, EVENT_TYPE } from "@contents/Shift/shift.data";
@@ -12,14 +12,15 @@ import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
 
 const OverviewTable = ({
   initialMonthFirst,
-  isTextShown
+  isExpand
 }: {
   initialMonthFirst: Date;
-  isTextShown: boolean;
+  isExpand: boolean;
 }) => {
   const UI = React.useContext(UIContext);
   const router = useRouter();
   const [allData, setAllData] = React.useState<DriverData[]>([]);
+  const containerRef = React.useRef(null);
 
   React.useEffect(() => {
     const queryString = `${initialMonthFirst.getFullYear()}-${(
@@ -29,10 +30,10 @@ const OverviewTable = ({
     )
       .toString()
       .padStart(2, "0")}`;
-
     const fetchData = async () => {
       const result = await getAllDriverScheduleList(queryString);
       setAllData(result.data);
+      console.log("data:", result.data);
     };
     fetchData();
   }, [initialMonthFirst, UI.monthCount]);
@@ -49,12 +50,18 @@ const OverviewTable = ({
   ).getDate();
 
   //------ functions ------//
+
+  const handleScroll = (event) => {
+    event.preventDefault();
+    const container = containerRef.current;
+    container.scrollLeft += event.deltaY;
+  };
+
   const handleClickUser = (id: string) => {
     router.push(`/shift/${id}?cur=${curMonthFirst}`);
   };
 
   const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
-    console.log(new Date(date.timestamp.valueOf()));
     const shiftsOnGivenDate = scheduleInfo.filter(
       (item: ScheduleInfoData) =>
         getDayStart(new Date(item.schd_Start_Time)) <=
@@ -73,7 +80,9 @@ const OverviewTable = ({
         return (
           <EventTag
             key={`shift-${i}`}
-            className="shift-btn"
+            className={`shift-btn ${i >= 3 ? "hidden" : ""} ${
+              item.check_Status === "0" ? "reminder" : ""
+            }`}
             value={EVENT_TYPE.get(eventTypeCode)}
           />
         );
@@ -102,10 +111,15 @@ const OverviewTable = ({
     </Table.TextHeaderCell>
   ));
   return (
-    <TableSTY className="table-viewport" isTextShown={isTextShown}>
+    <TableSTY
+      className="table-viewport"
+      isExpand={isExpand}
+      ref={containerRef}
+      onWheel={handleScroll}
+    >
       <Table className="eg-table">
         <Table.Head className="eg-head">
-          <Checkbox className="eg-th" key="selectAll" label="" />
+          <Checkbox className="eg-th checkbox" key="selectAll" label="" />
           <Table.TextHeaderCell className="eg-th">
             駕駛姓名
           </Table.TextHeaderCell>
@@ -126,7 +140,7 @@ const OverviewTable = ({
               )}
             >
               <Checkbox
-                className="eg-td"
+                className="eg-td checkbox"
                 key={"check-" + item.driverLeaveInfo.driver_No}
                 label=""
               />
@@ -143,9 +157,9 @@ const OverviewTable = ({
                     date.day.weekend ? "weekend" : ""
                   }`}
                 >
-                  <span className="eventTag-container">
+                  <div className="eventTag-container">
                     {renderShifts(date, item.scheduleInfo)}
-                  </span>
+                  </div>
                 </Table.TextCell>
               ))}
             </Table.Row>
