@@ -6,7 +6,7 @@ export const BodySTY = styled.div`
     background:  ${({ theme }) => theme.color.N0};
     display: block;
     height: calc(100vh - 180px);
-    .subpoint-title{
+    .title{
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -17,5 +17,11 @@ export const BodySTY = styled.div`
             color:  ${({ theme }) => theme.color.N700};
             margin-bottom: 24px;
         }
+    }
+    .title-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 21px;
     }
 `;

@@ -1,8 +1,9 @@
 import React from "react";
 import { BodySTY } from "./style";
 import Table from "@components/Table/Table";
-import { Pane, Heading } from "evergreen-ui";
+import { Pane, Heading, CogIcon } from "evergreen-ui";
 import LabelTag from "@components/LabelTag";
+import PaginationField from "@components/PaginationField";
 
 interface I_Props {
   test?: boolean;
@@ -48,8 +49,12 @@ const mock_data = [
 const VendorSubPoint = (props: I_Props) => {
   return (
     <BodySTY>
-      <Pane className="subpoint-title">
+      <Pane className="title">
         <Heading is="h4">富豪車隊</Heading>
+      </Pane>
+      <Pane className="title-right">
+        <PaginationField />
+        <CogIcon color="#718BAA" size={11} />
       </Pane>
       <Table
         titles={mock_title}
