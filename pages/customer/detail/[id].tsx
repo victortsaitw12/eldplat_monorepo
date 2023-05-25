@@ -28,7 +28,7 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
 
   const [loading, setLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState(editPage === "1" || false);
+  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   useEffect(() => {
     updateMainFilter("1");
   }, []);
