@@ -283,20 +283,25 @@ const Page: NextPageWithLayout<{
     </BodySTY>
   );
 };
-interface Props {
-  vendor_id: string;
-};
-export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+
+export const getServerSideProps: GetServerSideProps<Params> = async (
   context
 ) => {
-  const { params } = context;
-  console.log("context", context)
-  console.log("params", params);
-  return {
-    props: {
-      vendor_id: params ? params.id : ""
+  const { query } = context;
+  if (!query.codeType) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/vendor?codeType=01",
+      },
+      props: {}
     }
-  };
+  } else {
+    return {
+      props: {}
+    };
+  }
+
 };
 Page.getLayout = getLayout;
 export default Page;
