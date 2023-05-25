@@ -1,34 +1,38 @@
-import React, { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import React, { useState, forwardRef } from "react";
+import { useForm } from "react-hook-form";
 import { TextInputField, TextInput, SelectField } from "evergreen-ui";
 //@components
 import InfoBox from "@components/InfoBox";
-// import FormCard from "@components/FormCard";
-
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
 //@service
 //@utils
-import {
-  emailValidation,
-  numberValidation,
-  textValidation
-} from "@utils/inputValidation";
 //
 import ContactList from "@components/ContactList";
 import { CustomerDataTypes } from "../customer.type";
+import { getCustomerById } from "@services/customer/getCustomerById";
 interface I_Props {
   isEdit: boolean;
+  submitRef: React.MutableRefObject<HTMLButtonElement | null>;
+  asyncSubmitForm: (data: any) => Promise<void>;
+  customerId: string;
 }
-const CustomerDetail = ({ isEdit }: I_Props) => {
+const CustomerDetail = ({
+  isEdit,
+  submitRef,
+  asyncSubmitForm,
+  customerId
+}: I_Props) => {
   const {
     register,
     control,
     formState: { errors },
-    getValues
-  } = useFormContext<CustomerDataTypes>();
+    getValues,
+    handleSubmit
+  } = useForm<CustomerDataTypes>({
+    defaultValues: async () => getCustomerById(customerId)
+  });
   //TODO 分類的選法
-  console.log("getValues", getValues("labels"));
   if (getValues("customer_no") === undefined) {
     return <div></div>;
   }
@@ -197,7 +201,6 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
         <TextInput
           key="customer_tel_code"
           {...register("customer_tel_code")}
-          disabled={true}
           style={{ width: "60px" }}
         />,
         <TextInput
@@ -215,7 +218,6 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
       editEle: [
         <TextInput
           key="customer_fax_code"
-          disabled={true}
           style={{ width: "60px" }}
           {...register("customer_fax_code")}
         />,
@@ -248,12 +250,16 @@ const CustomerDetail = ({ isEdit }: I_Props) => {
           errors={errors}
           register={register}
           isEdit={isEdit}
+          arrayName="customer_contact"
         />
       ]
     }
   ];
   return (
-    <form>
+    <form onSubmit={handleSubmit(asyncSubmitForm)}>
+      <button ref={submitRef} type="submit" style={{ display: "none" }}>
+        儲存
+      </button>
       <FlexWrapper padding="0">
         <div style={{ flex: "1" }}>
           <InfoBox isEdit={isEdit} infoData={basic_info} infoTitle="基本資料" />

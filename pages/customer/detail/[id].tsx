@@ -2,14 +2,14 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/router";
-import { Pane, Icon, FloppyDiskIcon, EditIcon } from "evergreen-ui";
 //@layout
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 //@services
 import { getCustomerById } from "@services/customer/getCustomerById";
 import CustomerDetail from "@contents/Customer/CustomerDetail";
-
+import { updateCustomer } from "@services/customer/updateCustomer";
+//
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { CustomerDataTypes } from "@contents/Customer/customer.type";
@@ -22,67 +22,36 @@ function fakeSubmit(data: any) {
 const mainFilterArray = [{ id: 1, label: "客戶資料", value: "CustomerData" }];
 //
 const Index: NextPageWithLayout<never> = ({ customerId }) => {
+  const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useCustomerStore();
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
 
   const [loading, setLoading] = useState(false);
-  const [oldCustomerData, setOldCustomerData] = useState(null);
   const [isEdit, setIsEdit] = useState(editPage === "1" || false);
   useEffect(() => {
-    updateMainFilter("all");
-  }, [updateMainFilter]);
+    updateMainFilter("1");
+  }, []);
   //TableWrapper
   const changeMainFilterHandler = () => {
     console.log("changeMainFilterHandler");
   };
   //
-  const mainFilterArray = useMemo(
-    () => [{ id: 1, label: "顧客資料", value: "all" }],
-    []
-  );
   const asyncSubmitForm = async (data: any) => {
-    console.log("edited data", data);
     setLoading(true);
+    console.log("edited data", data);
     try {
+      await updateCustomer(data);
     } catch (e: any) {
       console.log(e);
-      alert(e.message);
     }
     setLoading(false);
     router.push("/customer");
   };
   //
-  async function getDefaultValuesHandler() {
-    const lowerCaseFlatternData = await getCustomerById(customerId);
-    console.log("lowerCaseFlatternData", lowerCaseFlatternData);
-    return lowerCaseFlatternData;
-  }
-  //
-  const method = useForm<CustomerDataTypes>({
-    defaultValues: async () => getDefaultValuesHandler()
-  });
-  const { register, formState, control, getValues, handleSubmit } = method;
-  //
   const onCancelHandler = () => {
     router.push("/customer");
   };
-  //
-  useEffect(() => {
-    const getCustomerData = async () => {
-      setLoading(true);
-      try {
-        const data = await getCustomerById(customerId);
-        console.log("✨✨✨✨✨Get data by id", data);
-        setOldCustomerData(data);
-      } catch (e: any) {
-        console.log("取單一供應商data的時候錯了", e);
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    getCustomerData();
-  }, [customerId]);
 
   return (
     <BodySTY>
@@ -90,16 +59,24 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
-        onSave={handleSubmit(asyncSubmitForm)}
+        onSave={() => {
+          console.log("save");
+          console.log("submitRef", submitRef.current);
+          submitRef.current?.click();
+        }}
         onEdit={() => {
           console.log("set is Edit to true");
           setIsEdit(true);
         }}
         onClose={onCancelHandler}
+        isEdit={isEdit}
       >
-        <FormProvider {...method}>
-          <CustomerDetail isEdit={isEdit} />
-        </FormProvider>
+        <CustomerDetail
+          isEdit={isEdit}
+          submitRef={submitRef}
+          asyncSubmitForm={asyncSubmitForm}
+          customerId={customerId}
+        />
       </TableWrapper>
     </BodySTY>
   );

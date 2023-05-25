@@ -1,24 +1,24 @@
-export const updateCustomer = async (
-  customer_No: string,
-  customerData: any
-) => {
-  const filteredNullData: { [key: string]: string | null } = {};
+export const updateCustomer = async (customerData: any) => {
   for (const key in customerData) {
-    if (customerData[key] !== null && customerData[key].trim() !== "") {
-      filteredNullData[key] = customerData[key];
+    if (customerData[key] === "") {
+      delete customerData[key];
     }
   }
-  filteredNullData["customer_No"] = customer_No;
-  console.log("filteredNullData", filteredNullData);
-  const res = await fetch(
-    "https://localhost:7188/Gateway_Customer/UpdateCustomer",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(filteredNullData)
+  // handle customer_contact
+  for (let i = 0; i < customerData.customer_contact.length; i++) {
+    if (i !== 0) {
+      customerData.customer_contact[i]["contact_sort"] = "2";
     }
-  );
-  return res.json();
+  }
+  //
+  const res = await fetch("https://localhost:7088/CTR/UpdateCustomer", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    },
+    body: JSON.stringify(customerData)
+  });
+  const result = await res.json();
+  return result;
 };

@@ -29,7 +29,7 @@ export const getBusById = async (bus_no: string) => {
   );
   const data = await response.json();
   console.log("data", data);
-  const flatternLowerCaseData = flatternAndLowerCaseInputData(data.oneBus);
+  const flatternLowerCaseData = flatternAndLowerCaseInputData(data.dataList[0]);
   return mappingData(flatternLowerCaseData, busPattern);
 };
 

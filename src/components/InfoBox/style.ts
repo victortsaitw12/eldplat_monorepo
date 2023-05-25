@@ -8,12 +8,16 @@ export const InfoBoxSTY = styled.div`
   border-radius:10px;
   overflow:auto;
   padding:35px 20px;
+  
   & > .info-title{
     display: inline-block;
     font-size: 16px;
     font-weight: 600;
     color: #567190;
     margin-bottom: 30px;
+  }
+  & ul{
+    margin: 0;
   }
   & ul li{
     list-style: none;
@@ -24,24 +28,27 @@ export const InfoBoxSTY = styled.div`
       display: flex;
       font-size: 14px;
       margin-bottom: 33px;
-      align-items: center;
+      align-items: baseline;
+      input{
+        width: unset;
+      }
       .req{
         color: #D14343;
       }
-      span:first-child{
+      & > span:first-child{
         flex: 1;
       }
-      span:last-child{
+      & > span:last-child{
         flex: 3;
       }
-     & > div{
+      & > div{
         display: flex;
         flex: 3;
         margin-bottom: 0;
         gap: 10px;
-        & > div{
+        /* & > div{
           flex-direction: column;
-        }
+        } */
       }  
   
     }

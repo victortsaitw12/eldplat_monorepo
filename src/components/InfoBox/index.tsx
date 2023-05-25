@@ -66,7 +66,6 @@ function InfoBox({
       if (inputType === "custom") {
         return editEle;
       }
-      console.log("value", value);
 
       return (
         <ListItem key={value + i}>
@@ -118,7 +117,7 @@ function InfoBox({
 
   return (
     <InfoBoxSTY style={style}>
-      <Text className="info-title">{infoTitle}</Text>
+      {infoTitle && <Text className="info-title">{infoTitle}</Text>}
       {r_switch_info(infoType)}
     </InfoBoxSTY>
   );

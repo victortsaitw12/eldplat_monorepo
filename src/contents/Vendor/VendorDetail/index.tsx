@@ -5,6 +5,7 @@ import { MOCK_FUEL_DATA } from "./FuelData";
 import VerticalInput from "@components/HookForm/Input/VerticalInput";
 //@components
 import InfoBox from "@components/InfoBox";
+import ContactList from "@components/ContactList";
 // import FormCard from "@components/FormCard";
 
 //@layout
@@ -85,8 +86,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       label: "名稱",
       value: vendor_Name,
       editEle:
-        <VerticalInput
-          label=''
+        <TextInput
           {...methods.register("vendor_Name", {
             required: "必填",
             validate: textValidation
@@ -142,23 +142,33 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       subLabel: <span>地址1</span>,
       value: address1,
       editEle:
-        <TextInput  {...methods.register("address1", {
-          validate: textValidation
-        })} />
+        <TextInputField
+          key="address1"
+          label="地址1"
+          {...methods.register("address1", {
+            validate: textValidation
+          })}
+          marginBottom="0"
+        />
     },
     {
       req: false,
-      label: "",
+      label: " ",
       subLabel: <span>地址2</span>,
       value: address2,
       editEle:
-        <TextInput  {...methods.register("address2", {
-          validate: textValidation
-        })} />
+        <TextInputField
+          key="address2"
+          label="地址2"
+          {...methods.register("address1", {
+            validate: textValidation
+          })}
+          marginBottom="0"
+        />
     },
     {
       req: false,
-      label: "",
+      label: " ",
       value: [vendor_City, vendor_Area],
       editEle: [
         <SelectField
@@ -192,7 +202,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     },
     {
       req: false,
-      label: "",
+      label: " ",
       value: [vendor_District_Code, vendor_Country],
       editEle: [
         <TextInputField
@@ -280,7 +290,23 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
         />
       ],
     },
+    {
+      req: false,
+      inputType: "custom",
+      editEle: [
+        <ContactList
+          key="contact_list"
+          arrayName="vendor_Contact_List"
+          hide={false}
+          control={methods.control as any}
+          errors={methods.formState.errors}
+          register={methods.register as any}
+          isEdit={isEdit}
+        />
+      ]
+    },
     // TODO:主要聯絡人區塊 因為變成Array所以先緩緩再做。
+    /*
     {
       req: true,
       label: "主要聯絡人",
@@ -332,6 +358,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
         />
       ],
     },
+    */
   ]
   return (
     <>
