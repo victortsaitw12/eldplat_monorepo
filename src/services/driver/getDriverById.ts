@@ -1,13 +1,11 @@
-import { token } from "./token";
-
-export const getDriverById = async (user_No: string) => {
+export const getDriverById = async (driver_no: string) => {
   const response = await fetch(
-    `https://localhost:7088/ATR/QueryDriverInfo?userNo=${user_No}`,
+    `https://localhost:7088/ATR/QueryDriverInfo?driver_no=${driver_no}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
       }
     }
   );

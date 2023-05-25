@@ -3,20 +3,27 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/router";
 import { Pane, Icon, FloppyDiskIcon, EditIcon } from "evergreen-ui";
+import { BodySTY } from "./style";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
+
 //@services
 import { updateVendor } from "@services/vendor/updateVendor";
 import { getVendorById } from "@services/vendor/getVendorById";
 
+//@contents
 import VendorDetail from "@contents/Vendor/VendorDetail";
+import VendorSubPoint from "@contents/Vendor/VendorSubPoint"
 
-import { BodySTY } from "./style";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-
+//@util
 import { keysToLowercase } from "@utils/keysToLowercase";
+
+//@context
+import { useVendorStore } from "@contexts/filter/vendorStore";
 //
 const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
@@ -26,15 +33,30 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
-  //TableWrapper
-  const changeMainFilterHandler = () => {
-    console.log("changeMainFilterHandler");
-  };
+  const [nowTab, setNowTab] = useState("vendor");
+  const {
+    initializeSubFilter,
+    mainFilter,
+    updateMainFilter,
+    subFilter,
+    updateSubFilter,
+    isDrawerOpen,
+    setDrawerOpen
+  } = useVendorStore();
+
   //
   const mainFilterArray = useMemo(
-    () => [{ id: 1, label: "供應商資料", value: "all" }],
+    () => [
+      { id: 1, label: "供應商資料", value: "vendor" },
+      { id: 2, label: "子據點", value: "subpoint" }
+    ],
     []
   );
+  //TableWrapper
+  const changeMainFilterHandler = (value: string) => {
+    console.log("changeMainFilterHandler", value);
+    setNowTab(value)
+  };
 
   const asyncSubmitForm = async (data: any) => {
     console.log("edited data", data);
@@ -49,7 +71,6 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     setLoading(false);
     router.push("/vendor");
   };
-
   //
   useEffect(() => {
     const getCustomerData = async () => {
@@ -77,8 +98,8 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
       {!loading && oldVendorData && (
         <TableWrapper
           isEdit={isEdit}
-          onChangeTab={changeMainFilterHandler}
-          mainFilter={"all"}
+          onChangeTab={(value) => changeMainFilterHandler(value)}
+          mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
           onSave={() => {
             // setIsEdit(!isEdit)
@@ -91,12 +112,26 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
             router.push("/vendor");
           }}
         >
-          <VendorDetail
-            submitRef={submitRef}
-            submitForm={asyncSubmitForm}
-            isEdit={isEdit}
-            vendorData={oldVendorData}
-          />
+          {
+            nowTab === "vendor" && <VendorDetail
+              submitRef={submitRef}
+              submitForm={asyncSubmitForm}
+              isEdit={isEdit}
+              vendorData={oldVendorData}
+            />
+          }
+          {
+            nowTab === "subpoint" &&
+            <FilterWrapper
+              updateFilter={updateSubFilter}
+              resetFilter={() => {
+                initializeSubFilter();
+              }}
+              filter={subFilter}
+            >
+              <VendorSubPoint />
+            </FilterWrapper>
+          }
         </TableWrapper>
       )}
     </BodySTY>

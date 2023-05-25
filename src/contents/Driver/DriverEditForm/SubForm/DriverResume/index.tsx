@@ -32,7 +32,7 @@ interface Props {
 
 function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
   const { register, errors, control, handleSubmit } = useFormContext();
-
+  console.log("DriverResume:", currentUserInfo);
   const resume_info = [
     {
       readonly: true,

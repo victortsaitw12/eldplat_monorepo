@@ -12,6 +12,8 @@ function Basic({
   currentUserInfo: I_driverInfo;
   isLoading: boolean;
 }) {
+  console.log("Basic:", currentUserInfo);
+
   const formatEmail = (email: string) => {
     return (
       <Link className="email" href={`mailto:${email}`}>
