@@ -10,7 +10,7 @@ import {
   UseFormGetValues,
   Control
 } from "react-hook-form";
-import { BusDataTypes } from "../../busDefaultData";
+import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
   selected?: boolean;
@@ -191,16 +191,16 @@ function Details({
       )
     },
     {
-      req: true,
-      label: "",
-      value: getValues("bus.bus_group"),
+      req: false,
+      inputType: "custom",
       editEle: (
         <DottedSelect
           control={control}
+          key={"bus.status"}
           name="bus.status"
           label="狀態"
           isRequire={true}
-          isDisabled={false}
+          isDisabled={!isEdit}
           options={[
             { label: "活躍中", value: "01", color: "#52BD94" },
             { label: "已售出", value: "02", color: "#8EA8C7" },
@@ -284,7 +284,12 @@ function Details({
       padding="0"
       style={{ display: `${selected ? "flex" : "none"}` }}
     >
-      <InfoBox isEdit={isEdit} infoData={identityInfo} infoTitle="身分識別" />
+      <InfoBox
+        isEdit={isEdit}
+        infoData={identityInfo}
+        infoTitle="身分識別"
+        style={{ flex: "1" }}
+      />
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={categoryInfo} infoTitle="分類" />
         <InfoBox

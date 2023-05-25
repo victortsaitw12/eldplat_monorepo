@@ -12,7 +12,7 @@ import {
   Control,
   UseFormGetValues
 } from "react-hook-form";
-import { BusDataTypes } from "../../busDefaultData";
+import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
   selected?: boolean;

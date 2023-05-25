@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import { Select, Button, FilePicker, TextInput } from "evergreen-ui";
-import DottedSelect from "@components/HookForm/Select/DottedSelect";
+import { TextInput } from "evergreen-ui";
 import InfoBox from "@components/InfoBox";
-import { FilePickBtnSTY } from "@components/FormCard/style";
 import {
   UseFormRegister,
   FieldErrors,
   UseFormGetValues,
   Control
 } from "react-hook-form";
-import { BusDataTypes } from "../../busDefaultData";
+import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
   selected?: boolean;
@@ -28,19 +25,31 @@ function Lifecycle({
   control,
   isEdit
 }: Props) {
+  console.log("Lifecycle", getValues("bus_lifecycle"));
   // 服務中
   const serviceInfo = [
     {
       req: false,
       label: "服務日期",
       value: getValues("bus_lifecycle.in_service_date"),
-      editEle: <TextInput {...register("bus_lifecycle.in_service_date")} />
+      editEle: (
+        <TextInput
+          key={"bus_lifecycle.in_service_date"}
+          type="date"
+          {...register("bus_lifecycle.in_service_date")}
+        />
+      )
     },
     {
       req: false,
       label: "服務里程數",
       value: getValues("bus_lifecycle.in_service_odometer"),
-      editEle: <TextInput {...register("bus_lifecycle.in_service_odometer")} />
+      editEle: (
+        <TextInput
+          key={"bus_lifecycle.in_service_odometer"}
+          {...register("bus_lifecycle.in_service_odometer")}
+        />
+      )
     }
   ];
   // 車輛壽命估計
@@ -50,7 +59,10 @@ function Lifecycle({
       label: "估計使用壽命(月)",
       value: getValues("bus_lifecycle.estimated_service_months"),
       editEle: (
-        <TextInput {...register("bus_lifecycle.estimated_service_months")} />
+        <TextInput
+          key={"bus_lifecycle.estimated_service_months"}
+          {...register("bus_lifecycle.estimated_service_months")}
+        />
       )
     },
     {
@@ -58,29 +70,48 @@ function Lifecycle({
       label: "估計使用壽命(里程)",
       value: getValues("bus_lifecycle.estimated_service_meter"),
       editEle: (
-        <TextInput {...register("bus_lifecycle.estimated_service_meter")} />
+        <TextInput
+          key={"bus_lifecycle.estimated_service_meter"}
+          {...register("bus_lifecycle.estimated_service_meter")}
+        />
       )
     },
     {
       req: false,
       label: "估計轉售價值",
       value: getValues("bus_lifecycle.out_service_date"),
-      editEle: <TextInput {...register("bus_lifecycle.out_service_date")} />
+      editEle: (
+        <TextInput
+          key={"bus_lifecycle.out_service_date"}
+          {...register("bus_lifecycle.out_service_date")}
+        />
+      )
     }
   ];
   // 終止服務
   const cancelInfo = [
     {
       req: false,
-      label: "服務日期",
-      value: getValues("bus_lifecycle.out_service_odometer"),
-      editEle: <TextInput {...register("bus_lifecycle.out_service_odometer")} />
+      label: "停用日期",
+      value: getValues("bus_lifecycle.out_service_date"),
+      editEle: (
+        <TextInput
+          key={"bus_lifecycle.out_service_date"}
+          type="date"
+          {...register("bus_lifecycle.out_service_date")}
+        />
+      )
     },
     {
       req: false,
-      label: "服務里程數",
-      value: getValues("bus_lifecycle.in_service_odometer"),
-      editEle: <TextInput {...register("bus_lifecycle.in_service_odometer")} />
+      label: "停用里程表數值",
+      value: getValues("bus_lifecycle.out_service_odometer"),
+      editEle: (
+        <TextInput
+          key={"bus_lifecycle.out_service_odometer"}
+          {...register("bus_lifecycle.out_service_odometer")}
+        />
+      )
     }
   ];
   return (

@@ -13,7 +13,7 @@ import InfoBox from "@components/InfoBox";
 import FlexWrapper from "@layout/FlexWrapper";
 //@service
 //@utils
-import { BusDataTypes } from "../busDefaultData";
+import { BusDataTypes } from "../bus.type";
 import { getBusById } from "@services/bus/getBusById";
 interface I_Props {
   isEdit: boolean;
@@ -44,8 +44,6 @@ const BusDetail = ({
     defaultValues: async () => getBusById(busId)
   });
   //TODO 分類的選法
-  console.log("render!");
-  console.log(getValues("bus"));
   if (getValues("bus") === undefined) {
     return <div></div>;
   }

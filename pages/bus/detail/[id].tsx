@@ -36,28 +36,23 @@ const Page: NextPageWithLayout<
   const [isEdit, setIsEdit] = useState(editPage === "1" || false);
   useEffect(() => {
     updateMainFilter("1");
-  }, [updateMainFilter]);
+  }, []);
   const changeMainFilterHandler = (value: string) => {
     console.log("changeMainFilterHandler");
+    console.log("value", value);
     updateMainFilter(value);
   };
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     console.log("asyncSubmitForm", data);
     try {
-      // for nesting obj only
-      const flatternObj: { [key: string]: any } = {};
-      for (const key in data) {
-        Object.assign(flatternObj, data[key]);
-      }
-      console.log("flatternObj", flatternObj);
-      // end
-      const res = await updateBus(busId);
+      const res = await updateBus(data);
       console.log("response of bus update: ", res);
-      router.push("/bus");
     } catch (e: any) {
+      alert(e.message);
       console.log(e);
     }
+    router.push("/bus");
     setLoading(false);
   };
   const onCancelHandler = () => {

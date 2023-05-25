@@ -39,8 +39,6 @@ function TableWrapper({
   onEdit,
   onClose
 }: Props) {
-  console.log("mainFilterArray", mainFilterArray);
-  console.log("mainFilter", mainFilter);
   return (
     <BodySTY>
       <div className="filter-header">

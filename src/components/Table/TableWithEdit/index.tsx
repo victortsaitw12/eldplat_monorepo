@@ -115,9 +115,6 @@ function Table({
                   return (
                     <td key={item.id + key}>
                       <div className="data-row">
-                        {key === "status" && (
-                          <StyledDot value={item[key].value} />
-                        )}
                         <div>{item[key].label}</div>
                       </div>
                     </td>

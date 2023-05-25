@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Select, TextInput, Textarea } from "evergreen-ui";
 import {
   UseFormRegister,
@@ -7,7 +7,7 @@ import {
   Control,
   useWatch
 } from "react-hook-form";
-import { BusDataTypes } from "../../busDefaultData";
+import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 import InfoBox from "@components/InfoBox";
 import Radio from "@components/HookForm/Radio";
@@ -27,11 +27,10 @@ function Financial({
   control,
   isEdit
 }: Props) {
-  useWatch({
+  const loan_lease = useWatch({
     control,
     name: "bus_loan_lease.loan_lease"
   });
-  // console.log("loanLeaseValue", loanLeaseValue);
   const purchaseInfo = [
     {
       req: true,
@@ -51,25 +50,46 @@ function Financial({
       req: false,
       label: "購買日期",
       value: getValues("bus_loan_lease.purchase_date"),
-      editEle: <TextInput {...register("bus_loan_lease.purchase_date")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.purchase_date"
+          type="date"
+          {...register("bus_loan_lease.purchase_date")}
+        />
+      )
     },
     {
       req: false,
       label: "購買價格",
       value: getValues("bus_loan_lease.purchase_price"),
-      editEle: <TextInput {...register("bus_loan_lease.purchase_price")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.purchase_price"
+          {...register("bus_loan_lease.purchase_price")}
+        />
+      )
     },
     {
       req: false,
       label: "里程表",
       value: getValues("bus_loan_lease.odometer"),
-      editEle: <TextInput {...register("bus_loan_lease.odometer")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.odometer"
+          {...register("bus_loan_lease.odometer")}
+        />
+      )
     },
     {
       req: false,
       label: "備註",
       value: getValues("bus_loan_lease.notes"),
-      editEle: <Textarea {...register("bus_loan_lease.notes")} />
+      editEle: (
+        <Textarea
+          key="bus_loan_lease.notes"
+          {...register("bus_loan_lease.notes")}
+        />
+      )
     }
   ];
   const maintainInfo = [
@@ -78,7 +98,11 @@ function Financial({
       label: "截止日期",
       value: getValues("bus_loan_lease.warranty_expiration_date"),
       editEle: (
-        <TextInput {...register("bus_loan_lease.warranty_expiration_date")} />
+        <TextInput
+          key="bus_loan_lease.warranty_expiration_date"
+          type="date"
+          {...register("bus_loan_lease.warranty_expiration_date")}
+        />
       )
     },
     {
@@ -95,6 +119,7 @@ function Financial({
       inputType: "custom",
       editEle: (
         <Radio
+          key={"bus_loan_lease.loan_lease"}
           control={control}
           name="bus_loan_lease.loan_lease"
           options={[
@@ -125,63 +150,118 @@ function Financial({
       req: false,
       label: "貸款日期",
       value: getValues("bus_loan_lease.date_of_loan"),
-      editEle: <TextInput {...register("bus_loan_lease.date_of_loan")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.date_of_loan"
+          type="date"
+          {...register("bus_loan_lease.date_of_loan")}
+        />
+      )
     },
     {
       req: false,
       label: "貸款金額",
       value: getValues("bus_loan_lease.amount_of_loan"),
-      editEle: <TextInput {...register("bus_loan_lease.amount_of_loan")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.amount_of_loan"
+          type="number"
+          {...register("bus_loan_lease.amount_of_loan")}
+        />
+      )
     },
     {
       req: false,
       label: "年度百分比率(APR)",
       value: getValues("bus_loan_lease.annual_percentage_rate"),
       editEle: (
-        <TextInput {...register("bus_loan_lease.annual_percentage_rate")} />
+        <TextInput
+          key="bus_loan_lease.annual_percentage_rate"
+          {...register("bus_loan_lease.annual_percentage_rate")}
+        />
       )
     },
     {
       req: false,
       label: "首期付款",
       value: getValues("bus_loan_lease.down_payment"),
-      editEle: <TextInput {...register("bus_loan_lease.down_payment")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.down_payment"
+          type="number"
+          {...register("bus_loan_lease.down_payment")}
+        />
+      )
     },
     {
       req: false,
       label: "首期付款日期",
       value: getValues("bus_loan_lease.first_payment_date"),
-      editEle: <TextInput {...register("bus_loan_lease.first_payment_date")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.first_payment_date"
+          type="date"
+          {...register("bus_loan_lease.first_payment_date")}
+        />
+      )
     },
     {
       req: false,
       label: "月付金額",
       value: getValues("bus_loan_lease.monthly_payment"),
-      editEle: <TextInput {...register("bus_loan_lease.monthly_payment")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.monthly_payment"
+          type="number"
+          {...register("bus_loan_lease.monthly_payment")}
+        />
+      )
     },
     {
       req: false,
       label: "付款次數",
       value: getValues("bus_loan_lease.number_of_payments"),
-      editEle: <TextInput {...register("bus_loan_lease.number_of_payments")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.number_of_payments"
+          type="number"
+          {...register("bus_loan_lease.number_of_payments")}
+        />
+      )
     },
     {
       req: false,
       label: "貸款結束日期",
       value: getValues("bus_loan_lease.loan_end_date"),
-      editEle: <TextInput {...register("bus_loan_lease.loan_end_date")} />
+      editEle: (
+        <TextInput
+          type="date"
+          key="bus_loan_lease.loan_end_date"
+          {...register("bus_loan_lease.loan_end_date")}
+        />
+      )
     },
     {
       req: false,
       label: "帳號",
       value: getValues("bus_loan_lease.account_number"),
-      editEle: <TextInput {...register("bus_loan_lease.account_number")} />
+      editEle: (
+        <TextInput
+          key="bus_loan_lease.account_number"
+          {...register("bus_loan_lease.account_number")}
+        />
+      )
     },
     {
       req: false,
       label: "備註",
       value: getValues("bus_loan_lease.loan_lease_notes"),
-      editEle: <Textarea {...register("bus_loan_lease.loan_lease_notes")} />
+      editEle: (
+        <Textarea
+          key="bus_loan_lease.loan_lease_notes"
+          {...register("bus_loan_lease.loan_lease_notes")}
+        />
+      )
     }
   ];
   const leaseInfo = [
@@ -282,7 +362,7 @@ function Financial({
       padding="0"
       style={{ display: `${selected ? "flex" : "none"}` }}
     >
-      <FlexWrapper flexDirection="column" style={{ flex: "1" }}>
+      <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={purchaseInfo} infoTitle="購買詳情" />
         <InfoBox isEdit={isEdit} infoData={maintainInfo} infoTitle="保固" />
       </FlexWrapper>

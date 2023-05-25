@@ -10,7 +10,7 @@ import {
 import FormCard from "@components/FormCard";
 import { FilePickBtnSTY } from "@components/FormCard/style";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { BusDataTypes } from "../../busDefaultData";
+import { BusDataTypes } from "../../bus.type";
 interface Props {
   hide?: boolean;
   register: UseFormRegister<BusDataTypes>;
