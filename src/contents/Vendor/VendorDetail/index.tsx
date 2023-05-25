@@ -365,16 +365,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
       <FormProvider {...methods} >
         <form
           onSubmit={methods.handleSubmit((data) => {
-            console.log("🕯️🕯️🕯️🕯️🕯️🕯️這是用form-hook的data:", {
-              ...data,
-              vendor_Code_List: fuelValue.map((child) => {
-                return ({
-                  vendor_Code: child,
-                  vendor_Code_Name: vedor_code_text[child]
-                })
-              })
-            });
-            // submitForm({
+            // console.log("🕯️🕯️🕯️🕯️🕯️🕯️這是用form-hook的data:", {
             //   ...data,
             //   vendor_Code_List: fuelValue.map((child) => {
             //     return ({
@@ -383,6 +374,15 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
             //     })
             //   })
             // });
+            submitForm({
+              ...data,
+              vendor_Code_List: fuelValue.map((child) => {
+                return ({
+                  vendor_Code: child,
+                  vendor_Code_Name: vedor_code_text[child]
+                })
+              })
+            });
           })}
           name="vendor"
         >

@@ -16,6 +16,7 @@ import VendorDetail from "@contents/Vendor/VendorDetail";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
+import { keysToLowercase } from "@utils/keysToLowercase";
 //
 const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
@@ -59,6 +60,10 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
       try {
         const data = await getVendorById(vendor_id);
         console.log("✨✨✨✨✨Get data by id", data);
+        data.vendor_Contact_List = data.vendor_Contact_List.map((
+          child: { [key: string]: string; }) => {
+          return keysToLowercase(child)
+        })
         setOldVendorData(data);
       } catch (e: any) {
         console.log("取單一供應商data的時候錯了", e)
