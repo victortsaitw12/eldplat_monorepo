@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const TabsSTY = styled.div`
+height:32px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: space-between;
+	
 	.tabs {
 		.tab {
 			display: flex;

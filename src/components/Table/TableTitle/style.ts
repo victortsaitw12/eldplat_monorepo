@@ -8,6 +8,10 @@ export const TableTitleSTY = styled.div`
   gap: 20px;
   margin-bottom: 10px;
   .container-header {
+    font-family:"Noto Sans";
+    font-weight:${({theme})=>theme.fontWeight.Heading500};
+    font-size:${({theme})=>theme.fontSize.Heading500};
+    line-height:22px;
     display: flex;
     justify-content: space-between;
     align-items: center;

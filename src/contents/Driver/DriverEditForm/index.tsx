@@ -1,114 +1,82 @@
-import React, { useState } from "react";
-import {
-  Pane,
-  Button,
-  Text,
-  IconButton,
-  FullscreenIcon,
-  SmallCrossIcon,
-  FloppyDiskIcon
-} from "evergreen-ui";
-import { DRIVER_TYPE } from "@typings/driver_type";
+import React from "react";
+import { Pane } from "evergreen-ui";
+import { FormProvider, useForm } from "react-hook-form";
+import { FormSTY } from "./style";
+
 import Basic from "./SubForm/Basic";
 import DriverResume from "./SubForm/DriverResume";
 import DriverLicense from "./SubForm/DriverLicense";
-import LanguageAbility from "./SubForm/LanguageAbility";
-import HealthFirst from "./SubForm/HealthFirst";
+import LanguageAbility from "@contents/driver/LanguageAbility";
 //
 interface Props {
-  submitForm: (data: any) => void;
-  onCancel?: () => void;
-  currentUserInfo: any;
   userId: string;
+  submitForm: (data: any) => void;
+  isEdit: boolean;
+  currentUserInfo: any;
+  isLoading: boolean;
+  submitRef: React.RefObject<HTMLButtonElement>;
 }
-function DriverEditForm({ submitForm, userId, currentUserInfo }: Props) {
-  const [insertData, setInsertData] = useState<DRIVER_TYPE>({
-    // <DriverResume />, TABLE: DRIVER
-    user_no: userId,
-    driver_no: "",
-    license_no: "",
-    license_area: "",
-    license_lvl: "",
-    driver_seniority: "0",
-    driver_typ: [""],
-    dsph_area: "",
-    dsph_city: "",
-    blocklist_mark: "",
-    remark: "",
-    // <DriverLicense /> TABLE: DRIVER_LICENCE
-    licn_typ: "",
-    licn_name: "",
-    licn_unit: "",
-    licn_issue: "",
-    licn_exp: "",
-    licn_examine_date: "",
-    licn_filename: "",
-    licn_link: "",
-    invalid: "N",
-    invalid_remark: ""
-  });
-  const submitFormHandler = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("insertData", insertData);
-    submitForm(insertData);
-  };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newData: any = { ...insertData };
-    newData[e.target.name] = e.target.value;
-    setInsertData(newData);
-  };
 
-  const handleMultiSelect = (key: string, updatedValue: any[]) => {
-    const newData: any = { ...insertData };
-    const updatedStringArr = updatedValue.map((item: any) => item.value);
-    newData[key] = updatedStringArr;
-    setInsertData(newData);
-  };
+// userId={userId}
+// submitForm={asyncSubmitForm}
+// isEdit={isEdit}
+// currentUserInfo={currentUserInfo}
+// formType={mainFilter}
+
+function DriverEditForm({
+  userId,
+  submitForm,
+  isEdit,
+  currentUserInfo,
+  isLoading,
+  submitRef
+}: Props) {
+  const {
+    register,
+    formState: { errors },
+    control,
+    handleSubmit
+  } = useForm({
+    defaultValues: currentUserInfo
+  });
+  React.useEffect(() => {
+    if (errors) {
+      // do the your logic here
+      console.log(errors);
+    }
+  }, [errors]);
   return (
-    <>
-      <Pane display="flex" justifyContent="space-between" className="title-bar">
-        <Text className="title-label">駕駛資訊</Text>
-        <Pane className="right-function">
-          <Button
-            iconBefore={FloppyDiskIcon}
-            className="save"
-            onClick={submitFormHandler}
-          >
-            全部儲存
-          </Button>
-          <IconButton icon={FullscreenIcon} />
-          <IconButton icon={SmallCrossIcon} />
-        </Pane>
-      </Pane>
-      <Pane className="add-blocks">
+    <FormProvider {...{ register, errors, control, handleSubmit }}>
+      <FormSTY
+        className="add-blocks"
+        onSubmit={handleSubmit((data) => {
+          console.log("form-hook:", { ...data });
+          submitForm({ ...data });
+        })}
+      >
+        <button ref={submitRef} type="submit" style={{ display: "none" }}>
+          儲存
+        </button>
         <Pane className="left-blocks">
-          <Basic currentUserInfo={currentUserInfo} />
+          <Basic currentUserInfo={currentUserInfo} isLoading={isLoading} />
           <DriverResume
-            insertData={insertData}
+            userId={userId}
+            isEdit={isEdit}
             currentUserInfo={currentUserInfo}
-            setInsertData={setInsertData}
-            handleInputChange={handleInputChange}
-            handleMultiSelect={handleMultiSelect}
+            isLoading={isLoading}
           />
         </Pane>
         <Pane className="right-blocks">
           <DriverLicense
-            insertData={insertData}
-            setInsertData={setInsertData}
-            handleInputChange={handleInputChange}
+            userId={userId}
+            isEdit={isEdit}
+            currentUserInfo={currentUserInfo}
+            isLoading={isLoading}
           />
-          <LanguageAbility />
-          <HealthFirst
-            setInsertData={(data) => {
-              console.log(data);
-            }}
-            handleEmployeeChange={(e) => {
-              console.log(e);
-            }}
-          />
+          <LanguageAbility currentUserInfo={currentUserInfo} />
         </Pane>
-      </Pane>
-    </>
+      </FormSTY>
+    </FormProvider>
   );
 }
 

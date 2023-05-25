@@ -2,100 +2,141 @@ import styled from "styled-components";
 
 export const MonthlySTY = styled.div<{ rows: number }>`
   flex-grow: 10;
-  .container {
-    border: 1px solid ${({ theme }) => theme.color.N300};
-    border-radius: 5px;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    overflow-x: scroll;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    display: grid;
-    grid-template-columns: repeat(7, minmax(100px, 1fr));
-    grid-template-rows: 32px repeat(
-        auto-fill,
-        calc((100% - 32px) / ${(props) => props.rows})
-      );
-
-    .cell__header {
-      background: ${({ theme }) => theme.color.N100};
-      text-align: center;
+  border: 1px solid ${({ theme }) => theme.color.N300};
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  overflow-x: scroll;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .headerCells {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+    z-index: 99;
+    .headerCell {
       height: 32px;
+      width: calc(100% / 7);
+      background: ${({ theme }) => theme.color.N100};
+      line-height: 32px;
+      text-align: center;
+      border-left: 1px solid ${({ theme }) => theme.color.N300};
+      &:first-child {
+        border-left: none;
+      }
     }
     .weekend {
       color: ${({ theme }) => theme.color.R300};
       background: ${({ theme }) => theme.color.R50};
     }
-    .monthly-date {
+  }
+  .dateCells {
+    width: 100%;
+    position: relative;
+    height: calc(100% - 32px);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    /* align-items: stretch; */
+    .dateCell__row {
+      height: 100%;
+      width: 100%;
+      position: relative;
       display: flex;
-      flex-direction: column;
-      gap: 4px;
-      border-top: 1px solid ${({ theme }) => theme.color.N300};
-    }
-    .cell {
-      border-left: 1px solid ${({ theme }) => theme.color.N300};
-      padding: 8px;
-      z-index: 10;
-      pointer-events: none;
-      * {
-        pointer-events: auto;
-      }
-      /* position: relative; */
-      &:nth-child(7n + 1) {
-        border-left: none;
-      }
-      .cell__date {
+      flex-direction: row;
+      border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+      .dateCell__canvas,
+      .dateCell__content {
+        height: 100%;
         width: 100%;
-        text-align: right;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
       }
-      .cell__unfold-btn {
-        flex-grow: 10;
+      .dateCell__canvas {
+        position: absolute;
+        pointer-events: none;
       }
-      .cell__date-btn {
-        min-width: 20px;
-        min-height: 20px;
-        border-radius: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        &:hover {
-          background: ${({ theme }) => theme.color.N200};
+      .cell {
+        padding: 8px;
+        z-index: 10;
+      }
+
+      .highlight {
+        background: ${({ theme }) => theme.color.N100};
+        position: relative;
+        z-index: 0;
+      }
+
+      .disabled {
+        position: relative;
+        cursor: not-allowed;
+        pointer-events: none;
+        &::after {
+          content: " ";
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: #fff;
+          opacity: 0.5;
+          z-index: 99;
+          cursor: not-allowed;
+          pointer-events: auto;
         }
       }
     }
-    .highlight:not(.start) {
-      background: ${({ theme }) => theme.color.N100};
-      position: relative;
-      z-index: 0;
-    }
-    .start {
-      background: ${({ theme }) => theme.color.N100};
-      position: relative;
-      z-index: 1;
+  }
+
+  /* shared style in headerCells & dateCells */
+  .cell {
+    width: calc(100% / 7);
+    pointer-events: none;
+    * {
+      pointer-events: auto;
     }
   }
 
-  .disabled {
-    position: relative;
-    &::before {
-      content: " ";
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: #fff;
-      opacity: 0.5;
-      z-index: 99;
+  .coverAll {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: ${({ theme }) => theme.color.N0};
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    z-index: 999;
+    .spinner {
+      opacity: 1;
     }
   }
+`;
+
+export const MouseMenuBtnSTY = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
 `;

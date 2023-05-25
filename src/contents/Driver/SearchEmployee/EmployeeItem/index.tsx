@@ -1,28 +1,34 @@
 interface Props {
   userNo: string;
   userName: string;
-  isSelected: boolean;
+  selectedUser: string;
   setSelectedUser: (userNo: string) => void;
+  value: string;
 }
 
 function EmployeeItem({
   userName,
   userNo,
-  isSelected,
-  setSelectedUser
+  selectedUser,
+  setSelectedUser,
+  value
 }: Props) {
+  const replacedUserName = () => {
+    const replacement: any = <span className="red">{value}</span>;
+    const userNameArr = userName.split(value);
+    userNameArr.splice(1, 0, replacement);
+
+    return userNameArr;
+  };
   return (
     <div
-      className="search-result"
+      className={`search-result ${selectedUser === userNo ? "selected" : ""}`}
       key={userNo}
       onClick={() => {
         setSelectedUser(userNo);
       }}
-      style={{
-        backgroundColor: isSelected ? "#f1f6fd" : "none"
-      }}
     >
-      {userName}
+      {replacedUserName()}
     </div>
   );
 }

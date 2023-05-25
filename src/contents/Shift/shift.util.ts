@@ -101,7 +101,6 @@ export const formatIntl = (date: Date) => {
 };
 
 // ------------------- formate Date => FOR 資料庫相關  ------------------- //
-// ------------------- formate Date => "2023 / 03 / 08" ------------------- //
 export const formatDateForAPI = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -133,6 +132,16 @@ export const formatToDB = (date: Date) => {
   return isoString;
 };
 
+export const formatToDBDate = (date: Date) => {
+  const now = date || new Date(Math.floor(Date.now() / 1000) * 1000);
+  const nowTimestamp = now.valueOf();
+  const timezoneOffset = now.getTimezoneOffset();
+  const timezoneOffsetMiliSeconds = timezoneOffset * 60 * 1000;
+  const offsetNow = new Date(nowTimestamp - timezoneOffsetMiliSeconds);
+  const isoString = offsetNow.toISOString().split("T")[0];
+  return isoString;
+};
+
 //-- keep for 跨時區 NOT-IN-USE -- //
 // format (UTC string) => {local date: Date} to user???
 // "4/6/2023, 2:26:48 PM"
@@ -144,3 +153,40 @@ export const formatLocal = (date: Date) => {
   });
   return localTime;
 };
+
+/* -------------------
+ 5. debounce/ throttle/ observer
+------------------- */
+export const debounce = (fn: (args?: any) => void, delay: number) => {
+  let timer: any = null;
+
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+};
+
+export const throttle = (fn: (args?: any) => void, delay: number) => {
+  let timer;
+  let lastExecTime = 0;
+
+  return function (...args) {
+    const currentTime = Date.now();
+
+    const execute = () => {
+      fn.apply(this, args);
+      lastExecTime = currentTime;
+    };
+
+    if (currentTime - lastExecTime >= delay) {
+      execute();
+    } else {
+      clearTimeout(timer);
+      timer = setTimeout(execute, delay);
+    }
+  };
+};
+
+export default throttle;

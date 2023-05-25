@@ -8,7 +8,7 @@ import {
 } from "evergreen-ui";
 
 import { formatYYYYMM } from "@contents/Shift/shift.util";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const MonthPicker = ({ initialMonthFirst }: { initialMonthFirst: Date }) => {
   const UI = React.useContext(UIContext);

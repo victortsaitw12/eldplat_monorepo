@@ -5,7 +5,7 @@ import { EventBarsSTY, EventBarSTY } from "./style";
 import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS } from "../shift.data";
 import { formatDate, getDayStart, getDayEnd } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 
 const EventBars = ({
@@ -14,23 +14,25 @@ const EventBars = ({
   setIsOpenDrawer,
   cellWidth
 }: {
-  cellTimestamp: string;
+  cellTimestamp: number;
   monthlyData: MonthlyData[] | null;
   setIsOpenDrawer: (value: boolean) => void;
   cellWidth: number;
 }) => {
   const [items, setItems] = React.useState<MonthlyData[]>([]);
   const UI = React.useContext(UIContext);
-  const timeFrame = 1000 * 60 * 60 * 2; //2hour
 
   React.useEffect(() => {
+    const cellDateStart = new Date(cellTimestamp);
+    const cellDateEnd = new Date(cellTimestamp + 1000 * 60 * 60 * 24);
+
     const eventsInDate = monthlyData?.filter((shift: any) => {
-      const cellDate = new Date(cellTimestamp);
       const eventStart = new Date(shift.schd_Start_Time);
       const eventEnd = new Date(shift.schd_End_Time);
       return (
-        (cellDate <= eventStart && eventStart <= getDayEnd(cellDate)) ||
-        (cellDate <= eventEnd && eventEnd <= getDayEnd(cellDate))
+        (eventStart <= cellDateStart && cellDateStart <= eventEnd) ||
+        (cellDateStart <= eventEnd && eventEnd <= cellDateEnd) ||
+        (cellDateStart <= eventStart && cellDateEnd <= eventEnd)
       );
     });
 
@@ -83,27 +85,29 @@ const EventBars = ({
     }
   };
 
-  const getEventDuration = (item: MonthlyData): number =>
-    Math.ceil(
+  const getEventDuration = (item: MonthlyData): number => {
+    if (
+      new Date(item.schd_End_Time).valueOf() - cellTimestamp >=
+      1000 * 60 * 60 * 24 - 1000 * 60
+    )
+      return (1000 * 60 * 60 * 24) / UI.timeframe;
+    // TODO 目前假設要滿格顯示，再問UI半格顯示畫面
+    return Math.ceil(
       (new Date(item.schd_End_Time).valueOf() -
         new Date(item.schd_Start_Time).valueOf()) /
-        timeFrame
+        UI.timeframe
     );
+  };
 
-  const getEventStart = (item: MonthlyData): number =>
-    Math.ceil(
+  const getEventStart = (item: MonthlyData): number => {
+    if (new Date(item.schd_Start_Time).valueOf() - cellTimestamp < 0) return 0;
+    return Math.ceil(
       (new Date(item.schd_Start_Time).valueOf() -
         getDayStart(new Date(cellTimestamp)).valueOf()) /
-        timeFrame
+        UI.timeframe
     );
+  };
   const eventBtns = items?.map((item, i) => {
-    // <div className={`test ${getEventDuration(item)}`}>test</div>
-    // if (
-    //   new Date(item.schd_Start_Time).valueOf() >= 1683302400000 &&
-    //   new Date(item.schd_End_Time).valueOf() <= 1683388740000
-    // )
-    //   console.log("start:", item.schd_Start_Time);
-
     return (
       <EventBarSTY
         key={`event-${cellTimestamp}-${i}`}
@@ -133,7 +137,9 @@ const EventBars = ({
           </span>
           {item.leave_Code || item.check_Status ? <TagIcon /> : ""}
           <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
-          {item.schd_Type === "04" ? item.leave_Description : ""}
+          <span className="text-wrapper">
+            <span>{item.schd_Type === "04" ? item.leave_Description : ""}</span>
+          </span>
         </button>
       </EventBarSTY>
     );

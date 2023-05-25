@@ -1,7 +1,7 @@
 import React from "react";
 import { AddIcon } from "evergreen-ui";
 import { CreateEventBtnSTY } from "./style";
-import { UIContext } from "src/contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 import { getDayStart, getDayEnd } from "../shift.util";
 
@@ -26,7 +26,7 @@ const CreateEventBtn = ({
     UI.setStartDate(selectedDT);
     view === "monthly"
       ? UI.setEndDate(getDayEnd(selectedDT))
-      : UI.setEndDate(new Date(parseInt(timestamp + UI.timeFrame)));
+      : UI.setEndDate(new Date(parseInt(timestamp + UI.timeframe)));
   };
 
   return (
