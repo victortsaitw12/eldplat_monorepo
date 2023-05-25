@@ -160,7 +160,9 @@ function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
           />
           <LanguageAbility
             insertData={insertData}
-            setInsertData={setInsertData}
+            setInsertData={() => {
+              console.log("lang");
+            }}
             editData={editData}
           />
         </Pane>

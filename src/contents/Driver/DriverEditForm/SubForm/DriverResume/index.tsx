@@ -1,135 +1,169 @@
-import MultiSelect from "@components/MultiSelect";
+import { SelectField, Textarea, TextInput } from "evergreen-ui";
+import React from "react";
+import { useFormContext } from "react-hook-form";
+import { SmallCrossIcon, SmallTickIcon } from "evergreen-ui";
+
 import {
-  Checkbox,
-  Heading,
-  Pane,
-  Select,
-  Text,
-  Textarea,
-  TextInput
-} from "evergreen-ui";
-import React, { useState } from "react";
-import { region_DATA, city_DATA, driver_DT_DATA } from "./data";
-import { BodySTY } from "./style";
+  emailValidation,
+  numberValidation,
+  textValidation
+} from "@utils/inputValidation";
+import {
+  region_DATA,
+  region_MAP,
+  city_DATA,
+  city_MAP,
+  country_DATA,
+  country_MAP
+} from "./data";
+import InfoBox from "@components/InfoBox";
 
-function DriverResume({
-  insertData,
-  currentUserInfo,
-  handleInputChange,
-  handleMultiSelect
-}: any) {
-  const [blackChecked, setBlackChecked] = useState<boolean>(false);
+interface Props {
+  userId: string;
+  isEdit: boolean;
+  currentUserInfo: any;
+  isLoading: boolean;
+}
 
+// userId={userId}
+// isEdit={isEdit}
+// currentUserInfo={currentUserInfo}
+// isLoading={isLoading}
+
+function DriverResume({ userId, isEdit, currentUserInfo, isLoading }: Props) {
+  const { register, errors, control, handleSubmit } = useFormContext();
+
+  const resume_info = [
+    {
+      readonly: true,
+      label: "使用者編號",
+      value: currentUserInfo?.user_No || userId
+    },
+    {
+      req: true,
+      label: "駕照編號",
+      value: currentUserInfo.license_no,
+      editEle: (
+        <TextInput
+          key="license_no"
+          {...register("license_no", {
+            validate: textValidation
+          })}
+        />
+      )
+    },
+    {
+      req: true,
+      label: "執照州/省/地區",
+      value: country_MAP.get(currentUserInfo.license_area)?.label,
+      editEle: (
+        <SelectField
+          className="inputField"
+          key="license_area"
+          {...register("license_area", {
+            required: "必填"
+          })}
+        >
+          {country_DATA.map((item) => (
+            <option key={`city-${item.value}`} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </SelectField>
+      )
+    },
+    {
+      req: true,
+      label: "牌照等級",
+      value: currentUserInfo.license_lvl,
+      editEle: (
+        <TextInput
+          key="license_lvl"
+          {...register("license_lvl", {
+            validate: textValidation
+          })}
+        />
+      )
+    },
+    {
+      req: true,
+      label: "駕駛資歷(年)",
+      value: currentUserInfo.driver_seniority,
+      editEle: (
+        <TextInput key="driver_seniority" {...register("driver_seniority")} />
+      )
+    },
+    {
+      req: true,
+      label: "派遣區域",
+      value: region_MAP.get(currentUserInfo.dsph_area)?.label,
+      editEle: (
+        <SelectField
+          key="dsph_area"
+          {...register("dsph_area", {
+            required: "必填"
+          })}
+        >
+          {region_DATA.map((item) => (
+            <option key={`city-${item.value}`} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </SelectField>
+      )
+    },
+    {
+      req: true,
+      label: "派遣都市",
+      value: city_MAP.get(currentUserInfo.dsph_city)?.label,
+      editEle: (
+        <SelectField
+          key="dsph_city"
+          {...register("dsph_city", {
+            required: "必填"
+          })}
+        >
+          {city_DATA.map((item) => (
+            <option key={`city-${item.value}`} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </SelectField>
+      )
+    },
+    {
+      req: false,
+      label: "黑名單註記",
+      value: currentUserInfo.blocklist_mark ? (
+        <SmallTickIcon />
+      ) : (
+        <SmallCrossIcon />
+      ),
+      editEle: (
+        <input
+          className="checkbox"
+          type="checkbox"
+          key="blocklist_mark"
+          // checked={currentUserInfo.blocklist_mark}
+          {...register("blocklist_mark", {
+            validate: textValidation
+          })}
+        />
+      )
+    },
+    {
+      req: false,
+      label: "黑名單備註",
+      value: currentUserInfo.remark || "---",
+      editEle: <Textarea key="remark" {...register("remark")} />
+    }
+  ];
   return (
-    <BodySTY>
-      <Heading is="h4">駕駛履歷</Heading>
-      <form>
-        <Pane className="input-line">
-          <Text>使用者編號</Text>
-          <Text>{currentUserInfo ? currentUserInfo.user_No : ""}</Text>
-        </Pane>
-        <Pane className="input-line">
-          <Text>駕照編號</Text>
-          <TextInput
-            name="license_no"
-            value={insertData.license_no}
-            onChange={handleInputChange}
-          />
-        </Pane>
-        <Pane className="input-line">
-          <Text>執照州/省/地區</Text>
-          <Select
-            width="100%"
-            name="license_area"
-            value={insertData.license_area}
-            onChange={handleInputChange}
-          >
-            {region_DATA.map((value, index) => {
-              return (
-                <option key={index} value={value}>
-                  {value}
-                </option>
-              );
-            })}
-          </Select>
-        </Pane>
-        <Pane className="input-line">
-          <Text>牌照等級</Text>
-          <TextInput
-            name="license_lvl"
-            value={insertData.license_lvl}
-            onChange={handleInputChange}
-          />
-        </Pane>
-        <Pane className="input-line">
-          <Text>駕駛資歷(年)</Text>
-          <TextInput
-            name="driver_seniority"
-            value={insertData.driver_seniority}
-            onChange={handleInputChange}
-          />
-        </Pane>
-        <Pane className="input-line">
-          <Text>駕駛分類</Text>
-          <MultiSelect
-            name="driver_typ"
-            handleMultiSelect={handleMultiSelect}
-            optionData={driver_DT_DATA}
-          />
-        </Pane>
-        <Pane className="input-line">
-          <Text>派遣區域</Text>
-          <Select
-            width="100%"
-            name="dsph_area"
-            value={insertData.dsph_area}
-            onChange={handleInputChange}
-          >
-            {region_DATA.map((value, index) => {
-              return (
-                <option key={index} value={value}>
-                  {value}
-                </option>
-              );
-            })}
-          </Select>
-        </Pane>
-        <Pane className="input-line">
-          <Text>派遣都市</Text>
-          <Select
-            width="100%"
-            name="dsph_city"
-            value={insertData.dsph_city}
-            onChange={handleInputChange}
-          >
-            {city_DATA.map((value, index) => {
-              return (
-                <option key={index} value={value}>
-                  {value}
-                </option>
-              );
-            })}
-          </Select>
-        </Pane>
-        <Pane className="input-line">
-          <Text>黑名單註記</Text>
-          <Checkbox
-            name="blocklist_mark"
-            label=""
-            checked={blackChecked}
-            onChange={(e: any) => setBlackChecked(e.target.checked)}
-          />
-        </Pane>
-        <Pane className="input-line">
-          <Text>黑名單註記</Text>
-          <Textarea
-            name="remark"
-            value={insertData.remark}
-            onChange={handleInputChange}
-          />
-        </Pane>
-      </form>
-    </BodySTY>
+    <>
+      {!isLoading && currentUserInfo && (
+        <InfoBox isEdit={isEdit} infoData={resume_info} infoTitle="駕駛履歷" />
+      )}
+    </>
   );
 }
 

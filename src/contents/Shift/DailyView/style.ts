@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
   flex-grow: 10;
-  border: 1px solid ${({ theme }) => theme.color.N300};
-  border-radius: 5px;
   width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
   overflow-x: scroll;
+  overflow-y: hidden;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -16,17 +16,19 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
   flex-direction: column;
 
   .headerCell__row {
+    height: 32px;
+    min-width: min-content;
+    width: 100%;
     background: ${({ theme }) => theme.color.N75};
+    border: 1px solid ${({ theme }) => theme.color.N300};
+    border-radius: 5px 5px 0px 0px;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
     text-align: center;
-    height: 32px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     &-date {
-      min-width: 52px;
-      width: 52px;
       border-left: none;
       white-space: nowrap;
     }
@@ -35,8 +37,6 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
       display: flex;
       flex-direction: row;
       .headerCell {
-        width: ${({ cellWidth }) => cellWidth + "%"};
-        height: 32px;
         /* flex-grow: 1; */
         line-height: 32px;
         justify-content: center;
@@ -53,20 +53,36 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
   }
 
   .dateCells {
+    overflow: visible;
+    overflow-x: visible;
+    overflow-y: scroll;
+    width: 100%;
+    min-width: min-content;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     .dateCell__row {
       height: 32px;
+      min-width: min-content;
+      width: 100%;
+      overflow: hidden;
       border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+      border-left: 1px solid ${({ theme }) => theme.color.N300};
+      border-right: 1px solid ${({ theme }) => theme.color.N300};
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
+      &:last-child {
+        border-radius: 0px 0px 5px 5px;
+      }
       &-date {
-        width: 52px;
         height: 32px;
         line-height: 32px;
         text-align: center;
         background: ${({ theme }) => theme.color.N100};
-        border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+        cursor: pointer;
+        z-index: 10;
       }
       &-canvas {
         flex-grow: 10;
@@ -74,17 +90,24 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
         flex-direction: row;
         align-items: center;
         position: relative;
-        overflow: hidden;
         &-cell {
           /* flex-grow: 1; */
           height: 32px;
-          width: ${({ cellWidth }) => cellWidth + "%"};
           border-left: 1px dashed ${({ theme }) => theme.color.N300};
           display: flex;
           align-items: center;
         }
       }
     }
+  }
+
+  .date {
+    width: 52px;
+    min-width: 52px;
+  }
+  .time {
+    width: ${({ cellWidth }) => cellWidth + "%"};
+    min-width: 70px;
   }
 
   .weekend {

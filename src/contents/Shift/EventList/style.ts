@@ -1,11 +1,24 @@
 import styled from "styled-components";
 
-export const EventListSTY = styled.div`
+export const EventListSTY = styled.div<{ maxEventCount?: number }>`
+  ${({ theme }) => `
+    --minBtnHeight: ${"calc(" + theme.fontSize.Heading200 + " + 4px * 2)"}};
+  `}
+  min-height: min-content;
+  max-height: calc(100% - var(--minBtnHeight) * 2);
   display: flex;
   flex-direction: column;
   gap: 4px;
+  .hide {
+    display: none;
+  }
 `;
-export const EventBtnSTY = styled.div<{ duration: number; color?: string }>`
+export const EventBtnSTY = styled.div<{
+  duration: number;
+  color?: string;
+}>`
+  min-height: var(--minBtnHeight);
+  min-width: 100%;
   .reminder {
     animation: 200ms ease-out 200ms infinite alternate reminder;
     /* animation-delay: 200ms;
@@ -22,18 +35,26 @@ export const EventBtnSTY = styled.div<{ duration: number; color?: string }>`
     }
   }
   button {
+    height: 100%;
     width: ${({ duration }) =>
-      "calc(" + duration * 100 + "% + " + (duration - 1) * 16 + "px)"};
+      "calc(" + duration * 100 + "% + " + (duration - 1) * 17 + "px)"};
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: ${({ theme }) => theme.fontWeight.Heading200};
+    font-size: ${({ theme }) => theme.fontSize.Heading200};
+    /* line-height: 16px; */
+    color: ${({ theme }) => theme.color.N0};
+
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
     flex-wrap: nowrap;
     gap: 4px;
     background: ${({ theme, color }) => (color ? theme.color[color] : "unset")};
     border: none;
     border-radius: 4px;
     color: ${({ theme }) => theme.color.N0};
-    z-index: 1;
     padding: 4px 8px;
     white-space: nowrap;
     overflow: hidden;

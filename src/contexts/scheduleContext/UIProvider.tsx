@@ -37,11 +37,12 @@ export const UIProvider = ({ children }: any) => {
   const [insertData, setInsertData] = React.useState<InsertData>(initData);
   const [flag, setFlag] = React.useState<boolean>(true);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [timeFrame, setTimeframe] = React.useState<number>(1000 * 60 * 60 * 2);
+  const [timeframe, setTimeframe] = React.useState<number>(1000 * 60 * 60 * 2); //2hour
+  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+  const [isMouseMenuBtn, setIsMouseMenuBtn] = React.useState(false);
 
   const resetState = (): void => {
     console.log("< Reset state >");
-    UI.setMonthCount(0);
     UI.setIsSelect(false);
     UI.setStartDate(null);
     UI.setEndDate(null);
@@ -77,8 +78,12 @@ export const UIProvider = ({ children }: any) => {
     setFlag,
     isLoading,
     setIsLoading,
-    timeFrame,
+    timeframe,
     setTimeframe,
+    mousePosition,
+    setMousePosition,
+    isMouseMenuBtn,
+    setIsMouseMenuBtn,
     // 共用 function
     resetState
   };

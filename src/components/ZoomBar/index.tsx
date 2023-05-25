@@ -2,12 +2,11 @@ import React from "react";
 import { ZoombarSTY } from "./style";
 
 const ZoomBar = ({
-  initScale,
-  setState
+  setState,
+  initScale
 }: {
+  setState?: (value: any) => void;
   initScale?: number;
-  scaleVal?: number;
-  setState?: (value: boolean) => void;
 }) => {
   const [scale, setScale] = React.useState(initScale || 0);
   const [isDragging, setIsDragging] = React.useState(false);
@@ -28,6 +27,10 @@ const ZoomBar = ({
       document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging]);
+
+  React.useEffect(() => {
+    if (initScale !== undefined) setScale(initScale);
+  }, [initScale]);
 
   const handleMouseMove = React.useCallback(
     (event: MouseEvent) => {

@@ -24,6 +24,7 @@ export const EventBarSTY = styled.div<{
   cellWidth: number;
   left: number;
 }>`
+  min-width: ${({ cellWidth }) => cellWidth + "px"};
   width: ${({ duration, cellWidth }) => duration * cellWidth + "%"};
   position: absolute;
   left: ${({ left, cellWidth }) => left * cellWidth + "%"};
@@ -43,10 +44,12 @@ export const EventBarSTY = styled.div<{
     }
   }
   button {
+    max-width: 100%;
     flex-grow: 10;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
     flex-wrap: nowrap;
     gap: 4px;
     background: ${({ theme, color }) => (color ? theme.color[color] : "unset")};
@@ -55,13 +58,20 @@ export const EventBarSTY = styled.div<{
     color: ${({ theme }) => theme.color.N0};
     z-index: 1;
     padding: 4px 8px;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    /* display: -webkit-box;
-    -webkit-box-orient: vertical; */
     cursor: pointer;
-
+    .text-wrapper {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    span {
+      vertical-align: middle;
+      line-height: normal;
+      &:not(.text-wrapper) {
+        min-width: fit-content;
+      }
+    }
     svg {
       width: 12px;
       min-width: 12px;
