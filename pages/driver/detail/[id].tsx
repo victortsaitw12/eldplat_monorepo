@@ -75,10 +75,10 @@ const Page: NextPageWithLayout<
     try {
       const res = await updateDriver(userId, data);
       toaster.success(`成功更新${data.user_name}駕駛履歷`);
-      setIsEdit(false);
+      router.push("/driver");
     } catch (e: any) {
       console.log(e);
-      toaster.success(e.message);
+      toaster.warning(e.message);
     }
     setIsLoading(false);
   };
@@ -112,6 +112,7 @@ const Page: NextPageWithLayout<
             )}
             {mainFilter === "health" && (
               <HealthFirst
+                currentUserInfo={currentUserInfo}
                 setInsertData={(data) => {
                   console.log(data);
                 }}

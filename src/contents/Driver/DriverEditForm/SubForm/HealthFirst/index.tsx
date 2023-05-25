@@ -1,68 +1,74 @@
-import LightBox from "@components/Lightbox";
+import { I_driverInfo } from "@contents/driver/driver.typing";
+
 import { I_Content_Props, I_Health_TYPE } from "@typings/employee_type";
 import Table from "@components/Table/Table";
 import PaginationField from "@components/PaginationField/";
-import {
-  Heading,
-  Pane,
-  DocumentIcon,
-  CogIcon,
-} from "evergreen-ui";
+import { Heading, Pane, DocumentIcon, CogIcon, Tooltip } from "evergreen-ui";
 import React, { useState } from "react";
 import AddHealth from "./AddHealth";
 import { BodySTY } from "./style";
 
-const table_title = [
-  "日期",
-  "分類",
-  "機構",
-  "結果",
-  "報告"
-]
+const health_MAP = new Map([
+  ["01", "職業汽車駕照體檢"],
+  ["02", "職業駕駛審驗體檢"],
+  ["03", "一般勞工體檢"]
+]);
 
-const table_data = [
-  {
-    id: "USR202302020002",
-    health_date: "2023/05/22",
-    health_cate: "一般體格檢查",
-    health_org: "起薪診所",
-    health_res: "正常",
-    health_rep: <DocumentIcon size={12} color="#718BAA" onClick={() => { console.log("下載PDF") }} />
-  },
-  {
-    id: "USR202302020003",
-    health_date: "2023/05/22",
-    health_cate: "一般體格檢查",
-    health_org: "起薪診所",
-    health_res: "正常",
-    health_rep: <DocumentIcon size={12} color="#718BAA" onClick={() => { console.log("下載PDF") }} />
-  },
-  {
-    id: "USR202302020004",
-    health_date: "2023/05/22",
-    health_cate: "一般體格檢查",
-    health_org: "起薪診所",
-    health_res: "正常",
-    health_rep: <DocumentIcon size={12} color="#718BAA" onClick={() => { console.log("下載PDF") }} />
-  }
-]
+const table_title = ["日期", "分類", "機構", "結果", "報告"];
 
-function HealthFirst({ handleEmployeeChange, setInsertData }: I_Content_Props) {
-  const [showHealthModal, setShowHealthModal] = useState<boolean>(false);
+function HealthFirst({ currentUserInfo }: { currentUserInfo: I_driverInfo }) {
   const [healthData, setHealthData] = useState<I_Health_TYPE | any>({
     // user_no: "USR202303210008",
     heal_date: "",
     heal_typ: "01",
     heal_agency: "",
+    invalid_remark: "",
     heal_status: "01",
     heal_examine_date: "",
     heal_filename: "",
-    invalid: "N",
-    invalid_remark: ""
+    heal_link: "",
+    invalid: "N"
   });
-  const [healthListArr, setHealthListArr] = useState<I_Health_TYPE[] | any[]>(
-    []
-  );
+
+  interface DataDetail {
+    id: string;
+    heal_date: string;
+    heal_typ: string;
+    heal_agency: string;
+    invalid_remark: string;
+    heal_link: any;
+  }
+  const orderedTableData = currentUserInfo?.healths?.map((item) => {
+    const dataDetail: DataDetail = {
+      id: "",
+      heal_date: "",
+      heal_typ: "",
+      heal_agency: "",
+      invalid_remark: "",
+      heal_link: ""
+    };
+    dataDetail.id = item.user_no;
+    dataDetail.heal_date = item.heal_date?.split("T")[0];
+    dataDetail.heal_typ =
+      (item.heal_typ && health_MAP.get(item.heal_typ)) || "";
+    dataDetail.heal_agency = item.heal_agency;
+    dataDetail.invalid_remark = item.invalid_remark;
+    dataDetail.heal_link = item.heal_link ? (
+      <Tooltip content={`下載${item.heal_filename}`}>
+        <DocumentIcon
+          className="reportIcon"
+          size={12}
+          color="#718BAA"
+          onClick={() => {
+            console.log(`從${item.heal_link}下載`);
+          }}
+        />
+      </Tooltip>
+    ) : (
+      ""
+    );
+    return dataDetail;
+  });
 
   const handleHealthChange = (e: any) => {
     const newData = { ...healthData };
@@ -70,46 +76,17 @@ function HealthFirst({ handleEmployeeChange, setInsertData }: I_Content_Props) {
     setHealthData(newData);
   };
 
-  // useEffect(() => {
-  //   const newData: any = { ...insertData };
-  //   newData["healths"] = healthListArr;
-  //   setInsertData(newData);
-  // }, [healthListArr]);
-
   return (
     <BodySTY>
       <Pane className="health-title">
-        <Heading is="h4">
-          鐘筑月
-        </Heading>
+        <Heading is="h4">{currentUserInfo?.user_name}</Heading>
       </Pane>
       <Pane className="health-title-right">
         <PaginationField />
         <CogIcon color="#718BAA" size={11} />
       </Pane>
-      <Table
-        titles={table_title}
-        data={table_data}
-      />
-      {/* 新增健康紀錄的光箱 */}
-      <LightBox
-        title="新增健康紀錄"
-        isOpen={showHealthModal}
-        handleCloseLightBox={() => {
-          setShowHealthModal((prev) => !prev);
-        }}
-      >
-        <AddHealth
-          setShowHealthModal={setShowHealthModal}
-          handleEmployeeChange={handleEmployeeChange}
-          setInsertData={setInsertData}
-          healthData={healthData}
-          setHealthData={setHealthData}
-          handleHealthChange={handleHealthChange}
-          setHealthListArr={setHealthListArr}
-        />
-      </LightBox>
-    </BodySTY >
+      <Table titles={table_title} data={orderedTableData} />
+    </BodySTY>
   );
 }
 

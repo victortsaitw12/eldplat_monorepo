@@ -20,6 +20,7 @@ import {
   textValidation
 } from "@utils/inputValidation";
 import InfoBox from "@components/InfoBox";
+import FileUploaderMulti from "@contents/Driver/FileUploaderMulti";
 
 interface Props {
   userId: string;
@@ -70,11 +71,6 @@ function DriverLicense({ userId, isEdit, currentUserInfo, isLoading }: Props) {
               {value.label}
             </option>
           ))}
-          {/* {licn_type_DATA.map((item) => (
-            <option key={`licn-${item.value}`} value={item.value}>
-              {item.label}
-            </option>
-          ))} */}
         </SelectField>
       )
     },
@@ -160,16 +156,20 @@ function DriverLicense({ userId, isEdit, currentUserInfo, isLoading }: Props) {
       editEle: (
         <>
           <TextInput type="file" id="file" ref={uploadRef} display="none" />
-          <Button
-            className="license-file-btn"
-            iconBefore={UploadIcon}
-            onClick={(e: any) => {
-              e.preventDefault();
-              handleUploadClick();
-            }}
-          >
-            上傳證照檔案
-          </Button>
+          <div className="license-file-container">
+            <Button
+              className="license-file-btn"
+              iconBefore={UploadIcon}
+              appearance="primary"
+              onClick={(e: any) => {
+                e.preventDefault();
+                handleUploadClick();
+              }}
+            >
+              上傳證照檔案
+            </Button>
+            {/* <FileUploaderMulti /> */}
+          </div>
         </>
       )
     },

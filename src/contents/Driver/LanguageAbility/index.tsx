@@ -1,7 +1,7 @@
 import { Heading, Pane, Text } from "evergreen-ui";
 import React, { useState } from "react";
 import { BodySTY } from "./style";
-import { language_DATA } from "@contents/Employee/LanguageAbility/data";
+import { language_MAP } from "@contents/Driver/LanguageAbility/data";
 import { I_driverInfo } from "@contents/driver/driver.typing";
 
 function LanguageAbility(props: I_driverInfo) {
@@ -12,33 +12,15 @@ function LanguageAbility(props: I_driverInfo) {
       {currentUserInfo &&
         currentUserInfo.languages?.map((item, i) => (
           <Pane key={`lang-${i}`} className="input-line">
-            <Text>{item.language}</Text>
+            <Text>{language_MAP.get(item.language)}</Text>
             <Pane className="description">
-              <Text>聽-{item.listen}</Text>
-              <Text>說-{item.speak}</Text>
-              <Text>讀-{item.read}</Text>
-              <Text>寫-{item.write}</Text>
+              <Text>聽-{language_MAP.get(item.listen)}</Text>
+              <Text>說-{language_MAP.get(item.speak)}</Text>
+              <Text>讀-{language_MAP.get(item.read)}</Text>
+              <Text>寫-{language_MAP.get(item.write)}</Text>
             </Pane>
           </Pane>
         ))}
-      <Pane className="input-line">
-        <Text>中文</Text>
-        <Pane className="description">
-          <Text>聽-精通2</Text>
-          <Text>說-精通</Text>
-          <Text>讀-精通</Text>
-          <Text>寫-精通</Text>
-        </Pane>
-      </Pane>
-      <Pane className="input-line">
-        <Text>英文</Text>
-        <Pane className="description">
-          <Text>聽-精通</Text>
-          <Text>說-精通</Text>
-          <Text>讀-精通</Text>
-          <Text>寫-精通</Text>
-        </Pane>
-      </Pane>
     </BodySTY>
   );
 }

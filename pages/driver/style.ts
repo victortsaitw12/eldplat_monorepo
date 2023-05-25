@@ -10,6 +10,9 @@ const BodySTY = styled.div<{ isOpenDrawer: boolean }>`
   font-weight: ${({ theme }) => theme.fontWeight.Paragraph200};
   font-size: ${({ theme }) => theme.fontWeight.Paragraph200};
   line-height: 19px;
+  & > div {
+    border: none;
+  }
   /* fonts */
   .wrapMain {
     width: ${(props) => (props.isOpenDrawer ? "calc(100% - 300px)" : "100%")};

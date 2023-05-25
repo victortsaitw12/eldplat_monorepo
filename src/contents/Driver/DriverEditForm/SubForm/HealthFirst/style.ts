@@ -4,7 +4,7 @@ export const BodySTY = styled.div`
   background: #ffffff;
   height: calc(100vh - 110px);
   padding: 28px 20px;
-  table svg{
+  table svg {
     cursor: pointer;
   }
   .health-title {
@@ -22,5 +22,14 @@ export const BodySTY = styled.div`
   .health-table {
     margin-top: 10px;
     text-align: center;
+  }
+  .reportIcon {
+    &:hover {
+      &:before {
+        content: "下載報告";
+        position: absolute;
+        bottom: 0;
+      }
+    }
   }
 `;

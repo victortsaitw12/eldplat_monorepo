@@ -69,7 +69,6 @@ export const BodySTY = styled.div`
       }
     }
     .inline-line > div > div:not(.title) {
-      border: 1px solid red;
       flex-grow: 10;
     }
   }

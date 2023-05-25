@@ -41,6 +41,13 @@ const Page: NextPageWithLayout<never> = ({ user }) => {
       isCanceled = true;
     };
   }, [mainFilter, subFilter, initializeSubFilter]);
+  React.useEffect(() => {
+    let isCanceled = false;
+    fetchDriverData(isCanceled, true);
+    return () => {
+      isCanceled = true;
+    };
+  }, [mainFilter]);
 
   // ordered data pattern
   const driverPattern = {
@@ -112,7 +119,7 @@ const Page: NextPageWithLayout<never> = ({ user }) => {
     };
   };
 
-  const fetchDriverData = async (isCanceled: boolean, isDisabled = true) => {
+  const fetchDriverData = async (isCanceled: boolean, isDisabled = false) => {
     getAllDriver(subFilter, isDisabled).then((res) => {
       // const resultData = res.contentList ? [...res.contentList] : [];
       const driverData = mappingQueryData(
@@ -129,7 +136,7 @@ const Page: NextPageWithLayout<never> = ({ user }) => {
         );
         initializeSubFilter();
       }
-      isDisabled ? setData(driverData) : setDisabledData(driverData);
+      isDisabled ? setDisabledData(driverData) : setData(driverData);
     });
   };
 
@@ -146,17 +153,12 @@ const Page: NextPageWithLayout<never> = ({ user }) => {
 
   const mainFilterArray = [
     { id: 1, label: "啟用", value: "info" },
-    { id: 2, label: "停用", value: "suspend" }
+    { id: 2, label: "停用", value: "disabled" }
   ];
 
   return (
     <BodySTY isOpenDrawer={isOpenDrawer}>
       <Pane className="wrapMain">
-        {/* <Tabs
-          titles={["啟用", "用戶", "無訪問權限", "停用"]}
-          setIsOpenDrawer={setIsOpenDrawer}
-          isOpenDrawer={isOpenDrawer}
-        /> */}
         <TableWrapper
           onChangeTab={changeMainFilterHandler}
           mainFilter={mainFilter}
@@ -165,19 +167,36 @@ const Page: NextPageWithLayout<never> = ({ user }) => {
             submitRef.current && submitRef.current.click();
           }}
         >
-          <MainBookmark
+          <FilterWrapper
             updateFilter={updateSubFilter}
             resetFilter={() => {
               initializeSubFilter();
             }}
             filter={subFilter}
           >
-            <DriverList
-              driverData={mainFilter === "info" ? data : disabledData}
-              goToCreatePage={handleOpenSearch}
-              handleDeleteDriver={handleDeleteDriver}
-            />
-          </MainBookmark>
+            {/* <MainBookmark
+              updateFilter={updateSubFilter}
+              resetFilter={() => {
+                initializeSubFilter();
+              }}
+              filter={subFilter}
+            > */}
+            {mainFilter === "info" && (
+              <DriverList
+                driverData={data}
+                goToCreatePage={handleOpenSearch}
+                handleDeleteDriver={handleDeleteDriver}
+              />
+            )}
+            {mainFilter === "disabled" && (
+              <DriverList
+                driverData={disabledData}
+                goToCreatePage={handleOpenSearch}
+                handleDeleteDriver={handleDeleteDriver}
+              />
+            )}
+            {/* </MainBookmark> */}
+          </FilterWrapper>
         </TableWrapper>
       </Pane>
       {isOpenDrawer && (

@@ -1,28 +1,37 @@
 export const language_DATA = {
   lang: [
-    { value: "ch", label: "中文" },
-    { value: "en", label: "英文" },
-    { value: "jp", label: "日文" },
-    { value: "fr", label: "法文" }
+    { value: "01", label: "中文" },
+    { value: "02", label: "英文" },
+    { value: "03", label: "日文" },
+    { value: "04", label: "法文" }
   ],
   listen: [
-    { value: "l-proficient", label: "聽-精通" },
-    { value: "l-normal", label: "聽-普通" },
-    { value: "l-bad", label: "聽-待加強" }
+    { value: "1", label: "初學" },
+    { value: "2", label: "中等" },
+    { value: "3", label: "精通" }
   ],
   speak: [
-    { value: "s-proficient", label: "說-精通" },
-    { value: "s-normal", label: "說-普通" },
-    { value: "s-bad", label: "說-待加強" }
+    { value: "1", label: "初學" },
+    { value: "2", label: "中等" },
+    { value: "3", label: "精通" }
   ],
   read: [
-    { value: "r-proficient", label: "讀-精通" },
-    { value: "r-normal", label: "讀-普通" },
-    { value: "r-bad", label: "讀-待加強" }
+    { value: "1", label: "初學" },
+    { value: "2", label: "中等" },
+    { value: "3", label: "精通" }
   ],
   write: [
-    { value: "w-proficient", label: "寫-精通" },
-    { value: "w-normal", label: "寫-普通" },
-    { value: "w-bad", label: "寫-待加強" }
+    { value: "1", label: "初學" },
+    { value: "2", label: "中等" },
+    { value: "3", label: "精通" }
   ]
 };
+
+export const language_MAP = new Map([
+  ["01", "中文"],
+  ["02", "英文"],
+  ["03", "日文"],
+  ["1", "初學"],
+  ["2", "中等"],
+  ["3", "精通"]
+]);

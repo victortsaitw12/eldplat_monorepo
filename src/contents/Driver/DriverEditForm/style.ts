@@ -5,16 +5,30 @@ export const FormSTY = styled.form`
   li > div > div {
     flex-grow: 10;
   }
-  /* 駕駛證照上傳檔案 */
-  .license-file-btn {
-    display: flex;
-    justify-content: flex-start;
-    color: #ffffff;
-    background-color: #3670c9;
-    width: 124px;
-    height: 32px;
-    border-radius: 32px;
+  li > span {
+    flex: 1 !important;
   }
+  li > div {
+    flex: 2 !important;
+  }
+
+  /* 駕駛證照上傳檔案 */
+  .license-file-container {
+    .license-file-btn {
+      display: flex;
+      justify-content: flex-start;
+      color: #ffffff;
+      background-color: #3670c9;
+      width: 124px;
+      height: 32px;
+      border-radius: 32px;
+    }
+    .drop-field {
+      border: 1px solid ${({ theme }) => theme.color.N400};
+      border-radius: 4px;
+    }
+  }
+
   .licnFileBox {
     min-height: 75px;
     width: 270px;

@@ -1,5 +1,3 @@
-import { token } from "./token";
-
 export const deleteDriver = async (id: string): Promise<void> => {
   console.log("id:", id);
   try {
@@ -9,7 +7,7 @@ export const deleteDriver = async (id: string): Promise<void> => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
         }
       }
     );
