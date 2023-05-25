@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
- 
+    overflow-x: auto;
     padding: 20px;
     background:  ${({ theme }) => theme.color.N0};
     display: block;

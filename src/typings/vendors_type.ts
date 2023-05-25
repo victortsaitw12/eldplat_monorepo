@@ -30,5 +30,10 @@ export interface I_Select_Vendors_Type {
   vendor_Contact_Phone: string;
   vendor_Contact_Email: string;
   vendor_Code: string[];
-  vendor_Email:string;
+  vendor_Email: string;
+  vendor_Tel: string;
+  vendor_Tel_Code: string;
+  contact_Name: string;
+  contact_Tel: string;
+  contact_Tel_Code: string;
 }
