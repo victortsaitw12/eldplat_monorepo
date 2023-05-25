@@ -115,15 +115,14 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     rules: { required: "此欄位必填" }
                 }}
             />
-            <SelectField
+            <FiledInput
                 label="負責人"
-                {...register("vendor_Owner")}
-            >
-                <option value="負責人1">負責人1</option>
-                <option value="負責人2">負責人2</option>
-                <option value="負責人3">負責人3</option>
-                <option value="負責人4">負責人4</option>
-            </SelectField >
+                controlProps={{
+                    name: "vendor_Owner",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+            />
             <Text>
                 <span style={{ color: "#D14343" }}>* </span>
                 公司地址
