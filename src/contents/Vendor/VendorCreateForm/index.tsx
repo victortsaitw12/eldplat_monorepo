@@ -151,7 +151,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     alignItems: "center"
                 }}
             >
-                <label htmlFor="">
+                <label style={{ width: "41%" }} htmlFor="">
                     <span style={{ color: "#D14343" }}>*</span>
                     城市
                 </label>
@@ -172,7 +172,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     alignItems: "center"
                 }}
             >
-                <label htmlFor="">
+                <label style={{ width: "41%" }} htmlFor="">
                     <span style={{ color: "#D14343" }}>*</span>
                     州/省/區域
                 </label>
@@ -202,7 +202,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     alignItems: "center"
                 }}
             >
-                <label htmlFor="">
+                <label style={{ width: "41%" }} htmlFor="">
                     <span style={{ color: "#D14343" }}>*</span>
                     國家
                 </label>
@@ -226,6 +226,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
             >
                 {/*公司電話國碼*/}
                 <FiledInput
+                    style={{ width: "60px" }}
                     label=""
                     controlProps={{
                         name: "vendor_Tel_Code",
@@ -263,11 +264,12 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                 }}
             >
                 <span
-                    style={{ flex: "unset", width: "90px" }}
+                    style={{ flex: "unset", minWidth: "2.5rem" }}
                 >
                     市話
                 </span>
                 <FiledInput
+                    style={{ width: "60px" }}
                     controlProps={{
                         name: "vendor_Contact_List.0.contact_tel_code",
                         control,
@@ -290,9 +292,10 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                 }}
             >
                 <span
-                    style={{ flex: "unset", width: "90px" }}
+                    style={{ flex: "unset", minWidth: "2.5rem" }}
                 >手機</span>
                 <FiledInput
+                    style={{ width: "60px" }}
                     controlProps={{
                         name: "vendor_Contact_List.0.contact_phone_code",
                         control
@@ -323,7 +326,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
             <IconLeft text={"新增供應商"} type="submit">
                 <PlusIcon size={14} />
             </IconLeft>
-        </FormSTY>
+        </FormSTY >
     )
 }
 

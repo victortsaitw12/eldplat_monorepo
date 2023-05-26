@@ -29,9 +29,9 @@ export const InfoBoxSTY = styled.div`
       font-size: 14px;
       margin-bottom: 33px;
       align-items: baseline;
-      input{
+      /* input{
         width: unset;
-      }
+      } */
       .req{
         color: #D14343;
       }
@@ -46,9 +46,9 @@ export const InfoBoxSTY = styled.div`
         flex: 3;
         margin-bottom: 0;
         gap: 10px;
-        /* & > div{
-          flex-direction: column;
-        } */
+        &>div{
+          width: 100%;
+        }
       }  
   
     }

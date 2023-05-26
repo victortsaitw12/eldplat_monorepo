@@ -72,7 +72,7 @@ function ContactList({
                   style={{ width: "60px" }}
                   {...register(`${arrayName}.${index}.contact_tel_code`)}
                 />
-                <TextInput {...register(`${arrayName}.${index}.contact_tel`)} />
+                <TextInput style={{ width: "48%" }} {...register(`${arrayName}.${index}.contact_tel`)} />
               </Pane>
             ]
           },
@@ -94,6 +94,7 @@ function ContactList({
                   {...register(`${arrayName}.${index}.contact_phone_code`)}
                 />
                 <TextInput
+                  style={{ width: "48%" }}
                   {...register(`${arrayName}.${index}.contact_phone`)}
                 />
               </Pane>

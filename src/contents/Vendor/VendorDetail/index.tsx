@@ -4,6 +4,8 @@ import { TextInputField, TextInput, SelectField } from "evergreen-ui";
 import { MOCK_FUEL_DATA } from "./FuelData";
 import VerticalInput from "@components/HookForm/Input/VerticalInput";
 import Select from "react-select";
+
+import { BodySTY } from "./style";
 //@components
 import InfoBox from "@components/InfoBox";
 import ContactList from "@components/ContactList";
@@ -151,10 +153,10 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     {
       req: true,
       label: "公司地址",
-      subLabel: <span>地址1</span>,
       value: address1,
       editEle:
         <TextInputField
+          className="text-input-field w100"
           key="address1"
           label="地址1"
           {...methods.register("address1", {
@@ -166,10 +168,10 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     {
       req: false,
       label: " ",
-      subLabel: <span>地址2</span>,
       value: address2,
       editEle:
         <TextInputField
+          className="text-input-field w100"
           key="address2"
           label="地址2"
           {...methods.register("address1", {
@@ -254,6 +256,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
           {...methods.register("vendor_Tel", {
             validate: numberValidation
           })}
+          style={{ width: "58%" }}
         />
       ],
     },
@@ -273,6 +276,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
           {...methods.register("vendor_Fax", {
             validate: numberValidation
           })}
+          style={{ width: "58%" }}
         />
       ],
     },
@@ -319,7 +323,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
     }
   ]
   return (
-    <>
+    <BodySTY>
       <FormProvider {...methods} >
         <form
           onSubmit={methods.handleSubmit((data) => {
@@ -363,7 +367,7 @@ const VendorDetail = ({ submitRef, isEdit, vendorData, goToDetailPage, goToCreat
           </FlexWrapper>
         </form>
       </FormProvider >
-    </>
+    </BodySTY>
   );
 }
 
