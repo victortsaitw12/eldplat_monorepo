@@ -37,13 +37,55 @@ export const BodySTY = styled.div`
           width: 80%;
         }
       }
+    }
+
+    // 地址區域樣式
+    .address-frame {
+      align-items: flex-start;
 
       .address {
-        display: flex;
-        justify-content: space-evenly;
-        width: 280px;
-        > div {
+        .first-address,
+        .second-address {
+          p {
+            font-weight: 400;
+            font-size: 12px;
+          }
+        }
+      }
+
+      .city-and-district {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        p {
+          font-weight: 400;
+          font-size: 12px;
+        }
+        .ub-mb_24px {
           margin-bottom: 0px;
+        }
+
+        .city,
+        .district {
+          /* margin-top: -10px; */
+          /* margin-bottom: 0px !important; */
+          /* margin-bottom: 36px; */
+        }
+      }
+
+      .zip-and-country {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        p {
+          font-weight: 400;
+          font-size: 12px;
+        }
+        .country {
+          /* margin-top: -8px; */
+        }
+        input {
+          width: 100%;
         }
       }
     }

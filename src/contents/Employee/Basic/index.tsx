@@ -12,7 +12,7 @@ import {
   TextInput
 } from "evergreen-ui";
 import React, { useCallback, useState } from "react";
-import { genderOption_DATA, national_DATA } from "./data";
+import { genderOption_DATA } from "./data";
 import { BodySTY } from "./style";
 
 interface I_Basic_Props extends I_Content_Props {
@@ -61,7 +61,6 @@ function Basic({
       setCountryNum("(+1)");
     }
   };
-  console.log("newData[\"user_country\"]", newData.user_country);
 
   return (
     <BodySTY>
@@ -169,16 +168,3 @@ function Basic({
 }
 
 export default Basic;
-
-{
-  /* <SelectMenu
-title="搜尋國籍"
-options={national_DATA.map((label) => ({ label, value: label }))}
-selected={nationalitySelected}
-onSelect={(item) => {
-  setNationalitySelected(item.value);
-}}
->
-<Button width="280px">{nationalitySelected || "請選擇"}</Button>
-</SelectMenu> */
-}

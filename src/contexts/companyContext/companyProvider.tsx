@@ -72,8 +72,11 @@ export const CompanyProvider = ({ children }: any) => {
     { errField: "", errText: "" } || false
   );
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const companyNo = "BH49202304190001";
   useEffect(() => {
+    setLoading(true);
     getSingleCompany().then((data) => {
       console.log("company data", data);
       // const newData = {
@@ -124,6 +127,7 @@ export const CompanyProvider = ({ children }: any) => {
       //   company_Working_Hours: data.company_Working_Hours
       // };
       setCompanyData(data.dataList[0]);
+      setLoading(false);
     });
   }, [countryNumInput]);
 
@@ -157,7 +161,7 @@ export const CompanyProvider = ({ children }: any) => {
 
     // 設定error message
     const contactInfo = { ...companyData.company_contact[0] };
-    console.log("contactInfo", contactInfo);
+
     const telValid = numberValidation(companyData["company_tel"]);
     const comFaxValid = numberValidation(companyData["company_fax"]);
     const comEmailValid = emailValidation(companyData["company_email"]);

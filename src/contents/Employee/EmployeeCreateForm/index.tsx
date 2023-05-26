@@ -12,14 +12,12 @@ export interface CreateEmployeePayload {
   user_first_name: string;
   user_email: string;
   user_phone: string;
-  staff_no: string;
 }
 const defaultValues = {
   user_name: "",
   user_first_name: "",
   user_email: "",
-  user_phone: "",
-  staff_no: ""
+  user_phone: ""
 };
 const EmployeeCreateForm = ({ createEmployee }: EmployeeCreateFormProps) => {
   const { handleSubmit, control } = useForm<CreateEmployeePayload>({
@@ -60,15 +58,6 @@ const EmployeeCreateForm = ({ createEmployee }: EmployeeCreateFormProps) => {
         }}
         label="手機"
       />
-      <FiledInput
-        controlProps={{
-          name: "staff_no",
-          control,
-          rules: { required: "此欄位必填" }
-        }}
-        label="員工編號"
-      />
-      <div>群組編號</div>
 
       <IconLeft text={"新增員工"} type="submit">
         <PlusIcon size={14} />

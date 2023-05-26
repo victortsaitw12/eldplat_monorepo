@@ -40,7 +40,7 @@ function LanguageAbility({
 
   // 一進來有editData的話先設好要顯示的語言們
   useEffect(() => {
-    const editLangArr = editData?.languags; // 從api取回來的資料是代碼形式的: speak:1 之類的
+    const editLangArr = editData?.languages; // 從api取回來的資料是代碼形式的: speak:1 之類的
     setLangForApi(editLangArr);
     const transLangArr = editLangArr?.map((v: any) => {
       const compareLang = language_DATA.languag.find((item) => {
@@ -100,7 +100,7 @@ function LanguageAbility({
       })
     );
     const newData = { ...insertData };
-    newData.languags = LangForApi;
+    newData.languages = LangForApi;
     setInsertData(newData);
   };
 
@@ -119,7 +119,7 @@ function LanguageAbility({
 
     // TODO: 移除大物件(insertData)中該物件
     const newData = { ...insertData };
-    newData.languags = LangForApi;
+    newData.languages = LangForApi;
     setInsertData(newData);
   };
 
@@ -131,7 +131,7 @@ function LanguageAbility({
 
   useEffect(() => {
     const newData = { ...insertData };
-    newData.languags = LangForApi;
+    newData.languages = LangForApi;
     setInsertData(newData);
   }, [LangForApi, setInsertData]);
 

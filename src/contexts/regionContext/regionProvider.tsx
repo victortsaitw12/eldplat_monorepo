@@ -8,6 +8,7 @@ import React, { useState, createContext, useEffect, useContext } from "react";
 export interface I_AllRegions_Type {
   regionName: string;
   areaNo: string;
+  countryCode?: string;
 }
 
 // the provider of types
@@ -21,6 +22,7 @@ export interface I_Region_Context {
   handleCountrySwitch: (country: string) => void | any;
   handleStateSwitch: (state: string) => void | any;
   handleCitySwitch: (city: string) => void | any;
+  handleCountryCode: (country: string) => void | any;
 }
 
 // make a context for those components
@@ -44,6 +46,9 @@ export const RegionContext = createContext<I_Region_Context>({
     throw new Error("Function not implemented.");
   },
   handleCitySwitch: function (): void {
+    throw new Error("Function not implemented.");
+  },
+  handleCountryCode: function (): void {
     throw new Error("Function not implemented.");
   }
 });
@@ -71,14 +76,24 @@ export const RegionProvider = ({ children }: any) => {
     getAllRegions(area_no, level_num)
       .then((data) => {
         console.log("region data from api : ", data);
-        data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
-          if (v.area_Name_Tw !== "" && v.area_No[0] !== "6")
-            // 空的國家或測試錯誤訊息的都篩掉
-            return setAllCountries((prev) => [
-              ...prev,
-              { regionName: v.area_Name_Tw, areaNo: v.area_No }
-            ]);
-        });
+        data.options.map(
+          (v: {
+            [x: string]: string | undefined;
+            area_Name_Tw: string;
+            area_No: string;
+          }) => {
+            if (v.area_Name_Tw !== "" && v.area_No[0] !== "6")
+              // 空的國家或測試錯誤訊息的都篩掉
+              return setAllCountries((prev) => [
+                ...prev,
+                {
+                  regionName: v.area_Name_Tw,
+                  areaNo: v.area_No,
+                  countryCode: v.tel_Code
+                }
+              ]);
+          }
+        );
       })
       .catch((err) => console.error("get regions error: ", err));
   }, []);
@@ -88,7 +103,6 @@ export const RegionProvider = ({ children }: any) => {
     const showCountry = allCountries?.filter((v) => {
       return country === v.areaNo;
     });
-    console.log("showCountry", showCountry);
     return showCountry[0]?.regionName;
   };
 
@@ -121,6 +135,14 @@ export const RegionProvider = ({ children }: any) => {
     if (showCity) return showCity[0]?.area_Name_Tw;
   };
 
+  // 判斷國別來決定要顯示的國碼
+  const handleCountryCode = (country: string) => {
+    const showCountryCode = allCountries?.filter((v) => {
+      return v.areaNo === country;
+    });
+    return showCountryCode[0]?.countryCode;
+  };
+
   const allContextValues = {
     allCountries,
     setAllCountries,
@@ -130,7 +152,8 @@ export const RegionProvider = ({ children }: any) => {
     // setAllCities,
     handleCountrySwitch,
     handleStateSwitch,
-    handleCitySwitch
+    handleCitySwitch,
+    handleCountryCode
   };
 
   return (

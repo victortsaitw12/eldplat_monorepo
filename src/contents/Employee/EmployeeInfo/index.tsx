@@ -116,7 +116,7 @@ function EmployeeInfo({
         </Pane>
         <Pane className="input-line">
           <Text>公司名稱</Text>
-          <Text>雄獅通運公司</Text>
+          <Text>{insertData.company_name}</Text>
         </Pane>
         <Pane className="input-line">
           <Text>部門別</Text>

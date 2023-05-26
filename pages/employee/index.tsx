@@ -13,7 +13,10 @@ import FilterWrapper from "@layout/FilterWrapper";
 import TableWrapper from "@layout/TableWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
-import { createEmployee } from "@services/employee/createEmployee";
+import {
+  createBriefEmployee,
+  createEmployee
+} from "@services/employee/createEmployee";
 
 //
 const fakeData = [
@@ -160,12 +163,18 @@ const Page: NextPageWithLayout<never> = () => {
 
   const createEmployeeHandler = async (employeeData: any) => {
     console.log("1️⃣employeeData", employeeData);
-    const newEmployeeData = { ...employeeData, group_no: ["default"] };
-    console.log("4️⃣newEmployeeData", newEmployeeData);
+    const { user_first_name, user_name, user_email, user_phone } = employeeData;
+
     setLoading(true);
     try {
-      const res = await createEmployee(newEmployeeData);
+      const res = await createBriefEmployee(
+        user_first_name,
+        user_name,
+        user_email,
+        user_phone
+      );
       console.log("3️⃣res", res);
+      router.reload();
     } catch (e: any) {
       console.log(e);
       alert(e.message);

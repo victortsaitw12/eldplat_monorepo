@@ -25,6 +25,7 @@ import {
   RegionContext
 } from "@contexts/regionContext/regionProvider";
 import { filterStates } from "@utils/regionMethods";
+import LoadingSpinner from "@components/LoadingSpinner";
 
 function Contact() {
   const {
@@ -35,7 +36,9 @@ function Contact() {
     countryNumInput,
     setCountryNumInput
   } = useContext<I_Company_Context>(CompanyContext);
-  const { allCountries } = useContext<I_Region_Context>(RegionContext);
+  const { allCountries, handleStateSwitch, handleCountryCode } =
+    useContext<I_Region_Context>(RegionContext);
+  const [loading, setLoading] = useState<boolean>(true);
   const [contactArr, setContactArr] = useState<I_Company_Contact_Type[] | any>([
     {
       contact_name: "",
@@ -54,6 +57,30 @@ function Contact() {
   const [allCities, setAllCities] = useState<I_AllRegions_Type[]>([
     { regionName: "請選擇", areaNo: "0" }
   ]);
+
+  // TODO: 一進畫面先抓到州、省和城市的文字顯示
+  // useEffect(() => {
+  //   if (!companyData.company_area) return;
+  //   console.log("💟companyData from beginning", companyData);
+  //   const area_no = companyData?.company_area.substring(0, 4);
+  //   const level_num = "3";
+  //   getAllRegions(area_no, level_num).then((data) => {
+  //     setAllStates([]);
+  //     data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
+  //       if (v.area_Name_Tw !== "")
+  //         return setAllStates((prev: I_AllRegions_Type[]) => [
+  //           ...prev,
+  //           { regionName: v.area_Name_Tw, areaNo: v.area_No }
+  //         ]);
+  //     });
+  //   });
+  //   // setAllStates([
+  //   //   {
+  //   //     regionName: handleStateSwitch(companyData.company_area),
+  //   //     areaNo: companyData?.company_area
+  //   //   }
+  //   // ]);
+  // }, [companyData]);
 
   // 不可變動的國碼欄位
   const countryCode = companyData.company_country;
@@ -171,9 +198,10 @@ function Contact() {
   };
 
   console.log("🎈contactArr", contactArr);
-  console.log("🎃allRegions", allCountries);
+  console.log("🎃allCountries", allCountries);
   console.log("⚽allStates", allStates);
   console.log("⚾allCities", allCities);
+  console.log("companyData in contact section", companyData);
 
   return (
     <BodySTY>
@@ -185,7 +213,7 @@ function Contact() {
             <TextInput
               className="country-number"
               name=""
-              value={countryNum}
+              value={handleCountryCode(companyData?.company_country)}
               required
               disabled
             />
@@ -207,7 +235,7 @@ function Contact() {
             <TextInput
               className="country-number"
               name=""
-              value={countryNum}
+              value={handleCountryCode(companyData?.company_country)}
               required
               disabled
             />
@@ -258,7 +286,7 @@ function Contact() {
                   }}
                 >
                   {allCities?.map((item: any, idx: number) => (
-                    <option key={idx} value={item.areaNo}>
+                    <option key={item.areaNo} value={item.areaNo}>
                       {item.regionName}
                     </option>
                   ))}
@@ -277,7 +305,7 @@ function Contact() {
                   }}
                 >
                   {allStates?.map((item: any, idx: number) => (
-                    <option key={idx} value={item.areaNo}>
+                    <option key={item.areaNo} value={item.areaNo}>
                       {item.regionName}
                     </option>
                   ))}
@@ -306,7 +334,7 @@ function Contact() {
                   }}
                 >
                   {allCountries?.map((item, idx) => (
-                    <option key={idx} value={item.areaNo}>
+                    <option key={item.areaNo} value={item.areaNo}>
                       {item.regionName}
                     </option>
                   ))}
