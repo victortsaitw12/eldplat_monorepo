@@ -60,7 +60,7 @@ const MonthlyView = ({
     const updateMaxEventCount = Math.floor(
       (cellH - cellPd * 2 - eventH) / (eventH + gapH)
     );
-    console.log("maxEventCount:", updateMaxEventCount);
+    console.log("dateCellRef:", dateCellRef);
     setMaxEventCount(updateMaxEventCount);
     if (initMaxEventCountRef.current === null) {
       initMaxEventCountRef.current = updateMaxEventCount;
@@ -72,9 +72,6 @@ const MonthlyView = ({
   React.useEffect(() => {
     handleEventCount();
   }, []);
-  React.useEffect(() => {
-    console.log("initMaxEventCount:", initMaxEventCountRef.current);
-  }, [maxEventCount]);
 
   React.useEffect(() => {
     window.addEventListener("resize", debounce(handleEventCount, 250));

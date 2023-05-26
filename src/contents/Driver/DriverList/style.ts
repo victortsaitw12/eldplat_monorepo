@@ -14,4 +14,9 @@ export const DriverListSTY = styled.div`
       left: 0;
     }
   }
+  tr > td {
+    &:first-child > div {
+      justify-content: flex-start;
+    }
+  }
 `;
