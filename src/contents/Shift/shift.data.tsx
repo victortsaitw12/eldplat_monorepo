@@ -33,9 +33,9 @@ export const EVENT_TYPE = new Map([
   ["040", { label: "需簽核", color: "ChartYellow", icon: <WarningSignIcon /> }], //"04+0"
   ["041", { label: "已簽核", color: "ChartYellow", icon: <TickCircleIcon /> }], //"04+1"
   ["042", { label: "退回", color: "N300", icon: <WarningSignIcon /> }], //"04+2???"
-  ["01", { label: "派訂單", color: "ChartGreen", icon: <ClipboardIcon /> }], //01?
+  ["05", { label: "派訂單", color: "ChartGreen", icon: <ClipboardIcon /> }], //01?
   ["06", { label: "派工單(車)", color: "T300", icon: <ClipboardIcon /> }], //01?
-  ["07", { label: "派工單(駕)", color: "ChartAqua", icon: <ClipboardIcon /> }], //01?
+  ["01", { label: "派工單(駕)", color: "ChartAqua", icon: <ClipboardIcon /> }], //01?
   ["08", { label: "派單完成", color: "N300", icon: <ClipboardIcon /> }] //01?
 ]);
 
