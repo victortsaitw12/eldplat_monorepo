@@ -30,7 +30,8 @@ const MonthlyView = ({
   UI.setId(router.query.id);
   const { cur } = router.query;
   const dateCellRef = React.useRef<HTMLDivElement>(null);
-  const [maxEventCount, setMaxEventCount] = React.useState<number>(1);
+  const initMaxEventCountRef = React.useRef(null);
+  const [maxEventCount, setMaxEventCount] = React.useState<number>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   //------ variables ------//
@@ -59,15 +60,18 @@ const MonthlyView = ({
     const updateMaxEventCount = Math.floor(
       (cellH - cellPd * 2 - eventH) / (eventH + gapH)
     );
-    console.log("maxEventCount:", updateMaxEventCount);
+    console.log("dateCellRef:", dateCellRef);
     setMaxEventCount(updateMaxEventCount);
+    if (initMaxEventCountRef.current === null) {
+      initMaxEventCountRef.current = updateMaxEventCount;
+    }
   }, []);
 
   // ------- useEffect ------- //
   // monitor window for eventCount shown
   React.useEffect(() => {
     handleEventCount();
-  }, [handleEventCount]);
+  }, []);
 
   React.useEffect(() => {
     window.addEventListener("resize", debounce(handleEventCount, 250));
@@ -77,7 +81,10 @@ const MonthlyView = ({
   }, [handleEventCount]);
 
   React.useEffect(() => {
-    isExpand ? setMaxEventCount(99) : handleEventCount();
+    console.log(isExpand);
+    isExpand
+      ? setMaxEventCount(99)
+      : setMaxEventCount(initMaxEventCountRef.current);
   }, [isExpand]);
 
   // fetch data from db

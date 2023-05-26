@@ -11,10 +11,31 @@ interface Props {
 //
 function Index({ onDelete, onEdit, onView }: Props) {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
+
+  const handleClickElseWhere = React.useCallback(
+    (event: any) => {
+      if (!event?.target.classList.contains("table-row-option")) {
+        setOptionIsOpen(false);
+      }
+    },
+    [setOptionIsOpen]
+  );
+
+  React.useEffect(() => {
+    console.log("1 useEffect:", optionIsOpen);
+    if (!optionIsOpen) return;
+    document.addEventListener("click", handleClickElseWhere);
+    console.log("2 useEffect:", optionIsOpen);
+    return () => {
+      document.removeEventListener("click", handleClickElseWhere);
+    };
+  }, [handleClickElseWhere, optionIsOpen]);
+
   return (
     <BodySTY>
       <button
         onClick={() => {
+          // console.log("click:", optionIsOpen);
           setOptionIsOpen((prev) => !prev);
         }}
       >
