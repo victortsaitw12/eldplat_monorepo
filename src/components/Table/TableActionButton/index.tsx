@@ -20,7 +20,6 @@ function Index({ onDelete, onEdit, onView }: Props) {
   return (
     <BodySTY>
       <button
-        ref={ref}
         onClick={() => {
           setOptionIsOpen((prev) => !prev);
         }}
@@ -28,7 +27,7 @@ function Index({ onDelete, onEdit, onView }: Props) {
         <MoreIcon />
       </button>
       {optionIsOpen && (
-        <div className="table-row-option">
+        <div className="table-row-option" ref={ref}>
           <button
             className="option-item"
             onClick={() => {
