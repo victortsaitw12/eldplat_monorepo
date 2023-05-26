@@ -7,15 +7,17 @@ interface Props extends CheckboxOwnProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean
+  defaultChecked?: boolean
 }
 const StyledCheckBox: BoxComponent<Props, "input"> = ({
   label,
   name,
   value,
   onChange,
-  disabled
+  disabled,
+  defaultChecked
 }: Props) => {
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(defaultChecked);
   return (
     <Checkbox
       label={label}

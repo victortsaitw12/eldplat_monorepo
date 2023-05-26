@@ -1,19 +1,16 @@
-export const getCustomerById = async (customer_No: string) => {
+export const getDriverById = async (driver_no: string) => {
   const response = await fetch(
-    "https://localhost:7188/Gateway_Customer/GetOneCustomer",
+    `https://localhost:7088/ATR/QueryDriverInfo?driver_no=${driver_no}`,
     {
       method: "POST",
-      body: JSON.stringify({
-        customer_No
-      }),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
       }
     }
   );
   const data = await response.json();
-  console.log(mappingData(data.contentList[0], customerPattern));
-  return data.contentList[0];
+  return data.data;
 };
 
 type PatternType = { [key: string]: string };

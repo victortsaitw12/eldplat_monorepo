@@ -1,40 +1,33 @@
 import React from "react";
-import {
-  Text,
-  UnorderedList,
-  ListItem,
-  Pane
-} from "evergreen-ui";
+import { Text, UnorderedList, ListItem, Pane } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
 
-interface I_infoData {
+export interface I_infoData {
   editEle?: React.ReactNode;
-  readonly?: boolean;//只讀
-  req?: boolean;//必填
-  value?: string | Array<string>;//值
-  label?: string;//label文字
-  subLabel?: string | React.ReactNode;//上下的label
+  readonly?: boolean; //只讀
+  req?: boolean; //必填
+  value?: string | Array<string> | React.ReactNode; //值
+  label?: string; //label文字
+  subLabel?: string | React.ReactNode; //上下的label
   inputType?: string;
 }
 
 export interface I_InfoBoxProps {
+  style?: React.CSSProperties;
   isEdit: boolean;
   infoTitle?: string;
   infoData?: I_infoData[];
   infoType?: string;
-  children?: React.ReactNode;
 }
 
-function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxProps) {
-
-  console.log("🎶🎶🎶🎶🎶🎶這些是InfoBox裡面的props", {
-    isEdit: isEdit,
-    infoTitle: infoTitle,
-    infoData: infoData,
-    infoType: infoType
-  });
-
+function InfoBox({
+  style,
+  isEdit,
+  infoTitle,
+  infoData,
+  infoType
+}: I_InfoBoxProps) {
   const r_switch_info = (type?: string) => {
     switch (type) {
       case "label":
@@ -42,23 +35,23 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
           <UnorderedList className="info_content type_label">
             {r_label()}
           </UnorderedList>
-        )
+        );
         break;
       case "checkbox":
         return (
           <UnorderedList className="info_content type_checkbox">
             {r_checkbox()}
           </UnorderedList>
-        )
+        );
         break;
       default:
         return (
           <UnorderedList className="info_content type_text">
             {r_text()}
           </UnorderedList>
-        )
+        );
     }
-  }
+  };
 
   //文字
   const r_text = () => {
@@ -66,54 +59,74 @@ function InfoBox({ isEdit, infoTitle, infoData, infoType, children }: I_InfoBoxP
       return false;
     }
     return infoData.map((child: any, i: number) => {
-      const { req, value, label, editEle } = child
-      console.log("💕💕💕💕💕💕💕infoData的child", child);
+      const { req, value, label, editEle, inputType } = child;
+      if (!value && !editEle) {
+        return;
+      }
+      if (inputType === "custom") {
+        return editEle;
+      }
 
       return (
         <ListItem key={value + i}>
-          <Text>
-            {req && label !== "" && <span className="req">*</span>}
-            {label}
-          </Text>
-          <Pane>
-            {isEdit && editEle ? editEle : <Text>{value}</Text>}
-          </Pane>
+          {label && (
+            <Text>
+              {req && label !== "" && <span className="req">*</span>}
+              {label}
+            </Text>
+          )}
+          <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane>
         </ListItem>
-      )
-    })
-  }
+      );
+    });
+  };
 
   //標籤-編輯模式待處理
   const r_label = () => {
+    console.log("sss", infoData);
+    if (!infoData) {
+      return false;
+    }
+    if (isEdit) {
+      return <Pane>{infoData[0].editEle}</Pane>
+    } else {
+      console.log("🎶🎶🎶🎶", infoData[0].value)
+      if (infoData[0].value && Array.isArray(infoData[0].value) && infoData[0].value.length > 0) {
+        return infoData[0].value.map((child: any, i: number) => {
+          return (
+            <ListItem key={child + i}>
+              <Text>{child}</Text>
+            </ListItem>
+          );
+        });
+      }
+
+    }
+  };
+
+  //checkbox-編輯模式待處理
+  const r_checkbox = () => {
     if (!infoData) {
       return false;
     }
     return infoData.map((child: any, i: number) => {
       return (
-        <ListItem key={child.value + i} >
-          <Text>{child.value}</Text>
-        </ListItem>
-      )
-    })
-  }
-
-  //checkbox-編輯模式待處理
-  const r_checkbox = () => {
-    if (!infoData) {
-      return false
-    }
-    return infoData.map((child: any, i: number) => {
-      return (
         <ListItem key={child.value + i}>
-          <Checkbox label={child.label} disabled={isEdit ? false : true} />
+          <Checkbox
+            disabled={isEdit ? false : true}
+            name={child.value}
+            label={child.label}
+            defaultChecked={child.checked}
+            onChange={child.onChange}
+          />
         </ListItem>
-      )
-    })
-  }
+      );
+    });
+  };
 
   return (
-    <InfoBoxSTY>
-      <Text className="info-title">{infoTitle}</Text>
+    <InfoBoxSTY style={style}>
+      {infoTitle && <Text className="info-title">{infoTitle}</Text>}
       {r_switch_info(infoType)}
     </InfoBoxSTY>
   );

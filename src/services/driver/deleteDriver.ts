@@ -1,24 +1,21 @@
-export const deleteDriver = async (customer_No: string): Promise<void> => {
-  console.log("customer_No", customer_No);
+export const deleteDriver = async (id: string): Promise<void> => {
+  console.log("id:", id);
   try {
     const response = await fetch(
-      "https://localhost:7188/Gateway_Customer/DeleteCustomer",
+      `https://localhost:7088/ATR/DeleteDriver?driverNo=${id}`,
       {
-        method: "POST",
-        body: JSON.stringify({
-          customer_No
-        }),
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
         }
       }
     );
     const data = await response.json();
     if (data.result === true) {
-      console.log("Delete success!");
+      console.log("SUCCESS:", id);
     }
   } catch (err) {
-    console.log(err);
+    console.log("ERR:", err);
   }
 };

@@ -40,7 +40,7 @@ export const TableSTY = styled.table`
         background: #e3e3e3;
       }
     }
-  }
+  
 
   .no-data {
     display: flex;
@@ -98,17 +98,17 @@ export const TrSTY = styled.tr<I_TrSTY>`
       transform: translateY(-50%);
       border-radius: 10px;
       background-color: ${(props) => {
-        switch (props.statusBar) {
-          case "success":
-            return "#52bd94";
-          case "error":
-            return "#d14343";
-          case "warning":
-            return "#ffb020";
-          default:
-            return "unset";
-        }
-      }};
+    switch (props.statusBar) {
+      case "success":
+        return "#52bd94";
+      case "error":
+        return "#d14343";
+      case "warning":
+        return "#ffb020";
+      default:
+        return "unset";
+    }
+  }};
     }
   }
 `;

@@ -1,5 +1,4 @@
 import { create } from "zustand";
-// import { persist, createJSONStorage } from "zustand/middleware";
 import { deepClone } from "@utils/deepClone";
 
 interface StateTypes {
@@ -15,7 +14,7 @@ interface StateTypes {
 }
 export const useBusStore = create<StateTypes>((set) => ({
   subFilter: null,
-  mainFilter: "",
+  mainFilter: "1",
   selectedForm: "",
   isDrawerOpen: false,
   setDrawerOpen: (value: boolean) => {

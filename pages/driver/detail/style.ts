@@ -1,29 +1,28 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* width: 600px; */
-  height: calc(100% - 20px);
+  /* display: flex;
+  height: calc(100% - 20px); */
   margin: 10px;
+  .title-bar {
+    margin-bottom: -1rem;
+  }
+  div:first-child > div {
+    border: none;
+  }
   // 最上面標題欄
   .title-bar {
-    .tab {
+    .title-label {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 8px 12px;
       color: #567190;
+      background-color: #ffffff;
       font-size: 14px;
       font-weight: 600;
-      cursor: pointer;
-      &:nth-child(1) {
-        margin-left: 24px;
-      }
-    }
-    .current {
-      background-color: #ffffff;
       border-radius: 10px 10px 0px 0px;
+      margin-left: 24px;
       gap: 4px;
       &:after {
         content: "›";
@@ -37,6 +36,7 @@ export const BodySTY = styled.div`
         background-color: transparent;
         border: none;
       }
+
       .save {
         &:hover {
           background-color: #ffffff;
@@ -45,32 +45,8 @@ export const BodySTY = styled.div`
     }
   }
 
-  // pane
-  .pane {
-    display: none;
-  }
-  .pane.current {
-    display: block;
-  }
-  div {
-    .left-wrap {
-      div {
-        &:nth-child(1) {
-          margin-top: 0;
-        }
-      }
-    }
-    .right-wrap {
-      div {
-        &:nth-child(1) {
-          margin-top: 0;
-        }
-      }
-    }
-  }
-
-  // 下方所有新增區塊 (TEMP FOR REF)
-  .content-blocks {
+  // 下方所有新增區塊
+  .add-blocks {
     display: grid;
     grid-template-columns: 4fr 5fr;
     gap: 6px;

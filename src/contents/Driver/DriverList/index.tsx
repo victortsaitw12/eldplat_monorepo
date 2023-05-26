@@ -1,37 +1,47 @@
-import TableWithEdit from "@components/Table/TableWithEdit";
-import { getDriverTitle } from "@services/driver/getAllDrivers";
+import { ErrorIcon, PlusIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
-import { BodySTY } from "./style";
+import { DriverListSTY } from "./style";
+
+import { getDriverTitle } from "@services/driver/getAllDrivers";
+import TableWithEdit from "@components/Table/TableWithEdit";
+import TableTitle from "@components/Table/TableTitle";
+import { IconLeft } from "@components/Button/Primary";
 
 interface Props {
   driverData: any;
   goToCreatePage: () => void;
+  handleDeleteDriver: (id: string) => void;
 }
 
-function DriverList({ driverData, goToCreatePage }: Props) {
+function DriverList({ driverData, goToCreatePage, handleDeleteDriver }: Props) {
   const driverTitle = getDriverTitle();
-  console.log("BusList", driverData);
   const router = useRouter();
+
+  const addDriverBtn = (
+    <IconLeft text="新增駕駛" onClick={goToCreatePage}>
+      <PlusIcon size={14} />
+    </IconLeft>
+  );
+
   return (
-    <BodySTY>
+    <DriverListSTY>
+      {/* <TableTitle tableName={"駕駛"} control={[addDriverBtn]} page={true} /> */}
       <TableWithEdit
         tableName="駕駛"
         titles={driverTitle}
         data={driverData}
         goToCreatePage={goToCreatePage}
         viewItem={(id) => {
-          console.log(`view driver: ${id}`);
-          router.push("/driver/detail");
+          router.push(`/driver/detail/${id}`);
         }}
-        editItem={(id) => {
-          console.log(`edit driver: ${id}`);
-          router.push(`/driver/create/${id}`);
+        goToEditPage={(id) => {
+          router.push(`/driver/detail/${id}?editPage=edit`);
         }}
         deleteItem={(id) => {
-          console.log(`delete driver: ${id}`);
+          handleDeleteDriver(id);
         }}
       />
-    </BodySTY>
+    </DriverListSTY>
   );
 }
 

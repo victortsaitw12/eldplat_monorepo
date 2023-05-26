@@ -1,59 +1,79 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { ItemSTY, FormSTY } from "./style";
+import { FormSTY } from "./style";
+import { useRouter } from "next/router";
 //@sevices
 import { createVendor } from "@services/vendor/createVendor";
 import FiledInput from "./FieldInput";
-import { HelpIcon, PlusIcon, ErrorIcon, Text } from "evergreen-ui";
+import { PlusIcon, Text, SelectField, Select } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
+//@layout
+import FlexWrapper from "@layout/FlexWrapper";
+
+//@components
+import CheckboxField from "@components/CheckboxField";
+import { I_contactData } from "../vendor.type";
+
+//@mock-data
+import { vedor_code_text } from "@mock-data/vendors/03VendorCodeList";
 export interface CreateVendorPayload {
-    updid: string;
     vendor_Name: string;
-    vendor_Label: string;
-    vendor_Phone: string;
-    vendor_Website: string;
-    vendor_Address: string;
-    vendor_Address2: string;
-    vendor_Zip: string;
-    vendor_State: string;
     vendor_City: string;
     vendor_Country: string;
-    vendor_Contact_Name: string;
-    vendor_Contact_Phone: string;
-    vendor_Contact_Email: string;
-    vendor_Code: Array<string>;
+    vendor_Owner: string;
+    vendor_Gui_No: string;
+    address1: string;
+    address2: string;
+    vendor_Area: string;
+    vendor_District_Code: string;
+    vendor_Tel_Code: string;
+    vendor_Tel: string;
+    vendor_Contact_List: Array<I_contactData>;
 }
 
 // default value
 const defaultValues = {
     vendor_Name: "",
-    vendor_Label: "",
-    vendor_Phone: "",
-    vendor_Website: "",
-    vendor_Address: "",
-    vendor_Address2: "",
-    vendor_Zip: "",
-    vendor_State: "",
     vendor_City: "",
     vendor_Country: "TW",
-    vendor_Contact_Name: "",
-    vendor_Contact_Phone: "",
-    vendor_Contact_Email: "",
-    vendor_Code: ["01"],
+    vendor_Owner: "",
+    vendor_Gui_No: "",
+    address1: "",
+    address2: "",
+    vendor_Area: "",
+    vendor_District_Code: "",
+    vendor_Tel_Code: "",
+    vendor_Tel: "",
+    vendor_Contact_List: [
+        {
+            contact_name: "",
+            contact_phone_code: "",
+            contact_phone: "",
+            contact_tel_code: "",
+            contact_tel: "",
+            contact_email: "",
+            contact_sort: "",
+        }
+    ],
 };
 
 interface I_VendorCreateFormProps {
     data?: any
+    reloadData?: () => void;
 }
 
-function VendorCreateForm({ data }: I_VendorCreateFormProps) {
-
-    const { handleSubmit, control } = useForm<CreateVendorPayload>({
+function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
+    const router = useRouter();
+    //供應商的分類
+    const { codeType = "01" } = router.query;
+    console.log("💫💫💫codeType", codeType);
+    console.log("vedor_code_text.codeType", vedor_code_text[codeType as string]);
+    const { register, handleSubmit, control } = useForm<CreateVendorPayload>({
         defaultValues
     });
-
     const [loading, setLoading] = useState(false);
+    const [fuelValue, setFuelValue] = useState(codeType);
 
     const asyncSubmitForm = async (data: any) => {
         setLoading(true);
@@ -64,163 +84,249 @@ function VendorCreateForm({ data }: I_VendorCreateFormProps) {
             alert(e.message);
         }
         setLoading(false);
+        reloadData && reloadData();
     };
 
     return (
         <FormSTY onSubmit={handleSubmit((data) => {
-            console.log("🎶🎶🎶create Vendor Data!:", data);
-            // asyncSubmitForm({ ...data });
+            asyncSubmitForm({
+                ...data,
+                vendor_Code_List: fuelValue ? [
+                    {
+                        "vendor_Code": fuelValue,
+                        "vendor_Code_Name": vedor_code_text[fuelValue as string]
+                    }
+                ] : []
+            });
         })}>
             <FiledInput
+                label="名稱"
                 controlProps={{
                     name: "vendor_Name",
                     control,
                     rules: { required: "此欄位必填" }
                 }}
-                label="名稱"
             />
             <FiledInput
-                controlProps={{
-                    name: "updid",
-                    control,
-                    rules: { required: "此欄位必填" }
-                }}
                 label="統一編號"
-            />
-            <FiledInput
                 controlProps={{
-                    name: "vendor_Contact_Name",
+                    name: "vendor_Gui_No",
                     control,
                     rules: { required: "此欄位必填" }
                 }}
+            />
+            <FiledInput
                 label="負責人"
+                controlProps={{
+                    name: "vendor_Owner",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
             />
             <Text>
                 <span style={{ color: "#D14343" }}>* </span>
                 公司地址
             </Text>
             <FiledInput
-                horizonLabel={true}
-                controlProps={{
-                    name: "vendor_Address",
-                    control,
-                    rules: { required: "此欄位必填" }
-                }}
                 label="地址1"
-            />
-            <FiledInput
                 horizonLabel={true}
                 controlProps={{
-                    name: "vendor_Address2",
+                    name: "address1",
                     control,
                     rules: { required: "此欄位必填" }
                 }}
+            />
+            <FiledInput
                 label="地址2"
-            />
-            <FiledInput
                 horizonLabel={true}
                 controlProps={{
-                    name: "vendor_City",
+                    name: "address2",
                     control,
                     rules: { required: "此欄位必填" }
                 }}
-                label="城市"
             />
-            <FiledInput
-                horizonLabel={true}
-                controlProps={{
-                    name: "vendor_State",
-                    control,
-                    rules: { required: "此欄位必填" }
+            <FlexWrapper
+                padding="0"
+                style={{
+                    alignItems: "center"
                 }}
-                label="州/省/區域"
-            />
-            <Text>
-                <span style={{ color: "#D14343" }}>* </span>
-                公司電話
-            </Text>
-            <FiledInput
-                horizonLabel={true}
-                controlProps={{
-                    name: "vendor_Zip",
-                    control,
-                    rules: { required: "此欄位必填" }
+            >
+                <label style={{ width: "41%" }} htmlFor="">
+                    <span style={{ color: "#D14343" }}>*</span>
+                    城市
+                </label>
+                <Select
+                    {...register("vendor_City", {
+                        required: "必填",
+                    })}
+                >
+                    <option value="A">A市</option>
+                    <option value="B">B市</option>
+                    <option value="C">C市</option>
+                    <option value="D">D市</option>
+                </Select >
+            </FlexWrapper>
+            <FlexWrapper
+                padding="0"
+                style={{
+                    alignItems: "center"
                 }}
+            >
+                <label style={{ width: "41%" }} htmlFor="">
+                    <span style={{ color: "#D14343" }}>*</span>
+                    州/省/區域
+                </label>
+                <Select
+                    {...register("vendor_Area", {
+                        required: "必填",
+                    })}
+                >
+                    <option value="A">A區</option>
+                    <option value="B">B區</option>
+                    <option value="C">C區</option>
+                    <option value="D">D區</option>
+                </Select >
+            </FlexWrapper>
+            <FiledInput
                 label="郵遞區號"
-            />
-            <FiledInput
                 horizonLabel={true}
                 controlProps={{
-                    name: "vendor_Country",
+                    name: "vendor_District_Code",
                     control,
-                    rules: { required: "此欄位必填" }
+                    rules: { required: "此欄位必填", maxLength: 5 }
                 }}
-                label="國家"
             />
-            <FiledInput
-                controlProps={{
-                    name: "vendor_Country",
-                    control,
-                    rules: { required: "此欄位必填" }
+            <FlexWrapper
+                padding="0"
+                style={{
+                    alignItems: "center"
                 }}
-                label="國家"
-            />
-            <FiledInput
-                controlProps={{
-                    name: "vendor_Country",
-                    control,
-                    rules: { required: "此欄位必填" }
-                }}
-                label="國家"
-            />
-            <FiledInput
-                controlProps={{
-                    name: "vendor_Country",
-                    control,
-                    rules: { required: "此欄位必填" }
-                }}
-                label="國家"
-            />
-            <FiledInput
-                controlProps={{
-                    name: "vendor_Country",
-                    control,
-                    rules: { required: "此欄位必填" }
-                }}
-                label="國家"
-            />
-            <FiledInput
-                controlProps={{
-                    name: "vendor_Country",
-                    control,
-                    rules: { required: "此欄位必填" }
-                }}
-                label="國家"
-            />
+            >
+                <label style={{ width: "41%" }} htmlFor="">
+                    <span style={{ color: "#D14343" }}>*</span>
+                    國家
+                </label>
+                <Select
+                    {...register("vendor_Country", {
+                        required: "必填",
+                    })}
+                >
+                    <option value="A">A國</option>
+                    <option value="B">B國</option>
+                    <option value="C">C國</option>
+                    <option value="D">D國</option>
+                </Select >
+            </FlexWrapper>
             <Text>
                 <span style={{ color: "#D14343" }}>* </span>
                 公司電話
             </Text>
+            <FlexWrapper
+                padding="0"
+            >
+                {/*公司電話國碼*/}
+                <FiledInput
+                    style={{ width: "60px" }}
+                    label=""
+                    controlProps={{
+                        name: "vendor_Tel_Code",
+                        control
+                    }}
+                />
+                <FiledInput
+                    label=""
+                    controlProps={{
+                        name: "vendor_Tel",
+                        control,
+                        rules: { required: "此欄位必填" }
+                    }}
+                />
+            </FlexWrapper>
+            <Text>
+                <span style={{ color: "#D14343" }}>* </span>
+                主要聯絡人
+            </Text>
             <FiledInput
                 controlProps={{
-                    name: "vendor_Country",
+                    name: "vendor_Contact_List.0.contact_name",
                     control,
                     rules: { required: "此欄位必填" }
                 }}
                 label=""
             />
-            <FiledInput
-                controlProps={{
-                    name: "vendor_Country",
-                    control,
-                    rules: { required: "此欄位必填" }
+            <Text>
+                主要聯絡人電話
+            </Text>
+            <FlexWrapper
+                padding="0"
+                style={{
+                    alignItems: "center"
                 }}
-                label=""
+            >
+                <span
+                    style={{ flex: "unset", minWidth: "2.5rem" }}
+                >
+                    市話
+                </span>
+                <FiledInput
+                    style={{ width: "60px" }}
+                    controlProps={{
+                        name: "vendor_Contact_List.0.contact_tel_code",
+                        control,
+                    }}
+                    label=""
+                />
+                <FiledInput
+                    controlProps={{
+                        name: "vendor_Contact_List.0.contact_tel",
+                        control,
+                        rules: { required: "此欄位必填" }
+                    }}
+                    label=""
+                />
+            </FlexWrapper>
+            <FlexWrapper
+                padding="0"
+                style={{
+                    alignItems: "center"
+                }}
+            >
+                <span
+                    style={{ flex: "unset", minWidth: "2.5rem" }}
+                >手機</span>
+                <FiledInput
+                    style={{ width: "60px" }}
+                    controlProps={{
+                        name: "vendor_Contact_List.0.contact_phone_code",
+                        control
+                    }}
+                    label=""
+                />
+                <FiledInput
+                    controlProps={{
+                        name: "vendor_Contact_List.0.contact_phone",
+                        control
+                    }}
+                    label=""
+                />
+            </FlexWrapper>
+            {/* 從外部車隊進來的時候要先預選外部車隊,如果要加入其他分類則到細節頁裡面新增 */}
+            <Text>
+                <span style={{ color: "#D14343" }}>* </span>
+                分類
+            </Text>
+            <CheckboxField
+                label={vedor_code_text[codeType as string]}
+                item={{ value: codeType }}
+                checked={fuelValue == codeType}
+                toggleFuelValue={() => {
+                    console.log("toggleFuelValue");
+                }}
             />
             <IconLeft text={"新增供應商"} type="submit">
                 <PlusIcon size={14} />
             </IconLeft>
-        </FormSTY>
+        </FormSTY >
     )
 }
 

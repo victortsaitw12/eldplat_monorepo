@@ -1,41 +1,63 @@
 import React from "react";
 import { TagIcon } from "evergreen-ui";
-
 import { EventListSTY, EventBtnSTY } from "./style";
+
 import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS } from "../shift.data";
-import { formatDate, removePad } from "../shift.util";
+import { formatDate } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
-import { UIContext } from "@contexts/UIProvider";
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 
 const EventList = ({
   cellTimestamp,
   monthlyData,
-  setIsOpenDrawer
+  setIsOpenDrawer,
+  placeholders,
+  setPlaceholders,
+  items,
+  setItems,
+  maxEventCount
 }: {
   cellTimestamp: number;
   monthlyData: MonthlyData[] | null;
   setIsOpenDrawer: (value: boolean) => void;
+  placeholders: MonthlyData[];
+  setPlaceholders: (value: MonthlyData[]) => void;
+  items: MonthlyData[];
+  setItems: (value: MonthlyData[]) => void;
+  maxEventCount: number;
 }) => {
-  const [placeholderNum, setPlaceholderNum] = React.useState<number>(0);
-  const [items, setItems] = React.useState<MonthlyData[] | null>([]);
   const UI = React.useContext(UIContext);
 
   React.useEffect(() => {
+    const cellDateStart = new Date(cellTimestamp);
+    const cellDateEnd = new Date(cellTimestamp + 1000 * 60 * 60 * 24);
+
     const eventsthroughDate =
       monthlyData?.filter((shift: any): boolean => {
-        const cellDate = new Date(cellTimestamp);
         const eventStart = new Date(shift.schd_Start_Time);
         const eventEnd = new Date(shift.schd_End_Time);
-        return cellDate > eventStart && cellDate <= eventEnd;
+        return cellDateStart > eventStart && cellDateStart <= eventEnd;
       }) || [];
-    const eventsOnDate =
+    const eventsStartsFromDate =
       monthlyData?.filter((shift: any) => {
-        const eventTimestamp = new Date(removePad(shift.schd_Date)).valueOf();
-        return eventTimestamp.toString() == cellTimestamp.toString();
+        const eventStart = new Date(shift.schd_Start_Time);
+        const eventEnd = new Date(shift.schd_End_Time);
+        return (
+          eventStart >= cellDateStart &&
+          eventStart < cellDateEnd &&
+          eventEnd >= cellDateEnd
+        );
       }) || [];
-    setPlaceholderNum(eventsthroughDate.length);
-    setItems(eventsOnDate);
+    const eventsInsideDate =
+      monthlyData?.filter((shift: any) => {
+        const eventStart = new Date(shift.schd_Start_Time);
+        const eventEnd = new Date(shift.schd_End_Time);
+        return eventStart >= cellDateStart && eventEnd <= cellDateEnd;
+      }) || [];
+
+    setPlaceholders(eventsthroughDate);
+    setItems(eventsStartsFromDate.concat(eventsInsideDate));
   }, [monthlyData, UI.monthCount, UI.flag]);
 
   //------ functions ------//
@@ -84,19 +106,22 @@ const EventList = ({
     }
   };
 
-  const getEventDuration = (item: MonthlyData) =>
-    Math.ceil(
+  const getEventDurationLeft = (item: MonthlyData) => {
+    const maxDuration = 7 - new Date(cellTimestamp).getDay();
+    const eventDuration = Math.ceil(
       (new Date(item.schd_End_Time).valueOf() -
-        new Date(item.schd_Start_Time).valueOf()) /
+        new Date(cellTimestamp).valueOf()) /
         (1000 * 60 * 60 * 24)
     );
+    return eventDuration <= maxDuration ? eventDuration : maxDuration;
+  };
 
   const eventBtns = items?.map((item, i) => (
     <EventBtnSTY
       key={`event-${cellTimestamp}-${i}`}
       color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
-      duration={getEventDuration(item)}
-      className="test"
+      duration={getEventDurationLeft(item)}
+      className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}`}
     >
       <button
         value={item.drv_Schedule_No}
@@ -111,41 +136,72 @@ const EventList = ({
       >
         {SCHD_TYPE.get(item.schd_Type)?.icon}
         <span>
-          {" "}
           {item.schd_Type === "04"
             ? CHECK_STATUS.get(item.check_Status)?.label
             : SCHD_TYPE.get(item.schd_Type)?.label}
         </span>
         {item.leave_Code || item.check_Status ? <TagIcon /> : ""}
         <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
-        {item.schd_Type === "04" ? item.leave_Description : ""}
+        <span>{item.schd_Type === "04" ? item.leave_Description : ""}</span>
       </button>
     </EventBtnSTY>
   ));
-  const placeholders = () => {
-    const arr = [];
-    for (let i = 0; i < placeholderNum; i++) {
-      arr.push(
-        <div
-          key={`placeholder-${cellTimestamp}-${i}`}
-          className="placeholder"
-          style={{
-            minHeight: "24px",
-            width: "100%",
-            padding: "4px 8px",
-            pointerEvents: "none"
-          }}
+
+  const prevEventBtns = placeholders.map((item, i) =>
+    new Date(cellTimestamp).getDay() === 0 ? (
+      <EventBtnSTY
+        key={`event-${cellTimestamp}-${i}`}
+        color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
+        duration={getEventDurationLeft(item)}
+        className={`${
+          placeholders.length + i + 1 > maxEventCount ? "hide" : ""
+        }`}
+      >
+        <button
+          value={item.drv_Schedule_No}
+          className={`eventBtn event-${cellTimestamp}-${i} ${
+            item.check_Status === "0" ? "reminder" : ""
+          }`}
+          onClick={
+            item.check_Status === "0"
+              ? renderSignOffEditForm.bind(null, item.drv_Schedule_No)
+              : renderEventStatus.bind(null, item.drv_Schedule_No)
+          }
         >
-          {" "}
-        </div>
-      );
-    }
-    return arr;
-  };
+          {SCHD_TYPE.get(item.schd_Type)?.icon}
+          <span>
+            {item.schd_Type === "04"
+              ? CHECK_STATUS.get(item.check_Status)?.label
+              : SCHD_TYPE.get(item.schd_Type)?.label}
+          </span>
+          {item.leave_Code || item.check_Status ? <TagIcon /> : ""}
+          <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
+          <span>{item.schd_Type === "04" ? item.leave_Description : ""}</span>
+        </button>
+      </EventBtnSTY>
+    ) : (
+      <EventBtnSTY
+        aria-hidden="true"
+        key={`placeholder-${cellTimestamp}-${i}`}
+        color="inherit"
+        duration={1}
+        className="placeholder"
+        style={{
+          width: "100%",
+          pointerEvents: "none"
+        }}
+      >
+        {" "}
+      </EventBtnSTY>
+    )
+  );
 
   return (
-    <EventListSTY>
-      {placeholders()}
+    <EventListSTY
+      maxEventCount={maxEventCount}
+      style={{ pointerEvents: "none" }}
+    >
+      {prevEventBtns}
       {eventBtns}
     </EventListSTY>
   );

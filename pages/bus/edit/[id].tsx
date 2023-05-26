@@ -46,6 +46,7 @@ const Page: NextPageWithLayout<
   }, [updateMainFilter]);
   const {
     register,
+    getValues,
     formState: { errors },
     control,
     handleSubmit
@@ -59,12 +60,7 @@ const Page: NextPageWithLayout<
     setLoading(true);
     console.log("asyncSubmitForm", data);
     try {
-      const flatternObj: { [key: string]: any } = {};
-      for (const key in data) {
-        Object.assign(flatternObj, data[key]);
-      }
-      console.log("flatternObj", flatternObj);
-      const res = await updateBus(busId, flatternObj);
+      const res = await updateBus(busId, data);
       console.log("response of bus update: ", res);
       router.push("/bus");
     } catch (e: any) {
@@ -83,7 +79,8 @@ const Page: NextPageWithLayout<
       onChangeTab={changeMainFilterHandler}
       mainFilter={mainFilter}
       mainFilterArray={mainFilterArray}
-      onSave={handleSubmit(fakeSubmit)}
+      onSave={handleSubmit(asyncSubmitForm)}
+      isEdit={true}
     >
       <BodySTY>
         <BusEditForm

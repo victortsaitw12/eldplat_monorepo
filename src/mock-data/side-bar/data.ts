@@ -30,37 +30,37 @@ const homePageData = [
     subList: [
       {
         name: "外部車隊",
-        url: "/vendor",
+        url: "/vendor?codeType=01",
         subList: null
       },
       {
         name: "維修廠",
-        url: "/vendor",
+        url: "/vendor?codeType=03",
         subList: null
       },
       {
         name: "燃料",
-        url: "/vendor",
+        url: "/vendor?codeType=05",
         subList: null
       },
       {
         name: "Etag",
-        url: "/vendor",
+        url: "/vendor?codeType=07",
         subList: null
       },
       {
         name: "設備庫存",
-        url: "/vendor",
+        url: "/vendor?codeType=02",
         subList: null
       },
       {
         name: "保險",
-        url: "/vendor",
+        url: "/vendor?codeType=04",
         subList: null
       },
       {
         name: "其他",
-        url: "/vendor",
+        url: "/vendor?codeType=06",
         subList: null
       }
     ]
