@@ -2,7 +2,7 @@ import { Heading, Pane, Text } from "evergreen-ui";
 import React, { useState } from "react";
 import { BodySTY } from "./style";
 import { language_MAP } from "@contents/Driver/LanguageAbility/data";
-import { I_driverInfo } from "@contents/driver/driver.typing";
+import { I_driverInfo } from "@contents/Driver/driver.type";
 
 function LanguageAbility(props: I_driverInfo) {
   const { currentUserInfo } = props;

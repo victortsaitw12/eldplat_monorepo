@@ -1,25 +1,17 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
-import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/router";
 //@layout
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 //@services
-import { getCustomerById } from "@services/customer/getCustomerById";
 import CustomerDetail from "@contents/Customer/CustomerDetail";
 import { updateCustomer } from "@services/customer/updateCustomer";
 //
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { CustomerDataTypes } from "@contents/Customer/customer.type";
 import { useCustomerStore } from "@contexts/filter/customerStore";
-//
-function fakeSubmit(data: any) {
-  console.log("data", data);
-}
-//
-const mainFilterArray = [{ id: 1, label: "客戶資料", value: "CustomerData" }];
+const mainFilterArray = [{ id: 1, label: "客戶資料", value: "1" }];
 //
 const Index: NextPageWithLayout<never> = ({ customerId }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
@@ -28,7 +20,7 @@ const Index: NextPageWithLayout<never> = ({ customerId }) => {
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
 
   const [loading, setLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState(editPage === "1" || false);
+  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   useEffect(() => {
     updateMainFilter("1");
   }, []);

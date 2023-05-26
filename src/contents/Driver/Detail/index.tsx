@@ -1,187 +1,116 @@
-import React from "react";
-
-import { Badge, Table } from "evergreen-ui";
-import Image from "next/image";
-
-import DetailTable from "@components/Table/DetailTable";
-
-import { StatusCount } from "./_common";
-
-import { DetailsOverviewSTY, BoxItemSTY, BasicSTY } from "./style";
-
-import { DETAIL_TITLE, DETAIL_RESUME_DATA, DETAIL_BASIC } from "../detail.data";
-
-interface I_DetailsOverview {
-  [key: string]: {
-    title: string;
-    data: any;
-  };
+import React, { useState, useEffect } from "react";
+import { Pane } from "evergreen-ui";
+import { useForm } from "react-hook-form";
+import HealthRecords from "./HealthRecords";
+import { UpdateDriverInfoPayload } from "../driver.type";
+import DriverInfo from "./DriverInfo";
+import { formatDateFromAPI } from "@utils/formatDateFromAPI";
+// import HealthRecord from "./HealthRecord"
+//
+interface Props {
+  driverId: string;
+  asyncSubmitForm: (data: any) => Promise<void>;
+  isEdit: boolean;
+  driverData: any;
+  isLoading: boolean;
+  submitRef: React.RefObject<HTMLButtonElement>;
+  formType: string;
 }
 
-interface I_BoxItem {
-  title: string;
-  content: React.ReactNode;
-  moreInfo?: {
-    remark?: string;
-    hrefText: {
-      text: string;
-      href: string;
-    };
-  };
-}
-
-const sampleData: I_DetailsOverview = {
-  Detail: {
-    title: DETAIL_TITLE,
-    data: DETAIL_RESUME_DATA
-  }
+const driverFormDefaultValues: UpdateDriverInfoPayload = {
+  driver_no: "",
+  license_no: "",
+  driver_country: "",
+  license_area: "",
+  license_lvl: "",
+  driver_seniority: "",
+  dsph_area: "",
+  dsph_city: "",
+  licn_typ: "",
+  licn_name: "",
+  licn_unit: "",
+  licn_issue: "",
+  licn_exp: "",
+  licn_examine_date: "",
+  licn_filename: "",
+  licn_link: ""
 };
 
-function BoxItem(props: I_BoxItem) {
+function DriverEditForm({
+  driverId,
+  asyncSubmitForm,
+  isEdit,
+  driverData,
+  isLoading,
+  submitRef,
+  formType
+}: Props) {
+  console.log("Driver data", driverData);
+  const {
+    register,
+    formState: { errors },
+    control,
+    handleSubmit,
+    getValues
+  } = useForm<UpdateDriverInfoPayload>({
+    defaultValues: {
+      driver_no: driverData.info.driver_no,
+      license_no: driverData.info.license_no,
+      driver_country: driverData.info.driver_country,
+      license_area: driverData.info.license_area,
+      license_lvl: driverData.info.license_lvl,
+      driver_seniority: driverData.info.driver_seniority,
+      dsph_area: driverData.info.dsph_area,
+      dsph_city: driverData.info.dsph_city,
+      licn_typ: driverData.info.licn_typ,
+      licn_name: driverData.info.licn_name,
+      licn_unit: driverData.info.licn_unit,
+      licn_issue: formatDateFromAPI(driverData.info.licn_issue),
+      licn_exp: formatDateFromAPI(driverData.info.licn_exp),
+      licn_examine_date: formatDateFromAPI(driverData.info.licn_examine_date),
+      licn_filename: driverData.info.licn_filename,
+      licn_link: driverData.info.licn_link
+    }
+  });
+
+  const [visibleForm, setVisibleForm] = useState("1");
+  useEffect(() => {
+    if (errors) {
+      // do the your logic here
+      console.log(errors);
+    }
+  }, [errors]);
+  useEffect(() => {
+    setVisibleForm(formType);
+  }, [formType]);
   return (
-    <BoxItemSTY>
-      <div className="head">
-        <div className="title">
-          <h3>{props.title}</h3>
-        </div>
-        {props.moreInfo && (
-          <div className="more-info">
-            <div className="remark">{props.moreInfo.remark}</div>
-            <a className="href-text" href={props.moreInfo.hrefText.href}>
-              {props.moreInfo.hrefText.text}
-            </a>
-          </div>
-        )}
-      </div>
-      <div className="content">{props.content}</div>
-    </BoxItemSTY>
+    <form
+      onSubmit={handleSubmit((currentData) => {
+        console.log("currentData");
+        console.log(currentData);
+        asyncSubmitForm(currentData);
+      })}
+    >
+      <button ref={submitRef} type="submit" style={{ display: "none" }}>
+        儲存
+      </button>
+      <DriverInfo
+        selected={visibleForm === "1"}
+        register={register}
+        errors={errors}
+        getValues={getValues}
+        control={control}
+        isEdit={isEdit}
+        driverData={driverData}
+      />
+      {visibleForm === "2" && (
+        <HealthRecords
+          healths={driverData.healths}
+          userName={driverData.info.user_name}
+        />
+      )}
+    </form>
   );
 }
 
-function DetailsOverview() {
-  return (
-    <DetailsOverviewSTY>
-      <div className="left-wrap box-wrap">
-        <BoxItem
-          title="基本資料"
-          content={
-            <BasicSTY>
-              <Image
-                width="120"
-                height="120"
-                src="/images/avatar1.jpg"
-                alt="test"
-              />
-              <DetailTable title="" data={DETAIL_BASIC} />
-            </BasicSTY>
-          }
-        />
-        <BoxItem
-          title={sampleData.Detail.title}
-          content={<DetailTable title="" data={sampleData.Detail.data} />}
-        />
-      </div>
-      <div className="right-wrap box-wrap">
-        {/* <BoxItem
-					title="Next Due"
-					content={
-						<Table className="table next-duo-table">
-							<Table.Head className="thead">
-								<Table.TextCell>Scheduled Date</Table.TextCell>
-								<Table.TextCell>Primary Meter</Table.TextCell>
-							</Table.Head>
-							<Table.Body className="tbody">
-								<Table.Row className="tr value">
-									<Table.TextCell className="td">
-										<CalendarIcon className="icon" />
-										06/03/2023
-									</Table.TextCell>
-									<Table.TextCell className="td">21,278 mi</Table.TextCell>
-								</Table.Row>
-								<Table.Row className="tr interval">
-									<Table.TextCell className="td">
-										3 months from now
-									</Table.TextCell>
-									<Table.TextCell className="td warning">
-										467 miles remaining
-									</Table.TextCell>
-								</Table.Row>
-								<Table.Row className="tr remark">
-									<Table.TextCell className="td">Upcoming</Table.TextCell>
-									<Table.TextCell className="td"></Table.TextCell>
-								</Table.Row>
-							</Table.Body>
-						</Table>
-					}
-					moreInfo={{
-						remark: "Improve compliance with Forecasting",
-						hrefText: {
-							text: "Learn More",
-							href: "#",
-						},
-					}}
-				/> */}
-        <BoxItem
-          title="歷史紀錄"
-          content={
-            <>
-              <StatusCount>
-                <li className="item">
-                  <div className="title">過期車輛</div>
-                  <div className="value error">2</div>
-                </li>
-                <li className="item">
-                  <div className="title">過期車輛</div>
-                  <div className="value error">2</div>
-                </li>
-                <li className="item">
-                  <div className="title">過期車輛</div>
-                  <div className="value error">2</div>
-                </li>
-              </StatusCount>
-              <Table className="table history-table">
-                <Table.Head className="thead">
-                  <Table.TextCell>到期日</Table.TextCell>
-                  <Table.TextCell>駕駛時數</Table.TextCell>
-                  <Table.TextCell>遵守</Table.TextCell>
-                </Table.Head>
-                <Table.Body className="tbody">
-                  <Table.Row className="tr value">
-                    <Table.TextCell className="td">
-                      <div className="due-wrap">
-                        <div className="date">2023/9/5 </div>
-                        <div className="value">16,100公里</div>
-                      </div>
-                    </Table.TextCell>
-                    <Table.TextCell className="td">
-                      <div className="completed-wrap">
-                        <div className="date">2022/12/04</div>
-                        <div className="value">18,150公里</div>
-                      </div>
-                    </Table.TextCell>
-                    <Table.TextCell className="td">
-                      <div className="completed-wrap">
-                        <div className="badge">
-                          <Badge color="red">延遲</Badge>
-                        </div>
-                        <div className="status">尚逾九個月 - 2,057公里</div>
-                      </div>
-                    </Table.TextCell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </>
-          }
-          moreInfo={{
-            hrefText: {
-              text: "觀看歷史紀錄",
-              href: "#"
-            }
-          }}
-        />
-      </div>
-    </DetailsOverviewSTY>
-  );
-}
-
-export default DetailsOverview;
+export default DriverEditForm;

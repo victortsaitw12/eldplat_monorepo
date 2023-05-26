@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import { ItemSTY, FormSTY } from "./style";
-import { HelpIcon, PlusIcon, ErrorIcon, SelectField } from "evergreen-ui";
+import { PlusIcon, SelectField } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 import FiledInput from "./FieldInput";
 import { useState } from "react";
 import { createBus } from "@services/bus/createBus";
+import DottedSelect from "@components/HookForm/Select/DottedSelect";
 interface I_BusCreateFormProps {
   data?: any;
   reloadData?: () => void;
@@ -20,8 +21,9 @@ export interface CreateBusPayload {
   bus_group: string;
   operator: string;
   status: string;
+  ownership: string;
 }
-const defaultValues = {
+const defaultValues: CreateBusPayload = {
   bus_name: "",
   vin: "",
   type: "",
@@ -31,7 +33,8 @@ const defaultValues = {
   year: "",
   bus_group: "",
   operator: "",
-  status: ""
+  status: "",
+  ownership: ""
 };
 const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
   const { register, handleSubmit, control, reset } = useForm<CreateBusPayload>({
@@ -171,19 +174,32 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
         <option value="施純鈞(200120)">施純鈞(200120)</option>
         <option value="王百華(230014)">王百華(230014)</option>
       </SelectField>
+      <DottedSelect
+        control={control}
+        name="status"
+        label="狀態"
+        isRequire={true}
+        isDisabled={false}
+        options={[
+          { label: "活躍中", value: "01", color: "#52BD94" },
+          { label: "已售出", value: "02", color: "#8EA8C7" },
+          { label: "終止服務", value: "03", color: "#D14343" },
+          { label: "在維修廠", value: "04", color: "#FFB020" },
+          { label: "閒置中", value: "05", color: "#3670C9" }
+        ]}
+      />
       <SelectField
         label={
           <div>
-            <span style={{ color: "#D14343" }}>*</span>狀態
+            <span style={{ color: "#D14343" }}>*</span>所有權
           </div>
         }
-        {...register("status", { required: "此欄位必填" })}
+        {...register("ownership", { required: "此欄位必填" })}
       >
-        <option value="01">活躍中</option>
-        <option value="02">閒置中</option>
-        <option value="03">在維修廠</option>
-        <option value="04">已販售</option>
-        <option value="05">終止服務</option>
+        <option value="01">擁有的</option>
+        <option value="02">租來的</option>
+        <option value="03">出租中</option>
+        <option value="04">客戶的</option>
       </SelectField>
       <IconLeft text={"新增車輛"} type="submit">
         <PlusIcon size={14} />

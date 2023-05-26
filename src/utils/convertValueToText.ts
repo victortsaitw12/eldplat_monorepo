@@ -77,19 +77,19 @@ const convertMap: { [key: string]: { [key: string]: any } } = {
       en: "Active"
     },
     "02": {
-      ch: "閒置中",
+      ch: "已售出",
       en: "Inactive"
     },
     "03": {
-      ch: "在維修廠",
+      ch: "終止服務",
       en: "In Shop"
     },
     "04": {
-      ch: "已售出",
+      ch: "在維修廠",
       en: "Out of Service"
     },
     "05": {
-      ch: "終止服務",
+      ch: "閒置中",
       en: "Sold"
     }
   },
