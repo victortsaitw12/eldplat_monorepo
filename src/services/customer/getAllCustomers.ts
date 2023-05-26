@@ -4,7 +4,6 @@ export const getAllCustomers = async (
   filter: { [key: string]: any } = {},
   customer_status = "1"
 ) => {
-  console.log("getAllCustomers", filter);
   const customerFilter = [];
   for (const key in filter) {
     if (filter[key].value !== "") {
@@ -107,14 +106,14 @@ export const customerParser = (data: any, key: string) => {
       [
         createElement(
           "div",
-          {},
+          { key: "contact_tel" },
           data["contact_tel"]
             ? data["contact_tel_code"] + " " + data["contact_tel"]
             : "---"
         ),
         createElement(
           "div",
-          {},
+          { key: "contact_phone" },
           data["contact_phone"]
             ? data["contact_phone_code"] + " " + data["contact_phone"]
             : "---"
@@ -122,6 +121,7 @@ export const customerParser = (data: any, key: string) => {
       ]
     );
     return {
+      // label: lebelElement,
       label: lebelElement,
       value:
         `${data["contact_tel_code"] + data["contact_tel"]}, ${

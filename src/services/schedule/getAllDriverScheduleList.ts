@@ -1,5 +1,3 @@
-import { token } from "./token";
-
 // 檢視所有駕駛當月排休
 export const getAllDriverScheduleList = async (date: string) => {
   const res = await fetch(

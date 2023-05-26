@@ -8,6 +8,7 @@ const FormSTY = styled.form`
   padding: 20px;
   select{
     height: 34px;
+    border: 1px solid ${({ theme }) => theme.color.N400};
     &+svg{
       margin-top: -10px;
       height: 20px;

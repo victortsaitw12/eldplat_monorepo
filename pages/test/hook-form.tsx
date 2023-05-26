@@ -25,7 +25,11 @@ const selectOptions = [
   { value: "female", label: "女" },
   { value: "unknown", label: "多元" }
 ];
-const radioOptions = ["國小", "國中", "高中", "大學", "碩士", "博士"];
+const radioOptions = [
+  { value: "1", label: "貸款", description: "此車輛與貸款無關" },
+  { value: "2", label: "租賃", description: "此車輛正在租賃中" },
+  { value: "3", label: "無融資", description: "此車輛未被融資" }
+];
 //
 const Page = () => {
   const [isEdit, setIsEdit] = React.useState<boolean>(true);
@@ -85,7 +89,7 @@ const Page = () => {
             />
           </div>
           <Radio
-            label="教育程度"
+            isDisabled={!isEdit}
             control={control}
             name="education"
             options={radioOptions}

@@ -2,7 +2,7 @@ import React, { useId } from "react";
 import { Text, UnorderedList, ListItem, Pane } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
-
+//🕯️🕯️🕯️🕯️🕯️因跟InfoBox功能差不多，所以之後統一使用InfoBox
 export interface I_infoData {
   editEle?: React.ReactNode;
   readonly?: boolean; //只讀

@@ -66,7 +66,7 @@ interface I_VendorCreateFormProps {
 function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
     const router = useRouter();
     //供應商的分類
-    const { codeType = "99" } = router.query;
+    const { codeType = "01" } = router.query;
     console.log("💫💫💫codeType", codeType);
     console.log("vedor_code_text.codeType", vedor_code_text[codeType as string]);
     const { register, handleSubmit, control } = useForm<CreateVendorPayload>({
@@ -89,7 +89,6 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
 
     return (
         <FormSTY onSubmit={handleSubmit((data) => {
-            console.log("🎶🎶🎶create Vendor Data!:", data);
             asyncSubmitForm({
                 ...data,
                 vendor_Code_List: fuelValue ? [
@@ -116,15 +115,14 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     rules: { required: "此欄位必填" }
                 }}
             />
-            <SelectField
+            <FiledInput
                 label="負責人"
-                {...register("vendor_Owner")}
-            >
-                <option value="負責人1">負責人1</option>
-                <option value="負責人2">負責人2</option>
-                <option value="負責人3">負責人3</option>
-                <option value="負責人4">負責人4</option>
-            </SelectField >
+                controlProps={{
+                    name: "vendor_Owner",
+                    control,
+                    rules: { required: "此欄位必填" }
+                }}
+            />
             <Text>
                 <span style={{ color: "#D14343" }}>* </span>
                 公司地址
@@ -153,7 +151,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     alignItems: "center"
                 }}
             >
-                <label htmlFor="">
+                <label style={{ width: "41%" }} htmlFor="">
                     <span style={{ color: "#D14343" }}>*</span>
                     城市
                 </label>
@@ -162,10 +160,10 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                         required: "必填",
                     })}
                 >
-                    <option value="01">基隆市</option>
-                    <option value="02">台北市</option>
-                    <option value="03">新北市</option>
-                    <option value="04">桃園市</option>
+                    <option value="A">A市</option>
+                    <option value="B">B市</option>
+                    <option value="C">C市</option>
+                    <option value="D">D市</option>
                 </Select >
             </FlexWrapper>
             <FlexWrapper
@@ -174,7 +172,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     alignItems: "center"
                 }}
             >
-                <label htmlFor="">
+                <label style={{ width: "41%" }} htmlFor="">
                     <span style={{ color: "#D14343" }}>*</span>
                     州/省/區域
                 </label>
@@ -183,10 +181,10 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                         required: "必填",
                     })}
                 >
-                    <option value="01">基隆市</option>
-                    <option value="02">台北市</option>
-                    <option value="03">新北市</option>
-                    <option value="04">桃園市</option>
+                    <option value="A">A區</option>
+                    <option value="B">B區</option>
+                    <option value="C">C區</option>
+                    <option value="D">D區</option>
                 </Select >
             </FlexWrapper>
             <FiledInput
@@ -204,7 +202,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     alignItems: "center"
                 }}
             >
-                <label htmlFor="">
+                <label style={{ width: "41%" }} htmlFor="">
                     <span style={{ color: "#D14343" }}>*</span>
                     國家
                 </label>
@@ -213,7 +211,10 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                         required: "必填",
                     })}
                 >
-                    <option value="TW">台灣</option>
+                    <option value="A">A國</option>
+                    <option value="B">B國</option>
+                    <option value="C">C國</option>
+                    <option value="D">D國</option>
                 </Select >
             </FlexWrapper>
             <Text>
@@ -225,6 +226,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
             >
                 {/*公司電話國碼*/}
                 <FiledInput
+                    style={{ width: "60px" }}
                     label=""
                     controlProps={{
                         name: "vendor_Tel_Code",
@@ -262,11 +264,12 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                 }}
             >
                 <span
-                    style={{ flex: "unset" }}
+                    style={{ flex: "unset", minWidth: "2.5rem" }}
                 >
                     市話
                 </span>
                 <FiledInput
+                    style={{ width: "60px" }}
                     controlProps={{
                         name: "vendor_Contact_List.0.contact_tel_code",
                         control,
@@ -288,8 +291,11 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
                     alignItems: "center"
                 }}
             >
-                <span>手機</span>
+                <span
+                    style={{ flex: "unset", minWidth: "2.5rem" }}
+                >手機</span>
                 <FiledInput
+                    style={{ width: "60px" }}
                     controlProps={{
                         name: "vendor_Contact_List.0.contact_phone_code",
                         control
@@ -320,7 +326,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
             <IconLeft text={"新增供應商"} type="submit">
                 <PlusIcon size={14} />
             </IconLeft>
-        </FormSTY>
+        </FormSTY >
     )
 }
 

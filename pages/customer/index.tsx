@@ -20,13 +20,14 @@ import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
 //
 const mainFilterArray = [
-  { id: 1, label: "全部", value: "1" },
+  { id: 1, label: "啟用", value: "1" },
   { id: 2, label: "停用", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [nowTab, setNowTab] = useState("1");
   const {
     initializeSubFilter,
     mainFilter,
@@ -37,30 +38,29 @@ const Page: NextPageWithLayout<never> = () => {
     setDrawerOpen
   } = useCustomerStore();
   //
-  const fetchCustomerData = useCallback(
-    async (isCanceled: boolean, mainFilter = "1") => {
-      getAllCustomers(subFilter, mainFilter).then((res) => {
-        const customerData = mappingQueryData(
-          res.contentList,
-          customerPattern,
-          customerParser
+  const fetchCustomerData = async (isCanceled: boolean, mainFilter = "1") => {
+    console.log("mainFilter", mainFilter);
+    getAllCustomers(subFilter, mainFilter).then((res) => {
+      console.log("res", res);
+      const customerData = mappingQueryData(
+        res.contentList,
+        customerPattern,
+        customerParser
+      );
+      if (isCanceled) {
+        console.log("canceled");
+        return;
+      }
+      if (!subFilter) {
+        localStorage.setItem(
+          "customerInitFilter",
+          JSON.stringify(res.conditionList)
         );
-        if (isCanceled) {
-          console.log("canceled");
-          return;
-        }
-        if (!subFilter) {
-          localStorage.setItem(
-            "customerInitFilter",
-            JSON.stringify(res.conditionList)
-          );
-          initializeSubFilter();
-        }
-        setData(customerData);
-      });
-    },
-    [initializeSubFilter, subFilter]
-  );
+        initializeSubFilter();
+      }
+      setData(customerData);
+    });
+  };
   //
   const deleteItemHandler = async (id: string) => {
     deleteCustomer(id).then((res) => {
@@ -70,26 +70,22 @@ const Page: NextPageWithLayout<never> = () => {
   };
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push("/customer/detail/" + id + "?editPage=1");
+    router.push("/customer/detail/" + id + "?editPage=edit");
   };
   const goToDetailPageHandler = (id: string) => {
-    router.push(`/customer/detail/${id}`);
+    router.push(`/customer/detail/${id}?editPage=view`);
   };
   const changeMainFilterHandler = (value: string) => {
-    updateMainFilter(value);
+    setNowTab(value);
   };
-  //
-  useEffect(() => {
-    updateMainFilter("1");
-  }, [updateMainFilter]);
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchCustomerData(isCanceled, mainFilter);
+    fetchCustomerData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
-  }, [mainFilter]);
+  }, [nowTab]);
   if (!data) {
     return <LoadingSpinner />;
   }
@@ -97,7 +93,7 @@ const Page: NextPageWithLayout<never> = () => {
     <BodySTY>
       <TableWrapper
         onChangeTab={changeMainFilterHandler}
-        mainFilter={mainFilter}
+        mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
         viewOnly={true}
       >

@@ -29,14 +29,6 @@ function SearchEmployee({ update, closeSearch, refetch }: any) {
       console.log(err);
     }
   };
-  /*
-  refetch
-  */
-  // const addSelectEmployeeToList = () => {};
-  // const coloredValue = (val) => {
-  //   return <span className="red">{val}</span>;
-  // };
-
   return (
     <SearchEmployeeSTY>
       <SearchInput
@@ -48,7 +40,7 @@ function SearchEmployee({ update, closeSearch, refetch }: any) {
         width="100%"
       />
       {allEmployees.reduce((acc: any[], item: any) => {
-        if (value.trim() === "" || item.User_Name.includes(value)) {
+        if (item.User_Name.includes(value)) {
           acc.push(
             <EmployeeItem
               key={item.User_No}

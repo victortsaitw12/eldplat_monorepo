@@ -14,7 +14,6 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-
 //@contents
 import VendorList from "@contents/Vendor/VendorList";
 import VendorCreateForm from "@contents/Vendor/VendorCreateForm";
@@ -25,8 +24,8 @@ import { getAllVendors } from "@services/vendor/getAllVendors";
 //@components
 import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
-
-//新版的store
+import LabelTag from "@components/LabelTag";
+//@contexts
 import { useVendorStore } from "@contexts/filter/vendorStore";
 
 const isFullWidth = false;
@@ -72,21 +71,25 @@ const Page: NextPageWithLayout<{
             label: vendors["vendor_City"],
             value: vendors["vendor_City"]
           },
-          vendor_phone: {
-            label: vendors["vendor_Phone"],
-            value: vendors["vendor_Phone"]
+          vendor_Tel: {
+            label: vendors["vendor_Tel_Code"] && vendors["vendor_Tel"] ?
+              vendors["vendor_Tel_Code"] + " " + vendors["vendor_Tel"] : "",
+            value: vendors["vendor_Tel_Code"] && vendors["vendor_Tel"] ?
+              vendors["vendor_Tel_Code"] + " " + vendors["vendor_Tel"] : ""
           },
           vendor_email: {
             label: vendors["vendor_Email"],
             value: vendors["vendor_Email"]
           },
-          vendor_contact_name: {
-            label: vendors["vendor_Contact_Name"],
-            value: vendors["vendor_Contact_Name"],
+          contact_Name: {
+            label: vendors["contact_Name"],
+            value: vendors["contact_Name"],
           },
-          vendor_contact_phone: {
-            label: vendors["vendor_Contact_Phone"],
-            value: vendors["vendor_Contact_Phone"],
+          contact_Tel: {
+            label: vendors["contact_Tel_Code"] && vendors["contact_Tel"] ?
+              vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"] : "",
+            value: vendors["contact_Tel_Code"] && vendors["contact_Tel"] ?
+              vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"] : "",
           },
           vendor_website: {
             label: (
@@ -102,11 +105,7 @@ const Page: NextPageWithLayout<{
           },
           vendor_label: {
             label: (
-              <span
-                className="vendor-label"
-              >
-                服務讚
-              </span>
+              <LabelTag text="服務讚" />
             ),
             value: vendors["vendor_Label"]
           }
@@ -261,6 +260,7 @@ const Page: NextPageWithLayout<{
             >
               <VendorCreateForm
                 reloadData={() => {
+                  setDrawerOpen(false);
                   setData([])
                   getResult("1");
                 }}
@@ -283,20 +283,25 @@ const Page: NextPageWithLayout<{
     </BodySTY>
   );
 };
-interface Props {
-  vendor_id: string;
-};
-export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+
+export const getServerSideProps: GetServerSideProps<Params> = async (
   context
 ) => {
-  const { params } = context;
-  console.log("context", context)
-  console.log("params", params);
-  return {
-    props: {
-      vendor_id: params ? params.id : ""
+  const { query } = context;
+  if (!query.codeType) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/vendor?codeType=01",
+      },
+      props: {}
     }
-  };
+  } else {
+    return {
+      props: {}
+    };
+  }
+
 };
 Page.getLayout = getLayout;
 export default Page;

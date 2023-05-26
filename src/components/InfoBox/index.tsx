@@ -8,7 +8,7 @@ export interface I_infoData {
   readonly?: boolean; //只讀
   req?: boolean; //必填
   value?: string | Array<string> | React.ReactNode; //值
-  label?: string; //label文字
+  label?: string | React.ReactNode; //label文字
   subLabel?: string | React.ReactNode; //上下的label
   inputType?: string;
 }
@@ -66,15 +66,14 @@ function InfoBox({
       if (inputType === "custom") {
         return editEle;
       }
-      console.log("value", value);
 
       return (
         <ListItem key={value + i}>
           {label && (
-            <Text>
+            <Pane>
               {req && label !== "" && <span className="req">*</span>}
               {label}
-            </Text>
+            </Pane>
           )}
           <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane>
         </ListItem>
@@ -84,16 +83,25 @@ function InfoBox({
 
   //標籤-編輯模式待處理
   const r_label = () => {
+    console.log("sss", infoData);
     if (!infoData) {
       return false;
     }
-    return infoData.map((child: any, i: number) => {
-      return (
-        <ListItem key={child.value + i}>
-          <Text>{child.value}</Text>
-        </ListItem>
-      );
-    });
+    if (isEdit) {
+      return <Pane>{infoData[0].editEle}</Pane>
+    } else {
+      console.log("🎶🎶🎶🎶", infoData[0].value)
+      if (infoData[0].value && Array.isArray(infoData[0].value) && infoData[0].value.length > 0) {
+        return infoData[0].value.map((child: any, i: number) => {
+          return (
+            <ListItem key={child + i}>
+              <Text>{child}</Text>
+            </ListItem>
+          );
+        });
+      }
+
+    }
   };
 
   //checkbox-編輯模式待處理
@@ -118,7 +126,7 @@ function InfoBox({
 
   return (
     <InfoBoxSTY style={style}>
-      <Text className="info-title">{infoTitle}</Text>
+      {infoTitle && <Text className="info-title">{infoTitle}</Text>}
       {r_switch_info(infoType)}
     </InfoBoxSTY>
   );

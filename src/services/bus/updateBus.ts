@@ -1,20 +1,21 @@
-export const updateBus = async (bus_No: string, busData: any) => {
-  const filteredNullData: { [key: string]: string | null } = {};
-  console.log("busData", busData);
+export const updateBus = async (busData: any) => {
+  console.log("updateBus", busData);
   for (const key in busData) {
-    if (busData[key] !== null && busData[key].trim() !== "") {
-      filteredNullData[key] = busData[key];
+    const subForm = busData[key];
+    for (const subKey in subForm) {
+      if (subForm[subKey] === "") {
+        delete subForm[subKey];
+      }
     }
   }
-  filteredNullData["bus_No"] = bus_No;
-  console.log("filteredNullData", filteredNullData);
-  const res = await fetch("https://localhost:7188/Gateway_Bus/UpdateBus", {
+  console.log("updateBus", busData);
+  const res = await fetch("https://localhost:7088/CAR/UpdateBus", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
-    body: JSON.stringify(filteredNullData)
+    body: JSON.stringify(busData)
   });
   return res.json();
 };

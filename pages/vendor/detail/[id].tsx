@@ -3,39 +3,60 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/router";
 import { Pane, Icon, FloppyDiskIcon, EditIcon } from "evergreen-ui";
+import { BodySTY } from "./style";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
+
 //@services
 import { updateVendor } from "@services/vendor/updateVendor";
 import { getVendorById } from "@services/vendor/getVendorById";
 
+//@contents
 import VendorDetail from "@contents/Vendor/VendorDetail";
+import VendorSubPoint from "@contents/Vendor/VendorSubPoint"
 
-import { BodySTY } from "./style";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+//@util
+import { keysToLowercase } from "@utils/keysToLowercase";
 
+//@context
+import { useVendorStore } from "@contexts/filter/vendorStore";
 //
 const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
-  const { editPage } = router.query;//是否為編輯頁的判斷1或0
+  const { editPage } = router.query; //是否為編輯頁的判斷1或0
 
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
-  //TableWrapper
-  const changeMainFilterHandler = () => {
-    console.log("changeMainFilterHandler");
-  };
+  const [nowTab, setNowTab] = useState("vendor");
+  const {
+    initializeSubFilter,
+    mainFilter,
+    updateMainFilter,
+    subFilter,
+    updateSubFilter,
+    isDrawerOpen,
+    setDrawerOpen
+  } = useVendorStore();
+
   //
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "供應商資料", value: "all" }
+      { id: 1, label: "供應商資料", value: "vendor" },
+      { id: 2, label: "子據點", value: "subpoint" }
     ],
     []
   );
+  //TableWrapper
+  const changeMainFilterHandler = (value: string) => {
+    console.log("changeMainFilterHandler", value);
+    setNowTab(value)
+  };
 
   const asyncSubmitForm = async (data: any) => {
     console.log("edited data", data);
@@ -43,7 +64,6 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     try {
       const res = await updateVendor(vendor_id, data);
       console.log("response of vendor edit: ", res);
-
     } catch (e: any) {
       console.log(e);
       alert(e.message);
@@ -51,7 +71,6 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     setLoading(false);
     router.push("/vendor");
   };
-
   //
   useEffect(() => {
     const getCustomerData = async () => {
@@ -59,9 +78,14 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
       try {
         const data = await getVendorById(vendor_id);
         console.log("✨✨✨✨✨Get data by id", data);
+        data.vendor_Contact_List = data.vendor_Contact_List.map(
+          (child: { [key: string]: string }) => {
+            return keysToLowercase(child);
+          }
+        );
         setOldVendorData(data);
       } catch (e: any) {
-        console.log("取單一供應商data的時候錯了", e)
+        console.log("取單一供應商data的時候錯了", e);
         console.log(e);
       }
       setLoading(false);
@@ -69,73 +93,48 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
     getCustomerData();
   }, [vendor_id]);
 
-  const r_editBtn = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer"
-        }}
-        onClick={() => setIsEdit(!isEdit)}
-      >
-        <Icon
-          icon={EditIcon}
-          size={16}
-          marginY="auto"
-          marginX="10px"
-          color="#91A9C5"
-        />
-        <div>編輯</div>
-      </div>
-    )
-  }
-  const r_saveBtn = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer"
-        }}
-        onClick={() => {
-          setIsEdit(!isEdit)
-          // submitRef.current && submitRef.current.click();
-        }}
-      >
-        <Icon
-          icon={FloppyDiskIcon}
-          size={16}
-          marginY="auto"
-          marginX="10px"
-          color="#91A9C5"
-        />
-        <div>全部儲存</div>
-      </div>
-    )
-  }
   return (
     <BodySTY>
-      {!loading && oldVendorData &&
+      {!loading && oldVendorData && (
         <TableWrapper
-          optionsEle={!isEdit ? r_editBtn() : r_saveBtn()}
-          onChangeTab={changeMainFilterHandler}
-          mainFilter={"all"}
+          isEdit={isEdit}
+          onChangeTab={(value) => changeMainFilterHandler(value)}
+          mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
           onSave={() => {
             // setIsEdit(!isEdit)
             submitRef.current && submitRef.current.click();
           }}
+          onEdit={() => {
+            setIsEdit(true);
+          }}
+          onClose={() => {
+            router.push("/vendor");
+          }}
         >
-          <VendorDetail
-            submitRef={submitRef}
-            submitForm={asyncSubmitForm}
-            isEdit={isEdit}
-            vendorData={oldVendorData}
-          />
+          {
+            nowTab === "vendor" && <VendorDetail
+              submitRef={submitRef}
+              submitForm={asyncSubmitForm}
+              isEdit={isEdit}
+              vendorData={oldVendorData}
+            />
+          }
+          {
+            nowTab === "subpoint" &&
+            <FilterWrapper
+              updateFilter={updateSubFilter}
+              resetFilter={() => {
+                initializeSubFilter();
+              }}
+              filter={subFilter}
+            >
+              <VendorSubPoint />
+            </FilterWrapper>
+          }
         </TableWrapper>
-      }
-    </BodySTY >
+      )}
+    </BodySTY>
   );
 };
 interface Props {

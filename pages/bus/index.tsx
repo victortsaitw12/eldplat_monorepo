@@ -23,6 +23,7 @@ const mainFilterArray = [
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [nowTab, setNowTab] = useState("1");
   const {
     initializeSubFilter,
     mainFilter,
@@ -59,16 +60,17 @@ const Page: NextPageWithLayout<never> = () => {
   );
   //
   useEffect(() => {
+    console.log("update mainFilter to 1");
     updateMainFilter("1");
-  }, [updateMainFilter]);
+  }, []);
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchBusData(isCanceled, mainFilter);
+    fetchBusData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
-  }, [mainFilter]);
+  }, [nowTab]);
   //
   if (!data) {
     return <LoadingSpinner />;
@@ -78,14 +80,13 @@ const Page: NextPageWithLayout<never> = () => {
    */
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push("/bus/detail/" + id + "?editPage=1");
+    router.push("/bus/detail/" + id + "?editPage=edit");
   };
   const goToDetailPageHandler = (id: string) => {
-    router.push(`/bus/detail/${id}`);
+    router.push(`/bus/detail/${id}?editPage=view`);
   };
   const changeMainFilterHandler = (value: string) => {
-    alert(value);
-    updateMainFilter(value);
+    setNowTab(value);
   };
   //
   const deleteItemHandler = async (id: string) => {
@@ -101,7 +102,7 @@ const Page: NextPageWithLayout<never> = () => {
     <BodySTY>
       <TableWrapper
         onChangeTab={changeMainFilterHandler}
-        mainFilter={mainFilter}
+        mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
         viewOnly={true}
       >
