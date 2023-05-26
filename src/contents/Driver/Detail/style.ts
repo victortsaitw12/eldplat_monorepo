@@ -5,11 +5,14 @@ export const FormSTY = styled.form`
   li > div > div {
     flex-grow: 10;
   }
-  li > span {
+  li > div:first-child {
     flex: 1 !important;
   }
-  li > div {
+  li > div:last-child {
     flex: 2 !important;
+    input {
+      width: 100%;
+    }
   }
 
   /* 駕駛證照上傳檔案 */

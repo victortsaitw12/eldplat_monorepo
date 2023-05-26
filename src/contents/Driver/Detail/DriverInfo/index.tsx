@@ -10,6 +10,7 @@ import {
 } from "react-hook-form";
 import FlexWrapper from "@layout/FlexWrapper";
 import { UpdateDriverInfoPayload } from "../../driver.type";
+import LanguageAbility from "@contents/Driver/LanguageAbility";
 interface Props {
   selected?: boolean;
   register: UseFormRegister<UpdateDriverInfoPayload>;
@@ -182,12 +183,16 @@ function DriverInfo({
         <InfoBox isEdit={isEdit} infoData={basicInfo} infoTitle="基本資料" />
         <InfoBox isEdit={isEdit} infoData={licenseInfo} infoTitle="駕駛履歷" />
       </FlexWrapper>
-      <InfoBox
-        isEdit={isEdit}
-        infoData={plateInfo}
-        infoTitle="駕駛證照"
-        style={{ flex: "1" }}
-      />
+      <FlexWrapper flexDirection="column">
+        <InfoBox
+          isEdit={isEdit}
+          infoData={plateInfo}
+          infoTitle="駕駛證照"
+          style={{ flex: "1" }}
+        />
+
+        <LanguageAbility currentUserInfo={driverData} />
+      </FlexWrapper>
     </FlexWrapper>
   );
 }

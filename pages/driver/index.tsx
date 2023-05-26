@@ -49,6 +49,7 @@ const Page: NextPageWithLayout<never> = () => {
         );
         initializeSubFilter();
       }
+      console.log("settting data", driverData);
       setData(driverData);
     });
   };
@@ -130,8 +131,9 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const handleDeleteDriver = (id: string) => {
-    deleteDriver(id);
-    fetchDriverData(false);
+    deleteDriver(id).then(() => {
+      fetchDriverData(false);
+    });
   };
 
   return (

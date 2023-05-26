@@ -5,6 +5,7 @@ import HealthRecords from "./HealthRecords";
 import { UpdateDriverInfoPayload } from "../driver.type";
 import DriverInfo from "./DriverInfo";
 import { formatDateFromAPI } from "@utils/formatDateFromAPI";
+import { FormSTY } from "./style";
 // import HealthRecord from "./HealthRecord"
 //
 interface Props {
@@ -67,7 +68,7 @@ function DriverEditForm({
       licn_unit: driverData.info.licn_unit,
       licn_issue: formatDateFromAPI(driverData.info.licn_issue),
       licn_exp: formatDateFromAPI(driverData.info.licn_exp),
-      licn_examine_date: formatDateFromAPI(driverData.info.licn_examine_date),
+      licn_examine_date: formatDateFromAPI(driverData.info.licn_examine_Date),
       licn_filename: driverData.info.licn_filename,
       licn_link: driverData.info.licn_link
     }
@@ -84,7 +85,7 @@ function DriverEditForm({
     setVisibleForm(formType);
   }, [formType]);
   return (
-    <form
+    <FormSTY
       onSubmit={handleSubmit((currentData) => {
         console.log("currentData");
         console.log(currentData);
@@ -109,7 +110,7 @@ function DriverEditForm({
           userName={driverData.info.user_name}
         />
       )}
-    </form>
+    </FormSTY>
   );
 }
 
