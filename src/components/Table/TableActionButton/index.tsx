@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MoreIcon, EditIcon, DisableIcon, EyeOpenIcon } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
+import useClickOutside from "@hooks/useClickOutside";
 //
 interface Props {
   onDelete: () => void;
@@ -11,31 +12,16 @@ interface Props {
 //
 function Index({ onDelete, onEdit, onView }: Props) {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
-
-  const handleClickElseWhere = React.useCallback(
-    (event: any) => {
-      if (!event?.target.classList.contains("table-row-option")) {
-        setOptionIsOpen(false);
-      }
-    },
-    [setOptionIsOpen]
-  );
-
-  React.useEffect(() => {
-    console.log("1 useEffect:", optionIsOpen);
-    if (!optionIsOpen) return;
-    document.addEventListener("click", handleClickElseWhere);
-    console.log("2 useEffect:", optionIsOpen);
-    return () => {
-      document.removeEventListener("click", handleClickElseWhere);
-    };
-  }, [handleClickElseWhere, optionIsOpen]);
+  const handleClickOutside = () => {
+    setOptionIsOpen(false);
+  };
+  const ref = useClickOutside(handleClickOutside);
 
   return (
     <BodySTY>
       <button
+        ref={ref}
         onClick={() => {
-          // console.log("click:", optionIsOpen);
           setOptionIsOpen((prev) => !prev);
         }}
       >
