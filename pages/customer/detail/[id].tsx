@@ -1,23 +1,16 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
-import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/router";
 //@layout
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 //@services
-import { getCustomerById } from "@services/customer/getCustomerById";
 import CustomerDetail from "@contents/Customer/CustomerDetail";
 import { updateCustomer } from "@services/customer/updateCustomer";
 //
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { useCustomerStore } from "@contexts/filter/customerStore";
-//
-function fakeSubmit(data: any) {
-  console.log("data", data);
-}
-//
 const mainFilterArray = [{ id: 1, label: "客戶資料", value: "1" }];
 //
 const Index: NextPageWithLayout<never> = ({ customerId }) => {

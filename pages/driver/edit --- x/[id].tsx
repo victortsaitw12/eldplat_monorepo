@@ -10,7 +10,7 @@ import { toaster } from "evergreen-ui";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { BodySTY } from "./style";
 
-import { I_driverInfo, DUMMY_DRIVERINFO } from "@contents/driver/driver.typing";
+import { I_driverInfo, DUMMY_DRIVERINFO } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
 import { useDriverStore } from "@contexts/filter/driverStore";

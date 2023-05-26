@@ -1,5 +1,6 @@
 import { deepCloneWithDateFormat } from "@utils/formatDateFromAPI";
 export const getBusById = async (bus_no: string) => {
+  console.log("fetching bus data");
   const response = await fetch(
     `https://localhost:7088/CAR/GetOneBus/${bus_no}`,
     {

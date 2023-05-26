@@ -17,22 +17,15 @@ function DriverList({ driverData, goToCreatePage, handleDeleteDriver }: Props) {
   const driverTitle = getDriverTitle();
   const router = useRouter();
 
-  const addDriverBtn = (
-    <IconLeft text="新增駕駛" onClick={goToCreatePage}>
-      <PlusIcon size={14} />
-    </IconLeft>
-  );
-
   return (
     <DriverListSTY>
-      {/* <TableTitle tableName={"駕駛"} control={[addDriverBtn]} page={true} /> */}
       <TableWithEdit
         tableName="駕駛"
         titles={driverTitle}
         data={driverData}
         goToCreatePage={goToCreatePage}
         viewItem={(id) => {
-          router.push(`/driver/detail/${id}`);
+          router.push(`/driver/detail/${id}?editPage=view`);
         }}
         goToEditPage={(id) => {
           router.push(`/driver/detail/${id}?editPage=edit`);

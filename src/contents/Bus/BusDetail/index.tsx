@@ -8,9 +8,6 @@ import {
   Specifications
 } from "./SubFrom";
 //@components
-import InfoBox from "@components/InfoBox";
-//@layout
-import FlexWrapper from "@layout/FlexWrapper";
 //@service
 //@utils
 import { BusDataTypes } from "../bus.type";
@@ -29,6 +26,7 @@ const BusDetail = ({
   busId,
   formType
 }: I_Props) => {
+  console.log("render bus detail component!");
   const [visibleForm, setVisibleForm] = useState("1");
   useEffect(() => {
     setVisibleForm(formType);

@@ -38,8 +38,6 @@ const Page: NextPageWithLayout<
     updateMainFilter("1");
   }, []);
   const changeMainFilterHandler = (value: string) => {
-    console.log("changeMainFilterHandler");
-    console.log("value", value);
     updateMainFilter(value);
   };
   const asyncSubmitForm = async (data: any) => {

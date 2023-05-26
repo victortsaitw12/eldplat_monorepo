@@ -3,7 +3,7 @@ import { EyeOpenIcon, Heading, Icon, Pane, Text, Spinner } from "evergreen-ui";
 import React from "react";
 import { BodySTY } from "./style";
 
-import { I_driverInfo } from "@contents/driver/driver.typing";
+import { I_driverInfo } from "@contents/Driver/driver.type";
 
 function Basic({
   currentUserInfo,

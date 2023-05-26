@@ -80,10 +80,6 @@ const Page: NextPageWithLayout<never> = () => {
   };
   //
   useEffect(() => {
-    updateMainFilter("1");
-  }, []);
-
-  useEffect(() => {
     let isCanceled = false;
     fetchCustomerData(isCanceled, nowTab);
     return () => {

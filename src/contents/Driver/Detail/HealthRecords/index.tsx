@@ -1,4 +1,4 @@
-import { I_driverInfo } from "@contents/driver/driver.typing";
+import { I_driverInfo } from "@contents/Driver/driver.type";
 
 import { I_Content_Props, I_Health_TYPE } from "@typings/employee_type";
 import Table from "@components/Table/Table";
@@ -16,9 +16,16 @@ const health_MAP = new Map([
 
 const table_title = ["日期", "分類", "機構", "結果", "報告"];
 
-function HealthFirst({ currentUserInfo }: { currentUserInfo: I_driverInfo }) {
+function HealthRecords({
+  healths,
+  userName
+}: {
+  healths: any;
+  userName: string;
+}) {
+  console.log("healths:", healths);
   const [healthData, setHealthData] = useState<I_Health_TYPE | any>({
-    // user_no: "USR202303210008",
+    user_no: "USR202303210008",
     heal_date: "",
     heal_typ: "01",
     heal_agency: "",
@@ -38,7 +45,7 @@ function HealthFirst({ currentUserInfo }: { currentUserInfo: I_driverInfo }) {
     invalid_remark: string;
     heal_link: any;
   }
-  const orderedTableData = currentUserInfo?.healths?.map((item) => {
+  const orderedTableData = healths.map((item: any) => {
     const dataDetail: DataDetail = {
       id: "",
       heal_date: "",
@@ -79,7 +86,7 @@ function HealthFirst({ currentUserInfo }: { currentUserInfo: I_driverInfo }) {
   return (
     <BodySTY>
       <Pane className="health-title">
-        <Heading is="h4">{currentUserInfo?.user_name}</Heading>
+        <Heading is="h4">{userName}</Heading>
       </Pane>
       <Pane className="health-title-right">
         <PaginationField />
@@ -90,4 +97,4 @@ function HealthFirst({ currentUserInfo }: { currentUserInfo: I_driverInfo }) {
   );
 }
 
-export default HealthFirst;
+export default HealthRecords;

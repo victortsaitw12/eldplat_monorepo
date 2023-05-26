@@ -4,7 +4,6 @@ export const getAllCustomers = async (
   filter: { [key: string]: any } = {},
   customer_status = "1"
 ) => {
-  console.log("getAllCustomers", filter);
   const customerFilter = [];
   for (const key in filter) {
     if (filter[key].value !== "") {
