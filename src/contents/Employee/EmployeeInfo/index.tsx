@@ -25,7 +25,9 @@ function EmployeeInfo({
   editData
 }: I_Content_Props) {
   // 是否在職
-  const [untilnowChecked, setUntilnowChecked] = useState<boolean>(true);
+  const [untilnowChecked, setUntilnowChecked] = useState<boolean>(
+    insertData["leave_check"] === "1" ? true : false
+  );
 
   // 證照陣列
   const [certificationArr, setCertificationArr] = useState<
@@ -43,10 +45,13 @@ function EmployeeInfo({
   }, [editData]);
 
   // 離職: 如果還在職(迄今)就存"1"，否則是"0"
-  const handleStillWorking = () => {
+  const handleStillWorking = (e: any) => {
+    const newChecked = e.target.checked;
+    setUntilnowChecked(newChecked);
     const newData = { ...insertData };
-    newData["leave_check"] = untilnowChecked ? "0" : "1";
-    newData["leave_date"] = untilnowChecked && "";
+    newData["leave_check"] = newChecked ? "1" : "0";
+    newData["leave_date"] = (newChecked || !newData["leave_date"]) && null;
+    // console.log("untilnowChecked && null", untilnowChecked && null);
     setInsertData(newData);
   };
 
@@ -184,8 +189,7 @@ function EmployeeInfo({
               label="迄今"
               checked={untilnowChecked}
               onChange={(e: any) => {
-                setUntilnowChecked(e.target.checked);
-                handleStillWorking();
+                handleStillWorking(e);
               }}
             />
           </Pane>

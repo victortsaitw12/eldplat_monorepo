@@ -101,9 +101,12 @@ function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
     const newData = { ...insertData };
     const targetName = e.target.name as
       | keyof (I_Add_Employees_Type | I_Get_Employees_Type);
-    const targetValue = e.target.value as any;
+    let targetValue = e.target.value as any;
+
+    if (e.target.type === "date") targetValue ||= null;
+    //  targetValue ||= null 的意思就等於 targetValue = targetValue || null
+
     newData[targetName] = targetValue;
-    // newData[e.target.name]=e.target.value
     setInsertData(newData);
   };
 
