@@ -25,13 +25,14 @@ export const BodySTY = styled.div`
         }
       }
 
-      // 手機號碼樣式
+      // 手機號碼 和 緊急連絡人手機樣式
       .phone-input {
         width: 280px;
         display: flex;
 
         .country-number {
           width: 20%;
+          margin-right: 6px;
         }
         .phone-number {
           width: 80%;

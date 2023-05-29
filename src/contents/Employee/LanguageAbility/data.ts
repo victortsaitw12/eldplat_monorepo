@@ -1,9 +1,10 @@
 export const language_DATA = {
-  languag: [
-    { value: "ch", label: "中文" },
-    { value: "en", label: "英文" },
-    { value: "jp", label: "日文" },
-    { value: "fr", label: "法文" }
+  language: [
+    { value: "01", label: "中文" },
+    { value: "02", label: "英文" },
+    { value: "03", label: "日文" },
+    { value: "04", label: "泰文" },
+    { value: "05", label: "西班牙文" }
   ],
   listen: [
     { value: "1", label: "聽-精通" },

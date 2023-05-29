@@ -17,6 +17,7 @@ import {
   createBriefEmployee,
   createEmployee
 } from "@services/employee/createEmployee";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 
 //
 const fakeData = [
@@ -182,44 +183,46 @@ const Page: NextPageWithLayout<never> = () => {
     setLoading(false);
   };
   return (
-    <BodySTY>
-      <TableWrapper
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={mainFilter}
-        mainFilterArray={mainFilterArray}
-      >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={() => {
-            initializeSubFilter();
-          }}
-          filter={filter}
+    <RegionProvider>
+      <BodySTY>
+        <TableWrapper
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={mainFilter}
+          mainFilterArray={mainFilterArray}
         >
-          {/* Put your component here */}
-          <Pane>
-            <EmployeeList
-              data={employeeListData}
-              // goToCreatePage={goToCreatePage}
-              goToCreatePage={() => {
-                setDrawerOpen(true);
-              }}
-              deleteItemHandler={deleteItemHandler}
-              goToEditPageHandler={goToEditPageHandler}
-            />
-          </Pane>
-        </FilterWrapper>
-      </TableWrapper>
-      {isDrawerOpen && (
-        <Drawer
-          tabName={["新增員工"]}
-          closeDrawer={() => {
-            setDrawerOpen(false);
-          }}
-        >
-          <EmployeeCreateForm createEmployee={createEmployeeHandler} />
-        </Drawer>
-      )}
-    </BodySTY>
+          <FilterWrapper
+            updateFilter={updateSubFilter}
+            resetFilter={() => {
+              initializeSubFilter();
+            }}
+            filter={filter}
+          >
+            {/* Put your component here */}
+            <Pane>
+              <EmployeeList
+                data={employeeListData}
+                // goToCreatePage={goToCreatePage}
+                goToCreatePage={() => {
+                  setDrawerOpen(true);
+                }}
+                deleteItemHandler={deleteItemHandler}
+                goToEditPageHandler={goToEditPageHandler}
+              />
+            </Pane>
+          </FilterWrapper>
+        </TableWrapper>
+        {isDrawerOpen && (
+          <Drawer
+            tabName={["新增員工"]}
+            closeDrawer={() => {
+              setDrawerOpen(false);
+            }}
+          >
+            <EmployeeCreateForm createEmployee={createEmployeeHandler} />
+          </Drawer>
+        )}
+      </BodySTY>
+    </RegionProvider>
   );
 };
 

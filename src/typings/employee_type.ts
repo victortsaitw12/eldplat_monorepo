@@ -15,7 +15,6 @@ export interface I_Add_Employees_Type {
   dt_country: string;
   user_address1: string;
   user_address2: string;
-
   user_birthday: string;
   user_sex: string;
   user_photo_link: string;
@@ -24,6 +23,7 @@ export interface I_Add_Employees_Type {
   user_phone: string;
   city: string;
   district: string;
+  emgc_phone_code: string;
   emgc_phone: string;
   emgc_contact: string;
   staff_no: string;
@@ -76,6 +76,7 @@ export interface I_Get_Employees_Type {
   user_phone: string;
   city: string;
   district: string;
+  emgc_phone_code: string;
   emgc_phone: string;
   emgc_contact: string;
   staff_no: string;

@@ -16,6 +16,7 @@ import { getEmployeeById } from "@services/employee/getEmployeeById";
 import { I_Get_Employees_Type } from "@typings/employee_type";
 import { updateEmployee } from "@services/employee/updateEmployee";
 import LoadingSpinner from "@components/LoadingSpinner";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -43,19 +44,26 @@ const Page: NextPageWithLayout<
         user_sex: newData.basicInfo["user_sex"],
         user_photo_link: newData.basicInfo["user_photo_link"],
         user_email: newData.basicInfo["user_email"],
+        user_phone_code: newData.basicInfo["user_phone_code"],
         user_phone: newData.basicInfo["user_phone"],
+        dt_country: newData.basicInfo["dt_country"],
         city: newData.basicInfo["city"],
         district: newData.basicInfo["district"],
+        zip_code: newData.basicInfo["zip_code"],
         user_address1: newData.basicInfo["user_address1"],
         user_address2: newData.basicInfo["user_address2"],
         emgc_contact: newData.basicInfo["emgc_contact"],
+        emgc_phone_code: newData.basicInfo["emgc_phone_code"],
         emgc_phone: newData.basicInfo["emgc_phone"],
         staff_no: newData.basicInfo["staff_no"],
         job_title: newData.basicInfo["job_title"],
+        working_hours_code: newData.basicInfo["working_hours_code"],
+        working_hours_name: newData.basicInfo["working_hours_name"],
         company_name: newData.basicInfo["company_name"],
         department: newData.basicInfo["department"],
         group: newData.basicInfo["group"],
         arrive_date: newData.basicInfo["arrive_date"],
+        leave_check: newData.basicInfo["leave_check"],
         license_name: newData["licenses"].map(
           (item: { license_name: any }) => item.license_name
         ),
@@ -89,11 +97,12 @@ const Page: NextPageWithLayout<
 
   console.log("1️⃣editData in edit page:", editData);
   return (
-    <BodySTY>
-      {
-        <Pane width="100%" height="100%" borderRadius="10px" overflow="auto">
-          {/* Put your component here */}
-          {/* {loading ? (
+    <RegionProvider>
+      <BodySTY>
+        {
+          <Pane width="100%" height="100%" borderRadius="10px" overflow="auto">
+            {/* Put your component here */}
+            {/* {loading ? (
             <LoadingSpinner />
           ) : (
             <AddEmployee
@@ -102,14 +111,15 @@ const Page: NextPageWithLayout<
               editData={editData}
             />
           )} */}
-          <AddEmployee
-            submitForm={asyncSubmitForm}
-            onCancel={cancelFormHandler}
-            editData={editData}
-          />
-        </Pane>
-      }
-    </BodySTY>
+            <AddEmployee
+              submitForm={asyncSubmitForm}
+              onCancel={cancelFormHandler}
+              editData={editData}
+            />
+          </Pane>
+        }
+      </BodySTY>
+    </RegionProvider>
   );
 };
 

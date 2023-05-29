@@ -30,7 +30,6 @@ interface I_AddEmployee_Props {
 }
 
 function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
-  const [countryNum, setCountryNum] = useState<string>("(+886)");
   const [insertData, setInsertData] = useState<I_Add_Employees_Type>({
     user_name: "",
     user_first_name: "",
@@ -53,6 +52,7 @@ function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
     user_email: "",
     user_phone_code: "",
     user_phone: "",
+    emgc_phone_code: "",
     emgc_contact: "",
     emgc_phone: "",
     city: "01",
@@ -146,7 +146,6 @@ function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
             handleEmployeeChange={handleEmployeeChange}
             insertData={insertData}
             setInsertData={setInsertData}
-            setCountryNum={setCountryNum}
           />
           <Charactor
             handleEmployeeChange={handleEmployeeChange}
@@ -175,9 +174,7 @@ function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
           />
           <LanguageAbility
             insertData={insertData}
-            setInsertData={() => {
-              console.log("lang");
-            }}
+            setInsertData={setInsertData}
             editData={editData}
           />
         </Pane>

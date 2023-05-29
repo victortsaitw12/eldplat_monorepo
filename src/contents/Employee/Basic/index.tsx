@@ -11,20 +11,25 @@ import {
   Text,
   TextInput
 } from "evergreen-ui";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { genderOption_DATA } from "./data";
 import { BodySTY } from "./style";
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 
-interface I_Basic_Props extends I_Content_Props {
-  setCountryNum: (t: string) => void;
-}
+// interface I_Basic_Props extends I_Content_Props {
+//   setCountryNum: (t: string) => void;
+// }
 
 function Basic({
   handleEmployeeChange,
   insertData,
-  setInsertData,
-  setCountryNum
-}: I_Basic_Props) {
+  setInsertData
+}: I_Content_Props) {
+  const { allCountries } = useContext<I_Region_Context>(RegionContext);
+
   // 性別選擇
   const handleChangeSex = (e: any) => {
     const newData = { ...insertData };
@@ -51,16 +56,17 @@ function Basic({
   }, []);
   // 上傳照片 end ------
 
-  const newData = { ...insertData };
-  const handleCountryNum = (e: any) => {
-    if (e.target.value === "TW") {
-      setCountryNum("(+886)");
-    } else if (e.target.value === "JP") {
-      setCountryNum("(+81)");
-    } else if (e.target.value === "US") {
-      setCountryNum("(+1)");
-    }
-  };
+  // const handleCountryNum = (e: any) => {
+  //   if (e.target.value === "TW") {
+  //     setCountryNum("(+886)");
+  //   } else if (e.target.value === "JP") {
+  //     setCountryNum("(+81)");
+  //   } else if (e.target.value === "US") {
+  //     setCountryNum("(+1)");
+  //   }
+  // };
+
+  console.log("allCountries", allCountries);
 
   return (
     <BodySTY>
@@ -107,12 +113,14 @@ function Basic({
             name="user_country"
             onChange={(e) => {
               handleEmployeeChange(e);
-              handleCountryNum(e);
+              // handleCountryNum(e);
             }}
           >
-            <option value="TW">台灣</option>
-            <option value="JP">日本</option>
-            <option value="US">美國</option>
+            {allCountries?.map((item) => (
+              <option key={item.areaNo} value={item.areaNo}>
+                {item.regionName}
+              </option>
+            ))}
           </SelectField>
         </Pane>
         <Pane className="input-line">

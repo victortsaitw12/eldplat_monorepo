@@ -8,16 +8,29 @@ import {
   Text,
   TextInput
 } from "evergreen-ui";
-import React from "react";
+import React, { useContext } from "react";
 import { convertCountryNum } from "@utils/convertValueToText";
 import { BodySTY } from "./style";
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 
 function Contact({
   handleEmployeeChange,
   insertData,
   setInsertData
 }: I_Content_Props) {
-  const countryNum = convertCountryNum(insertData.user_country);
+  const {
+    handleStateChange,
+    handleCityChange,
+    handleCountryCode,
+    allCountries,
+    allStates,
+    allCities
+  } = useContext<I_Region_Context>(RegionContext);
+
+  console.log("🉐insertData in contact", insertData);
 
   return (
     <BodySTY>
@@ -38,7 +51,7 @@ function Contact({
             <TextInput
               className="country-number"
               name=""
-              value={countryNum}
+              value={handleCountryCode(insertData?.user_country)}
               onChange={handleEmployeeChange}
               required
               disabled
@@ -88,11 +101,11 @@ function Contact({
                     handleEmployeeChange(e);
                   }}
                 >
-                  {/* {allCities?.map((item: any, idx: number) => (
+                  {allCities?.map((item: any, idx: number) => (
                     <option key={idx} value={item.areaNo}>
                       {item.regionName}
                     </option>
-                  ))} */}
+                  ))}
                 </SelectField>
               </Pane>
               <Pane>
@@ -104,14 +117,14 @@ function Contact({
                   value={insertData.district}
                   onChange={(e: any) => {
                     handleEmployeeChange(e);
-                    // handleCityChange(e);
+                    handleCityChange(e);
                   }}
                 >
-                  {/* {allStates?.map((item: any, idx: number) => (
+                  {allStates?.map((item: any, idx: number) => (
                     <option key={idx} value={item.areaNo}>
                       {item.regionName}
                     </option>
-                  ))} */}
+                  ))}
                 </SelectField>
               </Pane>
             </Pane>
@@ -134,14 +147,14 @@ function Contact({
                   value={insertData.dt_country}
                   onChange={(e: any) => {
                     handleEmployeeChange(e);
-                    // handleStateChange(e);
+                    handleStateChange(e);
                   }}
                 >
-                  {/* {allCountries?.map((item, idx) => (
+                  {allCountries?.map((item, idx) => (
                     <option key={idx} value={item.areaNo}>
                       {item.regionName}
                     </option>
-                  ))} */}
+                  ))}
                 </SelectField>
               </Pane>
             </Pane>
@@ -158,11 +171,23 @@ function Contact({
         </Pane>
         <Pane className="input-line">
           <Text>緊急聯絡人手機</Text>
-          <TextInput
-            name="emgc_phone"
-            value={insertData.emgc_phone}
-            onChange={handleEmployeeChange}
-          />
+          <Pane className="phone-input">
+            <TextInput
+              className="country-number"
+              name="emgc_phone_code"
+              placeholder="ex:+886"
+              value={insertData.emgc_phone_code}
+              onChange={(e: any) => {
+                handleEmployeeChange(e);
+              }}
+              required
+            />
+            <TextInput
+              name="emgc_phone"
+              value={insertData.emgc_phone}
+              onChange={handleEmployeeChange}
+            />
+          </Pane>
         </Pane>
       </form>
     </BodySTY>
