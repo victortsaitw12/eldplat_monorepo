@@ -13,6 +13,11 @@ import FilterWrapper from "@layout/FilterWrapper";
 import TableWrapper from "@layout/TableWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
+import {
+  createBriefEmployee,
+  createEmployee
+} from "@services/employee/createEmployee";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 
 //
 const fakeData = [
@@ -82,6 +87,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [employeeListData, setEmployeeListData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   // const initializeFilter = useFilterStore((state) => state.initializeFilter);
   // const updateFilter = useFilterStore((state) => state.updateFilter);
@@ -128,7 +134,7 @@ const Page: NextPageWithLayout<never> = () => {
       if (!filter) {
         localStorage.setItem(
           "employeeInitFilter",
-          JSON.stringify(data.conditionList)
+          JSON.stringify(data.contentList)
         );
         initializeSubFilter();
       }
@@ -157,47 +163,66 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const createEmployeeHandler = async (employeeData: any) => {
-    console.log("employeeData", employeeData);
+    console.log("1️⃣employeeData", employeeData);
+    const { user_first_name, user_name, user_email, user_phone } = employeeData;
+
+    setLoading(true);
+    try {
+      const res = await createBriefEmployee(
+        user_first_name,
+        user_name,
+        user_email,
+        user_phone
+      );
+      console.log("3️⃣res", res);
+      router.reload();
+    } catch (e: any) {
+      console.log(e);
+      alert(e.message);
+    }
+    setLoading(false);
   };
   return (
-    <BodySTY>
-      <TableWrapper
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={mainFilter}
-        mainFilterArray={mainFilterArray}
-      >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={() => {
-            initializeSubFilter();
-          }}
-          filter={filter}
+    <RegionProvider>
+      <BodySTY>
+        <TableWrapper
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={mainFilter}
+          mainFilterArray={mainFilterArray}
         >
-          {/* Put your component here */}
-          <Pane>
-            <EmployeeList
-              data={employeeListData}
-              // goToCreatePage={goToCreatePage}
-              goToCreatePage={() => {
-                setDrawerOpen(true);
-              }}
-              deleteItemHandler={deleteItemHandler}
-              goToEditPageHandler={goToEditPageHandler}
-            />
-          </Pane>
-        </FilterWrapper>
-      </TableWrapper>
-      {isDrawerOpen && (
-        <Drawer
-          tabName={["新增員工"]}
-          closeDrawer={() => {
-            setDrawerOpen(false);
-          }}
-        >
-          <EmployeeCreateForm createEmployee={createEmployeeHandler} />
-        </Drawer>
-      )}
-    </BodySTY>
+          <FilterWrapper
+            updateFilter={updateSubFilter}
+            resetFilter={() => {
+              initializeSubFilter();
+            }}
+            filter={filter}
+          >
+            {/* Put your component here */}
+            <Pane>
+              <EmployeeList
+                data={employeeListData}
+                // goToCreatePage={goToCreatePage}
+                goToCreatePage={() => {
+                  setDrawerOpen(true);
+                }}
+                deleteItemHandler={deleteItemHandler}
+                goToEditPageHandler={goToEditPageHandler}
+              />
+            </Pane>
+          </FilterWrapper>
+        </TableWrapper>
+        {isDrawerOpen && (
+          <Drawer
+            tabName={["新增員工"]}
+            closeDrawer={() => {
+              setDrawerOpen(false);
+            }}
+          >
+            <EmployeeCreateForm createEmployee={createEmployeeHandler} />
+          </Drawer>
+        )}
+      </BodySTY>
+    </RegionProvider>
   );
 };
 
