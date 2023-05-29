@@ -1,31 +1,22 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React from "react";
 import { Select, TextInput } from "evergreen-ui";
 import InfoBox from "@components/InfoBox";
-import {
-  UseFormRegister,
-  FieldErrors,
-  UseFormGetValues,
-  Control
-} from "react-hook-form";
+import { UseFormRegister, UseFormGetValues } from "react-hook-form";
 import FlexWrapper from "@layout/FlexWrapper";
 import { UpdateDriverInfoPayload } from "../../driver.type";
-import LanguageAbility from "@contents/Driver/LanguageAbility";
+import LanguageAbility from "@contents/Driver/Detail/LanguageAbility";
 interface Props {
   selected?: boolean;
   register: UseFormRegister<UpdateDriverInfoPayload>;
-  errors: FieldErrors<UpdateDriverInfoPayload>;
   getValues: UseFormGetValues<UpdateDriverInfoPayload>;
-  control: Control<UpdateDriverInfoPayload, any>;
   isEdit: boolean;
   driverData: any;
 }
+
 function DriverInfo({
   selected,
   register,
-  errors,
   getValues,
-  control,
   isEdit,
   driverData
 }: Props) {

@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Pane } from "evergreen-ui";
 import { useForm } from "react-hook-form";
 import HealthRecords from "./HealthRecords";
 import { UpdateDriverInfoPayload } from "../driver.type";
 import DriverInfo from "./DriverInfo";
 import { formatDateFromAPI } from "@utils/formatDateFromAPI";
 import { FormSTY } from "./style";
-// import HealthRecord from "./HealthRecord"
-//
+
 interface Props {
-  driverId: string;
-  asyncSubmitForm: (data: any) => Promise<void>;
   isEdit: boolean;
-  driverData: any;
-  isLoading: boolean;
   submitRef: React.RefObject<HTMLButtonElement>;
+  asyncSubmitForm: (data: any) => Promise<void>;
+  driverData: any;
   formType: string;
 }
 
@@ -37,13 +33,11 @@ const driverFormDefaultValues: UpdateDriverInfoPayload = {
   licn_link: ""
 };
 
-function DriverEditForm({
-  driverId,
-  asyncSubmitForm,
+function DriverDetail({
   isEdit,
-  driverData,
-  isLoading,
   submitRef,
+  asyncSubmitForm,
+  driverData,
   formType
 }: Props) {
   console.log("Driver data", driverData);
@@ -75,15 +69,14 @@ function DriverEditForm({
   });
 
   const [visibleForm, setVisibleForm] = useState("1");
+
   useEffect(() => {
-    if (errors) {
-      // do the your logic here
-      console.log(errors);
-    }
+    if (errors) console.log(errors);
   }, [errors]);
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
+
   return (
     <FormSTY
       onSubmit={handleSubmit((currentData) => {
@@ -98,9 +91,7 @@ function DriverEditForm({
       <DriverInfo
         selected={visibleForm === "1"}
         register={register}
-        errors={errors}
         getValues={getValues}
-        control={control}
         isEdit={isEdit}
         driverData={driverData}
       />
@@ -114,4 +105,4 @@ function DriverEditForm({
   );
 }
 
-export default DriverEditForm;
+export default DriverDetail;

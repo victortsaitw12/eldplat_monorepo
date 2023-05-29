@@ -8,11 +8,7 @@ import { useRouter } from "next/router";
 import { toaster, Pane, Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import {
-  I_driverInfo,
-  DUMMY_DRIVERINFO,
-  DriverInfo
-} from "@contents/Driver/driver.type";
+import { DriverInfo } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
 import { useDriverStore } from "@contexts/filter/driverStore";
@@ -20,9 +16,7 @@ import { getDriverById } from "@services/driver/getDriverById";
 import { updateDriver } from "@services/driver/updateDriver";
 import DriverDetail from "@contents/Driver/Detail";
 import TableWrapper from "@layout/TableWrapper";
-import HealthFirst from "@contents/Driver/Detail/SubForm/HealthFirst";
-//
-import { formatDateFromAPI } from "@utils/formatDateFromAPI";
+
 //
 const mainFilterArray = [
   { id: 1, label: "駕駛資訊", value: "1" },
@@ -105,9 +99,7 @@ const Page: NextPageWithLayout<
           <DriverDetail
             isEdit={isEdit}
             submitRef={submitRef}
-            driverId={driverNo}
             asyncSubmitForm={asyncSubmitForm}
-            isLoading={isLoading}
             driverData={driverData}
             formType={mainFilter}
           />
