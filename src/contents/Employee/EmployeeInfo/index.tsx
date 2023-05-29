@@ -1,6 +1,7 @@
 import { I_Content_Props } from "@typings/employee_type";
 import {
   Button,
+  Checkbox,
   Heading,
   Pane,
   PlusIcon,
@@ -23,6 +24,9 @@ function EmployeeInfo({
   setInsertData,
   editData
 }: I_Content_Props) {
+  // 是否在職
+  const [untilnowChecked, setUntilnowChecked] = useState<boolean>(true);
+
   // 證照陣列
   const [certificationArr, setCertificationArr] = useState<
     I_certificationType[]
@@ -37,6 +41,14 @@ function EmployeeInfo({
         })
       );
   }, [editData]);
+
+  // 離職: 如果還在職(迄今)就存"1"，否則是"0"
+  const handleStillWorking = () => {
+    const newData = { ...insertData };
+    newData["leave_check"] = untilnowChecked ? "0" : "1";
+    newData["leave_date"] = untilnowChecked && "";
+    setInsertData(newData);
+  };
 
   // 存取證照欄位input值
   const handleValue = (e: any, id: number) => {
@@ -81,6 +93,8 @@ function EmployeeInfo({
     newData.license_name = licenseArr;
     setInsertData(newData);
   };
+
+  console.log("untilnoeChecked", untilnowChecked);
 
   return (
     <BodySTY>
@@ -154,6 +168,31 @@ function EmployeeInfo({
             value={insertData.arrive_date}
             onChange={handleEmployeeChange}
           />
+        </Pane>
+        <Pane className="input-line">
+          <Text>離職日期</Text>
+          <Pane display="flex">
+            {" "}
+            <TextInput
+              type="date"
+              name="leave_date"
+              value={insertData.leave_date}
+              onChange={handleEmployeeChange}
+              disabled={untilnowChecked ? true : false}
+            />
+            <Checkbox
+              label="迄今"
+              checked={untilnowChecked}
+              onChange={(e: any) => {
+                setUntilnowChecked(e.target.checked);
+                handleStillWorking();
+              }}
+            />
+          </Pane>
+        </Pane>
+        <Pane className="input-line">
+          <Text>員工狀態</Text>
+          <Text color="#52BD94 !important">• 已加入</Text>
         </Pane>
         <Pane className="input-line">
           <Text>證照</Text>

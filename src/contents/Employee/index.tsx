@@ -47,6 +47,7 @@ function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
     arrive_date: "",
     working_hours_code: "",
     working_hours_name: "",
+    leave_date: null,
     leave_check: "",
     license_name: [],
     user_email: "",
