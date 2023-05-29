@@ -15,7 +15,7 @@ function Contact() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
   const { handleCountrySwitch, handleStateSwitch, handleCitySwitch } =
     useContext<I_Region_Context>(RegionContext);
-
+  console.log("🎏companyData", companyData);
   return (
     <BodySTY>
       <Heading is="h4">公司聯絡資訊</Heading>
@@ -39,7 +39,7 @@ function Contact() {
             </Pane>
             <Pane className="company_country_code">
               <Text>{companyData.company_district_code}</Text>
-              <Text>{handleCountrySwitch(companyData.company_country)}</Text>
+              <Text>{handleCountrySwitch(companyData.company_country2)}</Text>
             </Pane>
           </Pane>
         </Pane>
@@ -64,8 +64,8 @@ function Contact() {
                   </Pane>
                 </Pane>
                 <Pane className="input-line">
-                  <Text className="">主要聯絡人手機</Text>
-                  <Text>{v.contact_phone}</Text>
+                  <Text className="">主要聯絡人信箱</Text>
+                  <Text>{v.contact_email}</Text>
                 </Pane>
               </>
             );

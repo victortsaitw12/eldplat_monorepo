@@ -72,8 +72,11 @@ export const CompanyProvider = ({ children }: any) => {
     { errField: "", errText: "" } || false
   );
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const companyNo = "BH49202304190001";
   useEffect(() => {
+    setLoading(true);
     getSingleCompany().then((data) => {
       console.log("company data", data);
       // const newData = {
@@ -123,7 +126,8 @@ export const CompanyProvider = ({ children }: any) => {
       //   company_Leave: data.company_Leave,
       //   company_Working_Hours: data.company_Working_Hours
       // };
-      setCompanyData(data.company);
+      setCompanyData(data.dataList[0]);
+      setLoading(false);
     });
   }, [countryNumInput]);
 
@@ -156,12 +160,14 @@ export const CompanyProvider = ({ children }: any) => {
     setCompanyData(newData);
 
     // 設定error message
+    const contactInfo = { ...companyData.company_contact[0] };
+
     const telValid = numberValidation(companyData["company_tel"]);
     const comFaxValid = numberValidation(companyData["company_fax"]);
     const comEmailValid = emailValidation(companyData["company_email"]);
-    const contactTelValid = numberValidation(companyData["contact_tel"]);
-    const mobileValid = phoneValidation(companyData["contact_phone"]);
-
+    const contactTelValid = numberValidation(contactInfo["contact_tel"]);
+    const mobileValid = phoneValidation(contactInfo["contact_phone"]);
+    console.log("mobileValid", mobileValid);
     // 聯絡人手機
     if (mobileValid !== true) {
       return setErrMsg({
@@ -170,7 +176,7 @@ export const CompanyProvider = ({ children }: any) => {
       });
     } // 聯絡人電話
     else if (contactTelValid !== true) {
-      return setErrMsg({ errField: "contact_Tel", errText: contactTelValid });
+      return setErrMsg({ errField: "contact_tel", errText: contactTelValid });
     } // 公司電話
     else if (telValid !== true) {
       return setErrMsg({ errField: "company_tel", errText: telValid });
