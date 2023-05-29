@@ -58,9 +58,9 @@ function Table({ titles, data }: I_Table) {
         </tr>
       </thead>
       <tbody>
-        {data.map((item: any) => {
+        {data.map((item: any, i) => {
           return (
-            <tr key={item.id}>
+            <tr key={item.id + "-" + i}>
               {Object.keys(item).map((key) => {
                 if (key === "id") return;
 
