@@ -1,5 +1,6 @@
 import API_Path from "./apiPath";
 // 取得供應商資料
+// type:"1"啟用 "2"停用
 export const getAllVendors = async (filter: { [key: string]: any } = {}, type: string) => {
   const vendorFilter = [];
   for (const key in filter) {

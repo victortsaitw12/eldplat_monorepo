@@ -55,6 +55,10 @@ const Page: NextPageWithLayout<{
   }, [router, setPageType]);
 
   useEffect(() => {
+    setDrawerOpen(false);
+  }, [router.query.codeType, setDrawerOpen]);
+
+  useEffect(() => {
     let isCanceled = false;
     getAllVendors(subFilter, "1").then((data) => {
       const vendorData = data.contentList.map((vendors: Vendor) => {

@@ -7,6 +7,7 @@ export const BodySTY = styled.div`
     display: block;
     height: calc(100vh - 180px);
     .title{
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -19,9 +20,17 @@ export const BodySTY = styled.div`
         }
     }
     .title-right {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         margin-bottom: 21px;
+    }
+    button.create{
+        position: absolute;
+        cursor: pointer;
+        bottom: 32px;
+        border:none;
+        background: transparent;
     }
 `;
