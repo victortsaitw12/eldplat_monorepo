@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { BodySTY } from "./style";
-import Table from "@components/Table/Table";
 import { Pane, Heading, CogIcon } from "evergreen-ui";
+//@components
+import Table from "@components/Table/Table";
 import LabelTag from "@components/LabelTag";
 import PaginationField from "@components/PaginationField";
+import LightBox from "@components/Lightbox";
+//@content
+import EditSubPoint from "@contents/Vendor/SubForm/EditSubPoint";
 
 interface I_Props {
-  test?: boolean;
+  isEdit: boolean;
 }
 const mock_title = [
   "供應商號碼",
@@ -46,13 +50,26 @@ const mock_data = [
     label: <LabelTag text="標籤" />
   }
 ]
-const VendorSubPoint = (props: I_Props) => {
+const VendorSubPoint = ({ isEdit }: I_Props) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  console.log(isEdit ? "子據點編輯模式" : "檢視模式")
   return (
     <BodySTY>
       <Pane className="title">
         <Heading is="h4">富豪車隊</Heading>
       </Pane>
       <Pane className="title-right">
+        {isEdit &&
+          <button
+            className="create"
+            onClick={() => {
+              setModalOpen(true);
+              console.log("點擊新增子據點")
+            }}
+          >
+            新增子據點
+          </button>
+        }
         <PaginationField />
         <CogIcon color="#718BAA" size={11} />
       </Pane>
@@ -60,6 +77,19 @@ const VendorSubPoint = (props: I_Props) => {
         titles={mock_title}
         data={mock_data}
       />
+      <LightBox
+        wrapperStyle={{ maxWidth: "unset" }}
+        title={"新增子據點"}
+        isOpen={modalOpen}
+        handleCloseLightBox={() => {
+          setModalOpen(false);
+        }}>
+        <EditSubPoint
+          onClickCancel={
+            () => setModalOpen(false)
+          }
+        />
+      </LightBox>
     </BodySTY>
   );
 }
