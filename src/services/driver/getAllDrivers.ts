@@ -1,11 +1,8 @@
-import { token } from "./token";
-
 // 取得所有駕駛資料 QueryDriverList
 export const getAllDriver = async (
   filter: { [key: string]: any } = {},
-  isDisabled = false
+  driverStatus = "1"
 ) => {
-  // console.log("getAllDriver filter:", filter);
   const driverFilter = [];
   for (const key in filter) {
     if (filter[key].value !== "") {
@@ -21,7 +18,7 @@ export const getAllDriver = async (
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
     },
     // body: JSON.stringify(data),
     body: JSON.stringify({
@@ -31,11 +28,9 @@ export const getAllDriver = async (
         page_Index: 1,
         page_Size: 10,
         orderby: "user_no",
-        arrangement: "asc",
-        total: 0,
-        last_page: 0
+        arrangement: "asc"
       },
-      driver_status: isDisabled ? "2" : "1" //1: 啟用 2:停用
+      driver_status: driverStatus //1: 啟用 2:停用
     })
   });
   return res.json();
@@ -49,7 +44,7 @@ export const getAllNonDriverEmployee = async () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
     }
   });
   return res.json();
@@ -70,30 +65,3 @@ export const getDriverTitle = () => {
   ];
   return DUMMY_TITLES;
 };
-
-// export const driverPattern = {
-//   id: { label: "", value: "" },
-//   user_Name: { label: "", value: "" },
-//   user_Email: { label: "", value: "" },
-//   carteam: { label: "", value: "" },
-//   car: { label: "", value: "" },
-//   group_Name: { label: "", value: "" },
-//   loginCount: { label: "", value: "" },
-//   first_Login: { label: "", value: "" },
-//   invt_Status: { label: "", value: "" }
-// };
-// export const driverParser = (
-//   data: any,
-//   key: string
-// ): { label: any; value: any } => {
-//   if (key === "id") {
-//     return {
-//       label: data["user_No"] || null,
-//       value: data["user_No"] || null
-//     };
-//   }
-//   return {
-//     label: data[key] || null,
-//     value: data[key] || null
-//   };
-// };

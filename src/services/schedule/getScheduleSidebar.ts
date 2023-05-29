@@ -11,7 +11,7 @@ export const getScheduleSidebar = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
       }
     }
   );

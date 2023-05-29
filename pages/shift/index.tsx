@@ -107,9 +107,9 @@ const ShiftPage: NextPageWithLayout<never> = () => {
                 </div>
               ]}
               control={[<ZoomBar key="zoombar" setState={handleZoombar} />]}
-              sub={Array.from(EVENT_TYPE).map(([key, value]) => (
-                <EventTag key={key} value={value} />
-              ))}
+              sub={Array.from(EVENT_TYPE).map(([key, value]) => {
+                if (key !== "00") return <EventTag key={key} value={value} />;
+              })}
               page={true}
             />
             <OverviewTable

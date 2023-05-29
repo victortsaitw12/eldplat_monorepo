@@ -1,40 +1,75 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, useId } from "react";
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import { Radio as EverGreenRadio } from "evergreen-ui";
+import { RadioGroupListSTY, RadioListFieldSTY } from "./style";
 interface RadioProps extends InputHTMLAttributes<HTMLSelectElement> {
-  label: string;
-  options: string[];
-  description?: string;
+  options: { label: string; value: string; description?: string }[];
   errorMessage?: string;
   hint?: string;
   value?: string;
   onFormChange: (value: string) => void;
+  isDisabled?: boolean;
 }
-const Radio = ({
+
+const RadioItem = ({
+  checked,
+  onFormChange,
+  radioValue,
   label,
+  description,
+  isDisabled
+}: {
+  checked: boolean;
+  onFormChange: (value: string) => void;
+  radioValue: string;
+  label: string;
+  description?: string;
+  isDisabled?: boolean;
+}) => {
+  return (
+    <RadioListFieldSTY checked={checked}>
+      <EverGreenRadio
+        size={12}
+        label={label}
+        value={radioValue}
+        checked={checked}
+        marginY={0}
+        disabled={isDisabled}
+        onChange={(e) => {
+          console.log("e.target.value", e.target.value);
+          onFormChange(e.target.value);
+        }}
+      />
+      {description && <div>{description}</div>}
+    </RadioListFieldSTY>
+  );
+};
+
+const Radio = ({
   value,
   options,
   onFormChange,
   errorMessage,
   hint,
-  description
+  isDisabled
 }: RadioProps) => {
+  const id = useId();
   return (
-    <div>
-      <div>{label}</div>
-      {options.map((radioValue) => (
-        <label key={radioValue}>
-          <input
-            type="radio"
-            value={radioValue}
-            checked={value === radioValue}
-            onChange={(e) => {
-              onFormChange(e.target.value);
-            }}
+    <RadioGroupListSTY>
+      {options.map((radioObject, index) => {
+        return (
+          <RadioItem
+            key={id + "-" + index}
+            checked={value === radioObject.value}
+            radioValue={radioObject.value}
+            label={radioObject.label}
+            onFormChange={onFormChange}
+            description={radioObject.description}
+            isDisabled={isDisabled}
           />
-          {radioValue}
-        </label>
-      ))}
-    </div>
+        );
+      })}
+    </RadioGroupListSTY>
   );
 };
 
@@ -45,34 +80,34 @@ function ControlledRadio<
   name,
   control,
   options,
-  label,
-  description,
   errorMessage,
-  hint
+  hint,
+  isDisabled
 }: {
   name: TName;
   control?: Control<TFieldValues>;
-  options: string[];
-  label: string;
-  description?: string;
+  options: { label: string; value: string; description?: string }[];
   errorMessage?: string;
   hint?: string;
+  isDisabled?: boolean;
 }) {
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value } }) => (
-        <Radio
-          label={label}
-          options={options}
-          value={value}
-          onFormChange={onChange}
-          description={description}
-          errorMessage={errorMessage}
-          hint={hint}
-        />
-      )}
+      render={({ field: { onChange, value } }) => {
+        console.log("ControlledRadio", value);
+        return (
+          <Radio
+            options={options}
+            value={value}
+            onFormChange={onChange}
+            errorMessage={errorMessage}
+            hint={hint}
+            isDisabled={isDisabled}
+          />
+        );
+      }}
     />
   );
 }
