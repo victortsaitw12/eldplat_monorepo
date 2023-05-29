@@ -3,7 +3,6 @@ export const getAllBuses = async (
   filter: { [key: string]: any } = {},
   bus_status = "1"
 ) => {
-  console.log("getAllBuses", filter);
   const busFilter = [];
   for (const key in filter) {
     if (filter[key].value !== "") {
@@ -15,8 +14,6 @@ export const getAllBuses = async (
       });
     }
   }
-  console.log("bus_Filter", busFilter);
-  console.log("accessToken", process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const res = await fetch("https://localhost:7088/CAR/GetBusList", {
     method: "POST",
     headers: {

@@ -1,0 +1,68 @@
+import Link from "next/link";
+import { EyeOpenIcon, Heading, Icon, Pane, Text, Spinner } from "evergreen-ui";
+import React from "react";
+import { BodySTY } from "./style";
+
+import { I_driverInfo } from "@contents/Driver/driver.type";
+
+function Basic({
+  currentUserInfo,
+  isLoading
+}: {
+  currentUserInfo: I_driverInfo;
+  isLoading: boolean;
+}) {
+  console.log("Basic:", currentUserInfo);
+
+  const formatEmail = (email: string) => {
+    return (
+      <Link className="email" href={`mailto:${email}`}>
+        {email}
+      </Link>
+    );
+  };
+  const formatPhoneNum = (phoneNumber: string) =>
+    phoneNumber.slice(0, 4) + " - " + phoneNumber.slice(4);
+
+  return (
+    <BodySTY>
+      <Heading is="h4">
+        基本資料
+        <Icon icon={EyeOpenIcon} size={12} marginLeft="6px" />
+      </Heading>
+
+      <div className="form">
+        {!currentUserInfo && isLoading && (
+          <Pane className="input-line " style={{ position: "absolute" }}>
+            <Text>{""} </Text>
+            <Text style={{ width: "300px" }}>
+              {" "}
+              <Spinner />
+            </Text>
+          </Pane>
+        )}
+        <Pane className="input-line">
+          <Text>姓名</Text>
+          <Text>{currentUserInfo?.user_name}</Text>
+        </Pane>
+        <Pane className="input-line">
+          <Text>E-mail</Text>
+
+          <Text>
+            {currentUserInfo && formatEmail(currentUserInfo.user_email)}
+          </Text>
+        </Pane>
+        <Pane className="input-line">
+          <Text>手機</Text>
+          <Text>
+            {currentUserInfo && currentUserInfo.user_phone
+              ? formatPhoneNum(currentUserInfo.user_phone)
+              : ""}
+          </Text>
+        </Pane>
+      </div>
+    </BodySTY>
+  );
+}
+
+export default Basic;

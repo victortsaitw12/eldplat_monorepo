@@ -2,13 +2,15 @@ import { Heading, Pane, Text } from "evergreen-ui";
 import React, { useState } from "react";
 import { BodySTY } from "./style";
 import { language_MAP } from "@contents/Driver/LanguageAbility/data";
-import { I_driverInfo } from "@contents/driver/driver.typing";
+import { I_driverInfo } from "@contents/Driver/driver.type";
 
 function LanguageAbility(props: I_driverInfo) {
   const { currentUserInfo } = props;
   return (
     <BodySTY>
-      <Heading is="h4">語言能力</Heading>
+      <Heading is="h4" className="title">
+        語言能力
+      </Heading>
       {currentUserInfo &&
         currentUserInfo.languages?.map((item, i) => (
           <Pane key={`lang-${i}`} className="input-line">
