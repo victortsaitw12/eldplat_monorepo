@@ -16,7 +16,7 @@ interface StateTypes {
 
 export const useDriverStore = create<StateTypes>((set) => ({
   subFilter: null,
-  mainFilter: "info",
+  mainFilter: "1",
   selectedForm: "",
   isDrawerOpen: false,
   setDrawerOpen: (value: boolean) => {

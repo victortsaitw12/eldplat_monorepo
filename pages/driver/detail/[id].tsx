@@ -20,7 +20,8 @@ import TableWrapper from "@layout/TableWrapper";
 //
 const mainFilterArray = [
   { id: 1, label: "駕駛資訊", value: "1" },
-  { id: 2, label: "健康紀錄", value: "2" }
+  { id: 2, label: "駕駛證照", value: "2" },
+  { id: 3, label: "健康紀錄", value: "3" }
 ];
 //
 
@@ -32,11 +33,9 @@ const Page: NextPageWithLayout<
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷"edit"
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [currentUserInfo, setCurrentUserInfo] = useState<I_driverInfo>({});
   const [driverData, setDriverData] = useState<DriverInfo>();
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const { mainFilter, updateMainFilter } = useDriverStore();
-  console.log("isEdit", isEdit);
   // ------- useEffect ------- //
   useEffect(() => {
     updateMainFilter("1");

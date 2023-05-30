@@ -27,7 +27,7 @@ export const getAllDriver = async (
       pageInfo: {
         page_Index: 1,
         page_Size: 10,
-        orderby: "user_no",
+        orderby: "driver_no",
         arrangement: "asc"
       },
       driver_status: driverStatus //1: 啟用 2:停用
@@ -57,7 +57,7 @@ export const getDriverTitle = () => {
     "姓名",
     "E-MAIL",
     "車輛團隊",
-    "主要車輛",
+    "指定車輛",
     "群組",
     "登入次數",
     "加入時間",

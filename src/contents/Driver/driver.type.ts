@@ -1,31 +1,3 @@
-// 暫代 queryDriverInfo
-export const DUMMY_DRIVERINFO = {
-  user_name: "測試資料",
-  user_email: "測試資料@gmail.com",
-  user_phone: "0999666666",
-  driver_no: "DRV202305180002",
-  license_no: "測試資料",
-  license_area: "測試資料",
-  license_lvl: "測試資料",
-  driver_seniority: 999,
-  driver_typ: ["測試資料1", "測試資料2"], //暫時移除，待後續開發到標籤功能再加入
-  dsph_area: "測試資料",
-  dsph_city: "測試資料",
-  licn_typ: "測試資料",
-  licn_name: "測試資料",
-  licn_unit: "測試資料",
-  licn_issue: "測試資料",
-  licn_exp: "測試資料",
-  licn_examine_date: "測試資料",
-  licn_filename: "測試資料的證照.jpg",
-  licn_link: "測試資料",
-  // 這個不知道是不是先不做
-  blocklist_mark: "1",
-  remark: "測試資料",
-  invalid: "測試資料",
-  invalid_remark: "測試資料"
-};
-
 // single driver info
 export interface DriverInfo {
   info: {
@@ -42,9 +14,9 @@ export interface DriverInfo {
     licn_typ: string | null;
     licn_name: string | null;
     licn_unit: string | null;
-    licn_issue: string | null;
-    licn_exp: string | null;
-    licn_examine_Date: string | null;
+    licn_issue: string | null; //"2023-05-18T08:00:32.426Z"
+    licn_exp: string | null; //"2023-05-18T08:00:32.426Z"
+    licn_examine_Date: string | null; //"2023-05-18T08:00:32.426Z"
     licn_link: string | null;
     licn_filename: string | null;
   };
