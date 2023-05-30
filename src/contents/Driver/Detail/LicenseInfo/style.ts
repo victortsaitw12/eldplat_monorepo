@@ -1,12 +1,9 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  background: #ffffff;
-  height: calc(100vh - 110px);
-  padding: 28px 20px;
-  table svg {
-    cursor: pointer;
-  }
+  background-color: ${({ theme }) => theme.color.N0};
+  padding: 20px;
+  border-radius: 10px;
   .health-title {
     display: flex;
     align-items: center;
@@ -14,22 +11,17 @@ export const BodySTY = styled.div`
   }
   .health-title-right {
     display: flex;
-    align-items: center;
     justify-content: flex-end;
-    margin-bottom: 21px;
+    align-items: center;
+    button {
+      border: none;
+      padding: 0;
+      margin-right: 10px;
+    }
   }
 
   .health-table {
     margin-top: 10px;
     text-align: center;
-  }
-  .reportIcon {
-    &:hover {
-      &:before {
-        content: "下載報告";
-        position: absolute;
-        bottom: 0;
-      }
-    }
   }
 `;

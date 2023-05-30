@@ -49,7 +49,6 @@ const Page: NextPageWithLayout<never> = () => {
         );
         initializeSubFilter();
       }
-      console.log("settting data", driverData);
       setData(driverData);
     });
   };
