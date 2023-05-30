@@ -129,7 +129,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
               }}
               filter={subFilter}
             >
-              <VendorSubPoint />
+              <VendorSubPoint isEdit={isEdit} />
             </FilterWrapper>
           }
         </TableWrapper>
