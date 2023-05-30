@@ -1,10 +1,11 @@
 import React from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
+import { TickCircleIcon } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { getLayout } from "@layout/QuoteLayout";
-import TableWrapper from "@layout/TableWrapper";
+import StatusCard from "@components/StatusCard";
 
 interface orderData {}
 
@@ -65,9 +66,15 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <div className="tabs">Placeholder: Tabs </div>
-      <div className="order">Placeholder: Order-1</div>
-      <div className="order">Placeholder: Order-2</div>
+      <StatusCard>
+        <TickCircleIcon
+          color="success"
+          style={{ height: "40px", width: "40px" }}
+        />
+        <div style={{ fontWeight: "600", color: "#567190" }}>
+          已收到您的訂車詢價單，業務將盡快為您處理。
+        </div>
+      </StatusCard>
     </BodySTY>
   );
 };
