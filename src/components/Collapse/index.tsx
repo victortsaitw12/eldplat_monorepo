@@ -3,6 +3,7 @@ import { BodySTY } from "./style";
 import cx from "classnames";
 import { ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
 interface I_Props {
+    opened?: boolean
     color?: string;
     title: string;
     viewOnly?: boolean;
@@ -11,13 +12,14 @@ interface I_Props {
 }
 
 const Collapse = ({
+    opened = false,
     color = "#E2ECF7",
     title = "打開收合",
     viewOnly = false,
     children = <p>內容</p>,
     OnToggle = (isOpen) => { console.log("isOpen", isOpen) },
 }: I_Props) => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = React.useState(opened);
     const titleOnClick = () => {
         if (viewOnly) {
             return false;
