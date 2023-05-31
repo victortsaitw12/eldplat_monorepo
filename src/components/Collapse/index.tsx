@@ -3,31 +3,32 @@ import { BodySTY } from "./style";
 import cx from "classnames";
 import { ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
 interface I_Props {
-    opened?: boolean
-    color?: string;
-    title: string;
-    viewOnly?: boolean;
-    children: React.ReactNode;
-    OnToggle?: (isOpen: boolean) => void;
+  opened?: boolean;
+  color?: string;
+  title: string;
+  viewOnly?: boolean;
+  children: React.ReactNode;
+  OnToggle?: (isOpen: boolean) => void;
 }
 
 const Collapse = ({
-    opened = false,
-    color = "#E2ECF7",
-    title = "打開收合",
-    viewOnly = false,
-    children = <p>內容</p>,
-    OnToggle = (isOpen) => { console.log("isOpen", isOpen) },
+  opened = false,
+  color = "#E2ECF7",
+  title = "打開收合",
+  viewOnly = false,
+  children = <p>內容</p>,
+  OnToggle = (isOpen) => {
+    console.log("isOpen", isOpen);
+  }
 }: I_Props) => {
-    const [isOpen, setIsOpen] = React.useState(opened);
-    const titleOnClick = () => {
-        if (viewOnly) {
-            return false;
-        }
-        setIsOpen(!isOpen);
+  const [isOpen, setIsOpen] = React.useState(opened);
+  const titleOnClick = () => {
+    if (viewOnly) {
+      return false;
     }
     setIsOpen(!isOpen);
   };
+
   React.useEffect(() => {
     OnToggle && OnToggle(isOpen);
   }, [isOpen]);
