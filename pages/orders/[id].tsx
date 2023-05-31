@@ -95,6 +95,13 @@ const Page: NextPageWithLayout<never> = () => {
   ];
 
   // ----- function ----- //
+  const handleCheck = (e: any) => {
+    console.log("check:", e.target.checked);
+    console.log("check name:", e.target.name);
+  };
+  const handleTabChange = (v: string) => {
+    console.log("change tabs", v);
+  };
 
   // ----- useEffect ----- //
 
@@ -107,9 +114,6 @@ const Page: NextPageWithLayout<never> = () => {
   //使用條款扭 2  v
   //Tabs 2.5
   //Breadcrumb 2.5
-  const handleTabChange = () => {
-    console.log("change tabs");
-  };
 
   return (
     <BodySTY>
@@ -123,11 +127,16 @@ const Page: NextPageWithLayout<never> = () => {
         </div>
       </StatusCard>
       <ConditionCard type="view"></ConditionCard>
-      <ConditionCard type="checkbox"></ConditionCard>
+      <ConditionCard
+        type="checkbox"
+        title="預約注意事項、使用條款、隱私權條款、寵物條款"
+        onChange={handleCheck}
+      ></ConditionCard>
       <StatusTabsWrapper
         tabsArray={tabsArray}
-        onTabChange={handleTabChange}
+        onTabChange={(v) => handleTabChange(v)}
         isLoading={isLoading}
+        defaultTab={"03"}
       >
         {tabsArray.map((item) => item.content)}
       </StatusTabsWrapper>

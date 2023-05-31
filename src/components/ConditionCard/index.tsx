@@ -6,14 +6,22 @@ import Modal from "@components/Modal";
 const ConditionCard = ({
   type,
   title,
-  children
+  name,
+  value,
+  children,
+  onChange,
+  defaultCheck = false
 }: {
   type: "checkbox" | "view";
   title?: string;
+  name?: string;
+  value?: string;
   children?: React.ReactNode;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  defaultCheck?: boolean;
 }) => {
   // ----- states ----- //
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(defaultCheck);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   // ----- variables ----- //
@@ -63,8 +71,13 @@ const ConditionCard = ({
             <Checkbox
               className="condiiton__checkbox"
               label={<Text className="condiiton__text">我已了解</Text>}
+              name={name}
+              value={value}
               checked={checked}
-              onChange={(e) => setChecked(e.target.checked)}
+              onChange={(e) => {
+                setChecked(e.target.checked);
+                onChange && onChange(e);
+              }}
             />
           ) : (
             ""

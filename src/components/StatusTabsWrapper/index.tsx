@@ -1,9 +1,8 @@
 import React from "react";
-import { Pane, Spinner } from "evergreen-ui";
-import { GroupSTY, UlSTY, DivSTY } from "./style";
+import { GroupSTY, DivSTY } from "./style";
 
-import StatusCard from "@components/StatusCard";
 interface Props {
+  defaultTab?: string;
   tabsArray: { label: string; content: any[]; value: string }[];
   children: React.ReactNode;
   onTabChange: (val: string) => void;
@@ -11,12 +10,13 @@ interface Props {
 }
 
 const StatusTabsWrapper = ({
+  defaultTab = "01",
   tabsArray,
-  children,
-  onTabChange,
-  isLoading = false
+  onTabChange
 }: Props) => {
-  const [currentTab, setCurrentTab] = React.useState("01");
+  const [currentTab, setCurrentTab] = React.useState(defaultTab);
+  if (tabsArray.filter((item) => item.value === defaultTab).length === 0)
+    defaultTab = tabsArray[0].value;
 
   const handleClick = (e: any) => {
     const dataVal = e.target.dataset.val;
@@ -39,31 +39,6 @@ const StatusTabsWrapper = ({
             </DivSTY>
           ))}
       </GroupSTY>
-      {isLoading ? (
-        <Pane
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height={100}
-        >
-          <Spinner />
-        </Pane>
-      ) : (
-        ""
-      )}
-      {!isLoading &&
-        tabsArray.map((status) => (
-          <UlSTY
-            key={`${status.value}`}
-            className={`${currentTab === status.value ? "isActive" : ""}`}
-          >
-            {status.content.length !== 0 ? (
-              status.content
-            ) : (
-              <StatusCard data-val={status.value}>無訂單資料</StatusCard>
-            )}
-          </UlSTY>
-        ))}
     </>
   );
 };
