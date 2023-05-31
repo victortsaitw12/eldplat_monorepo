@@ -3,11 +3,13 @@ import styled from "styled-components";
 export const ItemSTY = styled.div<{ status: "ok" | "pending" | "error" }>`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   padding: 0px;
   gap: 4px;
   height: 60px;
+  width: 80px;
+  z-index: 2;
   .item-label {
     color: ${({ theme, status }) =>
       status === "error" ? theme.color.R400 : theme.color.B400};
@@ -32,13 +34,23 @@ export const ItemSTY = styled.div<{ status: "ok" | "pending" | "error" }>`
   }
   .item-date {
     color: ${({ theme }) => theme.color.N500};
+    font-size: 12px;
   }
 `;
 
 export const ListSTY = styled.div`
-  display: flex;
+  display: inline-flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 86px;
+  gap: 80px;
+`;
+
+export const LineSTY = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  border: 1px solid ${({ theme }) => theme.color.B400};
+  width: calc(100% - 80px);
 `;

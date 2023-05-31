@@ -22,7 +22,7 @@ export const IconSTY = styled.div<{ status: "done" | "current" | "next" }>`
 `;
 
 export const ItemSTY = styled.div<{ status: "done" | "current" | "next" }>`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   padding: 0px;
   gap: 8px;

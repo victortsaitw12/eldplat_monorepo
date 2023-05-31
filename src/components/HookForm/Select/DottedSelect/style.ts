@@ -38,7 +38,6 @@ export const colourStyles: StylesConfig<ColourOption> = {
     };
   },
   input: (baseStyles) => ({ ...baseStyles, ...dot() }),
-  // placeholder: (baseStyles) => ({ ...baseStyles, ...dot("#ccc") }),
   singleValue: (baseStyles, { data, isDisabled }) => ({
     ...baseStyles,
     color: isDisabled ? "#567190" : "#718BAA",

@@ -2,6 +2,10 @@ import FlowList from "@components/Flow";
 import ServerEntry from "@components/ServiceEntry";
 import NavigationList from "@components/NavigationList";
 import ProgressList from "@components/ProgressList";
+import HookFormMultiSelect from "@components/HookForm/Select/MultiSelect";
+import ExpenseDetail from "@components/ExpenseDetail";
+import { useForm, useWatch } from "react-hook-form";
+import StepArragement from "@components/StepArragement";
 const DummyFlowListData = [
   {
     imageUrl: "/icons/page-edit.png",
@@ -73,7 +77,58 @@ const DummyProgressListData: Array<{
   }
 ];
 
-const componentsRender = () => {
+const DummyMultiSelectOptions = [
+  { label: "label 1", value: "01" },
+  { label: "label 2", value: "02" },
+  { label: "label 3", value: "03" },
+  { label: "label 4", value: "04" }
+];
+
+const DummyExpenseDetailData = [
+  {
+    label: "基本車資",
+    hint: "基本車資說明",
+    value: 1200
+  },
+  {
+    label: "小費",
+    hint: "小費說明",
+    value: 200
+  },
+  {
+    label: "旺季加價",
+    hint: "旺季加價說明",
+    value: 300
+  },
+  {
+    label: "司機費用",
+    hint: "司機費用說明",
+    value: 300
+  }
+];
+
+type FormValues = {
+  muti: string[];
+  startPoint: { location: string };
+  destinationPoint: { location: string };
+  middlePoints: Array<{ location: string }>;
+};
+
+const ComponentsRender = () => {
+  const {
+    control,
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm<FormValues>({
+    defaultValues: {
+      muti: ["01"],
+      middlePoints: [],
+      startPoint: { location: "松山" },
+      destinationPoint: { location: "台南" }
+    }
+  });
+
   return (
     <div
       style={{
@@ -94,12 +149,46 @@ const componentsRender = () => {
       >
         <FlowList dataLists={DummyFlowListData} />
       </div>
-      <div style={{ background: "white" }}>
+      <div
+        style={{
+          background: "#fff",
+          display: "flex",
+          justifyContent: "center"
+        }}
+      >
         <NavigationList dataLists={DummyNavigationListData} currentStep={2} />
       </div>
-      <div style={{ background: "white" }}>
+      <div
+        style={{
+          background: "#fff",
+          display: "flex",
+          justifyContent: "center"
+        }}
+      >
         <ProgressList dataLists={DummyProgressListData} />
       </div>
+      <form
+        onSubmit={handleSubmit((data) => {
+          console.log("current form data: ", data);
+        })}
+      >
+        <HookFormMultiSelect
+          name="muti"
+          control={control}
+          options={DummyMultiSelectOptions}
+          isDisabled={false}
+        />
+        <StepArragement
+          startPointName="startPoint"
+          destinationPointName="destinationPoint"
+          middlePointName="middlePoints"
+          control={control}
+          errors={errors}
+          register={register}
+        />
+        <button type="submit">Check value</button>
+      </form>
+
       <ServerEntry
         imageUrl="/icons/page-edit.png"
         label="客製包車"
@@ -107,8 +196,12 @@ const componentsRender = () => {
           alert("客製包車");
         }}
       />
+
+      <div style={{ width: "600px", padding: "20px", backgroundColor: "#fff" }}>
+        <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
+      </div>
     </div>
   );
 };
 
-export default componentsRender;
+export default ComponentsRender;

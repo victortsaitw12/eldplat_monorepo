@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  display: flex;
-  /* justify-content: flex-start; */
+  display: inline-flex;
   align-items: flex-start;
   padding: 0px;
   gap: 60px;

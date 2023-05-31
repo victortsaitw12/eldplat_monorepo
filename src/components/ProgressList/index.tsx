@@ -1,17 +1,13 @@
-import { ItemSTY, ListSTY } from "./style";
+import { ItemSTY, ListSTY, LineSTY } from "./style";
 import { SmallTickIcon, SmallCrossIcon } from "evergreen-ui";
 interface ItemProps {
   status: "ok" | "pending" | "error";
   label: string;
   date?: string;
 }
-// const CheckIcon = ({ status }: { status: "ok" | "pending" | "error" }) => {
-//   return (
-//     <IconSTY status={status}>
-//       <SmallTickIcon size={12} />
-//     </IconSTY>
-//   );
-// };
+const HorizontalLine = () => {
+  return <LineSTY></LineSTY>;
+};
 
 const ProgressItem = ({ status, label, date }: ItemProps) => {
   return (
@@ -20,13 +16,15 @@ const ProgressItem = ({ status, label, date }: ItemProps) => {
       <div className="item-icon">
         {status === "error" ? (
           <SmallCrossIcon size={12} />
-        ) : status === "ok" ? (
-          <SmallTickIcon size={12} />
         ) : (
-          <div></div>
+          status === "ok" && <SmallTickIcon size={12} />
         )}
       </div>
-      {date && <div className="item-date">{date}</div>}
+      {date ? (
+        <div className="item-date">{date}</div>
+      ) : (
+        <div style={{ color: "transparent" }}>_</div>
+      )}
     </ItemSTY>
   );
 };
@@ -52,6 +50,7 @@ const ProgressList = ({ dataLists }: ListProps) => {
           />
         );
       })}
+      <HorizontalLine />
     </ListSTY>
   );
 };
