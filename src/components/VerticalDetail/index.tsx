@@ -2,8 +2,8 @@ import React from "react";
 import { Textarea } from "evergreen-ui";
 import { BodySTY } from "./style";
 interface I_Item {
-    label: string;
-    value: string;
+    label?: string;
+    value?: string;
 }
 interface I_Props {
     title?: string;

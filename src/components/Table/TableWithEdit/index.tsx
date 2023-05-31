@@ -132,9 +132,9 @@ function Table({
               );
             })
           ) : (
-            <div className="noDataShown">
-              <div>查無資料</div>
-            </div>
+            <tr className="noDataShown">
+              <td>查無資料</td>
+            </tr>
           )}
         </tbody>
       </TableSTY>
