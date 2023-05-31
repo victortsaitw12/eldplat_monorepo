@@ -26,24 +26,19 @@ const Collapse = ({
         }
         setIsOpen(!isOpen);
     }
-    React.useEffect(() => {
-        OnToggle && OnToggle(isOpen)
-    }, [isOpen])
-    return (
-        <BodySTY color={color} className="collapse">
-            <div
-                className="collapse_title"
-                onClick={titleOnClick}
-            >
-                {title}
-                {!viewOnly ?
-                    isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />
-                    : <></>}
-            </div>
-            <div className={cx("collapse_content", { show: isOpen })}>
-                {children}
-            </div>
-        </BodySTY>
-    )
-}
+    setIsOpen(!isOpen);
+  };
+  React.useEffect(() => {
+    OnToggle && OnToggle(isOpen);
+  }, [isOpen]);
+  return (
+    <BodySTY color={color} className="collapse">
+      <div className="collapse_title" onClick={titleOnClick}>
+        {title}
+        {!viewOnly ? isOpen ? <ChevronUpIcon /> : <ChevronDownIcon /> : <></>}
+      </div>
+      <div className={cx("collapse_content", { show: isOpen })}>{children}</div>
+    </BodySTY>
+  );
+};
 export default Collapse;

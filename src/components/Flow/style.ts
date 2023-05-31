@@ -4,7 +4,7 @@ export const BodySTY = styled.div`
   display: inline-flex;
   align-items: flex-start;
   padding: 0px;
-  gap: 60px;
+  gap: 32px;
 `;
 
 export const IconSTY = styled.div`
