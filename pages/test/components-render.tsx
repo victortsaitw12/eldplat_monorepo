@@ -8,16 +8,24 @@ import { useForm, useWatch } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
 const DummyFlowListData = [
   {
-    imageUrl: "/icons/page-edit.png",
-    label: "label 1"
+    imageUrl: "/icons/Document.svg",
+    label: "填寫詢價單"
   },
   {
-    imageUrl: "/icons/page-edit.png",
-    label: "label 2"
+    imageUrl: "/icons/Reply.svg",
+    label: "回復報價"
   },
   {
-    imageUrl: "/icons/page-edit.png",
-    label: "label 3"
+    imageUrl: "/icons/Car.svg",
+    label: "確認訂單"
+  },
+  {
+    imageUrl: "/icons/Wallet.svg",
+    label: "繳款確認"
+  },
+  {
+    imageUrl: "/icons/Reminder.svg",
+    label: "行前提醒"
   }
 ];
 
@@ -190,7 +198,14 @@ const ComponentsRender = () => {
       </form>
 
       <ServerEntry
-        imageUrl="/icons/page-edit.png"
+        imageUrl="/icons/Custom-bus-pickup.svg"
+        label="客製包車"
+        onClick={() => {
+          alert("客製包車");
+        }}
+      />
+      <ServerEntry
+        imageUrl="/icons/Airport-pickup.svg"
         label="客製包車"
         onClick={() => {
           alert("客製包車");

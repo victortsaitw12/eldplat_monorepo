@@ -5,7 +5,6 @@ export const BodySTY = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0px;
-  gap: 23px;
   .image-container {
     position: relative;
     width: 120px;
@@ -15,8 +14,8 @@ export const BodySTY = styled.div`
   }
   .label-container {
     font-size: 16px;
-    color: ${({ theme }) => theme.color.N700};
-    font-weight: 400;
+    color: ${({ theme }) => theme.color.N600};
+    font-weight: 600;
     text-align: center;
   }
 `;
