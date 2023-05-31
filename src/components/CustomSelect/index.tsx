@@ -28,6 +28,7 @@ const CustomSelect = ({
         <BodySTY className="custom_select">
             {label && <p>{label}</p>}
             <SelectField
+                label=""
                 {...register(`${selectName}`)}
             >
                 {options.map((child, i) => {
