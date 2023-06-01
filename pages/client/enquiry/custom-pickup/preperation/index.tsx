@@ -1,3 +1,0 @@
-/**
- * use for first page!
- */

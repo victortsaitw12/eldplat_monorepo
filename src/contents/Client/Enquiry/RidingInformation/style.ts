@@ -6,6 +6,7 @@ export const BodySTY = styled.ul`
   gap: 40px;
   width: 100%;
 `;
+
 export const ItemSTY = styled.li`
   display: flex;
   gap: 20px;
