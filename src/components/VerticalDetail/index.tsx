@@ -2,8 +2,8 @@ import React from "react";
 import { Textarea } from "evergreen-ui";
 import { BodySTY } from "./style";
 interface I_Item {
-    label?: string;
-    value?: string;
+    label?: React.ReactNode | string;
+    value?: React.ReactNode | string;
 }
 interface I_Props {
     title?: string;
@@ -23,8 +23,8 @@ const VerticalDetail = ({
             {title && <div className="v_detail_title">{title}</div>}
             <ul className="v_detail_list">
                 {items && items.length > 0 ? items.map((child, i) => <li className="v_detail_item" key={child.value + "-" + i}>
-                    <span>{child.label}</span>
-                    <span>{child.value}</span>
+                    {child.label && <span>{child.label}</span>}
+                    {child.value && <span>{child.value}</span>}
                 </li>) : <li>no data...</li>}
             </ul>
         </BodySTY>

@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 const BodySTY = styled.div`
     select{
-        height: 34px;
+        height: 32px;
+        min-width: 74px;
         & + svg{
             margin-top: -10px;
             height: 20px;

@@ -1,5 +1,5 @@
 import React from "react";
-import { SelectField } from "evergreen-ui";
+import { Select } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { UseFormRegister } from "react-hook-form";
 interface I_Option {
@@ -7,7 +7,7 @@ interface I_Option {
     text: string;
 }
 interface I_Props {
-    label: string;
+    label?: string;
     selectName: string;
     options: Array<I_Option>;
     register: UseFormRegister<any>;
@@ -27,8 +27,7 @@ const CustomSelect = ({
     return (
         <BodySTY className="custom_select">
             {label && <p>{label}</p>}
-            <SelectField
-                label=""
+            <Select
                 {...register(`${selectName}`)}
             >
                 {options.map((child, i) => {
@@ -41,7 +40,7 @@ const CustomSelect = ({
                         </option>
                     )
                 })}
-            </SelectField>
+            </Select>
         </BodySTY>
     );
 };
