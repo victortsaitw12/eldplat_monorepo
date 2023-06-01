@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { TickCircleIcon, Pane, Group, InlineAlert } from "evergreen-ui";
 import { BodySTY } from "./style";
 
+import { MOCK_ORDERS_LIST, MOCK_progressList } from "@mock-data/orders";
 import { getLayout } from "@layout/QuoteLayout";
 import StatusTabs from "@components/StatusTabs";
 import Collapse from "@components/Collapse";
@@ -14,44 +15,6 @@ import StatusCard from "@components/StatusCard";
 import ConditionCard from "@components/ConditionCard";
 import Breadcrumbs from "@components/Breadcrumbs";
 
-const TEMP_DATA = {
-  all: [],
-  query: [
-    {
-      quote_no: "ORD202302020001",
-      costs_no: "CST202302020001",
-      order_no: "ORD202302020001-20230530",
-      purpose: "機場接送",
-      departure_date: "2023/06/15",
-      order_status: "01",
-      payment_status: "1"
-    },
-    {
-      quote_no: "ORD202302020002",
-      costs_no: "CST202302020002",
-      order_no: "ORD202302020002-20230530",
-      purpose: "客製包車",
-      departure_date: "2023/06/15",
-      order_status: "01",
-      payment_status: "1"
-    }
-  ],
-  quote: [
-    {
-      quote_no: "ORD202302020002",
-      costs_no: "CST202302020002",
-      order_no: "ORD202302020002-20230530",
-      purpose: "客製包車",
-      departure_date: "2023/06/15",
-      order_status: "02",
-      payment_status: "0"
-    }
-  ],
-  order: [],
-  finish: [],
-  cancel: []
-};
-
 interface OrderData {
   quote_no: string;
   costs_no: string;
@@ -60,7 +23,7 @@ interface OrderData {
   departure_date: string;
   order_status: string;
 }
-interface OrdersData {
+interface OrdersList {
   all?: OrderData[];
   query?: OrderData[];
   quote?: OrderData[];
@@ -73,36 +36,10 @@ const Page: NextPageWithLayout<never> = () => {
   // ----- variables, states ----- //
   const router = useRouter();
   const { userId } = router.query;
-  const [data, setData] = React.useState<OrdersData>({});
+  const [data, setData] = React.useState<OrdersList>({});
   const [isLoading, setIsLoading] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState("01");
-  const dataLists = [
-    {
-      label: "送出詢價",
-      status: "pending", // "ok" | "pending" | "error"
-      date: ""
-    },
-    {
-      label: "收到報價",
-      status: "pending", // "ok" | "pending" | "error"
-      date: ""
-    },
-    {
-      label: "接受報價",
-      status: "pending", // "ok" | "pending" | "error"
-      date: ""
-    },
-    {
-      label: "訂單成立",
-      status: "pending", // "ok" | "pending" | "error"
-      date: ""
-    },
-    {
-      label: "結案",
-      status: "pending", // "ok" | "pending" | "error"
-      date: ""
-    }
-  ];
+
   const tabsArray = [
     //{  label: "全部", length: data.all?.length, value: "00" }
     {
@@ -135,7 +72,7 @@ const Page: NextPageWithLayout<never> = () => {
   // ----- function ----- //
   const renderOrderCards = (
     type: "all" | "query" | "quote" | "order" | "finish",
-    data: OrdersData
+    data: OrdersList
   ) => {
     if (!data) return;
     const content = data[type]?.map((item, index) => (
@@ -153,7 +90,7 @@ const Page: NextPageWithLayout<never> = () => {
                 <DetailItem title="乘車日期" value={item.departure_date} />
                 <DetailItem title="詢價編號" value={item.quote_no} />
               </Group>
-              <ProgressList dataLists={dataLists} />
+              <ProgressList dataLists={MOCK_progressList} />
             </Group>
           </Pane>
         </Collapse>
@@ -168,7 +105,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   // ----- useEffect ----- //
   React.useEffect(() => {
-    setData(TEMP_DATA);
+    setData(MOCK_ORDERS_LIST);
   }, []);
   React.useEffect(() => {
     console.log("userId:", userId);
@@ -192,7 +129,6 @@ const Page: NextPageWithLayout<never> = () => {
       {data && currentTab === "03" && renderOrderCards("order", data)}
       {data && currentTab === "04" && renderOrderCards("finish", data)}
 
-      {/* <ConditionCard type="view"></ConditionCard> */}
       {/* <ConditionCard
         type="checkbox"
         title="預約注意事項、使用條款、隱私權條款、寵物條款"
