@@ -8,6 +8,7 @@ import { getLayout } from "@layout/QuoteLayout";
 import StatusCard from "@components/StatusCard";
 import ConditionCard from "@components/ConditionCard";
 import StatusTabsWrapper from "@components/StatusTabsWrapper";
+import Breadcrumbs from "@components/Breadcrumbs";
 
 const TEMP_DATA = {
   all: [
@@ -109,10 +110,6 @@ const Page: NextPageWithLayout<never> = () => {
     setData(TEMP_DATA);
   }, []);
 
-  //外框Layout 2  v
-  //提示layout(只有外框) 1  v
-  //使用條款扭 2  v
-  //Tabs 2.5
   //Breadcrumb 2.5
 
   return (
@@ -140,6 +137,19 @@ const Page: NextPageWithLayout<never> = () => {
       >
         {tabsArray.map((item) => item.content)}
       </StatusTabsWrapper>
+      <Breadcrumbs
+        routes={[
+          { label: "首頁", url: "/" },
+          { label: "訂單管理", url: `/orders/userID${id}` },
+          {
+            label: `訂單編號${id}`,
+            url: {
+              pathname: `/orders/${id}`,
+              query: { order: "ORD202305050001" }
+            }
+          }
+        ]}
+      />
     </BodySTY>
   );
 };
