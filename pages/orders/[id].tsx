@@ -140,7 +140,7 @@ const Page: NextPageWithLayout<never> = () => {
       <Breadcrumbs
         routes={[
           { label: "首頁", url: "/" },
-          { label: "訂單管理", url: `/orders/userID${id}` },
+          { label: "訂單管理", url: `/orders/${id}` },
           {
             label: `訂單編號${id}`,
             url: {
