@@ -32,8 +32,17 @@ export const DivSTY = styled.div`
     margin-left: 20px;
   }
   &.isActive {
-    border-bottom: solid ${({ theme }) => theme.color.B400};
     color: ${({ theme }) => theme.color.B400};
+    position: relative;
+    &:after {
+      content: " ";
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-bottom: 2px solid ${({ theme }) => theme.color.B400};
+      border-radius: 2px 2px 0px 0px;
+    }
     span {
       background-color: ${({ theme }) => theme.color.B200};
       color: ${({ theme }) => theme.color.B500};
