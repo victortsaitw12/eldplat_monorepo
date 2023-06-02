@@ -27,12 +27,16 @@ import PaymentInfoView from "./PaymentInfo/PaymentInfoView";
 import PaymentInfoEdit from "./PaymentInfo/PaymentInfoEdit";
 import CarInfoView from "./CarInfo/CarInfoView";
 import CarInfoEdit from "./CarInfo/CarInfoEdit";
+import FlightInfoView from "./FlightInfo/FlightInfoView";
+import FlightInfoEdit from "./FlightInfo/FlightInfoEdit";
 import ContactInfoView from "./ContactInfo/ContactInfoView";
 import ContactInfoEdit from "./ContactInfo/ContactInfoEdit";
 import PassengerInfoView from "./PassengerInfo/PassengerInfoView";
 import PassengerInfoEdit from "./PassengerInfo/PassengerInfoEdit";
 import TakeBusInfoView from "./TakeBusInfo/TakeBusInfoView";
 import TakeBusInfoEdit from "./TakeBusInfo/TakeBusInfoEdit";
+import SpecialInfoView from "./SpecialInfo/SpecialInfoView";
+import SpecialInfoEdit from "./SpecialInfo/SpecialInfoEdit";
 //@util
 import { keysToLowercase } from "@utils/keysToLowercase";
 
@@ -45,12 +49,13 @@ import {
     order_contact,
     order_represent,
     order_shuttleList,
-    order_sepcial
+    order_sepcial,
+    order_flight
 } from "@mock-data/adminOrders/mockData";
 
 interface I_Props {
     isEdit: boolean;
-    orderType: "0" | "1" | "2"
+    orderType: "0" | "1"
     orderData: any
 };
 
@@ -90,68 +95,155 @@ const AdminOrdersDetal = ({
         setLoading(false);
     };
 
-    const r_template: { "0": React.ReactNode, "1": React.ReactNode, "2": React.ReactNode } = {
-        "0": <>
-            <Collapse opened={true} title="ORDER229999">
-                <Pane style={{ padding: "20px" }}>
-                    <ProgressList dataLists={[...mock_progressdata]} />
-                </Pane>
-            </Collapse>
-            <Collapse opened={true} title="付款方式">
+    const r_template: { "0": React.ReactNode, "1": React.ReactNode } = {
+        //客製包車
+        "0":
+            <>
+                <Collapse opened={true} title="ORDER229999">
+                    <Pane style={{ padding: "20px" }}>
+                        <ProgressList dataLists={[...mock_progressdata]} />
+                    </Pane>
+                </Collapse>
+                <Collapse opened={true} title="付款方式">
+                    {isEdit ?
+                        <PaymentInfoEdit /> :
+                        <PaymentInfoView />
+                    }
+                </Collapse>
+                <Collapse opened={true} title="客製包車">
+                    {isEdit ?
+                        <CarInfoEdit /> :
+                        <CarInfoView
+                            listArray={[
+                                {
+                                    title: "用車目的",
+                                    value: "旅遊"
+                                },
+                                {
+                                    title: "訂車注意事項",
+                                    value: "客戶同意"
+                                }
+                            ]}
+                        />
+                    }
+                </Collapse>
+                <Collapse opened={true} title="訂單聯絡人">
+                    {isEdit ?
+                        <ContactInfoEdit /> :
+                        <ContactInfoView data={order_contact} />
+                    }
+                </Collapse>
+                <Collapse opened={true} title="旅客代表人">
+                    {isEdit ?
+                        <PassengerInfoEdit /> :
+                        <PassengerInfoView data={order_represent} />
+                    }
+                </Collapse>
+                {/*接送資訊*/}
                 {isEdit ?
-                    <PaymentInfoEdit /> :
-                    <PaymentInfoView />
-                }
-            </Collapse>
-            <Collapse opened={true} title="客製包車">
-                {isEdit ?
-                    <CarInfoEdit /> :
-                    <CarInfoView />
-                }
-            </Collapse>
-            <Collapse opened={true} title="訂單聯絡人">
-                {isEdit ?
-                    <ContactInfoEdit /> :
-                    <ContactInfoView data={order_contact} />
-                }
-            </Collapse>
-            <Collapse opened={true} title="旅客代表人">
-                {isEdit ?
-                    <PassengerInfoEdit /> :
-                    <PassengerInfoView data={order_represent} />
-                }
-            </Collapse>
-            {/*接送資訊*/}
-            {isEdit ?
-                <></> :
-                <ShuttleInfoView
-                    shuttleList={order_shuttleList}
-                />
-            }
-            <Collapse title="乘車資訊">
-                {isEdit ?
-                    <TakeBusInfoEdit /> :
-                    <TakeBusInfoView />
-                }
-            </Collapse>
-            <Collapse title="特殊需求">
-                <Pane className="special_content" style={{ padding: "20px" }}>
-                    <DetailList
-                        listArray={order_sepcial}
+                    <></> :
+                    <ShuttleInfoView
+                        shuttleList={order_shuttleList}
                     />
-                </Pane>
-            </Collapse>
-            <Collapse title="標籤">
-                <Pane className="special-content" style={{ padding: "20px", display: "flex", gap: "10px" }}>
-                    <LabelTag text="服務讚" />
-                    <LabelTag text="服務讚" />
-                    <LabelTag text="服務讚" />
-                    <LabelTag text="服務讚" />
-                </Pane>
-            </Collapse>
-        </>,
-        "1": <></>,
-        "2": <></>
+                }
+                <Collapse title="乘車資訊">
+                    {isEdit ?
+                        <TakeBusInfoEdit /> :
+                        <TakeBusInfoView />
+                    }
+                </Collapse>
+                <Collapse title="特殊需求">
+                    {isEdit ?
+                        <SpecialInfoEdit /> :
+                        <SpecialInfoView data={order_sepcial} />
+                    }
+                </Collapse>
+                <Collapse title="標籤">
+                    <Pane className="special-content" style={{ padding: "20px", display: "flex", gap: "10px" }}>
+                        <LabelTag text="服務讚" />
+                        <LabelTag text="服務讚" />
+                        <LabelTag text="服務讚" />
+                        <LabelTag text="服務讚" />
+                    </Pane>
+                </Collapse>
+            </>,
+        //接機    
+        "1":
+            <>
+                <Collapse opened={true} title="ORDER229999">
+                    <Pane style={{ padding: "20px" }}>
+                        <ProgressList dataLists={[...mock_progressdata]} />
+                    </Pane>
+                </Collapse>
+                <Collapse opened={true} title="付款方式">
+                    {isEdit ?
+                        <PaymentInfoEdit /> :
+                        <PaymentInfoView />
+                    }
+                </Collapse>
+                <Collapse opened={true} title="機場接送">
+                    {isEdit ?
+                        <CarInfoEdit /> :
+                        <CarInfoView
+                            listArray={[
+                                {
+                                    title: "用車目的",
+                                    value: "送機"
+                                },
+                                {
+                                    title: "訂車注意事項",
+                                    value: "客戶同意"
+                                }
+                            ]}
+                        />
+                    }
+                </Collapse>
+                <Collapse opened={true} title="訂單聯絡人">
+                    {isEdit ?
+                        <ContactInfoEdit /> :
+                        <ContactInfoView data={order_contact} />
+                    }
+                </Collapse>
+                <Collapse opened={true} title="旅客代表人">
+                    {isEdit ?
+                        <PassengerInfoEdit /> :
+                        <PassengerInfoView data={order_represent} />
+                    }
+                </Collapse>
+                <Collapse opened={true} title="航班資訊">
+                    {isEdit ?
+                        <FlightInfoEdit /> :
+                        <FlightInfoView data={order_flight} />
+                    }
+                </Collapse>
+                {/*接送資訊*/}
+                {isEdit ?
+                    <></> :
+                    <ShuttleInfoView
+                        shuttleList={order_shuttleList}
+                    />
+                }
+                <Collapse title="乘車資訊">
+                    {isEdit ?
+                        <TakeBusInfoEdit /> :
+                        <TakeBusInfoView />
+                    }
+                </Collapse>
+                <Collapse title="特殊需求">
+                    {isEdit ?
+                        <SpecialInfoEdit /> :
+                        <SpecialInfoView data={order_sepcial} />
+                    }
+                </Collapse>
+                <Collapse title="標籤">
+                    <Pane className="special-content" style={{ padding: "20px", display: "flex", gap: "10px" }}>
+                        <LabelTag text="服務讚" />
+                        <LabelTag text="服務讚" />
+                        <LabelTag text="服務讚" />
+                        <LabelTag text="服務讚" />
+                    </Pane>
+                </Collapse>
+            </>
     }
     return (
         <BodySTY>
@@ -160,7 +252,7 @@ const AdminOrdersDetal = ({
                     console.log(data);
                     asyncSubmitForm({ ...data });
                 })}>
-                    <Pane style={{ background: "#ffffff" }}>
+                    <Pane style={{ background: "#ffffff", borderRadius: "10px", overflow: "hidden" }}>
                         {r_template[orderType]}
                     </Pane>
                 </form>

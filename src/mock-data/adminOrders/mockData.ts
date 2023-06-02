@@ -185,6 +185,32 @@ const order_shuttleList = [
     },
 ]
 
+const order_flight = [
+    {
+        title: "航班日期",
+        value: "2023-05-05"
+    },
+    {
+        title: "航班編號",
+        value: "C123"
+    },
+    {
+        title: "機場",
+        value: "桃園國際機場"
+    },
+    {
+        title: "航廈",
+        value: "第二航廈"
+    },
+    {
+        title: "航班抵達時間",
+        value: "10:30"
+    },
+    {
+        title: "航空公司",
+        value: "樂桃"
+    },
+]
 export {
     data,
     mock_subFilter,
@@ -194,5 +220,6 @@ export {
     order_contact,
     order_represent,
     order_shuttleList,
-    order_sepcial
+    order_sepcial,
+    order_flight
 };
