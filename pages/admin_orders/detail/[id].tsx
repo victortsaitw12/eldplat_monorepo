@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-import { Pane, Icon, FloppyDiskIcon, EditIcon } from "evergreen-ui";
+import { Pane, Icon, FloppyDiskIcon, EditIcon, Text } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
@@ -63,31 +63,36 @@ const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
         <BodySTY>
             {!loading && orderData && (
                 <>
-                    <TableWrapper
-                        isEdit={isEdit}
-                        onChangeTab={(value) => changeMainFilterHandler(value)}
-                        mainFilter={nowTab}
-                        mainFilterArray={mainFilterArray}
-                        onSave={() => {
-                            // setIsEdit(!isEdit)
-                            submitRef.current && submitRef.current.click();
-                        }}
-                        onEdit={() => {
-                            setIsEdit(true);
-                        }}
-                        onClose={() => {
-                            router.push("/vendor");
-                        }}
-                    >
-                        <AdminOrdersDetal
+                    <Pane>
+                        <TableWrapper
                             isEdit={isEdit}
-                            orderType={order_type}
-                            orderData={orderData}
-                        />
-                    </TableWrapper>
-                    <div>
+                            onChangeTab={(value) => changeMainFilterHandler(value)}
+                            mainFilter={nowTab}
+                            mainFilterArray={mainFilterArray}
+                            onSave={() => {
+                                // setIsEdit(!isEdit)
+                                submitRef.current && submitRef.current.click();
+                            }}
+                            onEdit={() => {
+                                setIsEdit(true);
+                            }}
+                            onClose={() => {
+                                router.push("/vendor");
+                            }}
+                        >
+                            <AdminOrdersDetal
+                                isEdit={isEdit}
+                                orderType={order_type}
+                                orderData={orderData}
+                            />
+                        </TableWrapper>
+                    </Pane>
+                    <Pane>
+                        <Pane style={{ background: "#FFFFFF", width: "280px" }}>
+                            <Text>價格部分</Text>
+                        </Pane>
+                    </Pane>
 
-                    </div>
                 </>
             )}
         </BodySTY>

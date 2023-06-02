@@ -8,7 +8,7 @@ interface I_Props {
     checked: boolean;
     label: string;
     description?: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 const CheckBoxWrapper = ({

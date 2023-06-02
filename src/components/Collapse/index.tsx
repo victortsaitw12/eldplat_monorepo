@@ -6,6 +6,7 @@ interface I_Props {
     opened?: boolean
     color?: string;
     title: string;
+    titleChildren?: React.ReactNode;
     viewOnly?: boolean;
     children: React.ReactNode;
     OnToggle?: (isOpen: boolean) => void;
@@ -15,6 +16,7 @@ const Collapse = ({
     opened = false,
     color = "#E2ECF7",
     title = "打開收合",
+    titleChildren,
     viewOnly = false,
     children = <p>內容</p>,
     OnToggle = (isOpen) => { console.log("isOpen", isOpen) },
@@ -35,10 +37,12 @@ const Collapse = ({
                 className="collapse_title"
                 onClick={titleOnClick}
             >
-                {title}
-                {!viewOnly ?
-                    isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />
-                    : <></>}
+                {titleChildren ? titleChildren :
+                    <> {title}
+                        {!viewOnly ?
+                            isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />
+                            : <></>}
+                    </>}
             </div>
             <div className={cx("collapse_content", { show: isOpen })}>
                 {children}
