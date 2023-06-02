@@ -51,7 +51,7 @@ interface I_Props {
   orderData: any;
 }
 
-const OrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
+const OrdersDetail = ({ isEdit, orderType = "0", orderData }: I_Props) => {
   console.log("🤣🤣🤣🤣detail頁的orderData", orderData);
   console.log("📃📃📃📃📃isEdit", isEdit);
   console.log("orderType", orderType);
@@ -149,4 +149,4 @@ const OrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
   );
 };
 
-export default OrdersDetal;
+export default OrdersDetail;

@@ -66,8 +66,7 @@ const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ departureDate, returnDate, purpose, type, airport, flightDate }) => {
   const [currentTab, setCurrentTab] = useState(1);
-
-  console.log("currentTab", currentTab);
+  const router = useRouter();
   return (
     <BodySTY>
       <StatusCard>
@@ -78,11 +77,8 @@ const Page: NextPageWithLayout<
       </StatusCard>
       <div className="body-container">
         <div className="content-container">
-          {currentTab === 1 && type === "custom" ? (
-            <TravelInformation />
-          ) : (
-            <FlightInformation />
-          )}
+          {currentTab === 1 && type === "custom" && <TravelInformation />}
+          {currentTab === 1 && type !== "custom" && <FlightInformation />}
           {currentTab === 2 && <RidingInformation />}
           {currentTab === 3 && <SpecialNeeds />}
           {currentTab === 4 && <ContactInformation />}
@@ -99,6 +95,12 @@ const Page: NextPageWithLayout<
               onClick={() => {
                 if (currentTab === 1) {
                   alert("回到日期選擇頁!");
+                  router.push({
+                    pathname: "/client/enquiry/confirm",
+                    query: {
+                      type: type === "custom" ? "custom" : "airport"
+                    }
+                  });
                   return;
                 }
                 setCurrentTab((prev) => prev - 1);
@@ -119,6 +121,12 @@ const Page: NextPageWithLayout<
               onClick={() => {
                 if (currentTab === 4) {
                   alert("送出詢價單");
+                  router.push({
+                    pathname: "/client/enquiry/detail",
+                    query: {
+                      type: type === "custom" ? "custom" : "airport"
+                    }
+                  });
                   return;
                 }
                 setCurrentTab((prev) => prev + 1);

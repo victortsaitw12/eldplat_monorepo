@@ -2,7 +2,7 @@ import Collapse from "@components/Collapse";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import { Select, Button } from "evergreen-ui";
-
+import ConditionCard from "@components/ConditionCard";
 import { useRef } from "react";
 import CustomPickup from "@contents/Client/Enquiry/CustomPickup";
 import FlightPickup from "@contents/Client/Enquiry/FlightPickup";
@@ -18,6 +18,10 @@ const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ type = "custom" }) => {
   const formButtonRef = useRef<HTMLButtonElement | null>(null);
+  const handleCheck = (e: any) => {
+    console.log("check:", e.target.checked);
+    console.log("check name:", e.target.name);
+  };
   return (
     <BodySTY>
       {type === "custom" ? (
@@ -25,7 +29,11 @@ const Page: NextPageWithLayout<
       ) : (
         <FlightPickup ref={formButtonRef} />
       )}
-      <div>注意事項</div>
+      <ConditionCard
+        type="checkbox"
+        title="預約注意事項、使用條款、隱私權條款、寵物條款"
+        onChange={handleCheck}
+      ></ConditionCard>
       <Button
         appearance="primary"
         onClick={() => {

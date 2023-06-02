@@ -42,7 +42,8 @@ const ContactInformation = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        padding: "20px"
+        padding: "20px",
+        gap: "50px"
       }}
     >
       <Collapse title="訂單聯絡人資訊" opened={true}>
