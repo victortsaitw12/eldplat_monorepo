@@ -2,17 +2,18 @@ import styled from "styled-components";
 export const BodySTY = styled.ul`
   display: flex;
   flex-direction: column;
+  padding: 20px;
   gap: 40px;
+  width: 100%;
 `;
 export const ItemSTY = styled.li`
   display: flex;
   gap: 20px;
   justify-content: flex-start;
   align-items: center;
-  position: relative;
   list-style: none;
-  width: 780px;
-  .content {
+  width: 100%;
+  > .item-content {
     width: 60px;
   }
   .option-container {
@@ -27,7 +28,6 @@ export const ItemSTY = styled.li`
       height: 32px;
       border: none;
       background: transparent;
-      //Neutral/N600
       color: ${({ theme }) => theme.color.N600};
     }
   }
