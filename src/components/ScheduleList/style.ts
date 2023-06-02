@@ -22,7 +22,7 @@ const BodySTY = styled.div`
                     position: absolute;
                     width: 11px;
                     height: 11px;
-                    top: 2px;
+                    top: 5px;
                     left: 0;
                     &>svg{
                         position: absolute;

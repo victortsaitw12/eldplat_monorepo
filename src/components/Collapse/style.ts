@@ -14,7 +14,7 @@ export const BodySTY = styled.div<I_StyProps>`
         cursor: pointer;
         font-weight: ${props => props.theme.fontWeight.Heading600};
         color:${props => props.theme.color.N700} ;
-        padding: 14px 40px;
+        padding: 14px 20px;
         font-size: 16px;
         background-color: ${props => props.color};
         svg{
