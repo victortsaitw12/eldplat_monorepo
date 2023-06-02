@@ -1,6 +1,6 @@
-import { StyledForm, StyledHeader, StyledButton } from "./style";
+import { StyledForm, StyledHeader, StyledButton, StyledCard } from "./style";
 import { useRouter } from "next/router";
-import { TextInput, Select, Button } from "evergreen-ui";
+import { TextInput } from "evergreen-ui";
 import { useForm } from "react-hook-form";
 import { forwardRef, useState } from "react";
 import Collapse from "@components/Collapse";
@@ -13,7 +13,7 @@ type FormValues = {
   airline: string;
 };
 
-const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
+const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
   {},
   formButtonRef
 ) {
@@ -65,61 +65,67 @@ const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
           接機
         </StyledButton>
       </StyledHeader>
-      <Collapse title="航班資訊" viewOnly opened={true}>
-        <StyledForm onSubmit={handleSubmit(submitFormHandler)}>
-          <div className="form-item">
-            <label className="form-sub-item">
-              <div>
-                <span style={{ color: "#D14343" }}>*</span>
-                <span>航班日期</span>
-              </div>
-              <TextInput type="date" {...register("flightDate")} />
-            </label>
-            <label className="form-sub-item">
-              <div>
-                <span style={{ color: "#D14343" }}>*</span>
-                <span>航班編號</span>
-              </div>
-              <TextInput {...register("flightNo")} />
-            </label>
-          </div>
-          <div className="form-item">
-            <label className="form-sub-item">
-              <div>
-                <span style={{ color: "#D14343" }}>*</span>
-                <span>機場</span>
-              </div>
-              <TextInput {...register("airport")} />
-            </label>
-            <label className="form-sub-item">
-              <div>
-                <span style={{ color: "#D14343" }}>*</span>
-                <span>航廈</span>
-              </div>
-              <TextInput {...register("terminal")} />
-            </label>
-          </div>
-          <div className="form-item">
-            <label className="form-sub-item">
-              <div>
-                <span style={{ color: "#D14343" }}>*</span>
-                <span>航班{purpose === "pickUp" ? "抵達" : "出發"}時間</span>
-              </div>
-              <TextInput type="date" {...register("flightTime")} />
-            </label>
-            <label className="form-sub-item">
-              <div>
-                <span>航空公司</span>
-              </div>
-              <TextInput {...register("airline")} />
-            </label>
-          </div>
-          <button type="submit" style={{ display: "none" }} ref={formButtonRef}>
-            submit
-          </button>
-        </StyledForm>
-      </Collapse>
+      <StyledCard>
+        <Collapse title="航班資訊" viewOnly opened={true}>
+          <StyledForm onSubmit={handleSubmit(submitFormHandler)}>
+            <div className="form-item">
+              <label className="form-sub-item">
+                <div>
+                  <span style={{ color: "#D14343" }}>*</span>
+                  <span>航班日期</span>
+                </div>
+                <TextInput type="date" {...register("flightDate")} />
+              </label>
+              <label className="form-sub-item">
+                <div>
+                  <span style={{ color: "#D14343" }}>*</span>
+                  <span>航班編號</span>
+                </div>
+                <TextInput {...register("flightNo")} />
+              </label>
+            </div>
+            <div className="form-item">
+              <label className="form-sub-item">
+                <div>
+                  <span style={{ color: "#D14343" }}>*</span>
+                  <span>機場</span>
+                </div>
+                <TextInput {...register("airport")} />
+              </label>
+              <label className="form-sub-item">
+                <div>
+                  <span style={{ color: "#D14343" }}>*</span>
+                  <span>航廈</span>
+                </div>
+                <TextInput {...register("terminal")} />
+              </label>
+            </div>
+            <div className="form-item">
+              <label className="form-sub-item">
+                <div>
+                  <span style={{ color: "#D14343" }}>*</span>
+                  <span>航班{purpose === "pickUp" ? "抵達" : "出發"}時間</span>
+                </div>
+                <TextInput type="date" {...register("flightTime")} />
+              </label>
+              <label className="form-sub-item">
+                <div>
+                  <span>航空公司</span>
+                </div>
+                <TextInput {...register("airline")} />
+              </label>
+            </div>
+            <button
+              type="submit"
+              style={{ display: "none" }}
+              ref={formButtonRef}
+            >
+              submit
+            </button>
+          </StyledForm>
+        </Collapse>
+      </StyledCard>
     </>
   );
 });
-export default CustomPickup;
+export default FlightPickup;

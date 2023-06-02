@@ -20,8 +20,7 @@ export const IconSTY = styled.div`
   position: relative;
   width: 200px;
   height: 200px;
-  /* Neutral/N75 */
-  background: ${({ theme }) => theme.color.N75};
+  background: ${({ theme }) => theme.color.N0};
   border-radius: 50%;
   overflow: hidden;
 `;

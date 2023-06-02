@@ -2,17 +2,17 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   display: inline-flex;
-  align-items: flex-start;
+  align-items: center;
   padding: 0px;
-  gap: 32px;
+  gap: 33.75px;
 `;
 
 export const IconSTY = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 120px;
+  width: 40px;
+  height: 40px;
   overflow: hidden;
-  color: ${({ theme }) => theme.color.N600};
+  color: ${({ theme }) => theme.color.B300};
 `;

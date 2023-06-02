@@ -5,38 +5,38 @@ export const BodySTY = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.color.N300};
-  .header {
+  > .header {
     display: flex;
     justify-content: center;
     padding: 32px 0px;
     width: 100%;
-    background-color: ${({ theme }) => theme.color.N0};
-    .header-container {
+    background-color: ${({ theme }) => theme.color.N75};
+    > .header-container {
       width: 1030px;
       display: flex;
       flex-direction: column;
       gap: 24px;
-    }
-    .header-title {
-      font-size: 32px;
-      font-weight: 600;
-      color: ${({ theme }) => theme.color.N700};
+      > .header-title {
+        font-size: 32px;
+        font-weight: 600;
+        color: ${({ theme }) => theme.color.N700};
+      }
     }
   }
-  .content-container {
+  > .content-container {
     display: flex;
     padding: 40px 0px;
     gap: 40px;
     flex-direction: column;
     align-items: center;
     width: 1030px;
-    .content-title {
+    > .content-title {
       color: ${({ theme }) => theme.color.N700};
       font-size: 32px;
       font-weight: 600;
       align-self: flex-start;
     }
-    .content-entry {
+    > .content-entry {
       display: flex;
       width: 100%;
       justify-content: space-between;

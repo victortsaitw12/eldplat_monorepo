@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const StyledHeader = styled.div`
   display: flex;
-  width: 100%;
+  width: 1240px;
   height: 48px;
   gap: 0px;
   background-color: ${({ theme }) => theme.color.N0};
+  border-radius: 10px;
 `;
 
 export const StyledButton = styled.button<{ isSelected: boolean }>`
@@ -18,6 +19,7 @@ export const StyledButton = styled.button<{ isSelected: boolean }>`
   background-color: ${({ theme, isSelected }) =>
     isSelected ? theme.color.B400 : theme.color.N0};
   border-radius: 10px;
+  font-size: 16px;
 `;
 
 export const StyledForm = styled.form`
@@ -38,4 +40,11 @@ export const StyledForm = styled.form`
       gap: 20px;
     }
   }
+`;
+
+export const StyledCard = styled.div`
+  width: 1240px;
+  box-shadow: 0px 4px 8px rgba(16, 24, 64, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
 `;

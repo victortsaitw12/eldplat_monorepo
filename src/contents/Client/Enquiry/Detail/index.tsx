@@ -30,6 +30,8 @@ import PassengerInfoView from "@contents/AdminOrders/AdminOrdersDetail/Passenger
 import PassengerInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoEdit";
 import TakeBusInfoView from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoView";
 import TakeBusInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoEdit";
+import FlightInfoView from "@contents/AdminOrders/AdminOrdersDetail/FlightInfo/FlightInfoView";
+import FlightInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/FlightInfo/FlightInfoEdit";
 //@util
 import { keysToLowercase } from "@utils/keysToLowercase";
 
@@ -42,7 +44,8 @@ import {
   order_contact,
   order_represent,
   order_shuttleList,
-  order_sepcial
+  order_sepcial,
+  order_flight
 } from "@mock-data/adminOrders/mockData";
 
 interface I_Props {
@@ -87,21 +90,34 @@ const OrdersDetail = ({ isEdit, orderType = "0", orderData }: I_Props) => {
     return (
       <>
         <Collapse opened={true} title="總覽">
-          {isEdit ? <CarInfoEdit /> : <CarInfoView />}
+          <CarInfoView
+            listArray={[
+              {
+                title: "用車目的",
+                value: "送機"
+              },
+              {
+                title: "訂車注意事項",
+                value: "客戶同意"
+              }
+            ]}
+          />
         </Collapse>
         <Collapse opened={true} title="訂單聯絡人">
-          {isEdit ? (
-            <ContactInfoEdit />
-          ) : (
-            <ContactInfoView data={order_contact} />
-          )}
+          <ContactInfoView data={order_contact} />
         </Collapse>
 
         {/*以下為變動*/}
         {orderType === "0" ? (
           <ShuttleInfoView shuttleList={order_shuttleList} />
         ) : (
-          <ShuttleInfoView shuttleList={order_shuttleList} />
+          <Collapse opened={true} title="航班資訊">
+            {isEdit ? (
+              <FlightInfoEdit />
+            ) : (
+              <FlightInfoView data={order_flight} />
+            )}
+          </Collapse>
         )}
         {/*變動*/}
         <Collapse title="乘車資訊">
