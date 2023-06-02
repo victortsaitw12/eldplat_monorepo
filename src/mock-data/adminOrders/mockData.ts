@@ -53,33 +53,37 @@ const mock_adminOrdersList = [
     }
 ]
 
-const mock_progressdata = [
-    {
-        label: "收到詢價",
-        status: "ok",
-        date: "2022/03/22"
-    },
-    {
-        label: "送出報價",
-        status: "pending",
-    },
-    {
-        label: "接受報價",
-        status: "pending",
-    },
-    {
-        label: "已付訂金",
-        status: "pending",
-    },
-    {
-        label: "已付尾款",
-        status: "pending",
-    },
-    {
-        label: "完成報價",
-        status: "pending",
-    }
-]
+const mock_progressdata: Array<{
+    label: string;
+    status: "ok" | "pending" | "error";
+    date?: string;
+}> = [
+        {
+            label: "收到詢價",
+            status: "ok",
+            date: "2022/03/22"
+        },
+        {
+            label: "送出報價",
+            status: "pending",
+        },
+        {
+            label: "接受報價",
+            status: "pending",
+        },
+        {
+            label: "已付訂金",
+            status: "pending",
+        },
+        {
+            label: "已付尾款",
+            status: "pending",
+        },
+        {
+            label: "完成報價",
+            status: "pending",
+        }
+    ]
 
 const mock_orderData = {
     test: "測試的資料",
@@ -139,6 +143,48 @@ const order_represent = [
     },
 ]
 
+const order_sepcial = [
+    {
+        title: "舉牌：Andy Welcome",
+        value: "NT$200"
+    },
+    {
+        title: "司導",
+        value: "NT$200"
+    },
+    {
+        title: "指定車齡 3年",
+        value: "NT$1,000"
+    },
+    {
+        title: "兒童座椅 由店家提供 1",
+        value: "免費"
+    },
+    {
+        title: "兒童座椅 自備 1",
+        value: "免費"
+    },
+    {
+        title: "嬰兒座椅 自備 1",
+        value: "免費"
+    }
+]
+
+const order_shuttleList = [
+    {
+        date: "2023-06-01",
+    },
+    {
+        date: "2023-06-02",
+    },
+    {
+        date: "2023-06-03",
+    },
+    {
+        date: "2023-06-04",
+    },
+]
+
 export {
     data,
     mock_subFilter,
@@ -146,5 +192,7 @@ export {
     mock_orderData,
     mock_progressdata,
     order_contact,
-    order_represent
+    order_represent,
+    order_shuttleList,
+    order_sepcial
 };

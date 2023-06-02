@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const BodySTY = styled.li`
     display: flex;
+    align-items: center;
     & > span{
         flex: 1;
         color: ${({ theme }) => theme.color.N700};

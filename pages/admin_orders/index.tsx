@@ -123,11 +123,13 @@ const Page: NextPageWithLayout<{
   };
   //進入詢價檢視頁
   const goToDetailPage = (id: string) => {
-    router.push("/admin_orders/detail/" + id);
+    //TODO:type代表是哪種訂單0:客製包車,1:接機,2:送機
+    router.push("/admin_orders/detail/" + id + "?type=0");
   }
   //進入詢價編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push("/admin_orders/edit/" + id);
+    //TODO:type代表是哪種訂單0:客製包車,1:接機,2:送機
+    router.push("/admin_orders/detail/" + id + "?type=0" + "&editPage=edit");
   }
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {
