@@ -1,16 +1,16 @@
 import React from "react";
 import { Pane, TimeIcon } from "evergreen-ui";
+import { useForm, FormProvider } from "react-hook-form";
 import { SectionSTY } from "./style";
 
 import Collapse from "@components/Collapse";
 import DetailList from "@components/DetailList";
-import DetailItem from "@components/DetailList/DetailItem";
-import ScheduleList from "@components/ScheduleList";
-import DupShuttleInfo from "@contents/orders/OrderDetail/DupShuttleInfo";
 import VerticalDetail from "@components/VerticalDetail";
 import { order_shuttleList } from "@mock-data/adminOrders/mockData";
+import ShuttleInfoView from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo/ShuttleInfoView";
 
 const OrderDetail = ({ data }) => {
+  const methods = useForm();
   // ----- function ----- //
   const filterData = (
     data: any,
@@ -101,33 +101,33 @@ const OrderDetail = ({ data }) => {
       ]
     : contactArr;
   return (
-    <SectionSTY style={{ background: "#fff" }}>
-      <Collapse title={"訂單聯絡人"} opened>
-        <Pane style={{ padding: "20px" }}>
-          <DetailList listArray={contactArr} />
-        </Pane>
-      </Collapse>
-
-      <DupShuttleInfo shuttleList={order_shuttleList} />
-
-      <Collapse title={"乘車資訊"} opened>
-        <Pane style={{ padding: "20px" }}>
-          <VerticalDetail title="乘客數量" items={specPassengerArr} />
-          <VerticalDetail title="行李件數" items={specLuggageArr} />
-          <VerticalDetail title="車型及數量" items={specBusTypeArr} />
-        </Pane>
-      </Collapse>
-      <Collapse title={"特殊需求"} opened>
-        <Pane style={{ padding: "20px" }} className="addon">
-          <DetailList listArray={filterData(data, addonArr)} />
-        </Pane>
-      </Collapse>
-      <Collapse title={"旅客代表人"} opened>
-        <Pane style={{ padding: "20px" }}>
-          <DetailList listArray={repArr} />
-        </Pane>
-      </Collapse>
-    </SectionSTY>
+    <FormProvider {...methods}>
+      <SectionSTY style={{ background: "#fff" }}>
+        <Collapse title={"訂單聯絡人"} opened>
+          <Pane style={{ padding: "20px" }}>
+            <DetailList listArray={contactArr} />
+          </Pane>
+        </Collapse>
+        <ShuttleInfoView shuttleList={order_shuttleList} />
+        <Collapse title={"乘車資訊"} opened>
+          <Pane style={{ padding: "20px" }}>
+            <VerticalDetail title="乘客數量" items={specPassengerArr} />
+            <VerticalDetail title="行李件數" items={specLuggageArr} />
+            <VerticalDetail title="車型及數量" items={specBusTypeArr} />
+          </Pane>
+        </Collapse>
+        <Collapse title={"特殊需求"} opened>
+          <Pane style={{ padding: "20px" }} className="addon">
+            <DetailList listArray={filterData(data, addonArr)} />
+          </Pane>
+        </Collapse>
+        <Collapse title={"旅客代表人"} opened>
+          <Pane style={{ padding: "20px" }}>
+            <DetailList listArray={repArr} />
+          </Pane>
+        </Collapse>
+      </SectionSTY>
+    </FormProvider>
   );
 };
 export default OrderDetail;
