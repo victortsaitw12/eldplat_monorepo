@@ -1,31 +1,22 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React from "react";
 import { Select, TextInput } from "evergreen-ui";
 import InfoBox from "@components/InfoBox";
-import {
-  UseFormRegister,
-  FieldErrors,
-  UseFormGetValues,
-  Control
-} from "react-hook-form";
+import { UseFormRegister, UseFormGetValues } from "react-hook-form";
 import FlexWrapper from "@layout/FlexWrapper";
 import { UpdateDriverInfoPayload } from "../../driver.type";
-import LanguageAbility from "@contents/Driver/LanguageAbility";
+import LanguageAbility from "@contents/Driver/Detail/LanguageAbility";
 interface Props {
   selected?: boolean;
   register: UseFormRegister<UpdateDriverInfoPayload>;
-  errors: FieldErrors<UpdateDriverInfoPayload>;
   getValues: UseFormGetValues<UpdateDriverInfoPayload>;
-  control: Control<UpdateDriverInfoPayload, any>;
   isEdit: boolean;
   driverData: any;
 }
+
 function DriverInfo({
   selected,
   register,
-  errors,
   getValues,
-  control,
   isEdit,
   driverData
 }: Props) {
@@ -51,7 +42,7 @@ function DriverInfo({
     }
   ];
   // 駕駛履歷
-  const licenseInfo = [
+  const resumeInfo = [
     {
       readonly: true,
       label: "使用者編號",
@@ -117,7 +108,7 @@ function DriverInfo({
     }
   ];
   // 駕駛證照
-  const plateInfo = [
+  const licenseInfo = [
     {
       req: false,
       label: "證照種類",
@@ -181,17 +172,10 @@ function DriverInfo({
     >
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={basicInfo} infoTitle="基本資料" />
-        <InfoBox isEdit={isEdit} infoData={licenseInfo} infoTitle="駕駛履歷" />
+        <LanguageAbility currentUserInfo={driverData} />
       </FlexWrapper>
       <FlexWrapper flexDirection="column">
-        <InfoBox
-          isEdit={isEdit}
-          infoData={plateInfo}
-          infoTitle="駕駛證照"
-          style={{ flex: "1" }}
-        />
-
-        <LanguageAbility currentUserInfo={driverData} />
+        <InfoBox isEdit={isEdit} infoData={resumeInfo} infoTitle="駕駛履歷" />
       </FlexWrapper>
     </FlexWrapper>
   );
