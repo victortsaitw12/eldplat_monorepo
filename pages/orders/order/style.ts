@@ -39,15 +39,3 @@ export const BodySTY = styled.div`
     }
   }
 `;
-export const SectionSTY = styled.section`
-  border-radius: 10px;
-
-  .collapse {
-  }
-  .collapse:not(:first-child) {
-    border: 1px dashed red;
-    .collapse_title {
-      border-radius: 0px;
-    }
-  }
-`;

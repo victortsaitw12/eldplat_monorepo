@@ -6,7 +6,7 @@ import {
   useFieldArray
 } from "react-hook-form";
 import { PlusIcon, TrashIcon, TextInput } from "evergreen-ui";
-import { BodySTY, ItemSTY } from "./style";
+import { ItemSTY } from "./style";
 //
 function StepArragement({
   control,
@@ -31,12 +31,13 @@ function StepArragement({
     name: middlePointName
   });
   return (
-    <BodySTY>
+    <>
       <ItemSTY>
-        <div className="content">上車地點</div>
+        <div className="item-content">上車地點</div>
         <TextInput
           {...register(`${startPointName}.location`)}
           disabled={withStartPoint}
+          style={{ flex: "1" }}
         />
         <div className="option-container">
           {fields.length === 0 && (
@@ -57,13 +58,16 @@ function StepArragement({
         const locationName = `中途點${index + 1}`;
         return (
           <ItemSTY key={item.id}>
-            <div className="content">{locationName}: </div>
-            <TextInput {...register(`${middlePointName}.${index}.location`)} />
+            <div className="item-content">{locationName}: </div>
+            <TextInput
+              {...register(`${middlePointName}.${index}.location`)}
+              style={{ flex: "1" }}
+            />
             <div className="option-container">
               <button className="option-item" onClick={() => remove(index)}>
                 <TrashIcon size={12} />
               </button>
-              {index === fields.length - 1 && (
+              {index === fields.length - 1 ? (
                 <button
                   className="option-item"
                   onClick={() =>
@@ -74,19 +78,23 @@ function StepArragement({
                 >
                   <PlusIcon size={12} />
                 </button>
+              ) : (
+                <div className="option-item"></div>
               )}
             </div>
           </ItemSTY>
         );
       })}
       <ItemSTY>
-        <div className="content">下車地點</div>
+        <div className="item-content">下車地點</div>
         <TextInput
           {...register(`${destinationPointName}.location`)}
           disabled={withDestinationPoint}
+          style={{ flex: "1" }}
         />
+        <div className="option-container"></div>
       </ItemSTY>
-    </BodySTY>
+    </>
   );
 }
 

@@ -20,8 +20,6 @@ interface QuoteLayoutProps {
 
 const QuoteLayout: FC<QuoteLayoutProps> = ({ children, layoutProps }) => {
   const [theme, setTheme] = React.useState(false);
-  const menuData: MenuDataType = fetchMenuData();
-  console.log("layoutProps:", layoutProps);
   return (
     <BodySTY>
       <Head>
@@ -36,6 +34,6 @@ const QuoteLayout: FC<QuoteLayoutProps> = ({ children, layoutProps }) => {
   );
 };
 
-export const getLayout = (page: ReactNode, layoutProps: { title?: string }) => (
+export const getLayout = (page: ReactNode, layoutProps: any) => (
   <QuoteLayout layoutProps={layoutProps}>{page}</QuoteLayout>
 );

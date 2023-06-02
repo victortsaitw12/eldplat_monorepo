@@ -11,16 +11,15 @@ import {
   MOCK_expenseList
 } from "@mock-data/orders";
 
-import { mappingQueryData } from "@utils/mappingQueryData";
 import { getLayout } from "@layout/QuoteLayout";
-import StatusTabs from "@components/StatusTabs";
 import Collapse from "@components/Collapse";
 import DetailItem from "@components/DetailList/DetailItem";
 import ProgressList from "@components/ProgressList";
-import StatusCard from "@components/StatusCard";
 import ConditionCard from "@components/ConditionCard";
 import Breadcrumbs from "@components/Breadcrumbs";
 import ExpenseDetail from "@components/ExpenseDetail";
+import OrderDetail from "@contents/Orders/OrderDetail";
+
 interface OrderData {
   customer_no: string;
   quote_no: string;
@@ -86,32 +85,7 @@ const Page: NextPageWithLayout<never> = () => {
                 <ProgressList dataLists={MOCK_progressList} />
               </Pane>
             </Collapse>
-            <SectionSTY style={{ background: "#fff" }}>
-              <Collapse title={"訂單聯絡人"} opened>
-                <Pane style={{ background: "#fff" }}>
-                  {contactInfo.map((item, index) => (
-                    <DetailItem
-                      key={`contact-${index}`}
-                      title={item.title}
-                      value={item.value}
-                    />
-                  ))}
-                  <DetailItem title="詢價編號" value={data.quote_no} />
-                </Pane>
-              </Collapse>
-              <Collapse title={"訂單聯絡人"} opened>
-                <Pane style={{ background: "#fff" }}>
-                  {contactInfo.map((item, index) => (
-                    <DetailItem
-                      key={`contact-${index}`}
-                      title={item.title}
-                      value={item.value}
-                    />
-                  ))}
-                  <DetailItem title="詢價編號" value={data.quote_no} />
-                </Pane>
-              </Collapse>
-            </SectionSTY>
+            <OrderDetail data={data} />
             <ConditionCard type="view"></ConditionCard>
           </div>
         )}
