@@ -41,14 +41,24 @@ const Page = () => {
             label="客製包車"
             imageUrl="/icons/Custom-bus-pickup.svg"
             onClick={() => {
-              router.push("/client/enquiry/custom-pickup");
+              router.push({
+                pathname: "/client/enquiry/confirm",
+                query: {
+                  type: "custom"
+                }
+              });
             }}
           />
           <ServerEntry
             label="機場接送"
             imageUrl="/icons/Airport-pickup.svg"
             onClick={() => {
-              router.push("/client/enquiry/airport-pickup");
+              router.push({
+                pathname: "/client/enquiry/confirm",
+                query: {
+                  type: "airport"
+                }
+              });
             }}
           />
         </div>

@@ -21,17 +21,15 @@ import CheckBoxWrapper from "@components/CheckBoxWrapper";
 //@services
 
 //@contents
-import ShuttleInfoView from "./ShuttleInfo/ShuttleInfoView";
-import PaymentInfoView from "./PaymentInfo/PaymentInfoView";
-import PaymentInfoEdit from "./PaymentInfo/PaymentInfoEdit";
-import CarInfoView from "./CarInfo/CarInfoView";
-import CarInfoEdit from "./CarInfo/CarInfoEdit";
-import ContactInfoView from "./ContactInfo/ContactInfoView";
-import ContactInfoEdit from "./ContactInfo/ContactInfoEdit";
-import PassengerInfoView from "./PassengerInfo/PassengerInfoView";
-import PassengerInfoEdit from "./PassengerInfo/PassengerInfoEdit";
-import TakeBusInfoView from "./TakeBusInfo/TakeBusInfoView";
-import TakeBusInfoEdit from "./TakeBusInfo/TakeBusInfoEdit";
+import ShuttleInfoView from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo/ShuttleInfoView";
+import CarInfoView from "@contents/AdminOrders/AdminOrdersDetail/CarInfo/CarInfoView";
+import CarInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/CarInfo/CarInfoEdit";
+import ContactInfoView from "@contents/AdminOrders/AdminOrdersDetail/ContactInfo/ContactInfoView";
+import ContactInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/ContactInfo/ContactInfoEdit";
+import PassengerInfoView from "@contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoView";
+import PassengerInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoEdit";
+import TakeBusInfoView from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoView";
+import TakeBusInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoEdit";
 //@util
 import { keysToLowercase } from "@utils/keysToLowercase";
 
@@ -49,11 +47,11 @@ import {
 
 interface I_Props {
   isEdit: boolean;
-  orderType?: "0" | "1" | "2";
+  orderType?: "0" | "1";
   orderData: any;
 }
 
-const AdminOrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
+const OrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
   console.log("🤣🤣🤣🤣detail頁的orderData", orderData);
   console.log("📃📃📃📃📃isEdit", isEdit);
   console.log("orderType", orderType);
@@ -85,22 +83,10 @@ const AdminOrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
     setLoading(false);
   };
 
-  const r_template: {
-    "0": React.ReactNode;
-    "1": React.ReactNode;
-    "2": React.ReactNode;
-  } = {
-    "0": (
+  const r_template = (orderType: "0" | "1") => {
+    return (
       <>
-        <Collapse opened={true} title="ORDER229999">
-          <Pane style={{ padding: "20px" }}>
-            <ProgressList dataLists={[...mock_progressdata]} />
-          </Pane>
-        </Collapse>
-        <Collapse opened={true} title="付款方式">
-          {isEdit ? <PaymentInfoEdit /> : <PaymentInfoView />}
-        </Collapse>
-        <Collapse opened={true} title="客製包車">
+        <Collapse opened={true} title="總覽">
           {isEdit ? <CarInfoEdit /> : <CarInfoView />}
         </Collapse>
         <Collapse opened={true} title="訂單聯絡人">
@@ -110,15 +96,14 @@ const AdminOrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
             <ContactInfoView data={order_contact} />
           )}
         </Collapse>
-        <Collapse opened={true} title="旅客代表人">
-          {isEdit ? (
-            <PassengerInfoEdit />
-          ) : (
-            <PassengerInfoView data={order_represent} />
-          )}
-        </Collapse>
-        {/*接送資訊*/}
-        {isEdit ? <></> : <ShuttleInfoView shuttleList={order_shuttleList} />}
+
+        {/*以下為變動*/}
+        {orderType === "0" ? (
+          <ShuttleInfoView shuttleList={order_shuttleList} />
+        ) : (
+          <ShuttleInfoView shuttleList={order_shuttleList} />
+        )}
+        {/*變動*/}
         <Collapse title="乘車資訊">
           {isEdit ? <TakeBusInfoEdit /> : <TakeBusInfoView />}
         </Collapse>
@@ -126,6 +111,13 @@ const AdminOrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
           <Pane className="special_content" style={{ padding: "20px" }}>
             <DetailList listArray={order_sepcial} />
           </Pane>
+        </Collapse>
+        <Collapse opened={true} title="旅客代表人">
+          {isEdit ? (
+            <PassengerInfoEdit />
+          ) : (
+            <PassengerInfoView data={order_represent} />
+          )}
         </Collapse>
         <Collapse title="標籤">
           <Pane
@@ -139,9 +131,7 @@ const AdminOrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
           </Pane>
         </Collapse>
       </>
-    ),
-    "1": <></>,
-    "2": <></>
+    );
   };
   return (
     <BodySTY>
@@ -152,11 +142,11 @@ const AdminOrdersDetal = ({ isEdit, orderType = "0", orderData }: I_Props) => {
             asyncSubmitForm({ ...data });
           })}
         >
-          <Pane style={{ background: "#ffffff" }}>{r_template[orderType]}</Pane>
+          <Pane style={{ background: "#ffffff" }}>{r_template(orderType)}</Pane>
         </form>
       </FormProvider>
     </BodySTY>
   );
 };
 
-export default AdminOrdersDetal;
+export default OrdersDetal;

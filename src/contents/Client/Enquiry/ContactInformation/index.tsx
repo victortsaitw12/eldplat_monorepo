@@ -96,18 +96,18 @@ const ContactInformation = () => {
               >
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>手機</span>
-                <CustomSelect
-                  options={[
-                    {
-                      text: "+886",
-                      value: "+886"
-                    }
-                  ]}
-                  register={register}
-                  selectName="contactUser.phoneCode"
-                />
-                <TextInput />
               </div>
+              <CustomSelect
+                options={[
+                  {
+                    text: "+886",
+                    value: "+886"
+                  }
+                ]}
+                register={register}
+                selectName="contactUser.phoneCode"
+              />
+              <TextInput />
             </div>
             <div
               style={{
@@ -120,7 +120,6 @@ const ContactInformation = () => {
               <div
                 style={{ color: "#567190", fontWeight: "700", width: "80px" }}
               >
-                <span style={{ color: "#D14343" }}>*</span>
                 <span>電話</span>
               </div>
               <CustomSelect
@@ -148,6 +147,7 @@ const ContactInformation = () => {
               <div
                 style={{ color: "#567190", fontWeight: "700", width: "80px" }}
               >
+                <span style={{ color: "#D14343" }}>*</span>
                 <span>信箱</span>
               </div>
               <TextInput />
@@ -206,18 +206,18 @@ const ContactInformation = () => {
               >
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>手機</span>
-                <CustomSelect
-                  options={[
-                    {
-                      text: "+886",
-                      value: "+886"
-                    }
-                  ]}
-                  register={register}
-                  selectName="represatation.phoneCode"
-                />
-                <TextInput />
               </div>
+              <CustomSelect
+                options={[
+                  {
+                    text: "+886",
+                    value: "+886"
+                  }
+                ]}
+                register={register}
+                selectName="represatation.phoneCode"
+              />
+              <TextInput />
             </div>
             <div
               style={{
@@ -230,7 +230,6 @@ const ContactInformation = () => {
               <div
                 style={{ color: "#567190", fontWeight: "700", width: "80px" }}
               >
-                <span style={{ color: "#D14343" }}>*</span>
                 <span>電話</span>
               </div>
               <CustomSelect
@@ -260,8 +259,8 @@ const ContactInformation = () => {
               >
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>信箱</span>
-                <TextInput />
               </div>
+              <TextInput />
             </div>
             <div
               style={{

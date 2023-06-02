@@ -15,7 +15,9 @@ import TravelInformation from "@contents/Client/Enquiry/TravelInformation";
 import RidingInformation from "@contents/Client/Enquiry/RidingInformation";
 import SpecialNeeds from "@contents/Client/Enquiry/SpecialNeeds";
 import ContactInformation from "@contents/Client/Enquiry/ContactInformation";
+import FlightInformation from "@contents/Client/Enquiry/FlightInformation";
 import { Button } from "evergreen-ui";
+import { useRouter } from "next/router";
 //
 const DummyNavigationListData = [
   {
@@ -62,9 +64,10 @@ const DummyExpenseDetailData = [
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ departureDate, returnDate, purpose }) => {
+> = ({ departureDate, returnDate, purpose, type, airport, flightDate }) => {
   const [currentTab, setCurrentTab] = useState(1);
 
+  console.log("currentTab", currentTab);
   return (
     <BodySTY>
       <StatusCard>
@@ -75,10 +78,14 @@ const Page: NextPageWithLayout<
       </StatusCard>
       <div className="body-container">
         <div className="content-container">
-          {/* <TravelInformation /> */}
-          {/* <RidingInformation /> */}
-          {/* <SpecialNeeds /> */}
-          <ContactInformation />
+          {currentTab === 1 && type === "custom" ? (
+            <TravelInformation />
+          ) : (
+            <FlightInformation />
+          )}
+          {currentTab === 2 && <RidingInformation />}
+          {currentTab === 3 && <SpecialNeeds />}
+          {currentTab === 4 && <ContactInformation />}
           <div className="content-actions-container">
             <Button
               style={{
@@ -90,7 +97,11 @@ const Page: NextPageWithLayout<
                 border: "none"
               }}
               onClick={() => {
-                console.log("上一步");
+                if (currentTab === 1) {
+                  alert("回到日期選擇頁!");
+                  return;
+                }
+                setCurrentTab((prev) => prev - 1);
               }}
             >
               上一步
@@ -106,10 +117,14 @@ const Page: NextPageWithLayout<
                 border: "none"
               }}
               onClick={() => {
-                console.log("上一步");
+                if (currentTab === 4) {
+                  alert("送出詢價單");
+                  return;
+                }
+                setCurrentTab((prev) => prev + 1);
               }}
             >
-              下一步
+              {currentTab === 4 ? "送出詢價單" : "下一步"}
             </Button>
           </div>
         </div>
@@ -124,15 +139,21 @@ const Page: NextPageWithLayout<
 };
 
 interface Props {
-  departureDate: string;
-  returnDate: string;
-  purpose: string;
+  departureDate?: string;
+  returnDate?: string;
+  flightDate?: string;
+  purpose?: string;
+  airport?: string;
+  type: string;
   title: string;
 }
 interface RouterQuery extends ParsedUrlQuery {
-  departureDate: string;
-  returnDate: string;
-  purpose: string;
+  departureDate?: string;
+  returnDate?: string;
+  flightDate?: string;
+  purpose?: string;
+  airport?: string;
+  type: string;
 }
 
 export const getServerSideProps: GetServerSideProps<
@@ -140,16 +161,22 @@ export const getServerSideProps: GetServerSideProps<
   RouterQuery
 > = async (context) => {
   const { query } = context;
-  const departureDate = query.departureDate as string;
-  const returnDate = query.returnDate as string;
-  const purpose = query.purpose as string;
+  const departureDate = query.departureDate && (query.departureDate as string);
+  const returnDate = query.returnDate && (query.returnDate as string);
+  const purpose = query.purpose && (query.purpose as string);
+  const flightDate = query.flightDate && (query.flightDate as string);
+  const airport = query.airport && (query.airport as string);
+  const type = query.type ? (query.type as string) : "custom";
 
   return {
     props: {
-      departureDate,
-      returnDate,
-      purpose,
-      title: "客製包車"
+      departureDate: departureDate || "",
+      returnDate: returnDate || "",
+      purpose: purpose || "",
+      flightDate: flightDate || "",
+      airport: airport || "",
+      type: type || "",
+      title: type === "custom" ? "客製包車" : "機場接送"
     }
   };
 };
