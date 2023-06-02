@@ -5,7 +5,11 @@ import { useRouter } from "next/router";
 import { TickCircleIcon, Pane, Group, InlineAlert } from "evergreen-ui";
 import { BodySTY, SectionSTY } from "./style";
 
-import { MOCK_ORDER_DETAIL, MOCK_progressList } from "@mock-data/orders";
+import {
+  MOCK_ORDER_DETAIL,
+  MOCK_progressList,
+  MOCK_expenseList
+} from "@mock-data/orders";
 
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { getLayout } from "@layout/QuoteLayout";
@@ -54,7 +58,8 @@ const Page: NextPageWithLayout<never> = () => {
   }, [orderId]);
 
   return (
-    <BodySTY>
+    <>
+      {" "}
       {data && (
         <Breadcrumbs
           routes={[
@@ -68,54 +73,59 @@ const Page: NextPageWithLayout<never> = () => {
               }
             }
           ]}
+          style={{ marginBottom: "24px" }}
         />
       )}
-      {data && (
-        <>
-          <Collapse title={data.purpose} opened>
-            <Pane style={{ background: "#fff" }}>
-              <DetailItem title="乘車日期" value={data.departure_date} />
-              <DetailItem title="詢價編號" value={data.quote_no} />
-              <ProgressList dataLists={MOCK_progressList} />
-            </Pane>
-          </Collapse>
-          <SectionSTY style={{ background: "#fff" }}>
-            <Collapse title={"訂單聯絡人"} opened>
+      <BodySTY>
+        {data && (
+          <div className="left">
+            <Collapse title={data.purpose} opened>
               <Pane style={{ background: "#fff" }}>
-                {contactInfo.map((item, index) => (
-                  <DetailItem
-                    key={`contact-${index}`}
-                    title={item.title}
-                    value={item.value}
-                  />
-                ))}
+                <DetailItem title="乘車日期" value={data.departure_date} />
                 <DetailItem title="詢價編號" value={data.quote_no} />
+                <ProgressList dataLists={MOCK_progressList} />
               </Pane>
             </Collapse>
-            <Collapse title={"訂單聯絡人"} opened>
+            <SectionSTY style={{ background: "#fff" }}>
+              <Collapse title={"訂單聯絡人"} opened>
+                <Pane style={{ background: "#fff" }}>
+                  {contactInfo.map((item, index) => (
+                    <DetailItem
+                      key={`contact-${index}`}
+                      title={item.title}
+                      value={item.value}
+                    />
+                  ))}
+                  <DetailItem title="詢價編號" value={data.quote_no} />
+                </Pane>
+              </Collapse>
+              <Collapse title={"訂單聯絡人"} opened>
+                <Pane style={{ background: "#fff" }}>
+                  {contactInfo.map((item, index) => (
+                    <DetailItem
+                      key={`contact-${index}`}
+                      title={item.title}
+                      value={item.value}
+                    />
+                  ))}
+                  <DetailItem title="詢價編號" value={data.quote_no} />
+                </Pane>
+              </Collapse>
+            </SectionSTY>
+            <ConditionCard type="view"></ConditionCard>
+          </div>
+        )}
+        {data && (
+          <div className="right">
+            <Collapse title="金額試算" opened>
               <Pane style={{ background: "#fff" }}>
-                {contactInfo.map((item, index) => (
-                  <DetailItem
-                    key={`contact-${index}`}
-                    title={item.title}
-                    value={item.value}
-                  />
-                ))}
-                <DetailItem title="詢價編號" value={data.quote_no} />
+                <ExpenseDetail data={MOCK_expenseList} prefix="NT$" />
               </Pane>
             </Collapse>
-          </SectionSTY>
-          <ConditionCard type="view"></ConditionCard>
-        </>
-      )}
-      {data && (
-        <div className="cost">
-          <Collapse title="金額試算" opened>
-            <ExpenseDetail data={[]} prefix="NT$" />
-          </Collapse>
-        </div>
-      )}
-    </BodySTY>
+          </div>
+        )}
+      </BodySTY>
+    </>
   );
 };
 

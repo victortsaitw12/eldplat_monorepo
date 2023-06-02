@@ -90,7 +90,9 @@ const Page: NextPageWithLayout<never> = () => {
                 <DetailItem title="乘車日期" value={item.departure_date} />
                 <DetailItem title="詢價編號" value={item.quote_no} />
               </Group>
-              <ProgressList dataLists={MOCK_progressList} />
+              <Pane>
+                <ProgressList dataLists={MOCK_progressList} />
+              </Pane>
             </Group>
           </Pane>
         </Collapse>
@@ -138,5 +140,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = (page) => getLayout(page, { title: "訂單管理" });
+Page.getLayout = (page, layoutProps) =>
+  getLayout(page, { title: "訂單管理xxxx", ...layoutProps });
 export default Page;

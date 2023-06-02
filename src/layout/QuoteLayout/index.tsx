@@ -36,6 +36,6 @@ const QuoteLayout: FC<QuoteLayoutProps> = ({ children, layoutProps }) => {
   );
 };
 
-export const getLayout = (page: ReactNode, layoutProps: { title: string }) => (
+export const getLayout = (page: ReactNode, layoutProps: { title?: string }) => (
   <QuoteLayout layoutProps={layoutProps}>{page}</QuoteLayout>
 );

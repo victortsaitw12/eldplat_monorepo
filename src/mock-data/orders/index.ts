@@ -82,3 +82,13 @@ export const MOCK_progressList = [
     date: ""
   }
 ];
+
+export const MOCK_expenseList = [
+  { label: "基本車資", value: 1200 },
+  { label: "小費", value: 200 },
+  { label: "旺季加價", value: 300 },
+  { label: "司機費用", value: 300 },
+  { label: "夜間加價", value: 200 },
+  { label: "偏遠地區加價", value: 300 },
+  { label: "特殊需求小計", value: 300 }
+];
