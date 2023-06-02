@@ -128,7 +128,7 @@ const Page: NextPageWithLayout<{
   }
   //進入詢價編輯頁
   const goToEditPageHandler = (id: string) => {
-    //TODO:type代表是哪種訂單0:客製包車,1:接機,2:送機
+    //TODO:type代表是哪種訂單0:客製包車,1:接送機
     router.push("/admin_orders/detail/" + id + "?type=0" + "&editPage=edit");
   }
   //刪除該筆供應商
