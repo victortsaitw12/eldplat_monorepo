@@ -146,19 +146,19 @@ const AdminOrdersDetal = ({
                         shuttleList={order_shuttleList}
                     />
                 }
-                <Collapse title="乘車資訊">
+                <Collapse opened={true} title="乘車資訊">
                     {isEdit ?
                         <TakeBusInfoEdit /> :
                         <TakeBusInfoView />
                     }
                 </Collapse>
-                <Collapse title="特殊需求">
+                <Collapse opened={true} title="特殊需求">
                     {isEdit ?
                         <SpecialInfoEdit /> :
                         <SpecialInfoView data={order_sepcial} />
                     }
                 </Collapse>
-                <Collapse title="標籤">
+                <Collapse opened={true} title="標籤">
                     <Pane className="special-content" style={{ padding: "20px", display: "flex", gap: "10px" }}>
                         <LabelTag text="服務讚" />
                         <LabelTag text="服務讚" />
@@ -223,19 +223,19 @@ const AdminOrdersDetal = ({
                         shuttleList={order_shuttleList}
                     />
                 }
-                <Collapse title="乘車資訊">
+                <Collapse opened={true} title="乘車資訊">
                     {isEdit ?
                         <TakeBusInfoEdit /> :
                         <TakeBusInfoView />
                     }
                 </Collapse>
-                <Collapse title="特殊需求">
+                <Collapse opened={true} title="特殊需求">
                     {isEdit ?
                         <SpecialInfoEdit /> :
                         <SpecialInfoView data={order_sepcial} />
                     }
                 </Collapse>
-                <Collapse title="標籤">
+                <Collapse opened={true} title="標籤">
                     <Pane className="special-content" style={{ padding: "20px", display: "flex", gap: "10px" }}>
                         <LabelTag text="服務讚" />
                         <LabelTag text="服務讚" />

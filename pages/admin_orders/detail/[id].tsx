@@ -11,6 +11,8 @@ import TableWrapper from "@layout/TableWrapper";
 
 //@content
 import AdminOrdersDetal from "@contents/AdminOrders/AdminOrdersDetail";
+import PriceInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/PriceInfo/PriceInfoEdit";
+import PriceInfoView from "@contents/AdminOrders/AdminOrdersDetail/PriceInfo/PriceInfoView";
 
 //@services
 
@@ -88,9 +90,20 @@ const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
                         </TableWrapper>
                     </Pane>
                     <Pane>
-                        <Pane style={{ background: "#FFFFFF", width: "280px" }}>
-                            <Text>價格部分</Text>
-                        </Pane>
+                        {
+                            isEdit ?
+                                <PriceInfoEdit
+                                    status={"1"}
+                                    priceList={[
+                                        {
+                                            label: "基本車資",
+                                            name: "basic"
+                                        }
+                                    ]}
+                                /> :
+                                <PriceInfoView />
+                        }
+
                     </Pane>
 
                 </>
