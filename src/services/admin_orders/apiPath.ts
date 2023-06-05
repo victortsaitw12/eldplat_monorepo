@@ -1,18 +1,25 @@
+const domain = {
+    dev: "https://localhost:7088",
+    prod: "https://localhost:7088",
+}
 const path = {
     dev: {
-        GetVendor: "https://localhost:7088/VNR/GetVendorList",//查詢供應商（多筆資料）
-        CreateVendor: "https://localhost:7088/VNR/CreateVendor", //新增供應商
-        GetOneVendor: "https://localhost:7088/VNR/GetVendorUpdateInfo?vendor_no=", //查詢供應商（單筆）
-        UpdateVendor: "https://localhost:7088/VNR/UpdateVendor", //修改供應商
-        DeleteVendor: "https://localhost:7088/VNR/DeleteVendor", //刪除供應商
+        CreateQuotation: domain["dev"] + "/ORD/CreateQuotation",// 創建詢價/報價單
+        GetQuotationByID: domain["dev"] + "/ORD/GetQuotationByID",// 查詢報價/報價/訂單
+        GetQuotationByFilter: domain["dev"] + "/ORD/GetQuotationByFilter",// 篩選詢價/報價/訂單列表
+        UpdateQuotation: domain["dev"] + "/ORD/UpdateQuotation",// 篩選詢價/報價/訂單列表
+        CompleteQuotation: domain["dev"] + "/ORD/CompleteQuotation",// 完成報價（成立訂單並產生新的訂單號）
+        DeleteQuotation: domain["dev"] + "/ORD/DeleteQuotation",// 完成報價（成立訂單並產生新的訂單號）
     },
     prod: {
-        GetVendor: "https://localhost:7088/VNR/GetVendorList",//查詢供應商（多筆資料）
-        CreateVendor: "https://localhost:7088/VNR/CreateVendor", //新增供應商
-        GetOneVendor: "https://localhost:7088/VNR/GetVendorUpdateInfo?vendor_no=", //查詢供應商（單筆）
-        UpdateVendor: "https://localhost:7088/VNR/UpdateVendor", //修改供應商
-        DeleteVendor: "https://localhost:7088/VNR/DeleteVendor", //刪除供應商
+        CreateQuotation: domain["prod"] + "/ORD/CreateQuotation",// 創建詢價/報價單
+        GetQuotationByID: domain["prod"] + "/ORD/GetQuotationByID",// 查詢報價/報價/訂單
+        GetQuotationByFilter: domain["prod"] + "/ORD/GetQuotationByFilter",// 篩選詢價/報價/訂單列表
+        UpdateQuotation: domain["prod"] + "/ORD/UpdateQuotation",// 篩選詢價/報價/訂單列表
+        CompleteQuotation: domain["prod"] + "/ORD/CompleteQuotation",// 完成報價（成立訂單並產生新的訂單號）
+        DeleteQuotation: domain["prod"] + "/ORD/DeleteQuotation",// 完成報價（成立訂單並產生新的訂單號）
     }
 }
+
 const API_Path = path["dev"];
 export default API_Path;
