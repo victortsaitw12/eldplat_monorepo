@@ -2,23 +2,16 @@ import React from "react";
 import Link from "next/link";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-import { TickCircleIcon, Pane, Group, InlineAlert } from "evergreen-ui";
 import { BodySTY, SectionSTY } from "./style";
 
-import {
-  MOCK_ORDER_DETAIL,
-  MOCK_progressList,
-  MOCK_expenseList
-} from "@mock-data/orders";
+import { MOCK_ORDER_DETAIL } from "@mock-data/orders";
 
 import { getLayout } from "@layout/QuoteLayout";
-import Collapse from "@components/Collapse";
-import DetailItem from "@components/DetailList/DetailItem";
-import ProgressList from "@components/ProgressList";
+
 import ConditionCard from "@components/ConditionCard";
 import Breadcrumbs from "@components/Breadcrumbs";
-import ExpenseDetail from "@components/ExpenseDetail";
 import OrderDetail from "@contents/Orders/OrderDetail";
+import Quote from "@contents/Orders/Quote";
 
 interface OrderData {
   customer_no: string;
@@ -78,24 +71,13 @@ const Page: NextPageWithLayout<never> = () => {
       <BodySTY>
         {data && (
           <div className="left">
-            <Collapse title={data.purpose} opened>
-              <Pane style={{ background: "#fff" }}>
-                <DetailItem title="乘車日期" value={data.departure_date} />
-                <DetailItem title="詢價編號" value={data.quote_no} />
-                <ProgressList dataLists={MOCK_progressList} />
-              </Pane>
-            </Collapse>
             <OrderDetail data={data} />
             <ConditionCard type="view"></ConditionCard>
           </div>
         )}
         {data && (
           <div className="right">
-            <Collapse title="金額試算" opened>
-              <Pane style={{ background: "#fff" }}>
-                <ExpenseDetail data={MOCK_expenseList} prefix="NT$" />
-              </Pane>
-            </Collapse>
+            <Quote data={data} />
           </div>
         )}
       </BodySTY>
