@@ -16,6 +16,7 @@ import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 //@contents
 import AdminOrdersList from "@contents/AdminOrders/AdminOrdersList";
+import AdminOrderCreateForm from "@contents/AdminOrders/AdminOrderCreateForm";
 
 // import Vendor from "@contents/Vendor";
 //@services
@@ -137,7 +138,6 @@ const Page: NextPageWithLayout<{
   }
   //套用新版filter(上方Tab切換)
   const changeMainFilterHandler = (value: string) => {
-    console.log("切換上方頁簽", value)
     setNowTab(value);
     setData([]);
     getResult();
@@ -145,14 +145,19 @@ const Page: NextPageWithLayout<{
   //
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "啟用", value: "1" },
-      { id: 2, label: "停用", value: "2" },
+      { id: 1, label: "全部", value: "1" },
+      { id: 2, label: "詢價", value: "2" },
       { id: 3, label: "報價", value: "3" },
       { id: 4, label: "訂單", value: "4" },
-      { id: 5, label: "已取消", value: "5" }
+      { id: 5, label: "結案", value: "5" },
+      { id: 6, label: "已取消", value: "6" },
     ],
     []
   );
+
+  React.useEffect(() => {
+    console.log("現在是哪個頁簽", nowTab);
+  }, [nowTab])
 
   return (
     <BodySTY>
@@ -187,7 +192,7 @@ const Page: NextPageWithLayout<{
                 setDrawerOpen(false);
               }}
             >
-              <br />
+              <AdminOrderCreateForm />
             </Drawer>
           )}
           {/* <SideBookMark /> */}
