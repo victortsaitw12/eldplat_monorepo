@@ -1,49 +1,27 @@
 import React from "react";
 import Collapse from "@components/Collapse";
-import { useForm } from "react-hook-form";
 import { TextInput } from "evergreen-ui";
 import { BodySTY, ItemSTY } from "./style";
 import CounterInput from "@components/CounterInput";
-type SchduleType = {
-  departureTime: string;
-  startPoint: { location: string };
-  destinationPoint: { location: string };
-  middlePoints: Array<{ location: string }>;
-};
-
-type FormValues = {
-  passengerCount: {
-    adult: number;
-    child: number;
-    baby: number;
-  };
-  luggageCount: {
-    checkLuggage: number;
-    handLuggage: number;
-  };
-  largeBus: {
-    large1: number;
-    large2: number;
-  };
-  mediumBus: {
-    medium1: number;
-    medium2: number;
-  };
-  smallBus: {
-    small1: number;
-  };
-};
-const TravelInformation = () => {
-  const {
-    control,
-    register,
-    formState: { errors }
-  } = useForm<FormValues>({});
+import { QuotationCreatePayload } from "../type";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  useFieldArray
+} from "react-hook-form";
+interface TravelInformationProps {
+  control: Control<QuotationCreatePayload>;
+  register: UseFormRegister<QuotationCreatePayload>;
+  errors: FieldErrors<QuotationCreatePayload>;
+}
+const TravelInformation = ({
+  register,
+  control,
+  errors
+}: TravelInformationProps) => {
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+    <div
       style={{
         display: "flex",
         flexDirection: "column",
@@ -77,17 +55,17 @@ const TravelInformation = () => {
               <CounterInput
                 register={register}
                 label="成人"
-                inpurName="passengerCount.adult"
+                inpurName="adult"
               />
               <CounterInput
                 register={register}
                 label="兒童(2~4歲)"
-                inpurName="passengerCount.child"
+                inpurName="child"
               />
               <CounterInput
                 register={register}
                 label="嬰兒(0~1歲)"
-                inpurName="passengerCount.baby"
+                inpurName="infant"
               />
             </div>
             <div
@@ -106,12 +84,12 @@ const TravelInformation = () => {
               <CounterInput
                 register={register}
                 label="託運行李(21吋以上)"
-                inpurName="luggageCount.checkLuggage"
+                inpurName="check_in_luggage"
               />
               <CounterInput
                 register={register}
                 label="手提行李(20吋以下)"
-                inpurName="luggageCount.handLuggage"
+                inpurName="carry_on_luggage"
               />
             </div>
           </div>
@@ -158,7 +136,7 @@ const TravelInformation = () => {
           </Collapse>
         </BodySTY>
       </Collapse>
-    </form>
+    </div>
   );
 };
 

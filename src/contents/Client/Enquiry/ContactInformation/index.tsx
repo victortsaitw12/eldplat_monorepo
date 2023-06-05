@@ -1,44 +1,28 @@
 import React from "react";
 import Collapse from "@components/Collapse";
-import { useForm } from "react-hook-form";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import { BodySTY, ItemSTY } from "./style";
 import { Textarea, Select, TextInput } from "evergreen-ui";
 import CustomSelect from "@components/CustomSelect";
-type SchduleType = {
-  departureTime: string;
-  startPoint: { location: string };
-  destinationPoint: { location: string };
-  middlePoints: Array<{ location: string }>;
-};
-
-type FormValues = {
-  contactUser: {
-    phoneCode: string;
-    phone: string;
-    telCode: string;
-    tel: string;
-  };
-  represatation: {
-    phoneCode: string;
-    phone: string;
-    telCode: string;
-    tel: string;
-    socialMedia: string;
-    socialMediaAccount: string;
-  };
-};
-const ContactInformation = () => {
-  const {
-    control,
-    register,
-    formState: { errors }
-  } = useForm<FormValues>({});
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  useFieldArray
+} from "react-hook-form";
+import { QuotationCreatePayload } from "../type";
+interface TravelInformationProps {
+  control: Control<QuotationCreatePayload>;
+  register: UseFormRegister<QuotationCreatePayload>;
+  errors: FieldErrors<QuotationCreatePayload>;
+}
+const ContactInformation = ({
+  register,
+  control,
+  errors
+}: TravelInformationProps) => {
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+    <div
       style={{
         display: "flex",
         flexDirection: "column",
@@ -64,7 +48,7 @@ const ContactInformation = () => {
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>姓</span>
               </div>
-              <TextInput />
+              <TextInput {...register("order_contact_list.0.family_name")} />
             </div>
             <div
               style={{
@@ -80,7 +64,7 @@ const ContactInformation = () => {
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>名</span>
               </div>
-              <TextInput />
+              <TextInput {...register("order_contact_list.0.name")} />
             </div>
           </ItemSTY>
           <ItemSTY>
@@ -106,9 +90,9 @@ const ContactInformation = () => {
                   }
                 ]}
                 register={register}
-                selectName="contactUser.phoneCode"
+                selectName="order_contact_list.0.contact_phone_code"
               />
-              <TextInput />
+              <TextInput {...register("order_contact_list.0.contact_phone")} />
             </div>
             <div
               style={{
@@ -131,9 +115,9 @@ const ContactInformation = () => {
                   }
                 ]}
                 register={register}
-                selectName="contactUser.telCode"
+                selectName="order_contact_list.0.contact_tel_code"
               />
-              <TextInput />
+              <TextInput {...register("order_contact_list.0.contact_tel")} />
             </div>
           </ItemSTY>
           <ItemSTY>
@@ -151,7 +135,7 @@ const ContactInformation = () => {
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>信箱</span>
               </div>
-              <TextInput />
+              <TextInput {...register("order_contact_list.0.contact_email")} />
             </div>
           </ItemSTY>
         </BodySTY>
@@ -172,9 +156,9 @@ const ContactInformation = () => {
                 style={{ color: "#567190", fontWeight: "700", width: "60px" }}
               >
                 <span style={{ color: "#D14343" }}>*</span>
-                <span>信箱</span>
+                <span>姓</span>
               </div>
-              <TextInput />
+              <TextInput {...register("order_contact_list.1.family_name")} />
             </div>
             <div
               style={{
@@ -190,7 +174,7 @@ const ContactInformation = () => {
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>名</span>
               </div>
-              <TextInput />
+              <TextInput {...register("order_contact_list.1.name")} />
             </div>
           </ItemSTY>
           <ItemSTY>
@@ -216,9 +200,9 @@ const ContactInformation = () => {
                   }
                 ]}
                 register={register}
-                selectName="represatation.phoneCode"
+                selectName="order_contact_list.1.contact_phone_code"
               />
-              <TextInput />
+              <TextInput {...register("order_contact_list.1.contact_phone")} />
             </div>
             <div
               style={{
@@ -241,9 +225,9 @@ const ContactInformation = () => {
                   }
                 ]}
                 register={register}
-                selectName="represatation.telCode"
+                selectName="order_contact_list.1.contact_tel_code"
               />
-              <TextInput />
+              <TextInput {...register("order_contact_list.1.contact_tel")} />
             </div>
           </ItemSTY>
           <ItemSTY>
@@ -261,7 +245,7 @@ const ContactInformation = () => {
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>信箱</span>
               </div>
-              <TextInput />
+              <TextInput {...register("order_contact_list.1.contact_email")} />
             </div>
             <div
               style={{
@@ -285,14 +269,14 @@ const ContactInformation = () => {
                   }
                 ]}
                 register={register}
-                selectName="contactUser.socialMedia"
+                selectName="order_contact_list.1.social_media_type"
               />
-              <TextInput />
+              <TextInput {...register("order_contact_list.1.social_media")} />
             </div>
           </ItemSTY>
         </BodySTY>
       </Collapse>
-    </form>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import {
   NextPageWithLayout
 } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { getLayout } from "@layout/QuoteLayout";
 import StatusCard from "@components/StatusCard";
 import { BodySTY } from "./style";
@@ -18,6 +18,12 @@ import ContactInformation from "@contents/Client/Enquiry/ContactInformation";
 import FlightInformation from "@contents/Client/Enquiry/FlightInformation";
 import { Button } from "evergreen-ui";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+//
+import {
+  QuotationCreatePayload,
+  defaultQuotationCreatePayload
+} from "@contents/Client/Enquiry/type";
 //
 const DummyNavigationListData = [
   {
@@ -65,8 +71,22 @@ const DummyExpenseDetailData = [
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ departureDate, returnDate, purpose, type, airport, flightDate }) => {
+  const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const router = useRouter();
+  const {
+    register,
+    control,
+    handleSubmit,
+    getValues,
+    formState: { errors, isDirty, dirtyFields }
+  } = useForm<QuotationCreatePayload>({
+    defaultValues: defaultQuotationCreatePayload
+  });
+  const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
+    console.log("data: ", data);
+  };
+  console.log("Current Data: ", getValues());
   return (
     <BodySTY>
       <StatusCard>
@@ -75,13 +95,47 @@ const Page: NextPageWithLayout<
           currentStep={currentTab}
         />
       </StatusCard>
-      <div className="body-container">
+      <form
+        className="body-container"
+        onSubmit={handleSubmit(asyncSubmitFormHandler)}
+      >
         <div className="content-container">
-          {currentTab === 1 && type === "custom" && <TravelInformation />}
-          {currentTab === 1 && type !== "custom" && <FlightInformation />}
-          {currentTab === 2 && <RidingInformation />}
-          {currentTab === 3 && <SpecialNeeds />}
-          {currentTab === 4 && <ContactInformation />}
+          {currentTab === 1 && type === "custom" && (
+            <TravelInformation
+              control={control}
+              errors={errors}
+              register={register}
+            />
+          )}
+          {currentTab === 1 && type !== "custom" && (
+            <FlightInformation
+              control={control}
+              errors={errors}
+              register={register}
+            />
+          )}
+          {currentTab === 2 && (
+            <RidingInformation
+              control={control}
+              errors={errors}
+              register={register}
+            />
+          )}
+
+          {currentTab === 3 && (
+            <SpecialNeeds
+              control={control}
+              errors={errors}
+              register={register}
+            />
+          )}
+          {currentTab === 4 && (
+            <ContactInformation
+              control={control}
+              errors={errors}
+              register={register}
+            />
+          )}
           <div className="content-actions-container">
             <Button
               style={{
@@ -92,6 +146,7 @@ const Page: NextPageWithLayout<
                 flex: "1",
                 border: "none"
               }}
+              type="button"
               onClick={() => {
                 if (currentTab === 1) {
                   alert("回到日期選擇頁!");
@@ -110,8 +165,8 @@ const Page: NextPageWithLayout<
             </Button>
             <Button
               appearance="primary"
+              type="button"
               style={{
-                // backgroundColor: "#fff",
                 color: "#fff",
                 fontWeight: "600",
                 borderRadius: "32px",
@@ -121,12 +176,13 @@ const Page: NextPageWithLayout<
               onClick={() => {
                 if (currentTab === 4) {
                   alert("送出詢價單");
-                  router.push({
-                    pathname: "/client/enquiry/detail",
-                    query: {
-                      type: type === "custom" ? "custom" : "airport"
-                    }
-                  });
+                  // router.push({
+                  //   pathname: "/client/enquiry/detail",
+                  //   query: {
+                  //     type: type === "custom" ? "custom" : "airport"
+                  //   }
+                  // });
+                  submitRef.current?.click();
                   return;
                 }
                 setCurrentTab((prev) => prev + 1);
@@ -141,7 +197,10 @@ const Page: NextPageWithLayout<
             <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
           </Collapse>
         </div>
-      </div>
+        <button style={{ display: "none" }} type="submit" ref={submitRef}>
+          submit
+        </button>
+      </form>
     </BodySTY>
   );
 };

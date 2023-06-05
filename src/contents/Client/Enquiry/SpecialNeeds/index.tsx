@@ -1,39 +1,28 @@
 import React from "react";
 import Collapse from "@components/Collapse";
-import { useForm } from "react-hook-form";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import { BodySTY, ItemSTY } from "./style";
 import { Textarea, Select, Checkbox } from "evergreen-ui";
 import CounterInput from "@components/CounterInput";
-type SchduleType = {
-  departureTime: string;
-  startPoint: { location: string };
-  destinationPoint: { location: string };
-  middlePoints: Array<{ location: string }>;
-};
-
-type FormValues = {
-  bottleWater: number;
-  childSeat: {
-    store: number;
-    self: number;
-  };
-  babySeat: {
-    store: number;
-    self: number;
-  };
-};
-const TravelInformation = () => {
-  const {
-    control,
-    register,
-    formState: { errors }
-  } = useForm<FormValues>({});
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  useFieldArray
+} from "react-hook-form";
+import { QuotationCreatePayload } from "../type";
+interface TravelInformationProps {
+  control: Control<QuotationCreatePayload>;
+  register: UseFormRegister<QuotationCreatePayload>;
+  errors: FieldErrors<QuotationCreatePayload>;
+}
+const TravelInformation = ({
+  register,
+  control,
+  errors
+}: TravelInformationProps) => {
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+    <div
       style={{
         display: "flex",
         flexDirection: "column",
@@ -53,7 +42,7 @@ const TravelInformation = () => {
                 checked={true}
                 description="若欲接送非母語人士/國外友人，建議選擇此選項。"
               >
-                <Textarea width={310} />
+                <Textarea width={310} {...register("pickup_sign_remark")} />
               </CheckBoxWrapper>
             </div>
             <div
@@ -93,7 +82,7 @@ const TravelInformation = () => {
                 <CounterInput
                   label="24瓶/箱"
                   register={register}
-                  inpurName="bottleWater"
+                  inpurName="bottled_water_box"
                 />
               </CheckBoxWrapper>
             </div>
@@ -109,7 +98,7 @@ const TravelInformation = () => {
                 checked={true}
                 description=""
               >
-                <Select width={310}>
+                <Select width={310} {...register("bus_age")}>
                   <option value={"01"}>{"3年 (+NT$ 1000 / 天)"}</option>
                 </Select>
               </CheckBoxWrapper>
@@ -127,12 +116,12 @@ const TravelInformation = () => {
                 <CounterInput
                   label="由店家提供 (+NT$ 200 / 天)"
                   register={register}
-                  inpurName="childSeat.store"
+                  inpurName="child_seat_seller"
                 />
                 <CounterInput
                   label="自備"
                   register={register}
-                  inpurName="childSeat.self"
+                  inpurName="child_seat_yourself"
                 />
               </CheckBoxWrapper>
             </div>
@@ -159,12 +148,12 @@ const TravelInformation = () => {
                 <CounterInput
                   label="由店家提供 (+NT$ 200 / 天)"
                   register={register}
-                  inpurName="babySeat.store"
+                  inpurName="infant_seat_seller"
                 />
                 <CounterInput
                   label="自備"
                   register={register}
-                  inpurName="babySeat.self"
+                  inpurName="infant_seat_yourself"
                 />
               </CheckBoxWrapper>
             </div>
@@ -195,11 +184,11 @@ const TravelInformation = () => {
             <div>
               此欄位可補充說明以上需求之細節，或提出您的其他需求。若有其他特殊需求，專人將會再提供報價。
             </div>
-            <Textarea width={"100%"} />
+            <Textarea width={"100%"} {...register("remark")} />
           </div>
         </BodySTY>
       </Collapse>
-    </form>
+    </div>
   );
 };
 
