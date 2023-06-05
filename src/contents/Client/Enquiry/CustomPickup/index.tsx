@@ -17,7 +17,7 @@ const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isDirty, dirtyFields }
   } = useForm<FormValues>({
     defaultValues: {
       departureDate: "",
@@ -29,15 +29,16 @@ const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
     console.log(data);
     const { departureDate, purpose, returnDate } = data;
     console.log(departureDate, purpose, returnDate);
-    router.push({
-      pathname: "/client/enquiry/edit",
-      query: {
-        departureDate,
-        returnDate,
-        purpose,
-        type: "custom"
-      }
-    });
+    console.log(isDirty, dirtyFields);
+    // router.push({
+    //   pathname: "/client/enquiry/edit",
+    //   query: {
+    //     departureDate,
+    //     returnDate,
+    //     purpose,
+    //     type: "custom"
+    //   }
+    // });
   };
   return (
     <Collapse title="客製包車" viewOnly opened={true}>
