@@ -15,7 +15,6 @@ export const ItemSTY = styled.li`
   gap: 30px;
   width: 100%;
   > .item {
-    border: 1px solid;
     flex: 1 0 0;
   }
 `;
