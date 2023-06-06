@@ -4,6 +4,7 @@ import { TextInput } from "evergreen-ui";
 import { useForm } from "react-hook-form";
 import { forwardRef, useState } from "react";
 import Collapse from "@components/Collapse";
+import { formatDateToString } from "@utils/calculateDate";
 type FormValues = {
   flightDate: string;
   flightNo: string;
@@ -25,7 +26,7 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
     formState: { errors }
   } = useForm<FormValues>({
     defaultValues: {
-      flightDate: "",
+      flightDate: formatDateToString(new Date()),
       flightNo: "",
       airport: "",
       terminal: "",
@@ -34,12 +35,12 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
     }
   });
   const submitFormHandler = (data: FormValues) => {
-    console.log(data);
-    const { flightDate, airport } = data;
+    const { flightDate, airport, flightTime } = data;
     router.push({
       pathname: "/client/enquiry/edit",
       query: {
         flightDate,
+        flightTime,
         airport,
         type: purpose
       }
@@ -74,14 +75,25 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>航班日期</span>
                 </div>
-                <TextInput type="date" {...register("flightDate")} />
+                <TextInput
+                  type="date"
+                  {...register("flightDate", {
+                    required: true
+                  })}
+                  isInvalid={!!errors.flightDate}
+                />
               </label>
               <label className="form-sub-item">
                 <div>
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>航班編號</span>
                 </div>
-                <TextInput {...register("flightNo")} />
+                <TextInput
+                  {...register("flightNo", {
+                    required: true
+                  })}
+                  isInvalid={!!errors.flightNo}
+                />
               </label>
             </div>
             <div className="form-item">
@@ -90,14 +102,24 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>機場</span>
                 </div>
-                <TextInput {...register("airport")} />
+                <TextInput
+                  {...register("airport", {
+                    required: true
+                  })}
+                  isInvalid={!!errors.airport}
+                />
               </label>
               <label className="form-sub-item">
                 <div>
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>航廈</span>
                 </div>
-                <TextInput {...register("terminal")} />
+                <TextInput
+                  {...register("terminal", {
+                    required: true
+                  })}
+                  isInvalid={!!errors.terminal}
+                />
               </label>
             </div>
             <div className="form-item">
@@ -106,7 +128,13 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>航班{purpose === "pickUp" ? "抵達" : "出發"}時間</span>
                 </div>
-                <TextInput type="date" {...register("flightTime")} />
+                <TextInput
+                  type="time"
+                  {...register("flightTime", {
+                    required: true
+                  })}
+                  isInvalid={!!errors.flightTime}
+                />
               </label>
               <label className="form-sub-item">
                 <div>

@@ -35,7 +35,11 @@ const TravelInformation = ({
     >
       {fields.map((item, index) => {
         return (
-          <Collapse key={item.id} title="第一天" opened={true}>
+          <Collapse
+            key={item.id}
+            title={`第${index + 1}天 ${item.day_date}`}
+            opened={true}
+          >
             <BodySTY>
               <ItemSTY>
                 <div className="item-content">出發時間</div>
@@ -58,86 +62,6 @@ const TravelInformation = ({
           </Collapse>
         );
       })}
-      {/* <Collapse title="第一天" opened={true}>
-        <BodySTY>
-          <ItemSTY>
-            <div className="item-content">出發時間</div>
-            <TextInput
-              {...register("fourthDay.departureTime")}
-              style={{ flex: "1" }}
-            />
-            <div className="option-container"></div>
-          </ItemSTY>
-          <StepArragement
-            control={control}
-            errors={errors}
-            register={register}
-            startPointName="firstDay.startPoint"
-            destinationPointName="firstDay.destinationPoint"
-            middlePointName="firstDay.middlePoints"
-          />
-        </BodySTY>
-      </Collapse>
-      <Collapse title="第二天">
-        <BodySTY>
-          <ItemSTY>
-            <div className="item-content">出發時間</div>
-            <TextInput
-              {...register("fourthDay.departureTime")}
-              style={{ flex: "1" }}
-            />
-            <div className="option-container"></div>
-          </ItemSTY>
-          <StepArragement
-            control={control}
-            errors={errors}
-            register={register}
-            startPointName="secondDay.startPoint"
-            destinationPointName="secondDay.destinationPoint"
-            middlePointName="secondDay.middlePoints"
-          />
-        </BodySTY>
-      </Collapse>
-      <Collapse title="第三天">
-        <BodySTY>
-          <ItemSTY>
-            <div className="item-content">出發時間</div>
-            <TextInput
-              {...register("fourthDay.departureTime")}
-              style={{ flex: "1" }}
-            />
-            <div className="option-container"></div>
-          </ItemSTY>
-          <StepArragement
-            control={control}
-            errors={errors}
-            register={register}
-            startPointName="thirdDay.startPoint"
-            destinationPointName="thirdDay.destinationPoint"
-            middlePointName="thirdDay.middlePoints"
-          />
-        </BodySTY>
-      </Collapse>
-      <Collapse title="第四天">
-        <BodySTY>
-          <ItemSTY>
-            <div className="item-content">出發時間</div>
-            <TextInput
-              {...register("fourthDay.departureTime")}
-              style={{ flex: "1" }}
-            />
-            <div className="option-container"></div>
-          </ItemSTY>
-          <StepArragement
-            control={control}
-            errors={errors}
-            register={register}
-            startPointName="fourthDay.startPoint"
-            destinationPointName="fourthDay.destinationPoint"
-            middlePointName="fourthDay.middlePoints"
-          />
-        </BodySTY>
-      </Collapse> */}
     </div>
   );
 };

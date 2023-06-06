@@ -5,31 +5,37 @@ export const BodySTY = styled.ul`
   padding: 20px;
   gap: 40px;
   width: 100%;
-`;
-
-export const ItemSTY = styled.li`
-  display: flex;
-  gap: 20px;
-  justify-content: flex-start;
-  align-items: center;
-  list-style: none;
-  width: 100%;
-  > .item-content {
-    width: 60px;
-  }
-  .option-container {
+  > .header-container {
     display: flex;
-    width: 72px;
-    .option-item {
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border: none;
-      background: transparent;
-      color: ${({ theme }) => theme.color.N600};
+    flex-direction: row;
+    padding: 0px;
+    gap: 40px;
+    > .header-item {
+      flex: 1 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 20px;
+      > .header-title {
+        font-weight: 700;
+        font-size: 14px;
+        color: ${({ theme }) => theme.color.N700};
+      }
     }
   }
+  > .content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 20px;
+  }
+`;
+
+export const CardSTY = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
 `;

@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  .body-container {
+  width: 100%;
+  > .body-container {
     display: flex;
     gap: 20px;
-    .content-container {
-      flex: 2;
+    > .content-container {
+      flex: 2 0 0;
       display: flex;
       flex-direction: column;
       gap: 50px;
@@ -15,7 +16,7 @@ export const BodySTY = styled.div`
       }
     }
     .charge-container {
-      flex: 1;
+      flex: 1 0 0;
     }
   }
 `;

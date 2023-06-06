@@ -14,11 +14,13 @@ interface TravelInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
+  type: string;
 }
 const FlightInformation = ({
   register,
   control,
-  errors
+  errors,
+  type
 }: TravelInformationProps) => {
   const { fields } = useFieldArray({
     name: "order_itinerary_list",
@@ -69,6 +71,8 @@ const FlightInformation = ({
                 startPointName={`order_itinerary_list.${index}.pickup_location`}
                 destinationPointName={`order_itinerary_list.${index}.dropoff_location`}
                 middlePointName={`order_itinerary_list.${index}.stopover_addresses`}
+                withStartPoint={type === "pickUp"}
+                withDestinationPoint={type === "dropOff"}
               />
             </BodySTY>
           </Collapse>

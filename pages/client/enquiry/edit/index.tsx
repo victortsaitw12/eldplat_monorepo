@@ -4,7 +4,7 @@ import {
   NextPageWithLayout
 } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { getLayout } from "@layout/QuoteLayout";
 import StatusCard from "@components/StatusCard";
 import { BodySTY } from "./style";
@@ -24,6 +24,7 @@ import {
   QuotationCreatePayload,
   defaultQuotationCreatePayload
 } from "@contents/Client/Enquiry/type";
+import { shiftDate, calculateDuration } from "@utils/calculateDate";
 //
 const DummyNavigationListData = [
   {
@@ -65,15 +66,93 @@ const DummyExpenseDetailData = [
     label: "司機費用",
     hint: "司機費用說明",
     value: 300
+  },
+  {
+    label: "夜間加價",
+    hint: "夜間加價費用說明",
+    value: 200
+  },
+  {
+    label: "偏遠地區加價",
+    hint: "偏遠地區加價費用說明",
+    value: 300
+  },
+  {
+    label: "特殊需求小計",
+    hint: "特殊需求小計費用說明",
+    value: 300
   }
 ];
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ departureDate, returnDate, purpose, type, airport, flightDate }) => {
+> = ({
+  departureDate,
+  returnDate,
+  purpose,
+  type,
+  airport,
+  flightDate,
+  flightTime
+}) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const router = useRouter();
+  console.log(
+    "data: ",
+    departureDate,
+    returnDate,
+    purpose,
+    type,
+    airport,
+    flightDate,
+    flightTime
+  );
+  const defaultValues = useMemo(() => {
+    if (type === "custom") {
+      let durationDay = 1;
+      if (type === "custom") {
+        if (returnDate && departureDate) {
+          durationDay = calculateDuration(departureDate, returnDate);
+        }
+        console.log("durationDay: ", durationDay);
+        return {
+          ...defaultQuotationCreatePayload,
+          departure_date: departureDate,
+          return_date: returnDate,
+          order_itinerary_list: new Array(durationDay + 1)
+            .fill({})
+            .map((_, index) => {
+              return {
+                day_number: index + 1,
+                day_date: shiftDate(new Date(departureDate!), index),
+                departure_time: "",
+                pickup_location: "",
+                stopover_addresses: [],
+                dropoff_location: ""
+              };
+            })
+        };
+      }
+    } else {
+      return {
+        ...defaultQuotationCreatePayload,
+        departure_date: flightDate,
+        return_date: returnDate,
+        order_itinerary_list: [
+          {
+            day_number: 1,
+            day_date: flightDate,
+            departure_time: flightTime,
+            pickup_location: type === "pickUp" ? airport : "",
+            stopover_addresses: [],
+            dropoff_location: type === "dropOff" ? airport : ""
+          }
+        ]
+      };
+    }
+  }, [type]);
+  console.log("defaultValues: ", defaultValues);
   const {
     register,
     control,
@@ -81,7 +160,7 @@ const Page: NextPageWithLayout<
     getValues,
     formState: { errors, isDirty, dirtyFields }
   } = useForm<QuotationCreatePayload>({
-    defaultValues: defaultQuotationCreatePayload
+    defaultValues: defaultValues
   });
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
     console.log("data: ", data);
@@ -112,6 +191,7 @@ const Page: NextPageWithLayout<
               control={control}
               errors={errors}
               register={register}
+              type={type}
             />
           )}
           {currentTab === 2 && (
@@ -168,6 +248,7 @@ const Page: NextPageWithLayout<
               type="button"
               style={{
                 color: "#fff",
+                backgroundColor: "#3670C9",
                 fontWeight: "600",
                 borderRadius: "32px",
                 flex: "1",
@@ -209,6 +290,7 @@ interface Props {
   departureDate?: string;
   returnDate?: string;
   flightDate?: string;
+  flightTime?: string;
   purpose?: string;
   airport?: string;
   type: string;
@@ -218,6 +300,7 @@ interface RouterQuery extends ParsedUrlQuery {
   departureDate?: string;
   returnDate?: string;
   flightDate?: string;
+  flightTime?: string;
   purpose?: string;
   airport?: string;
   type: string;
@@ -232,6 +315,7 @@ export const getServerSideProps: GetServerSideProps<
   const returnDate = query.returnDate && (query.returnDate as string);
   const purpose = query.purpose && (query.purpose as string);
   const flightDate = query.flightDate && (query.flightDate as string);
+  const flightTime = query.flightTime && (query.flightTime as string);
   const airport = query.airport && (query.airport as string);
   const type = query.type ? (query.type as string) : "custom";
 
@@ -241,6 +325,7 @@ export const getServerSideProps: GetServerSideProps<
       returnDate: returnDate || "",
       purpose: purpose || "",
       flightDate: flightDate || "",
+      flightTime: flightTime || "",
       airport: airport || "",
       type: type || "",
       title: type === "custom" ? "客製包車" : "機場接送"

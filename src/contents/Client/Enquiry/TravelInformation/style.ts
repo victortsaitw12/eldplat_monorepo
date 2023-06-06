@@ -10,14 +10,15 @@ export const BodySTY = styled.ul`
 export const ItemSTY = styled.li`
   display: flex;
   gap: 20px;
+  color: ${({ theme }) => theme.color.N700};
   justify-content: flex-start;
   align-items: center;
   list-style: none;
   width: 100%;
   > .item-content {
-    width: 60px;
+    width: 70px;
   }
-  .option-container {
+  > .option-container {
     display: flex;
     width: 72px;
     .option-item {

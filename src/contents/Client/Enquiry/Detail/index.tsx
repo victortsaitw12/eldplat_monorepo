@@ -1,52 +1,29 @@
 import React, { useState } from "react";
-import { GetServerSideProps, NextPageWithLayout } from "next";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
-import { useRouter } from "next/router";
-import { Pane, Icon, FloppyDiskIcon, EditIcon, TextInput } from "evergreen-ui";
+import { useForm, FormProvider } from "react-hook-form";
+import { Pane } from "evergreen-ui";
 import { BodySTY } from "./style";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-
-//@layout
-import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
-import FilterWrapper from "@layout/FilterWrapper";
-
 //@component
 import LabelTag from "@components/LabelTag";
 import Collapse from "@components/Collapse";
-import ProgressList from "@components/ProgressList";
-import VerticalDetail from "@components/VerticalDetail";
-import DetailList from "@components/DetailList";
-import CheckBoxWrapper from "@components/CheckBoxWrapper";
-//@services
-
 //@contents
 import ShuttleInfoView from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo/ShuttleInfoView";
 import CarInfoView from "@contents/AdminOrders/AdminOrdersDetail/CarInfo/CarInfoView";
-import CarInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/CarInfo/CarInfoEdit";
 import ContactInfoView from "@contents/AdminOrders/AdminOrdersDetail/ContactInfo/ContactInfoView";
-import ContactInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/ContactInfo/ContactInfoEdit";
 import PassengerInfoView from "@contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoView";
 import PassengerInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoEdit";
 import TakeBusInfoView from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoView";
 import TakeBusInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoEdit";
 import FlightInfoView from "@contents/AdminOrders/AdminOrdersDetail/FlightInfo/FlightInfoView";
 import FlightInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/FlightInfo/FlightInfoEdit";
-//@util
-import { keysToLowercase } from "@utils/keysToLowercase";
-
-//@context
-// import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
-
 //@mock_data
 import {
-  mock_progressdata,
   order_contact,
   order_represent,
   order_shuttleList,
   order_sepcial,
   order_flight
 } from "@mock-data/adminOrders/mockData";
+import DetailList from "@components/DetailList";
 
 interface I_Props {
   isEdit: boolean;

@@ -1,15 +1,10 @@
 import React from "react";
 import Collapse from "@components/Collapse";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
-import { BodySTY, ItemSTY } from "./style";
+import { BodySTY, ItemSTY, RemarkSTY } from "./style";
 import { Textarea, Select, Checkbox } from "evergreen-ui";
 import CounterInput from "@components/CounterInput";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  useFieldArray
-} from "react-hook-form";
+import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
 interface TravelInformationProps {
   control: Control<QuotationCreatePayload>;
@@ -25,18 +20,13 @@ const TravelInformation = ({
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
-        padding: "20px"
+        flexDirection: "column"
       }}
     >
       <Collapse title="特殊需求" opened={true}>
         <BodySTY>
           <ItemSTY>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper
                 label="舉牌(NT$200)"
                 checked={true}
@@ -45,11 +35,7 @@ const TravelInformation = ({
                 <Textarea width={310} {...register("pickup_sign_remark")} />
               </CheckBoxWrapper>
             </div>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper
                 label="杯水"
                 checked={true}
@@ -58,22 +44,14 @@ const TravelInformation = ({
             </div>
           </ItemSTY>
           <ItemSTY>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper
                 label="司導(NT$200)"
                 checked={true}
                 description="由司機兼任導遊，講解沿路風光。"
               ></CheckBoxWrapper>
             </div>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper
                 label="瓶裝水(NT$120)"
                 checked={true}
@@ -88,11 +66,7 @@ const TravelInformation = ({
             </div>
           </ItemSTY>
           <ItemSTY>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper
                 label="指定車齡(視選項加價)"
                 checked={true}
@@ -103,11 +77,7 @@ const TravelInformation = ({
                 </Select>
               </CheckBoxWrapper>
             </div>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper
                 label="兒童座椅"
                 checked={true}
@@ -126,24 +96,15 @@ const TravelInformation = ({
               </CheckBoxWrapper>
             </div>
           </ItemSTY>
-
           <ItemSTY>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper
                 label="攜帶特大/特殊行李"
                 checked={true}
                 description="若有特大/特殊行李，像是貴重物、易碎品等等，請盡量事前告知。"
               ></CheckBoxWrapper>
             </div>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper label="嬰兒座椅" checked={true} description="">
                 <CounterInput
                   label="由店家提供 (+NT$ 200 / 天)"
@@ -159,11 +120,7 @@ const TravelInformation = ({
             </div>
           </ItemSTY>
           <ItemSTY>
-            <div
-              style={{
-                flex: "1"
-              }}
-            >
+            <div className="item">
               <CheckBoxWrapper
                 label="攜帶寵物"
                 checked={true}
@@ -173,19 +130,15 @@ const TravelInformation = ({
                 <Checkbox label="寵物無法裝籠，將直接帶上車（NT$1,000） " />
               </CheckBoxWrapper>
             </div>
-            <div
-              style={{
-                flex: "1"
-              }}
-            ></div>
+            <div className="item"></div>
           </ItemSTY>
-          <div>
-            <div>備註</div>
+          <RemarkSTY>
+            <div className="title">備註</div>
             <div>
               此欄位可補充說明以上需求之細節，或提出您的其他需求。若有其他特殊需求，專人將會再提供報價。
             </div>
             <Textarea width={"100%"} {...register("remark")} />
-          </div>
+          </RemarkSTY>
         </BodySTY>
       </Collapse>
     </div>
