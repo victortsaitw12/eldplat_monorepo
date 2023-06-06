@@ -5,17 +5,19 @@ export const BodySTY = styled.div`
   flex-direction: row;
   gap: 20px;
   .left {
-    width: 820px;
+    /* width: 820px; */
+    flex: 2;
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
   .right {
-    width: 400px;
+    /* width: 400px; */
+    flex: 1;
   }
   .collapse {
     &_title {
-      border-radius: 10px 10px 0px 0px;
+      /* border-radius: 10px 10px 0px 0px; */
       padding-left: 20px;
     }
     &_content {
@@ -24,7 +26,7 @@ export const BodySTY = styled.div`
         display: flex;
         flex-direction: column;
         gap: 20px;
-        border-radius: 0px 0px 10px 10px;
+        /* border-radius: 0px 0px 10px 10px; */
         padding: 20px;
         /* DetailItem */
         & > li {

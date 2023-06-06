@@ -218,13 +218,13 @@ export const MOCK_progressList = [
 ];
 
 export const MOCK_expenseList = [
-  { label: "基本車資", value: 1200 },
-  { label: "小費", value: 200 },
-  { label: "旺季加價", value: 300 },
-  { label: "司機費用", value: 300 },
-  { label: "夜間加價", value: 200 },
-  { label: "偏遠地區加價", value: 300 },
-  { label: "特殊需求小計", value: 300 }
+  { label: "基本車資", value: 1200, hint: "基本車資" },
+  { label: "小費", value: 200, hint: "小費" },
+  { label: "旺季加價", value: 300, hint: "旺季加價" },
+  { label: "司機費用", value: 300, hint: "司機費用" },
+  { label: "夜間加價", value: 200, hint: "夜間加價" },
+  { label: "偏遠地區加價", value: 300, hint: "偏遠地區加價" },
+  { label: "特殊需求小計", value: 300, hint: "特殊需求小計" }
 ];
 
 // DT ------------------------------------------------------
