@@ -3,15 +3,25 @@ import Collapse from "@components/Collapse";
 import { BodySTY, CardSTY } from "./style";
 import CounterInput from "@components/CounterInput";
 import { QuotationCreatePayload } from "../type";
-import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormGetValues
+} from "react-hook-form";
 interface TravelInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
+  setValue: UseFormSetValue<QuotationCreatePayload>;
+  getValues: UseFormGetValues<QuotationCreatePayload>;
 }
 const TravelInformation = ({
   register,
+  setValue,
   control,
+  getValues,
   errors
 }: TravelInformationProps) => {
   return (
@@ -32,18 +42,24 @@ const TravelInformation = ({
               </div>
               <CounterInput
                 register={register}
+                setValue={setValue}
+                getValues={getValues}
                 label="成人"
-                inpurName="adult"
+                inputName="adult"
               />
               <CounterInput
                 register={register}
+                setValue={setValue}
+                getValues={getValues}
                 label="兒童(2~4歲)"
-                inpurName="child"
+                inputName="child"
               />
               <CounterInput
                 register={register}
+                setValue={setValue}
+                getValues={getValues}
                 label="嬰兒(0~1歲)"
-                inpurName="infant"
+                inputName="infant"
               />
             </div>
             <div className="header-item">
@@ -52,13 +68,17 @@ const TravelInformation = ({
               </div>
               <CounterInput
                 register={register}
+                setValue={setValue}
+                getValues={getValues}
                 label="託運行李(21吋以上)"
-                inpurName="check_in_luggage"
+                inputName="check_in_luggage"
               />
               <CounterInput
                 register={register}
+                setValue={setValue}
+                getValues={getValues}
                 label="手提行李(20吋以下)"
-                inpurName="carry_on_luggage"
+                inputName="carry_on_luggage"
               />
             </div>
           </div>
@@ -71,13 +91,17 @@ const TravelInformation = ({
               <CardSTY>
                 <CounterInput
                   register={register}
+                  setValue={setValue}
+                  getValues={getValues}
                   label="車輛名稱(35~43人)"
-                  inpurName="largeBus.large1"
+                  inputName="largeBus.large1"
                 />
                 <CounterInput
                   register={register}
+                  setValue={setValue}
+                  getValues={getValues}
                   label="車輛名稱(28~34人)"
-                  inpurName="largeBus.large2"
+                  inputName="largeBus.large2"
                 />
               </CardSTY>
             </Collapse>
@@ -85,13 +109,17 @@ const TravelInformation = ({
               <CardSTY>
                 <CounterInput
                   register={register}
+                  setValue={setValue}
+                  getValues={getValues}
                   label="車輛名稱(21~25人)"
-                  inpurName="mediumBus.medium1"
+                  inputName="mediumBus.medium1"
                 />
                 <CounterInput
                   register={register}
+                  setValue={setValue}
+                  getValues={getValues}
                   label="車輛名稱(10~21人)"
-                  inpurName="mediumBus.medium2"
+                  inputName="mediumBus.medium2"
                 />
               </CardSTY>
             </Collapse>
@@ -99,8 +127,10 @@ const TravelInformation = ({
               <CardSTY>
                 <CounterInput
                   register={register}
+                  setValue={setValue}
+                  getValues={getValues}
                   label="車輛名稱(9人)"
-                  inpurName="smallBus.small1"
+                  inputName="smallBus.small1"
                 />
               </CardSTY>
             </Collapse>

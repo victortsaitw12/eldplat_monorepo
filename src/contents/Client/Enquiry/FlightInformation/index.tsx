@@ -8,12 +8,14 @@ import {
   Control,
   FieldErrors,
   UseFormRegister,
+  UseFormSetValue,
   useFieldArray
 } from "react-hook-form";
 interface TravelInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
+  setValue: UseFormSetValue<QuotationCreatePayload>;
   type: string;
 }
 const FlightInformation = ({

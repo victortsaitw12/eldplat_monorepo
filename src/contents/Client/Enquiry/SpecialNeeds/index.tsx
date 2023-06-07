@@ -4,17 +4,27 @@ import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import { BodySTY, ItemSTY, RemarkSTY } from "./style";
 import { Textarea, Select, Checkbox } from "evergreen-ui";
 import CounterInput from "@components/CounterInput";
-import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormGetValues
+} from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
 interface TravelInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
+  setValue: UseFormSetValue<QuotationCreatePayload>;
+  getValues: UseFormGetValues<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
 }
 const TravelInformation = ({
   register,
   control,
-  errors
+  errors,
+  getValues,
+  setValue
 }: TravelInformationProps) => {
   return (
     <div
@@ -60,7 +70,9 @@ const TravelInformation = ({
                 <CounterInput
                   label="24瓶/箱"
                   register={register}
-                  inpurName="bottled_water_box"
+                  setValue={setValue}
+                  getValues={getValues}
+                  inputName="bottled_water_box"
                 />
               </CheckBoxWrapper>
             </div>
@@ -86,12 +98,16 @@ const TravelInformation = ({
                 <CounterInput
                   label="由店家提供 (+NT$ 200 / 天)"
                   register={register}
-                  inpurName="child_seat_seller"
+                  setValue={setValue}
+                  getValues={getValues}
+                  inputName="child_seat_seller"
                 />
                 <CounterInput
                   label="自備"
                   register={register}
-                  inpurName="child_seat_yourself"
+                  setValue={setValue}
+                  getValues={getValues}
+                  inputName="child_seat_yourself"
                 />
               </CheckBoxWrapper>
             </div>
@@ -109,12 +125,16 @@ const TravelInformation = ({
                 <CounterInput
                   label="由店家提供 (+NT$ 200 / 天)"
                   register={register}
-                  inpurName="infant_seat_seller"
+                  setValue={setValue}
+                  getValues={getValues}
+                  inputName="infant_seat_seller"
                 />
                 <CounterInput
                   label="自備"
                   register={register}
-                  inpurName="infant_seat_yourself"
+                  setValue={setValue}
+                  getValues={getValues}
+                  inputName="infant_seat_yourself"
                 />
               </CheckBoxWrapper>
             </div>

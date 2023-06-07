@@ -4,6 +4,7 @@ import {
   Control,
   FieldErrors,
   UseFormRegister,
+  UseFormSetValue,
   useFieldArray
 } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
@@ -15,11 +16,13 @@ interface TravelInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
+  setValue: UseFormSetValue<QuotationCreatePayload>;
 }
 const TravelInformation = ({
   register,
   control,
-  errors
+  errors,
+  setValue
 }: TravelInformationProps) => {
   const { fields } = useFieldArray({
     name: "order_itinerary_list",

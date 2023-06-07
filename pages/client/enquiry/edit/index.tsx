@@ -105,16 +105,6 @@ const Page: NextPageWithLayout<
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const router = useRouter();
-  console.log(
-    "data: ",
-    departureDate,
-    returnDate,
-    purpose,
-    type,
-    airport,
-    flightDate,
-    flightTime
-  );
   const defaultValues = useMemo(() => {
     if (type === "custom") {
       let durationDay = 1;
@@ -159,12 +149,12 @@ const Page: NextPageWithLayout<
       };
     }
   }, [type]);
-  console.log("defaultValues: ", defaultValues);
   const {
     register,
     control,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors, isDirty, dirtyFields }
   } = useForm<QuotationCreatePayload>({
     defaultValues: defaultValues
@@ -181,16 +171,20 @@ const Page: NextPageWithLayout<
           currentStep={currentTab}
         />
       </StatusCard>
-      <form
-        className="body-container"
-        onSubmit={handleSubmit(asyncSubmitFormHandler)}
-      >
-        <div className="content-container">
+      <div className="body-container">
+        <form
+          className="content-container"
+          onSubmit={handleSubmit(asyncSubmitFormHandler)}
+        >
+          <button type="submit" style={{ display: "none" }} ref={submitRef}>
+            submit
+          </button>
           {currentTab === 1 && type === "custom" && (
             <TravelInformation
               control={control}
               errors={errors}
               register={register}
+              setValue={setValue}
             />
           )}
           {currentTab === 1 && type !== "custom" && (
@@ -198,6 +192,7 @@ const Page: NextPageWithLayout<
               control={control}
               errors={errors}
               register={register}
+              setValue={setValue}
               type={type}
             />
           )}
@@ -206,6 +201,8 @@ const Page: NextPageWithLayout<
               control={control}
               errors={errors}
               register={register}
+              setValue={setValue}
+              getValues={getValues}
             />
           )}
 
@@ -214,6 +211,8 @@ const Page: NextPageWithLayout<
               control={control}
               errors={errors}
               register={register}
+              setValue={setValue}
+              getValues={getValues}
             />
           )}
           {currentTab === 4 && (
@@ -279,16 +278,13 @@ const Page: NextPageWithLayout<
               {currentTab === 4 ? "送出詢價單" : "下一步"}
             </Button>
           </div>
-        </div>
+        </form>
         <div className="charge-container">
           <Collapse title="初估金額" opened={true}>
             <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
           </Collapse>
         </div>
-        <button style={{ display: "none" }} type="submit" ref={submitRef}>
-          submit
-        </button>
-      </form>
+      </div>
     </BodySTY>
   );
 };

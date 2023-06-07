@@ -41,14 +41,7 @@ function StepArragement({
         />
         <div className="option-container">
           {fields.length === 0 && (
-            <button
-              className="option-item"
-              onClick={() =>
-                append({
-                  location: ""
-                })
-              }
-            >
+            <button className="option-item" onClick={() => append("")}>
               <PlusIcon size={12} />
             </button>
           )}

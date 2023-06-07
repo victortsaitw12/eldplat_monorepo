@@ -6,6 +6,7 @@ import HookFormMultiSelect from "@components/HookForm/Select/MultiSelect";
 import ExpenseDetail from "@components/ExpenseDetail";
 import { useForm, useWatch } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
+import CounterInput from "@components/HookForm/Input/CounterInput";
 import { useRef } from "react";
 const DummyFlowListData = [
   {
@@ -125,6 +126,7 @@ type FormValues = {
   startPoint: string;
   destinationPoint: string;
   middlePoints: Array<string>;
+  counter: number;
 };
 
 const ComponentsRender = () => {
@@ -138,7 +140,8 @@ const ComponentsRender = () => {
       muti: ["01"],
       middlePoints: [],
       startPoint: "松山",
-      destinationPoint: "台南"
+      destinationPoint: "台南",
+      counter: 0
     }
   });
   const formButtonRef = useRef<HTMLButtonElement>(null);
@@ -191,6 +194,7 @@ const ComponentsRender = () => {
           options={DummyMultiSelectOptions}
           isDisabled={false}
         />
+        <CounterInput control={control} inputName="counter" label="Counter" />
         <StepArragement
           startPointName="startPoint"
           destinationPointName="destinationPoint"
