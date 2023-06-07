@@ -10,6 +10,7 @@ export const getQuotationByFilter = async (data: any) => {
             filteredNullData[key] = data[key];
         }
     }
+    console.log("filteredNullData", filteredNullData);
     //
     const res = await fetch(
         API_Path["GetQuotationByFilter"],
@@ -19,7 +20,16 @@ export const getQuotationByFilter = async (data: any) => {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
             },
-            body: JSON.stringify(filteredNullData)
+            body: JSON.stringify({
+                order_filter: [],
+                filter_needed: true,
+                page_info: {
+                    page_Index: 1, //第幾頁
+                    page_Size: 10, //一頁幾筆
+                    orderby: "quote_no", //可根據詢價號碼做排序
+                    arrangement: "asc", //升序or降序
+                }
+            })
         }
     );
     return res.json();
