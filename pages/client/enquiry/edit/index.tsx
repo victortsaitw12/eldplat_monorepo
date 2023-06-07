@@ -50,36 +50,43 @@ const DummyExpenseDetailData = [
   {
     label: "基本車資",
     hint: "基本車資說明",
+    name: "basic",
     value: 1200
   },
   {
     label: "小費",
     hint: "小費說明",
+    name: "tip",
     value: 200
   },
   {
     label: "旺季加價",
     hint: "旺季加價說明",
+    name: "peak",
     value: 300
   },
   {
     label: "司機費用",
     hint: "司機費用說明",
+    name: "driver",
     value: 300
   },
   {
     label: "夜間加價",
     hint: "夜間加價費用說明",
+    name: "night",
     value: 200
   },
   {
     label: "偏遠地區加價",
     hint: "偏遠地區加價費用說明",
+    name: "remote",
     value: 300
   },
   {
     label: "特殊需求小計",
     hint: "特殊需求小計費用說明",
+    name: "special",
     value: 300
   }
 ];
