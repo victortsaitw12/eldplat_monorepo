@@ -11,7 +11,6 @@ import ShuttleInfoView from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo
 import DetailItem from "@components/DetailList/DetailItem";
 import ProgressList from "@components/ProgressList";
 import { MOCK_progressList } from "@mock-data/orders";
-import CounterInput from "@components/CounterInput";
 
 const OrderDetail = ({ data }) => {
   const methods = useForm();
@@ -104,15 +103,10 @@ const OrderDetail = ({ data }) => {
         { title: "通訊軟體", value: data?.contact[1]?.social_media || "" }
       ]
     : contactArr;
-  const handleTest = () => {
-    console.log("Check:");
-  };
   const onSubmit = (data) => console.log("Check:", data);
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <Button type="submit">check register value</Button>
-        <CounterInput label="成人" inputName="adult" methods={methods} />
         <SectionSTY>
           <Collapse
             title={data.purpose}

@@ -6,4 +6,7 @@ export const BodySTY = styled.div`
   &>div{
     border: none;
   }
+  .drawer__content{
+    height: calc(100vh - 110px);
+  }
 `;

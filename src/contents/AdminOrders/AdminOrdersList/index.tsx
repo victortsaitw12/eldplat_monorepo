@@ -4,8 +4,8 @@ import { BodySTY } from "./style";
 interface Props {
   listData: any;
   goToCreatePage: () => void;
-  goToDetailPage: (id: string) => void;
-  goToEditPageHandler: (id: string) => void;
+  goToDetailPage: (id: string, item: any) => void;
+  goToEditPageHandler: (id: string, item: any) => void;
   deleteItemHandler: (id: string) => void;
 }
 

@@ -1,30 +1,18 @@
 import React from "react";
-import { TickCircleIcon, Pane, Group, InlineAlert, Button } from "evergreen-ui";
+import { Pane, mergeTheme, defaultTheme } from "evergreen-ui";
 import { DivSTY } from "./style";
 import { MOCK_expenseList } from "@mock-data/orders";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
+import { Label } from "@components/Button/Primary";
+import { LabelSec } from "@components/Button/Primary";
+import PaymentBtn from "./PaymentBtn";
 
 const Quote = ({ data }) => {
+  const [payment, setPayment] = React.useState();
   return (
     <DivSTY>
-      {data.order_status === "01" && (
-        <Button appearance="primary">接受報價</Button>
-      )}
-      {data.order_status === "01" && (
-        <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-          <Button appearance="primary">支付訂金</Button>
-          <Button appearance="primary">支付全額</Button>
-        </div>
-      )}
-      {data.order_status === "01" && (
-        <Button appearance="primary">支付尾款</Button>
-      )}
-      {data.order_status === "01" && (
-        <InlineAlert intent="danger" className="inlineAlert">
-          繳費期限已截止，未成功完成訂車作業。若仍想要訂車， 請聯繫客服。
-        </InlineAlert>
-      )}
+      <PaymentBtn data={data} />
       <Pane className="quote">
         <Collapse
           title="金額試算"
