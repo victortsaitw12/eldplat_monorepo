@@ -9,9 +9,10 @@ interface Route {
   url: string | { pathname: string; query: any };
 }
 
-const Breadcrumbs = ({ routes }: { routes: Route[] }) => {
+const Breadcrumbs = ({ routes, style }: { routes: Route[]; style?: any }) => {
+  const STY = style || {};
   return (
-    <DivSTY className="breadcrumbs">
+    <DivSTY className="breadcrumbs" style={STY}>
       {routes.map((route, index) => (
         <>
           {index !== 0 && (
