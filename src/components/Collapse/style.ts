@@ -26,6 +26,7 @@ export const BodySTY = styled.div<I_StyProps>`
     }
     .collapse_content{
         display: none;
+        background-color: ${({ theme }) => theme.color.N0};
         &.show{
             display: block;
         }

@@ -1,22 +1,14 @@
 import React from "react";
 import { BodySTY } from "./style";
 import DotIcon from "./DotIcon";
-import cx from "classnames"
-import {
-    Control,
-    FieldArrayPath,
-    FieldError,
-    FieldErrors,
-    FieldValues,
-    UseFormRegister,
-    useFieldArray
-} from "react-hook-form";
+import cx from "classnames";
+import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
 
 import { PlusIcon, TrashIcon, TextInput, Text } from "evergreen-ui";
 
 interface I_Item {
-    label: string | React.ReactNode;
-    location: string | React.ReactNode;
+  label: string | React.ReactNode;
+  location: string | React.ReactNode;
 }
 interface I_Props {
     fatherArrayName: string;
@@ -108,13 +100,60 @@ const ScheduleList = ({
 
         )
     }
-    return (
-        <BodySTY className="schedule-list-container">
-            <ul className="schedule-list">
-                {r_item(fields)}
-            </ul>
-        </BodySTY>
-    );
+  };
+  const r_item = (fields: any[]) => {
+    return fields.map((child, i) => (
+      <li key={i} className="schedule-list-item">
+        <Text className="schedule-list-label">
+          {needLine && (
+            <Text className={cx("dot", { withLine: i < fields.length - 1 })}>
+              <DotIcon />
+            </Text>
+          )}
+          {r_label(child.label, i)}
+        </Text>
+        <Text>
+          {isEdit ? (
+            <TextInput
+              placeholder="請輸入詳細地址"
+              {...register(`${arrayName}.${i}.location`)}
+              disabled={disabledFirst && i == 0}
+            />
+          ) : (
+            child.location
+          )}
+        </Text>
+        {isEdit && (
+          <Text className="schedule-item-action">
+            <PlusIcon
+              color="#718BAA"
+              size={11}
+              onClick={() => {
+                append({
+                  label: "",
+                  value: ""
+                });
+              }}
+            />
+            {i > 0 && (
+              <TrashIcon
+                color="#718BAA"
+                size={11}
+                onClick={() => {
+                  remove(i);
+                }}
+              />
+            )}
+          </Text>
+        )}
+      </li>
+    ));
+  };
+  return (
+    <BodySTY className="schedule-list-container">
+      <ul className="schedule-list">{r_item(fields)}</ul>
+    </BodySTY>
+  );
 };
 
-export default ScheduleList
+export default ScheduleList;

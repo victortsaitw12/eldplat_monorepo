@@ -6,6 +6,8 @@ import HookFormMultiSelect from "@components/HookForm/Select/MultiSelect";
 import ExpenseDetail from "@components/ExpenseDetail";
 import { useForm, useWatch } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
+import CounterInput from "@components/HookForm/Input/CounterInput";
+import { useRef } from "react";
 const DummyFlowListData = [
   {
     imageUrl: "/icons/Document.svg",
@@ -96,30 +98,35 @@ const DummyExpenseDetailData = [
   {
     label: "基本車資",
     hint: "基本車資說明",
+    name: "basic",
     value: 1200
   },
   {
     label: "小費",
     hint: "小費說明",
+    name: "tip",
     value: 200
   },
   {
     label: "旺季加價",
     hint: "旺季加價說明",
+    name: "peak",
     value: 300
   },
   {
     label: "司機費用",
     hint: "司機費用說明",
+    name: "driver",
     value: 300
   }
 ];
 
 type FormValues = {
   muti: string[];
-  startPoint: { location: string };
-  destinationPoint: { location: string };
-  middlePoints: Array<{ location: string }>;
+  startPoint: string;
+  destinationPoint: string;
+  middlePoints: Array<string>;
+  counter: number;
 };
 
 const ComponentsRender = () => {
@@ -132,11 +139,12 @@ const ComponentsRender = () => {
     defaultValues: {
       muti: ["01"],
       middlePoints: [],
-      startPoint: { location: "松山" },
-      destinationPoint: { location: "台南" }
+      startPoint: "松山",
+      destinationPoint: "台南",
+      counter: 0
     }
   });
-
+  const formButtonRef = useRef<HTMLButtonElement>(null);
   return (
     <div
       style={{
@@ -186,6 +194,7 @@ const ComponentsRender = () => {
           options={DummyMultiSelectOptions}
           isDisabled={false}
         />
+        <CounterInput control={control} inputName="counter" label="Counter" />
         <StepArragement
           startPointName="startPoint"
           destinationPointName="destinationPoint"
@@ -213,7 +222,19 @@ const ComponentsRender = () => {
       />
 
       <div style={{ width: "600px", padding: "20px", backgroundColor: "#fff" }}>
-        <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
+        <ExpenseDetail
+          data={DummyExpenseDetailData}
+          prefix="NT$"
+          isEdit
+          ref={formButtonRef}
+        />
+        <button
+          onClick={() => {
+            formButtonRef.current?.click();
+          }}
+        >
+          sumbit data!
+        </button>
       </div>
     </div>
   );

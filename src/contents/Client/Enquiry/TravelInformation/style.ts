@@ -6,9 +6,11 @@ export const BodySTY = styled.ul`
   gap: 40px;
   width: 100%;
 `;
+
 export const ItemSTY = styled.li`
   display: flex;
   gap: 20px;
+  color: ${({ theme }) => theme.color.N700};
   justify-content: flex-start;
   align-items: center;
   list-style: none;
@@ -16,7 +18,7 @@ export const ItemSTY = styled.li`
   > .item-content {
     width: 70px;
   }
-  .option-container {
+  > .option-container {
     display: flex;
     width: 72px;
     .option-item {
