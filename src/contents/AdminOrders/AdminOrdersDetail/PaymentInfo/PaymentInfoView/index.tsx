@@ -3,7 +3,7 @@ import { Pane } from "evergreen-ui";
 
 import VerticalDetail from "@components/VerticalDetail";
 
-const PaymentInfoView = () => {
+const PaymentInfoView = (data: any) => {
     return (
         <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
             <VerticalDetail
