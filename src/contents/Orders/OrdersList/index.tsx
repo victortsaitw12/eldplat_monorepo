@@ -8,32 +8,17 @@ import Collapse from "@components/Collapse";
 import DetailItem from "@components/DetailList/DetailItem";
 import ProgressList from "@components/ProgressList";
 import StatusCard from "@components/StatusCard";
-
-interface I_OrderData {
-  quote_no: string;
-  costs_no: string;
-  order_no: string;
-  purpose: string;
-  departure_date: string;
-  order_status: string;
-}
-interface I_OrdersList {
-  all?: I_OrderData[];
-  query?: I_OrderData[];
-  quote?: I_OrderData[];
-  order?: I_OrderData[];
-  finish?: I_OrderData[];
-  cancel?: I_OrderData[];
-}
+import { I_Order } from "@services/client/getOrdersList";
+import { QUOTE_TYPE, STATUS_CODE } from "@services/getDDL";
 
 const OrdersList = ({
   type,
   data
 }: {
-  type: "all" | "query" | "quote" | "order" | "finish";
-  data: I_OrdersList;
+  type: "query" | "quote" | "order" | "finish";
+  data: I_Order[];
 }) => {
-  if (!data || !data[type]?.[0])
+  if (!data)
     return (
       <BodySTY>
         <StatusCard>
@@ -42,29 +27,42 @@ const OrdersList = ({
       </BodySTY>
     );
 
+  const renderDataList = (list) =>
+    list.map((item) => ({
+      label: STATUS_CODE[item.status_code].label,
+      status: "ok", // "ok" | "pending" | "error",
+      date: item.upddate
+    }));
   return (
     <BodySTY>
-      {data[type]?.map((item, index) => (
-        <Link
-          key={`${type}-${index} `}
-          href={{
-            pathname: `/orders/order/${item.quote_no}`
-          }}
-        >
-          <Collapse title={item.purpose} opened>
-            <Pane style={{ background: "#fff" }}>
-              <Group className="info">
-                <Group className="info__text">
-                  <DetailItem title="乘車日期" value={item.departure_date} />
-                  <DetailItem title="詢價編號" value={item.quote_no} />
+      {data.map((item, index) => (
+        <>
+          <Link
+            key={`${type}-${index} `}
+            href={{
+              pathname: `/orders/order/${item.quote_no}`
+            }}
+          >
+            <Collapse title={QUOTE_TYPE[item.quote_type].label} opened>
+              <Pane style={{ background: "#fff" }}>
+                <Group className="info">
+                  <Group className="info__text">
+                    <DetailItem
+                      title="乘車日期"
+                      value={item.date?.split(" ")[0]}
+                    />
+                    <DetailItem title="詢價編號" value={item.quote_no} />
+                  </Group>
+                  <Pane>
+                    <ProgressList
+                      dataLists={renderDataList.call(null, item.status_list)}
+                    />
+                  </Pane>
                 </Group>
-                <Pane>
-                  <ProgressList dataLists={MOCK_progressList} />
-                </Pane>
-              </Group>
-            </Pane>
-          </Collapse>
-        </Link>
+              </Pane>
+            </Collapse>
+          </Link>
+        </>
       ))}
     </BodySTY>
   );

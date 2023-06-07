@@ -5,9 +5,7 @@ import { useRouter } from "next/router";
 import { BodySTY, SectionSTY } from "./style";
 
 import { MOCK_ORDER_DETAIL } from "@mock-data/orders";
-
 import { getLayout } from "@layout/QuoteLayout";
-
 import ConditionCard from "@components/ConditionCard";
 import Breadcrumbs from "@components/Breadcrumbs";
 import OrderDetail from "@contents/Orders/OrderDetail";

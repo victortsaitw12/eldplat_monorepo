@@ -6,8 +6,9 @@ import { SectionSTY } from "./style";
 import Collapse from "@components/Collapse";
 import DetailList from "@components/DetailList";
 import VerticalDetail from "@components/VerticalDetail";
-import { order_shuttleList } from "@mock-data/adminOrders/mockData";
-import ShuttleInfoView from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo/ShuttleInfoView";
+// import { order_shuttleList } from "@mock-data/adminOrders/mockData";
+// import ShuttleInfoView from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo/ShuttleInfoView";
+import ScheduleList from "@components/ScheduleList";
 import DetailItem from "@components/DetailList/DetailItem";
 import ProgressList from "@components/ProgressList";
 import { MOCK_progressList } from "@mock-data/orders";
@@ -132,7 +133,31 @@ const OrderDetail = ({ data }) => {
                 <DetailList listArray={contactArr} />
               </Pane>
             </Collapse>
-            <ShuttleInfoView shuttleList={order_shuttleList} />
+            <Collapse
+              opened={true}
+              key={i}
+              title={"第" + child.day_number + "天  " + child.day_date}
+              titleChildren={r_titleChildren(isEdit, child, i)}
+            >
+              <Pane style={{ padding: "20px" }}>
+                <span className="detail-with-icon">
+                  <TimeIcon color="#8EA8C7" size={11} />
+                  <DetailItem
+                    title="出發時間"
+                    value={child.departure_time || "-"}
+                  />
+                </span>
+                <ScheduleList
+                  control={methods.control}
+                  register={methods.register}
+                  fatherArrayName={"fatherArrayName"}
+                  dayIndex={1}
+                  arrayName={"stopover_addresses"}
+                />
+              </Pane>
+            </Collapse>
+
+            {/* <ShuttleInfoView shuttleList={order_shuttleList} /> */}
             <Collapse title={"乘車資訊"} opened>
               <Pane style={{ padding: "20px" }}>
                 <VerticalDetail title="乘客數量" items={specPassengerArr} />

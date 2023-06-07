@@ -2,13 +2,13 @@ import React from "react";
 import { GroupSTY, DivSTY } from "./style";
 
 interface Props {
-  defaultTab?: string;
-  tabsArray: { label: string; length: number; value: string }[];
-  onTabChange: (val: string) => void;
+  defaultTab?: number;
+  tabsArray: { label: string; length: number; value: number }[];
+  onTabChange: (val: number) => void;
   isLoading?: boolean;
 }
 
-const StatusTabs = ({ defaultTab = "01", tabsArray, onTabChange }: Props) => {
+const StatusTabs = ({ defaultTab = 1, tabsArray, onTabChange }: Props) => {
   const [currentTab, setCurrentTab] = React.useState(defaultTab);
   if (tabsArray.filter((item) => item.value === defaultTab).length === 0)
     defaultTab = tabsArray[0].value;

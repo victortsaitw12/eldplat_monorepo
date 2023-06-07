@@ -2,7 +2,7 @@
 
 // table: Quotation
 //服務種類
-export const quote_type = {
+export const QUOTE_TYPE = {
   "1": { label: "客製包車", value: "1" },
   "2": { label: "機場接送", value: "2" }
 };
@@ -43,7 +43,7 @@ export const social_media_type = {
 
 //資料表名稱: ORDER_STATUS (訂單狀態)
 //狀態號碼 INT
-export const status_code = {
+export const STATUS_CODE = {
   1: { label: "送出詢價", value: 1 },
   2: { label: "收到詢價", value: 2 },
   3: { label: "送出報價", value: 3 },
@@ -52,12 +52,14 @@ export const status_code = {
   6: { label: "已付全額", value: 6 },
   7: { label: "已付訂金", value: 7 },
   8: { label: "已付尾款", value: 8 },
-  9: { label: "尾款逾期", value: 9 },
-  10: { label: "訂單成立", value: 10 },
-  11: { label: "尾款逾期", value: 11 },
-  12: { label: "預約派車", value: 12 },
-  13: { label: "預約完成", value: 13 },
-  14: { label: "結案", value: 14 }
+
+  10: { label: "尾款逾期", value: 10 },
+  12: { label: "訂單成立", value: 12 },
+  13: { label: "預約派車", value: 13 },
+  14: { label: "預約完成", value: 14 },
+  15: { label: "結案", value: 15 },
+  9: { label: "訂金逾期", value: 9 },
+  11: { label: "繳款逾期", value: 11 }
 };
 //前後台狀態分類
 export const status_type = {
