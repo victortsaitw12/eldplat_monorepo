@@ -1,11 +1,8 @@
-import { ErrorIcon, PlusIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { DriverListSTY } from "./style";
 
 import { getDriverTitle } from "@services/driver/getAllDrivers";
 import TableWithEdit from "@components/Table/TableWithEdit";
-import TableTitle from "@components/Table/TableTitle";
-import { IconLeft } from "@components/Button/Primary";
 
 interface Props {
   driverData: any;

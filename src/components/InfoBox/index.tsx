@@ -81,6 +81,7 @@ function InfoBox({
 
   //標籤-編輯模式待處理
   const r_label = () => {
+
     if (!infoData) {
       return false;
     }
