@@ -17,7 +17,16 @@ import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
-import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
+
+import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
+import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
+import {
+  getAllMaintenanceRecords,
+  maintenanceParser,
+  maintenancePattern
+} from "@services/maintenance/getMaintenanceRecord";
+import MaintenanceRecordList from "@contents/maintenance/Record/RecordList";
+import { convertDateFormat } from "@utils/convertDate";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -36,16 +45,35 @@ const Page: NextPageWithLayout<never> = () => {
     updateSubFilter,
     isDrawerOpen,
     setDrawerOpen
-  } = useCustomerStore();
+  } = useMaintenanceStore();
   //
-  const fetchCustomerData = async (isCanceled: boolean, mainFilter = "1") => {
-    console.log("mainFilter", mainFilter);
-    getAllCustomers(subFilter, mainFilter).then((res) => {
-      console.log("res", res);
-      const customerData = mappingQueryData(
+
+  // useEffect(() => {
+  //   const dateString = "06/05/2023 11:38:34";
+  //   const date = new Date(dateString);
+  //   const year = date.getFullYear();
+  //   const month = String(date.getMonth() + 1).padStart(2, "0");
+  //   const day = String(date.getDate()).padStart(2, "0");
+  //   const formattedDate = `${year}/${month}/${day}`;
+  //   console.log("formattedDate", formattedDate);
+  // }, []);
+
+  const fetchMaintenanceData = async (
+    isCanceled: boolean,
+    mainStatus = "2"
+  ) => {
+    getAllMaintenanceRecords(subFilter, (mainStatus = "2")).then((res) => {
+      console.log("1️⃣res for record", res);
+      const copyResList = [...res.contentList];
+      const newResList = copyResList?.map((v: any) => {
+        v["completion_time"] = convertDateFormat(v?.completion_time);
+        return v;
+      });
+
+      const MainRecordData = mappingQueryData(
         res.contentList,
-        customerPattern,
-        customerParser
+        maintenancePattern,
+        maintenanceParser
       );
       if (isCanceled) {
         console.log("canceled");
@@ -53,27 +81,27 @@ const Page: NextPageWithLayout<never> = () => {
       }
       if (!subFilter) {
         localStorage.setItem(
-          "customerInitFilter",
+          "maintenanceInitFilter",
           JSON.stringify(res.conditionList)
         );
         initializeSubFilter();
       }
-      setData(customerData);
+      console.log("MainRecordData", MainRecordData);
+      setData(MainRecordData);
     });
   };
   //
-  const deleteItemHandler = async (id: string) => {
-    deleteCustomer(id).then((res) => {
-      console.log("res", res);
-      fetchCustomerData(false);
-    });
-  };
+  // const deleteItemHandler = async (id: string) => {
+  //   deleteCustomer(id).then((res) => {
+  //     fetchMaintenanceData(false);
+  //   });
+  // };
   //進入供應商編輯頁
-  const goToEditPageHandler = (id: string) => {
-    router.push("/customer/detail/" + id + "?editPage=edit");
-  };
+  // const goToEditPageHandler = (id: string) => {
+  //   router.push("/maintenance/detail/" + id + "?editPage=edit");
+  // };
   const goToDetailPageHandler = (id: string) => {
-    router.push(`/customer/detail/${id}?editPage=view`);
+    router.push(`/maintenance/detail/${id}?editPage=view`);
   };
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
@@ -81,7 +109,7 @@ const Page: NextPageWithLayout<never> = () => {
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchCustomerData(isCanceled, nowTab);
+    fetchMaintenanceData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
@@ -90,7 +118,6 @@ const Page: NextPageWithLayout<never> = () => {
     return <LoadingSpinner />;
   }
 
-  console.log("CUSTOMER data", data);
   return (
     <BodySTY>
       <TableWrapper
@@ -106,32 +133,27 @@ const Page: NextPageWithLayout<never> = () => {
           }}
           filter={subFilter}
         >
-          <CustomerList
+          <MaintenanceRecordList
             clientData={data}
-            goToCreatePage={() => {
-              setDrawerOpen(true);
-            }}
-            deleteItemHandler={deleteItemHandler}
-            goToEditPageHandler={goToEditPageHandler}
             goToDetailPage={goToDetailPageHandler}
           />
         </FilterWrapper>
       </TableWrapper>
-      {isDrawerOpen && (
+      {/* {isDrawerOpen && (
         <Drawer
-          tabName={["新增客戶"]}
+          tabName={["新增維保計畫"]}
           closeDrawer={() => {
             setDrawerOpen(false);
           }}
         >
-          <CustomerCreateForm
+          <MaintenanceCreateForm
             reloadData={() => {
-              fetchCustomerData(false);
+              fetchMaintenanceData(false);
               setDrawerOpen(false);
             }}
           />
         </Drawer>
-      )}
+      )} */}
     </BodySTY>
   );
 };

@@ -2,14 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
-import CustomerList from "@contents/Customer/CustomerList";
-import {
-  getAllCustomers,
-  customerParser,
-  customerPattern
-} from "@services/customer/getAllCustomers";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { useCustomerStore } from "@contexts/filter/customerStore";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
@@ -17,7 +10,16 @@ import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
-import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
+import MaintenanceNoticeList from "@contents/maintenance/Notice/NoticeList";
+
+import {
+  getAllMaintenanceNotices,
+  maintenanceParser,
+  maintenancePattern
+} from "@services/maintenance/getMaintenanceNotice";
+import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
+import AddMissionBtn from "@contents/maintenance/Notice/NoticeList/AddMissionBtn";
+import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -27,6 +29,7 @@ const mainFilterArray = [
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [checkItems, setCheckItems] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
   const {
     initializeSubFilter,
@@ -36,44 +39,78 @@ const Page: NextPageWithLayout<never> = () => {
     updateSubFilter,
     isDrawerOpen,
     setDrawerOpen
-  } = useCustomerStore();
+  } = useMaintenanceStore();
   //
-  const fetchCustomerData = async (isCanceled: boolean, mainFilter = "1") => {
-    console.log("mainFilter", mainFilter);
-    getAllCustomers(subFilter, mainFilter).then((res) => {
-      console.log("res", res);
-      const customerData = mappingQueryData(
+
+  const fetchMaintenanceNoticeData = async (
+    isCanceled: boolean,
+    mainFilter = "1"
+  ) => {
+    getAllMaintenanceNotices(subFilter, mainFilter).then((res) => {
+      console.log("res in notice", res);
+      const maintenanceData = mappingQueryData(
         res.contentList,
-        customerPattern,
-        customerParser
+        maintenancePattern,
+        maintenanceParser
       );
+
+      res.contentList.map((v: { reminders_no: { label: any } }) => {
+        setCheckItems((prev) => [
+          ...prev,
+          { id: v.reminders_no, checked: false }
+        ]);
+      });
+
+      const newData = maintenanceData?.map((item, idx) => {
+        return {
+          bus_name: { label: item.bus_name.label, value: item.bus_name.value },
+          driver_name: {
+            label: item.driver_name.label,
+            value: item.driver_name.value
+          },
+          meter: { label: item.meter.label, value: item.meter.value },
+          vendor_name: { label: "台北保養廠", value: "台北保養廠" },
+          component_name: {
+            label: item.component_name.label,
+            value: item.component_name.value
+          },
+          mission: {
+            label: (
+              <AddMissionBtn setDrawerOpen={setDrawerOpen}></AddMissionBtn>
+            ),
+            value: item.reminders_no.label
+          }
+        };
+      });
+      console.log("newData", newData);
       if (isCanceled) {
         console.log("canceled");
         return;
       }
       if (!subFilter) {
         localStorage.setItem(
-          "customerInitFilter",
+          "maintenanceInitFilter",
           JSON.stringify(res.conditionList)
         );
         initializeSubFilter();
       }
-      setData(customerData);
+      console.log("notice maintenanceData", maintenanceData);
+
+      setData(newData);
     });
   };
-  //
+
   const deleteItemHandler = async (id: string) => {
     deleteCustomer(id).then((res) => {
-      console.log("res", res);
-      fetchCustomerData(false);
+      fetchMaintenanceNoticeData(false);
     });
   };
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push("/customer/detail/" + id + "?editPage=edit");
+    router.push("/maintenance/detail/" + id + "?editPage=edit");
   };
   const goToDetailPageHandler = (id: string) => {
-    router.push(`/customer/detail/${id}?editPage=view`);
+    router.push(`/maintenance/detail/${id}?editPage=view`);
   };
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
@@ -81,7 +118,7 @@ const Page: NextPageWithLayout<never> = () => {
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchCustomerData(isCanceled, nowTab);
+    fetchMaintenanceNoticeData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
@@ -90,7 +127,6 @@ const Page: NextPageWithLayout<never> = () => {
     return <LoadingSpinner />;
   }
 
-  console.log("CUSTOMER data", data);
   return (
     <BodySTY>
       <TableWrapper
@@ -106,8 +142,10 @@ const Page: NextPageWithLayout<never> = () => {
           }}
           filter={subFilter}
         >
-          <CustomerList
+          <MaintenanceNoticeList
             clientData={data}
+            checkboxData={checkItems}
+            setCheckboxData={setCheckItems}
             goToCreatePage={() => {
               setDrawerOpen(true);
             }}
@@ -119,14 +157,15 @@ const Page: NextPageWithLayout<never> = () => {
       </TableWrapper>
       {isDrawerOpen && (
         <Drawer
-          tabName={["新增客戶"]}
+          tabName={["新增維保計畫"]}
           closeDrawer={() => {
             setDrawerOpen(false);
           }}
         >
-          <CustomerCreateForm
+          <MaintenanceCreateForm
+            data={data}
             reloadData={() => {
-              fetchCustomerData(false);
+              fetchMaintenanceNoticeData(false);
               setDrawerOpen(false);
             }}
           />

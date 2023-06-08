@@ -18,6 +18,17 @@ import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
+import MaintenanceNoticeList from "@contents/maintenance/Notice/NoticeList";
+import MaintenanceMissionList from "@contents/maintenance/Mission/MissionList";
+import {
+  getAllMaintenanceMissions,
+  maintenanceParser,
+  maintenancePattern
+} from "@services/maintenance/getMaintenanceMission";
+import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
+import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
+import FinishBtn from "@contents/maintenance/Mission/MissionList/FinishBtn";
+import AssignBtn from "@contents/maintenance/Mission/MissionList/AssignBtn";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -36,44 +47,84 @@ const Page: NextPageWithLayout<never> = () => {
     updateSubFilter,
     isDrawerOpen,
     setDrawerOpen
-  } = useCustomerStore();
+  } = useMaintenanceStore();
   //
-  const fetchCustomerData = async (isCanceled: boolean, mainFilter = "1") => {
-    console.log("mainFilter", mainFilter);
-    getAllCustomers(subFilter, mainFilter).then((res) => {
-      console.log("res", res);
-      const customerData = mappingQueryData(
+
+  const fetchMaintenanceData = async (
+    isCanceled: boolean,
+    mainFilter = "1"
+  ) => {
+    getAllMaintenanceMissions(subFilter, mainFilter).then((res) => {
+      console.log("1️⃣res for mission", res);
+
+      const MainMissionData = mappingQueryData(
         res.contentList,
-        customerPattern,
-        customerParser
+        maintenancePattern,
+        maintenanceParser
       );
+
+      // 由於table內不只有靜態資料顯示(有button功能)，所以客制加工一下 => 結案按鈕
+      MainMissionData?.map((item) => {
+        if (item["completion_time"].label === "---") {
+          const active =
+            item["all_assignment_no"].value.length > 30 ? false : true;
+
+          return (item["completion_time"].label = (
+            <FinishBtn
+              id={item.maintenance_no["value"]}
+              disabled={active}
+            ></FinishBtn>
+          ));
+        }
+      });
+
+      // 派單按鈕邏輯加工
+      const assignActive = res.contentList.map(
+        (item: { [x: string]: null }) => {
+          return item["service_start_date"] !== null &&
+            item["service_end_date"] !== null
+            ? false
+            : true;
+        }
+      );
+      MainMissionData?.map((item, idx) => {
+        if (item["all_assignment_no"].value.length < 15) {
+          return (item["all_assignment_no"].label = (
+            <AssignBtn
+              id={item.maintenance_no["value"]}
+              disabled={assignActive[idx]}
+            ></AssignBtn>
+          ));
+        }
+      });
+
       if (isCanceled) {
         console.log("canceled");
         return;
       }
       if (!subFilter) {
         localStorage.setItem(
-          "customerInitFilter",
+          "maintenanceInitFilter",
           JSON.stringify(res.conditionList)
         );
         initializeSubFilter();
       }
-      setData(customerData);
+      console.log("MainMissionData", MainMissionData);
+      setData(MainMissionData);
     });
   };
   //
   const deleteItemHandler = async (id: string) => {
     deleteCustomer(id).then((res) => {
-      console.log("res", res);
-      fetchCustomerData(false);
+      fetchMaintenanceData(false);
     });
   };
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
-    router.push("/customer/detail/" + id + "?editPage=edit");
+    router.push("/maintenance/detail/" + id + "?editPage=edit");
   };
   const goToDetailPageHandler = (id: string) => {
-    router.push(`/customer/detail/${id}?editPage=view`);
+    router.push(`/maintenance/detail/${id}?editPage=view`);
   };
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
@@ -81,7 +132,7 @@ const Page: NextPageWithLayout<never> = () => {
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchCustomerData(isCanceled, nowTab);
+    fetchMaintenanceData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
@@ -90,7 +141,6 @@ const Page: NextPageWithLayout<never> = () => {
     return <LoadingSpinner />;
   }
 
-  console.log("CUSTOMER data", data);
   return (
     <BodySTY>
       <TableWrapper
@@ -106,7 +156,7 @@ const Page: NextPageWithLayout<never> = () => {
           }}
           filter={subFilter}
         >
-          <CustomerList
+          <MaintenanceMissionList
             clientData={data}
             goToCreatePage={() => {
               setDrawerOpen(true);
@@ -119,14 +169,14 @@ const Page: NextPageWithLayout<never> = () => {
       </TableWrapper>
       {isDrawerOpen && (
         <Drawer
-          tabName={["新增客戶"]}
+          tabName={["新增維保計畫"]}
           closeDrawer={() => {
             setDrawerOpen(false);
           }}
         >
-          <CustomerCreateForm
+          <MaintenanceCreateForm
             reloadData={() => {
-              fetchCustomerData(false);
+              fetchMaintenanceData(false);
               setDrawerOpen(false);
             }}
           />

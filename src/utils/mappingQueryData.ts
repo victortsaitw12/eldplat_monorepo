@@ -5,14 +5,15 @@ export const mappingQueryData = (
   pattern: PatternType,
   parser: (data: any, key: string) => { label: any; value: any }
 ) => {
-  console.log("data", data);
   const result: { [key: string]: any }[] = [];
-  for (const item of data) {
-    const mappedItem: { [key: string]: any } = {};
-    for (const key in pattern) {
-      mappedItem[key] = parser(item, key);
+  if (data !== null)
+    for (const item of data) {
+      const mappedItem: { [key: string]: any } = {};
+      for (const key in pattern) {
+        mappedItem[key] = parser(item, key);
+      }
+      result.push(mappedItem);
     }
-    result.push(mappedItem);
-  }
+  console.log("💥result", result);
   return convertValueToText(result, "ch");
 };

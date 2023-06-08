@@ -25,7 +25,7 @@ function LeaveSet() {
   const [leaveArr, setLeaveArr] = useState<I_Company_Leave_Type[]>(
     leaveData ? leaveData : [{ leave_code: "01", leave_name: "" }]
   );
-
+  console.log("leaveData", leaveData);
   useEffect(() => {
     leaveData && setLeaveArr(leaveData);
   }, [leaveData]);
@@ -76,6 +76,8 @@ function LeaveSet() {
     newData["company_leave"] = leaveArr;
     setCompanyData(newData);
   };
+
+  console.log("leaveArr", leaveArr);
 
   return (
     <BodySTY>
