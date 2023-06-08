@@ -214,23 +214,18 @@ const homePageData = [
     url: "/",
     subList: [
       {
-        name: "維保歷史",
-        url: "/",
+        name: "維保通知",
+        url: "/maintenance/notice",
         subList: null
       },
       {
         name: "維保任務",
-        url: "/",
+        url: "/maintenance/mission",
         subList: null
       },
       {
-        name: "維保項目",
-        url: "/",
-        subList: null
-      },
-      {
-        name: "維修廠",
-        url: "/",
+        name: "維保紀錄",
+        url: "/maintenance/record",
         subList: null
       }
     ]

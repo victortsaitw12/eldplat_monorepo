@@ -9,6 +9,7 @@ export interface I_Add_Employees_Type {
   company_name: string;
   working_hours_code: string;
   working_hours_name: string;
+  leave_date: any | string;
   leave_check: string;
   user_phone_code: string;
   zip_code: string;
@@ -62,6 +63,7 @@ export interface I_Get_Employees_Type {
   company_name: string;
   working_hours_code: string;
   working_hours_name: string;
+  leave_date: any | string;
   leave_check: string;
   user_phone_code: string;
   zip_code: string;
