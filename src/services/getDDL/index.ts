@@ -7,8 +7,8 @@ export const QUOTE_TYPE = {
   "2": { label: "機場接送", value: "2" }
 };
 //訂車用途
-export const purpose = {
-  "01": { label: "訂車用途", value: "01" }
+export const PURPOSE = {
+  "01": { label: "旅遊", value: "01" }
 };
 // table: Quotation_DT
 //指定車齡代號

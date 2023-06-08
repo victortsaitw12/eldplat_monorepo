@@ -1,7 +1,7 @@
 import React from "react";
-import Link from "next/link";
-import { NextPageWithLayout } from "next";
+import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
+import { Spinner } from "evergreen-ui";
 import { BodySTY, SectionSTY } from "./style";
 
 import { MOCK_ORDER_DETAIL } from "@mock-data/orders";
@@ -10,24 +10,14 @@ import ConditionCard from "@components/ConditionCard";
 import Breadcrumbs from "@components/Breadcrumbs";
 import OrderDetail from "@contents/Orders/OrderDetail";
 import Quote from "@contents/Orders/Quote";
+import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
+import StatusCard from "@components/StatusCard";
 
-interface OrderData {
-  customer_no: string;
-  quote_no: string;
-  costs_no: string;
-  order_no: string;
-  purpose: string;
-  departure_date: string;
-  order_status: string;
-}
-
-const Page: NextPageWithLayout<never> = () => {
+const Page: NextPageWithLayout<never> = ({ quote_no }) => {
   // ----- variables, states ----- //
   const router = useRouter();
-  const { orderId } = router.query;
-  const [data, setData] = React.useState<OrdersData>({});
+  const [data, setData] = React.useState<I_OrderDetail>(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [currentTab, setCurrentTab] = React.useState("01");
 
   const contactInfo = [
     { title: "姓", value: data?.family_name },
@@ -41,20 +31,35 @@ const Page: NextPageWithLayout<never> = () => {
 
   // ----- useEffect ----- //
   React.useEffect(() => {
-    setData(MOCK_ORDER_DETAIL);
-  }, []);
-  React.useEffect(() => {
-    console.log("orderId:", orderId);
-  }, [orderId]);
+    const fetchData = async () => {
+      console.log(`fetchData:${quote_no}`);
+      setIsLoading(true);
+      try {
+        const res = await getQuotation(quote_no);
+        setData(res);
+        console.log("res:", res);
+      } catch (e) {
+        console.log("載入訂單失敗:", e);
+      }
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [quote_no]);
 
   return (
     <>
-      {" "}
+      {isLoading && (
+        <StatusCard>
+          <Spinner />
+          <div>載入訂單資料中</div>
+        </StatusCard>
+      )}
       {data && (
         <Breadcrumbs
           routes={[
             { label: "首頁", url: "/" },
-            { label: "訂單管理", url: `/orders?${data.customer_no}` },
+            { label: "訂單管理", url: "/orders" },
             {
               label: `訂單編號${data.quote_no}`,
               url: {
@@ -67,7 +72,7 @@ const Page: NextPageWithLayout<never> = () => {
         />
       )}
       <BodySTY>
-        {data && (
+        {!isLoading && data && (
           <div className="left">
             <OrderDetail data={data} />
             <ConditionCard type="view"></ConditionCard>
@@ -82,6 +87,17 @@ const Page: NextPageWithLayout<never> = () => {
     </>
   );
 };
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  context
+) => {
+  const { params } = context;
+  return {
+    props: {
+      quote_no: params ? params.id : ""
+    }
+  };
+};
 
-Page.getLayout = (page) => getLayout(page, { title: "訂單管理" });
+Page.getLayout = (page, layoutProps) =>
+  getLayout(page, { title: "訂單管理", ...layoutProps });
 export default Page;
