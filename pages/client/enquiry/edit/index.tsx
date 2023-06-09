@@ -233,6 +233,8 @@ const Page: NextPageWithLayout<
               control={control}
               errors={errors}
               register={register}
+              setValue={setValue}
+              getValues={getValues}
             />
           )}
           <div className="content-actions-container">
