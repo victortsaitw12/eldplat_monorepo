@@ -34,7 +34,6 @@ const CounterInput = ({
     }
   };
   React.useEffect(() => {
-    console.log("現在數字是", num);
     setValue(`${inputName}`, num);
   }, [num]);
   return (

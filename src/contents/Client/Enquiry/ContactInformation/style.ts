@@ -41,3 +41,16 @@ export const ItemSTY = styled.li`
     }
   }
 `;
+
+export const StyledCollapseTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  > button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: ${({ theme }) => theme.color.N700};
+  }
+`;

@@ -6,7 +6,7 @@ import HookFormMultiSelect from "@components/HookForm/Select/MultiSelect";
 import ExpenseDetail from "@components/ExpenseDetail";
 import { useForm, useWatch } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
-import CounterInput from "@components/HookForm/Input/CounterInput";
+import CounterInput from "@components/CounterInput";
 import { useRef } from "react";
 const DummyFlowListData = [
   {
@@ -133,6 +133,8 @@ const ComponentsRender = () => {
   const {
     control,
     register,
+    setValue,
+    getValues,
     formState: { errors },
     handleSubmit
   } = useForm<FormValues>({
@@ -194,7 +196,13 @@ const ComponentsRender = () => {
           options={DummyMultiSelectOptions}
           isDisabled={false}
         />
-        <CounterInput control={control} inputName="counter" label="Counter" />
+        <CounterInput
+          register={register}
+          inputName="counter"
+          label="Counter"
+          setValue={setValue}
+          getValues={getValues}
+        />
         <StepArragement
           startPointName="startPoint"
           destinationPointName="destinationPoint"

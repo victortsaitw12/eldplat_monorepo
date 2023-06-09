@@ -35,13 +35,17 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
     }
   });
   const submitFormHandler = (data: FormValues) => {
-    const { flightDate, airport, flightTime } = data;
+    const { flightDate, flightNo, airport, terminal, flightTime, airline } =
+      data;
     router.push({
       pathname: "/client/enquiry/edit",
       query: {
         flightDate,
+        flightNo,
         flightTime,
         airport,
+        terminal,
+        airline,
         type: purpose
       }
     });

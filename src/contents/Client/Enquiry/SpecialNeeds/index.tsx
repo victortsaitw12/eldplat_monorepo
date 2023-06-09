@@ -2,7 +2,7 @@ import React from "react";
 import Collapse from "@components/Collapse";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import { BodySTY, ItemSTY, RemarkSTY } from "./style";
-import { Textarea, Select, Checkbox } from "evergreen-ui";
+import { Textarea, Select, Checkbox, Radio } from "evergreen-ui";
 import CounterInput from "@components/CounterInput";
 import {
   Control,
@@ -39,7 +39,8 @@ const TravelInformation = ({
             <div className="item">
               <CheckBoxWrapper
                 label="舉牌(NT$200)"
-                checked={true}
+                control={control}
+                inputName="pickup_sign_check"
                 description="若欲接送非母語人士/國外友人，建議選擇此選項。"
               >
                 <Textarea width={310} {...register("pickup_sign_remark")} />
@@ -48,7 +49,8 @@ const TravelInformation = ({
             <div className="item">
               <CheckBoxWrapper
                 label="杯水"
-                checked={true}
+                control={control}
+                inputName="mineral_water_check"
                 description="免費提供。每車提供一箱，總共有x杯。"
               ></CheckBoxWrapper>
             </div>
@@ -57,14 +59,16 @@ const TravelInformation = ({
             <div className="item">
               <CheckBoxWrapper
                 label="司導(NT$200)"
-                checked={true}
+                control={control}
+                inputName="driver_guide_check"
                 description="由司機兼任導遊，講解沿路風光。"
               ></CheckBoxWrapper>
             </div>
             <div className="item">
               <CheckBoxWrapper
                 label="瓶裝水(NT$120)"
-                checked={true}
+                control={control}
+                inputName="bottled_water_check"
                 description=""
               >
                 <CounterInput
@@ -81,7 +85,8 @@ const TravelInformation = ({
             <div className="item">
               <CheckBoxWrapper
                 label="指定車齡(視選項加價)"
-                checked={true}
+                control={control}
+                inputName="bus_age_check"
                 description=""
               >
                 <Select width={310} {...register("bus_age")}>
@@ -92,7 +97,8 @@ const TravelInformation = ({
             <div className="item">
               <CheckBoxWrapper
                 label="兒童座椅"
-                checked={true}
+                control={control}
+                inputName="child_seat_check"
                 description="若有需要說明文字，車公司可自行輸入於此。"
               >
                 <CounterInput
@@ -116,12 +122,18 @@ const TravelInformation = ({
             <div className="item">
               <CheckBoxWrapper
                 label="攜帶特大/特殊行李"
-                checked={true}
+                control={control}
+                inputName="special_luggage_check"
                 description="若有特大/特殊行李，像是貴重物、易碎品等等，請盡量事前告知。"
               ></CheckBoxWrapper>
             </div>
             <div className="item">
-              <CheckBoxWrapper label="嬰兒座椅" checked={true} description="">
+              <CheckBoxWrapper
+                label="嬰兒座椅"
+                control={control}
+                inputName="infant_seat_check"
+                description=""
+              >
                 <CounterInput
                   label="由店家提供 (+NT$ 200 / 天)"
                   register={register}
@@ -143,11 +155,20 @@ const TravelInformation = ({
             <div className="item">
               <CheckBoxWrapper
                 label="攜帶寵物"
-                checked={true}
+                control={control}
+                inputName="bring_pets_check"
                 description="若寵物造成車內髒污，將收取清潔費 NT$1,000 予司機。若弄髒部分為司機無法清潔之處（例：皮椅），則將另請清潔公司處理，並酌收相關費用。"
               >
-                <Checkbox label="攜帶小型寵物，且會裝於寵物籠/背包中。" />
-                <Checkbox label="寵物無法裝籠，將直接帶上車（NT$1,000） " />
+                <Radio
+                  label="攜帶小型寵物，且會裝於寵物籠/背包中。"
+                  {...register("bring_pets_radio")}
+                  value="1"
+                />
+                <Radio
+                  label="寵物無法裝籠，將直接帶上車（NT$1,000）"
+                  {...register("bring_pets_radio")}
+                  value="2"
+                />
               </CheckBoxWrapper>
             </div>
             <div className="item"></div>

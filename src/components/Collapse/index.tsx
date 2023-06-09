@@ -5,7 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
 interface I_Props {
   opened?: boolean;
   color?: string;
-  title: string;
+  title?: string;
   titleChildren?: React.ReactNode;
   viewOnly?: boolean;
   children: React.ReactNode;
@@ -35,7 +35,7 @@ const Collapse = ({
   }, [isOpen]);
   return (
     <BodySTY color={color} className="collapse">
-      <div className="collapse_title" onClick={titleOnClick}>
+      <div className="collapse_title">
         {titleChildren ? (
           titleChildren
         ) : (
@@ -44,9 +44,9 @@ const Collapse = ({
             {title}
             {!viewOnly ? (
               isOpen ? (
-                <ChevronUpIcon />
+                <ChevronUpIcon onClick={titleOnClick} />
               ) : (
-                <ChevronDownIcon />
+                <ChevronDownIcon onClick={titleOnClick} />
               )
             ) : (
               <></>

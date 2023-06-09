@@ -1,20 +1,60 @@
 import React from "react";
 import Collapse from "@components/Collapse";
-import { BodySTY, ItemSTY, ContainerSTY } from "./style";
+import { BodySTY, ItemSTY, ContainerSTY, StyledCollapseTitle } from "./style";
 import { TextInput } from "evergreen-ui";
 import CustomSelect from "@components/CustomSelect";
-import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormGetValues
+} from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
 interface TravelInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
+  setValue: UseFormSetValue<QuotationCreatePayload>;
+  getValues: UseFormGetValues<QuotationCreatePayload>;
 }
 const ContactInformation = ({
   register,
   control,
-  errors
+  errors,
+  setValue,
+  getValues
 }: TravelInformationProps) => {
+  function sameContactUser() {
+    setValue(
+      "order_contact_list.1.family_name",
+      getValues("order_contact_list.0.family_name")
+    );
+    setValue(
+      "order_contact_list.1.name",
+      getValues("order_contact_list.0.name")
+    );
+    setValue(
+      "order_contact_list.1.contact_phone_code",
+      getValues("order_contact_list.0.contact_phone_code")
+    );
+    setValue(
+      "order_contact_list.1.contact_phone",
+      getValues("order_contact_list.0.contact_phone")
+    );
+    setValue(
+      "order_contact_list.1.contact_tel_code",
+      getValues("order_contact_list.0.contact_tel_code")
+    );
+    setValue(
+      "order_contact_list.1.contact_tel",
+      getValues("order_contact_list.0.contact_tel")
+    );
+    setValue(
+      "order_contact_list.1.contact_email",
+      getValues("order_contact_list.0.contact_email")
+    );
+  }
   return (
     <>
       <BodySTY>
@@ -107,7 +147,22 @@ const ContactInformation = ({
         </Collapse>
       </BodySTY>
       <BodySTY>
-        <Collapse title="旅客代表人" opened={true}>
+        <Collapse
+          titleChildren={
+            <StyledCollapseTitle>
+              <span>旅客代表人資訊</span>
+              <button
+                type="button"
+                onClick={() => {
+                  sameContactUser();
+                }}
+              >
+                同上方欄位內容
+              </button>
+            </StyledCollapseTitle>
+          }
+          opened={true}
+        >
           <ContainerSTY>
             <ItemSTY>
               <div className="item-container">
@@ -200,15 +255,19 @@ const ContactInformation = ({
                   <CustomSelect
                     options={[
                       {
-                        text: "+886",
-                        value: "+886"
+                        text: "Line",
+                        value: "01"
+                      },
+                      {
+                        text: "WeChat",
+                        value: "02"
                       }
                     ]}
                     register={register}
                     selectName="order_contact_list.1.social_media_type"
                   />
                   <TextInput
-                    {...register("order_contact_list.0.social_media")}
+                    {...register("order_contact_list.1.social_media")}
                   />
                 </div>
               </div>
