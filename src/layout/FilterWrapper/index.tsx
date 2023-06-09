@@ -29,8 +29,6 @@ function FilterWrapper({
       if (searchText.trim() === "") {
         updateFilter(field, "");
       } else {
-        console.log("field", field);
-        console.log("searchText", searchText);
         updateFilter(field, searchText);
       }
     }, 500);

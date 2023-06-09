@@ -1,4 +1,4 @@
-const order_sepcial = [
+export const order_sepcial = [
   {
     title: "舉牌：Andy Welcome",
     value: "NT$200"
@@ -25,7 +25,7 @@ const order_sepcial = [
   }
 ];
 
-const order_shuttleList = [
+export const order_shuttleList = [
   {
     date: "2023-06-01"
   },
@@ -40,51 +40,16 @@ const order_shuttleList = [
   }
 ];
 
-export const MOCK_ORDERS_LIST = {
-  all: [],
-  query: [
-    {
-      quote_no: "ORD202302020001",
-      costs_no: "CST202302020001",
-      order_no: "ORD202302020001-20230530",
-      purpose: "機場接送",
-      departure_date: "2023/06/15",
-      order_status: "01",
-      payment_status: "1"
-    },
-    {
-      quote_no: "ORD202302020002",
-      costs_no: "CST202302020002",
-      order_no: "ORD202302020002-20230530",
-      purpose: "客製包車",
-      departure_date: "2023/06/15",
-      order_status: "01",
-      payment_status: "1"
-    }
-  ],
-  quote: [
-    {
-      quote_no: "ORD202302020002",
-      costs_no: "CST202302020002",
-      order_no: "ORD202302020002-20230530",
-      purpose: "客製包車",
-      departure_date: "2023/06/15",
-      order_status: "02",
-      payment_status: "0"
-    }
-  ],
-  order: [],
-  finish: [],
-  cancel: []
-};
 export const MOCK_ORDER_DETAIL = {
-  quote_no: "ORD202302020001",
+  quote_no: "ORD202302020001", //
   costs_no: "CST202302020001",
   order_no: "ORD202302020001-20230530",
-  purpose: "機場接送",
-  departure_date: "2023/06/15",
-  order_status: "01",
+  purpose: "01",
+  departure_date: "2023-07-01T04:02:10.624Z", //
+  return_date: "2023-07-03T04:02:10.624Z", //
+  status_code: "4",
   payment_status: "1",
+  full_payment_amount: "NT$2,200",
   // contact
   contact: [
     {
@@ -226,9 +191,3 @@ export const MOCK_expenseList = [
   { label: "偏遠地區加價", value: 300, hint: "偏遠地區加價" },
   { label: "特殊需求小計", value: 300, hint: "特殊需求小計" }
 ];
-
-// DT ------------------------------------------------------
-export const social_media_type = {
-  "01": "Line",
-  "02": "Wechat"
-};
