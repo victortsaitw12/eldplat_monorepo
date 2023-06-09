@@ -40,43 +40,6 @@ export const order_shuttleList = [
   }
 ];
 
-export const MOCK_ORDERS_LIST = {
-  all: [],
-  query: [
-    {
-      quote_no: "ORD202302020001",
-      costs_no: "CST202302020001",
-      order_no: "ORD202302020001-20230530",
-      purpose: "機場接送",
-      departure_date: "2023/06/15",
-      status_code: "1",
-      payment_status: "1"
-    },
-    {
-      quote_no: "ORD202302020002",
-      costs_no: "CST202302020002",
-      order_no: "ORD202302020002-20230530",
-      purpose: "客製包車",
-      departure_date: "2023/06/15",
-      status_code: "1",
-      payment_status: "1"
-    }
-  ],
-  quote: [
-    {
-      quote_no: "ORD202302020002",
-      costs_no: "CST202302020002",
-      order_no: "ORD202302020002-20230530",
-      purpose: "客製包車",
-      departure_date: "2023/06/15",
-      status_code: "1",
-      payment_status: "0"
-    }
-  ],
-  order: [],
-  finish: [],
-  cancel: []
-};
 export const MOCK_ORDER_DETAIL = {
   quote_no: "ORD202302020001", //
   costs_no: "CST202302020001",
