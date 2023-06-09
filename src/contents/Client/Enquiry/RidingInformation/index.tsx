@@ -87,7 +87,7 @@ const TravelInformation = ({
               <span style={{ color: "#D14343" }}>*</span>
               <span>車型及數量</span>
             </div>
-            <Collapse title="大型巴士(28~43人)" color="#EEF8F4">
+            {/* <Collapse title="大型巴士(28~43人)" color="#EEF8F4">
               <CardSTY>
                 <CounterInput
                   register={register}
@@ -133,7 +133,7 @@ const TravelInformation = ({
                   inputName="smallBus.small1"
                 />
               </CardSTY>
-            </Collapse>
+            </Collapse> */}
           </div>
         </BodySTY>
       </Collapse>

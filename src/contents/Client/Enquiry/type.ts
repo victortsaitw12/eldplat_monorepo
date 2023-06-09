@@ -1,5 +1,5 @@
 export interface QuotationCreatePayload {
-  quote_no: string;
+  quote_type: string;
   departure_date?: string;
   return_date?: string;
   purpose?: string;
@@ -15,17 +15,22 @@ export interface QuotationCreatePayload {
   child: number;
   infant: number;
   /** dummy bus, waiting for backend to update*/
-  largeBus: {
-    large1: number;
-    large2: number;
-  };
-  mediumBus: {
-    medium1: number;
-    medium2: number;
-  };
-  smallBus: {
-    small1: number;
-  };
+  bus_data?: Array<{
+    bus_type: string;
+    bus_seat: number;
+    order_quantity: number;
+  }>;
+  // largeBus: {
+  //   large1: number;
+  //   large2: number;
+  // };
+  // mediumBus: {
+  //   medium1: number;
+  //   medium2: number;
+  // };
+  // smallBus: {
+  //   small1: number;
+  // };
 
   /** dummy bus end */
   check_in_luggage: number;
@@ -72,7 +77,7 @@ export interface QuotationCreatePayload {
 }
 
 export const defaultQuotationCreatePayload: QuotationCreatePayload = {
-  quote_no: "",
+  quote_type: "1",
   departure_date: "",
   return_date: "",
   purpose: "",
@@ -87,17 +92,17 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
   adult: 0,
   child: 0,
   infant: 0,
-  largeBus: {
-    large1: 0,
-    large2: 0
-  },
-  mediumBus: {
-    medium1: 0,
-    medium2: 0
-  },
-  smallBus: {
-    small1: 0
-  },
+  // largeBus: {
+  //   large1: 0,
+  //   large2: 0
+  // },
+  // mediumBus: {
+  //   medium1: 0,
+  //   medium2: 0
+  // },
+  // smallBus: {
+  //   small1: 0
+  // },
   check_in_luggage: 0,
   carry_on_luggage: 0,
   order_contact_list: [
@@ -126,21 +131,21 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
       social_media: ""
     }
   ],
-  pickup_sign_check: "",
+  pickup_sign_check: "0",
   pickup_sign_remark: "",
-  driver_guide_check: "",
-  bus_age_check: "",
+  driver_guide_check: "0",
+  bus_age_check: "0",
   bus_age: "",
-  special_luggage_check: "",
-  bring_pets_check: "",
+  special_luggage_check: "0",
+  bring_pets_check: "0",
   bring_pets_radio: "",
-  mineral_water_check: "",
-  bottled_water_check: "",
+  mineral_water_check: "0",
+  bottled_water_check: "0",
   bottled_water_box: 0,
-  child_seat_check: "",
+  child_seat_check: "0",
   child_seat_seller: 0,
   child_seat_yourself: 0,
-  infant_seat_check: "",
+  infant_seat_check: "0",
   infant_seat_seller: 0,
   infant_seat_yourself: 0,
   remark: "",

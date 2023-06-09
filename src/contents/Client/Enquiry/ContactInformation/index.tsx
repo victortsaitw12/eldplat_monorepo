@@ -200,8 +200,12 @@ const ContactInformation = ({
                   <CustomSelect
                     options={[
                       {
-                        text: "+886",
-                        value: "+886"
+                        text: "Line",
+                        value: "01"
+                      },
+                      {
+                        text: "WeChat",
+                        value: "02"
                       }
                     ]}
                     register={register}
