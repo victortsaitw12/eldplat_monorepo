@@ -12,11 +12,13 @@ export const PURPOSE = {
 };
 // table: Quotation_DT
 //指定車齡代號
-export const bus_age = {
-  "01": { label: "指定車齡代號", value: "01" }
+export const BUS_AGE = {
+  "01": { label: "3年以下TBD", value: "01" },
+  "02": { label: "5年以下TBD", value: "02" },
+  "03": { label: "10年以下TBD", value: "03" }
 };
 //攜帶寵物單選代號
-export const bring_pets_radio = {
+export const BRING_PETS_RADIO = {
   "1": {
     label: "攜帶小型寵物，且會裝於寵物籠/背包中。",
     value: "1",
