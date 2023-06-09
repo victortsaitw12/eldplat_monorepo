@@ -4,19 +4,27 @@ export const DivSTY = styled.div`
   button {
     width: 100%;
     border-radius: 50rem;
-    background-color: ${({ theme }) => theme.color.B400};
     margin-bottom: 12px;
+    /* primary */
+    background: ${({ theme }) => theme.color.B400};
+    transition: all 0.3s;
     &:hover {
-      background-color: ${({ theme }) => theme.color.B500};
+      background: ${({ theme }) => theme.color.B400};
     }
-
-    &:focus {
-      background-color: ${({ theme }) => theme.color.R500};
-    }
-
     &:active {
-      background-color: ${({ theme }) => theme.color.B500};
+      background: ${({ theme }) => theme.color.B500};
     }
+    &:focus {
+      background: ${({ theme }) => theme.color.B400};
+    }
+    &:disabled {
+      background: ${({ theme }) => theme.color.B200};
+    }
+  }
+  .secondaryBtn {
+    /* secondary */
+    background: ${({ theme }) => theme.color.N0};
+    transition: all 0.3s;
   }
   .inlineAlert {
     align-items: flex-start;

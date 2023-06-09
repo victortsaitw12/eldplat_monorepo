@@ -66,8 +66,6 @@ function Basic({
   //   }
   // };
 
-  console.log("allCountries", allCountries);
-
   return (
     <BodySTY>
       <Heading is="h4">基本資料</Heading>

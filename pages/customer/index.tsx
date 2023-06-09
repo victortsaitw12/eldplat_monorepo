@@ -89,6 +89,8 @@ const Page: NextPageWithLayout<never> = () => {
   if (!data) {
     return <LoadingSpinner />;
   }
+
+  console.log("CUSTOMER data", data);
   return (
     <BodySTY>
       <TableWrapper
