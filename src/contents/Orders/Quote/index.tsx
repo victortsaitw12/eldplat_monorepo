@@ -10,6 +10,21 @@ import PaymentBtn from "./PaymentBtn";
 
 const Quote = ({ data }) => {
   const [payment, setPayment] = React.useState();
+  const expenseList = [
+    { label: "基本車資", value: data.basic_amount, hint: "基本車資" },
+    { label: "小費", value: data.tip, hint: "小費" },
+    { label: "旺季加價", value: data.high_season_charge, hint: "旺季加價" },
+    { label: "司機費用", value: data.driver_guide_charge, hint: "司導加價" },
+    { label: "夜間加價", value: data.night_charge, hint: "夜間加價" },
+    { label: "偏遠地區加價", value: data.remote_charge, hint: "偏遠地區加價" },
+    { label: "特殊需求小計", value: data.extra_charge, hint: "特殊需求小計" }
+  ];
+  // ----- function ----- //
+  const handleToggle = () => {
+    return;
+  };
+  const currentStatus =
+    data.orderStatusesList[data.orderStatusesList.length - 1].status_code;
   return (
     <DivSTY>
       <PaymentBtn data={data} />
@@ -19,18 +34,28 @@ const Quote = ({ data }) => {
           titleChildren={
             <div className="collapse">
               <div className="collapse__title">
-                <span>金額試算</span>
-                <span>NT$2,200</span>
+                <span style={{ fontSize: "16px" }}>
+                  {currentStatus === "1" ? "初估金額" : "總金額"}
+                </span>
+                <span>NT${data.quote_total_amount}</span>
               </div>
+
               <div className="collapse__subTitle">
-                <span>訂金</span>
-                <span> NT$1,000</span>
+                {data.isfullpay ? (
+                  <span> 本筆訂單無支付訂金選項</span>
+                ) : (
+                  <>
+                    <span>訂金</span>
+                    <span> NT${data.deposit}</span>
+                  </>
+                )}
               </div>
             </div>
           }
           opened
+          OnToggle={handleToggle}
         >
-          <ExpenseDetail data={MOCK_expenseList} prefix="NT$" />
+          <ExpenseDetail data={expenseList} prefix="NT$" />
         </Collapse>
       </Pane>
     </DivSTY>

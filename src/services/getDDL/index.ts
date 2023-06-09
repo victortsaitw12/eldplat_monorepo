@@ -38,7 +38,7 @@ export const contact_type = {
   "2": { label: "聯絡人", value: "2" }
 };
 //通訊軟體種類
-export const social_media_type = {
+export const SOCIAL_MEDIA_TYPE = {
   "01": { label: "Line", value: "01" },
   "02": { label: "Wechat", value: "02" }
 };

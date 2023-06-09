@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, Group, TimeIcon, Button } from "evergreen-ui";
+import { Pane, TimeIcon } from "evergreen-ui";
 import { useForm, FormProvider } from "react-hook-form";
 import { SectionSTY } from "./style";
 import dayjs from "dayjs";
@@ -12,13 +12,13 @@ import VerticalDetail from "@components/VerticalDetail";
 import ScheduleList from "@components/ScheduleList";
 import DetailItem from "@components/DetailList/DetailItem";
 import ProgressList from "@components/ProgressList";
-import { MOCK_progressList } from "@mock-data/orders";
 import {
   STATUS_CODE,
   QUOTE_TYPE,
   PURPOSE,
   BUS_AGE,
-  BRING_PETS_RADIO
+  BRING_PETS_RADIO,
+  SOCIAL_MEDIA_TYPE
 } from "@services/getDDL";
 
 const OrderDetail = ({ data }) => {
@@ -31,7 +31,7 @@ const OrderDetail = ({ data }) => {
     return keysArr.filter((item) => item.isShown === true);
   };
   // ----- render ----- //
-  const renderDataList = (list) => {
+  const renderDataList = (list: any[]) => {
     const dataArr = [
       "送出詢價", //1|2
       "收到報價", //3|4
@@ -40,15 +40,17 @@ const OrderDetail = ({ data }) => {
       "結案" //15
     ].map((item) => ({
       label: item,
-      status: "pending", // "ok" | "pending" | "error"
+      status: "pending", // "ok" | "pending" | "error" |"disabled"
       date: ""
     }));
     const renderOverdue = (item) => {
       dataArr.splice(3, 0, {
         label: STATUS_CODE[item.status_code].label,
         status: "error",
-        date: item.upddate
+        date: dayjs(item.upddate).format("MM/DD HH:MM")
       });
+      dataArr[dataArr.length - 2].status = "disabled";
+      dataArr[dataArr.length - 1].status = "disabled";
       //TODO 更新訂單成立跟結案的狀態=>'due'? 待確認
     };
     list.forEach((item) => {
@@ -59,22 +61,26 @@ const OrderDetail = ({ data }) => {
           break;
         case "3" || "4":
           dataArr[1].status = "ok";
-          dataArr[1].date = item.upddate;
+          dataArr[1].date = dayjs(item.upddate).format("MM/DD HH:MM");
           break;
         case "5" || "7":
           dataArr[2].status = "ok";
-          dataArr[2].date = item.upddate;
+          dataArr[2].date = dayjs(item.upddate).format("MM/DD HH:MM");
           break;
         case "9" || "10" || "11":
           renderOverdue(item);
           break;
         case "6" || "8" || "12" || "13" || "14":
           dataArr[dataArr.length - 2].status = "ok";
-          dataArr[dataArr.length - 2].date = item.upddate;
+          dataArr[dataArr.length - 2].date = dayjs(item.upddate).format(
+            "MM/DD HH:MM"
+          );
           break;
         case "15":
           dataArr[dataArr.length - 1].status = "ok";
-          dataArr[dataArr.length - 1].date = item.upddate;
+          dataArr[dataArr.length - 1].date = dayjs(item.upddate).format(
+            "MM/DD HH:MM"
+          );
           break;
         default:
           return;
@@ -102,9 +108,9 @@ const OrderDetail = ({ data }) => {
       { title: "信箱", value: contactData.contact_email },
       {
         title: "通訊軟體",
-        value: `${contactData.social_media_type || ""} ${
-          contactData.social_media || "---"
-        }`
+        value: `${
+          SOCIAL_MEDIA_TYPE[contactData.social_media_type]?.label || ""
+        }  ${contactData.social_media || "---"}`
       }
     ];
     return contactArr;
@@ -252,7 +258,7 @@ const OrderDetail = ({ data }) => {
                 <span className="collapse__subTitle">
                   {`${PURPOSE[data.purpose]?.label || "---"}｜${
                     data.bus_type?.bus_seat || "---"
-                  }人座車（4-7人搭乘）`}
+                  }人座車`}
                 </span>
               </div>
             }
@@ -264,9 +270,11 @@ const OrderDetail = ({ data }) => {
                 value={dayjs(data.departure_date).format("YYYY/MM/DD")}
               />
               <DetailItem title="詢價編號" value={data.quote_no} />
-              <ProgressList
-                dataLists={renderDataList.call(null, data.orderStatusesList)}
-              />
+              <Pane>
+                <ProgressList
+                  dataLists={renderDataList.call(null, data.orderStatusesList)}
+                />
+              </Pane>
             </Pane>
           </Collapse>
           <Pane>
