@@ -6,6 +6,7 @@ export const BodySTY = styled.div`
   justify-content: space-between;
   padding: 0px;
   gap: 20px;
+  height: 32px;
   width: 100%;
   .item-title {
     display: flex;

@@ -1,13 +1,22 @@
+import { UseFormRegister } from "react-hook-form";
 import { ExpenseItemType } from "../type";
 import { BodySTY } from "./style";
 import Tooltip from "@components/Tooltip";
 import { HelpIcon } from "evergreen-ui";
 interface ItemProps {
   itemData: ExpenseItemType;
+  register: UseFormRegister<any>;
   prefix?: string;
   suffix?: string;
+  isEdit?: boolean;
 }
-const ExpenseItem = ({ itemData, prefix, suffix }: ItemProps) => {
+const ExpenseItem = ({
+  itemData,
+  register,
+  isEdit,
+  prefix,
+  suffix
+}: ItemProps) => {
   const { label, hint, value } = itemData;
   return (
     <BodySTY>
@@ -22,7 +31,14 @@ const ExpenseItem = ({ itemData, prefix, suffix }: ItemProps) => {
 
       <div className="item-value">
         {prefix && <span>{prefix}</span>}
-        <span>{value.toLocaleString("en-US")}</span>
+        {isEdit ? (
+          <input
+            type="number"
+            {...register(itemData.name, { valueAsNumber: true })}
+          />
+        ) : (
+          <span>{value.toLocaleString("en-US")}</span>
+        )}
         {suffix && <span>{suffix}</span>}
       </div>
     </BodySTY>

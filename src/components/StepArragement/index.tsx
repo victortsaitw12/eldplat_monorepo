@@ -35,20 +35,13 @@ function StepArragement({
       <ItemSTY>
         <div className="item-content">上車地點</div>
         <TextInput
-          {...register(`${startPointName}.location`)}
+          {...register(`${startPointName}`)}
           disabled={withStartPoint}
           style={{ flex: "1" }}
         />
         <div className="option-container">
           {fields.length === 0 && (
-            <button
-              className="option-item"
-              onClick={() =>
-                append({
-                  location: ""
-                })
-              }
-            >
+            <button className="option-item" onClick={() => append("")}>
               <PlusIcon size={12} />
             </button>
           )}
@@ -60,7 +53,7 @@ function StepArragement({
           <ItemSTY key={item.id}>
             <div className="item-content">{locationName}: </div>
             <TextInput
-              {...register(`${middlePointName}.${index}.location`)}
+              {...register(`${middlePointName}.${index}`)}
               style={{ flex: "1" }}
             />
             <div className="option-container">
@@ -68,14 +61,7 @@ function StepArragement({
                 <TrashIcon size={12} />
               </button>
               {index === fields.length - 1 ? (
-                <button
-                  className="option-item"
-                  onClick={() =>
-                    append({
-                      location: ""
-                    })
-                  }
-                >
+                <button className="option-item" onClick={() => append("")}>
                   <PlusIcon size={12} />
                 </button>
               ) : (
@@ -88,7 +74,7 @@ function StepArragement({
       <ItemSTY>
         <div className="item-content">下車地點</div>
         <TextInput
-          {...register(`${destinationPointName}.location`)}
+          {...register(`${destinationPointName}`)}
           disabled={withDestinationPoint}
           style={{ flex: "1" }}
         />
