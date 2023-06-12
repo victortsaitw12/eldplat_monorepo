@@ -64,7 +64,7 @@ const Page: NextPageWithLayout<{
       .then((data) => {
         console.log("💫💫💫💫", data);
         console.log(data.contentList);
-        const orderData = mock_GetQuotationByFilterList.map((order: any) => {
+        const orderData = data.contentList.map((order: any) => {
           return {
             id: { label: order["quote_no"], value: order["quote_no"] },
             quote_no: { label: order["quote_no"], value: order["quote_no"] },
@@ -132,7 +132,7 @@ const Page: NextPageWithLayout<{
     try {
       const res = await getQuotationByFilter(subFilter);
       console.log("res.contentList", res.contentList);
-      const orderData = mock_GetQuotationByFilterList.map((order: any) => {
+      const orderData = res.contentList.map((order: any) => {
         return {
           id: { label: order["quote_no"], value: order["quote_no"] },
           quote_no: { label: order["quote_no"], value: order["quote_no"] },
