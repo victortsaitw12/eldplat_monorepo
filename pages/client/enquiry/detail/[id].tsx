@@ -4,7 +4,7 @@ import {
   NextPageWithLayout
 } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getLayout } from "@layout/QuoteLayout";
 import StatusCard from "@components/StatusCard";
 import { BodySTY } from "./style";
@@ -12,38 +12,87 @@ import NavigationList from "@components/NavigationList";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
 
-import { Button, TickCircleIcon } from "evergreen-ui";
+import { TickCircleIcon } from "evergreen-ui";
 //@mock_data
 import { mock_orderData } from "@mock-data/adminOrders/mockData";
 //@content
 import OrdersDetail from "@contents/Client/Enquiry/Detail";
 //
+import ConditionCard from "@components/ConditionCard";
+import Breadcrumbs from "@components/Breadcrumbs";
+import OrderDetail from "@contents/Orders/OrderDetail";
+import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 const DummyExpenseDetailData = [
   {
     label: "基本車資",
     hint: "基本車資說明",
+    name: "basic",
     value: 1200
   },
   {
     label: "小費",
     hint: "小費說明",
+    name: "tip",
     value: 200
   },
   {
     label: "旺季加價",
     hint: "旺季加價說明",
+    name: "peak",
     value: 300
   },
   {
     label: "司機費用",
     hint: "司機費用說明",
+    name: "driver",
+    value: 300
+  },
+  {
+    label: "夜間加價",
+    hint: "夜間加價費用說明",
+    name: "night",
+    value: 200
+  },
+  {
+    label: "偏遠地區加價",
+    hint: "偏遠地區加價費用說明",
+    name: "remote",
+    value: 300
+  },
+  {
+    label: "特殊需求小計",
+    hint: "特殊需求小計費用說明",
+    name: "special",
     value: 300
   }
 ];
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ type }) => {
+> = ({ quote_type, quoteNo }) => {
+  console.log({
+    quote_type,
+    quoteNo
+  });
+  const [data, setData] = useState<I_OrderDetail | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const getQuotationData = async () => {
+      setIsLoading(true);
+      try {
+        const res = await getQuotation(quoteNo);
+        console.log("response of getQuotation: ", res);
+        setData(res);
+      } catch (e: any) {
+        console.log(e);
+      }
+      setIsLoading(false);
+    };
+    getQuotationData();
+  }, []);
+  if (!quoteNo || quoteNo.trim() === "") {
+    return <div>查無此訂單</div>;
+  }
   return (
     <BodySTY>
       <StatusCard>
@@ -57,11 +106,13 @@ const Page: NextPageWithLayout<
       </StatusCard>
       <div className="body-container">
         <div className="content-container">
-          <OrdersDetail
-            isEdit={false}
-            orderData={mock_orderData}
-            orderType={type === "custom" ? "0" : "1"}
-          />
+          {!isLoading && data && (
+            <OrdersDetail
+              isEdit={false}
+              orderData={data}
+              orderType={quote_type}
+            />
+          )}
         </div>
         <div className="charge-container">
           <Collapse title="初估金額" opened={true}>
@@ -74,23 +125,26 @@ const Page: NextPageWithLayout<
 };
 
 interface Props {
-  type: string;
+  quote_type: "1" | "2" | "3";
+  quoteNo: string;
 }
 interface RouterQuery extends ParsedUrlQuery {
-  type: string;
+  quote_type: string;
+  id: string;
 }
 
 export const getServerSideProps: GetServerSideProps<
   Props,
   RouterQuery
 > = async (context) => {
-  const { query } = context;
-  const type = query.type ? (query.type as string) : "custom";
-
+  const { query, params } = context;
+  const quote_type = query.quote_type ? (query.quote_type as any) : "1";
+  const id = params?.id;
   return {
     props: {
-      type: type || "",
-      title: type === "custom" ? "客製包車" : "機場接送"
+      quote_type,
+      title: quote_type === "1" ? "客製包車" : "機場接送",
+      quoteNo: id || ""
     }
   };
 };

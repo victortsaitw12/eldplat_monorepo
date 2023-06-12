@@ -6,7 +6,7 @@ import { BodySTY } from "./style";
 import LabelTag from "@components/LabelTag";
 import Collapse from "@components/Collapse";
 //@contents
-import ShuttleInfoView from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo/ShuttleInfoView";
+import ShuttleInfo from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo";
 import CarInfoView from "@contents/AdminOrders/AdminOrdersDetail/CarInfo/CarInfoView";
 import ContactInfoView from "@contents/AdminOrders/AdminOrdersDetail/ContactInfo/ContactInfoView";
 import PassengerInfoView from "@contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoView";
@@ -23,18 +23,29 @@ import {
   order_sepcial,
   order_flight
 } from "@mock-data/adminOrders/mockData";
+import {
+  mappingContactInfo,
+  mappingSpecailNeededsInfo
+} from "@services/client/mappingQuotationData";
 import DetailList from "@components/DetailList";
 
 interface I_Props {
   isEdit: boolean;
-  orderType?: "0" | "1";
+  orderType?: "1" | "2" | "3";
   orderData: any;
 }
 
-const OrdersDetail = ({ isEdit, orderType = "0", orderData }: I_Props) => {
+const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
   console.log("🤣🤣🤣🤣detail頁的orderData", orderData);
   console.log("📃📃📃📃📃isEdit", isEdit);
   console.log("orderType", orderType);
+  const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
+  const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
+  const specialInfo = mappingSpecailNeededsInfo(orderData);
+  console.log("contactInfo", contactInfo);
+  console.log("passengerInfo", passengerInfo);
+  console.log("specialInfo", specialInfo);
+
   const [loading, setLoading] = useState(false);
   const methods = useForm({
     defaultValues: {
@@ -63,37 +74,42 @@ const OrdersDetail = ({ isEdit, orderType = "0", orderData }: I_Props) => {
     setLoading(false);
   };
 
-  const r_template = (orderType: "0" | "1") => {
+  const r_template = (orderType: "1" | "2" | "3") => {
     return (
       <>
         <Collapse opened={true} title="總覽">
           <CarInfoView
             listArray={[
               {
-                title: "用車目的",
-                value: "送機"
+                title: "訂單編號",
+                value: orderData["quote_no"]
               },
               {
-                title: "訂車注意事項",
-                value: "客戶同意"
+                title: "用車目的",
+                value:
+                  orderData["quote_type"] === "2"
+                    ? "接機"
+                    : orderData["quote_type"] === "3"
+                    ? "送機"
+                    : orderData["purpose"]
               }
             ]}
           />
         </Collapse>
         <Collapse opened={true} title="訂單聯絡人">
-          <ContactInfoView data={order_contact} />
+          <ContactInfoView data={contactInfo} />
         </Collapse>
 
         {/*以下為變動*/}
-        {orderType === "0" ? (
-          <ShuttleInfoView shuttleList={order_shuttleList} />
+        {orderType === "1" ? (
+          <ShuttleInfo
+            arrayName="order_itinerary_list"
+            isEdit={false}
+            shuttleList={order_shuttleList}
+          />
         ) : (
           <Collapse opened={true} title="航班資訊">
-            {isEdit ? (
-              <FlightInfoEdit />
-            ) : (
-              <FlightInfoView data={order_flight} />
-            )}
+            <FlightInfoView data={order_flight} />
           </Collapse>
         )}
         {/*變動*/}
@@ -102,26 +118,11 @@ const OrdersDetail = ({ isEdit, orderType = "0", orderData }: I_Props) => {
         </Collapse>
         <Collapse title="特殊需求">
           <Pane className="special_content" style={{ padding: "20px" }}>
-            <DetailList listArray={order_sepcial} />
+            <DetailList listArray={specialInfo} />
           </Pane>
         </Collapse>
         <Collapse opened={true} title="旅客代表人">
-          {isEdit ? (
-            <PassengerInfoEdit />
-          ) : (
-            <PassengerInfoView data={order_represent} />
-          )}
-        </Collapse>
-        <Collapse title="標籤">
-          <Pane
-            className="special-content"
-            style={{ padding: "20px", display: "flex", gap: "10px" }}
-          >
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
-          </Pane>
+          <PassengerInfoView data={passengerInfo} />
         </Collapse>
       </>
     );

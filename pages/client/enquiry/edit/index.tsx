@@ -116,12 +116,12 @@ const Page: NextPageWithLayout<
         if (returnDate && departureDate) {
           durationDay = calculateDuration(departureDate, returnDate);
         }
-        console.log("durationDay: ", durationDay);
         return {
           ...defaultQuotationCreatePayload,
           quote_type: "1",
           departure_date: departureDate,
           return_date: returnDate,
+          purpose: purpose,
           order_itinerary_list: new Array(durationDay + 1)
             .fill({})
             .map((_, index) => {
@@ -139,7 +139,7 @@ const Page: NextPageWithLayout<
     } else {
       return {
         ...defaultQuotationCreatePayload,
-        quote_type: purpose === "pickUp" ? "2" : "3",
+        quote_type: type === "pickUp" ? "2" : "3",
         departure_date: flightDate,
         return_date: returnDate,
         flight_date: flightDate,
@@ -172,10 +172,15 @@ const Page: NextPageWithLayout<
     defaultValues: defaultValues
   });
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
-    console.log("data: ", data);
-    // createQuotation(data);
+    const result = await createQuotation(data);
+    const { quote_no } = result;
+    router.push({
+      pathname: `/client/enquiry/detail/${quote_no}`,
+      query: {
+        quote_type: type === "custom" ? "1" : type === "pickUp" ? "2" : "3"
+      }
+    });
   };
-  console.log("Current Data: ", getValues());
   return (
     <BodySTY>
       <StatusCard>
@@ -278,12 +283,6 @@ const Page: NextPageWithLayout<
               onClick={() => {
                 if (currentTab === 4) {
                   alert("送出詢價單");
-                  // router.push({
-                  //   pathname: "/client/enquiry/detail",
-                  //   query: {
-                  //     type: type === "custom" ? "custom" : "airport"
-                  //   }
-                  // });
                   submitRef.current?.click();
                   return;
                 }
