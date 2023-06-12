@@ -1,5 +1,6 @@
 import { mock_company_data } from "@mock-data/company/mock_data";
 import { getSingleCompany } from "@services/company/getAllCompany";
+import { getDdlData } from "@services/ddl/getDdlData";
 import {
   I_Company_Contact_Type,
   I_Company_Update_Type
@@ -13,6 +14,11 @@ import {
 import React, { useState, createContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
+interface I_DDL_Type {
+  label: string;
+  value: string;
+}
+
 interface I_CountryNum {
   contactTel: string;
   contactPhone: string;
@@ -25,6 +31,7 @@ interface I_ErrMsg {
 export interface I_Company_Context {
   companyData: I_Company_Update_Type;
   setCompanyData: (companyData: I_Company_Update_Type) => void;
+  ddlLanguage: I_DDL_Type[];
   errMsg: I_ErrMsg[] | boolean | any;
   countryNumInput: any | I_CountryNum;
   setCountryNumInput: (countryNumInput: I_CountryNum) => void;
@@ -41,6 +48,7 @@ export const CompanyContext = createContext<I_Company_Context>({
   setCompanyData: function (): void {
     throw new Error("Function not implemented.");
   },
+  ddlLanguage: [{ label: "請選擇", value: "no" }],
   errMsg: { errField: "", errText: "" } || false,
   countryNumInput: { contactTel: "", contactPhone: "" },
   setCountryNumInput: function (): void {
@@ -59,6 +67,9 @@ export const CompanyContext = createContext<I_Company_Context>({
 
 // function component start
 export const CompanyProvider = ({ children }: any) => {
+  const [ddlLanguage, setDdlLanguage] = useState<I_DDL_Type[]>([
+    { label: "請選擇", value: "no" }
+  ]);
   const [companyData, setCompanyData] = useState<I_Company_Update_Type | any>(
     mock_company_data
   );
@@ -74,7 +85,32 @@ export const CompanyProvider = ({ children }: any) => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const companyNo = "BH49202304190001";
+  // 取得下拉式選單的資料
+  useEffect(() => {
+    setLoading(true);
+    const languageObj = { ddl_column: "company_language", ddl_type: "company" };
+    try {
+      getDdlData(languageObj).then((data) => {
+        console.log("ddl lang data", data);
+        const originData = [...ddlLanguage];
+        const newData = data.dataList.map(
+          (v: { label: string; value: string }) => {
+            return { label: v.label, value: v.value };
+          }
+        );
+        const concatData = originData.concat(newData);
+        setDdlLanguage(concatData);
+      });
+    } catch (e: any) {
+      console.log(e);
+      console.log("get DDL errors :", e.message);
+    }
+    setLoading(false);
+  }, []);
+
+  console.log("ddlLanguage", ddlLanguage);
+
+  // 取得登入公司的資料
   useEffect(() => {
     setLoading(true);
     getSingleCompany().then((data) => {
@@ -204,6 +240,7 @@ export const CompanyProvider = ({ children }: any) => {
   const allContextValues = {
     companyData,
     setCompanyData,
+    ddlLanguage,
     errMsg,
     countryNumInput,
     setCountryNumInput,

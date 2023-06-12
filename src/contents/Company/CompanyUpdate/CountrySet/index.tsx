@@ -12,13 +12,13 @@ import {
   RegionContext
 } from "@contexts/regionContext/regionProvider";
 
-const languageOptions = [
-  { value: "no", label: "請選擇" },
-  { value: "01", label: "簡體中文" },
-  { value: "02", label: "日文" },
-  { value: "03", label: "韓文" },
-  { value: "04", label: "泰文" }
-];
+// const languageOptions = [
+//   { value: "no", label: "請選擇" },
+//   { value: "01", label: "簡體中文" },
+//   { value: "02", label: "日文" },
+//   { value: "03", label: "韓文" },
+//   { value: "04", label: "泰文" }
+// ];
 const currencyOptions = [
   { value: "no", label: "請選擇" },
   { value: "01", label: "台幣" },
@@ -28,8 +28,12 @@ const currencyOptions = [
 ];
 
 function CountrySet() {
-  const { companyData, setCompanyData, handleCompanyCountrySetChange } =
-    useContext<I_Company_Context>(CompanyContext);
+  const {
+    companyData,
+    setCompanyData,
+    ddlLanguage,
+    handleCompanyCountrySetChange
+  } = useContext<I_Company_Context>(CompanyContext);
   const { allCountries, setAllCountries } =
     useContext<I_Region_Context>(RegionContext);
   const company_language_data = companyData?.company_language;
@@ -122,7 +126,8 @@ function CountrySet() {
         <Pane className="input-line">
           <Text className="">語系</Text>
           <TagSelect
-            options={languageOptions}
+            // options={languageOptions}
+            options={ddlLanguage}
             handleCustomData={setLangData}
             editData={editLangData}
           />

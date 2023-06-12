@@ -2,18 +2,13 @@ import React from "react";
 import { GroupSTY, DivSTY } from "./style";
 
 interface Props {
-  defaultTab?: string;
-  tabsArray: { label: string; content: any[]; value: string }[];
-  children: React.ReactNode;
-  onTabChange: (val: string) => void;
+  defaultTab?: number;
+  tabsArray: { label: string; length: number; value: number }[];
+  onTabChange: (val: number) => void;
   isLoading?: boolean;
 }
 
-const StatusTabsWrapper = ({
-  defaultTab = "01",
-  tabsArray,
-  onTabChange
-}: Props) => {
+const StatusTabs = ({ defaultTab = 1, tabsArray, onTabChange }: Props) => {
   const [currentTab, setCurrentTab] = React.useState(defaultTab);
   if (tabsArray.filter((item) => item.value === defaultTab).length === 0)
     defaultTab = tabsArray[0].value;
@@ -35,7 +30,7 @@ const StatusTabsWrapper = ({
               onClick={handleClick}
             >
               {item.label}
-              {item.content.length !== 0 && <span>{item.content.length} </span>}
+              {item.length !== 0 && <span>{item.length} </span>}
             </DivSTY>
           ))}
       </GroupSTY>
@@ -43,4 +38,4 @@ const StatusTabsWrapper = ({
   );
 };
 
-export default StatusTabsWrapper;
+export default StatusTabs;
