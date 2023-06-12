@@ -45,57 +45,6 @@ const ScheduleList = ({
       return "下車地點";
     }
   };
-  // const r_item = (fields: any[]) => {
-  //   return fields.map((child, i) => {
-  //     return (
-  //       <li key={i} className="schedule-list-item">
-  //         <Text className="schedule-list-label">
-  //           {needLine && (
-  //             <Text className={cx("dot", { withLine: i < fields.length - 1 })}>
-  //               <DotIcon />
-  //             </Text>
-  //           )}
-  //           {r_label(i)}
-  //         </Text>
-  //         <Text>
-  //           {isEdit ? (
-  //             <TextInput
-  //               placeholder="請輸入詳細地址"
-  //               {...register(
-  //                 `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.location`
-  //               )}
-  //               disabled={disabledFirst && i == 0}
-  //             />
-  //           ) : (
-  //             child.location
-  //           )}
-  //         </Text>
-  //         {isEdit && (
-  //           <Text className="schedule-item-action">
-  //             <PlusIcon
-  //               color="#718BAA"
-  //               size={11}
-  //               onClick={() => {
-  //                 append({
-  //                   value: ""
-  //                 });
-  //               }}
-  //             />
-  //             {i > 0 && (
-  //               <TrashIcon
-  //                 color="#718BAA"
-  //                 size={11}
-  //                 onClick={() => {
-  //                   remove(i);
-  //                 }}
-  //               />
-  //             )}
-  //           </Text>
-  //         )}
-  //       </li>
-  //     );
-  //   });
-  // };
   const r_item = (fields: any[]) => {
     return fields.map((child, i) => (
       <li key={i} className="schedule-list-item">
@@ -111,7 +60,9 @@ const ScheduleList = ({
           {isEdit ? (
             <TextInput
               placeholder="請輸入詳細地址"
-              {...register(`${arrayName}.${i}.location`)}
+              {...register(
+                `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.location`
+              )}
               disabled={disabledFirst && i == 0}
             />
           ) : (
@@ -125,8 +76,7 @@ const ScheduleList = ({
               size={11}
               onClick={() => {
                 append({
-                  label: "",
-                  value: ""
+                  location: ""
                 });
               }}
             />

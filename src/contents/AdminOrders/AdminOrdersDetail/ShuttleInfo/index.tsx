@@ -60,7 +60,7 @@ const ShuttleInfo = ({ isEdit, arrayName }: I_Props) => {
             arrayName="stopover_addresses"
             register={register}
             isEdit={isEdit}
-            disabledFirst={true}
+            disabledFirst={false}
             control={control}
           />
         </Pane>

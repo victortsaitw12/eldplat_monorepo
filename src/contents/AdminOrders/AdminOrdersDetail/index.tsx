@@ -63,9 +63,26 @@ const AdminOrdersDetal = ({ isEdit, orderType = "1", orderData }: I_Props) => {
   // console.log("🤣🤣🤣🤣", orderData.order_contact_list);
   const [loading, setLoading] = useState(false);
 
+  const defaultOrderdata = (data: any) => {
+    const newdata = data;
+    newdata.order_itinerary_list = data.order_itinerary_list.map(
+      (child: any) => {
+        return {
+          ...child,
+          stopover_addresses: child.stopover_addresses.map((c) => {
+            return {
+              location: c
+            };
+          })
+        };
+      }
+    );
+    return newdata;
+  };
+
   const methods = useForm({
     defaultValues: {
-      ...orderData
+      ...defaultOrderdata(orderData)
     }
   });
 
