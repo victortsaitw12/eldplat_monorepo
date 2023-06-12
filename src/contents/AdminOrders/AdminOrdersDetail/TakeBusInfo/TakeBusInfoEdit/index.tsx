@@ -24,8 +24,10 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      methods={methods}
-                      inputName="counter-01"
+                      setValue={methods.setValue}
+                      getValues={methods.getValues}
+                      register={register}
+                      inputName="adult"
                       label="成人"
                     />
                   )
@@ -34,8 +36,10 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      methods={methods}
-                      inputName="counter-02"
+                      setValue={methods.setValue}
+                      getValues={methods.getValues}
+                      register={register}
+                      inputName="child"
                       label="兒童 (2~4歲)"
                     />
                   )
@@ -44,8 +48,10 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      methods={methods}
-                      inputName="counter-02"
+                      setValue={methods.setValue}
+                      getValues={methods.getValues}
+                      register={register}
+                      inputName="infant"
                       label="嬰兒 (0~1歲)"
                     />
                   )
@@ -61,8 +67,10 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      methods={methods}
-                      inputName="counter-01"
+                      setValue={methods.setValue}
+                      getValues={methods.getValues}
+                      register={register}
+                      inputName="check_in_luggage"
                       label="托運行李 (21吋以上)"
                     />
                   )
@@ -71,8 +79,10 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      methods={methods}
-                      inputName="counter-02"
+                      setValue={methods.setValue}
+                      getValues={methods.getValues}
+                      register={register}
+                      inputName="carry_on_luggage"
                       label="手提行李 (20吋以下)"
                     />
                   )
@@ -93,9 +103,11 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                     label: "",
                     value: (
                       <CounterInput
-                        methods={methods}
+                        setValue={methods.setValue}
+                        getValues={methods.getValues}
+                        register={register}
                         inputName="counter-01"
-                        label="托運行李 (21吋以上)"
+                        label="車款名稱（35~43人）"
                       />
                     )
                   },
@@ -103,9 +115,11 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                     label: "",
                     value: (
                       <CounterInput
-                        methods={methods}
+                        setValue={methods.setValue}
+                        getValues={methods.getValues}
+                        register={register}
                         inputName="counter-02"
-                        label="手提行李 (20吋以下)"
+                        label="車款名稱（28~34人）"
                       />
                     )
                   }
@@ -122,9 +136,11 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                     label: "",
                     value: (
                       <CounterInput
-                        methods={methods}
+                        setValue={methods.setValue}
+                        getValues={methods.getValues}
+                        register={register}
                         inputName="counter-01"
-                        label="托運行李 (21吋以上)"
+                        label="車款名稱（21~25人）"
                       />
                     )
                   },
@@ -132,9 +148,11 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                     label: "",
                     value: (
                       <CounterInput
-                        methods={methods}
+                        setValue={methods.setValue}
+                        getValues={methods.getValues}
+                        register={register}
                         inputName="counter-02"
-                        label="手提行李 (20吋以下)"
+                        label="車款名稱（21~25人）"
                       />
                     )
                   }
@@ -151,19 +169,11 @@ const TakeBusInfoEdit = ({ methods }: I_Props) => {
                     label: "",
                     value: (
                       <CounterInput
-                        methods={methods}
+                        setValue={methods.setValue}
+                        getValues={methods.getValues}
+                        register={register}
                         inputName="counter-01"
-                        label="托運行李 (21吋以上)"
-                      />
-                    )
-                  },
-                  {
-                    label: "",
-                    value: (
-                      <CounterInput
-                        methods={methods}
-                        inputName="counter-02"
-                        label="手提行李 (20吋以下)"
+                        label="車款名稱（9人以下）"
                       />
                     )
                   }
