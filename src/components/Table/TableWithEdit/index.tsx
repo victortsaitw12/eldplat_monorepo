@@ -163,8 +163,8 @@ function Table({
                   })}
                   <td>
                     <TableActionButton
-                      onView={viewItem.bind(null, item.id?.value)}
-                      onEdit={goToEditPage.bind(null, item.id?.value)}
+                      onView={viewItem.bind(null, item.id?.value, item)}
+                      onEdit={goToEditPage.bind(null, item.id?.value, item)}
                       onDelete={deleteItem.bind(null, item.id?.value)}
                     />
                   </td>

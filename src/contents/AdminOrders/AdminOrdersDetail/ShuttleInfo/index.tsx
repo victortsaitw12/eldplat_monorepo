@@ -5,7 +5,7 @@ import {
   useFormContext,
   useFieldArray
 } from "react-hook-form";
-import { Pane, TimeIcon, TrashIcon, Button } from "evergreen-ui";
+import { Pane, TimeIcon, TrashIcon, Button, SmallPlusIcon } from "evergreen-ui";
 import Collapse from "@components/Collapse";
 import ScheduleList from "@components/ScheduleList";
 import DetailItem from "@components/DetailList/DetailItem";
@@ -17,10 +17,9 @@ interface I_ShuttleInfo {
 interface I_Props {
   isEdit: boolean;
   arrayName: string;
-  shuttleList: Array<I_ShuttleInfo>;
 }
 
-const ShuttleInfo = ({ isEdit, arrayName, shuttleList }: I_Props) => {
+const ShuttleInfo = ({ isEdit, arrayName }: I_Props) => {
   const { register, control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -72,21 +71,24 @@ const ShuttleInfo = ({ isEdit, arrayName, shuttleList }: I_Props) => {
     <BodySTY>
       {r_list(fields)}
       {isEdit && (
-        <Button
-          onClick={() => {
-            append({
-              day_number: (fields.length + 1).toString(),
-              day_date: "2023/06/05",
-              stopover_addresses: [
-                {
-                  location: ""
-                }
-              ]
-            });
-          }}
-        >
-          新增一天
-        </Button>
+        <Pane className="add_day_container">
+          <Button
+            onClick={() => {
+              append({
+                day_number: (fields.length + 1).toString(),
+                day_date: "2023/06/05",
+                stopover_addresses: [
+                  {
+                    location: ""
+                  }
+                ]
+              });
+            }}
+          >
+            <SmallPlusIcon color="#718BAA" />
+            新增其他天
+          </Button>
+        </Pane>
       )}
     </BodySTY>
   );
