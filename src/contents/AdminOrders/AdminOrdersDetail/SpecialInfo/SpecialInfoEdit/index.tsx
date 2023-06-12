@@ -8,8 +8,11 @@ import CounterInput from "@components/CounterInput";
 import CustomSelect from "@components/CustomSelect";
 import VerticalTextArea from "@components/VerticalTextArea";
 import { BodySTY } from "./style";
+interface I_Props {
+  methods: any;
+}
 
-const SpecialInfoEdit = () => {
+const SpecialInfoEdit = ({ methods }: I_Props) => {
   const { register, control } = useFormContext();
   const [options] = React.useState([
     { label: "攜帶小型寵物，且會裝於寵物籠/背包中。", value: "01" },
@@ -62,8 +65,8 @@ const SpecialInfoEdit = () => {
                     label: "",
                     value: (
                       <CounterInput
-                        register={register}
-                        inpurName="counter-01"
+                        methods={methods}
+                        inputName="counter-01"
                         label="24瓶/箱"
                       />
                     )
@@ -103,8 +106,8 @@ const SpecialInfoEdit = () => {
                     label: "",
                     value: (
                       <CounterInput
-                        register={register}
-                        inpurName="counter-01"
+                        methods={methods}
+                        inputName="counter-01"
                         label="由店家提供（+NT$200/ 天）"
                       />
                     )
@@ -113,8 +116,8 @@ const SpecialInfoEdit = () => {
                     label: "",
                     value: (
                       <CounterInput
-                        register={register}
-                        inpurName="counter-01"
+                        methods={methods}
+                        inputName="counter-01"
                         label="自備"
                       />
                     )
@@ -141,8 +144,8 @@ const SpecialInfoEdit = () => {
                     label: "",
                     value: (
                       <CounterInput
-                        register={register}
-                        inpurName="counter-01"
+                        methods={methods}
+                        inputName="counter-01"
                         label="由店家提供（+NT$200/ 天）"
                       />
                     )
@@ -151,8 +154,8 @@ const SpecialInfoEdit = () => {
                     label: "",
                     value: (
                       <CounterInput
-                        register={register}
-                        inpurName="counter-01"
+                        methods={methods}
+                        inputName="counter-01"
                         label="自備"
                       />
                     )
