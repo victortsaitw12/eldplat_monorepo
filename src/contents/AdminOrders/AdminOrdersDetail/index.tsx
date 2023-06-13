@@ -27,6 +27,8 @@ import TakeBusInfoView from "./TakeBusInfo/TakeBusInfoView";
 import TakeBusInfoEdit from "./TakeBusInfo/TakeBusInfoEdit";
 import SpecialInfoView from "./SpecialInfo/SpecialInfoView";
 import SpecialInfoEdit from "./SpecialInfo/SpecialInfoEdit";
+import PriceInfoEdit from "./PriceInfo/PriceInfoEdit";
+import PriceInfoView from "./PriceInfo/PriceInfoView";
 //@util
 
 //@context
@@ -36,8 +38,9 @@ import SpecialInfoEdit from "./SpecialInfo/SpecialInfoEdit";
 import { mock_progressdata } from "@mock-data/adminOrders/mockData";
 
 interface I_Props {
+  submitForm?: (data: any) => void;
   isEdit: boolean;
-  orderType: "1" | "2"; //1:客製包車 2:接送機
+  quoteType: "1" | "2"; //1:客製包車 2:接送機
   orderData: any;
 }
 // const test = {
@@ -56,31 +59,55 @@ interface I_Props {
 //     }
 //   ]
 // };
-const AdminOrdersDetal = ({ isEdit, orderType = "1", orderData }: I_Props) => {
+const AdminOrdersDetal = ({
+  submitForm,
+  isEdit,
+  quoteType = "1",
+  orderData
+}: I_Props) => {
   console.log("🤣🤣🤣🤣detail頁的orderData", orderData);
   console.log("📃📃📃📃📃isEdit", isEdit);
-  console.log("orderType", orderType);
+  console.log("quoteType", quoteType);
   // console.log("🤣🤣🤣🤣", orderData.order_contact_list);
   const [loading, setLoading] = useState(false);
 
-  const methods = useForm({
-    defaultValues: {
-      ...orderData
-    }
-  });
-
-  const asyncSubmitForm = async (data: any) => {
-    console.log("edited data", data);
-    setLoading(true);
-    try {
-      console.log("response of vendor edit: ");
-    } catch (e: any) {
-      console.log(e);
-      alert(e.message);
-    }
-    setLoading(false);
+  const defaultOrderdata = (data: any) => {
+    const newdata = data;
+    newdata.order_itinerary_list = data.order_itinerary_list.map(
+      (child: any) => {
+        return {
+          ...child,
+          stopover_addresses: child.stopover_addresses.map((c: any) => {
+            return {
+              location: c
+            };
+          })
+        };
+      }
+    );
+    return newdata;
+  };
+  //原本中途點的地方要轉成單維的結構
+  const fotmat_submitData = (data: any) => {
+    const newdata = data;
+    newdata.order_itinerary_list = data.order_itinerary_list.map(
+      (child: any) => {
+        return {
+          ...child,
+          stopover_addresses: child.stopover_addresses.map((c: any) => {
+            return c.location;
+          })
+        };
+      }
+    );
+    return newdata;
   };
 
+  const methods = useForm({
+    defaultValues: {
+      ...defaultOrderdata(orderData)
+    }
+  });
   //篩出聯絡人還是代表人的資料
   const contactListByType = (array: any[], type: string) => {
     const newArr = array.filter((child) => {
@@ -208,7 +235,11 @@ const AdminOrdersDetal = ({ isEdit, orderType = "1", orderData }: I_Props) => {
           )}
         </Collapse>
         {/*接送資訊*/}
-        <ShuttleInfo arrayName="order_itinerary_list" isEdit={isEdit} />
+        <ShuttleInfo
+          quote_no={orderData.quote_no}
+          arrayName="order_itinerary_list"
+          isEdit={isEdit}
+        />
         <Collapse opened={true} title="乘車資訊">
           {isEdit ? (
             <TakeBusInfoEdit methods={methods} />
@@ -391,7 +422,11 @@ const AdminOrdersDetal = ({ isEdit, orderType = "1", orderData }: I_Props) => {
           )}
         </Collapse>
         {/*接送資訊*/}
-        <ShuttleInfo arrayName="order_itinerary_list" isEdit={isEdit} />
+        <ShuttleInfo
+          quote_no={orderData.quote_no}
+          arrayName="order_itinerary_list"
+          isEdit={isEdit}
+        />
         <Collapse opened={true} title="乘車資訊">
           {isEdit ? (
             <TakeBusInfoEdit methods={methods} />
@@ -448,10 +483,9 @@ const AdminOrdersDetal = ({ isEdit, orderType = "1", orderData }: I_Props) => {
         <form
           onSubmit={methods.handleSubmit((data) => {
             console.log("🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡order", data);
-            // asyncSubmitForm({ ...data });
+            submitForm && submitForm({ ...fotmat_submitData(data) });
           })}
         >
-          <button type="submit">發送表單</button>
           <Pane
             style={{
               background: "#ffffff",
@@ -459,7 +493,23 @@ const AdminOrdersDetal = ({ isEdit, orderType = "1", orderData }: I_Props) => {
               overflow: "hidden"
             }}
           >
-            {r_template[orderType]}
+            {r_template[quoteType == "1" ? quoteType : "2"]}
+          </Pane>
+          <Pane>
+            {isEdit ? (
+              <PriceInfoEdit
+                status={"1"}
+                priceList={[
+                  {
+                    label: "基本車資",
+                    name: "basic"
+                  }
+                ]}
+              />
+            ) : (
+              <PriceInfoView orderData={orderData} />
+            )}
+            <button type="submit">發送表單</button>
           </Pane>
         </form>
       </FormProvider>

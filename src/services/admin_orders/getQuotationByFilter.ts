@@ -1,16 +1,30 @@
 import API_Path from "./apiPath";
-// 創建詢價/報價單
-export const getQuotationByFilter = async (data: any) => {
-  const filteredNullData: { [key: string]: string | null } = {};
-  for (const key in data) {
+// 取得詢價單&報價單列表
+export const getQuotationByFilter = async (
+  filter: { [key: string]: any } = {}
+) => {
+  const orderFilter = [];
+  const filteredNullData: { [key: string]: any } = {};
+  for (const key in filter) {
     console.log("key", key);
-    if (data[key].data !== 0) {
-      filteredNullData[key] = data[key];
-    } else if (data[key] !== null && data[key].trim() !== "") {
-      filteredNullData[key] = data[key];
+    if (filter[key].data !== 0) {
+      filteredNullData[key] = filter[key];
+    } else if (filter[key] !== null && filter[key].trim() !== "") {
+      filteredNullData[key] = filter[key];
     }
   }
   console.log("filteredNullData", filteredNullData);
+  for (const key in filteredNullData) {
+    if (filteredNullData[key].value !== "") {
+      orderFilter.push({
+        field_Name: key,
+        arrayConditions: "like",
+        value: filter[key].value,
+        dataType: filter[key].dataType
+      });
+    }
+  }
+  console.log("🕯️🕯️🕯️🕯️🕯️orderFilter", orderFilter);
   //
   const res = await fetch(API_Path["GetQuotationByFilter"], {
     method: "POST",
@@ -19,13 +33,13 @@ export const getQuotationByFilter = async (data: any) => {
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
     body: JSON.stringify({
-      order_filter: [],
+      order_filter: orderFilter,
       filter_needed: true,
       page_info: {
         page_Index: 1, //第幾頁
         page_Size: 10, //一頁幾筆
-        orderby: "quote_no" //可根據詢價號碼做排序
-        // arrangement: "asc", //升序or降序
+        orderby: "quote_no", //可根據詢價號碼做排序
+        arrangement: "asc" //升序or降序
       }
     })
   });

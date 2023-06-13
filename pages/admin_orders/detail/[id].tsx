@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { Pane, Icon, FloppyDiskIcon, EditIcon, Text } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
@@ -11,18 +12,17 @@ import TableWrapper from "@layout/TableWrapper";
 
 //@content
 import AdminOrdersDetal from "@contents/AdminOrders/AdminOrdersDetail";
-import PriceInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/PriceInfo/PriceInfoEdit";
-import PriceInfoView from "@contents/AdminOrders/AdminOrdersDetail/PriceInfo/PriceInfoView";
 
 //@services
 import { getQuotationByID } from "@services/admin_orders/getQuotationByID";
+import { updateQuotation } from "@services/admin_orders/updateQuotation";
 
 //@context
 // import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
 
 //@mock_data
 
-const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
+const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
@@ -50,6 +50,19 @@ const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
   const changeMainFilterHandler = (value: string) => {
     console.log("changeMainFilterHandler", value);
     setNowTab(value);
+  };
+
+  const asyncSubmitForm = async (data: any) => {
+    console.log("✨✨✨✨✨✨✨✨✨✨✨✨edited data", data);
+    // setLoading(true);
+    try {
+      const res = await updateQuotation(data);
+      console.log("response of order edit: ", res);
+    } catch (e: any) {
+      console.log(e);
+      // alert(e.message);
+    }
+    // setLoading(false);
   };
 
   //
@@ -93,26 +106,12 @@ const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
               }}
             >
               <AdminOrdersDetal
+                submitForm={asyncSubmitForm}
                 isEdit={isEdit}
-                orderType={order_type}
+                quoteType={quote_type}
                 orderData={orderData}
               />
             </TableWrapper>
-          </Pane>
-          <Pane>
-            {isEdit ? (
-              <PriceInfoEdit
-                status={"1"}
-                priceList={[
-                  {
-                    label: "基本車資",
-                    name: "basic"
-                  }
-                ]}
-              />
-            ) : (
-              <PriceInfoView />
-            )}
           </Pane>
         </>
       )}
@@ -137,7 +136,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   } else {
     return {
       props: {
-        order_type: query.type,
+        quote_type: query.type,
         order_id: params ? params.id : ""
       }
     };

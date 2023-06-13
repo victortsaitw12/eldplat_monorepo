@@ -60,7 +60,9 @@ const ScheduleList = ({
           {isEdit ? (
             <TextInput
               placeholder="請輸入詳細地址"
-              {...register(`${arrayName}.${i}.location`)}
+              {...register(
+                `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.location`
+              )}
               disabled={disabledFirst && i == 0}
             />
           ) : (
@@ -74,8 +76,7 @@ const ScheduleList = ({
               size={11}
               onClick={() => {
                 append({
-                  label: "",
-                  value: ""
+                  location: ""
                 });
               }}
             />

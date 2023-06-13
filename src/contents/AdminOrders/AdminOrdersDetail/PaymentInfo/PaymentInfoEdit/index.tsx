@@ -2,7 +2,9 @@ import React from "react";
 import { Pane, TextInput } from "evergreen-ui";
 //@components
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
+import { useFormContext } from "react-hook-form";
 const PaymentInfoEdit = () => {
+  const { register, control } = useFormContext();
   return (
     <Pane
       style={{
@@ -12,12 +14,22 @@ const PaymentInfoEdit = () => {
         gap: "30px"
       }}
     >
-      <CheckBoxWrapper checked={true} description="" label="全額支付">
+      <CheckBoxWrapper
+        control={control}
+        inputName="full_payment_check"
+        description=""
+        label="全額支付"
+      >
         <Pane>
           <TextInput placeholder="付款期限" />
         </Pane>
       </CheckBoxWrapper>
-      <CheckBoxWrapper checked={false} description="" label="預付定金">
+      <CheckBoxWrapper
+        control={control}
+        inputName="deposit_check"
+        description=""
+        label="預付定金"
+      >
         <Pane>
           <Pane style={{ display: "flex", marginBottom: "12px" }}>
             <TextInput placeholder="金額" />
@@ -27,7 +39,12 @@ const PaymentInfoEdit = () => {
           </Pane>
         </Pane>
       </CheckBoxWrapper>
-      <CheckBoxWrapper checked={false} description="" label="尾款支付">
+      <CheckBoxWrapper
+        control={control}
+        inputName="balance_check"
+        description=""
+        label="尾款支付"
+      >
         <Pane>
           <Pane style={{ display: "flex" }}>
             <TextInput disabled={true} placeholder="金額" />
