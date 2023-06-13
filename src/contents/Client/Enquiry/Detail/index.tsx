@@ -6,28 +6,17 @@ import { BodySTY } from "./style";
 import LabelTag from "@components/LabelTag";
 import Collapse from "@components/Collapse";
 //@contents
-import ShuttleInfo from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo";
-import CarInfoView from "@contents/AdminOrders/AdminOrdersDetail/CarInfo/CarInfoView";
-import ContactInfoView from "@contents/AdminOrders/AdminOrdersDetail/ContactInfo/ContactInfoView";
-import PassengerInfoView from "@contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoView";
-import PassengerInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoEdit";
-import TakeBusInfoView from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoView";
-import TakeBusInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoEdit";
+import ShuttleInfo from "./ShuttleInfo";
+import SummaryInfoView from "@contents/Client/Enquiry/Detail/SummaryInfoView";
+import TakeBusInfoView from "./TakeBusInfoView";
 import FlightInfoView from "@contents/AdminOrders/AdminOrdersDetail/FlightInfo/FlightInfoView";
-import FlightInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/FlightInfo/FlightInfoEdit";
+import SpecialInfoView from "./SpecialInfoView";
+import ContactInfoView from "./ContactInfoView";
 //@mock_data
-import {
-  order_contact,
-  order_represent,
-  order_shuttleList,
-  order_sepcial,
-  order_flight
-} from "@mock-data/adminOrders/mockData";
 import {
   mappingContactInfo,
   mappingSpecailNeededsInfo
 } from "@services/client/mappingQuotationData";
-import DetailList from "@components/DetailList";
 
 interface I_Props {
   isEdit: boolean;
@@ -36,29 +25,13 @@ interface I_Props {
 }
 
 const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
-  console.log("🤣🤣🤣🤣detail頁的orderData", orderData);
-  console.log("📃📃📃📃📃isEdit", isEdit);
-  console.log("orderType", orderType);
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
   const specialInfo = mappingSpecailNeededsInfo(orderData);
-  console.log("contactInfo", contactInfo);
-  console.log("passengerInfo", passengerInfo);
-  console.log("specialInfo", specialInfo);
-
   const [loading, setLoading] = useState(false);
   const methods = useForm({
     defaultValues: {
-      "schedule-list": [
-        {
-          label: "",
-          location: "桃園國際機場"
-        },
-        {
-          label: "",
-          location: "你家"
-        }
-      ]
+      ...orderData
     }
   });
 
@@ -78,7 +51,7 @@ const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
     return (
       <>
         <Collapse opened={true} title="總覽">
-          <CarInfoView
+          <SummaryInfoView
             listArray={[
               {
                 title: "訂單編號",
@@ -97,11 +70,11 @@ const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
           />
         </Collapse>
         <Collapse opened={true} title="訂單聯絡人">
-          <ContactInfoView data={contactInfo} />
+          <ContactInfoView listArray={contactInfo} />
         </Collapse>
-
+        <ShuttleInfo arrayName="order_itinerary_list" isEdit={isEdit} />
         {/*以下為變動*/}
-        {orderType === "1" ? (
+        {/* {orderType === "1" ? (
           <ShuttleInfo
             arrayName="order_itinerary_list"
             isEdit={false}
@@ -111,18 +84,26 @@ const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
           <Collapse opened={true} title="航班資訊">
             <FlightInfoView data={order_flight} />
           </Collapse>
-        )}
+        )} */}
         {/*變動*/}
         <Collapse title="乘車資訊">
-          {isEdit ? <TakeBusInfoEdit /> : <TakeBusInfoView />}
+          <TakeBusInfoView
+            adult={orderData.adult}
+            child={orderData.child}
+            infant={orderData.infant}
+            check_in_luggage={orderData.check_in_luggage}
+            carry_on_luggage={orderData.carry_on_luggage}
+            bus_data={orderData.bus_data}
+          />
         </Collapse>
         <Collapse title="特殊需求">
-          <Pane className="special_content" style={{ padding: "20px" }}>
-            <DetailList listArray={specialInfo} />
-          </Pane>
+          <SpecialInfoView
+            listArray={specialInfo}
+            remark={orderData["remark"]}
+          />
         </Collapse>
         <Collapse opened={true} title="旅客代表人">
-          <PassengerInfoView data={passengerInfo} />
+          <ContactInfoView listArray={passengerInfo} />
         </Collapse>
       </>
     );

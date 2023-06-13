@@ -6,6 +6,7 @@ import { QuotationCreatePayload } from "../type";
 import {
   Control,
   FieldErrors,
+  useFieldArray,
   UseFormRegister,
   UseFormSetValue,
   UseFormGetValues
@@ -24,6 +25,10 @@ const TravelInformation = ({
   getValues,
   errors
 }: TravelInformationProps) => {
+  const { fields } = useFieldArray({
+    control,
+    name: "bus_data"
+  });
   return (
     <div
       style={{
@@ -87,6 +92,26 @@ const TravelInformation = ({
               <span style={{ color: "#D14343" }}>*</span>
               <span>車型及數量</span>
             </div>
+            {fields.map((item, index) => {
+              return (
+                <Collapse title={item.type_name} color="#EEF8F4" key={item.id}>
+                  <CardSTY>
+                    {item.bus_list.map((bus, i) => {
+                      return (
+                        <CounterInput
+                          register={register}
+                          setValue={setValue}
+                          getValues={getValues}
+                          label={item.type_name + "-" + bus.bus_seat + "人座"}
+                          inputName={`bus_data.${index}.bus_list.${i}.order_quantity`}
+                          key={bus.bus_name + "-" + i}
+                        />
+                      );
+                    })}
+                  </CardSTY>
+                </Collapse>
+              );
+            })}
             {/* <Collapse title="大型巴士(28~43人)" color="#EEF8F4">
               <CardSTY>
                 <CounterInput

@@ -26,6 +26,7 @@ import {
 } from "@contents/Client/Enquiry/type";
 import { shiftDate, calculateDuration } from "@utils/calculateDate";
 import { createQuotation } from "@services/client/createQuotation";
+import { getBusType } from "@services/client/getBusType";
 //
 const DummyNavigationListData = [
   {
@@ -109,36 +110,54 @@ const Page: NextPageWithLayout<
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const router = useRouter();
-  const defaultValues = useMemo(() => {
+  const asyncGetDefaultValues = async (type: string) => {
+    const busData = await getBusType();
+    console.log("busData", busData);
+    const formatedBusData = [];
+    for (const key in busData) {
+      formatedBusData.push({
+        type_name: busData[key].type_name,
+        ddl_code: busData[key].ddl_code,
+        bus_list: busData[key].bus_list.map((child: any) => {
+          return {
+            bus_name: child.bus_name,
+            bus_seat: child.bus_seat,
+            bus_type: child.type,
+            order_quantity: 0
+          };
+        })
+      });
+    }
+    console.log("formatedBusData", formatedBusData);
     if (type === "custom") {
       let durationDay = 1;
-      if (type === "custom") {
-        if (returnDate && departureDate) {
-          durationDay = calculateDuration(departureDate, returnDate);
-        }
-        return {
-          ...defaultQuotationCreatePayload,
-          quote_type: "1",
-          departure_date: departureDate,
-          return_date: returnDate,
-          purpose: purpose,
-          order_itinerary_list: new Array(durationDay + 1)
-            .fill({})
-            .map((_, index) => {
-              return {
-                day_number: index + 1,
-                day_date: shiftDate(new Date(departureDate!), index),
-                departure_time: "",
-                pickup_location: "",
-                stopover_addresses: [],
-                dropoff_location: ""
-              };
-            })
-        };
+      if (returnDate && departureDate) {
+        durationDay = calculateDuration(departureDate, returnDate);
       }
+      return {
+        ...defaultQuotationCreatePayload,
+        bus_data: formatedBusData,
+        quote_type: "1",
+        departure_date: departureDate,
+        return_date: returnDate,
+        purpose: purpose,
+        order_itinerary_list: new Array(durationDay + 1)
+          .fill({})
+          .map((_, index) => {
+            return {
+              day_number: index + 1,
+              day_date: shiftDate(new Date(departureDate!), index),
+              departure_time: "",
+              pickup_location: "",
+              stopover_addresses: [],
+              dropoff_location: ""
+            };
+          })
+      };
     } else {
       return {
         ...defaultQuotationCreatePayload,
+        bus_data: formatedBusData,
         quote_type: type === "pickUp" ? "2" : "3",
         departure_date: flightDate,
         return_date: returnDate,
@@ -160,26 +179,35 @@ const Page: NextPageWithLayout<
         ]
       };
     }
-  }, [type]);
+  };
   const {
     register,
     control,
     handleSubmit,
     getValues,
     setValue,
-    formState: { errors, isDirty, dirtyFields }
+    formState: { errors }
   } = useForm<QuotationCreatePayload>({
-    defaultValues: defaultValues
+    defaultValues: async () => {
+      const result = await asyncGetDefaultValues(type);
+      console.log("default values", result);
+      return result;
+    }
   });
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
-    const result = await createQuotation(data);
-    const { quote_no } = result;
-    router.push({
-      pathname: `/client/enquiry/detail/${quote_no}`,
-      query: {
-        quote_type: type === "custom" ? "1" : type === "pickUp" ? "2" : "3"
-      }
-    });
+    console.log("create bus data", data);
+    try {
+      const result = await createQuotation(data);
+      const { quote_no } = result;
+      router.push({
+        pathname: `/client/enquiry/detail/${quote_no}`,
+        query: {
+          quote_type: type === "custom" ? "1" : type === "pickUp" ? "2" : "3"
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <BodySTY>

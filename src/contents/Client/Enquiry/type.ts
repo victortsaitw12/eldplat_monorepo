@@ -15,23 +15,16 @@ export interface QuotationCreatePayload {
   child: number;
   infant: number;
   /** dummy bus, waiting for backend to update*/
-  bus_data?: Array<{
-    bus_type: string;
-    bus_seat: number;
-    order_quantity: number;
+  bus_data: Array<{
+    type_name: string;
+    ddl_code: string;
+    bus_list: Array<{
+      bus_type: string;
+      bus_name: string;
+      bus_seat: number;
+      order_quantity: number;
+    }>;
   }>;
-  // largeBus: {
-  //   large1: number;
-  //   large2: number;
-  // };
-  // mediumBus: {
-  //   medium1: number;
-  //   medium2: number;
-  // };
-  // smallBus: {
-  //   small1: number;
-  // };
-
   /** dummy bus end */
   check_in_luggage: number;
   carry_on_luggage: number;
@@ -92,17 +85,9 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
   adult: 0,
   child: 0,
   infant: 0,
-  // largeBus: {
-  //   large1: 0,
-  //   large2: 0
-  // },
-  // mediumBus: {
-  //   medium1: 0,
-  //   medium2: 0
-  // },
-  // smallBus: {
-  //   small1: 0
-  // },
+  /* bus Data */
+  bus_data: [],
+  /* bus Data end */
   check_in_luggage: 0,
   carry_on_luggage: 0,
   order_contact_list: [
