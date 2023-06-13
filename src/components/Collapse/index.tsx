@@ -37,7 +37,14 @@ const Collapse = ({
     <BodySTY color={color} className="collapse">
       <div className="collapse_title">
         {titleChildren ? (
-          titleChildren
+          <>
+            {titleChildren}
+            {isOpen ? (
+              <ChevronUpIcon onClick={titleOnClick} />
+            ) : (
+              <ChevronDownIcon onClick={titleOnClick} />
+            )}
+          </>
         ) : (
           <>
             {" "}

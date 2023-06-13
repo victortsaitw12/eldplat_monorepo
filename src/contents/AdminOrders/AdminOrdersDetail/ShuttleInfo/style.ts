@@ -1,6 +1,19 @@
 import styled from "styled-components";
 
 const BodySTY = styled.div`
+  .title_children {
+    gap: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: calc(100% - 50px);
+    & > svg {
+      right: 0;
+    }
+    & > input {
+      width: calc(100% - 100px);
+    }
+  }
   .detail-with-icon {
     display: inline-block;
     width: 100%;
@@ -12,7 +25,7 @@ const BodySTY = styled.div`
       top: 10px;
     }
     .detail_item {
-      padding-left: 23px;
+      padding-left: 16px;
       & > span {
         line-height: 32px;
       }

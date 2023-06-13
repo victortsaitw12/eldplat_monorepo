@@ -1,7 +1,7 @@
 import React from "react";
 import { Pane } from "evergreen-ui";
-
 import VerticalDetail from "@components/VerticalDetail";
+import dayjs from "dayjs";
 interface I_Props {
   payment_status?: any; // 付款狀態
   payment_time?: any; // 付款時間
@@ -32,20 +32,41 @@ const PaymentInfoView = ({
         return "尚未付款";
     }
   };
+  const payment_period_date = (status: any) => {
+    switch (status) {
+      case "01":
+        return full_payment_period
+          ? dayjs(full_payment_period).format("YYYY-MM-DD") + " 前繳款"
+          : "-";
+      default:
+        return full_payment_period
+          ? dayjs(full_payment_period).format("YYYY-MM-DD") + " 前繳款"
+          : "-";
+    }
+  };
+  const payment_price_text = (status: any) => {
+    switch (status) {
+      case "01":
+        return full_payment_amount
+          ? "NT$" + full_payment_amount + " 含稅"
+          : "-";
+      default:
+        return full_payment_amount
+          ? "NT$" + full_payment_amount + " 含稅"
+          : "-";
+    }
+  };
   return (
     <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
       <VerticalDetail
-        title={payment_status_text("01")}
+        title={payment_status_text(payment_status)}
         items={[
           {
-            label: "2023-05-01 前繳款"
+            label: payment_period_date(payment_status)
           }
         ]}
       />
-      <VerticalDetail
-        title={"NT$" + full_payment_amount || "-" + " 含稅"}
-        items={[{}]}
-      />
+      <VerticalDetail title={payment_price_text(payment_status)} items={[{}]} />
     </Pane>
   );
 };
