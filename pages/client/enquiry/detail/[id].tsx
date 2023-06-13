@@ -7,20 +7,16 @@ import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
 import { getLayout } from "@layout/QuoteLayout";
 import StatusCard from "@components/StatusCard";
-import { BodySTY } from "./style";
-import NavigationList from "@components/NavigationList";
+import { BodySTY, ExpenseTitle } from "./style";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
 
 import { TickCircleIcon } from "evergreen-ui";
 //@mock_data
-import { mock_orderData } from "@mock-data/adminOrders/mockData";
 //@content
 import OrdersDetail from "@contents/Client/Enquiry/Detail";
 //
-import ConditionCard from "@components/ConditionCard";
-import Breadcrumbs from "@components/Breadcrumbs";
-import OrderDetail from "@contents/Orders/OrderDetail";
+
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 const DummyExpenseDetailData = [
   {
@@ -115,7 +111,15 @@ const Page: NextPageWithLayout<
           )}
         </div>
         <div className="charge-container">
-          <Collapse title="初估金額" opened={true}>
+          <Collapse
+            titleChildren={
+              <ExpenseTitle>
+                <div className="title">初估金額</div>
+                <div className="price-info">NT$2,200</div>
+              </ExpenseTitle>
+            }
+            opened={true}
+          >
             <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
           </Collapse>
         </div>
