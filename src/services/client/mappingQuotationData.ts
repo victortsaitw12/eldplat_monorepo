@@ -157,9 +157,9 @@ export function mappingSpecailNeededsInfo(data: any) {
         case "bring_pets_check":
           specailInfo.push({
             title:
-              item.title + " " + data["bring_pets_radio"] === "01"
-                ? "進籠"
-                : "不進籠",
+              data["bring_pets_radio"] === "01"
+                ? item.title + " " + "進籠"
+                : item.title + " " + "不進籠",
             value: data["bring_pets_charge"]
               ? "NT$" + data["bring_pets_charge"]
               : "免費"
@@ -212,4 +212,21 @@ export function mappingSpecailNeededsInfo(data: any) {
     }
   });
   return specailInfo;
+}
+
+const defaultExpenseInfo = [
+  {
+    name: "family_name",
+    title: "姓",
+    value: 0
+  },
+  {
+    name: "quote_total_amount",
+    title: "總計",
+    value: 0
+  }
+];
+
+export function mappingExpenseInfo(data: any) {
+  const expenseInfo: { title: string; value: number }[] = [];
 }

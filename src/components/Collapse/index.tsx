@@ -36,30 +36,18 @@ const Collapse = ({
   return (
     <BodySTY color={color} className="collapse">
       <div className="collapse_title">
-        {titleChildren ? (
-          <>
-            {titleChildren}
-            {isOpen ? (
+        <>
+          {titleChildren ? titleChildren : title}
+          {!viewOnly ? (
+            isOpen ? (
               <ChevronUpIcon onClick={titleOnClick} />
             ) : (
               <ChevronDownIcon onClick={titleOnClick} />
-            )}
-          </>
-        ) : (
-          <>
-            {" "}
-            {title}
-            {!viewOnly ? (
-              isOpen ? (
-                <ChevronUpIcon onClick={titleOnClick} />
-              ) : (
-                <ChevronDownIcon onClick={titleOnClick} />
-              )
-            ) : (
-              <></>
-            )}
-          </>
-        )}
+            )
+          ) : (
+            <></>
+          )}
+        </>
       </div>
       <div className={cx("collapse_content", { show: isOpen })}>{children}</div>
     </BodySTY>
