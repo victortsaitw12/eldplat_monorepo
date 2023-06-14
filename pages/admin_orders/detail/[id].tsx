@@ -16,6 +16,7 @@ import AdminOrdersDetal from "@contents/AdminOrders/AdminOrdersDetail";
 //@services
 import { getQuotationByID } from "@services/admin_orders/getQuotationByID";
 import { updateQuotation } from "@services/admin_orders/updateQuotation";
+import { getBusType } from "@services/client/getBusType";
 
 //@context
 // import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
@@ -28,6 +29,7 @@ const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState(null);
+  const [busType, setBusType] = useState([]);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [nowTab, setNowTab] = useState("order");
 
@@ -72,7 +74,10 @@ const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
       setLoading(true);
       try {
         const res = await getQuotationByID(order_id);
+        const bus_res = await getBusType();
         console.log("✨✨✨✨✨Get data by id", res.data);
+        console.log("👽👽👽👽👽👽👽bus_res", bus_res);
+        setBusType(bus_res);
         setOrderData(res.data);
       } catch (e: any) {
         console.log("getQuotationByID Error:", e);
@@ -106,6 +111,7 @@ const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
               }}
             >
               <AdminOrdersDetal
+                busType={busType}
                 submitForm={asyncSubmitForm}
                 isEdit={isEdit}
                 quoteType={quote_type}

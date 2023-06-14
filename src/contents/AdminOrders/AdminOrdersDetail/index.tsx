@@ -36,76 +36,37 @@ import PriceInfoView from "./PriceInfo/PriceInfoView";
 
 //@mock_data
 import { mock_progressdata } from "@mock-data/adminOrders/mockData";
-
+export interface I_busItem {
+  type: string;
+  bus_name: string;
+  bus_seat: number;
+}
+export interface I_busType {
+  bus_list: I_busItem[];
+  ddl_code: string;
+  type_name: string;
+}
 interface I_Props {
   submitForm?: (data: any) => void;
   isEdit: boolean;
   quoteType: "1" | "2"; //1:客製包車 2:接送機
   orderData: any;
+  busType: I_busType[];
 }
-// const test = {
-//   order_itinerary_list: [
-//     {
-//       day_number: "1",
-//       day_date: "2023/06/05",
-//       stopover_addresses: [
-//         {
-//           location: "桃園國際機場"
-//         },
-//         {
-//           location: "你家"
-//         }
-//       ]
-//     }
-//   ]
-// };
+
 const AdminOrdersDetal = ({
   submitForm,
   isEdit,
   quoteType = "1",
-  orderData
+  orderData,
+  busType
 }: I_Props) => {
-  console.log("🤣🤣🤣🤣detail頁的orderData", orderData);
-  console.log("📃📃📃📃📃isEdit", isEdit);
-  console.log("quoteType", quoteType);
-  // console.log("🤣🤣🤣🤣", orderData.order_contact_list);
+  console.log("🤣🤣🤣🤣detail頁的orderData", orderData, busType);
   const [loading, setLoading] = useState(false);
-
-  const defaultOrderdata = (data: any) => {
-    const newdata = data;
-    newdata.order_itinerary_list = data.order_itinerary_list.map(
-      (child: any) => {
-        return {
-          ...child,
-          stopover_addresses: child.stopover_addresses.map((c: any) => {
-            return {
-              location: c
-            };
-          })
-        };
-      }
-    );
-    return newdata;
-  };
   //原本中途點的地方要轉成單維的結構
-  const fotmat_submitData = (data: any) => {
-    const newdata = data;
-    newdata.order_itinerary_list = data.order_itinerary_list.map(
-      (child: any) => {
-        return {
-          ...child,
-          stopover_addresses: child.stopover_addresses.map((c: any) => {
-            return c.location;
-          })
-        };
-      }
-    );
-    return newdata;
-  };
-
   const methods = useForm({
     defaultValues: {
-      ...defaultOrderdata(orderData)
+      ...orderData
     }
   });
   //篩出聯絡人還是代表人的資料
@@ -242,7 +203,7 @@ const AdminOrdersDetal = ({
         />
         <Collapse opened={true} title="乘車資訊">
           {isEdit ? (
-            <TakeBusInfoEdit methods={methods} />
+            <TakeBusInfoEdit busType={busType} methods={methods} />
           ) : (
             /*TODO：車型車輛的API之後會改成另一隻*/
             <TakeBusInfoView
@@ -251,7 +212,7 @@ const AdminOrdersDetal = ({
               infant={orderData.infant}
               check_in_luggage={orderData.check_in_luggage}
               carry_on_luggage={orderData.carry_on_luggage}
-              bus_type={orderData.bus_type}
+              bus_type_list={orderData.bus_type_list}
             />
           )}
         </Collapse>
@@ -281,10 +242,12 @@ const AdminOrdersDetal = ({
             className="special-content"
             style={{ padding: "20px", display: "flex", gap: "10px" }}
           >
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
+            {orderData.label_list &&
+              orderData.label_list.map(
+                (child: { label_name: string }, i: number) => {
+                  return <LabelTag key={i} text={child.label_name} />;
+                }
+              )}
           </Pane>
         </Collapse>
       </>
@@ -292,7 +255,7 @@ const AdminOrdersDetal = ({
     //接送機
     "2": (
       <>
-        <Collapse opened={true} title="ORDER229999">
+        <Collapse opened={true} title={orderData?.quote_no}>
           <Pane style={{ padding: "20px" }}>
             <ProgressList dataLists={[...mock_progressdata]} />
           </Pane>
@@ -429,7 +392,7 @@ const AdminOrdersDetal = ({
         />
         <Collapse opened={true} title="乘車資訊">
           {isEdit ? (
-            <TakeBusInfoEdit methods={methods} />
+            <TakeBusInfoEdit busType={busType} methods={methods} />
           ) : (
             <TakeBusInfoView
               adult={orderData.adult}
@@ -437,7 +400,7 @@ const AdminOrdersDetal = ({
               infant={orderData.infant}
               check_in_luggage={orderData.check_in_luggage}
               carry_on_luggage={orderData.carry_on_luggage}
-              bus_type={orderData.bus_type}
+              bus_type_list={orderData.bus_type_list}
             />
           )}
         </Collapse>
@@ -463,15 +426,12 @@ const AdminOrdersDetal = ({
           )}
         </Collapse>
         <Collapse opened={true} title="標籤">
-          <Pane
-            className="special-content"
-            style={{ padding: "20px", display: "flex", gap: "10px" }}
-          >
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
-            <LabelTag text="服務讚" />
-          </Pane>
+          {orderData.label_list &&
+            orderData.label_list.map(
+              (child: { label_name: string }, i: number) => {
+                return <LabelTag key={i} text={child.label_name} />;
+              }
+            )}
         </Collapse>
       </>
     )
@@ -483,7 +443,7 @@ const AdminOrdersDetal = ({
         <form
           onSubmit={methods.handleSubmit((data) => {
             console.log("🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡order", data);
-            submitForm && submitForm({ ...fotmat_submitData(data) });
+            submitForm && submitForm({ ...data });
           })}
         >
           <Pane
