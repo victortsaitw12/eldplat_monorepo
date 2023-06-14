@@ -19,8 +19,8 @@ interface I_Table {
   data: I_Data[];
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
-  goToEditPage?: (id: string) => void;
-  viewItem?: (item: any) => void;
+  goToEditPage?: (id: string, item: any) => void;
+  viewItem?: (id: any, item: any) => void;
   // editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
   handleCheckboxChange?: (item: any) => void;
@@ -36,11 +36,11 @@ function Table({
   titles,
   data,
   goToCreatePage,
-  viewItem = (item) => {
-    console.log(item);
+  viewItem = (id, item) => {
+    console.log(id, item);
   },
-  goToEditPage = (id) => {
-    console.log(id);
+  goToEditPage = (id, item) => {
+    console.log(id, item);
   },
   deleteItem = (item) => {
     console.log(item);
@@ -172,9 +172,9 @@ function Table({
               );
             })
           ) : (
-            <div className="noDataShown">
-              <div>查無資料</div>
-            </div>
+            <tr className="noDataShown">
+              <td>查無資料</td>
+            </tr>
           )}
         </tbody>
       </TableSTY>
