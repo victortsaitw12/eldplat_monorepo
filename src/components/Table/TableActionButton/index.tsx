@@ -7,7 +7,7 @@ import useClickOutside from "@hooks/useClickOutside";
 interface Props {
   onDelete: () => void;
   onEdit: () => void;
-  onView: () => void;
+  onView?: () => void;
 }
 //
 function Index({ onDelete, onEdit, onView }: Props) {
@@ -28,26 +28,30 @@ function Index({ onDelete, onEdit, onView }: Props) {
       </button>
       {optionIsOpen && (
         <div className="table-row-option" ref={ref}>
-          <button
-            className="option-item"
-            onClick={() => {
-              onView();
-              setOptionIsOpen(false);
-            }}
-          >
-            <EyeOpenIcon size={14} />
-            <div>檢視</div>
-          </button>
-          <button
-            className="option-item"
-            onClick={() => {
-              onEdit();
-              setOptionIsOpen(false);
-            }}
-          >
-            <EditIcon size={14} />
-            <div>編輯</div>
-          </button>
+          {onView && (
+            <button
+              className="option-item"
+              onClick={() => {
+                onView();
+                setOptionIsOpen(false);
+              }}
+            >
+              <EyeOpenIcon size={14} />
+              <div>檢視</div>
+            </button>
+          )}
+          {onEdit && (
+            <button
+              className="option-item"
+              onClick={() => {
+                onEdit();
+                setOptionIsOpen(false);
+              }}
+            >
+              <EditIcon size={14} />
+              <div>編輯</div>
+            </button>
+          )}
           <button
             className="option-item"
             onClick={() => {
