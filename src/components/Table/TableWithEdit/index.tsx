@@ -19,8 +19,8 @@ interface I_Table {
   data: I_Data[];
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
-  goToEditPage?: (id: string, item: any) => void;
-  viewItem?: (id: any, item: any) => void;
+  goToEditPage?: (item: any) => void;
+  viewItem?: (item: any) => void;
   // editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
   handleCheckboxChange?: (item: any) => void;
@@ -36,12 +36,8 @@ function Table({
   titles,
   data,
   goToCreatePage,
-  viewItem = (id, item) => {
-    console.log(id, item);
-  },
-  goToEditPage = (id, item) => {
-    console.log(id, item);
-  },
+  viewItem,
+  goToEditPage,
   deleteItem = (item) => {
     console.log(item);
   },
@@ -163,8 +159,10 @@ function Table({
                   })}
                   <td>
                     <TableActionButton
-                      onView={viewItem.bind(null, item.id?.value)}
-                      onEdit={goToEditPage.bind(null, item.id?.value)}
+                      onView={viewItem && viewItem.bind(null, item.id?.value)}
+                      onEdit={
+                        goToEditPage && goToEditPage.bind(null, item.id?.value)
+                      }
                       onDelete={deleteItem.bind(null, item.id?.value)}
                     />
                   </td>

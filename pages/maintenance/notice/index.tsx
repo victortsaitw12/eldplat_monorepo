@@ -62,6 +62,7 @@ const Page: NextPageWithLayout<never> = () => {
       });
 
       const newData = maintenanceData?.map((item, idx) => {
+        console.log("😺item", item);
         return {
           bus_name: { label: item.bus_name.label, value: item.bus_name.value },
           driver_name: {
@@ -69,7 +70,10 @@ const Page: NextPageWithLayout<never> = () => {
             value: item.driver_name.value
           },
           meter: { label: item.meter.label, value: item.meter.value },
-          vendor_name: { label: "台北保養廠", value: "台北保養廠" },
+          vendor_name: {
+            label: item.vendor_name.label,
+            value: item.vendor_name.value
+          },
           component_name: {
             label: item.component_name.label,
             value: item.component_name.value
@@ -105,13 +109,7 @@ const Page: NextPageWithLayout<never> = () => {
       fetchMaintenanceNoticeData(false);
     });
   };
-  //進入供應商編輯頁
-  const goToEditPageHandler = (id: string) => {
-    router.push("/maintenance/detail/" + id + "?editPage=edit");
-  };
-  const goToDetailPageHandler = (id: string) => {
-    router.push(`/maintenance/detail/${id}?editPage=view`);
-  };
+
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
   };
@@ -150,8 +148,6 @@ const Page: NextPageWithLayout<never> = () => {
               setDrawerOpen(true);
             }}
             deleteItemHandler={deleteItemHandler}
-            goToEditPageHandler={goToEditPageHandler}
-            goToDetailPage={goToDetailPageHandler}
           />
         </FilterWrapper>
       </TableWrapper>

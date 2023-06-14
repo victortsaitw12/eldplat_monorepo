@@ -1,7 +1,7 @@
 import { HelpIcon, PlusIcon, ErrorIcon } from "evergreen-ui";
 import { ItemSTY } from "./style";
 import { useController, UseControllerProps } from "react-hook-form";
-import { CreateCustomerPayload } from "../index";
+import { CreateCustomerPayload } from "@contents/Assignment/AssignManualCreate";
 
 export interface FiledInputProps {
   horizonLabel?: boolean;

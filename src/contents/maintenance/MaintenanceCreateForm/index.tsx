@@ -4,7 +4,14 @@ import { FormSTY } from "./style";
 //@sevices
 import { createCustomer } from "@services/customer/createCustomer";
 import FiledInput from "./FieldInput";
-import { PlusIcon, Text, SelectField, Select } from "evergreen-ui";
+import {
+  PlusIcon,
+  Text,
+  SelectField,
+  Select,
+  TextInput,
+  TextInputField
+} from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
 //@layout
@@ -22,6 +29,8 @@ export interface CreateMaintenancePayload {
   maintenance_type: string;
   vendor_no: string;
   package_code: string;
+  service_start_date: string;
+  service_end_date: string;
 }
 
 interface I_MaintenanceCreateFormProps {
@@ -41,7 +50,9 @@ function MaintenanceCreateForm({
     driver_name: "",
     maintenance_type: "",
     vendor_no: "",
-    package_code: ""
+    package_code: "",
+    service_start_date: "",
+    service_end_date: ""
   };
   const { register, handleSubmit, control, reset } =
     useForm<CreateMaintenancePayload>({
@@ -188,6 +199,24 @@ function MaintenanceCreateForm({
           );
         })}
       </SelectField>
+      <TextInputField
+        label={
+          <div>
+            <span style={{ color: "#D14343" }}>*</span>起始日期
+          </div>
+        }
+        type="date"
+        {...register("service_start_date")}
+      />
+      <TextInputField
+        label={
+          <div>
+            <span style={{ color: "#D14343" }}>*</span>截止日期
+          </div>
+        }
+        type="date"
+        {...register("service_end_date")}
+      />
 
       <IconLeft text={"新增維保任務"} type="submit">
         <PlusIcon size={14} />
