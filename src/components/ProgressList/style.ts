@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const ItemSTY = styled.div<{ status: "ok" | "pending" | "error" }>`
+export const ItemSTY = styled.div<{
+  status: "ok" | "pending" | "error" | "disabled";
+}>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

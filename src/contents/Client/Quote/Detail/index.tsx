@@ -3,13 +3,12 @@ import { useForm, FormProvider } from "react-hook-form";
 import { Pane } from "evergreen-ui";
 import { BodySTY } from "./style";
 //@component
-import LabelTag from "@components/LabelTag";
 import Collapse from "@components/Collapse";
 //@contents
+import SummaryInfoView from "@contents/Client/Quote/Detail/SummaryInfoView";
 import ShuttleInfo from "./ShuttleInfo";
-import SummaryInfoView from "@contents/Client/Enquiry/Detail/SummaryInfoView";
 import TakeBusInfoView from "./TakeBusInfoView";
-import FlightInfoView from "@contents/AdminOrders/AdminOrdersDetail/FlightInfo/FlightInfoView";
+import FlightInfoView from "./FlightInfoView";
 import SpecialInfoView from "./SpecialInfoView";
 import ContactInfoView from "./ContactInfoView";
 //@mock_data
@@ -72,19 +71,15 @@ const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
         <Collapse opened={true} title="訂單聯絡人">
           <ContactInfoView listArray={contactInfo} />
         </Collapse>
-        <ShuttleInfo arrayName="order_itinerary_list" isEdit={isEdit} />
+
         {/*以下為變動*/}
-        {/* {orderType === "1" ? (
-          <ShuttleInfo
-            arrayName="order_itinerary_list"
-            isEdit={false}
-            shuttleList={order_shuttleList}
-          />
+        {orderData["quote_type"] === "1" ? (
+          <ShuttleInfo arrayName="order_itinerary_list" isEdit={isEdit} />
         ) : (
           <Collapse opened={true} title="航班資訊">
-            <FlightInfoView data={order_flight} />
+            <FlightInfoView data={orderData} />
           </Collapse>
-        )} */}
+        )}
         {/*變動*/}
         <Collapse title="乘車資訊">
           <TakeBusInfoView

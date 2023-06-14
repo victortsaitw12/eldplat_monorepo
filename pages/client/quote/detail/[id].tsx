@@ -65,9 +65,8 @@ const DummyExpenseDetailData = [
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ quote_type, quoteNo }) => {
+> = ({ quoteNo }) => {
   console.log({
-    quote_type,
     quoteNo
   });
   const [data, setData] = useState<I_OrderDetail | null>(null);
@@ -103,11 +102,7 @@ const Page: NextPageWithLayout<
       <div className="body-container">
         <div className="content-container">
           {!isLoading && data && (
-            <OrdersDetail
-              isEdit={false}
-              orderData={data}
-              orderType={quote_type}
-            />
+            <OrdersDetail isEdit={false} orderData={data} />
           )}
         </div>
         <div className="charge-container">
@@ -129,11 +124,9 @@ const Page: NextPageWithLayout<
 };
 
 interface Props {
-  quote_type: "1" | "2" | "3";
   quoteNo: string;
 }
 interface RouterQuery extends ParsedUrlQuery {
-  quote_type: string;
   id: string;
 }
 
@@ -142,12 +135,10 @@ export const getServerSideProps: GetServerSideProps<
   RouterQuery
 > = async (context) => {
   const { query, params } = context;
-  const quote_type = query.quote_type ? (query.quote_type as any) : "1";
   const id = params?.id;
   return {
     props: {
-      quote_type,
-      title: quote_type === "1" ? "客製包車" : "機場接送",
+      title: "詢價單資訊",
       quoteNo: id || ""
     }
   };

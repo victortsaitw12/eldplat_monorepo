@@ -17,6 +17,7 @@ const ExpenseDetail = forwardRef<HTMLButtonElement, ExpenseDetailProps>(
     formButtonRef
   ) {
     const defaultValues: { [key: string]: any } = {};
+    console.log("data", data);
     data.forEach((item) => {
       defaultValues[item.name] = item.value;
     });
