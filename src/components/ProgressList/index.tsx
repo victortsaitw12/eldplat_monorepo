@@ -1,12 +1,21 @@
-import { ItemSTY, ListSTY, LineSTY } from "./style";
+import { ItemSTY, ListSTY, LineSTY, GrayLineSTY } from "./style";
 import { SmallTickIcon, SmallCrossIcon } from "evergreen-ui";
 interface ItemProps {
-  status: "ok" | "pending" | "error";
+  status: "ok" | "pending" | "error" | "disabled";
   label: string;
   date?: string;
 }
-const HorizontalLine = () => {
-  return <LineSTY></LineSTY>;
+const HorizontalLine = ({ dataLists }: { dataLists: ItemProps[] }) => {
+  const disabledLength = dataLists.filter(
+    (item) => item.status === "disabled"
+  ).length;
+  const grayWidth = disabledLength / (dataLists.length - 1);
+  return (
+    <>
+      <LineSTY></LineSTY>
+      <GrayLineSTY grayWidth={grayWidth}></GrayLineSTY>
+    </>
+  );
 };
 
 const ProgressItem = ({ status, label, date }: ItemProps) => {
@@ -50,7 +59,7 @@ const ProgressList = ({ dataLists }: ListProps) => {
           />
         );
       })}
-      <HorizontalLine />
+      <HorizontalLine dataLists={dataLists} />
     </ListSTY>
   );
 };

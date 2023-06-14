@@ -31,6 +31,14 @@ export const BodySTY = styled.div`
             align-items: flex-start;
             gap: 10px;
             li {
+              white-space: nowrap;
+
+              span:first-child {
+                flex: 1;
+              }
+              span:last-child {
+                flex: 2;
+              }
               gap: 10px;
             }
           }

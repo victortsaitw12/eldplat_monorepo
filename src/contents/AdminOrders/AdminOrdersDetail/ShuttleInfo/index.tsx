@@ -5,40 +5,53 @@ import {
   useFormContext,
   useFieldArray
 } from "react-hook-form";
-import { Pane, TimeIcon, TrashIcon, Button } from "evergreen-ui";
+import {
+  Pane,
+  TimeIcon,
+  TrashIcon,
+  Button,
+  SmallPlusIcon,
+  TextInput
+} from "evergreen-ui";
 import Collapse from "@components/Collapse";
 import ScheduleList from "@components/ScheduleList";
 import DetailItem from "@components/DetailList/DetailItem";
 import { BodySTY } from "./style";
+import dayjs from "dayjs";
 interface I_ShuttleInfo {
   date: string;
 }
 
 interface I_Props {
+  quote_no: string;
   isEdit: boolean;
   arrayName: string;
-  shuttleList: Array<I_ShuttleInfo>;
 }
 
-const ShuttleInfo = ({ isEdit, arrayName, shuttleList }: I_Props) => {
+const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
   const { register, control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: arrayName
   });
+
   const r_titleChildren = (isEdit: boolean, data: any, i: number) => {
     if (!isEdit) {
       return null;
     } else {
       return (
-        <span>
-          第{data.day_number}天
+        <Pane className="title_children">
+          <span>第{data.day_number}天</span>
+          <TextInput
+            type="date"
+            {...register(arrayName + "[" + i + "]" + ".day_date")}
+          />
           <TrashIcon
             onClick={() => {
               remove(i);
             }}
           />
-        </span>
+        </Pane>
       );
     }
   };
@@ -47,13 +60,30 @@ const ShuttleInfo = ({ isEdit, arrayName, shuttleList }: I_Props) => {
       <Collapse
         opened={true}
         key={i}
-        title={"第" + child.day_number + "天  " + child.day_date}
+        title={
+          "第" +
+          child.day_number +
+          "天  " +
+          dayjs(child.day_date).format("YYYY-MM-DD")
+        }
         titleChildren={r_titleChildren(isEdit, child, i)}
       >
         <Pane style={{ padding: "20px" }}>
           <span className="detail-with-icon">
             <TimeIcon color="#8EA8C7" size={11} />
-            <DetailItem title="出發時間" value={child.departure_time || "-"} />
+            <DetailItem
+              title="出發時間"
+              value={
+                isEdit ? (
+                  <TextInput
+                    type="text"
+                    {...register(arrayName + "[" + i + "]" + ".departure_time")}
+                  />
+                ) : (
+                  child.departure_time || "-"
+                )
+              }
+            />
           </span>
           <ScheduleList
             dayIndex={i}
@@ -61,7 +91,7 @@ const ShuttleInfo = ({ isEdit, arrayName, shuttleList }: I_Props) => {
             arrayName="stopover_addresses"
             register={register}
             isEdit={isEdit}
-            disabledFirst={true}
+            disabledFirst={false}
             control={control}
           />
         </Pane>
@@ -72,21 +102,31 @@ const ShuttleInfo = ({ isEdit, arrayName, shuttleList }: I_Props) => {
     <BodySTY>
       {r_list(fields)}
       {isEdit && (
-        <Button
-          onClick={() => {
-            append({
-              day_number: (fields.length + 1).toString(),
-              day_date: "2023/06/05",
-              stopover_addresses: [
-                {
-                  location: ""
-                }
-              ]
-            });
-          }}
-        >
-          新增一天
-        </Button>
+        <Pane className="add_day_container">
+          <Button
+            onClick={() => {
+              const lastDate = fields[fields.length - 1]?.day_date;
+              append({
+                quote_no: quote_no,
+                day_number: fields.length + 1,
+                day_date: dayjs(lastDate)
+                  .add(1, "day")
+                  .format("YYYY-MM-DDTHH:mm:ss"),
+                departure_time: "08:00",
+                dropoff_location: "",
+                pickup_location: "",
+                stopover_addresses: [
+                  {
+                    location: ""
+                  }
+                ]
+              });
+            }}
+          >
+            <SmallPlusIcon color="#718BAA" />
+            新增其他天
+          </Button>
+        </Pane>
       )}
     </BodySTY>
   );

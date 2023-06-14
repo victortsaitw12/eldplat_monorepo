@@ -8,29 +8,33 @@ import {
   Button,
   Dialog,
   Paragraph,
-  toaster
+  toaster,
+  Tooltip
 } from "evergreen-ui";
 import { DivSTY } from "./style";
 import LightBox from "@components/Lightbox";
 import Table from "@components/Table/Table";
 import PrimaryRadiusBtn from "@components/Button/PrimaryRadius";
+import { updateStatus } from "@services/client/updateStatus";
 
 const PaymentBtn = ({ data }) => {
   const [isPayInFull, setIsPayInFull] = React.useState(true);
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
 
-  const handleTakeQuote = () => {
+  const handleTakeQuote = React.useCallback(async () => {
     //接後端API更改status_qode = '5'
+    const status_code = "5";
+    const res = await updateStatus(status_code, data.quote_no, data.costs_no);
     console.log("確認接受報價");
     setTimeout(() => setIsLightBoxOpen(false), 1000);
 
     toaster.success("接受報價", {
-      description: `訂單 ${data.quote_no} 確認總金額 ${data.full_payment_amount}，請於繳費期限內付款，完成訂車作業。`,
+      description: `訂單 ${data.quote_no} 確認總金額 ${data.quote_total_amount}，請於繳費期限內付款，完成訂車作業。`,
       duration: 2,
       hasCloseButton: true
     });
     //refetch to update status
-  };
+  }, [data]);
   const handlePayment = (status_code: string) => {
     try {
       //打串金流API
@@ -39,10 +43,16 @@ const PaymentBtn = ({ data }) => {
       console.log("somehting wrong:", e.message);
     }
   };
+  const handleTogglePayment = () => {
+    if (data.isfullpay) return;
+    setIsPayInFull(!isPayInFull);
+  };
+  const currentStatus =
+    data.orderStatusesList[data.orderStatusesList.length - 1].status_code;
 
   return (
     <DivSTY>
-      {data.status_code === "4" && (
+      {(currentStatus === "3" || currentStatus === "4") && (
         <PrimaryRadiusBtn
           appearance="primary"
           onClick={() => setIsLightBoxOpen(true)}
@@ -50,31 +60,34 @@ const PaymentBtn = ({ data }) => {
           接受報價
         </PrimaryRadiusBtn>
       )}
-      {data.status_code === "5" && (
+      {currentStatus === "5" && (
         <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-          <Button
+          <PrimaryRadiusBtn
             appearance={`${isPayInFull ? "secondary" : "primary"}`}
-            className="secondaryBtn"
-            onMouseEnter={() => setIsPayInFull(false)}
-            onMouseLeave={() => setIsPayInFull(true)}
+            onMouseEnter={handleTogglePayment}
+            onMouseLeave={handleTogglePayment}
             onClick={handlePayment.bind(null, "7")}
+            disabled={data.isfullpay}
           >
             支付訂金
-          </Button>
-          <Button
+          </PrimaryRadiusBtn>
+          <PrimaryRadiusBtn
             appearance={`${isPayInFull ? "primary" : "secondary"}`}
             onClick={handlePayment.bind(null, "6")}
           >
             支付全額
-          </Button>
+          </PrimaryRadiusBtn>
         </div>
       )}
-      {data.status_code === "7" && (
-        <Button appearance="primary" onClick={handlePayment.bind(null, "8")}>
+      {currentStatus === "7" && (
+        <PrimaryRadiusBtn
+          appearance="primary"
+          onClick={handlePayment.bind(null, "8")}
+        >
           支付尾款
-        </Button>
+        </PrimaryRadiusBtn>
       )}
-      {data.status_code === "11" && (
+      {currentStatus === "11" && (
         <InlineAlert intent="danger" className="inlineAlert">
           繳費期限已截止，未成功完成訂車作業。若仍想要訂車， 請聯繫客服。
         </InlineAlert>
