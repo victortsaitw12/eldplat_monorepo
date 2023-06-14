@@ -14,7 +14,7 @@ import ExpenseDetail from "@components/ExpenseDetail";
 import { TickCircleIcon } from "evergreen-ui";
 //@mock_data
 //@content
-import OrdersDetail from "@contents/Client/Enquiry/Detail";
+import OrdersDetail from "@contents/Client/Quote/Detail";
 //
 
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";

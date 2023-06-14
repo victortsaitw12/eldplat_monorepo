@@ -12,7 +12,7 @@ const SpecialInfoView = ({ listArray, remark = "---" }: I_Props) => {
       <DetailList listArray={listArray} />
       <div className="remark">
         <div className="remark-title">備註</div>
-        <div className="remark-content">{remark}</div>
+        <div className="remark-content">{remark || "無"}</div>
       </div>
     </BodySTY>
   );

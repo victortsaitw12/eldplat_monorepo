@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import { ExpenseDetailProps } from "./type";
 import { StyledForm } from "./style";
 import ExpenseItem from "./ExpenseItem";

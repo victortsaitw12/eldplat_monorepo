@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { Select, Button } from "evergreen-ui";
 import ConditionCard from "@components/ConditionCard";
 import { useRef } from "react";
-import CustomPickup from "@contents/Client/Enquiry/CustomPickup";
-import FlightPickup from "@contents/Client/Enquiry/FlightPickup";
+import CustomPickup from "@contents/Client/Quote/CustomPickup";
+import FlightPickup from "@contents/Client/Quote/FlightPickup";
 import { ParsedUrlQuery } from "querystring";
 import {
   GetServerSideProps,

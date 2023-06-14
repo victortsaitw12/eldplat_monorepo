@@ -11,11 +11,11 @@ import { BodySTY } from "./style";
 import NavigationList from "@components/NavigationList";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
-import TravelInformation from "@contents/Client/Enquiry/TravelInformation";
-import RidingInformation from "@contents/Client/Enquiry/RidingInformation";
-import SpecialNeeds from "@contents/Client/Enquiry/SpecialNeeds";
-import ContactInformation from "@contents/Client/Enquiry/ContactInformation";
-import FlightInformation from "@contents/Client/Enquiry/FlightInformation";
+import TravelInformation from "@contents/Client/Quote/TravelInformation";
+import RidingInformation from "@contents/Client/Quote/RidingInformation";
+import SpecialNeeds from "@contents/Client/Quote/SpecialNeeds";
+import ContactInformation from "@contents/Client/Quote/ContactInformation";
+import FlightInformation from "@contents/Client/Quote/FlightInformation";
 import { Button } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form";
 import {
   QuotationCreatePayload,
   defaultQuotationCreatePayload
-} from "@contents/Client/Enquiry/type";
+} from "@contents/Client/Quote/type";
 import { shiftDate, calculateDuration } from "@utils/calculateDate";
 import { createQuotation } from "@services/client/createQuotation";
 import { getBusType } from "@services/client/getBusType";
@@ -191,7 +191,7 @@ const Page: NextPageWithLayout<
     defaultValues: async () => {
       const result = await asyncGetDefaultValues(type);
       console.log("default values", result);
-      return result;
+      return result as QuotationCreatePayload;
     }
   });
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
@@ -199,6 +199,9 @@ const Page: NextPageWithLayout<
     try {
       const result = await createQuotation(data);
       const { quote_no } = result;
+      if (!quote_no) {
+        throw new Error("Fail to create quotation");
+      }
       router.push({
         pathname: `/client/enquiry/detail/${quote_no}`,
         query: {
