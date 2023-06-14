@@ -93,6 +93,7 @@ const Page: NextPageWithLayout<never> = () => {
             <AssignBtn
               id={item.maintenance_no["value"]}
               disabled={assignActive[idx]}
+              assignmentData={res.contentList}
             ></AssignBtn>
           ));
         }

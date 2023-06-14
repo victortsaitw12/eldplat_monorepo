@@ -11,8 +11,6 @@ interface Props {
   setCheckboxData: (t: any) => void;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
-  goToEditPageHandler: (id: string) => void;
-  goToDetailPage: (id: string) => void;
 }
 
 function MaintenanceNoticeList({
@@ -20,9 +18,7 @@ function MaintenanceNoticeList({
   checkboxData,
   setCheckboxData,
   goToCreatePage,
-  deleteItemHandler,
-  goToEditPageHandler,
-  goToDetailPage
+  deleteItemHandler
 }: Props) {
   const clientTitle = getMaintenanceNoticeTitle();
   const [value, setValue] = useState("動作");
@@ -93,8 +89,6 @@ function MaintenanceNoticeList({
         data={clientData}
         goToCreatePage={goToCreatePage}
         deleteItem={deleteItemHandler}
-        goToEditPage={goToEditPageHandler}
-        viewItem={goToDetailPage}
         handleCheckboxChange={handleCheckboxChange}
         handleSelectAll={handleSelectAll}
         handleDeselectAll={handleDeselectAll}

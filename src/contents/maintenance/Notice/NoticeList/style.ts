@@ -5,6 +5,7 @@ export const BodySTY = styled.div`
   background-color: #fff;
   overflow-x: auto;
   position: relative;
+  min-height: 100vh;
 
   .select {
     width: 100px;
