@@ -33,7 +33,7 @@ const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
   const submitFormHandler = (data: FormValues) => {
     const { departureDate, purpose, returnDate } = data;
     router.push({
-      pathname: "/client/enquiry/edit",
+      pathname: "/client/quote/edit",
       query: {
         departureDate,
         returnDate,

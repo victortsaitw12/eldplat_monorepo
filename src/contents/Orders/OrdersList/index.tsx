@@ -25,7 +25,6 @@ const OrdersList = ({
   return (
     <BodySTY>
       {orderData.map((item, index) => {
-        console.log("item: ", item);
         return (
           <div className="list-item" key={item.quote_no}>
             <Link

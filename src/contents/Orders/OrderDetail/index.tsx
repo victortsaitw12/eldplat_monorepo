@@ -7,8 +7,6 @@ import dayjs from "dayjs";
 import Collapse from "@components/Collapse";
 import DetailList from "@components/DetailList";
 import VerticalDetail from "@components/VerticalDetail";
-// import { order_shuttleList } from "@mock-data/adminOrders/mockData";
-// import ShuttleInfoView from "@contents/AdminOrders/AdminOrdersDetail/ShuttleInfo/ShuttleInfoView";
 import ScheduleList from "@components/ScheduleList";
 import DetailItem from "@components/DetailList/DetailItem";
 import ProgressList from "@components/ProgressList";
@@ -17,16 +15,9 @@ import {
   mappingSpecailNeededsInfo,
   mappingProgressInfo
 } from "@services/client/mappingQuotationData";
-import {
-  STATUS_CODE,
-  QUOTE_TYPE,
-  PURPOSE,
-  BUS_AGE,
-  BRING_PETS_RADIO,
-  SOCIAL_MEDIA_TYPE
-} from "@services/getDDL";
+import { QUOTE_TYPE, PURPOSE } from "@services/getDDL";
 
-import ShuttleInfo from "@contents/Client/Quote/Detail/ShuttleInfo";
+import ShuttleInfo from "@contents/Orders/OrderDetail/ShuttleInfo";
 import TakeBusInfoView from "@contents/Client/Quote/Detail/TakeBusInfoView";
 import FlightInfoView from "@contents/Client/Quote/Detail/FlightInfoView";
 import SpecialInfoView from "@contents/Client/Quote/Detail/SpecialInfoView";
@@ -40,13 +31,12 @@ type StatusItemType = {
 
 const OrderDetail = ({ orderData }: { orderData: any }) => {
   // ----- function ----- //
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      ...orderData
+    }
+  });
   console.log("orderData", orderData);
-  const filterData = (
-    keysArr: { title: string; key: string; val: string; isShown: boolean }[]
-  ) => {
-    return keysArr.filter((item) => item.isShown === true);
-  };
 
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
@@ -65,13 +55,11 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                   {orderData.quote_type === "1" ? "客製包車" : "機場接送"}
                 </span>
                 <span className="collapse__subTitle">
-                  {`${
-                    orderData.quote_type === "3"
-                      ? "送機"
-                      : orderData.quote_type === "2"
+                  {orderData.quote_type === "3"
+                    ? "送機"
                       ? "接機"
-                      : PURPOSE[orderData.purpose]?.label || ""
-                  }`}
+                      : PURPOSE[orderData.purpose].label
+                    : orderData.quote_type === "2"}
                 </span>
               </div>
             }

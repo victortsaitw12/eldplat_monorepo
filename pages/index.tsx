@@ -76,9 +76,7 @@ function Home() {
           <Textarea />
         </CheckBoxWrapper>
       </div>
-      <div>
-        <VerticalTextArea />
-      </div>
+      <div>{/* <VerticalTextArea /> */}</div>
       <div>
         <DetailList
           listArray={[

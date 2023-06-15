@@ -192,7 +192,11 @@ const Page: NextPageWithLayout<{
             value: "-"
           },
           order_label: {
-            label: <LabelTag text="服務讚" />,
+            label: order["label_list"].map(
+              (child: { label_name: string }, i: number) => {
+                return <LabelTag key={i} text={child.label_name} />;
+              }
+            ),
             value: order["order_label"]
           }
         };

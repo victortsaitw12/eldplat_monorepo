@@ -7,7 +7,6 @@ import ExpenseDetail from "@components/ExpenseDetail";
 import PaymentBtn from "./PaymentBtn";
 
 const Quote = ({ data }: { data: any }) => {
-  const [payment, setPayment] = React.useState();
   const expenseList = [
     {
       label: "基本車資",
@@ -81,6 +80,7 @@ const Quote = ({ data }: { data: any }) => {
             </div>
           }
           opened
+          viewOnly
           OnToggle={handleToggle}
         >
           <ExpenseDetail data={expenseList} prefix="NT$" />

@@ -29,7 +29,7 @@ interface I_Props {
 }
 
 const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
-  const { register, control } = useFormContext();
+  const { register, control, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: arrayName
@@ -105,7 +105,10 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
         <Pane className="add_day_container">
           <Button
             onClick={() => {
-              const lastDate = fields[fields.length - 1]?.day_date;
+              const lastDate = getValues(
+                "order_itinerary_list[" + (fields.length - 1) + "].day_date"
+              );
+              // const lastDate = fields[fields.length - 1]?.day_date;
               append({
                 quote_no: quote_no,
                 day_number: fields.length + 1,

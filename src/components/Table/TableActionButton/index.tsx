@@ -6,7 +6,7 @@ import useClickOutside from "@hooks/useClickOutside";
 //
 interface Props {
   onDelete: () => void;
-  onEdit: () => void;
+  onEdit?: () => void;
   onView?: () => void;
 }
 //

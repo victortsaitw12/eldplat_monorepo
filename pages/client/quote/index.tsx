@@ -42,7 +42,7 @@ const Page = () => {
             imageUrl="/icons/Custom-bus-pickup.svg"
             onClick={() => {
               router.push({
-                pathname: "/client/enquiry/confirm",
+                pathname: "/client/quote/confirm",
                 query: {
                   type: "custom"
                 }
@@ -54,7 +54,7 @@ const Page = () => {
             imageUrl="/icons/Airport-pickup.svg"
             onClick={() => {
               router.push({
-                pathname: "/client/enquiry/confirm",
+                pathname: "/client/quote/confirm",
                 query: {
                   type: "airport"
                 }
