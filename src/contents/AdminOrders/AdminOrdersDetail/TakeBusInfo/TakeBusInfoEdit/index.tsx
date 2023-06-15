@@ -109,14 +109,13 @@ const TakeBusInfoEdit = ({ busType, methods }: I_Props) => {
                               setValue={methods.setValue}
                               getValues={methods.getValues}
                               register={register}
-                              // inputName={
-                              //   "bus_type_list[" +
-                              //   i +
-                              //   "].bus_list[" +
-                              //   j +
-                              //   "].order_quantity"
-                              // }
-                              inputName="counter-test"
+                              inputName={
+                                "bus_type_list[" +
+                                i +
+                                "].bus_list[" +
+                                j +
+                                "].order_quantity"
+                              }
                               label={busItem.bus_name}
                             />
                           )
@@ -128,93 +127,6 @@ const TakeBusInfoEdit = ({ busType, methods }: I_Props) => {
               </Collapse>
             );
           })}
-          {/* <Collapse title="大型巴士 (28~43人)">
-            <Pane style={{ padding: "20px 0" }}>
-              <VerticalDetail
-                title=""
-                items={[
-                  {
-                    label: "",
-                    value: (
-                      <CounterInput
-                        setValue={methods.setValue}
-                        getValues={methods.getValues}
-                        register={register}
-                        inputName="counter-01"
-                        label="車款名稱（35~43人）"
-                      />
-                    )
-                  },
-                  {
-                    label: "",
-                    value: (
-                      <CounterInput
-                        setValue={methods.setValue}
-                        getValues={methods.getValues}
-                        register={register}
-                        inputName="counter-02"
-                        label="車款名稱（28~34人）"
-                      />
-                    )
-                  }
-                ]}
-              />
-            </Pane>
-          </Collapse>
-          <Collapse title="中型巴士 (10~25人)">
-            <Pane style={{ padding: "20px 0" }}>
-              <VerticalDetail
-                title=""
-                items={[
-                  {
-                    label: "",
-                    value: (
-                      <CounterInput
-                        setValue={methods.setValue}
-                        getValues={methods.getValues}
-                        register={register}
-                        inputName="counter-01"
-                        label="車款名稱（21~25人）"
-                      />
-                    )
-                  },
-                  {
-                    label: "",
-                    value: (
-                      <CounterInput
-                        setValue={methods.setValue}
-                        getValues={methods.getValues}
-                        register={register}
-                        inputName="counter-02"
-                        label="車款名稱（21~25人）"
-                      />
-                    )
-                  }
-                ]}
-              />
-            </Pane>
-          </Collapse>
-          <Collapse title="小車 (9人以下)">
-            <Pane style={{ padding: "20px 0" }}>
-              <VerticalDetail
-                title=""
-                items={[
-                  {
-                    label: "",
-                    value: (
-                      <CounterInput
-                        setValue={methods.setValue}
-                        getValues={methods.getValues}
-                        register={register}
-                        inputName="counter-01"
-                        label="車款名稱（9人以下）"
-                      />
-                    )
-                  }
-                ]}
-              />
-            </Pane>
-          </Collapse> */}
         </Pane>
       </Pane>
     </BodySTY>

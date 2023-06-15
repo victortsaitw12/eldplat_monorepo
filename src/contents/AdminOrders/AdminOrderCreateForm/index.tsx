@@ -30,6 +30,18 @@ const defaultValues = {
       contact_type: "2",
       social_media_type: "",
       social_media: ""
+    },
+    {
+      family_name: "",
+      name: "",
+      contact_phone_code: "",
+      contact_phone: "",
+      contact_tel_code: "",
+      contact_tel: "",
+      contact_email: "",
+      contact_type: "1",
+      social_media_type: "",
+      social_media: ""
     }
   ]
 };

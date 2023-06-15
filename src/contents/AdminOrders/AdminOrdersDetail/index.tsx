@@ -63,13 +63,13 @@ const AdminOrdersDetal = ({
 }: I_Props) => {
   console.log("🤣🤣🤣🤣detail頁的orderData", orderData, busType);
   const [loading, setLoading] = useState(false);
-  //原本中途點的地方要轉成單維的結構
+
   const methods = useForm({
     defaultValues: {
       ...orderData
     }
   });
-  //篩出聯絡人還是代表人的資料
+
   const contactListByType = (array: any[], type: string) => {
     const newArr = array.filter((child) => {
       return child.contact_type === type;

@@ -16,12 +16,12 @@ const PaymentInfoEdit = () => {
     >
       <CheckBoxWrapper
         control={control}
-        inputName="full_payment_check"
+        inputName="full_payment_amount"
         description=""
         label="全額支付"
       >
         <Pane>
-          <TextInput placeholder="付款期限" />
+          <TextInput type="date" placeholder="付款期限" />
         </Pane>
       </CheckBoxWrapper>
       <CheckBoxWrapper
@@ -35,7 +35,7 @@ const PaymentInfoEdit = () => {
             <TextInput placeholder="金額" />
           </Pane>
           <Pane style={{ display: "flex" }}>
-            <TextInput placeholder="付款期限" />
+            <TextInput type="date" placeholder="付款期限" />
           </Pane>
         </Pane>
       </CheckBoxWrapper>
