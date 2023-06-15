@@ -36,14 +36,12 @@ function InfoBox({
             {r_label()}
           </UnorderedList>
         );
-        break;
       case "checkbox":
         return (
           <UnorderedList className="info_content type_checkbox">
             {r_checkbox()}
           </UnorderedList>
         );
-        break;
       default:
         return (
           <UnorderedList className="info_content type_text">
@@ -83,15 +81,18 @@ function InfoBox({
 
   //標籤-編輯模式待處理
   const r_label = () => {
-
     if (!infoData) {
       return false;
     }
     if (isEdit) {
-      return <Pane>{infoData[0].editEle}</Pane>
+      return <Pane>{infoData[0].editEle}</Pane>;
     } else {
-      console.log("🎶🎶🎶🎶", infoData[0].value)
-      if (infoData[0].value && Array.isArray(infoData[0].value) && infoData[0].value.length > 0) {
+      console.log("🎶🎶🎶🎶", infoData[0].value);
+      if (
+        infoData[0].value &&
+        Array.isArray(infoData[0].value) &&
+        infoData[0].value.length > 0
+      ) {
         return infoData[0].value.map((child: any, i: number) => {
           return (
             <ListItem key={child + i}>
@@ -100,7 +101,6 @@ function InfoBox({
           );
         });
       }
-
     }
   };
 

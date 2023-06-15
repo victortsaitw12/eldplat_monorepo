@@ -1,21 +1,49 @@
+import { forwardRef } from "react";
 import { ExpenseDetailProps } from "./type";
-import { BodySTY } from "./style";
+import { StyledForm } from "./style";
 import ExpenseItem from "./ExpenseItem";
-const ExpenseDetail = ({ data, prefix, suffix }: ExpenseDetailProps) => {
-  return (
-    <BodySTY>
-      {data.map((item) => {
-        return (
-          <ExpenseItem
-            key={item.label}
-            itemData={item}
-            prefix={prefix}
-            suffix={suffix}
-          />
-        );
-      })}
-    </BodySTY>
-  );
-};
+import { useForm } from "react-hook-form";
+const ExpenseDetail = forwardRef<HTMLButtonElement, ExpenseDetailProps>(
+  function ExpenseDetail(
+    {
+      data,
+      prefix,
+      suffix,
+      isEdit = false,
+      asyncSubmitData = (data) => {
+        console.log(data);
+      }
+    },
+    formButtonRef
+  ) {
+    const defaultValues: { [key: string]: any } = {};
+    console.log("data", data);
+    data.forEach((item) => {
+      defaultValues[item.name] = item.value;
+    });
+    const { register, handleSubmit } = useForm({
+      defaultValues: defaultValues
+    });
+    return (
+      <StyledForm onSubmit={handleSubmit(asyncSubmitData)}>
+        {data.map((item) => {
+          return (
+            <ExpenseItem
+              key={item.label}
+              register={register}
+              itemData={item}
+              prefix={prefix}
+              suffix={suffix}
+              isEdit={isEdit}
+            />
+          );
+        })}
+        <button type="submit" style={{ display: "none" }} ref={formButtonRef}>
+          submit
+        </button>
+      </StyledForm>
+    );
+  }
+);
 
 export default ExpenseDetail;

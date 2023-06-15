@@ -14,7 +14,7 @@ export const ItemSTY = styled.li`
   list-style: none;
   width: 100%;
   > .item-content {
-    width: 60px;
+    width: 70px;
   }
   .option-container {
     display: flex;

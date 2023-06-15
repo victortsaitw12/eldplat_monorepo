@@ -41,12 +41,13 @@ const ProgressItem = ({ status, label, date }: ItemProps) => {
 interface ListProps {
   dataLists: Array<{
     label: string;
-    status: "ok" | "pending" | "error";
+    status: "ok" | "pending" | "error" | "disabled";
     date?: string;
   }>;
 }
 
 const ProgressList = ({ dataLists }: ListProps) => {
+  console.log("dataLists: ", dataLists);
   return (
     <ListSTY>
       {dataLists.map((item, index) => {

@@ -14,22 +14,14 @@ const Breadcrumbs = ({ routes, style }: { routes: Route[]; style?: any }) => {
   return (
     <DivSTY className="breadcrumbs" style={STY}>
       {routes.map((route, index) => (
-        <>
+        <div className="breadcrumbs-item" key={`route-${index}`}>
           {index !== 0 && (
-            <ChevronRightIcon
-              key={`sep-${index}`}
-              className="breadcrumbs__separation"
-            />
+            <ChevronRightIcon className="breadcrumbs__separation" />
           )}
-          <Link
-            key={`route-${index}`}
-            className="breadcrumbs__route"
-            href={route.url}
-            replace
-          >
+          <Link className="breadcrumbs__route" href={route.url} replace>
             {route.label}
           </Link>
-        </>
+        </div>
       ))}
     </DivSTY>
   );

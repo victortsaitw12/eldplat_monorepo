@@ -2,33 +2,24 @@ import React from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { Spinner } from "evergreen-ui";
-import { BodySTY, SectionSTY } from "./style";
 
-import { MOCK_ORDER_DETAIL } from "@mock-data/orders";
 import { getLayout } from "@layout/QuoteLayout";
-import ConditionCard from "@components/ConditionCard";
 import Breadcrumbs from "@components/Breadcrumbs";
+import { BodySTY } from "./style";
+import { MOCK_ORDER_DETAIL } from "@mock-data/orders";
+import ConditionCard from "@components/ConditionCard";
 import OrderDetail from "@contents/Orders/OrderDetail";
 import Quote from "@contents/Orders/Quote";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 import StatusCard from "@components/StatusCard";
+import { ParsedUrlQuery } from "querystring";
 
 const Page: NextPageWithLayout<never> = ({ quote_no }) => {
   // ----- variables, states ----- //
   const router = useRouter();
-  const [data, setData] = React.useState<I_OrderDetail>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-
-  const contactInfo = [
-    { title: "姓", value: data?.family_name },
-    { title: "名", value: data?.name },
-    { title: "手機", value: data?.contact_phone },
-    { title: "電話", value: data?.contact_tel },
-    { title: "信箱", value: data?.contact_email },
-    { title: "通訊軟體", value: data?.social_media }
-  ];
-  // ----- function ----- //
-
+  const [data, setData] = React.useState<I_OrderDetail | null>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  console.log("current data:", data);
   // ----- useEffect ----- //
   React.useEffect(() => {
     const fetchData = async () => {
@@ -74,7 +65,7 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
       <BodySTY>
         {!isLoading && data && (
           <div className="left">
-            <OrderDetail data={data} />
+            <OrderDetail orderData={data} />
             <ConditionCard type="view"></ConditionCard>
           </div>
         )}
@@ -87,13 +78,20 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
     </>
   );
 };
+interface Props {
+  quote_no: string;
+}
+interface Params extends ParsedUrlQuery {
+  id: string;
+}
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
 ) => {
-  const { params } = context;
+  const { query, params } = context;
+  const id = params?.id;
   return {
     props: {
-      quote_no: params ? params.id : ""
+      quote_no: id || ""
     }
   };
 };

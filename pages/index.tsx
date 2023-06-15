@@ -12,13 +12,10 @@ import ScheduleList from "@components/ScheduleList";
 import { useForm } from "react-hook-form";
 //
 function Home() {
-  const {
-    register,
-    control
-  } = useForm<any>({
+  const { register, control, getValues, setValue } = useForm<any>({
     defaultValues: {
-      "counter": 0,
-      "customSelect": "B",
+      counter: 0,
+      customSelect: "B",
       "schedule-list": [
         {
           label: "",
@@ -45,7 +42,13 @@ function Home() {
         <p>內容內容</p>
       </Collapse>
       <div style={{ width: "300px" }}>
-        <CounterInput register={register} inpurName="counter" label="成人" />
+        <CounterInput
+          register={register}
+          inputName="counter"
+          label="成人"
+          getValues={getValues}
+          setValue={setValue}
+        />
       </div>
       <div>
         <CustomSelect
@@ -65,7 +68,11 @@ function Home() {
         />
       </div>
       <div>
-        <CheckBoxWrapper checked={true} label="舉牌 (NT$200)" >
+        <CheckBoxWrapper
+          control={control}
+          label="舉牌 (NT$200)"
+          inputName="remark-sign-check"
+        >
           <Textarea />
         </CheckBoxWrapper>
       </div>
@@ -87,7 +94,6 @@ function Home() {
               title: <h4>訂單編號</h4>,
               value: "ORD0002992992000"
             }
-
           ]}
         />
       </div>
@@ -96,7 +102,9 @@ function Home() {
       </div>
       <div>
         <ScheduleList
-          arrayName={"schedule-list"}
+          dayIndex={0}
+          fatherArrayName={"schedule-list"}
+          arrayName="stopover_addresses"
           register={register}
           isEdit={true}
           disabledFirst={true}
