@@ -26,22 +26,22 @@ const Page: NextPageWithLayout<never> = () => {
     {
       label: "詢價中",
       length: data.query?.length || 0,
-      value: 1
+      value: "1"
     },
     {
       label: "已報價",
       length: data.quote?.length || 0,
-      value: 2
+      value: "2"
     },
     {
       label: "訂單成立",
       length: data.order?.length || 0,
-      value: 3
+      value: "3"
     },
     {
       label: "已完成",
       length: data.finish?.length || 0,
-      value: 4
+      value: "4"
     }
   ];
 

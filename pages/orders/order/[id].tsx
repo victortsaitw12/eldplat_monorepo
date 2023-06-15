@@ -19,11 +19,9 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
   const router = useRouter();
   const [data, setData] = React.useState<I_OrderDetail | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  console.log("current data:", data);
   // ----- useEffect ----- //
   React.useEffect(() => {
     const fetchData = async () => {
-      console.log(`fetchData:${quote_no}`);
       setIsLoading(true);
       try {
         const res = await getQuotation(quote_no);

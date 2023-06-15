@@ -47,68 +47,12 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
   ) => {
     return keysArr.filter((item) => item.isShown === true);
   };
-  // ----- render ----- //
-  // const renderDataList = (list: any[]): Array<StatusItemType> => {
-  //   const dataArr: Array<StatusItemType> = [
-  //     "送出詢價", //1|2
-  //     "收到報價", //3|4
-  //     "接受報價", //5|7
-  //     "訂單成立", //"6" || "8" || "12" || "13" || "14"
-  //     "結案" //15
-  //   ].map((item) => ({
-  //     label: item,
-  //     status: "pending", // "ok" | "pending" | "error" |"disabled"
-  //     date: ""
-  //   }));
-  //   const renderOverdue = (item: any) => {
-  //     dataArr.splice(3, 0, {
-  //       label: STATUS_CODE[item.status_code].label,
-  //       status: "error",
-  //       date: dayjs(item.upddate).format("MM/DD HH:MM")
-  //     });
-  //     dataArr[dataArr.length - 2].status = "disabled";
-  //     dataArr[dataArr.length - 1].status = "disabled";
-  //     //TODO 更新訂單成立跟結案的狀態=>'due'? 待確認
-  //   };
-  //   list.forEach((item) => {
-  //     switch (item.status_code) {
-  //       case "1" || "2":
-  //         dataArr[0].status = "ok";
-  //         dataArr[0].date = dayjs(item.upddate).format("MM/DD HH:MM");
-  //         break;
-  //       case "3" || "4":
-  //         dataArr[1].status = "ok";
-  //         dataArr[1].date = dayjs(item.upddate).format("MM/DD HH:MM");
-  //         break;
-  //       case "5" || "7":
-  //         dataArr[2].status = "ok";
-  //         dataArr[2].date = dayjs(item.upddate).format("MM/DD HH:MM");
-  //         break;
-  //       case "9" || "10" || "11":
-  //         renderOverdue(item);
-  //         break;
-  //       case "6" || "8" || "12" || "13" || "14":
-  //         dataArr[dataArr.length - 2].status = "ok";
-  //         dataArr[dataArr.length - 2].date = dayjs(item.upddate).format(
-  //           "MM/DD HH:MM"
-  //         );
-  //         break;
-  //       case "15":
-  //         dataArr[dataArr.length - 1].status = "ok";
-  //         dataArr[dataArr.length - 1].date = dayjs(item.upddate).format(
-  //           "MM/DD HH:MM"
-  //         );
-  //         break;
-  //       default:
-  //         return;
-  //     }
-  //   });
-  //   return dataArr;
-  // };
+
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
   const specialInfo = mappingSpecailNeededsInfo(orderData);
   const progressInfo = mappingProgressInfo(orderData.orderStatusesList);
+
   return (
     <FormProvider {...methods}>
       <form>
@@ -126,7 +70,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                       ? "送機"
                       : orderData.quote_type === "2"
                       ? "接機"
-                      : PURPOSE[orderData.purpose].label
+                      : PURPOSE[orderData.purpose]?.label || ""
                   }`}
                 </span>
               </div>
@@ -140,13 +84,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
               />
               <DetailItem title="詢價編號" value={orderData.quote_no} />
               <Pane>
-                <ProgressList
-                  // dataLists={renderDataList.call(
-                  //   null,
-                  //   orderData.orderStatusesList
-                  // )}
-                  dataLists={progressInfo}
-                />
+                <ProgressList dataLists={progressInfo} />
               </Pane>
             </Pane>
           </Collapse>
@@ -159,9 +97,12 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
             {orderData["quote_type"] === "1" ? (
               <ShuttleInfo arrayName="order_itinerary_list" isEdit={false} />
             ) : (
-              <Collapse opened={true} title="航班資訊">
-                <FlightInfoView data={orderData} />
-              </Collapse>
+              <>
+                <Collapse opened={true} title="航班資訊">
+                  <FlightInfoView data={orderData} />
+                </Collapse>
+                <ShuttleInfo arrayName="order_itinerary_list" isEdit={false} />
+              </>
             )}
             {/*變動*/}
             <Collapse title="乘車資訊">
