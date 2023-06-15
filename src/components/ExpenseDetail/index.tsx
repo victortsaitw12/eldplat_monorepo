@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import { ExpenseDetailProps } from "./type";
 import { StyledForm } from "./style";
 import ExpenseItem from "./ExpenseItem";
@@ -17,6 +17,7 @@ const ExpenseDetail = forwardRef<HTMLButtonElement, ExpenseDetailProps>(
     formButtonRef
   ) {
     const defaultValues: { [key: string]: any } = {};
+    console.log("data", data);
     data.forEach((item) => {
       defaultValues[item.name] = item.value;
     });

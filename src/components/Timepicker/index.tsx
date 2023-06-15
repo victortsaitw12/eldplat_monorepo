@@ -53,7 +53,7 @@ const Timepicker = ({
   React.useEffect(() => {
     setSelectDate(date);
     if (!selectDate) return;
-    if (!hour && !minute && !timeslot) return;
+    if (!hour || !minute || !timeslot) return;
     const updateDate = new Date(
       selectDate.getFullYear(),
       selectDate.getMonth(),
@@ -107,7 +107,7 @@ const Timepicker = ({
     return optionArr;
   };
   const minOptions = () => {
-    let arr = [];
+    const arr = [];
     let i = 0;
     while (i < 60) {
       i === 0
@@ -123,7 +123,7 @@ const Timepicker = ({
       { value: 0, label: "AM" },
       { value: 12, label: "PM" }
     ];
-    let arr = options.map((option) => (
+    const arr = options.map((option) => (
       <option key={`timeslot-${option.label}`} value={option.value}>
         {option.label}
       </option>

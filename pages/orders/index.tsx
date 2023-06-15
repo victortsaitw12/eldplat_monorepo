@@ -9,15 +9,6 @@ import StatusTabs from "@components/StatusTabs";
 import StatusCard from "@components/StatusCard";
 import OrdersList from "@contents/Orders/OrdersList";
 import { getOrdersList, I_Order } from "@services/client/getOrdersList";
-
-interface I_OrderData {
-  quote_no: string;
-  costs_no: string;
-  order_no: string;
-  purpose: string;
-  departure_date: string;
-  order_status: string;
-}
 interface I_OrdersList {
   query?: I_Order[];
   quote?: I_Order[];
@@ -97,11 +88,17 @@ const Page: NextPageWithLayout<never> = () => {
         isLoading={isLoading}
         defaultTab={1}
       />
-      {data && currentTab == 1 && <OrdersList type="query" data={data.query} />}
-      {data && currentTab == 2 && <OrdersList type="quote" data={data.quote} />}
-      {data && currentTab == 3 && <OrdersList type="order" data={data.order} />}
+      {data && currentTab == 1 && (
+        <OrdersList type="query" orderData={data.query} />
+      )}
+      {data && currentTab == 2 && (
+        <OrdersList type="quote" orderData={data.quote} />
+      )}
+      {data && currentTab == 3 && (
+        <OrdersList type="order" orderData={data.order} />
+      )}
       {data && currentTab == 4 && (
-        <OrdersList type="finish" data={data.finish} />
+        <OrdersList type="finish" orderData={data.finish} />
       )}
     </BodySTY>
   );
