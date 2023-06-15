@@ -121,13 +121,11 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                   {orderData.quote_type === "1" ? "客製包車" : "機場接送"}
                 </span>
                 <span className="collapse__subTitle">
-                  {`${
-                    orderData.quote_type === "3"
-                      ? "送機"
-                      : orderData.quote_type === "2"
-                      ? "接機"
-                      : PURPOSE[orderData.purpose].label
-                  }`}
+                  {orderData.quote_type === "3"
+                    ? "送機"
+                    : orderData.quote_type === "2"
+                    ? "接機"
+                    : PURPOSE[orderData.purpose].label}
                 </span>
               </div>
             }

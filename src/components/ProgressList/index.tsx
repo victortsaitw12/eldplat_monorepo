@@ -4,23 +4,30 @@ interface ItemProps {
   status: "ok" | "pending" | "error" | "disabled";
   label: string;
   date?: string;
+  color?: string;
 }
-const HorizontalLine = ({ dataLists }: { dataLists: ItemProps[] }) => {
+const HorizontalLine = ({
+  dataLists,
+  color
+}: {
+  dataLists: ItemProps[];
+  color?: string;
+}) => {
   const disabledLength = dataLists.filter(
     (item) => item.status === "disabled"
   ).length;
   const grayWidth = disabledLength / (dataLists.length - 1);
   return (
     <>
-      <LineSTY></LineSTY>
-      <GrayLineSTY grayWidth={grayWidth}></GrayLineSTY>
+      <LineSTY color={color} />
+      <GrayLineSTY grayWidth={grayWidth} />
     </>
   );
 };
 
-const ProgressItem = ({ status, label, date }: ItemProps) => {
+const ProgressItem = ({ status, label, date, color }: ItemProps) => {
   return (
-    <ItemSTY status={status}>
+    <ItemSTY status={status} color={color}>
       <div className="item-label">{label}</div>
       <div className="item-icon">
         {status === "error" ? (
@@ -44,12 +51,12 @@ interface ListProps {
     status: "ok" | "pending" | "error" | "disabled";
     date?: string;
   }>;
+  color?: string;
 }
 
-const ProgressList = ({ dataLists }: ListProps) => {
-  console.log("dataLists: ", dataLists);
+const ProgressList = ({ dataLists, color }: ListProps) => {
   return (
-    <ListSTY>
+    <ListSTY color={color}>
       {dataLists.map((item, index) => {
         return (
           <ProgressItem
@@ -57,10 +64,11 @@ const ProgressList = ({ dataLists }: ListProps) => {
             status={item.status}
             label={item.label}
             date={item.date}
+            color={color}
           />
         );
       })}
-      <HorizontalLine dataLists={dataLists} />
+      <HorizontalLine dataLists={dataLists} color={color} />
     </ListSTY>
   );
 };
