@@ -203,7 +203,7 @@ const Page: NextPageWithLayout<
         throw new Error("Fail to create quotation");
       }
       router.push({
-        pathname: `/client/enquiry/detail/${quote_no}`,
+        pathname: `/client/quote/detail/${quote_no}`,
         query: {
           quote_type: type === "custom" ? "1" : type === "pickUp" ? "2" : "3"
         }
@@ -288,7 +288,7 @@ const Page: NextPageWithLayout<
                 if (currentTab === 1) {
                   alert("回到日期選擇頁!");
                   router.push({
-                    pathname: "/client/enquiry/confirm",
+                    pathname: "/client/quote/confirm",
                     query: {
                       type: type === "custom" ? "custom" : "airport"
                     }
