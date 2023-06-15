@@ -183,7 +183,7 @@ const ComponentsRender = () => {
           justifyContent: "center"
         }}
       >
-        <ProgressList dataLists={DummyProgressListData} />
+        <ProgressList dataLists={DummyProgressListData} color={"#897AE3"} />
       </div>
       <form
         onSubmit={handleSubmit((data) => {
