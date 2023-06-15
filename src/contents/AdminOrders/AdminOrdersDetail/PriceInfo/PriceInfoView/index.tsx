@@ -7,7 +7,6 @@ interface I_Props {
   orderData: any;
 }
 const PriceInfoView = ({ orderData }: I_Props) => {
-  console.log("🎶🎶🎶🎶🎶🎶🎶🎶🎶PriceInfoView", orderData);
   return (
     <BodySTY>
       <Pane>

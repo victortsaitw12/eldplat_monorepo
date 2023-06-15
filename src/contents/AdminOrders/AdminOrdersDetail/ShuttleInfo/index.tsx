@@ -29,7 +29,7 @@ interface I_Props {
 }
 
 const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
-  const { register, control } = useFormContext();
+  const { register, control, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: arrayName
@@ -76,7 +76,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
               value={
                 isEdit ? (
                   <TextInput
-                    type="text"
+                    type="time"
                     {...register(arrayName + "[" + i + "]" + ".departure_time")}
                   />
                 ) : (
@@ -88,7 +88,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
           <ScheduleList
             dayIndex={i}
             fatherArrayName={arrayName}
-            arrayName="stopover_addresses"
+            arrayName="stopover_address_list"
             register={register}
             isEdit={isEdit}
             disabledFirst={false}
@@ -105,7 +105,10 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
         <Pane className="add_day_container">
           <Button
             onClick={() => {
-              const lastDate = fields[fields.length - 1]?.day_date;
+              const lastDate = getValues(
+                "order_itinerary_list[" + (fields.length - 1) + "].day_date"
+              );
+              // const lastDate = fields[fields.length - 1]?.day_date;
               append({
                 quote_no: quote_no,
                 day_number: fields.length + 1,
@@ -115,9 +118,10 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
                 departure_time: "08:00",
                 dropoff_location: "",
                 pickup_location: "",
-                stopover_addresses: [
+                stopover_address_list: [
                   {
-                    location: ""
+                    stopover_sort: 1,
+                    stopover_address: ""
                   }
                 ]
               });

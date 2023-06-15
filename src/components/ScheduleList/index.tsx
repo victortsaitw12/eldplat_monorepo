@@ -6,10 +6,6 @@ import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
 
 import { PlusIcon, TrashIcon, TextInput, Text } from "evergreen-ui";
 
-interface I_Item {
-  label: string | React.ReactNode;
-  location: string | React.ReactNode;
-}
 interface I_Props {
   fatherArrayName: string;
   dayIndex: number;
@@ -61,12 +57,12 @@ const ScheduleList = ({
             <TextInput
               placeholder="請輸入詳細地址"
               {...register(
-                `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.location`
+                `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.stopover_address`
               )}
               disabled={disabledFirst && i == 0}
             />
           ) : (
-            child.location
+            child.stopover_address
           )}
         </Text>
         {isEdit && (
@@ -76,7 +72,8 @@ const ScheduleList = ({
               size={11}
               onClick={() => {
                 append({
-                  location: ""
+                  stopover_sort: fields.length + 1,
+                  stopover_address: ""
                 });
               }}
             />

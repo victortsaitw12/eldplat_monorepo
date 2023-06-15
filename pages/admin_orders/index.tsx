@@ -27,7 +27,7 @@ import LabelTag from "@components/LabelTag";
 import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
 
 //@mock-data
-import { mock_GetQuotationByFilterList } from "@mock-data/adminOrders/mockData";
+// import { mock_GetQuotationByFilterList } from "@mock-data/adminOrders/mockData";
 
 const isFullWidth = false;
 
@@ -57,11 +57,12 @@ const Page: NextPageWithLayout<{
   }, [router.query.codeType, setDrawerOpen]);
 
   useEffect(() => {
+    change_tab("1");
     let isCanceled = false;
     //串接API中
     getQuotationByFilter(subFilter)
       .then((data) => {
-        const orderData = data.contentList.map((order: any) => {
+        const orderData = data.contentList?.map((order: any) => {
           return {
             id: { label: order["quote_no"], value: order["quote_no"] },
             quote_no: { label: order["quote_no"], value: order["quote_no"] },
@@ -102,8 +103,9 @@ const Page: NextPageWithLayout<{
             }
           };
         });
+        console.log(data.conditionList);
         // setData(data.contentList || []);
-        setData(orderData);
+        // setData(orderData);
         if (!subFilter) {
           localStorage.setItem(
             "adminOrderFilter",
@@ -190,7 +192,11 @@ const Page: NextPageWithLayout<{
             value: "-"
           },
           order_label: {
-            label: <LabelTag text="服務讚" />,
+            label: order["label_list"].map(
+              (child: { label_name: string }, i: number) => {
+                return <LabelTag key={i} text={child.label_name} />;
+              }
+            ),
             value: order["order_label"]
           }
         };

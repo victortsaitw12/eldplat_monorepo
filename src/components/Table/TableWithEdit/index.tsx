@@ -19,8 +19,8 @@ interface I_Table {
   data: I_Data[];
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
-  goToEditPage?: (item: any) => void;
-  viewItem?: (item: any) => void;
+  goToEditPage?: (id: string, item: any) => void;
+  viewItem?: (id: string, item: any) => void;
   // editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
   handleCheckboxChange?: (item: any) => void;
@@ -159,9 +159,12 @@ function Table({
                   })}
                   <td>
                     <TableActionButton
-                      onView={viewItem && viewItem.bind(null, item.id?.value)}
+                      onView={
+                        viewItem && viewItem.bind(null, item.id?.value, item)
+                      }
                       onEdit={
-                        goToEditPage && goToEditPage.bind(null, item.id?.value)
+                        goToEditPage &&
+                        goToEditPage.bind(null, item.id?.value, item)
                       }
                       onDelete={deleteItem.bind(null, item.id?.value)}
                     />

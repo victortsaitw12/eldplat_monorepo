@@ -13,7 +13,6 @@ const PassengerInfoView = ({
   social_media_type,
   social_media
 }: any) => {
-  console.log("data in PassengerInfoView", family_name);
   const list_arr = [
     {
       title: "姓",
