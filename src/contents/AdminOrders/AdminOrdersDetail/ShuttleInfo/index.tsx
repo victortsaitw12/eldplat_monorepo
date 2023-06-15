@@ -76,7 +76,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
               value={
                 isEdit ? (
                   <TextInput
-                    type="text"
+                    type="time"
                     {...register(arrayName + "[" + i + "]" + ".departure_time")}
                   />
                 ) : (
@@ -88,7 +88,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
           <ScheduleList
             dayIndex={i}
             fatherArrayName={arrayName}
-            arrayName="stopover_addresses"
+            arrayName="stopover_address_list"
             register={register}
             isEdit={isEdit}
             disabledFirst={false}
@@ -115,9 +115,10 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
                 departure_time: "08:00",
                 dropoff_location: "",
                 pickup_location: "",
-                stopover_addresses: [
+                stopover_address_list: [
                   {
-                    location: ""
+                    stopover_sort: 1,
+                    stopover_address: ""
                   }
                 ]
               });

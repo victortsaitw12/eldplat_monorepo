@@ -9,7 +9,7 @@ interface I_Props {
   infant?: string | number;
   check_in_luggage?: string | number;
   carry_on_luggage?: string | number;
-  bus_type?: string | number;
+  bus_type_list?: any[];
 }
 
 const TakeBusInfoView = ({
@@ -18,7 +18,7 @@ const TakeBusInfoView = ({
   infant,
   check_in_luggage,
   carry_on_luggage,
-  bus_type
+  bus_type_list
 }: I_Props) => {
   return (
     <Pane
@@ -65,11 +65,11 @@ const TakeBusInfoView = ({
         items={[
           {
             label: "車款名稱（21-25人）",
-            value: bus_type
+            value: bus_type_list || "0"
           },
           {
             label: "車款名稱（28-34人）",
-            value: 0
+            value: bus_type_list || ""
           }
         ]}
       />
