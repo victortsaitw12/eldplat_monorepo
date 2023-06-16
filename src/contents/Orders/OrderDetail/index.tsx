@@ -50,7 +50,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
           <Collapse
             title={QUOTE_TYPE[orderData.quote_type]?.label}
             titleChildren={
-              <div>
+              <div style={{ display: "flex", flexDirection: "row" }}>
                 <span className="collapse__title">
                   {orderData.quote_type === "1" ? "客製包車" : "機場接送"}
                 </span>
@@ -64,6 +64,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
               </div>
             }
             opened
+            viewOnly
           >
             <Pane style={{ background: "#fff" }}>
               <DetailItem

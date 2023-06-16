@@ -69,7 +69,7 @@ const Quote = ({ data }: { data: any }) => {
 
               <div className="collapse__subTitle">
                 {data.isfullpay ? (
-                  <span> 本筆訂單無支付訂金選項</span>
+                  ""
                 ) : (
                   <>
                     <span>訂金</span>

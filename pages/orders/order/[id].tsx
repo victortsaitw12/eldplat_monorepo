@@ -6,7 +6,6 @@ import { Spinner } from "evergreen-ui";
 import { getLayout } from "@layout/QuoteLayout";
 import Breadcrumbs from "@components/Breadcrumbs";
 import { BodySTY } from "./style";
-import { MOCK_ORDER_DETAIL } from "@mock-data/orders";
 import ConditionCard from "@components/ConditionCard";
 import OrderDetail from "@contents/Orders/OrderDetail";
 import Quote from "@contents/Orders/Quote";
