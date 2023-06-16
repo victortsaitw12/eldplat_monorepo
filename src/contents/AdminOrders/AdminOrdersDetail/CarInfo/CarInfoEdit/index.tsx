@@ -1,9 +1,8 @@
 import React from "react";
-import { Pane, Select, Option, Text } from "evergreen-ui";
-import DetailList from "@components/DetailList";
+import { Pane, Select, Text } from "evergreen-ui";
 import { useFormContext } from "react-hook-form";
 const CarInfoEdit = () => {
-  const { register, control } = useFormContext();
+  const { register } = useFormContext();
   return (
     <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
       <Pane style={{ display: "flex", flexDirection: "column", gap: "25px" }}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, TextInput, Textarea, Radio } from "evergreen-ui";
+import { Pane, Textarea, Radio } from "evergreen-ui";
 import { useFormContext } from "react-hook-form";
 // import DetailList from "@components/DetailList";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";

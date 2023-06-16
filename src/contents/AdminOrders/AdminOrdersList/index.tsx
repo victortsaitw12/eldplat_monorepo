@@ -16,7 +16,6 @@ const AdminOrdersList = ({
   goToEditPageHandler,
   deleteItemHandler
 }: Props) => {
-  console.log("listData", listData);
   const tableTitleArr = [
     "詢價單號",
     "分類",
