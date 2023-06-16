@@ -1,39 +1,20 @@
 import React from "react";
 import Link from "next/link";
-import { Pane, Group } from "evergreen-ui";
 import { BodySTY } from "./style";
-
-import { MOCK_progressList } from "@mock-data/orders";
 import Collapse from "@components/Collapse";
-import DetailItem from "@components/DetailList/DetailItem";
-import ProgressList from "@components/ProgressList";
 import StatusCard from "@components/StatusCard";
-
-interface I_OrderData {
-  quote_no: string;
-  costs_no: string;
-  order_no: string;
-  purpose: string;
-  departure_date: string;
-  order_status: string;
-}
-interface I_OrdersList {
-  all?: I_OrderData[];
-  query?: I_OrderData[];
-  quote?: I_OrderData[];
-  order?: I_OrderData[];
-  finish?: I_OrderData[];
-  cancel?: I_OrderData[];
-}
-
+import { PURPOSE, QUOTE_TYPE } from "@services/getDDL";
+import { I_Order } from "@services/client/getOrdersList";
+import OrderListItem from "./OrderListItem";
 const OrdersList = ({
   type,
-  data
+  orderData
 }: {
-  type: "all" | "query" | "quote" | "order" | "finish";
-  data: I_OrdersList;
+  type: "query" | "quote" | "order" | "finish";
+  orderData: any;
 }) => {
-  if (!data || !data[type]?.[0])
+  console.log("data:", orderData);
+  if (!orderData)
     return (
       <BodySTY>
         <StatusCard>
@@ -44,28 +25,43 @@ const OrdersList = ({
 
   return (
     <BodySTY>
-      {data[type]?.map((item, index) => (
-        <Link
-          key={`${type}-${index} `}
-          href={{
-            pathname: `/orders/order/${item.quote_no}`
-          }}
-        >
-          <Collapse title={item.purpose} opened>
-            <Pane style={{ background: "#fff" }}>
-              <Group className="info">
-                <Group className="info__text">
-                  <DetailItem title="乘車日期" value={item.departure_date} />
-                  <DetailItem title="詢價編號" value={item.quote_no} />
-                </Group>
-                <Pane>
-                  <ProgressList dataLists={MOCK_progressList} />
-                </Pane>
-              </Group>
-            </Pane>
-          </Collapse>
-        </Link>
-      ))}
+      {orderData.map((item: I_Order) => {
+        return (
+          <div className="list-item" key={item.quote_no}>
+            <Link
+              href={{
+                pathname: `/orders/order/${item.quote_no}`
+              }}
+            >
+              <Collapse
+                title={item.quote_type === "1" ? "客製包車" : "機場接送"}
+                titleChildren={
+                  <div>
+                    <span className="collapse__title">
+                      {QUOTE_TYPE[item.quote_type].label}
+                      {" | "}
+                    </span>
+                    <span className="collapse__subTitle">
+                      {`${
+                        item.quote_type === "2"
+                          ? "送機"
+                          : item.quote_type === "3"
+                          ? "接機"
+                          : item.purpose
+                          ? PURPOSE[item.purpose].label
+                          : "---"
+                      }`}
+                    </span>
+                  </div>
+                }
+                opened
+              >
+                <OrderListItem itemData={item} />
+              </Collapse>
+            </Link>
+          </div>
+        );
+      })}
     </BodySTY>
   );
 };

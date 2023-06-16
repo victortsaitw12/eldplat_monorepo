@@ -2,19 +2,18 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   display: flex;
-  /* width: 600px; */
   margin: 10px;
   gap: 10px;
-  .title-bar{
+  .title-bar {
     margin-bottom: -1rem;
   }
-  &>div{
+  .filter-header {
+    width: calc(100% - 317px);
+  }
+  & > div {
     border: none;
-    &:first-child{
+    &:first-child {
       flex: 1;
-    }
-    &:last-child{
-      margin-bottom: 20px;
     }
   }
 `;

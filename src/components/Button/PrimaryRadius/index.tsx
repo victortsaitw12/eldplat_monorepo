@@ -12,26 +12,32 @@ const ButtonPrimaryRadius = ({
     components: {
       Button: {
         appearances: {
-          primaryRadius: {
+          primary: {
             color: "white",
-            paddingX: 12,
-            paddingY: 8,
             borderRadius: 32,
-            backgroundColor: theme.color.B400,
+            background: theme.color.B400,
             selectors: {
               _hover: {
-                backgroundColor: theme.color.B500
+                background: theme.color.B500
               },
               _active: {
                 //Pressed
-                backgroundColor: theme.color.B600
+                background: theme.color.B600
               },
               _focus: {
-                backgroundColor: theme.color.B500,
+                background: theme.color.B500,
                 border: `2px solid ${theme.color.B200}`
               },
               _disabled: {
-                backgroundColor: theme.color.B200
+                background: theme.color.B200
+              }
+            }
+          },
+          secondary: {
+            background: theme.color.N0,
+            selectors: {
+              _disabled: {
+                color: theme.color.N500
               }
             }
           }
@@ -41,9 +47,7 @@ const ButtonPrimaryRadius = ({
   });
   return (
     <ThemeProvider value={themeEvergreen}>
-      <Button appearance="primaryRadius" {...props}>
-        {children}
-      </Button>
+      <Button {...props}>{children}</Button>
     </ThemeProvider>
   );
 };

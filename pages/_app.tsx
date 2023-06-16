@@ -53,17 +53,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const loadLocaleData = () => {
     return langJSONData;
-    // switch (locale) {
-    //   case "en-us":
-    //     // return import("../compiled-lang/en.json");
-    //     return enJSONData;
-    //   case "th-th":
-    //     // return import("../compiled-lang/th.json");
-    //     return thJSONData;
-    //   default:
-    //     // return import("../compiled-lang/zh.json");
-    //     return zhJSONData;
-    // }
   };
 
   useEffect(() => {
@@ -74,9 +63,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   }, [locale]);
 
   const getLayout = Component.getLayout || ((page: React.ReactNode) => page);
-
-  console.log("👕locale", locale);
-
   return (
     <I18Provider locale={locale} messages={messages} defaultLocale="zh">
       <ThemeProvider theme={theme}>
@@ -88,7 +74,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             setLocale={setLocale}
             setPageType={setPageType}
           />,
-          { locale: locale, setLocale: setLocale }
+          { ...pageProps, locale: locale, setLocale: setLocale }
         )}
       </ThemeProvider>
     </I18Provider>

@@ -9,7 +9,13 @@ interface Props {
   deleteItemHandler: (id: string) => void;
 }
 
-const AdminOrdersList = ({ listData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler }: Props) => {
+const AdminOrdersList = ({
+  listData,
+  goToDetailPage,
+  goToCreatePage,
+  goToEditPageHandler,
+  deleteItemHandler
+}: Props) => {
   const tableTitleArr = [
     "詢價單號",
     "分類",
@@ -33,6 +39,6 @@ const AdminOrdersList = ({ listData, goToDetailPage, goToCreatePage, goToEditPag
       />
     </BodySTY>
   );
-}
+};
 
 export default AdminOrdersList;

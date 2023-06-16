@@ -2,21 +2,30 @@
 
 // table: Quotation
 //服務種類
-export const quote_type = {
+export const QUOTE_TYPE: any = {
   "1": { label: "客製包車", value: "1" },
-  "2": { label: "機場接送", value: "2" }
+  "2": { label: "機場接送", value: "2" },
+  "3": { label: "機場接送", value: "3" }
 };
 //訂車用途
-export const purpose = {
-  "01": { label: "訂車用途", value: "01" }
+export const PURPOSE: any = {
+  "01": { label: "學校/企業參訪", value: "01" },
+  "02": { label: "旅遊", value: "02" },
+  "03": { label: "戶外教學", value: "03" },
+  "04": { label: "企業教育訓練", value: "04" },
+  "05": { label: "員工旅遊", value: "05" },
+  "06": { label: "進香團", value: "06" },
+  "07": { label: "其他", value: "07" }
 };
 // table: Quotation_DT
 //指定車齡代號
-export const bus_age = {
-  "01": { label: "指定車齡代號", value: "01" }
+export const BUS_AGE: any = {
+  "01": { label: "3年以下TBD", value: "01" },
+  "02": { label: "5年以下TBD", value: "02" },
+  "03": { label: "10年以下TBD", value: "03" }
 };
 //攜帶寵物單選代號
-export const bring_pets_radio = {
+export const BRING_PETS_RADIO: any = {
   "1": {
     label: "攜帶小型寵物，且會裝於寵物籠/背包中。",
     value: "1",
@@ -36,14 +45,14 @@ export const contact_type = {
   "2": { label: "聯絡人", value: "2" }
 };
 //通訊軟體種類
-export const social_media_type = {
+export const SOCIAL_MEDIA_TYPE: any = {
   "01": { label: "Line", value: "01" },
   "02": { label: "Wechat", value: "02" }
 };
 
 //資料表名稱: ORDER_STATUS (訂單狀態)
 //狀態號碼 INT
-export const status_code = {
+export const STATUS_CODE: any = {
   1: { label: "送出詢價", value: 1 },
   2: { label: "收到詢價", value: 2 },
   3: { label: "送出報價", value: 3 },
@@ -52,12 +61,13 @@ export const status_code = {
   6: { label: "已付全額", value: 6 },
   7: { label: "已付訂金", value: 7 },
   8: { label: "已付尾款", value: 8 },
-  9: { label: "尾款逾期", value: 9 },
-  10: { label: "訂單成立", value: 10 },
-  11: { label: "尾款逾期", value: 11 },
-  12: { label: "預約派車", value: 12 },
-  13: { label: "預約完成", value: 13 },
-  14: { label: "結案", value: 14 }
+  9: { label: "訂金逾期", value: 9 },
+  10: { label: "尾款逾期", value: 10 },
+  11: { label: "繳款逾期", value: 11 },
+  12: { label: "訂單成立", value: 12 },
+  13: { label: "預約派車", value: 13 },
+  14: { label: "預約完成", value: 14 },
+  15: { label: "結案", value: 15 }
 };
 //前後台狀態分類
 export const status_type = {

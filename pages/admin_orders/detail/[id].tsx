@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-import { Pane, Icon, FloppyDiskIcon, EditIcon, Text } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
@@ -11,24 +11,29 @@ import TableWrapper from "@layout/TableWrapper";
 
 //@content
 import AdminOrdersDetal from "@contents/AdminOrders/AdminOrdersDetail";
-import PriceInfoEdit from "@contents/AdminOrders/AdminOrdersDetail/PriceInfo/PriceInfoEdit";
-import PriceInfoView from "@contents/AdminOrders/AdminOrdersDetail/PriceInfo/PriceInfoView";
 
 //@services
 import { getQuotationByID } from "@services/admin_orders/getQuotationByID";
+import { updateQuotation } from "@services/admin_orders/updateQuotation";
+import { getBusType } from "@services/client/getBusType";
 
 //@context
 // import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
 
 //@mock_data
 
-const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
+const Index: NextPageWithLayout<never> = ({
+  p_quote_type,
+  p_order_no,
+  editPage
+}) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  // const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState(null);
-  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [busData, setBusData] = useState([]);
+  const [isEdit, setIsEdit] = useState(editPage);
   const [nowTab, setNowTab] = useState("order");
 
   // const {
@@ -52,25 +57,55 @@ const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
     setNowTab(value);
   };
 
+  const asyncSubmitForm = async (data: any) => {
+    console.log("✨✨✨✨✨✨✨✨✨✨✨✨edited data", data);
+    // setLoading(true);
+    try {
+      const res = await updateQuotation(data);
+      // console.log("response of order edit: ", res);
+      router.push({
+        pathname: "/admin_orders/detail/" + p_order_no,
+        query: { type: p_quote_type }
+      });
+    } catch (e: any) {
+      console.log(e);
+      // alert(e.message);
+    }
+
+    // setLoading(false);
+  };
+
   //
   useEffect(() => {
     setLoading(true);
     const getCustomerData = async () => {
       setLoading(true);
       try {
-        const res = await getQuotationByID(order_id);
-        console.log("✨✨✨✨✨Get data by id", res.data);
+        const res = await getQuotationByID(p_order_no);
+        const bus_res = await getBusType();
+        setBusData(bus_res);
         setOrderData(res.data);
       } catch (e: any) {
-        console.log("getQuotationByID Error:", e);
         console.log(e);
       }
       setLoading(false);
     };
     getCustomerData();
     setLoading(false);
-  }, [order_id]);
+  }, [p_order_no]);
+  useEffect(() => {
+    // 監聽query的變化
+    const handleRouteChange = (url: string) => {
+      // 在這裡觸發頁面刷新
+      router.reload();
+    };
 
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, []);
   return (
     <BodySTY>
       {!loading && orderData && (
@@ -82,37 +117,27 @@ const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
               mainFilter={nowTab}
               mainFilterArray={mainFilterArray}
               onSave={() => {
-                // setIsEdit(!isEdit)
                 submitRef.current && submitRef.current.click();
               }}
               onEdit={() => {
-                setIsEdit(true);
+                router.push({
+                  pathname: "/admin_orders/detail/" + p_order_no,
+                  query: { type: p_quote_type, editPage: "edit" }
+                });
               }}
               onClose={() => {
-                router.push("/vendor");
+                router.push("/admin_orders/");
               }}
             >
               <AdminOrdersDetal
+                submitRef={submitRef}
+                busData={busData}
+                submitForm={asyncSubmitForm}
                 isEdit={isEdit}
-                orderType={order_type}
+                quoteType={p_quote_type}
                 orderData={orderData}
               />
             </TableWrapper>
-          </Pane>
-          <Pane>
-            {isEdit ? (
-              <PriceInfoEdit
-                status={"1"}
-                priceList={[
-                  {
-                    label: "基本車資",
-                    name: "basic"
-                  }
-                ]}
-              />
-            ) : (
-              <PriceInfoView />
-            )}
           </Pane>
         </>
       )}
@@ -120,7 +145,7 @@ const Index: NextPageWithLayout<never> = ({ order_type, order_id }) => {
   );
 };
 interface Props {
-  order_id: string;
+  p_order_no: string;
 }
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
@@ -137,8 +162,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   } else {
     return {
       props: {
-        order_type: query.type,
-        order_id: params ? params.id : ""
+        editPage: query.editPage == "edit",
+        p_quote_type: query.type,
+        p_order_no: params ? params.id : ""
       }
     };
   }

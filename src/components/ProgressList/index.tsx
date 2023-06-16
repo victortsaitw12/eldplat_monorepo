@@ -1,17 +1,33 @@
-import { ItemSTY, ListSTY, LineSTY } from "./style";
+import { ItemSTY, ListSTY, LineSTY, GrayLineSTY } from "./style";
 import { SmallTickIcon, SmallCrossIcon } from "evergreen-ui";
 interface ItemProps {
-  status: "ok" | "pending" | "error";
+  status: "ok" | "pending" | "error" | "disabled";
   label: string;
   date?: string;
+  color?: string;
 }
-const HorizontalLine = () => {
-  return <LineSTY></LineSTY>;
+const HorizontalLine = ({
+  dataLists,
+  color
+}: {
+  dataLists: ItemProps[];
+  color?: string;
+}) => {
+  const disabledLength = dataLists.filter(
+    (item) => item.status === "disabled"
+  ).length;
+  const grayWidth = disabledLength / (dataLists.length - 1);
+  return (
+    <>
+      <LineSTY color={color} />
+      <GrayLineSTY grayWidth={grayWidth} />
+    </>
+  );
 };
 
-const ProgressItem = ({ status, label, date }: ItemProps) => {
+const ProgressItem = ({ status, label, date, color }: ItemProps) => {
   return (
-    <ItemSTY status={status}>
+    <ItemSTY status={status} color={color}>
       <div className="item-label">{label}</div>
       <div className="item-icon">
         {status === "error" ? (
@@ -32,14 +48,15 @@ const ProgressItem = ({ status, label, date }: ItemProps) => {
 interface ListProps {
   dataLists: Array<{
     label: string;
-    status: "ok" | "pending" | "error";
+    status: "ok" | "pending" | "error" | "disabled";
     date?: string;
   }>;
+  color?: string;
 }
 
-const ProgressList = ({ dataLists }: ListProps) => {
+const ProgressList = ({ dataLists, color }: ListProps) => {
   return (
-    <ListSTY>
+    <ListSTY color={color}>
       {dataLists.map((item, index) => {
         return (
           <ProgressItem
@@ -47,10 +64,11 @@ const ProgressList = ({ dataLists }: ListProps) => {
             status={item.status}
             label={item.label}
             date={item.date}
+            color={color}
           />
         );
       })}
-      <HorizontalLine />
+      <HorizontalLine dataLists={dataLists} color={color} />
     </ListSTY>
   );
 };

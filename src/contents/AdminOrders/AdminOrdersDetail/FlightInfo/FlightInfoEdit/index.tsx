@@ -6,80 +6,76 @@ import DetailList from "@components/DetailList";
 import CustomSelect from "@components/CustomSelect";
 
 const FlightInfoEdit = () => {
-    const { register, control } = useFormContext();
-    const contact_1 = [
-        {
-            title: "姓",
-            value: <TextInput />
-        },
-        {
-            title: "手機",
-            value:
-                <Pane style={{ display: "flex", gap: "8px" }}>
-                    <CustomSelect
-                        selectName="contact_mobile_code"
-                        register={register}
-                        options={[
-                            {
-                                value: "886",
-                                text: "+886",
-                            }
-                        ]} />
-                    <TextInput style={{ maxWidth: "198px" }} />
-                </Pane>
-        },
-        {
-            title: "信箱",
-            value: <TextInput />
-        },
-    ]
-    const contact_2 = [
-        {
-            title: "名",
-            value: <TextInput />
-        },
-        {
-            title: "電話",
-            value:
-                <Pane style={{ display: "flex", gap: "8px" }}>
-                    <CustomSelect
-                        selectName="contact_phone_code"
-                        register={register}
-                        options={[
-                            {
-                                value: "886",
-                                text: "+886",
-                            }
-                        ]} />
-                    <TextInput style={{ maxWidth: "198px" }} />
-                </Pane>
-        },
-        {
-            title: "電話",
-            value:
-                <Pane style={{ display: "flex", gap: "8px" }}>
-                    <CustomSelect
-                        selectName="contact_social_media"
-                        register={register}
-                        options={[
-                            {
-                                value: "Line",
-                                text: "Line",
-                            }
-                        ]} />
-                    <TextInput style={{ maxWidth: "198px" }} />
-                </Pane>
-        }
-    ]
-    return (
-        <Pane style={{ padding: "20px", display: "flex" }}>
-            <Pane style={{ flex: "1" }}>
-                <DetailList listArray={contact_1} />
-            </Pane>
-            <Pane style={{ flex: "1" }}>
-                <DetailList listArray={contact_2} />
-            </Pane>
-        </Pane>
-    );
+  const { register, control } = useFormContext();
+  const contact_1 = [
+    {
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>航班日期
+        </>
+      ),
+      value: (
+        <TextInput
+          type="date"
+          {...register("flight_date", { required: "此欄位必填" })}
+        />
+      )
+    },
+    {
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>機場
+        </>
+      ),
+      value: <TextInput {...register("airport", { required: "此欄位必填" })} />
+    },
+    {
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>航班出發時間
+        </>
+      ),
+      value: (
+        <TextInput
+          type="time"
+          {...register("flight_departure_time", { required: "此欄位必填" })}
+        />
+      )
+    }
+  ];
+  const contact_2 = [
+    {
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>航班編號
+        </>
+      ),
+      value: (
+        <TextInput {...register("flight_number", { required: "此欄位必填" })} />
+      )
+    },
+    {
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>航廈
+        </>
+      ),
+      value: <TextInput {...register("terminal", { required: "此欄位必填" })} />
+    },
+    {
+      title: <>航空公司</>,
+      value: <TextInput {...register("airline")} />
+    }
+  ];
+  return (
+    <Pane style={{ padding: "20px", display: "flex" }}>
+      <Pane style={{ flex: "1" }}>
+        <DetailList listArray={contact_1} />
+      </Pane>
+      <Pane style={{ flex: "1" }}>
+        <DetailList listArray={contact_2} />
+      </Pane>
+    </Pane>
+  );
 };
 export default FlightInfoEdit;

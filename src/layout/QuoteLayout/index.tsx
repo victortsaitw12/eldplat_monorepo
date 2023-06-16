@@ -20,6 +20,7 @@ interface QuoteLayoutProps {
 
 const QuoteLayout: FC<QuoteLayoutProps> = ({ children, layoutProps }) => {
   const [theme, setTheme] = React.useState(false);
+  console.log("layoutProps:", layoutProps);
   return (
     <BodySTY>
       <Head>

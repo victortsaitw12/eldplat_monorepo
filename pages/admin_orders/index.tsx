@@ -16,6 +16,7 @@ import AdminOrderCreateForm from "@contents/AdminOrders/AdminOrderCreateForm";
 // import Vendor from "@contents/Vendor";
 //@services
 import { getQuotationByFilter } from "@services/admin_orders/getQuotationByFilter";
+import { getQuotationByStatus } from "@services/admin_orders/getQuotationByStatus";
 
 //@components
 import Drawer from "@components/Drawer";
@@ -26,7 +27,7 @@ import LabelTag from "@components/LabelTag";
 import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
 
 //@mock-data
-import { mock_GetQuotationByFilterList } from "@mock-data/adminOrders/mockData";
+// import { mock_GetQuotationByFilterList } from "@mock-data/adminOrders/mockData";
 
 const isFullWidth = false;
 
@@ -56,57 +57,55 @@ const Page: NextPageWithLayout<{
   }, [router.query.codeType, setDrawerOpen]);
 
   useEffect(() => {
+    change_tab("1");
     let isCanceled = false;
-    //TODO:過篩條件待開發
-    console.log("🤣🤣🤣🤣🤣🤣", subFilter);
     //串接API中
     getQuotationByFilter(subFilter)
       .then((data) => {
-        console.log("💫💫💫💫", data);
-        console.log(data.contentList);
-        const orderData = mock_GetQuotationByFilterList.map((order: any) => {
-          return {
-            id: { label: order["quote_no"], value: order["quote_no"] },
-            quote_no: { label: order["quote_no"], value: order["quote_no"] },
-            quote_type: {
-              label: order["quote_type"] == "1" ? "客製包車" : "接送機",
-              value: order["quote_type"]
-            },
-            name: {
-              label: order["family_name"] + order["name"],
-              value: order["name"]
-            },
-            contact_phone: {
-              label: (
-                <span>
-                  {order["contact_phone_code"]} {order["contact_phone"]}
-                  <br />
-                  {order["contact_tel_code"]} {order["contact_tel"]}
-                </span>
-              ),
-              value: order["contact_phone"]
-            },
-            contact_email: {
-              label: order["contact_email"],
-              value: order["contact_email"]
-            },
-            order_status: {
-              label: order["order_status"],
-              value: order["order_status"]
-            },
-            //接單下階段才會做
-            person_name: {
-              label: "-",
-              value: "-"
-            },
-            order_label: {
-              label: <LabelTag text="服務讚" />,
-              value: order["order_label"]
-            }
-          };
-        });
+        // const orderData = data.contentList?.map((order: any) => {
+        //   return {
+        //     id: { label: order["quote_no"], value: order["quote_no"] },
+        //     quote_no: { label: order["quote_no"], value: order["quote_no"] },
+        //     quote_type: {
+        //       label: order["quote_type"] == "1" ? "客製包車" : "接送機",
+        //       value: order["quote_type"]
+        //     },
+        //     name: {
+        //       label: order["family_name"] + order["name"],
+        //       value: order["name"]
+        //     },
+        //     contact_phone: {
+        //       label: (
+        //         <span>
+        //           {order["contact_phone_code"]} {order["contact_phone"]}
+        //           <br />
+        //           {order["contact_tel_code"]} {order["contact_tel"]}
+        //         </span>
+        //       ),
+        //       value: order["contact_phone"]
+        //     },
+        //     contact_email: {
+        //       label: order["contact_email"],
+        //       value: order["contact_email"]
+        //     },
+        //     order_status: {
+        //       label: order["order_status"],
+        //       value: order["order_status"]
+        //     },
+        //     //接單下階段才會做
+        //     person_name: {
+        //       label: "-",
+        //       value: "-"
+        //     },
+        //     order_label: {
+        //       label: <LabelTag text="服務讚" />,
+        //       value: order["order_label"]
+        //     }
+        //   };
+        // });
+        // console.log(data.conditionList);
         // setData(data.contentList || []);
-        setData(orderData);
+        // setData(orderData);
         if (!subFilter) {
           localStorage.setItem(
             "adminOrderFilter",
@@ -128,11 +127,36 @@ const Page: NextPageWithLayout<{
     };
   }, [subFilter]);
 
-  const getResult = async () => {
+  const goToCreatePage = () => {
+    // router.push("/vendor/create");
+    setDrawerOpen(true);
+  };
+  //進入詢價檢視頁
+  const goToDetailPage = (id: string, item: any) => {
+    router.push(
+      "/admin_orders/detail/" + id + "?type=" + item.quote_type.value
+    );
+  };
+  //進入詢價編輯頁
+  const goToEditPageHandler = (id: string, item: any) => {
+    //TODO:type代表是哪種訂單0:客製包車,1:接送機
+    router.push(
+      "/admin_orders/detail/" +
+        id +
+        "?type=" +
+        item.quote_type.value +
+        "&editPage=edit"
+    );
+  };
+  //刪除該筆供應商
+  const deleteItemHandler = async (id: string) => {
+    console.log("deleteItemHandler", id);
+  };
+
+  const change_tab = async (tab_code: string) => {
     try {
-      const res = await getQuotationByFilter(subFilter);
-      console.log("res.contentList", res.contentList);
-      const orderData = mock_GetQuotationByFilterList.map((order: any) => {
+      const res = await getQuotationByStatus(tab_code);
+      const orderData = res.data.map((order: any) => {
         return {
           id: { label: order["quote_no"], value: order["quote_no"] },
           quote_no: { label: order["quote_no"], value: order["quote_no"] },
@@ -168,7 +192,11 @@ const Page: NextPageWithLayout<{
             value: "-"
           },
           order_label: {
-            label: <LabelTag text="服務讚" />,
+            label: order["label_list"].map(
+              (child: { label_name: string }, i: number) => {
+                return <LabelTag key={i} text={child.label_name} />;
+              }
+            ),
             value: order["order_label"]
           }
         };
@@ -179,39 +207,11 @@ const Page: NextPageWithLayout<{
       //刷新列表失敗
     }
   };
-
-  const goToCreatePage = () => {
-    // router.push("/vendor/create");
-    setDrawerOpen(true);
-  };
-  //進入詢價檢視頁
-  const goToDetailPage = (id: string, item: any) => {
-    console.log("😊😊😊😊😊item", item);
-    //TODO:type代表是哪種訂單0:客製包車,1:接機,2:送機
-    router.push(
-      "/admin_orders/detail/" + id + "?type=" + item.quote_type.value
-    );
-  };
-  //進入詢價編輯頁
-  const goToEditPageHandler = (id: string, item: any) => {
-    //TODO:type代表是哪種訂單0:客製包車,1:接送機
-    router.push(
-      "/admin_orders/detail/" +
-        id +
-        "?type=" +
-        item.quote_type.value +
-        "&editPage=edit"
-    );
-  };
-  //刪除該筆供應商
-  const deleteItemHandler = async (id: string) => {
-    console.log("deleteItemHandler", id);
-  };
-  //套用新版filter(上方Tab切換)
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
     setData([]);
-    getResult();
+    // updateSubFilter("status_code", value);
+    change_tab(value);
   };
   //
   const mainFilterArray = useMemo(
