@@ -63,9 +63,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   }, [locale]);
 
   const getLayout = Component.getLayout || ((page: React.ReactNode) => page);
-
-  console.log("👕locale", locale);
-  console.log("pageProps", pageProps);
   return (
     <I18Provider locale={locale} messages={messages} defaultLocale="zh">
       <ThemeProvider theme={theme}>

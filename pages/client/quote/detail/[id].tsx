@@ -10,7 +10,7 @@ import StatusCard from "@components/StatusCard";
 import { BodySTY, ExpenseTitle } from "./style";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
-
+import LoadingSpinner from "@components/LoadingSpinner";
 import { TickCircleIcon } from "evergreen-ui";
 //@mock_data
 //@content
@@ -90,35 +90,41 @@ const Page: NextPageWithLayout<
   }
   return (
     <BodySTY>
-      <StatusCard>
-        <TickCircleIcon
-          color="success"
-          style={{ height: "40px", width: "40px" }}
-        />
-        <div style={{ fontWeight: "600", color: "#567190" }}>
-          已收到您的訂車詢價單，業務將盡快為您處理。
-        </div>
-      </StatusCard>
-      <div className="body-container">
-        <div className="content-container">
-          {!isLoading && data && (
-            <OrdersDetail isEdit={false} orderData={data} />
-          )}
-        </div>
-        <div className="charge-container">
-          <Collapse
-            titleChildren={
-              <ExpenseTitle>
-                <div className="title">初估金額</div>
-                <div className="price-info">NT$2,200</div>
-              </ExpenseTitle>
-            }
-            opened={true}
-          >
-            <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
-          </Collapse>
-        </div>
-      </div>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : data ? (
+        <>
+          <StatusCard>
+            <TickCircleIcon
+              color="success"
+              style={{ height: "40px", width: "40px" }}
+            />
+            <div style={{ fontWeight: "600", color: "#567190" }}>
+              已收到您的訂車詢價單，業務將盡快為您處理。
+            </div>
+          </StatusCard>
+          <div className="body-container">
+            <div className="content-container">
+              <OrdersDetail isEdit={false} orderData={data} />
+            </div>
+            <div className="charge-container">
+              <Collapse
+                titleChildren={
+                  <ExpenseTitle>
+                    <div className="title">初估金額</div>
+                    <div className="price-info">NT$2,200</div>
+                  </ExpenseTitle>
+                }
+                opened={true}
+              >
+                <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
+              </Collapse>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div>查無訂單資料...</div>
+      )}
     </BodySTY>
   );
 };

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  width: 100%;
+  width: 1240px;
+  margin: 28px auto;
   > .body-container {
     display: flex;
     gap: 20px;
@@ -15,7 +16,7 @@ export const BodySTY = styled.div`
         gap: 20px;
       }
     }
-    .charge-container {
+    > .charge-container {
       flex: 1 0 0;
     }
   }

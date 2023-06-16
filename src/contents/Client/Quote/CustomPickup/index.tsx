@@ -46,7 +46,7 @@ const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
     <Collapse title="客製包車" viewOnly opened={true}>
       <StyledForm onSubmit={handleSubmit(submitFormHandler)}>
         <label className="form-item">
-          <div>
+          <div className="item-title">
             <span style={{ color: "#D14343" }}>*</span>
             <span>出發日期</span>
           </div>
@@ -67,7 +67,7 @@ const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
           />
         </label>
         <label className="form-item">
-          <div>
+          <div className="item-title">
             <span style={{ color: "#D14343" }}>*</span>
             <span>回程日期</span>
           </div>
@@ -79,7 +79,7 @@ const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
           />
         </label>
         <label className="form-item">
-          <div>
+          <div className="item-title">
             <span>訂車用途</span>
           </div>
           <Select {...register("purpose")}>

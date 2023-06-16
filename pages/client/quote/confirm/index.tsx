@@ -1,8 +1,7 @@
-import Collapse from "@components/Collapse";
 import { BodySTY } from "./style";
-import { useRouter } from "next/router";
-import { Select, Button } from "evergreen-ui";
-import ConditionCard from "@components/ConditionCard";
+import { Button } from "evergreen-ui";
+// import ConditionCard from "@components/ConditionCard";
+import TermOfUse from "@components/TermOfUse";
 import { useRef } from "react";
 import CustomPickup from "@contents/Client/Quote/CustomPickup";
 import FlightPickup from "@contents/Client/Quote/FlightPickup";
@@ -13,15 +12,11 @@ import {
   InferGetServerSidePropsType
 } from "next";
 
-import { getLayout } from "@layout/QuoteLayout";
+import { getLayout } from "@layout/ClientLayout";
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ type = "custom" }) => {
   const formButtonRef = useRef<HTMLButtonElement | null>(null);
-  const handleCheck = (e: any) => {
-    console.log("check:", e.target.checked);
-    console.log("check name:", e.target.name);
-  };
   return (
     <BodySTY>
       {type === "custom" ? (
@@ -29,11 +24,14 @@ const Page: NextPageWithLayout<
       ) : (
         <FlightPickup ref={formButtonRef} />
       )}
-      <ConditionCard
-        type="checkbox"
-        title="預約注意事項、使用條款、隱私權條款、寵物條款"
-        onChange={handleCheck}
-      ></ConditionCard>
+      <TermOfUse type="checkbox">
+        <div>
+          我以了解
+          <span style={{ color: "#3670C9" }}>預約注意事項</span>、
+          <span style={{ color: "#3670C9" }}>使用條款</span>、
+          <span style={{ color: "#3670C9" }}>隱私權條款</span>
+        </div>
+      </TermOfUse>
       <Button
         appearance="primary"
         onClick={() => {
