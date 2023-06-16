@@ -1,11 +1,11 @@
 import React from "react";
-import { Pane, TextInput, Select } from "evergreen-ui";
+import { Pane, TextInput } from "evergreen-ui";
 import { useFormContext } from "react-hook-form";
 
 import DetailList from "@components/DetailList";
 import CustomSelect from "@components/CustomSelect";
 const ContactInfoEdit = () => {
-  const { register, control } = useFormContext();
+  const { register } = useFormContext();
   const contact_1 = [
     {
       title: "姓",
