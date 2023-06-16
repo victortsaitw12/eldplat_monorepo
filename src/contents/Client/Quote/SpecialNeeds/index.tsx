@@ -1,7 +1,7 @@
 import React from "react";
 import Collapse from "@components/Collapse";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
-import { BodySTY, ItemSTY, RemarkSTY } from "./style";
+import { BodySTY, ItemSTY, RemarkSTY, CollapseCardSTY } from "./style";
 import { Textarea, Select, Checkbox, Radio } from "evergreen-ui";
 import CounterInput from "@components/CounterInput";
 import {
@@ -27,12 +27,7 @@ const TravelInformation = ({
   setValue
 }: TravelInformationProps) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column"
-      }}
-    >
+    <CollapseCardSTY>
       <Collapse title="特殊需求" opened={true}>
         <BodySTY>
           <ItemSTY>
@@ -182,7 +177,7 @@ const TravelInformation = ({
           </RemarkSTY>
         </BodySTY>
       </Collapse>
-    </div>
+    </CollapseCardSTY>
   );
 };
 

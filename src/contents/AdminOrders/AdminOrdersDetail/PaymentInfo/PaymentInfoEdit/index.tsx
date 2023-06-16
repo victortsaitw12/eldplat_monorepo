@@ -1,12 +1,14 @@
 import React from "react";
-import { Pane, TextInput } from "evergreen-ui";
+import { Pane, TextInput, Text } from "evergreen-ui";
 //@components
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import { useFormContext } from "react-hook-form";
+import { BodySTY } from "./style";
+
 const PaymentInfoEdit = () => {
   const { register, control } = useFormContext();
   return (
-    <Pane
+    <BodySTY
       style={{
         padding: "20px",
         display: "flex",
@@ -16,12 +18,16 @@ const PaymentInfoEdit = () => {
     >
       <CheckBoxWrapper
         control={control}
-        inputName="full_payment_amount"
+        inputName="full_payment_check"
         description=""
         label="全額支付"
       >
         <Pane>
-          <TextInput type="date" placeholder="付款期限" />
+          <TextInput
+            {...register("full_payment_period")}
+            type="date"
+            placeholder="付款期限"
+          />
         </Pane>
       </CheckBoxWrapper>
       <CheckBoxWrapper
@@ -35,23 +41,27 @@ const PaymentInfoEdit = () => {
             <TextInput placeholder="金額" />
           </Pane>
           <Pane style={{ display: "flex" }}>
-            <TextInput type="date" placeholder="付款期限" />
+            <TextInput
+              {...register("deposit_period")}
+              type="date"
+              placeholder="付款期限"
+            />
+          </Pane>
+        </Pane>
+        <Pane className="final_payment_content">
+          <Text>尾款支付</Text>
+          <Pane>
+            <Pane style={{ display: "flex" }}>
+              <TextInput
+                {...register("balance_period")}
+                disabled={false}
+                placeholder="金額"
+              />
+            </Pane>
           </Pane>
         </Pane>
       </CheckBoxWrapper>
-      <CheckBoxWrapper
-        control={control}
-        inputName="balance_check"
-        description=""
-        label="尾款支付"
-      >
-        <Pane>
-          <Pane style={{ display: "flex" }}>
-            <TextInput disabled={true} placeholder="金額" />
-          </Pane>
-        </Pane>
-      </CheckBoxWrapper>
-    </Pane>
+    </BodySTY>
   );
 };
 export default PaymentInfoEdit;

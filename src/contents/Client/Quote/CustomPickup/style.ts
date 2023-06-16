@@ -24,3 +24,10 @@ export const StyledForm = styled.form`
     }
   }
 `;
+
+export const StyledCard = styled.div`
+  width: 1240px;
+  box-shadow: 0px 4px 8px rgba(16, 24, 64, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+`;
