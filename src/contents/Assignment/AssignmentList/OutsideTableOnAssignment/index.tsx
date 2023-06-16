@@ -93,6 +93,7 @@ function OutsideTableOnAssignment({
               return (
                 <TableRow
                   key={uuid()}
+                  idx={idx}
                   item={item}
                   data={data}
                   subAssignData={subAssignData}

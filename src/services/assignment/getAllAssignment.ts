@@ -1,14 +1,19 @@
+import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { PatternType } from "@utils/mappingQueryData";
 import React, { createElement } from "react";
 
 export const getAllAssignments = async () => {
   const res = await fetch("https://localhost:7088/ANV/GetAssignmentList", {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-    }
+    },
+    body: JSON.stringify({
+      page_Index: 1,
+      page_Size: 10
+    })
   });
   console.log("res for getting the list of assignment : ", res);
   return res.json();

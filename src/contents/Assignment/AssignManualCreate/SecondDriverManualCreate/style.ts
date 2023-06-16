@@ -4,22 +4,31 @@ const FormSTY = styled.form`
   /* border: 1px solid #ccc; */
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 10px;
+  gap: 15px;
+  padding: 20px;
 
   .info-box {
     background: #f1f6fd;
     border-radius: 10px;
-    padding: 12px 20px;
+    padding: 6px 20px;
 
-    .date-area {
-      width: 100%;
+    .title {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
 
-      span {
-        width: 33%;
+      p {
+        color: ${({ theme }) => theme.color.N700};
+        font-weight: 600;
       }
+    }
+  }
+
+  .time-area {
+    width: max-content;
+    select {
+      width: 80px;
+      display: flex;
+      flex-wrap: nowrap;
     }
   }
 
@@ -57,6 +66,27 @@ const FormSTY = styled.form`
     }
   }
 `;
+const ItemSTY = styled.label`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .field-title {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    .requier-icon {
+      font-weight: 700;
+      color: ${({ theme }) => theme.color.R400};
+    }
+  }
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: ${({ theme }) => theme.color.R400};
+  }
+`;
 
 const StyledButton = styled.button`
   display: flex;
@@ -70,4 +100,4 @@ const StyledButton = styled.button`
   /* width: 240px; */
 `;
 
-export { FormSTY, StyledButton };
+export { FormSTY, ItemSTY, StyledButton };

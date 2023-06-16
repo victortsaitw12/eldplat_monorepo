@@ -15,7 +15,7 @@ import { I_Maintenance_Type } from "@typings/maintenance_type";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import ItemListTable from "./ItemListTable";
-import { onlyDate } from "@utils/convertDate";
+import { dashDate } from "@utils/convertDate";
 import { BodySTY } from "./style";
 interface I_Props {
   isEdit: boolean;
@@ -39,8 +39,8 @@ const CustomerDetail = ({
     defaultValues: async () => {
       return getMaintenanceById(maintenance_id).then((data) => {
         const newData = { ...data };
-        newData["service_start_date"] = onlyDate(data.service_start_date);
-        newData["service_end_date"] = onlyDate(data.service_end_date);
+        newData["service_start_date"] = dashDate(data.service_start_date);
+        newData["service_end_date"] = dashDate(data.service_end_date);
         return newData;
       });
     }
@@ -141,13 +141,13 @@ const CustomerDetail = ({
     {
       req: false,
       label: "起始日期",
-      value: onlyDate(getValues("service_start_date")),
+      value: dashDate(getValues("service_start_date")),
       editEle: <TextInput type="date" {...register("service_start_date")} />
     },
     {
       req: false,
       label: "截止日期",
-      value: onlyDate(getValues("service_end_date")),
+      value: dashDate(getValues("service_end_date")),
       editEle: <TextInput type="date" {...register("service_end_date")} />
     },
     {

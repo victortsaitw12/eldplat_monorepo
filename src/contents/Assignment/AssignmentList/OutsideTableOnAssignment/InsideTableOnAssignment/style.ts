@@ -49,27 +49,61 @@ const TableContainerSTY = styled.div`
 
 // 表格本身
 const TableSTY = styled.table`
-  /* min-width: 100%; */
+  min-width: 100%;
   border: 1px solid ${({ theme }) => theme.color.N300};
   /* border-collapse: collapse; */
   border-radius: 4px;
   border-spacing: 0px;
-  thead tr {
-    background-color: ${({ theme }) => theme.color.N50};
-    text-align: left;
+  thead {
+    tr {
+      background-color: ${({ theme }) => theme.color.N300};
+      text-align: left;
+    }
   }
+
+  tbody {
+    background-color: ${({ theme }) => theme.color.N75};
+  }
+
   td,
   th {
     padding: 8px 10px;
-    text-align: left;
+    text-align: center;
     white-space: nowrap;
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+
     span,
     div {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    position: relative;
+    .table-row-option {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      transform: translate(90%, 20%);
+      background-color: ${({ theme }) => theme.color.N0};
+      border: 1px solid ${({ theme }) => theme.color.N300};
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+      .option-item {
+        width: 100px;
+        height: 32px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        cursor: pointer;
+        padding: 0 10px;
+        gap: 5px;
+        border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+      }
     }
   }
   tr:last-child td {

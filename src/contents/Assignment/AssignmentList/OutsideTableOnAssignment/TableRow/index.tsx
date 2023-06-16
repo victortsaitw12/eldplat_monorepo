@@ -5,6 +5,7 @@ import { I_Data } from "..";
 import { getSubAssignmentTitle } from "@services/assignment/getAllAssignment";
 
 interface I_TableRow {
+  idx: number;
   item: any;
   //   titles: Array<string | number | React.ReactNode> | any;
   data: I_Data[];
@@ -16,6 +17,7 @@ interface I_TableRow {
 }
 
 const TableRow = ({
+  idx,
   item,
   data,
   subAssignData,
@@ -76,6 +78,7 @@ const TableRow = ({
           <td colSpan={7}>
             <InsideTableOnAssignment
               tableName="派單"
+              idx={idx}
               titles={titles}
               data={data}
               subAssignData={subAssignData}
