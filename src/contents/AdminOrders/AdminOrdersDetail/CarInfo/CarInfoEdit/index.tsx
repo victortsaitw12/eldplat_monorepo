@@ -13,8 +13,11 @@ const CarInfoEdit = () => {
             {...register("purpose", { required: "此欄位必填" })}
             style={{ width: "270px" }}
           >
-            <option value="01">旅遊</option>
-            <option value="02">旅遊</option>
+            <option value="1">旅遊</option>
+            <option value="2">旅遊</option>
+            <option value="3">旅遊</option>
+            <option value="4">旅遊</option>
+            <option value="5">旅遊</option>
           </Select>
         </Pane>
         <Pane style={{ display: "flex", gap: "20px" }}>

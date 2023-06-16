@@ -23,14 +23,19 @@ import { getBusType } from "@services/client/getBusType";
 
 //@mock_data
 
-const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
+const Index: NextPageWithLayout<never> = ({
+  p_quote_type,
+  p_order_no,
+  editPage
+}) => {
+  console.log(editPage);
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  // const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState(null);
-  const [busType, setBusType] = useState([]);
-  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [busData, setBusData] = useState([]);
+  const [isEdit, setIsEdit] = useState(editPage);
   const [nowTab, setNowTab] = useState("order");
 
   // const {
@@ -60,10 +65,15 @@ const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
     try {
       const res = await updateQuotation(data);
       console.log("response of order edit: ", res);
+      // router.push({
+      //   pathname: "/admin_orders/detail/" + p_order_no,
+      //   query: { type: p_quote_type }
+      // });
     } catch (e: any) {
       console.log(e);
       // alert(e.message);
     }
+
     // setLoading(false);
   };
 
@@ -73,11 +83,11 @@ const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
     const getCustomerData = async () => {
       setLoading(true);
       try {
-        const res = await getQuotationByID(order_id);
+        const res = await getQuotationByID(p_order_no);
         const bus_res = await getBusType();
         console.log("✨✨✨✨✨Get data by id", res.data);
         console.log("👽👽👽👽👽👽👽bus_res", bus_res);
-        setBusType(bus_res);
+        setBusData(bus_res);
         setOrderData(res.data);
       } catch (e: any) {
         console.log("getQuotationByID Error:", e);
@@ -87,8 +97,20 @@ const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
     };
     getCustomerData();
     setLoading(false);
-  }, [order_id]);
+  }, [p_order_no]);
+  useEffect(() => {
+    // 監聽query的變化
+    const handleRouteChange = (url: string) => {
+      // 在這裡觸發頁面刷新
+      router.reload();
+    };
 
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, []);
   return (
     <BodySTY>
       {!loading && orderData && (
@@ -100,21 +122,24 @@ const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
               mainFilter={nowTab}
               mainFilterArray={mainFilterArray}
               onSave={() => {
-                // setIsEdit(!isEdit)
                 submitRef.current && submitRef.current.click();
               }}
               onEdit={() => {
-                setIsEdit(true);
+                router.push({
+                  pathname: "/admin_orders/detail/" + p_order_no,
+                  query: { type: p_quote_type, editPage: "edit" }
+                });
               }}
               onClose={() => {
-                router.push("/vendor");
+                router.push("/admin_orders/");
               }}
             >
               <AdminOrdersDetal
-                busType={busType}
+                submitRef={submitRef}
+                busData={busData}
                 submitForm={asyncSubmitForm}
                 isEdit={isEdit}
-                quoteType={quote_type}
+                quoteType={p_quote_type}
                 orderData={orderData}
               />
             </TableWrapper>
@@ -125,7 +150,7 @@ const Index: NextPageWithLayout<never> = ({ quote_type, order_id }) => {
   );
 };
 interface Props {
-  order_id: string;
+  p_order_no: string;
 }
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
@@ -142,8 +167,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   } else {
     return {
       props: {
-        quote_type: query.type,
-        order_id: params ? params.id : ""
+        editPage: query.editPage == "edit",
+        p_quote_type: query.type,
+        p_order_no: params ? params.id : ""
       }
     };
   }

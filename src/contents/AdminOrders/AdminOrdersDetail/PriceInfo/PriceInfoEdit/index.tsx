@@ -26,7 +26,7 @@ const PriceInfoEdit = ({ status, priceList }: I_Props) => {
           <Text>總金額</Text>
           <Text>
             NT$
-            <TextInput type="number" {...register("full_payment_amount")} />
+            <TextInput type="number" {...register("quote_total_amount")} />
           </Text>
         </Pane>
         <Text>2023-05-01 前繳款</Text>

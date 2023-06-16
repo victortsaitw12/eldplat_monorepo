@@ -13,7 +13,7 @@ const PriceInfoView = ({ orderData }: I_Props) => {
         <LabelButton className="submit_btn" text="送出報價" />
         <Pane className="total_price">
           <Text>總金額</Text>
-          <Text>NT${orderData?.full_payment_amount || "0"}</Text>
+          <Text>NT${orderData?.quote_total_amount || "0"}</Text>
         </Pane>
         <Text>2023-05-01 前繳款</Text>
         <hr />
