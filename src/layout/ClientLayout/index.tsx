@@ -5,7 +5,7 @@ import React, { ReactNode } from "react";
 import Header from "./Header";
 import { BodySTY, ContainerSTY } from "./style";
 
-interface QuoteLayoutProps {
+interface ClientLayoutProps {
   children: ReactNode;
   layoutProps: {
     title?: string;
@@ -17,7 +17,7 @@ interface QuoteLayoutProps {
   };
 }
 
-const QuoteLayout = ({ children, layoutProps }: QuoteLayoutProps) => {
+const ClientLayout = ({ children, layoutProps }: ClientLayoutProps) => {
   const [theme, setTheme] = React.useState(false);
   console.log("layoutProps:", layoutProps);
   return (
@@ -35,5 +35,5 @@ const QuoteLayout = ({ children, layoutProps }: QuoteLayoutProps) => {
 };
 
 export const getLayout = (page: ReactNode, layoutProps: any) => (
-  <QuoteLayout layoutProps={layoutProps}>{page}</QuoteLayout>
+  <ClientLayout layoutProps={layoutProps}>{page}</ClientLayout>
 );

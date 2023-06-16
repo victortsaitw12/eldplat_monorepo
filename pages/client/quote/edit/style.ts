@@ -5,6 +5,7 @@ export const BodySTY = styled.div`
   margin: 28px auto;
   > .body-container {
     display: flex;
+    align-items: flex-start;
     gap: 20px;
     > .content-container {
       flex: 2 0 0;
@@ -18,6 +19,8 @@ export const BodySTY = styled.div`
     }
     > .charge-container {
       flex: 1 0 0;
+      border-radius: 10px;
+      overflow: hidden;
     }
   }
 `;

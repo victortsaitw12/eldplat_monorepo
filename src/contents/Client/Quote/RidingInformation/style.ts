@@ -39,3 +39,8 @@ export const CardSTY = styled.div`
   padding: 20px;
   gap: 20px;
 `;
+
+export const CollapseCardSTY = styled.div`
+  border-radius: 10px;
+  overflow: hidden;
+`;
