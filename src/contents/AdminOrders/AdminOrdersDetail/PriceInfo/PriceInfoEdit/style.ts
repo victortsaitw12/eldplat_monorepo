@@ -68,12 +68,6 @@ const BodySTY = styled.div`
       }
     }
   }
-  & > div {
-    .submit_btn {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-  }
   .detail_item {
     span {
       &:last-child {

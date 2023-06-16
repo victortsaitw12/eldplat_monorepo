@@ -9,9 +9,9 @@ import { BodySTY } from "./style";
 import { I_busType, I_busItem } from "@contents/AdminOrders/AdminOrdersDetail";
 interface I_Props {
   methods: any;
-  busType: I_busType[];
+  busData: I_busType[];
 }
-const TakeBusInfoEdit = ({ busType, methods }: I_Props) => {
+const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
   const { register, control } = useFormContext();
   return (
     <BodySTY>
@@ -94,9 +94,13 @@ const TakeBusInfoEdit = ({ busType, methods }: I_Props) => {
         </Pane>
         <Text className="bus_amount_title">車型及數量</Text>
         <Pane className="bus_amount">
-          {busType.map((child: any, i: number) => {
+          {busData.map((child: any, i: number) => {
             return (
-              <Collapse key={child.ddl_code + "-" + i} title={child.type_name}>
+              <Collapse
+                opened={true}
+                key={child.ddl_code + "-" + i}
+                title={child.type_name}
+              >
                 <Pane style={{ padding: "20px 0" }}>
                   <VerticalDetail
                     title=""
@@ -110,7 +114,7 @@ const TakeBusInfoEdit = ({ busType, methods }: I_Props) => {
                               getValues={methods.getValues}
                               register={register}
                               inputName={
-                                "bus_type_list[" +
+                                "bus_data[" +
                                 i +
                                 "].bus_list[" +
                                 j +

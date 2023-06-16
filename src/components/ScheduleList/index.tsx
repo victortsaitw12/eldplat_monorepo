@@ -7,6 +7,8 @@ import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
 import { PlusIcon, TrashIcon, TextInput, Text } from "evergreen-ui";
 
 interface I_Props {
+  pickup_location: string;
+  dropoff_location: string;
   fatherArrayName: string;
   dayIndex: number;
   arrayName: string;
@@ -18,6 +20,8 @@ interface I_Props {
 }
 
 const ScheduleList = ({
+  pickup_location,
+  dropoff_location,
   needLine = true,
   isEdit,
   disabledFirst,
@@ -31,26 +35,16 @@ const ScheduleList = ({
     control,
     name: `${fatherArrayName}.${dayIndex}.${arrayName}`
   });
-
-  const r_label = (i: number) => {
-    if (i == 0) {
-      return "上車地點";
-    } else if (i > 0 && i < fields.length - 1) {
-      return "中途點" + i;
-    } else if (i > 0 && i == fields.length - 1) {
-      return "下車地點";
-    }
-  };
-  const r_item = (fields: any[]) => {
+  const r_stopover = (fields: any[]) => {
     return fields.map((child, i) => (
       <li key={i} className="schedule-list-item">
         <Text className="schedule-list-label">
           {needLine && (
-            <Text className={cx("dot", { withLine: i < fields.length - 1 })}>
+            <Text className={cx("dot", { withLine: true })}>
               <DotIcon />
             </Text>
           )}
-          {r_label(i)}
+          {"中途點 " + (i + 1)}
         </Text>
         <Text>
           {isEdit ? (
@@ -93,7 +87,65 @@ const ScheduleList = ({
   };
   return (
     <BodySTY className="schedule-list-container">
-      <ul className="schedule-list">{r_item(fields)}</ul>
+      <ul className="schedule-list">
+        <li className="schedule-list-item">
+          <Text className="schedule-list-label">
+            {needLine && (
+              <Text className={cx("dot", { withLine: true })}>
+                <DotIcon />
+              </Text>
+            )}
+            上車地點
+          </Text>
+          <Text>
+            {isEdit ? (
+              <TextInput
+                placeholder="請輸入詳細地址"
+                {...register(`${fatherArrayName}.${dayIndex}.pickup_location`)}
+                disabled={disabledFirst}
+              />
+            ) : (
+              pickup_location
+            )}
+          </Text>
+          {isEdit && (
+            <Text className="schedule-item-action">
+              <PlusIcon
+                color="#718BAA"
+                size={11}
+                onClick={() => {
+                  append({
+                    stopover_sort: fields.length + 1,
+                    stopover_address: ""
+                  });
+                }}
+              />
+            </Text>
+          )}
+        </li>
+        {r_stopover(fields)}
+        <li className="schedule-list-item">
+          <Text className="schedule-list-label">
+            {needLine && (
+              <Text className={cx("dot")}>
+                <DotIcon />
+              </Text>
+            )}
+            下車地點
+          </Text>
+          <Text>
+            {isEdit ? (
+              <TextInput
+                placeholder="請輸入詳細地址"
+                {...register(`${fatherArrayName}.${dayIndex}.dropoff_location`)}
+                disabled={disabledFirst}
+              />
+            ) : (
+              dropoff_location
+            )}
+          </Text>
+        </li>
+      </ul>
     </BodySTY>
   );
 };

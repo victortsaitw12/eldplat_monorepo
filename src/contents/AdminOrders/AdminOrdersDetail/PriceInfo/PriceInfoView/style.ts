@@ -24,10 +24,15 @@ const BodySTY = styled.div`
       color: ${({ theme }) => theme.color.N700};
     }
   }
-  & > div {
-    .submit_btn {
-      width: 100%;
+  & > div > .btn_list {
+    display: flex;
+    gap: 20px;
+    > button {
+      flex: 1;
       margin-bottom: 20px;
+      &.cancel_btn {
+        border: 1px solid ${({ theme }) => theme.color.N400};
+      }
     }
   }
   .detail_item {

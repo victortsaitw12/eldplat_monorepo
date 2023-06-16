@@ -6,36 +6,21 @@ import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //@component
-import LabelTag from "@components/LabelTag";
-import Collapse from "@components/Collapse";
-import ProgressList from "@components/ProgressList";
+
 //@services
 
 //@contents
-import ShuttleInfo from "./ShuttleInfo";
-import PaymentInfoView from "./PaymentInfo/PaymentInfoView";
-import PaymentInfoEdit from "./PaymentInfo/PaymentInfoEdit";
-import CarInfoView from "./CarInfo/CarInfoView";
-import CarInfoEdit from "./CarInfo/CarInfoEdit";
-import FlightInfoView from "./FlightInfo/FlightInfoView";
-import FlightInfoEdit from "./FlightInfo/FlightInfoEdit";
-import ContactInfoView from "./ContactInfo/ContactInfoView";
-import ContactInfoEdit from "./ContactInfo/ContactInfoEdit";
-import PassengerInfoView from "./PassengerInfo/PassengerInfoView";
-import PassengerInfoEdit from "./PassengerInfo/PassengerInfoEdit";
-import TakeBusInfoView from "./TakeBusInfo/TakeBusInfoView";
-import TakeBusInfoEdit from "./TakeBusInfo/TakeBusInfoEdit";
-import SpecialInfoView from "./SpecialInfo/SpecialInfoView";
-import SpecialInfoEdit from "./SpecialInfo/SpecialInfoEdit";
 import PriceInfoEdit from "./PriceInfo/PriceInfoEdit";
 import PriceInfoView from "./PriceInfo/PriceInfoView";
+import CustomBus from "./CustomBus";
+import AirlineShuttle from "./AirlineShuttle";
+import dayjs from "dayjs";
+
 //@util
 
 //@context
 // import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
 
-//@mock_data
-import { mock_progressdata } from "@mock-data/adminOrders/mockData";
 export interface I_busItem {
   type: string;
   bus_name: string;
@@ -47,393 +32,125 @@ export interface I_busType {
   type_name: string;
 }
 interface I_Props {
+  submitRef: React.RefObject<HTMLButtonElement>;
   submitForm?: (data: any) => void;
   isEdit: boolean;
-  quoteType: "1" | "2"; //1:客製包車 2:接送機
+  quoteType: "1" | "2" | "3"; //1:客製包車 2:接送機
   orderData: any;
-  busType: I_busType[];
+  busData: I_busType[];
 }
 
 const AdminOrdersDetal = ({
+  submitRef,
   submitForm,
   isEdit,
   quoteType = "1",
   orderData,
-  busType
+  busData
 }: I_Props) => {
-  console.log("🤣🤣🤣🤣detail頁的orderData", orderData, busType);
-  const [loading, setLoading] = useState(false);
+  console.log("🤣🤣🤣🤣detail頁的orderData", orderData, busData);
+  const modifyDefaultValues = (data: any) => {
+    const newData = { ...orderData };
+    newData["full_payment_period"] =
+      orderData["full_payment_period"] &&
+      dayjs(orderData["full_payment_period"]).format("YYYY-MM-DD");
 
+    newData["deposit_period"] =
+      orderData["deposit_period"] &&
+      dayjs(orderData["deposit_period"]).format("YYYY-MM-DD");
+
+    newData["order_itinerary_list"] = orderData["order_itinerary_list"].map(
+      (child: any) => {
+        return {
+          ...child,
+          day_date: dayjs(child.day_date).format("YYYY-MM-DD")
+        };
+      }
+    );
+    //處理巴士資訊的部分
+    let res_bus_data: { [key: string]: number } = {};
+    orderData.bus_data.forEach(
+      (element: {
+        bus_type: string;
+        bus_seat: string;
+        order_quantity: number;
+      }) => {
+        if (element.bus_type && element.bus_seat && element.order_quantity) {
+          res_bus_data = {
+            ...res_bus_data,
+            [element.bus_type + "-" + element.bus_seat]: element.order_quantity
+          };
+        }
+      }
+    );
+    const formatedBusData = [];
+    for (const key in busData) {
+      formatedBusData.push({
+        type_name: busData[key].type_name,
+        ddl_code: busData[key].ddl_code,
+        bus_list: busData[key].bus_list.map((child: any) => {
+          return {
+            bus_name: child.bus_name,
+            bus_seat: child.bus_seat,
+            bus_type: child.type,
+            order_quantity:
+              res_bus_data[busData[key].type_name + "-" + child.bus_seat] || 0
+          };
+        })
+      });
+    }
+    newData["bus_data"] = formatedBusData;
+    return newData;
+  };
+
+  const [loading, setLoading] = useState(false);
   const methods = useForm({
     defaultValues: {
-      ...orderData
+      ...modifyDefaultValues(orderData)
     }
   });
-
-  const contactListByType = (array: any[], type: string) => {
-    const newArr = array.filter((child) => {
-      return child.contact_type === type;
+  const { watch } = methods;
+  // const watchAllFields = watch();
+  // Callback version of watch.  It's your responsibility to unsubscribe when done.
+  React.useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log(value, name, type);
+      if (name == "full_payment_check") {
+        if (value.full_payment_check == "1") {
+          //當為全額支付的時候
+          methods.setValue("deposit_check", "0");
+          methods.setValue("deposit_period", null);
+        }
+      }
+      if (name == "deposit_check") {
+        if (value.deposit_check == "1") {
+          //當為訂金支付的時候
+          methods.setValue("full_payment_check", "0");
+          methods.setValue("full_payment_period", null);
+        }
+      }
     });
-    return newArr;
-  };
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   const r_template: { "1": React.ReactNode; "2": React.ReactNode } = {
     //客製包車
     "1": (
-      <>
-        <Collapse opened={true} title={orderData?.quote_no}>
-          <Pane style={{ padding: "20px" }}>
-            <ProgressList dataLists={[...mock_progressdata]} />
-          </Pane>
-        </Collapse>
-        <Collapse opened={true} title="付款方式">
-          {isEdit ? (
-            <PaymentInfoEdit />
-          ) : (
-            <PaymentInfoView
-              payment_status={orderData.payment_status}
-              payment_time={orderData.payment_time}
-              full_payment_amount={orderData.full_payment_amount}
-              full_payment_period={orderData.full_payment_period}
-              deposit_percent={orderData.deposit_percent}
-              deposit_amount={orderData.deposit_amount}
-              deposit_period={orderData.deposit_period}
-              balance_amount={orderData.balance_amount}
-              balance_period={orderData.balance_period}
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="客製包車">
-          {isEdit ? (
-            <CarInfoEdit />
-          ) : (
-            <CarInfoView purpose={orderData?.purpose} />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="訂單聯絡人">
-          {isEdit ? (
-            <ContactInfoEdit />
-          ) : (
-            <ContactInfoView
-              family_name={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.family_name
-              }
-              name={
-                contactListByType(orderData.order_contact_list, "2")[0]?.name
-              }
-              contact_phone_code={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_phone_code
-              }
-              contact_phone={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_phone
-              }
-              contact_tel_code={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_tel_code
-              }
-              contact_tel={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_tel
-              }
-              contact_email={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_email
-              }
-              social_media_type={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.social_media_type
-              }
-              social_media={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.social_media
-              }
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="旅客代表人">
-          {isEdit ? (
-            <PassengerInfoEdit />
-          ) : (
-            <PassengerInfoView
-              family_name={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.family_name
-              }
-              name={
-                contactListByType(orderData.order_contact_list, "1")[0]?.name
-              }
-              contact_phone_code={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_phone_code
-              }
-              contact_phone={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_phone
-              }
-              contact_tel_code={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_tel_code
-              }
-              contact_tel={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_tel
-              }
-              contact_email={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_email
-              }
-              social_media_type={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.social_media_type
-              }
-              social_media={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.social_media
-              }
-            />
-          )}
-        </Collapse>
-        {/*接送資訊*/}
-        <ShuttleInfo
-          quote_no={orderData.quote_no}
-          arrayName="order_itinerary_list"
-          isEdit={isEdit}
-        />
-        <Collapse opened={true} title="乘車資訊">
-          {isEdit ? (
-            <TakeBusInfoEdit busType={busType} methods={methods} />
-          ) : (
-            /*TODO：車型車輛的API之後會改成另一隻*/
-            <TakeBusInfoView
-              adult={orderData.adult}
-              child={orderData.child}
-              infant={orderData.infant}
-              check_in_luggage={orderData.check_in_luggage}
-              carry_on_luggage={orderData.carry_on_luggage}
-              bus_type_list={orderData.bus_type_list}
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="特殊需求">
-          {isEdit ? (
-            <SpecialInfoEdit methods={methods} />
-          ) : (
-            <SpecialInfoView
-              pickup_sign_check={orderData.pickup_sign_check}
-              driver_guide_check={orderData.driver_guide_check}
-              bus_age_check={orderData.bus_age_check}
-              special_luggage_check={orderData.special_luggage_check}
-              bring_pets_check={orderData.bring_pets_check}
-              bring_pets_radio={orderData.bring_pets_radio}
-              mineral_water_check={orderData.mineral_water_check}
-              bottled_water_check={orderData.bottled_water_check}
-              bottled_water_box={orderData.bottled_water_box}
-              child_seat_check={orderData.child_seat_check}
-              child_seat_seller={orderData.child_seat_seller}
-              child_seat_yourself={orderData.child_seat_yourself}
-              remark={orderData.remark}
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="標籤">
-          <Pane
-            className="special-content"
-            style={{ padding: "20px", display: "flex", gap: "10px" }}
-          >
-            {orderData.label_list &&
-              orderData.label_list.map(
-                (child: { label_name: string }, i: number) => {
-                  return <LabelTag key={i} text={child.label_name} />;
-                }
-              )}
-          </Pane>
-        </Collapse>
-      </>
+      <CustomBus
+        orderData={orderData}
+        methods={methods}
+        busData={busData}
+        isEdit={isEdit}
+      />
     ),
     //接送機
     "2": (
-      <>
-        <Collapse opened={true} title={orderData?.quote_no}>
-          <Pane style={{ padding: "20px" }}>
-            <ProgressList dataLists={[...mock_progressdata]} />
-          </Pane>
-        </Collapse>
-        <Collapse opened={true} title="付款方式">
-          {isEdit ? (
-            <PaymentInfoEdit />
-          ) : (
-            <PaymentInfoView
-              payment_status={orderData.payment_status}
-              payment_time={orderData.payment_time}
-              full_payment_amount={orderData.full_payment_amount}
-              full_payment_period={orderData.full_payment_period}
-              deposit_percent={orderData.deposit_percent}
-              deposit_amount={orderData.deposit_amount}
-              deposit_period={orderData.deposit_period}
-              balance_amount={orderData.balance_amount}
-              balance_period={orderData.balance_period}
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="機場接送">
-          {isEdit ? (
-            <CarInfoEdit />
-          ) : (
-            <CarInfoView purpose={orderData?.purpose} />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="訂單聯絡人">
-          {isEdit ? (
-            <ContactInfoEdit />
-          ) : (
-            <ContactInfoView
-              family_name={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.family_name
-              }
-              name={
-                contactListByType(orderData.order_contact_list, "2")[0]?.name
-              }
-              contact_phone_code={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_phone_code
-              }
-              contact_phone={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_phone
-              }
-              contact_tel_code={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_tel_code
-              }
-              contact_tel={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_tel
-              }
-              contact_email={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.contact_email
-              }
-              social_media_type={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.social_media_type
-              }
-              social_media={
-                contactListByType(orderData.order_contact_list, "2")[0]
-                  ?.social_media
-              }
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="旅客代表人">
-          {isEdit ? (
-            <PassengerInfoEdit />
-          ) : (
-            <PassengerInfoView
-              family_name={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.family_name
-              }
-              name={
-                contactListByType(orderData.order_contact_list, "1")[0]?.name
-              }
-              contact_phone_code={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_phone_code
-              }
-              contact_phone={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_phone
-              }
-              contact_tel_code={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_tel_code
-              }
-              contact_tel={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_tel
-              }
-              contact_email={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.contact_email
-              }
-              social_media_type={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.social_media_type
-              }
-              social_media={
-                contactListByType(orderData.order_contact_list, "1")[0]
-                  ?.social_media
-              }
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="航班資訊">
-          {isEdit ? (
-            <FlightInfoEdit />
-          ) : (
-            <FlightInfoView
-              flight_date={orderData.flight_date}
-              flight_number={orderData.flight_number}
-              airport={orderData.airport}
-              terminal={orderData.terminal}
-              flight_departure_time={orderData.flight_departure_time}
-              airline={orderData.airline}
-            />
-          )}
-        </Collapse>
-        {/*接送資訊*/}
-        <ShuttleInfo
-          quote_no={orderData.quote_no}
-          arrayName="order_itinerary_list"
-          isEdit={isEdit}
-        />
-        <Collapse opened={true} title="乘車資訊">
-          {isEdit ? (
-            <TakeBusInfoEdit busType={busType} methods={methods} />
-          ) : (
-            <TakeBusInfoView
-              adult={orderData.adult}
-              child={orderData.child}
-              infant={orderData.infant}
-              check_in_luggage={orderData.check_in_luggage}
-              carry_on_luggage={orderData.carry_on_luggage}
-              bus_type_list={orderData.bus_type_list}
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="特殊需求">
-          {isEdit ? (
-            <SpecialInfoEdit methods={methods} />
-          ) : (
-            <SpecialInfoView
-              pickup_sign_check={orderData.pickup_sign_check}
-              driver_guide_check={orderData.driver_guide_check}
-              bus_age_check={orderData.bus_age_check}
-              special_luggage_check={orderData.special_luggage_check}
-              bring_pets_check={orderData.bring_pets_check}
-              bring_pets_radio={orderData.bring_pets_radio}
-              mineral_water_check={orderData.mineral_water_check}
-              bottled_water_check={orderData.bottled_water_check}
-              bottled_water_box={orderData.bottled_water_box}
-              child_seat_check={orderData.child_seat_check}
-              child_seat_seller={orderData.child_seat_seller}
-              child_seat_yourself={orderData.child_seat_yourself}
-              remark={orderData.remark}
-            />
-          )}
-        </Collapse>
-        <Collapse opened={true} title="標籤">
-          {orderData.label_list &&
-            orderData.label_list.map(
-              (child: { label_name: string }, i: number) => {
-                return <LabelTag key={i} text={child.label_name} />;
-              }
-            )}
-        </Collapse>
-      </>
+      <AirlineShuttle
+        orderData={orderData}
+        methods={methods}
+        busData={busData}
+        isEdit={isEdit}
+      />
     )
   };
 
@@ -443,7 +160,11 @@ const AdminOrdersDetal = ({
         <form
           onSubmit={methods.handleSubmit((data) => {
             console.log("🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡order", data);
-            submitForm && submitForm({ ...data });
+            if (data.full_payment_check == "1" || data.deposit_check == "1") {
+              submitForm && submitForm({ ...data });
+            } else {
+              alert("請最少選擇一種支付方式");
+            }
           })}
         >
           <Pane
@@ -469,7 +190,9 @@ const AdminOrdersDetal = ({
             ) : (
               <PriceInfoView orderData={orderData} />
             )}
-            <button type="submit">發送表單</button>
+            <button style={{ display: "none" }} ref={submitRef} type="submit">
+              發送表單
+            </button>
           </Pane>
         </form>
       </FormProvider>
