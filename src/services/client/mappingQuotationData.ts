@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { STATUS_CODE } from "@services/getDDL";
 const defaultContactInfo = [
   {
     name: "family_name",

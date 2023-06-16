@@ -5,11 +5,26 @@ import { DivSTY } from "./style";
 import Table from "@components/Table/Table";
 import PrimaryRadiusBtn from "@components/Button/PrimaryRadius";
 import { updateStatus } from "@services/client/updateStatus";
-import { I_OrderDetail } from "@services/client/getQuotation";
+import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 
-const PaymentBtn = ({ data }: { data: I_OrderDetail }) => {
+const PaymentBtn = ({
+  data,
+  setData
+}: {
+  data: I_OrderDetail;
+  setData: (data: any) => void;
+}) => {
   const [isPayInFull, setIsPayInFull] = React.useState(true);
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
+
+  const handleRefetch = async () => {
+    try {
+      const res = await getQuotation(data.quote_no);
+      setData(res);
+    } catch (e) {
+      console.log("更新訂單失敗:", e);
+    }
+  };
 
   const handleTakeQuote = React.useCallback(async () => {
     //接後端API更改status_qode = '5'
@@ -31,8 +46,28 @@ const PaymentBtn = ({ data }: { data: I_OrderDetail }) => {
       //打串金流API
       //接後端API更改status_qode = '6' 已付全額 ('7'已付訂金 '8'已付尾款)
       const res = await updateStatus(status_code, data.quote_no);
+      if (status_code === "6")
+        toaster.success("付款完成", {
+          description: `訂單 ${data.quote_no} 總金額 ${data.quote_total_amount}，已付款完成。`,
+          duration: 2,
+          hasCloseButton: true
+        });
+      if (status_code === "7")
+        toaster.success("訂金付款完成", {
+          description: `訂單 ${data.quote_no} 訂金 ${data.deposit}，已付款完成。`,
+          duration: 2,
+          hasCloseButton: true
+        });
+      if (status_code === "8")
+        toaster.success("尾款付款完成", {
+          description: `訂單 ${data.quote_no} 尾款 ${data.final_payment}，已付款完成。`,
+          duration: 2,
+          hasCloseButton: true
+        });
     } catch (e) {
       console.log("somehting wrong:", e.message);
+    } finally {
+      handleRefetch();
     }
   };
 
@@ -56,6 +91,15 @@ const PaymentBtn = ({ data }: { data: I_OrderDetail }) => {
     // 2: {name: '接受報價', status: 'ok', date: '06/20/2023 00:00:00'}
     // isPayInFull ?付款(全額):付款(訂金/全額)
     if (statusList[2].status === "ok" && statusList[3].status === "pending") {
+      if (data.checkdeposit)
+        return (
+          <PrimaryRadiusBtn
+            appearance="primary"
+            onClick={handlePayment.bind(null, "8")}
+          >
+            支付尾款
+          </PrimaryRadiusBtn>
+        );
       return !data.isfullpay ? (
         <PrimaryRadiusBtn
           appearance="primary"
@@ -84,7 +128,7 @@ const PaymentBtn = ({ data }: { data: I_OrderDetail }) => {
     }
     // 3: {name: '訂金逾期', status: 'error', date: '06/20/2023 00:00:00'}
     // 有逾期狀況
-    if (statusList.filter((item) => item.status === "error"))
+    if (statusList.filter((item) => item.status === "error").length !== 0)
       return (
         <InlineAlert intent="danger" className="inlineAlert">
           繳費期限已截止，未成功完成訂車作業。若仍想要訂車， 請聯繫客服。
@@ -117,9 +161,9 @@ const PaymentBtn = ({ data }: { data: I_OrderDetail }) => {
                   titles={["訂單編號", "總金額"]}
                   data={[
                     {
-                      id: data.id,
+                      id: data.quote_no,
                       quote_no: data.quote_no,
-                      full_payment_amount: data.full_payment_amount
+                      quote_total_amount: data.quote_total_amount
                     }
                   ]}
                 />

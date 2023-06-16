@@ -15,7 +15,6 @@ import { ParsedUrlQuery } from "querystring";
 
 const Page: NextPageWithLayout<never> = ({ quote_no }) => {
   // ----- variables, states ----- //
-  const router = useRouter();
   const [data, setData] = React.useState<I_OrderDetail | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   // ----- useEffect ----- //
@@ -68,7 +67,7 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
         )}
         {data && (
           <div className="right">
-            <Quote data={data} />
+            <Quote data={data} setData={setData} />
           </div>
         )}
       </BodySTY>
