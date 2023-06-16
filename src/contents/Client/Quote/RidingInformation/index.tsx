@@ -112,53 +112,6 @@ const TravelInformation = ({
                 </Collapse>
               );
             })}
-            {/* <Collapse title="大型巴士(28~43人)" color="#EEF8F4">
-              <CardSTY>
-                <CounterInput
-                  register={register}
-                  setValue={setValue}
-                  getValues={getValues}
-                  label="車輛名稱(35~43人)"
-                  inputName="largeBus.large1"
-                />
-                <CounterInput
-                  register={register}
-                  setValue={setValue}
-                  getValues={getValues}
-                  label="車輛名稱(28~34人)"
-                  inputName="largeBus.large2"
-                />
-              </CardSTY>
-            </Collapse>
-            <Collapse title="中型巴士(10~28人)" color="#EEF8F4">
-              <CardSTY>
-                <CounterInput
-                  register={register}
-                  setValue={setValue}
-                  getValues={getValues}
-                  label="車輛名稱(21~25人)"
-                  inputName="mediumBus.medium1"
-                />
-                <CounterInput
-                  register={register}
-                  setValue={setValue}
-                  getValues={getValues}
-                  label="車輛名稱(10~21人)"
-                  inputName="mediumBus.medium2"
-                />
-              </CardSTY>
-            </Collapse>
-            <Collapse title="小型巴士(9人以下)" color="#EEF8F4">
-              <CardSTY>
-                <CounterInput
-                  register={register}
-                  setValue={setValue}
-                  getValues={getValues}
-                  label="車輛名稱(9人)"
-                  inputName="smallBus.small1"
-                />
-              </CardSTY>
-            </Collapse> */}
           </div>
         </BodySTY>
       </Collapse>

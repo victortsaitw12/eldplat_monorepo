@@ -4,8 +4,8 @@ import {
   NextPageWithLayout
 } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { useState, useRef, useMemo } from "react";
-import { getLayout } from "@layout/QuoteLayout";
+import { useState, useRef } from "react";
+import { getLayout } from "@layout/ClientLayout";
 import StatusCard from "@components/StatusCard";
 import { BodySTY } from "./style";
 import NavigationList from "@components/NavigationList";
