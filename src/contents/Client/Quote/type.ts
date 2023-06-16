@@ -64,7 +64,10 @@ export interface QuotationCreatePayload {
     day_date: string;
     departure_time: string;
     pickup_location: string;
-    stopover_addresses: Array<string>;
+    stopover_address_list: Array<{
+      stopover_address: string;
+      stopover_sort: string;
+    }>;
     dropoff_location: string;
   }>;
 }
@@ -141,7 +144,7 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
       day_date: "",
       departure_time: "",
       pickup_location: "",
-      stopover_addresses: [],
+      stopover_address_list: [],
       dropoff_location: ""
     }
   ]

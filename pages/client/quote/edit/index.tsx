@@ -27,6 +27,7 @@ import {
 import { shiftDate, calculateDuration } from "@utils/calculateDate";
 import { createQuotation } from "@services/client/createQuotation";
 import { getBusType } from "@services/client/getBusType";
+import LoadingSpinner from "@components/LoadingSpinner";
 //
 const DummyNavigationListData = [
   {
@@ -107,10 +108,13 @@ const Page: NextPageWithLayout<
   terminal,
   airline
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const router = useRouter();
-  const asyncGetDefaultValues = async (type: string) => {
+  const asyncGetDefaultValues = async (
+    type: string
+  ): Promise<QuotationCreatePayload> => {
     const busData = await getBusType();
     console.log("busData", busData);
     const formatedBusData = [];
@@ -149,7 +153,7 @@ const Page: NextPageWithLayout<
               day_date: shiftDate(new Date(departureDate!), index),
               departure_time: "",
               pickup_location: "",
-              stopover_addresses: [],
+              stopover_address_list: [],
               dropoff_location: ""
             };
           })
@@ -170,11 +174,11 @@ const Page: NextPageWithLayout<
         order_itinerary_list: [
           {
             day_number: 1,
-            day_date: flightDate,
-            departure_time: flightTime,
-            pickup_location: type === "pickUp" ? airport : "",
-            stopover_addresses: [],
-            dropoff_location: type === "dropOff" ? airport : ""
+            day_date: flightDate!,
+            departure_time: flightTime!,
+            pickup_location: type === "pickUp" ? airport! : "",
+            stopover_address_list: [],
+            dropoff_location: type === "dropOff" ? airport! : ""
           }
         ]
       };
@@ -189,13 +193,15 @@ const Page: NextPageWithLayout<
     formState: { errors }
   } = useForm<QuotationCreatePayload>({
     defaultValues: async () => {
+      setIsLoading(true);
       const result = await asyncGetDefaultValues(type);
+      setIsLoading(false);
       console.log("default values", result);
       return result as QuotationCreatePayload;
     }
   });
+  console.log("current form data: ", getValues());
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
-    console.log("create bus data", data);
     try {
       const result = await createQuotation(data);
       const { quote_no } = result;
@@ -212,14 +218,14 @@ const Page: NextPageWithLayout<
       console.log(e);
     }
   };
-  return (
-    <BodySTY>
+  return (isLoading ? <LoadingSpinner />: <BodySTY>   
       <StatusCard>
         <NavigationList
           dataLists={DummyNavigationListData}
           currentStep={currentTab}
         />
       </StatusCard>
+
       <div className="body-container">
         <form
           className="content-container"

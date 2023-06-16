@@ -34,7 +34,6 @@ const defaultContactInfo = [
 ];
 export function mappingContactInfo(data: any) {
   const contactInfo: { title: string; value: string | null }[] = [];
-  console.log("socail_media", data["socail_media"]);
   defaultContactInfo.forEach((item) => {
     if (item.name === "contact_phone") {
       contactInfo.push({
@@ -55,16 +54,11 @@ export function mappingContactInfo(data: any) {
       if (!data["social_media"]) {
         return;
       }
-      console.log("social_media", data["social_media"]);
       if (data["social_media_type"] === "01") {
         socialMediaType = "Line";
       } else if (data["social_media_type"] === "02") {
         socialMediaType = "WeChat";
       }
-      console.log(
-        "socialMediaType",
-        socialMediaType + ":" + data["social_media"]
-      );
       contactInfo.push({
         title: item.title,
         value: socialMediaType + ":" + data["social_media"]
