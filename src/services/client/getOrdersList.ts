@@ -23,8 +23,9 @@ export interface I_Order {
   basic_amount: string; //"2000.00"
   status_list: [
     {
-      status_code: string; //"4"
-      upddate: string; //"2023-06-05 16:58"
+      name: string;
+      status: string; //"4"
+      date: string; //"2023-06-05 16:58"
     }
   ];
 }

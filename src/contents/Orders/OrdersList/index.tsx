@@ -4,6 +4,7 @@ import { BodySTY } from "./style";
 import Collapse from "@components/Collapse";
 import StatusCard from "@components/StatusCard";
 import { PURPOSE, QUOTE_TYPE } from "@services/getDDL";
+import { I_Order } from "@services/client/getOrdersList";
 import OrderListItem from "./OrderListItem";
 const OrdersList = ({
   type,
@@ -24,8 +25,7 @@ const OrdersList = ({
 
   return (
     <BodySTY>
-      {orderData.map((item, index) => {
-        console.log("item: ", item);
+      {orderData.map((item: I_Order) => {
         return (
           <div className="list-item" key={item.quote_no}>
             <Link

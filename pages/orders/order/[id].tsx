@@ -6,7 +6,6 @@ import { Spinner } from "evergreen-ui";
 import { getLayout } from "@layout/QuoteLayout";
 import Breadcrumbs from "@components/Breadcrumbs";
 import { BodySTY } from "./style";
-import { MOCK_ORDER_DETAIL } from "@mock-data/orders";
 import ConditionCard from "@components/ConditionCard";
 import OrderDetail from "@contents/Orders/OrderDetail";
 import Quote from "@contents/Orders/Quote";
@@ -16,14 +15,11 @@ import { ParsedUrlQuery } from "querystring";
 
 const Page: NextPageWithLayout<never> = ({ quote_no }) => {
   // ----- variables, states ----- //
-  const router = useRouter();
   const [data, setData] = React.useState<I_OrderDetail | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  console.log("current data:", data);
   // ----- useEffect ----- //
   React.useEffect(() => {
     const fetchData = async () => {
-      console.log(`fetchData:${quote_no}`);
       setIsLoading(true);
       try {
         const res = await getQuotation(quote_no);
@@ -71,7 +67,7 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
         )}
         {data && (
           <div className="right">
-            <Quote data={data} />
+            <Quote data={data} setData={setData} />
           </div>
         )}
       </BodySTY>
