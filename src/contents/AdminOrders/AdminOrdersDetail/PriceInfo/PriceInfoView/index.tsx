@@ -1,16 +1,64 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { Pane, Text, Button } from "evergreen-ui";
 import { BodySTY } from "./style";
 import DetailList from "@components/DetailList";
 import LabelButton from "@components/Button/Primary/Label";
+import LabelSecondaryButton from "@components/Button/Secondary/Label";
+import LightBox from "@components/Lightbox";
+//@service
+import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
+import { updateStatusLog } from "@services/admin_orders/updateStatusLog";
+
 interface I_Props {
   orderData: any;
 }
 const PriceInfoView = ({ orderData }: I_Props) => {
+  // console.log("orderData", orderData);
+  const [isConfirmOpen, setIsConfirmOpen] = React.useState(false);
+  const [isCancelOpen, setIsCancelOpen] = React.useState(false);
+  const router = useRouter();
+  const delete_quotation = async () => {
+    try {
+      const res = await deleteQuotation(orderData.quote_no);
+      console.log(res);
+      router.push("/admin_orders/");
+    } catch (err: any) {
+      console.log(err);
+      alert(err.message);
+    }
+  };
+  const update_status = async (quote_no: string, status_code: string) => {
+    try {
+      const res = await updateStatusLog(quote_no, status_code);
+      console.log(res);
+      router.push("/admin_orders/");
+    } catch (err: any) {
+      console.log(err);
+      alert(err.message);
+    }
+  };
   return (
     <BodySTY>
       <Pane>
-        <LabelButton className="submit_btn" text="送出報價" />
+        <Pane className="btn_list">
+          <LabelSecondaryButton
+            onClick={(e) => {
+              e.preventDefault();
+              setIsCancelOpen(true);
+            }}
+            className="cancel_btn"
+            text="取消報價"
+          />
+          <LabelButton
+            onClick={(e) => {
+              e.preventDefault();
+              setIsConfirmOpen(true);
+            }}
+            className="submit_btn"
+            text="送出報價"
+          />
+        </Pane>
         <Pane className="total_price">
           <Text>總金額</Text>
           <Text>NT${orderData?.quote_total_amount || "0"}</Text>
@@ -100,6 +148,65 @@ const PriceInfoView = ({ orderData }: I_Props) => {
           ]}
         />
       </Pane>
+      <LightBox
+        title="確定要送出報價?"
+        isOpen={isConfirmOpen}
+        handleCloseLightBox={() => {
+          setIsConfirmOpen((prev) => !prev);
+        }}
+      >
+        <Text style={{ display: "inline-block", padding: "15px 0" }}>
+          報價將傳送給客人
+        </Text>
+        <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
+          <LabelSecondaryButton
+            onClick={(e) => {
+              e.preventDefault();
+              setIsConfirmOpen((prev) => !prev);
+            }}
+            className="cancel_btn"
+            text="取消"
+          />
+          <LabelButton
+            onClick={(e) => {
+              e.preventDefault();
+              console.log("確認送出報價");
+              update_status(orderData.quote_no, "3");
+            }}
+            className="submit_btn"
+            text="確認"
+          />
+        </Pane>
+      </LightBox>
+      <LightBox
+        title="確定要取消報價？"
+        isOpen={isCancelOpen}
+        handleCloseLightBox={() => {
+          setIsCancelOpen((prev) => !prev);
+        }}
+      >
+        <Text style={{ display: "inline-block", padding: "15px 0" }}>
+          取消報價後，該筆訂單將移至【已取消】頁籤，且無法還原訂單。
+        </Text>
+        <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
+          <LabelSecondaryButton
+            onClick={(e) => {
+              e.preventDefault();
+              setIsCancelOpen((prev) => !prev);
+            }}
+            className="cancel_btn"
+            text="取消"
+          />
+          <LabelButton
+            onClick={(e) => {
+              e.preventDefault();
+              delete_quotation();
+            }}
+            className="submit_btn"
+            text="確認"
+          />
+        </Pane>
+      </LightBox>
     </BodySTY>
   );
 };

@@ -64,11 +64,11 @@ const Index: NextPageWithLayout<never> = ({
     // setLoading(true);
     try {
       const res = await updateQuotation(data);
-      console.log("response of order edit: ", res);
-      // router.push({
-      //   pathname: "/admin_orders/detail/" + p_order_no,
-      //   query: { type: p_quote_type }
-      // });
+      // console.log("response of order edit: ", res);
+      router.push({
+        pathname: "/admin_orders/detail/" + p_order_no,
+        query: { type: p_quote_type }
+      });
     } catch (e: any) {
       console.log(e);
       // alert(e.message);

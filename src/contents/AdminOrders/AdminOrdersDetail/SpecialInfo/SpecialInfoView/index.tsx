@@ -38,33 +38,26 @@ const SpecialInfoView = ({
   if (pickup_sign_check) {
     listArray.push({
       title: "舉牌：Andy Welcome",
-      value: "NT$200"
+      value: ""
     });
   }
   if (driver_guide_check) {
     listArray.push({
       title: "司導",
-      value: "NT$200"
+      value: ""
     });
   }
   if (bus_age_check) {
     listArray.push({
       title: "指定車齡 3年",
-      value: "NT$1,000"
-    });
-  }
-
-  if (bus_age_check) {
-    listArray.push({
-      title: "指定車齡 3年",
-      value: "NT$1,000"
+      value: ""
     });
   }
 
   if (special_luggage_check) {
     listArray.push({
       title: "攜帶特大/特殊行李",
-      value: "NT$1,000"
+      value: ""
     });
   }
 
@@ -78,7 +71,7 @@ const SpecialInfoView = ({
   if (mineral_water_check) {
     listArray.push({
       title: "杯水",
-      value: "杯"
+      value: ""
     });
   }
 

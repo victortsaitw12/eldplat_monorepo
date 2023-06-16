@@ -20,6 +20,7 @@ import TakeBusInfoView from "./TakeBusInfo/TakeBusInfoView";
 import TakeBusInfoEdit from "./TakeBusInfo/TakeBusInfoEdit";
 import SpecialInfoView from "./SpecialInfo/SpecialInfoView";
 import SpecialInfoEdit from "./SpecialInfo/SpecialInfoEdit";
+import LabelInfoView from "./LabelInfo/LabelInfoView";
 
 //@mock_data
 import { mock_progressdata } from "@mock-data/adminOrders/mockData";
@@ -193,12 +194,7 @@ const CustomBus = ({ isEdit, orderData, busData, methods }: I_Props) => {
         )}
       </Collapse>
       <Collapse opened={true} title="標籤">
-        {orderData.label_list &&
-          orderData.label_list.map(
-            (child: { label_name: string }, i: number) => {
-              return <LabelTag key={i} text={child.label_name} />;
-            }
-          )}
+        <LabelInfoView label_list={orderData.label_list} />
       </Collapse>
     </>
   );
