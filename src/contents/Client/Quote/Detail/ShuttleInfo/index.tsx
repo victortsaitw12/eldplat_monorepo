@@ -18,7 +18,7 @@ interface I_ShuttleInfo {
 }
 
 interface I_Props {
-  quote_no: string;
+  quote_no?: string;
   isEdit: boolean;
   arrayName: string;
 }
