@@ -2,6 +2,8 @@ import { BodySTY } from "./style";
 import Flow from "@components/Flow";
 import ServerEntry from "@components/ServiceEntry";
 import { useRouter } from "next/router";
+import { getLayout } from "@layout/ClientLayout";
+import { ReactNode } from "react";
 const FlowListData = [
   {
     imageUrl: "/icons/Document.svg",
@@ -66,4 +68,8 @@ const Page = () => {
     </BodySTY>
   );
 };
+
+// Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: "線上訂車" });
 export default Page;

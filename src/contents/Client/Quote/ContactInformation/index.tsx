@@ -20,8 +20,6 @@ interface TravelInformationProps {
 }
 const ContactInformation = ({
   register,
-  control,
-  errors,
   setValue,
   getValues
 }: TravelInformationProps) => {

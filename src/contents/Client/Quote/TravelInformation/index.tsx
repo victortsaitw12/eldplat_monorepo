@@ -59,7 +59,7 @@ const TravelInformation = ({
                 register={register}
                 startPointName={`order_itinerary_list.${index}.pickup_location`}
                 destinationPointName={`order_itinerary_list.${index}.dropoff_location`}
-                middlePointName={`order_itinerary_list.${index}.stopover_addresses`}
+                middlePointName={`order_itinerary_list.${index}.stopover_address_list`}
               />
             </BodySTY>
           </Collapse>

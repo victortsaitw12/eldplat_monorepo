@@ -32,12 +32,16 @@ export const ItemSTY = styled.li`
       display: "flex";
       justify-content: "flex-start";
       align-items: "center";
-      gap: "0px";
+      gap: 0;
     }
     > .item-input-container {
       display: flex;
       gap: 8px;
       flex: 1 0 0;
+      > input {
+        width: auto;
+        flex: 1 0 0;
+      }
     }
   }
 `;

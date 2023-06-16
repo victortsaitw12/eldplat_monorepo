@@ -30,6 +30,12 @@ function StepArragement({
     control,
     name: middlePointName
   });
+  function appendMiddlePoint() {
+    append({
+      stopover_sort: fields.length + 1 + "",
+      stopover_address: ""
+    });
+  }
   return (
     <>
       <ItemSTY>
@@ -41,7 +47,7 @@ function StepArragement({
         />
         <div className="option-container">
           {fields.length === 0 && (
-            <button className="option-item" onClick={() => append("")}>
+            <button className="option-item" onClick={() => appendMiddlePoint()}>
               <PlusIcon size={12} />
             </button>
           )}
@@ -49,11 +55,16 @@ function StepArragement({
       </ItemSTY>
       {fields.map((item, index) => {
         const locationName = `中途點${index + 1}`;
+        console.log("item", item);
         return (
           <ItemSTY key={item.id}>
             <div className="item-content">{locationName}: </div>
             <TextInput
-              {...register(`${middlePointName}.${index}`)}
+              {...register(`${middlePointName}.${index}.stopover_sort`)}
+              style={{ flex: "1", display: "none" }}
+            />
+            <TextInput
+              {...register(`${middlePointName}.${index}.stopover_address`)}
               style={{ flex: "1" }}
             />
             <div className="option-container">
@@ -61,7 +72,12 @@ function StepArragement({
                 <TrashIcon size={12} />
               </button>
               {index === fields.length - 1 ? (
-                <button className="option-item" onClick={() => append("")}>
+                <button
+                  className="option-item"
+                  onClick={() => {
+                    appendMiddlePoint();
+                  }}
+                >
                   <PlusIcon size={12} />
                 </button>
               ) : (
