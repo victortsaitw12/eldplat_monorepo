@@ -32,3 +32,8 @@ export const RemarkSTY = styled.div`
     font-size: 16px;
   }
 `;
+
+export const CollapseCardSTY = styled.div`
+  border-radius: 10px;
+  overflow: hidden;
+`;
