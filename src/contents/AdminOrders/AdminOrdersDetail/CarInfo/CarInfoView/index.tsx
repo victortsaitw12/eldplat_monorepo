@@ -8,7 +8,7 @@ const CarInfoView = ({ purpose }: I_Props) => {
   const listArray = [
     {
       title: "用車目的",
-      value: purpose
+      value: purpose || "-"
     },
     {
       title: "訂車注意事項",

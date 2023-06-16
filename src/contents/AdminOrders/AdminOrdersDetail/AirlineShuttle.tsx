@@ -50,15 +50,25 @@ const AirlineShuttle = ({ isEdit, orderData, busData, methods }: I_Props) => {
           <PaymentInfoEdit />
         ) : (
           <PaymentInfoView
-            payment_status={orderData.payment_status}
-            payment_time={orderData.payment_time}
+            quote_total_amount={orderData.quote_total_amount}
+            deposit={orderData.deposit}
+            final_payment={orderData.final_payment}
             full_payment_amount={orderData.full_payment_amount}
+            full_payment_check={orderData.full_payment_check}
+            full_payment_tax={orderData.full_payment_tax}
             full_payment_period={orderData.full_payment_period}
+            full_payment_history={orderData.full_payment_history}
+            actual_full_payment_date={orderData.actual_full_payment_date}
+            deposit_check={orderData.deposit_check}
+            deposit_tax={orderData.deposit_tax}
             deposit_percent={orderData.deposit_percent}
             deposit_amount={orderData.deposit_amount}
             deposit_period={orderData.deposit_period}
+            deposit_history={orderData.deposit_history}
+            actual_deposit_date={orderData.actual_deposit_date}
             balance_amount={orderData.balance_amount}
             balance_period={orderData.balance_period}
+            balance_history={orderData.balance_history}
           />
         )}
       </Collapse>

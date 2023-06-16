@@ -160,9 +160,11 @@ const AdminOrdersDetal = ({
         <form
           onSubmit={methods.handleSubmit((data) => {
             console.log("🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡order", data);
-            (data.full_payment_check == "1" || data.deposit_check == "1") &&
-              submitForm &&
-              submitForm({ ...data });
+            if (data.full_payment_check == "1" || data.deposit_check == "1") {
+              submitForm && submitForm({ ...data });
+            } else {
+              alert("請最少選擇一種支付方式");
+            }
           })}
         >
           <Pane

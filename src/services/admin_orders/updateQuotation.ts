@@ -20,10 +20,18 @@ export const updateQuotation = async (data: any) => {
         }
       });
       filteredNullData[key] = flatternBusData;
+    } else if (key === "order_contact_list") {
+      filteredNullData[key] = data[key].map((child: any) => {
+        return {
+          ...child,
+          quote_no: data.quote_no
+        };
+      });
     } else if (typeof data[key] !== "string" || data[key].trim() !== "") {
       filteredNullData[key] = data[key];
     }
   }
+
   const res = await fetch(API_Path["UpdateQuotation"], {
     method: "PUT",
     headers: {
