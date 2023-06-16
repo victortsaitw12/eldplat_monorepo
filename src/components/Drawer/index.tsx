@@ -4,7 +4,7 @@ import { DrawerSTY } from "./style";
 import DrawerTabs from "@components/Drawer/DrawerTabs";
 
 interface DrawerProps {
-  tabName: string[];
+  tabName?: string[];
   children: React.ReactNode;
   closeDrawer: () => void;
 }
