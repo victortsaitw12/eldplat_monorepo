@@ -76,28 +76,27 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      {isLoading && (
-        <StatusCard>
-          <Spinner />
-          <div>搜尋訂單中</div>
-        </StatusCard>
-      )}
       <StatusTabs
         tabsArray={tabsArray}
         onTabChange={(v) => handleTabChange(v)}
         isLoading={isLoading}
         defaultTab={1}
       />
-      {data && currentTab == 1 && (
+      {isLoading && (
+        <StatusCard>
+          <Spinner />
+        </StatusCard>
+      )}
+      {!isLoading && data && currentTab == 1 && (
         <OrdersList type="query" orderData={data.query} />
       )}
-      {data && currentTab == 2 && (
+      {!isLoading && data && currentTab == 2 && (
         <OrdersList type="quote" orderData={data.quote} />
       )}
-      {data && currentTab == 3 && (
+      {!isLoading && data && currentTab == 3 && (
         <OrdersList type="order" orderData={data.order} />
       )}
-      {data && currentTab == 4 && (
+      {!isLoading && data && currentTab == 4 && (
         <OrdersList type="finish" orderData={data.finish} />
       )}
     </BodySTY>

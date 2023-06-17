@@ -13,8 +13,7 @@ const OrdersList = ({
   type: "query" | "quote" | "order" | "finish";
   orderData: any;
 }) => {
-  console.log("data:", orderData);
-  if (!orderData)
+  if (!orderData || orderData.length === 0)
     return (
       <BodySTY>
         <StatusCard>

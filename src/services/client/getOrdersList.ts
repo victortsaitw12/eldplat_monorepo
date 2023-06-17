@@ -21,6 +21,7 @@ export interface I_Order {
   quote_no: string; //"ORD202306050015"
   quote_type: string; //"2"
   basic_amount: string; //"2000.00"
+  purpose: string;
   status_list: [
     {
       name: string;

@@ -5,8 +5,15 @@ import { DivSTY } from "./style";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
 import PaymentBtn from "./PaymentBtn";
+import { I_OrderDetail } from "@services/client/getQuotation";
 
-const Quote = ({ data }: { data: any }) => {
+const Quote = ({
+  data,
+  setData
+}: {
+  data: I_OrderDetail;
+  setData: (data: any) => void;
+}) => {
   const expenseList = [
     {
       label: "基本車資",
@@ -54,7 +61,7 @@ const Quote = ({ data }: { data: any }) => {
     data.orderStatusesList[data.orderStatusesList.length - 1].status_code;
   return (
     <DivSTY>
-      <PaymentBtn data={data} />
+      <PaymentBtn data={data} setData={setData} />
       <Pane className="quote">
         <Collapse
           title="金額試算"
@@ -68,6 +75,8 @@ const Quote = ({ data }: { data: any }) => {
               </div>
 
               <div className="collapse__subTitle">
+                {/* isfullpay表示僅接受全額支付 */}
+                {/* checkdeposit表示已付訂金 */}
                 {data.isfullpay ? (
                   ""
                 ) : (

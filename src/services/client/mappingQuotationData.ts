@@ -216,8 +216,6 @@ type StatusItemType = {
 };
 
 export function mappingProgressInfo(list: any[]) {
-  console.log("😁😁😁item: ", list);
-
   return list.map((item) => ({
     label: item.name,
     status: item.status,

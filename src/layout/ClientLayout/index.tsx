@@ -19,7 +19,6 @@ interface ClientLayoutProps {
 
 const ClientLayout = ({ children, layoutProps }: ClientLayoutProps) => {
   const [theme, setTheme] = React.useState(false);
-  console.log("layoutProps:", layoutProps);
   return (
     <BodySTY>
       <Head>
