@@ -22,19 +22,15 @@ export const createBus = async (busData: any) => {
   }
 };
 // prettier-ignore
-const DUMMY_INPUTS = {
-  bus_name: "國光-1",
-  vin: "55688",
-  license_plate: "99661155",
-  type: "c1",
-  status: "01",
-  ownership: "02",
-  // driver_seat: "1", //no
-  // bus_seat: "42", //no
-  // bus_seat_row: "20", //no
-  primary_meter: "3",
-  fuel_unit: "1",
-  measurement_units: "2",
-  // oil_capacity: "100", // no
-  estimated_resale: "100"
-};
+// const DUMMY_INPUTS = {
+//   bus_name: "國光-1",
+//   vin: "55688",
+//   license_plate: "99661155",
+//   type: "c1",
+//   status: "01",
+//   ownership: "02",
+//   primary_meter: "3",
+//   fuel_unit: "1",
+//   measurement_units: "2",
+//   estimated_resale: "100"
+// };

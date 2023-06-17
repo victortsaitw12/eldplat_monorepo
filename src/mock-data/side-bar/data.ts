@@ -1,17 +1,17 @@
-type MENU = {
-  no: string;
-  menu_no: string;
-  menu_name: string;
-  main_category?: string;
-  menu_url: string;
-  menu_lvl: number;
-  menu_sort?: number;
-  menu_status: string;
-  creid: string;
-  credate: Date;
-  updid?: string;
-  upddate?: Date;
-};
+// type MENU = {
+//   no: string;
+//   menu_no: string;
+//   menu_name: string;
+//   main_category?: string;
+//   menu_url: string;
+//   menu_lvl: number;
+//   menu_sort?: number;
+//   menu_status: string;
+//   creid: string;
+//   credate: Date;
+//   updid?: string;
+//   upddate?: Date;
+// };
 const homePageData = [
   {
     name: "公司設定",

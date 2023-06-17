@@ -4,7 +4,6 @@ import React, { FC, ReactNode } from "react";
 //
 import Header from "./Header";
 import { BodySTY, ContainerSTY } from "./style";
-import { fetchMenuData, MenuDataType } from "../../mock-data/side-bar/data";
 
 interface QuoteLayoutProps {
   children: ReactNode;

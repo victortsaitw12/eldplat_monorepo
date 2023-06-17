@@ -1,5 +1,5 @@
 import { PatternType } from "@utils/mappingQueryData";
-import React, { createElement } from "react";
+import { createElement } from "react";
 export const getAllCustomers = async (
   filter: { [key: string]: any } = {},
   customer_status = "1"
@@ -15,7 +15,6 @@ export const getAllCustomers = async (
       });
     }
   }
-  console.log("customer_Filter", customerFilter);
   const res = await fetch("https://localhost:7088/CTR/GetCustomer", {
     method: "POST",
     headers: {

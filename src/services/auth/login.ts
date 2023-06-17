@@ -1,7 +1,7 @@
-const login = async (
+export async function login(
   email: string,
   password: string
-): Promise<{ accessToken: string }> => {
+): Promise<{ accessToken: string }> {
   try {
     const response = await fetch(
       "https://localhost:7188/Gateway_Authorize/Login/api/Login/1",
@@ -25,10 +25,4 @@ const login = async (
     console.log(error);
   }
   return { accessToken: "" };
-};
-
-const logout = async (): Promise<void> => {
-  console.log("logout");
-};
-
-export { login };
+}

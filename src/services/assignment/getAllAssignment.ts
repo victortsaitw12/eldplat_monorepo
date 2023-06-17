@@ -1,7 +1,5 @@
-import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { PatternType } from "@utils/mappingQueryData";
-import React, { createElement } from "react";
 
 export const getAllAssignments = async () => {
   const res = await fetch("https://localhost:7088/ANV/GetAssignmentList", {
@@ -45,7 +43,6 @@ export const assignPattern: PatternType = {
   task_end_time: true,
   auto_assign: true,
   manual_assign: true
-  // assignments: true
 };
 
 export const assignParser = (data: any, key: string) => {
