@@ -59,13 +59,13 @@ const SpecialInfoView = ({
   remark
 }: I_Porps) => {
   const listArray = [];
-  if (pickup_sign_check) {
+  if (pickup_sign_check == "1") {
     listArray.push({
       title: "舉牌",
       value: pickup_sign_remark || "-"
     });
   }
-  if (driver_guide_check) {
+  if (driver_guide_check == "1") {
     listArray.push({
       title: "司導",
       value: driver_guide_charge
@@ -73,14 +73,14 @@ const SpecialInfoView = ({
         : "免費"
     });
   }
-  if (bus_age_check) {
+  if (bus_age_check == "1") {
     listArray.push({
       title: "指定車齡 3年",
       value: bus_age_charge ? "NT$" + bus_age_charge.toLocaleString() : "免費"
     });
   }
 
-  if (special_luggage_check) {
+  if (special_luggage_check == "1") {
     listArray.push({
       title: "攜帶特大/特殊行李",
       value: special_luggage_charge
@@ -89,7 +89,7 @@ const SpecialInfoView = ({
     });
   }
 
-  if (bring_pets_check) {
+  if (bring_pets_check == "1") {
     listArray.push({
       title:
         "攜帶寵物:" + bring_pets_radio == "1" ? "攜帶小型寵物" : "寵物無法裝籠",
@@ -99,7 +99,7 @@ const SpecialInfoView = ({
     });
   }
 
-  if (mineral_water_check) {
+  if (mineral_water_check == "1") {
     listArray.push({
       title: "杯水",
       value: mineral_water_charge
@@ -108,7 +108,7 @@ const SpecialInfoView = ({
     });
   }
 
-  if (bottled_water_check) {
+  if (bottled_water_check == "1") {
     listArray.push({
       title: "瓶裝水" + bottled_water_box + "箱",
       value: bottled_water_charge
@@ -116,7 +116,7 @@ const SpecialInfoView = ({
         : "免費"
     });
   }
-  if (child_seat_check) {
+  if (child_seat_check == "1") {
     if (child_seat_seller && child_seat_seller > 0) {
       listArray.push({
         title: "兒童座椅" + "店家提供" + child_seat_seller + "張",
@@ -134,7 +134,7 @@ const SpecialInfoView = ({
       });
     }
   }
-  if (infant_seat_check) {
+  if (infant_seat_check == "1") {
     if (infant_seat_seller && infant_seat_seller > 0) {
       listArray.push({
         title: "嬰兒座椅" + "店家提供" + infant_seat_seller + "張",
