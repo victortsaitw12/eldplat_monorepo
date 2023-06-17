@@ -186,17 +186,29 @@ const CustomBus = ({ isEdit, orderData, busData, methods }: I_Props) => {
         ) : (
           <SpecialInfoView
             pickup_sign_check={orderData.pickup_sign_check}
+            pickup_sign_remark={orderData.pickup_sign_remark}
             driver_guide_check={orderData.driver_guide_check}
+            driver_guide_charge={orderData.driver_guide_charge}
             bus_age_check={orderData.bus_age_check}
+            bus_age_charge={orderData.bus_age_charge}
             special_luggage_check={orderData.special_luggage_check}
+            special_luggage_charge={orderData.special_luggage_charge}
             bring_pets_check={orderData.bring_pets_check}
             bring_pets_radio={orderData.bring_pets_radio}
+            bring_pets_charge={orderData.bring_pets_charge}
             mineral_water_check={orderData.mineral_water_check}
+            mineral_water_charge={orderData.mineral_water_charge}
             bottled_water_check={orderData.bottled_water_check}
             bottled_water_box={orderData.bottled_water_box}
+            bottled_water_charge={orderData.bottled_water_charge}
             child_seat_check={orderData.child_seat_check}
             child_seat_seller={orderData.child_seat_seller}
-            child_seat_yourself={orderData.child_seat_yourself}
+            child_seat_yourself={orderData.chilchild_seat_yourselfd_seat_seller}
+            child_seat_charge={orderData.child_seat_charge}
+            infant_seat_check={orderData.infant_seat_check}
+            infant_seat_seller={orderData.infant_seat_seller}
+            infant_seat_yourself={orderData.infant_seat_yourself}
+            infant_seat_charge={orderData.infant_seat_charge}
             remark={orderData.remark}
           />
         )}
