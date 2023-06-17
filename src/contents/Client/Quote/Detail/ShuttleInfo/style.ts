@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 const BodySTY = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   .detail-with-icon {
     display: inline-block;
     width: 100%;

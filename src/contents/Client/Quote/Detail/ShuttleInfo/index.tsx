@@ -13,10 +13,6 @@ import ScheduleList from "@components/ScheduleList";
 import DetailItem from "@components/DetailList/DetailItem";
 import { BodySTY } from "./style";
 import dayjs from "dayjs";
-interface I_ShuttleInfo {
-  date: string;
-}
-
 interface I_Props {
   quote_no?: string;
   isEdit: boolean;

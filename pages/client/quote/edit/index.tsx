@@ -116,7 +116,6 @@ const Page: NextPageWithLayout<
     type: string
   ): Promise<QuotationCreatePayload> => {
     const busData = await getBusType();
-    console.log("busData", busData);
     const formatedBusData = [];
     for (const key in busData) {
       formatedBusData.push({
@@ -132,7 +131,6 @@ const Page: NextPageWithLayout<
         })
       });
     }
-    console.log("formatedBusData", formatedBusData);
     if (type === "custom") {
       let durationDay = 1;
       if (returnDate && departureDate) {
@@ -196,11 +194,9 @@ const Page: NextPageWithLayout<
       setIsLoading(true);
       const result = await asyncGetDefaultValues(type);
       setIsLoading(false);
-      console.log("default values", result);
       return result as QuotationCreatePayload;
     }
   });
-  console.log("current form data: ", getValues());
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
     try {
       const result = await createQuotation(data);
@@ -218,7 +214,10 @@ const Page: NextPageWithLayout<
       console.log(e);
     }
   };
-  return (isLoading ? <LoadingSpinner />: <BodySTY>   
+  return isLoading ? (
+    <LoadingSpinner />
+  ) : (
+    <BodySTY>
       <StatusCard>
         <NavigationList
           dataLists={DummyNavigationListData}
