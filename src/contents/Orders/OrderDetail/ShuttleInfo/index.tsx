@@ -44,7 +44,6 @@ const ShuttleInfo = ({ isEdit, arrayName }: I_Props) => {
   };
   const r_list = (fields: any[]) => {
     return fields.map((child, i) => {
-      console.log("use field list", child, i);
       return (
         <Collapse
           opened={true}

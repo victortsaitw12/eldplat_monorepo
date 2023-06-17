@@ -36,7 +36,6 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
       ...orderData
     }
   });
-  console.log("orderData", orderData);
 
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
