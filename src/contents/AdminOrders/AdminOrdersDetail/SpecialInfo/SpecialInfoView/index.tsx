@@ -68,20 +68,24 @@ const SpecialInfoView = ({
   if (driver_guide_check) {
     listArray.push({
       title: "司導",
-      value: driver_guide_charge ? "NT$" + driver_guide_charge : "免費"
+      value: driver_guide_charge
+        ? "NT$" + driver_guide_charge.toLocaleString()
+        : "免費"
     });
   }
   if (bus_age_check) {
     listArray.push({
       title: "指定車齡 3年",
-      value: bus_age_charge ? "NT$" + bus_age_charge : "免費"
+      value: bus_age_charge ? "NT$" + bus_age_charge.toLocaleString() : "免費"
     });
   }
 
   if (special_luggage_check) {
     listArray.push({
       title: "攜帶特大/特殊行李",
-      value: special_luggage_charge ? "NT$" + special_luggage_charge : "免費"
+      value: special_luggage_charge
+        ? "NT$" + special_luggage_charge.toLocaleString()
+        : "免費"
     });
   }
 
@@ -89,34 +93,44 @@ const SpecialInfoView = ({
     listArray.push({
       title:
         "攜帶寵物:" + bring_pets_radio == "1" ? "攜帶小型寵物" : "寵物無法裝籠",
-      value: bring_pets_charge ? "NT$" + bring_pets_charge : "免費"
+      value: bring_pets_charge
+        ? "NT$" + bring_pets_charge.toLocaleString()
+        : "免費"
     });
   }
 
   if (mineral_water_check) {
     listArray.push({
       title: "杯水",
-      value: mineral_water_charge ? "NT$" + mineral_water_charge : "免費"
+      value: mineral_water_charge
+        ? "NT$" + mineral_water_charge.toLocaleString()
+        : "免費"
     });
   }
 
   if (bottled_water_check) {
     listArray.push({
       title: "瓶裝水" + bottled_water_box + "箱",
-      value: bottled_water_charge ? "NT$" + bottled_water_charge : "免費"
+      value: bottled_water_charge
+        ? "NT$" + bottled_water_charge.toLocaleString()
+        : "免費"
     });
   }
   if (child_seat_check) {
     if (child_seat_seller && child_seat_seller > 0) {
       listArray.push({
         title: "兒童座椅" + "店家提供" + child_seat_seller + "張",
-        value: child_seat_charge ? "NT$" + child_seat_charge : "免費"
+        value: child_seat_charge
+          ? "NT$" + child_seat_charge.toLocaleString()
+          : "免費"
       });
     }
     if (child_seat_yourself && child_seat_yourself > 0) {
       listArray.push({
         title: "兒童座椅" + "自備數" + child_seat_seller + "張",
-        value: child_seat_charge ? "NT$" + child_seat_charge : "免費"
+        value: child_seat_charge
+          ? "NT$" + child_seat_charge.toLocaleString()
+          : "免費"
       });
     }
   }
@@ -124,13 +138,17 @@ const SpecialInfoView = ({
     if (infant_seat_seller && infant_seat_seller > 0) {
       listArray.push({
         title: "嬰兒座椅" + "店家提供" + infant_seat_seller + "張",
-        value: infant_seat_charge ? "NT$" + infant_seat_charge : "免費"
+        value: infant_seat_charge
+          ? "NT$" + infant_seat_charge.toLocaleString()
+          : "免費"
       });
     }
     if (infant_seat_yourself && infant_seat_yourself > 0) {
       listArray.push({
         title: "嬰兒座椅" + "自備數" + infant_seat_seller + "張",
-        value: infant_seat_charge ? "NT$" + infant_seat_charge : "免費"
+        value: infant_seat_charge
+          ? "NT$" + infant_seat_charge.toLocaleString()
+          : "免費"
       });
     }
   }

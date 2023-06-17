@@ -68,11 +68,15 @@ const PaymentInfoView = ({
     switch (status) {
       case "1":
         return quote_total_amount
-          ? "NT$" + quote_total_amount + (full_payment_tax ? " 含稅" : "")
+          ? "NT$" +
+              quote_total_amount.toLocaleString() +
+              (full_payment_tax ? " 含稅" : "")
           : "-";
       default:
         return quote_total_amount
-          ? "NT$" + quote_total_amount + (full_payment_tax ? " 含稅" : "")
+          ? "NT$" +
+              quote_total_amount.toLocaleString() +
+              (full_payment_tax ? " 含稅" : "")
           : "-";
     }
   };
