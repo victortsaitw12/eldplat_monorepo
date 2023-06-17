@@ -12,10 +12,7 @@ import FilterWrapper from "@layout/FilterWrapper";
 import TableWrapper from "@layout/TableWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
-import {
-  createBriefEmployee,
-  createEmployee
-} from "@services/employee/createEmployee";
+import { createBriefEmployee } from "@services/employee/createEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
 
 //
@@ -151,10 +148,6 @@ const Page: NextPageWithLayout<never> = () => {
 
   const goToEditPageHandler = (id: string) => {
     router.push(`/employee/edit/${id}`);
-  };
-
-  const goToCreatePage = () => {
-    router.push("/employee/create");
   };
   const changeMainFilterHandler = (value: string) => {
     alert(value);

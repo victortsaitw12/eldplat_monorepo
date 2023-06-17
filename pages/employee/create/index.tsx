@@ -28,14 +28,15 @@ const Page: NextPageWithLayout<any> = () => {
   return (
     <BodySTY>
       {/* Put your component here */}
-      {loading ? (
+      {/* {loading ? (
         <LoadingSpinner />
       ) : (
         <AddEmployee
           submitForm={asyncSubmitForm}
           onCancel={cancelFormHandler}
         />
-      )}
+      )} */}
+      <div></div>
     </BodySTY>
   );
 };
