@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BodySTY = styled.div<BodyProps>`
+export const BodySTY = styled.div`
   align-items: center;
   display: flex;
   .container-pagination {

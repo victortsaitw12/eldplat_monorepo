@@ -8,7 +8,7 @@ import { createEmployee } from "@services/employee/createEmployee";
 import AddEmployee from "@contents/Employee";
 import { BodySTY } from "./style";
 //
-const Page: NextPageWithLayout<never> = () => {
+const Page: NextPageWithLayout<any> = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const asyncSubmitForm = async (data: any) => {

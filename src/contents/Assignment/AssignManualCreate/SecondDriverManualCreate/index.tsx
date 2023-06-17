@@ -1,29 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
 //@sevices
 // import { createVendor } from "@services/vendor/createVendor";
-import { createCustomer } from "@services/customer/createCustomer";
-import FiledInput from "../FieldInput";
 import {
-  PlusIcon,
   Text,
   SelectField,
   Select,
-  Button,
   Pane,
-  DocumentShareIcon,
   Paragraph,
-  FloppyDiskIcon,
-  Textarea,
-  TextInputField,
   TextareaField
 } from "evergreen-ui";
-import { IconLeft } from "@components/Button/Primary";
 
 //@layout
-import FlexWrapper from "@layout/FlexWrapper";
-import Drawer from "@components/Drawer";
 import { I_ManualCreateType } from "@typings/assignment_type";
 import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
 import { hours, minutes } from "@services/assignment/mock_data";
@@ -32,29 +20,29 @@ import { hours, minutes } from "@services/assignment/mock_data";
 // import { I_contactData } from "../vendor.type";
 
 // default value
-const defaultValues: I_ManualCreateType = {
-  quote_no: "",
-  manual_driver: [
-    {
-      driver_no: "",
-      bus_day_number: 1,
-      bus_group: "",
-      task_start_time: "",
-      task_end_time: "",
-      remark: ""
-    }
-  ],
-  manual_bus: [
-    {
-      bus_no: "",
-      bus_day_number: 1,
-      bus_group: "",
-      task_start_time: "",
-      task_end_time: "",
-      remark: ""
-    }
-  ]
-};
+// const defaultValues: I_ManualCreateType = {
+//   quote_no: "",
+//   manual_driver: [
+//     {
+//       driver_no: "",
+//       bus_day_number: 1,
+//       bus_group: "",
+//       task_start_time: "",
+//       task_end_time: "",
+//       remark: ""
+//     }
+//   ],
+//   manual_bus: [
+//     {
+//       bus_no: "",
+//       bus_day_number: 1,
+//       bus_group: "",
+//       task_start_time: "",
+//       task_end_time: "",
+//       remark: ""
+//     }
+//   ]
+// };
 
 interface I_AssignManualCreateProps {
   createAssignData: I_ManualCreateType;
@@ -97,10 +85,10 @@ function SecondDriverAssignManualCreate({
     setLoading(false);
   }, []);
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setSecondDrawerOpen(!secondDrawerOpen);
-  };
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   setSecondDrawerOpen(!secondDrawerOpen);
+  // };
 
   const handleBusGroupChange = async (e: any) => {
     console.log("e", e);

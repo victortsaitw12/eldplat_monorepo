@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const EventBarsSTY = styled.div<{ duration?: number; color?: string }>`
+export const EventBarsSTY = styled.div`
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -9,14 +9,6 @@ export const EventBarsSTY = styled.div<{ duration?: number; color?: string }>`
   z-index: 3;
   width: 100%;
   position: absolute;
-  /* .event {
-    height: 24px;
-    width: 120px;
-    position: absolute;
-    left: 100px;
-    border: 1px solid red;
-    border-radius: 4px;
-  } */
 `;
 
 export const EventBarSTY = styled.div<{
@@ -31,9 +23,6 @@ export const EventBarSTY = styled.div<{
   display: flex;
   .reminder {
     animation: 200ms ease-out 200ms infinite alternate reminder;
-    /* animation-delay: 200ms;
-    animation-timing-function: ease-out;
-    animation-duration: 200msr; */
   }
   @keyframes reminder {
     from {
@@ -52,7 +41,7 @@ export const EventBarSTY = styled.div<{
     align-items: center;
     flex-wrap: nowrap;
     gap: 4px;
-    background: ${({ theme, color }) => (color ? theme.color[color] : "unset")};
+    background: ${({ theme, color }) => (color ? color : "unset")};
     border: none;
     border-radius: 4px;
     color: ${({ theme }) => theme.color.N0};

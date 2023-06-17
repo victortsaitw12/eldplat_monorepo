@@ -20,7 +20,7 @@ const OverviewTable = ({
   const UI = React.useContext(UIContext);
   const router = useRouter();
   const [allData, setAllData] = React.useState<DriverData[]>([]);
-  const containerRef = React.useRef(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const queryString = `${initialMonthFirst.getFullYear()}-${(
@@ -51,9 +51,10 @@ const OverviewTable = ({
 
   //------ functions ------//
 
-  const handleScroll = (event) => {
+  const handleScroll = (event: any) => {
     event.preventDefault();
     const container = containerRef.current;
+    if (!container) return;
     container.scrollLeft += event.deltaY;
   };
 

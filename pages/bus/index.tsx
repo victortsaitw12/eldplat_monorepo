@@ -26,7 +26,6 @@ const Page: NextPageWithLayout<never> = () => {
   const [nowTab, setNowTab] = useState("1");
   const {
     initializeSubFilter,
-    mainFilter,
     updateMainFilter,
     subFilter,
     updateSubFilter,

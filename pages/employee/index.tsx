@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Pane } from "evergreen-ui";
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
-import MainBookmark from "@contents/MainBookmark";
 import { useEmployeeFilterStore } from "@contexts/filter/employeeFilterStore";
 import { useRouter } from "next/router";
 import { getAllEmployees } from "@services/employee/getAllEmployee";
@@ -228,12 +227,3 @@ const Page: NextPageWithLayout<never> = () => {
 
 Page.getLayout = getLayout;
 export default Page;
-{
-  /* <MainBookmark
-  filter={filter}
-  updateFilter={updateFilter}
-  resetFilter={() => {
-    initializeFilter();
-  }}
-></MainBookmark>; */
-}

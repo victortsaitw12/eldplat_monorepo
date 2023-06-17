@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ShiftSTY, BtnSTY } from "../style";
 
 export const TimepickerSTY = styled.div`
   display: flex;

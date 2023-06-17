@@ -46,9 +46,9 @@ const Timepicker = ({
   const UI = React.useContext(UIContext);
   const [selectDate, setSelectDate] = React.useState(date);
   const [isFullDay, setIsFullDay] = React.useState(fullDay);
-  const [hour, setHour] = React.useState(null);
-  const [minute, setMinute] = React.useState(null);
-  const [timeslot, setTimeslot] = React.useState(null);
+  const [hour, setHour] = React.useState<number | null>(null);
+  const [minute, setMinute] = React.useState<number | null>(null);
+  const [timeslot, setTimeslot] = React.useState<number | null>(null);
 
   React.useEffect(() => {
     setSelectDate(date);
@@ -76,13 +76,13 @@ const Timepicker = ({
     }
     setDate(date);
   };
-  const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHourChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setHour(parseInt(e.target.value));
   };
-  const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMinute(e.target.value);
+  const handleMinuteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setMinute(parseInt(e.target.value));
   };
-  const handleTimeslotChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTimeslotChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTimeslot(parseInt(e.target.value));
   };
   const hourOptions = () => {
@@ -136,14 +136,14 @@ const Timepicker = ({
     customHeaderCount,
     decreaseMonth,
     increaseMonth
-  }) => (
+  }: any) => (
     <div>
       <button
         aria-label="Previous Month"
         className={
           "react-datepicker__navigation react-datepicker__navigation--previous"
         }
-        style={customHeaderCount === 1 ? { visibility: "hidden" } : null}
+        style={{ visibility: customHeaderCount === 1 ? "hidden" : "visible" }}
         onClick={decreaseMonth}
       >
         <ChevronLeftIcon
@@ -164,7 +164,7 @@ const Timepicker = ({
         className={
           "react-datepicker__navigation react-datepicker__navigation--next"
         }
-        style={customHeaderCount === 0 ? { visibility: "hidden" } : null}
+        style={{ visibility: customHeaderCount === 0 ? "hidden" : "visible" }}
         onClick={increaseMonth}
       >
         <ChevronRightIcon
@@ -178,7 +178,7 @@ const Timepicker = ({
   );
   return (
     <ThemeProvider value={customTheme}>
-      <TimepickerSTY isFullDay={isFullDay} type={type}>
+      <TimepickerSTY>
         <DatePicker
           selected={selectDate}
           onChange={handleDateChange}
@@ -194,7 +194,7 @@ const Timepicker = ({
           {" "}
           <Select
             className="timepicker-time"
-            value={hour}
+            value={hour || 0}
             onChange={handleHourChange}
             disabled={isFullDay}
           >
@@ -203,7 +203,7 @@ const Timepicker = ({
           <span>:</span>
           <Select
             className="timepicker-time"
-            value={minute}
+            value={minute || 0}
             onChange={handleMinuteChange}
             disabled={isFullDay}
           >
@@ -211,7 +211,7 @@ const Timepicker = ({
           </Select>
           <Select
             className="timepicker-time"
-            value={timeslot}
+            value={timeslot || 0}
             onChange={handleTimeslotChange}
             disabled={isFullDay}
           >

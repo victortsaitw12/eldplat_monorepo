@@ -13,9 +13,6 @@ interface Props {
   editData?: any;
 }
 
-// { value: "TW", label: "台灣" },
-// { value: "JP", label: "日本" }
-
 const TagSelect: React.FC<Props> = ({
   options,
   handleCustomData,
@@ -28,7 +25,6 @@ const TagSelect: React.FC<Props> = ({
   }, [editData]);
 
   const handleChangeSelect = async (e: any) => {
-    // console.log("e", e); // e.target.value => "TW"
     const optArr = options.filter((v) => {
       if (e.target.value === "no") return;
       return v.value === e.target.value;
