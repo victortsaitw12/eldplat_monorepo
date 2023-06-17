@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MoreIcon, EditIcon, DisableIcon, EyeOpenIcon } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
-import useClickOutside from "@hooks/useClickOutside";
+// import useClickOutside from "@hooks/useClickOutside";
 //
 interface Props {
   onDelete: () => void;
@@ -12,10 +12,10 @@ interface Props {
 //
 function Index({ onDelete, onEdit, onView }: Props) {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
-  const handleClickOutside = () => {
-    setOptionIsOpen(false);
-  };
-  const ref = useClickOutside(handleClickOutside);
+  // const handleClickOutside = () => {
+  //   setOptionIsOpen(false);
+  // };
+  // const ref = useClickOutside(handleClickOutside);
 
   return (
     <BodySTY>
@@ -27,7 +27,7 @@ function Index({ onDelete, onEdit, onView }: Props) {
         <MoreIcon />
       </button>
       {optionIsOpen && (
-        <div className="table-row-option" ref={ref}>
+        <div className="table-row-option">
           {onView && (
             <button
               className="option-item"

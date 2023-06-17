@@ -36,7 +36,7 @@ export const useEmployeeFilterStore = create<StateTypes>((set) => ({
       filter[item.field_Name] = item;
       filter[item.field_Name].value = "";
     }
-    return set((state) => {
+    return set(() => {
       return {
         filter
       };

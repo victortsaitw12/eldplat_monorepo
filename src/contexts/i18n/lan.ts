@@ -1,8 +1,8 @@
 import enUS from "./messageTest/enUS";
-import { LOCALES } from "./locales";
-interface planTYPE {
-  title: string;
-}
+// import { LOCALES } from "./locales";
+// interface planTYPE {
+//   title: string;
+// }
 // const lan: {
 //   [key: string]: {
 //     [categoryKey: string]: {

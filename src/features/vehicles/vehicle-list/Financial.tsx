@@ -7,7 +7,6 @@ import {
   Checkbox
 } from "evergreen-ui";
 import FormCard from "@components/FormCard";
-import { StepControlSTY } from "@components/FormCard/style";
 import RadioGroupRow, { RadioField } from "@components/RadioGroupRow";
 
 function Financial() {
@@ -238,17 +237,6 @@ function Financial() {
             </>
           )}
         </FormCard>
-
-        {/* <StepControlSTY>
-          <button>Cancel</button>
-
-          <div className="next-step">
-            <button className="bordered">Save & Add Another</button>
-            <button className="fill" type="submit">
-              Save Vehicle
-            </button>
-          </div>
-        </StepControlSTY> */}
       </form>
     </Pane>
   );
