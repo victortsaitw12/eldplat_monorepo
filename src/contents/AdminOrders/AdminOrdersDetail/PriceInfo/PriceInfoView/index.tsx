@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Pane, Text, Button } from "evergreen-ui";
+import { Pane, Text } from "evergreen-ui";
 import { BodySTY } from "./style";
 import DetailList from "@components/DetailList";
 import LabelButton from "@components/Button/Primary/Label";
@@ -9,12 +9,12 @@ import LightBox from "@components/Lightbox";
 //@service
 import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
 import { updateStatusLog } from "@services/admin_orders/updateStatusLog";
+import dayjs from "dayjs";
 
 interface I_Props {
   orderData: any;
 }
 const PriceInfoView = ({ orderData }: I_Props) => {
-  // console.log("orderData", orderData);
   const [isConfirmOpen, setIsConfirmOpen] = React.useState(false);
   const [isCancelOpen, setIsCancelOpen] = React.useState(false);
   const router = useRouter();
@@ -25,7 +25,6 @@ const PriceInfoView = ({ orderData }: I_Props) => {
       router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
-      alert(err.message);
     }
   };
   const update_status = async (quote_no: string, status_code: string) => {
@@ -35,7 +34,6 @@ const PriceInfoView = ({ orderData }: I_Props) => {
       router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
-      alert(err.message);
     }
   };
   return (
@@ -63,7 +61,9 @@ const PriceInfoView = ({ orderData }: I_Props) => {
           <Text>總金額</Text>
           <Text>NT${orderData?.quote_total_amount || "0"}</Text>
         </Pane>
-        <Text>2023-05-01 前繳款</Text>
+        <Text>
+          {dayjs(orderData.full_payment_period).format("YYYY-MM-DD")} 前繳款
+        </Text>
         <hr />
       </Pane>
       <Pane className="price_detail">
@@ -170,7 +170,6 @@ const PriceInfoView = ({ orderData }: I_Props) => {
           <LabelButton
             onClick={(e) => {
               e.preventDefault();
-              console.log("確認送出報價");
               update_status(orderData.quote_no, "3");
             }}
             className="submit_btn"

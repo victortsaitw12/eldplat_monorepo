@@ -1,9 +1,8 @@
 import React from "react";
-import { Pane, Select, Option, Text } from "evergreen-ui";
-import DetailList from "@components/DetailList";
+import { Pane, Select, Text } from "evergreen-ui";
 import { useFormContext } from "react-hook-form";
 const CarInfoEdit = () => {
-  const { register, control } = useFormContext();
+  const { register } = useFormContext();
   return (
     <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
       <Pane style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
@@ -13,11 +12,13 @@ const CarInfoEdit = () => {
             {...register("purpose", { required: "此欄位必填" })}
             style={{ width: "270px" }}
           >
-            <option value="1">旅遊</option>
-            <option value="2">旅遊</option>
-            <option value="3">旅遊</option>
-            <option value="4">旅遊</option>
-            <option value="5">旅遊</option>
+            <option value="01">學校/企業參訪</option>
+            <option value="02">旅遊</option>
+            <option value="03">戶外教學</option>
+            <option value="04">企業教育訓練</option>
+            <option value="05">員工旅遊</option>
+            <option value="06">進香團</option>
+            <option value="07">其他</option>
           </Select>
         </Pane>
         <Pane style={{ display: "flex", gap: "20px" }}>

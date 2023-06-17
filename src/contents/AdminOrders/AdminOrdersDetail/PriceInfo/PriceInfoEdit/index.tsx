@@ -7,7 +7,10 @@ import {
   numberValidation,
   textValidation
 } from "@utils/inputValidation";
+import dayjs from "dayjs";
 interface I_Props {
+  full_payment_period?: any; // 全額付款期限
+  deposit_period?: any; // 預付訂金付款期限
   status: string;
   priceList: [
     {
@@ -17,7 +20,12 @@ interface I_Props {
   ];
 }
 
-const PriceInfoEdit = ({ status, priceList }: I_Props) => {
+const PriceInfoEdit = ({
+  full_payment_period,
+  deposit_period,
+  status,
+  priceList
+}: I_Props) => {
   const { register, control } = useFormContext();
   return (
     <BodySTY>
@@ -29,7 +37,7 @@ const PriceInfoEdit = ({ status, priceList }: I_Props) => {
             <TextInput type="number" {...register("quote_total_amount")} />
           </Text>
         </Pane>
-        <Text>2023-05-01 前繳款</Text>
+        <Text>{dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款</Text>
         <hr />
       </Pane>
       <Pane className="price_detail">

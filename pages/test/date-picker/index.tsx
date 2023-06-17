@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-
+import dayjs from "dayjs";
 import "react-datepicker/dist/react-datepicker.css";
 
 function Index() {
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
-    null,
-    null
-  ]);
-  const [startDate, endDate] = dateRange;
+  const [startDate, setStartDate] = useState(new Date(2023, 1, 1, 8));
   return (
     <DatePicker
-      selectsRange
-      startDate={startDate}
-      endDate={endDate}
-      onChange={(update) => {
-        setDateRange(update);
+      selected={startDate}
+      onChange={(date) => {
+        console.log(date);
+        console.log(dayjs(date).format("HH:mm"));
+        return setStartDate(date);
       }}
-      isClearable
+      showTimeSelect
+      showTimeSelectOnly
+      timeIntervals={15}
+      timeCaption="Time"
+      dateFormat="h:mm aa"
     />
   );
 }

@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-import { Pane, Icon, FloppyDiskIcon, EditIcon, Text } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
@@ -28,7 +27,6 @@ const Index: NextPageWithLayout<never> = ({
   p_order_no,
   editPage
 }) => {
-  console.log(editPage);
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
   // const { editPage } = router.query; //是否為編輯頁的判斷1或0
@@ -85,12 +83,9 @@ const Index: NextPageWithLayout<never> = ({
       try {
         const res = await getQuotationByID(p_order_no);
         const bus_res = await getBusType();
-        console.log("✨✨✨✨✨Get data by id", res.data);
-        console.log("👽👽👽👽👽👽👽bus_res", bus_res);
         setBusData(bus_res);
         setOrderData(res.data);
       } catch (e: any) {
-        console.log("getQuotationByID Error:", e);
         console.log(e);
       }
       setLoading(false);

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  EditIcon,
   ErrorIcon,
+  MoreIcon,
   Pane,
   PlusIcon
 } from "evergreen-ui";
@@ -18,6 +20,9 @@ import Collapse from "@components/Collapse";
 import ProgressList from "@components/ProgressList";
 import { mock_progressdata } from "@mock-data/adminOrders/mockData";
 import { I_OpenTable } from "..";
+import { I_SubAssignData } from "@typings/assignment_type";
+import dayjs from "dayjs";
+import { slashDate, timeWithAPM } from "@utils/convertDate";
 //
 interface I_Data {
   [key: string]: string | number | React.ReactNode;
@@ -25,9 +30,10 @@ interface I_Data {
 
 interface I_Table {
   tableName: string | any;
+  idx: number;
   titles: Array<string | number | React.ReactNode> | any;
   data: I_Data[];
-  subAssignData: any;
+  subAssignData: I_SubAssignData[];
   isOpen?: I_OpenTable[];
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
@@ -41,6 +47,7 @@ Must provide id field in the Data Array
 */
 function InsideTableOnAssignment({
   tableName,
+  idx,
   titles,
   data,
   subAssignData,
@@ -57,6 +64,10 @@ function InsideTableOnAssignment({
   }
 }: I_Table) {
   console.log("🅰subAssignData", subAssignData);
+  console.log("🅱data", data);
+  console.log("🅾idx", idx);
+  const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
+
   if (!data) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
@@ -79,15 +90,67 @@ function InsideTableOnAssignment({
           </tr>
         </thead>
         <tbody>
-          {subAssignData[0].map((item) => {
+          {subAssignData[idx].map((item: I_SubAssignData, i: number) => {
+            const startDate = slashDate(item.task_start_time);
+            const startTime = timeWithAPM(item.task_start_time);
+            const endTime = timeWithAPM(item.task_end_time);
             return (
-              <tr key={uuid()}>
-                <td>
-                  <div className="data-row">
-                    <div>5555</div>
-                  </div>
-                </td>
-              </tr>
+              <>
+                <tr key={uuid()}>
+                  {i === 0 && (
+                    <td rowSpan={subAssignData[idx].length}>
+                      <td>
+                        <div>{startDate}</div>
+                      </td>
+                    </td>
+                  )}
+                  {(i + 1) % 2 !== 0 && (
+                    <td rowSpan={2}>
+                      <div>第{item.bus_day_number}車</div>
+                    </td>
+                  )}
+                  <td>
+                    <div>{item.assignment_no}</div>
+                  </td>
+                  <td>
+                    <div>{item.bus_group_name}</div>
+                  </td>
+                  <td>
+                    <div>{item.bus_name}</div>
+                  </td>
+                  <td>
+                    <div>{item.license_plate}</div>
+                  </td>
+                  <td>
+                    <div>{startTime}</div>
+                  </td>
+                  <td>
+                    <div>{endTime}</div>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        setOptionIsOpen((prev) => !prev);
+                      }}
+                    >
+                      <MoreIcon />
+                    </button>
+                    {optionIsOpen && (
+                      <div className="table-row-option">
+                        <button
+                          className="option-item"
+                          onClick={() => {
+                            setOptionIsOpen(false);
+                          }}
+                        >
+                          <EditIcon size={14} />
+                          <div>編輯</div>
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              </>
             );
           })}
         </tbody>

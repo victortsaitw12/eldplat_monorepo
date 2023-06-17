@@ -26,7 +26,7 @@ import {
   maintenancePattern
 } from "@services/maintenance/getMaintenanceRecord";
 import MaintenanceRecordList from "@contents/maintenance/Record/RecordList";
-import { convertDateFormat } from "@utils/convertDate";
+import { slashDate } from "@utils/convertDate";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -66,7 +66,7 @@ const Page: NextPageWithLayout<never> = () => {
       console.log("1️⃣res for record", res);
       const copyResList = [...res.contentList];
       const newResList = copyResList?.map((v: any) => {
-        v["completion_time"] = convertDateFormat(v?.completion_time);
+        v["completion_time"] = slashDate(v?.completion_time);
         return v;
       });
 

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { Pane } from "evergreen-ui";
-import { BodySTY } from "./style";
+import { StyledForm } from "./style";
 //@component
 import Collapse from "@components/Collapse";
 //@contents
@@ -19,15 +19,13 @@ import {
 
 interface I_Props {
   isEdit: boolean;
-  orderType?: "1" | "2" | "3";
   orderData: any;
 }
 
-const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
+const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
   const specialInfo = mappingSpecailNeededsInfo(orderData);
-  const [loading, setLoading] = useState(false);
   const methods = useForm({
     defaultValues: {
       ...orderData
@@ -35,18 +33,15 @@ const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
   });
 
   const asyncSubmitForm = async (data: any) => {
-    console.log("edited data", data);
-    setLoading(true);
     try {
       console.log("response of vendor edit: ");
     } catch (e: any) {
       console.log(e);
       alert(e.message);
     }
-    setLoading(false);
   };
 
-  const r_template = (orderType: "1" | "2" | "3") => {
+  const r_template = () => {
     return (
       <>
         <Collapse opened={true} title="總覽">
@@ -104,18 +99,16 @@ const OrdersDetail = ({ isEdit, orderType = "1", orderData }: I_Props) => {
     );
   };
   return (
-    <BodySTY>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit((data) => {
-            console.log(data);
-            asyncSubmitForm({ ...data });
-          })}
-        >
-          <Pane style={{ background: "#ffffff" }}>{r_template(orderType)}</Pane>
-        </form>
-      </FormProvider>
-    </BodySTY>
+    <FormProvider {...methods}>
+      <StyledForm
+        onSubmit={methods.handleSubmit((data) => {
+          console.log(data);
+          asyncSubmitForm({ ...data });
+        })}
+      >
+        {r_template()}
+      </StyledForm>
+    </FormProvider>
   );
 };
 

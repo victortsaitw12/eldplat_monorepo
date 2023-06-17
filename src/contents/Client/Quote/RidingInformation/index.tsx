@@ -22,8 +22,7 @@ const TravelInformation = ({
   register,
   setValue,
   control,
-  getValues,
-  errors
+  getValues
 }: TravelInformationProps) => {
   const { fields } = useFieldArray({
     control,

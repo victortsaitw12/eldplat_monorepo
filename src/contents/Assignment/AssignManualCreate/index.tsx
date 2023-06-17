@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
 //@sevices
@@ -20,6 +20,12 @@ import { IconLeft } from "@components/Button/Primary";
 
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
+import Drawer from "@components/Drawer";
+import SecondAssignManualCreate from "./SecondCarManualCreate";
+import { convertDateAndTimeFormat } from "@utils/convertDate";
+import dayjs from "dayjs";
+import { log } from "console";
+import { I_ManualAssignType } from "@typings/assignment_type";
 
 //@components
 // import { I_contactData } from "../vendor.type";
@@ -65,20 +71,57 @@ const defaultValues: CreateCustomerPayload = {
 };
 
 interface I_AssignManualCreateProps {
-  data?: any;
+  assignData?: any;
   reloadData?: () => void;
+  secondDrawerOpen: boolean;
+  setSecondDrawerOpen: (secondDrawerOpen: boolean) => void;
+  orderInfo: I_ManualAssignType[];
+  setShowSecondTitle: (t: any) => void;
 }
 
-function AssignManualCreate({ reloadData }: I_AssignManualCreateProps) {
+function AssignManualCreate({
+  assignData,
+  reloadData,
+  secondDrawerOpen,
+  setSecondDrawerOpen,
+  orderInfo,
+  setShowSecondTitle
+}: I_AssignManualCreateProps) {
   const { register, handleSubmit, control, reset } =
     useForm<CreateCustomerPayload>({
       defaultValues
     });
   const [loading, setLoading] = useState(false);
+
+  function formatOrderInfo(orderInfoArr: any) {
+    if (!orderInfoArr) return;
+    const orderInfo = orderInfoArr[0];
+
+    // 計算一開始到最後一天共有幾天
+    const dayCount =
+      dayjs(orderInfo.return_date).diff(orderInfo.departure_date, "day") + 1;
+
+    // [...new Array(放數字)] 代表請產出一個有多少內容的陣列
+    const arr = [...new Array(dayCount)].reduce((acc, _, i) => {
+      const data = {
+        date: dayjs(orderInfo.departure_date)
+          .add(i, "day")
+          .format("YYYY/MM/DD"),
+        cars: [...new Array(orderInfo.order_quantity)].map((_, i) => i + 1)
+      };
+      acc.push(data);
+      return acc;
+    }, []);
+    return arr;
+  }
+  const orderArr = formatOrderInfo(orderInfo);
+
+  // 按下儲存派單按鈕
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     try {
-      const res = await createCustomer(data);
+      console.log("👉data for click save", data);
+      // const res = await createCustomer(data);
     } catch (e: any) {
       console.log(e);
       alert(e.message);
@@ -87,6 +130,31 @@ function AssignManualCreate({ reloadData }: I_AssignManualCreateProps) {
     reloadData && reloadData();
     reset();
   };
+
+  const handleClick = (
+    e: any,
+    orderItem: {
+      date: string | number | Date | dayjs.Dayjs | null | undefined;
+    },
+    car_no: number
+  ) => {
+    e.preventDefault();
+    console.log("e", e);
+    console.log("orderItem", orderItem);
+    console.log("car_no", car_no);
+    setShowSecondTitle({
+      date: orderItem.date,
+      day: dayjs(orderItem.date).format("dddd"),
+      car: car_no,
+      assignType: e.target.name === "car" ? "派車" : "派工"
+    });
+    setSecondDrawerOpen(!secondDrawerOpen);
+  };
+
+  console.log("😊assignData", assignData);
+  console.log("😋orderInfo", orderInfo);
+  console.log("😴orderArr", orderArr);
+  console.log("dayjs(orderItem.date)", dayjs("2023/05/15").format("dddd"));
 
   return (
     <FormSTY
@@ -106,12 +174,16 @@ function AssignManualCreate({ reloadData }: I_AssignManualCreateProps) {
 
       {/* 資訊小方塊 */}
       <Pane className="info-box">
-        <Paragraph>(訂單單號)</Paragraph>
-        <Paragraph>(訂單單號)</Paragraph>
-        <Pane>
-          <Text>(用車起始日期)</Text>
-          <Text marginX={10}>—</Text>
-          <Text>(用車截止日期)</Text>
+        <Paragraph>{orderInfo && orderInfo[0].quote_no}</Paragraph>
+        <Paragraph>{orderInfo && orderInfo[0].quote_type}</Paragraph>
+        <Pane className="date-area">
+          <Text>
+            {orderInfo && convertDateAndTimeFormat(orderInfo[0].departure_date)}
+          </Text>
+          <Text marginX={26}>—</Text>
+          <Text>
+            {orderInfo && convertDateAndTimeFormat(orderInfo[0].return_date)}
+          </Text>
         </Pane>
       </Pane>
 
@@ -121,28 +193,53 @@ function AssignManualCreate({ reloadData }: I_AssignManualCreateProps) {
       </IconLeft>
 
       {/* 派車派工小表格 */}
-      <Pane className="assign-table">
-        <Pane borderBottom="1px solid #D5E2F1" paddingY={6} paddingX={12}>
-          2022/11/23 週三
-        </Pane>
-        <Pane display="flex">
-          <Pane
-            borderRight="1px solid #D5E2F1"
-            marginRight={10}
-            padding={10}
-            display="flex"
-            alignItems="center"
-          >
-            第01車
+      {orderArr?.map((item: any, idx: number) => {
+        return (
+          <Pane key={idx} className="assign-table">
+            <Pane borderBottom="1px solid #D5E2F1" paddingY={6} paddingX={12}>
+              {item.date}
+            </Pane>
+
+            {item.cars.map((v: number) => {
+              return (
+                <Pane key={v} display="flex" borderBottom="1px solid #D5E2F1">
+                  <Pane
+                    borderRight="1px solid #D5E2F1"
+                    marginRight={10}
+                    padding={10}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    第{v}車
+                  </Pane>
+                  <Pane>
+                    <Button
+                      display="flex"
+                      flexWrap="wrap"
+                      marginY={4}
+                      name="car"
+                      onClick={(e: any) => {
+                        handleClick(e, item, v);
+                      }}
+                    >
+                      派車
+                    </Button>
+                    <Button
+                      name="driver"
+                      marginBottom={4}
+                      onClick={(e: any) => {
+                        handleClick(e, item, v);
+                      }}
+                    >
+                      派工
+                    </Button>
+                  </Pane>
+                </Pane>
+              );
+            })}
           </Pane>
-          <Pane>
-            <Button display="flex" flexWrap="wrap" marginY={4}>
-              派車
-            </Button>
-            <Button marginBottom={4}>派工</Button>
-          </Pane>
-        </Pane>
-      </Pane>
+        );
+      })}
     </FormSTY>
   );
 }
@@ -172,4 +269,34 @@ export default AssignManualCreate;
         <option value="負責人3">負責人3</option>
         <option value="負責人4">負責人4</option>
       </SelectField> */
+}
+
+{
+  /* <Pane className="assign-table">
+        <Pane borderBottom="1px solid #D5E2F1" paddingY={6} paddingX={12}>
+          2022/11/23 週三
+        </Pane>
+        <Pane display="flex">
+          <Pane
+            borderRight="1px solid #D5E2F1"
+            marginRight={10}
+            padding={10}
+            display="flex"
+            alignItems="center"
+          >
+            第01車
+          </Pane>
+          <Pane>
+            <Button
+              display="flex"
+              flexWrap="wrap"
+              marginY={4}
+              onClick={handleClick}
+            >
+              派車
+            </Button>
+            <Button marginBottom={4}>派工</Button>
+          </Pane>
+        </Pane>
+      </Pane> */
 }

@@ -62,48 +62,48 @@ const Page: NextPageWithLayout<{
     //串接API中
     getQuotationByFilter(subFilter)
       .then((data) => {
-        const orderData = data.contentList?.map((order: any) => {
-          return {
-            id: { label: order["quote_no"], value: order["quote_no"] },
-            quote_no: { label: order["quote_no"], value: order["quote_no"] },
-            quote_type: {
-              label: order["quote_type"] == "1" ? "客製包車" : "接送機",
-              value: order["quote_type"]
-            },
-            name: {
-              label: order["family_name"] + order["name"],
-              value: order["name"]
-            },
-            contact_phone: {
-              label: (
-                <span>
-                  {order["contact_phone_code"]} {order["contact_phone"]}
-                  <br />
-                  {order["contact_tel_code"]} {order["contact_tel"]}
-                </span>
-              ),
-              value: order["contact_phone"]
-            },
-            contact_email: {
-              label: order["contact_email"],
-              value: order["contact_email"]
-            },
-            order_status: {
-              label: order["order_status"],
-              value: order["order_status"]
-            },
-            //接單下階段才會做
-            person_name: {
-              label: "-",
-              value: "-"
-            },
-            order_label: {
-              label: <LabelTag text="服務讚" />,
-              value: order["order_label"]
-            }
-          };
-        });
-        console.log(data.conditionList);
+        // const orderData = data.contentList?.map((order: any) => {
+        //   return {
+        //     id: { label: order["quote_no"], value: order["quote_no"] },
+        //     quote_no: { label: order["quote_no"], value: order["quote_no"] },
+        //     quote_type: {
+        //       label: order["quote_type"] == "1" ? "客製包車" : "接送機",
+        //       value: order["quote_type"]
+        //     },
+        //     name: {
+        //       label: order["family_name"] + order["name"],
+        //       value: order["name"]
+        //     },
+        //     contact_phone: {
+        //       label: (
+        //         <span>
+        //           {order["contact_phone_code"]} {order["contact_phone"]}
+        //           <br />
+        //           {order["contact_tel_code"]} {order["contact_tel"]}
+        //         </span>
+        //       ),
+        //       value: order["contact_phone"]
+        //     },
+        //     contact_email: {
+        //       label: order["contact_email"],
+        //       value: order["contact_email"]
+        //     },
+        //     order_status: {
+        //       label: order["order_status"],
+        //       value: order["order_status"]
+        //     },
+        //     //接單下階段才會做
+        //     person_name: {
+        //       label: "-",
+        //       value: "-"
+        //     },
+        //     order_label: {
+        //       label: <LabelTag text="服務讚" />,
+        //       value: order["order_label"]
+        //     }
+        //   };
+        // });
+        // console.log(data.conditionList);
         // setData(data.contentList || []);
         // setData(orderData);
         if (!subFilter) {
