@@ -176,7 +176,7 @@ const CustomBus = ({ isEdit, orderData, busData, methods }: I_Props) => {
             infant={orderData.infant}
             check_in_luggage={orderData.check_in_luggage}
             carry_on_luggage={orderData.carry_on_luggage}
-            bus_type_list={orderData.bus_type_list}
+            bus_data={orderData.bus_data}
           />
         )}
       </Collapse>
