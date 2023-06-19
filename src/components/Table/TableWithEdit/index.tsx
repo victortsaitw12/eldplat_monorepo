@@ -21,7 +21,6 @@ interface I_Table {
   goToCreatePage?: () => void;
   goToEditPage?: (id: string, item: any) => void;
   viewItem?: (id: string, item: any) => void;
-  // editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
   handleCheckboxChange?: (item: any) => void;
   handleSelectAll?: () => void;

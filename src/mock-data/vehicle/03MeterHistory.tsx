@@ -1,11 +1,6 @@
 import Image from "next/image";
 
-import {
-  TagSTY,
-  ImageSTY,
-  StatusSTY,
-  AvatarSTY
-} from "@components/Table/style";
+import { TagSTY, ImageSTY } from "@components/Table/style";
 
 // ExpnseList dummy data
 export const EXPENSE_lIST_TITLES = [

@@ -1,7 +1,6 @@
 import { CancelMaintenanceById } from "@services/maintenance/getMaintenanceNotice";
-import { Pane, Dialog, Button } from "evergreen-ui";
+import { Pane, Dialog } from "evergreen-ui";
 import router from "next/router";
-import { useState } from "react";
 
 interface Dialog_Type {
   isShown: boolean;

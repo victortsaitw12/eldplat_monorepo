@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDownIcon, PlusIcon } from "evergreen-ui";
-import { v4 as uuid } from "uuid";
+import { ChevronDownIcon } from "evergreen-ui";
 //
 import { MenuDataType } from "src/mock-data/side-bar/data";
 import { BodySTY, StyledButton } from "./style";

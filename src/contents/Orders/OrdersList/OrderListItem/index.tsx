@@ -1,15 +1,14 @@
-import DetailItem from "@components/DetailList/DetailItem";
 import ProgressList from "@components/ProgressList";
 import { STATUS_CODE } from "@services/getDDL";
 import { BodySTY } from "./style";
 import { mappingProgressInfo } from "@services/client/mappingQuotationData";
-function renderDataList(list: any) {
-  return list.map((item: any) => ({
-    label: STATUS_CODE[item.status_code].label,
-    status: "ok", // "ok" | "pending" | "error",
-    date: item.upddate
-  }));
-}
+// function renderDataList(list: any) {
+//   return list.map((item: any) => ({
+//     label: STATUS_CODE[item.status_code].label,
+//     status: "ok", // "ok" | "pending" | "error",
+//     date: item.upddate
+//   }));
+// }
 
 const OrderListItem = ({ itemData }: { itemData: any }) => {
   const progressInfo = mappingProgressInfo(itemData.status_list);

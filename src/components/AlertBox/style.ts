@@ -10,7 +10,7 @@ export const AlertSTY = styled.div`
   gap: 1rem;
   z-index: 999;
   h4 {
-    font-weight: ${({ theme }) => theme.Heading400};
+    font-weight: ${({ theme }) => theme.fontWeight.Heading400};
   }
   p {
     line-height: 1.5;

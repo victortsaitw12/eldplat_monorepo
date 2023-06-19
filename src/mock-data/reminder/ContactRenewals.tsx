@@ -1,12 +1,6 @@
 import Image from "next/image";
 
-import {
-  TagSTY,
-  ImageSTY,
-  StatusSTY,
-  AvatarSTY,
-  MultipleTxtSTY
-} from "@components/Table/style";
+import { ImageSTY, StatusSTY, MultipleTxtSTY } from "@components/Table/style";
 
 export const MOCK_TITLES = [
   "Contact",

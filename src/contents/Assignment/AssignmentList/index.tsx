@@ -1,4 +1,3 @@
-import { assignment_mock_data } from "@services/assignment/mock_data";
 import { BodySTY } from "./style";
 import OutsideTableOnAssignment from "./OutsideTableOnAssignment";
 import { getAssignmentTitle } from "@services/assignment/getAllAssignment";

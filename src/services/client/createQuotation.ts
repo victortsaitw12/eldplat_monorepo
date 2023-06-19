@@ -1,4 +1,4 @@
-import { QuotationCreatePayload } from "@contents/Client/Enquiry/type";
+import { QuotationCreatePayload } from "@contents/Client/Quote/type";
 export const createQuotation = async (quotationData: any) => {
   const filteredNullData: { [key: string]: any } = {};
   for (const key in quotationData) {
@@ -26,8 +26,6 @@ export const createQuotation = async (quotationData: any) => {
       filteredNullData[key] = quotationData[key];
     }
   }
-  console.log("originalData", quotationData);
-  console.log("filteredNullData", filteredNullData);
   const res = await fetch("https://localhost:7088/ORD/CreateFEQuotation", {
     method: "POST",
     headers: {
@@ -36,8 +34,6 @@ export const createQuotation = async (quotationData: any) => {
     },
     body: JSON.stringify(filteredNullData)
   });
-  console.log("res", res);
   const result = await res.json();
-  console.log("result", result);
   return result;
 };

@@ -168,25 +168,25 @@ export const debounce = (fn: (args?: any) => void, delay: number) => {
   };
 };
 
-export const throttle = (fn: (args?: any) => void, delay: number) => {
-  let timer;
-  let lastExecTime = 0;
+// export const throttle = (fn: (args?: any) => void, delay: number) => {
+//   let timer;
+//   let lastExecTime = 0;
 
-  return function (...args) {
-    const currentTime = Date.now();
+//   return function (...args) {
+//     const currentTime = Date.now();
 
-    const execute = () => {
-      fn.apply(this, args);
-      lastExecTime = currentTime;
-    };
+//     const execute = () => {
+//       fn.apply(this, args);
+//       lastExecTime = currentTime;
+//     };
 
-    if (currentTime - lastExecTime >= delay) {
-      execute();
-    } else {
-      clearTimeout(timer);
-      timer = setTimeout(execute, delay);
-    }
-  };
-};
+//     if (currentTime - lastExecTime >= delay) {
+//       execute();
+//     } else {
+//       clearTimeout(timer);
+//       timer = setTimeout(execute, delay);
+//     }
+//   };
+// };
 
-export default throttle;
+// export default throttle;

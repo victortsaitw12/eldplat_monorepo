@@ -31,7 +31,7 @@ const PaymentBtn = ({
     //接後端API更改status_qode = '5'
     const status_code = "5";
     try {
-      const res = await updateStatus(status_code, data.quote_no);
+      await updateStatus(status_code, data.quote_no);
       console.log("確認接受報價");
       setTimeout(() => setIsLightBoxOpen(false), 1000);
       toaster.success("接受報價", {
@@ -153,7 +153,7 @@ const PaymentBtn = ({
             cancelLabel="取消"
             confirmLabel="確認"
           >
-            {({ close }) => (
+            {({}) => (
               <Pane>
                 <Paragraph style={{ lineHeight: "32px" }}>
                   接受報價後，此筆訂單即可繳款。

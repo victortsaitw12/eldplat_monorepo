@@ -6,6 +6,7 @@ const ButtonSecondaryRadius = ({
   props
 }: {
   children: React.ReactNode;
+  props?: any;
 }) => {
   const themeEvergreen = mergeTheme(defaultTheme, {
     components: {

@@ -1,13 +1,10 @@
 import React from "react";
-import { Pane, TimeIcon } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
 import { useForm, FormProvider } from "react-hook-form";
 import { SectionSTY } from "./style";
 import dayjs from "dayjs";
 
 import Collapse from "@components/Collapse";
-import DetailList from "@components/DetailList";
-import VerticalDetail from "@components/VerticalDetail";
-import ScheduleList from "@components/ScheduleList";
 import DetailItem from "@components/DetailList/DetailItem";
 import ProgressList from "@components/ProgressList";
 import {
@@ -22,12 +19,6 @@ import TakeBusInfoView from "@contents/Client/Quote/Detail/TakeBusInfoView";
 import FlightInfoView from "@contents/Client/Quote/Detail/FlightInfoView";
 import SpecialInfoView from "@contents/Client/Quote/Detail/SpecialInfoView";
 import ContactInfoView from "@contents/Client/Quote/Detail/ContactInfoView";
-
-type StatusItemType = {
-  label: string;
-  status: "pending" | "error" | "ok" | "disabled";
-  date?: string | undefined;
-};
 
 const OrderDetail = ({ orderData }: { orderData: any }) => {
   // ----- function ----- //

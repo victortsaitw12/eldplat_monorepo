@@ -24,10 +24,10 @@ export const customerPattern: PatternType = {
   contact_email: "contact_Email"
 };
 
-const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
-  const result: { [key: string]: any } = {};
-  for (const key in pattern) {
-    result[key] = data[key];
-  }
-  return result;
-};
+// const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
+//   const result: { [key: string]: any } = {};
+//   for (const key in pattern) {
+//     result[key] = data[key];
+//   }
+//   return result;
+// };

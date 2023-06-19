@@ -51,7 +51,7 @@ export const EventBtnSTY = styled.div<{
     align-items: center;
     flex-wrap: nowrap;
     gap: 4px;
-    background: ${({ theme, color }) => (color ? theme.color[color] : "unset")};
+    background: ${({ theme, color }) => (color ? color : "unset")};
     border: none;
     border-radius: 4px;
     color: ${({ theme }) => theme.color.N0};

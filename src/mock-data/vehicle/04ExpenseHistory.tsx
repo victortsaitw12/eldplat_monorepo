@@ -73,11 +73,6 @@ export const EXPENSE_lIST_DATA = [
     watchers: ""
   }
 ];
-
-const handleCheck = (checkedItems: any) => {
-  console.log(checkedItems);
-};
-
 // =========================================================
 
 // ExpenseListDetail dummy data

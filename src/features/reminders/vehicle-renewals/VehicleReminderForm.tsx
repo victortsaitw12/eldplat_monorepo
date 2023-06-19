@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import { TextInputField, TextareaField, Checkbox, Label } from "evergreen-ui";
+import { TextInputField, Checkbox, Label } from "evergreen-ui";
 import FormCard from "@components/FormCard";
 import { AvatarSTY } from "@components/Table/style";
 import { StepControlSTY } from "@components/FormCard/style";
