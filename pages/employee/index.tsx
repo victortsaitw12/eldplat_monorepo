@@ -193,7 +193,6 @@ const Page: NextPageWithLayout<never> = () => {
             <Pane>
               <EmployeeList
                 data={employeeListData}
-                // goToCreatePage={goToCreatePage}
                 goToCreatePage={() => {
                   setDrawerOpen(true);
                 }}
