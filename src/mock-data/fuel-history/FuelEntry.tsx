@@ -8,7 +8,7 @@ export const MOCK_DATA = [
     Vehicle: (
       <>
         <ImageSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </ImageSTY>
         1100 [2018 Toyota Prius]
       </>

@@ -89,12 +89,7 @@ function VehicleReminderForm({ title, selectOptions }: Props) {
         <Label>Comment</Label>
         <div className="w50 gap-10">
           <AvatarSTY>
-            <Image
-              width="50"
-              height="50"
-              src="/images/avatar1.jpg"
-              alt="test"
-            />
+            <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
           </AvatarSTY>
           <TextareaFieldSTY placeholder="Add an optional comment" />
         </div>
