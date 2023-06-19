@@ -1,6 +1,7 @@
 import { I_Content_Props } from "@typings/employee_type";
 import {
   Button,
+  Checkbox,
   Heading,
   Pane,
   PlusIcon,
@@ -20,16 +21,39 @@ interface I_certificationType {
 function EmployeeInfo({
   handleEmployeeChange,
   insertData,
-  setInsertData
+  setInsertData,
+  editData
 }: I_Content_Props) {
-  const [untilnowChecked, setUntilnowChecked] = useState(false);
-  const [inviteActive, setInviteActive] = useState<boolean>(false);
-  const [inviteDate, setInviteDate] = useState<string>("");
+  // 是否在職
+  const [untilnowChecked, setUntilnowChecked] = useState<boolean>(
+    insertData["leave_check"] === "1" ? true : false
+  );
 
   // 證照陣列
   const [certificationArr, setCertificationArr] = useState<
     I_certificationType[]
   >([]);
+
+  // 一進來先抓資料庫原本就有的證照資料
+  useEffect(() => {
+    editData &&
+      setCertificationArr(
+        editData?.license_name.map((v: string, i: number) => {
+          return { id: i, value: v };
+        })
+      );
+  }, [editData]);
+
+  // 離職: 如果還在職(迄今)就存"1"，否則是"0"
+  const handleStillWorking = (e: any) => {
+    const newChecked = e.target.checked;
+    setUntilnowChecked(newChecked);
+    const newData = { ...insertData };
+    newData["leave_check"] = newChecked ? "1" : "0";
+    newData["leave_date"] = (newChecked || !newData["leave_date"]) && null;
+    // console.log("untilnowChecked && null", untilnowChecked && null);
+    setInsertData(newData);
+  };
 
   // 存取證照欄位input值
   const handleValue = (e: any, id: number) => {
@@ -54,13 +78,11 @@ function EmployeeInfo({
   // 加一欄證照
   const handleInputAdd = () => {
     const idx = certificationArr.length;
-    console.log("⚾idx", idx);
     setCertificationArr((prev) => [...prev, { id: idx, value: "" }]);
   };
 
   // 移除一欄證照
   const handleInputRemove = (id: number) => {
-    console.log("⚽id", id);
     const newData = { ...insertData };
     const newArr = certificationArr.filter((v, i) => {
       return v.id !== id;
@@ -77,19 +99,7 @@ function EmployeeInfo({
     setInsertData(newData);
   };
 
-  // useEffect(() => {
-  //   let newDate = new Date();
-  //   setInviteDate(formatDate(newDate));
-  // }, []);
-
-  // const handleInvite = () => {
-  //   setInviteActive(true);
-  //   const newData = { ...insertData };
-  //   newData["invt_date"] = inviteDate;
-  //   setInsertData(newData);
-  // };
-
-  console.log("certificationArr", certificationArr);
+  console.log("untilnoeChecked", untilnowChecked);
 
   return (
     <BodySTY>
@@ -125,7 +135,7 @@ function EmployeeInfo({
         </Pane>
         <Pane className="input-line">
           <Text>公司名稱</Text>
-          <Text>雄獅通運公司</Text>
+          <Text>{insertData.company_name}</Text>
         </Pane>
         <Pane className="input-line">
           <Text>部門別</Text>
@@ -165,6 +175,30 @@ function EmployeeInfo({
           />
         </Pane>
         <Pane className="input-line">
+          <Text>離職日期</Text>
+          <Pane display="flex">
+            {" "}
+            <TextInput
+              type="date"
+              name="leave_date"
+              value={insertData.leave_date}
+              onChange={handleEmployeeChange}
+              disabled={untilnowChecked ? true : false}
+            />
+            <Checkbox
+              label="迄今"
+              checked={untilnowChecked}
+              onChange={(e: any) => {
+                handleStillWorking(e);
+              }}
+            />
+          </Pane>
+        </Pane>
+        <Pane className="input-line">
+          <Text>員工狀態</Text>
+          <Text color="#52BD94 !important">• 已加入</Text>
+        </Pane>
+        <Pane className="input-line">
           <Text>證照</Text>
           <Pane>
             {certificationArr.map((item, index) => {
@@ -195,7 +229,6 @@ function EmployeeInfo({
             <Button
               className="add-license-btn"
               onClick={(e: any) => {
-                console.log("eeeeeeeeeeeeeee", e);
                 e.preventDefault();
                 handleInputAdd();
                 // handleInputAdd(item.id);

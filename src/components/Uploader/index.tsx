@@ -1,6 +1,14 @@
 import React from "react";
-
-import { Pane, FileUploader, Alert, FileCard, MimeType } from "evergreen-ui";
+import {
+  Pane,
+  FileUploader,
+  Alert,
+  FileCard,
+  MimeType,
+  rebaseFiles,
+  FileRejectionReason,
+  majorScale
+} from "evergreen-ui";
 
 type Props = {
   label: string;
@@ -10,8 +18,8 @@ function Uploader({ label }: Props) {
   const acceptedMimeTypes = [MimeType.jpeg, MimeType.pdf];
   const maxFiles = 5;
   const maxSizeInBytes = 50 * 1024 ** 2; // 50 MB
-  const [files, setFiles] = React.useState([]);
-  const [fileRejections, setFileRejections] = React.useState([]);
+  const [files, setFiles] = React.useState<Array<any>>([]);
+  const [fileRejections, setFileRejections] = React.useState<Array<any>>([]);
   const values = React.useMemo(
     () => [
       ...files,
@@ -20,7 +28,7 @@ function Uploader({ label }: Props) {
     [files, fileRejections]
   );
   const handleRemove = React.useCallback(
-    (file) => {
+    (file: any) => {
       const updatedFiles = files.filter(
         (existingFile) => existingFile !== file
       );

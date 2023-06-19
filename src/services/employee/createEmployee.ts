@@ -1,23 +1,46 @@
 // 新增員工資料
 export const createEmployee = async (employeeData: any) => {
-  // const filteredNullData: { [key: string]: string | null } = {};
-  // for (const key in employeeData) {
-  //   console.log("key", key);
-  //   if (key === "driver_typ") {
-  //     filteredNullData[key] = employeeData[key];
-  //   } else if (employeeData[key] !== null && employeeData[key].trim() !== "") {
-  //     filteredNullData[key] = employeeData[key];
-  //   }
-  // }
-  // console.log("filteredNullData", filteredNullData);
+  const filteredNullData: { [key: string]: string | null } = {};
+  for (const key in employeeData) {
+    console.log("2️⃣key", key);
+    if (key === "driver_typ") {
+      filteredNullData[key] = employeeData[key];
+    } else if (
+      employeeData[key] !== null ||
+      employeeData[key].trim() !== "" ||
+      employeeData[key].length !== 0
+    ) {
+      filteredNullData[key] = employeeData[key];
+    }
+  }
+  console.log("filteredNullData", filteredNullData);
+  const res = await fetch("https://localhost:7088/ATR/CreateAccount", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    },
+    body: JSON.stringify(employeeData)
+  });
+  return res.json();
+};
+
+// List頁快速新增
+export const createBriefEmployee = async (
+  user_first_name: string,
+  user_name: string,
+  user_email: string,
+  user_phone: string
+) => {
   const res = await fetch(
-    "https://localhost:7188/Gateway_AccountDriver/Account/InsertAccount/api/InsertAccount/1",
+    `https://localhost:7088/ATR/CreateAccountInfo?user_first_name=${user_first_name}&user_name=${user_name}&user_email=${user_email}&user_phone=${user_phone}`,
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
       },
-      body: JSON.stringify(employeeData)
+      body: JSON.stringify({})
     }
   );
   return res.json();
@@ -49,7 +72,7 @@ export const createEmployee = async (employeeData: any) => {
     "group": "01",
     "arrive_date": "2023-03-31",
     "license_name": [],
-    "languags": [],
+    "languages": [],
     "healths": [
         {
             "heal_date": "2023-03-01",

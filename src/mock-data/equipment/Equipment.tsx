@@ -33,7 +33,7 @@ export const EQUIPMENT_lIST_DATA = [
     Name: (
       <>
         <ImageSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </ImageSTY>
         測試
       </>
@@ -47,7 +47,7 @@ export const EQUIPMENT_lIST_DATA = [
     "Current Assignee": (
       <>
         <AvatarSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </AvatarSTY>
         Carlos Garcia
       </>
@@ -56,7 +56,7 @@ export const EQUIPMENT_lIST_DATA = [
     "Linked Vehicle": (
       <>
         <ImageSTY status="pending">
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </ImageSTY>
         Carlos Garcia
       </>
@@ -64,7 +64,7 @@ export const EQUIPMENT_lIST_DATA = [
     "Vehicle Operator": (
       <>
         <AvatarSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </AvatarSTY>
         Carlos Garcia
       </>
@@ -92,7 +92,7 @@ export const EQUIPMENT_ASSIGNMENT_HISTORY_DATA = [
     Assignee: (
       <>
         <AvatarSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </AvatarSTY>
         jason chen
         <TagSTY backgroundColor="lightblue" color="blue">
@@ -106,7 +106,7 @@ export const EQUIPMENT_ASSIGNMENT_HISTORY_DATA = [
     "Started By": (
       <>
         <AvatarSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </AvatarSTY>
         jason chen
       </>
@@ -131,7 +131,7 @@ export const EQUIPMENT_LINKED_VEHICLE_HISTORY_DATA = [
     "Linked Vehicle": (
       <>
         <AvatarSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </AvatarSTY>
         jason chen
         <TagSTY backgroundColor="lightblue" color="blue">
@@ -145,7 +145,7 @@ export const EQUIPMENT_LINKED_VEHICLE_HISTORY_DATA = [
     "Started By": (
       <>
         <AvatarSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </AvatarSTY>
         jason chen
       </>
@@ -174,7 +174,7 @@ export const EQUIPMENT__OVERVIEW_DATA = {
   "Linked Vehicle": (
     <>
       <ImageSTY status="pending">
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
       </ImageSTY>
       <MultipleTxtSTY>
         <a>1100</a>

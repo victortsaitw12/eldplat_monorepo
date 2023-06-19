@@ -21,7 +21,7 @@ function Modal(props: ModalProps) {
     <>
       {createPortal(
         <Backdrop onClick={props.onConfirm} />,
-        document.getElementById("backdop-root")!
+        document.getElementById("backdrop-root")!
       )}
       {createPortal(
         <ModalOverlay onConfirm={props.onConfirm}>

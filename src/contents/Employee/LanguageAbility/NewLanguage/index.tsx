@@ -10,7 +10,7 @@ import { language_DATA } from "../data";
 import { BodySTY } from "./style";
 
 interface I_languageType {
-  languag: string;
+  language: string;
   listen: string;
   speak: string;
   read: string;
@@ -32,7 +32,7 @@ function NewLanguage({
   setLangForApi
 }: I_newLanguage_props) {
   const [languageValue, setLanguageValue] = useState<any>({
-    languag: "",
+    language: "",
     listen: "",
     speak: "",
     read: "",
@@ -40,7 +40,7 @@ function NewLanguage({
   }); // 代碼物件
   const [languageLabel, setLanguageLabel] =
     useState<I_languageType>(defaultData); // 文字物件
-  console.log("defaultData", defaultData);
+
   // 下拉選語言別或是程度時
   const handleChangeLang = (
     select: { value: string; label: string },
@@ -52,28 +52,25 @@ function NewLanguage({
     setLanguageLabel(newLabelData); // 文字版
   };
 
+  // 按下打勾時
   const handleAdd = () => {
-    console.log(" add languageValue fn", handleSave);
     handleSave(languageLabel);
-
     setLangForApi((prev: any) => [...prev, languageValue]); // 存代碼形式進陣列物件
   };
 
-  console.log("🎭languageValue", languageValue);
-  console.log("👓languageLabel", languageLabel);
   return (
     <BodySTY>
       <Pane className="add-language">
         <Combobox
-          items={language_DATA.languag.map((v) => {
+          items={language_DATA.language.map((v) => {
             return v;
           })}
           itemToString={(item) => (item ? item.label : "")}
           onChange={(selected) => {
-            handleChangeLang(selected, "languag");
+            handleChangeLang(selected, "language");
           }}
-          name="languag"
-          placeholder={languageLabel.languag || "選擇語言"}
+          name="language"
+          placeholder={languageLabel.language || "選擇語言"}
         />
         <Combobox
           openOnFocus

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Table from "@components/Table/Table";
 import { MOCK_LIST_TITLES } from "src/mock-data/vendors/00VendorList";
 

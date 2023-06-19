@@ -1,110 +1,143 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
-import MainBookmark from "@contents/MainBookmark";
 import BusList from "@contents/Bus/BusList";
-import { getAllBuses } from "@services/bus/getAllBuses";
+import { getAllBuses, busPattern, busParser } from "@services/bus/getAllBuses";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { useRouter } from "next/router";
-import { useFilterStore } from "@contexts/filter/busFilterStore";
-import { convertValueToText } from "@utils/convertValueToText";
+import { useBusStore } from "@contexts/filter/busStore";
 import { BodySTY } from "./style";
+import { mappingQueryData } from "@utils/mappingQueryData";
+import { deleteBus } from "@services/bus/deleteBus";
+import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
+import Drawer from "@components/Drawer";
+import BusCreateForm from "@contents/Bus/BusCreateForm";
 //
-const fakeData = [
-  {
-    bus_group: "北部"
-  },
-  {
-    bus_group: "北部"
-  },
-  {
-    bus_group: "中部"
-  },
-  {
-    bus_group: "中部"
-  },
-  {
-    bus_group: "南部"
-  }
+const mainFilterArray = [
+  { id: 1, label: "全部", value: "1" },
+  { id: 2, label: "停用", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
-  const initializeFilter = useFilterStore((state) => state.initializeFilter);
-  const updateFilter = useFilterStore((state) => state.updateFilter);
-  const filter = useFilterStore((state) => state.filter);
-
+  const [nowTab, setNowTab] = useState("1");
+  const {
+    initializeSubFilter,
+    updateMainFilter,
+    subFilter,
+    updateSubFilter,
+    isDrawerOpen,
+    setDrawerOpen
+  } = useBusStore();
+  //
+  const fetchBusData = useCallback(
+    async (isCanceled: boolean, mainFilter = "1") => {
+      getAllBuses(subFilter, mainFilter).then((res) => {
+        const busesData = mappingQueryData(
+          res.contentList,
+          busPattern,
+          busParser
+        );
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "busInitFilter",
+            JSON.stringify(res.conditionList)
+          );
+          initializeSubFilter();
+        }
+        setData(busesData);
+      });
+    },
+    [initializeSubFilter, subFilter]
+  );
+  //
+  useEffect(() => {
+    console.log("update mainFilter to 1");
+    updateMainFilter("1");
+  }, []);
+  //
   useEffect(() => {
     let isCanceled = false;
-    getAllBuses(filter).then((res: any) => {
-      console.log("res", res);
-      console.log("bus filter", filter);
-      const busData = res.contentList.map((bus: any, index: number) => {
-        return {
-          id: { label: bus.bus_no, value: bus.bus_no },
-          bus_no: { label: bus.bus_no, value: bus.bus_no },
-          type: { label: bus.type, value: bus.type },
-          make: { label: bus.make, value: bus.make },
-          model: { label: bus.model, value: bus.model },
-          license_plate: {
-            label: bus.license_plate,
-            value: bus.license_plate
-          },
-          year: { label: bus.age, value: bus.age },
-          bus_group: {
-            label:
-              index < fakeData.length
-                ? fakeData[index].bus_group
-                : bus.bus_group,
-            value: bus.bus_group
-          },
-          operator: { label: bus.operator, value: bus.operator },
-          status: { label: bus.status, value: bus.status },
-          labels: { label: bus.labels, value: bus.labels }
-        };
-      });
-      console.log("busData", busData);
-      const convertedBusData = convertValueToText(busData);
-      if (isCanceled) {
-        console.log("canceled");
-        return;
-      }
-      if (!filter) {
-        console.log("conditionList", res.conditionList);
-        localStorage.setItem(
-          "busInitFilter",
-          JSON.stringify(res.conditionList)
-        );
-        initializeFilter();
-      }
-      setData(convertedBusData);
-    });
+    fetchBusData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
-  }, [filter, initializeFilter]);
+  }, [nowTab]);
+  //
   if (!data) {
     return <LoadingSpinner />;
   }
-  const goToCreatePage = () => {
-    router.push("/bus/create");
+  /**
+   * CUD handler
+   */
+  //進入供應商編輯頁
+  const goToEditPageHandler = (id: string) => {
+    router.push("/bus/detail/" + id + "?editPage=edit");
   };
+  const goToDetailPageHandler = (id: string) => {
+    router.push(`/bus/detail/${id}?editPage=view`);
+  };
+  const changeMainFilterHandler = (value: string) => {
+    setNowTab(value);
+  };
+  //
+  const deleteItemHandler = async (id: string) => {
+    deleteBus(id).then((res) => {
+      console.log("res", res);
+      fetchBusData(false);
+    });
+  };
+  if (!data) {
+    return <LoadingSpinner />;
+  }
   return (
     <BodySTY>
-      <MainBookmark
-        updateFilter={updateFilter}
-        resetFilter={() => {
-          initializeFilter();
-        }}
-        filter={filter}
+      <TableWrapper
+        onChangeTab={changeMainFilterHandler}
+        mainFilter={nowTab}
+        mainFilterArray={mainFilterArray}
+        viewOnly={true}
       >
-        {
-          /* Put your component here */
-          <BusList busData={data} goToCreatePage={goToCreatePage} />
-        }
-      </MainBookmark>
+        <FilterWrapper
+          updateFilter={updateSubFilter}
+          resetFilter={() => {
+            initializeSubFilter();
+          }}
+          filter={subFilter}
+        >
+          <BusList
+            busData={data}
+            goToCreatePage={() => {
+              setDrawerOpen(true);
+            }}
+            deleteItemHandler={deleteItemHandler}
+            goToEditPageHandler={goToEditPageHandler}
+            goToDetailPage={goToDetailPageHandler}
+          />
+        </FilterWrapper>
+      </TableWrapper>
+      {isDrawerOpen && (
+        <Drawer
+          tabName={["新增車輛"]}
+          closeDrawer={() => {
+            setDrawerOpen(false);
+          }}
+        >
+          <BusCreateForm
+            reloadData={() => {
+              fetchBusData(false);
+              setDrawerOpen(false);
+            }}
+          />
+        </Drawer>
+      )}
     </BodySTY>
   );
 };

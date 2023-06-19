@@ -1,37 +1,37 @@
-import TableWithEdit from "@components/Table/TableWithEdit";
-import { getDriverTitle } from "@services/driver/getAllDrivers";
 import { useRouter } from "next/router";
-import { BodySTY } from "./style";
+import { DriverListSTY } from "./style";
+
+import { getDriverTitle } from "@services/driver/getAllDrivers";
+import TableWithEdit from "@components/Table/TableWithEdit";
 
 interface Props {
   driverData: any;
   goToCreatePage: () => void;
+  handleDeleteDriver: (id: string) => void;
 }
 
-function DriverList({ driverData, goToCreatePage }: Props) {
+function DriverList({ driverData, goToCreatePage, handleDeleteDriver }: Props) {
   const driverTitle = getDriverTitle();
-  console.log("BusList", driverData);
   const router = useRouter();
+
   return (
-    <BodySTY>
+    <DriverListSTY>
       <TableWithEdit
         tableName="駕駛"
         titles={driverTitle}
         data={driverData}
         goToCreatePage={goToCreatePage}
         viewItem={(id) => {
-          console.log(`view driver: ${id}`);
-          router.push("/driver/detail");
+          router.push(`/driver/detail/${id}?editPage=view`);
         }}
-        editItem={(id) => {
-          console.log(`edit driver: ${id}`);
-          router.push(`/driver/create/${id}`);
+        goToEditPage={(id) => {
+          router.push(`/driver/detail/${id}?editPage=edit`);
         }}
         deleteItem={(id) => {
-          console.log(`delete driver: ${id}`);
+          handleDeleteDriver(id);
         }}
       />
-    </BodySTY>
+    </DriverListSTY>
   );
 }
 

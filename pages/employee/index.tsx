@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Pane } from "evergreen-ui";
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
-import MainBookmark from "@contents/MainBookmark";
-import { useFilterStore } from "@contexts/filter/employeeFilterStore";
+import { useEmployeeFilterStore } from "@contexts/filter/employeeFilterStore";
 import { useRouter } from "next/router";
 import { getAllEmployees } from "@services/employee/getAllEmployee";
 import EmployeeList from "@contents/Employee/EmployeeList";
 import { BodySTY } from "./style";
+import Drawer from "@components/Drawer";
+import FilterWrapper from "@layout/FilterWrapper";
+import TableWrapper from "@layout/TableWrapper";
+import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
+import { deleteEmployee } from "@services/employee/deleteEmployee";
+import { createBriefEmployee } from "@services/employee/createEmployee";
+import RegionProvider from "@contexts/regionContext/regionProvider";
+
 //
 const fakeData = [
   {
@@ -54,14 +61,33 @@ const fakeData = [
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const {
+    initializeSubFilter,
+    mainFilter,
+    updateMainFilter,
+    subFilter,
+    updateSubFilter,
+    isDrawerOpen,
+    setDrawerOpen
+  } = useEmployeeFilterStore();
+  useEffect(() => {
+    updateMainFilter("all");
+  }, []);
+  const mainFilterArray = useMemo(
+    () => [
+      { id: 1, label: "全部", value: "all" },
+      { id: 2, label: "停用", value: "seal" }
+    ],
+    []
+  );
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [addEmployeeActive, setAddEmployeeActive] = useState<boolean>(false);
   const [employeeListData, setEmployeeListData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
-  const initializeFilter = useFilterStore((state) => state.initializeFilter);
-  const updateFilter = useFilterStore((state) => state.updateFilter);
-  const filter = useFilterStore((state) => state.filter);
+  // const initializeFilter = useFilterStore((state) => state.initializeFilter);
+  // const updateFilter = useFilterStore((state) => state.updateFilter);
+  const filter = useEmployeeFilterStore((state) => state.filter);
 
   useEffect(() => {
     const isCanceled = false;
@@ -104,35 +130,90 @@ const Page: NextPageWithLayout<never> = () => {
       if (!filter) {
         localStorage.setItem(
           "employeeInitFilter",
-          JSON.stringify(data.conditionList)
+          JSON.stringify(data.contentList)
         );
-        initializeFilter();
+        initializeSubFilter();
       }
       setEmployeeListData(newData);
     });
-  }, [filter]);
-  const goToCreatePage = () => {
-    router.push("/employee/create");
+  }, [filter, initializeSubFilter]);
+
+  // Delete Employee
+  const deleteItemHandler = async (id: string) => {
+    deleteEmployee(id).then((res) => {
+      console.log("delete user res------------------", res);
+      router.reload();
+    });
+  };
+
+  const goToEditPageHandler = (id: string) => {
+    router.push(`/employee/edit/${id}`);
+  };
+  const changeMainFilterHandler = (value: string) => {
+    alert(value);
+    updateMainFilter(value);
+  };
+
+  const createEmployeeHandler = async (employeeData: any) => {
+    console.log("1️⃣employeeData", employeeData);
+    const { user_first_name, user_name, user_email, user_phone } = employeeData;
+
+    setLoading(true);
+    try {
+      const res = await createBriefEmployee(
+        user_first_name,
+        user_name,
+        user_email,
+        user_phone
+      );
+      console.log("3️⃣res", res);
+      router.reload();
+    } catch (e: any) {
+      console.log(e);
+      alert(e.message);
+    }
+    setLoading(false);
   };
   return (
-    <BodySTY addEmployeeActive={addEmployeeActive}>
-      <MainBookmark
-        filter={filter}
-        updateFilter={updateFilter}
-        resetFilter={() => {
-          initializeFilter();
-        }}
-      >
-        {/* Put your component here */}
-        <Pane>
-          <EmployeeList
-            data={employeeListData}
-            setAddEmployeeActive={setAddEmployeeActive}
-            goToCreatePage={goToCreatePage}
-          />
-        </Pane>
-      </MainBookmark>
-    </BodySTY>
+    <RegionProvider>
+      <BodySTY>
+        <TableWrapper
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={mainFilter}
+          mainFilterArray={mainFilterArray}
+        >
+          <FilterWrapper
+            updateFilter={updateSubFilter}
+            resetFilter={() => {
+              initializeSubFilter();
+            }}
+            filter={filter}
+          >
+            {/* Put your component here */}
+            <Pane>
+              <EmployeeList
+                data={employeeListData}
+                goToCreatePage={() => {
+                  setDrawerOpen(true);
+                }}
+                deleteItemHandler={deleteItemHandler}
+                goToEditPageHandler={goToEditPageHandler}
+              />
+            </Pane>
+          </FilterWrapper>
+        </TableWrapper>
+        {isDrawerOpen && (
+          <Drawer
+            tabName={["新增員工"]}
+            closeDrawer={() => {
+              setDrawerOpen(false);
+            }}
+          >
+            <EmployeeCreateForm createEmployee={createEmployeeHandler} />
+          </Drawer>
+        )}
+      </BodySTY>
+    </RegionProvider>
   );
 };
 

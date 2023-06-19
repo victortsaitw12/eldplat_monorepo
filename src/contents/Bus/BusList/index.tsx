@@ -5,11 +5,20 @@ import { BodySTY } from "./style";
 interface Props {
   busData: any;
   goToCreatePage: () => void;
+  deleteItemHandler: (id: string) => void;
+  goToEditPageHandler: (id: string) => void;
+  goToDetailPage: (id: string) => void;
 }
 
-function BusList({ busData, goToCreatePage }: Props) {
+function BusList({
+  busData,
+  goToCreatePage,
+  deleteItemHandler,
+  goToEditPageHandler,
+  goToDetailPage
+}: Props) {
   const busTitle = getBusTitle();
-  console.log("BusList", busData);
+  console.log(busData);
   return (
     <BodySTY>
       <TableWithEdit
@@ -17,6 +26,9 @@ function BusList({ busData, goToCreatePage }: Props) {
         titles={busTitle}
         data={busData}
         goToCreatePage={goToCreatePage}
+        deleteItem={deleteItemHandler}
+        goToEditPage={goToEditPageHandler}
+        viewItem={goToDetailPage}
       />
     </BodySTY>
   );

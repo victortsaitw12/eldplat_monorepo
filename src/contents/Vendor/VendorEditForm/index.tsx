@@ -1,54 +1,55 @@
 import React, { useState } from "react";
-import { Pane, TextInputField, SelectField } from "evergreen-ui";
+import { Pane, TextInputField, SelectField, TagInput } from "evergreen-ui";
 import FormCard from "@components/FormCard";
 import { StepControlSTY } from "@components/FormCard/style";
 import CheckboxField from "@components/CheckboxField";
-import { I_Add_Vendors_Type } from "@typings/vendors_type";
 import { MOCK_FUEL_DATA } from "./FuelData";
-
+import { useForm } from "react-hook-form";
+import {
+  emailValidation,
+  numberValidation,
+  textValidation
+} from "@utils/inputValidation";
+import FlexWrapper from "@layout/FlexWrapper";
 interface I_addVendorProps {
   submitForm: (data: any) => void;
   onCancel: () => void;
+  oldData?: any;
 }
 
-function AddVendor({ onCancel, submitForm }: I_addVendorProps) {
-  const [tagValue, setTagValue] = useState<string>("benz");
-  const [countryValue, setCountryValue] = useState<string>("taiwan");
+// default value
+const defaultValues = {
+  vendor_Name: "",
+  vendor_Label: "",
+  vendor_Phone: "",
+  vendor_Website: "",
+  vendor_Address: "",
+  vendor_Address2: "",
+  vendor_Zip: "",
+  vendor_State: "",
+  vendor_City: "",
+  vendor_Country: "TW",
+  vendor_Contact_Name: "",
+  vendor_Contact_Phone: "",
+  vendor_Contact_Email: "",
+  vendor_Code: ["01"]
+};
+//🕯️🕯️🕯️此component未來會刪除
+function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
+  const defaultFormValue = oldData ? oldData : defaultValues;
+  const {
+    getValues,
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({ defaultValues: defaultFormValue });
 
   const [fuelValue, setFuelValue] = useState<string[]>(["03"]);
-  const [insertData, setInsertData] = useState<I_Add_Vendors_Type>({
-    vendor_name: "",
-    vendor_label: "",
-    vendor_phone: "",
-    vendor_website: "",
-    vendor_address: "",
-    vendor_address2: "",
-    vendor_zip: "",
-    vendor_state: "",
-    vendor_city: "",
-    vendor_country: "TW",
-    vendor_contact_name: "",
-    vendor_contact_phone: "",
-    vendor_contact_email: "",
-    vendor_code: ["h1"]
-  });
-
-  const handleChange = (e: any) => {
-    const newData: any = { ...insertData };
-    newData[e.target.name] = e.target.value;
-    setInsertData(newData);
-  };
-
-  const submitFormHandler = () => {
-    console.log("insertData", insertData);
-    submitForm(insertData);
-    // setAddVendorActive(false);
-    // Router.reload();
-  };
 
   const toggleFuelValue = (value: string) => {
     const newData = [...fuelValue];
     const idx = fuelValue.indexOf(value);
+
     // 如果在fuelValue陣列抓不到該value，idx會是-1，然後就push一個新的value，反之則刪去
     if (idx === -1) {
       newData.push(value);
@@ -56,166 +57,189 @@ function AddVendor({ onCancel, submitForm }: I_addVendorProps) {
       newData.splice(idx, 1);
     }
     setFuelValue(newData);
-
-    // 設回全部大物件
-    const newInsert = { ...insertData };
-    newInsert.vendor_code = newData;
-    setInsertData(newInsert);
   };
-
+  const [tags, setTags] = React.useState(["Kauri", "Willow"]);
+  console.log("🧨🧨insertData", getValues());
+  console.log("🧨🧨🧨🧨form errors", errors);
   return (
     <Pane marginX="20px">
-      <FormCard formTitle="新增供應商">
-        <div className="w100">
-          <TextInputField
-            label="名稱"
-            name="vendor_name"
-            value={insertData.vendor_name}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="w50">
-          <TextInputField
-            label="電話"
-            name="vendor_phone"
-            value={insertData.vendor_phone}
-            onChange={handleChange}
-          />
-          <TextInputField
-            label="網站"
-            name="vendor_website"
-            value={insertData.vendor_website}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="w100">
-          <TextInputField
-            label="標籤"
-            value={insertData.vendor_label}
-            name="vendor_label"
-            onChange={(e: any) => {
-              handleChange(e);
-              setTagValue(e.target.value);
-            }}
-          />
-        </div>
-
-        <div className="w100">
-          <TextInputField
-            label="地址"
-            hint="街道地址、郵政信箱等"
-            value={insertData.vendor_address}
-            name="vendor_address"
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="w100">
-          <TextInputField
-            label="地址第二列"
-            hint="套房、建築、大樓、樓層等"
-            value={insertData.vendor_address2}
-            name="vendor_address2"
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="w50">
-          <TextInputField
-            label="城市"
-            value={insertData.vendor_city}
-            name="vendor_city"
-            onChange={handleChange}
-          />
-          <TextInputField
-            label="州/省/地區"
-            value={insertData.vendor_state}
-            name="vendor_state"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="w50">
-          <TextInputField
-            label="郵遞區號"
-            value={insertData.vendor_zip}
-            name="vendor_zip"
-            onChange={handleChange}
-          />
-          <SelectField
-            label="國家"
-            value={insertData.vendor_country}
-            name="vendor_country"
-            onChange={(e: any) => {
-              handleChange(e);
-              setCountryValue(e.target.value);
-            }}
-          >
-            <option value="TW">台灣</option>
-            <option value="JP">日本</option>
-            <option value="US">美國</option>
-          </SelectField>
-        </div>
-      </FormCard>
-
-      <FormCard formTitle="聯絡人">
-        <div className="w100">
-          <TextInputField
-            label="聯絡人"
-            value={insertData.vendor_contact_name}
-            name="vendor_contact_name"
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="w50">
-          <TextInputField
-            label="電話"
-            hint="聯絡人的專線或手機號碼"
-            value={insertData.vendor_contact_phone}
-            name="vendor_contact_phone"
-            onChange={handleChange}
-          />
-          <TextInputField
-            label="信箱"
-            value={insertData.vendor_contact_email}
-            name="vendor_contact_email"
-            onChange={handleChange}
-          />
-        </div>
-      </FormCard>
-
-      <FormCard formTitle="分類">
-        {MOCK_FUEL_DATA.map((item) => {
-          // 現在是供應商(車) => 所以只有03可選
-          if (item.value === "03")
-            return (
-              <div key={item.label} className="w100">
-                <CheckboxField
-                  label={item.label}
-                  hint={item.hint}
-                  item={item}
-                  checked={fuelValue.includes(item.value)}
-                  toggleFuelValue={toggleFuelValue}
+      <form
+        onSubmit={handleSubmit((data) => {
+          console.log("🧨🧨🧨🧨🧨🧨這是用form-hook的data:", {
+            ...data,
+            vendor_Code: fuelValue
+          });
+          submitForm({ ...data, vendor_Code: fuelValue });
+        })}
+      >
+        <FlexWrapper>
+          <div>
+            <FormCard formTitle="基本資料">
+              <div className="w100">
+                <TextInputField
+                  label="名稱"
+                  {...register("vendor_Name", {
+                    required: "必填",
+                    validate: textValidation
+                  })}
+                />
+                {/*錯誤訊息範例*/}
+                {errors.vendor_Name && (
+                  <span style={{ color: "red" }}>
+                    {errors.vendor_Name.message as string}
+                  </span>
+                )}
+                {/* {errors.vendor_Name && <span>{errors.vendor_Name?.message as string}</span>} */}
+                {/* {errors.vendor_Name && errors.vendor_Name.type === "maxLength" && <span>Max length exceeded</span>} */}
+              </div>
+              <div className="w50">
+                <TextInputField
+                  label="電話"
+                  {...register("vendor_Phone", {
+                    required: "必填",
+                    validate: numberValidation
+                  })}
+                />
+                <TextInputField
+                  label="網站"
+                  {...register("vendor_Website", {
+                    required: "必填"
+                  })}
                 />
               </div>
-            );
-        })}
-      </FormCard>
 
-      <StepControlSTY>
-        <button onClick={onCancel}>取消</button>
+              <div className="w100">
+                <TextInputField
+                  label="標籤 (最多只允許2字元)"
+                  {...register("vendor_Label", {
+                    maxLength: 2
+                  })}
+                />
+              </div>
 
-        <div className="next-step">
-          {/* <button className="bordered" onClick={handleSubmitThenAddAnother}>
+              <div className="w100">
+                <TextInputField
+                  label="地址"
+                  hint="街道地址、郵政信箱等"
+                  {...register("vendor_Address", {
+                    required: "必填"
+                  })}
+                />
+              </div>
+
+              <div className="w100">
+                <TextInputField
+                  label="地址第二列"
+                  hint="套房、建築、大樓、樓層等"
+                  {...register("vendor_Address2", {
+                    required: "必填"
+                  })}
+                />
+              </div>
+
+              <div className="w50">
+                <TextInputField
+                  label="城市"
+                  {...register("vendor_City", {
+                    required: "必填"
+                  })}
+                />
+                <TextInputField
+                  label="州/省/地區"
+                  {...register("vendor_State", {
+                    required: "必填"
+                  })}
+                />
+              </div>
+              <div className="w50">
+                <TextInputField
+                  label="郵遞區號"
+                  {...register("vendor_Zip", {
+                    required: "必填"
+                  })}
+                />
+                <SelectField
+                  label="國家"
+                  {...register("vendor_Country", {
+                    required: "必填"
+                  })}
+                >
+                  <option value="TW">台灣</option>
+                  <option value="JP">日本</option>
+                  <option value="US">美國</option>
+                </SelectField>
+              </div>
+            </FormCard>
+            <FlexWrapper padding="10px 0">
+              <FormCard formTitle="分類">
+                {MOCK_FUEL_DATA.map((item) => {
+                  // 現在是供應商(車) => 所以只有03可選
+                  if (item.value === "03")
+                    return (
+                      <div key={item.label} className="w100">
+                        <CheckboxField
+                          label={item.label}
+                          hint={item.hint}
+                          item={item}
+                          checked={fuelValue.includes(item.value)}
+                          toggleFuelValue={toggleFuelValue}
+                        />
+                      </div>
+                    );
+                })}
+              </FormCard>
+              <FormCard formTitle="標籤">
+                <TagInput
+                  inputProps={{ placeholder: "標籤上限2字元" }}
+                  values={tags}
+                  // width="100%"
+                  onChange={(values) => {
+                    setTags(values);
+                  }}
+                />
+              </FormCard>
+            </FlexWrapper>
+          </div>
+          <FormCard formTitle="聯絡方式">
+            <div className="w100">
+              <TextInputField
+                label="聯絡人"
+                {...register("vendor_Contact_Name", {
+                  required: "必填"
+                })}
+              />
+            </div>
+            <div className="w50">
+              <TextInputField
+                label="電話"
+                hint="聯絡人的專線或手機號碼"
+                {...register("vendor_Contact_Phone", {
+                  required: "必填",
+                  validate: numberValidation
+                })}
+              />
+              <TextInputField
+                label="信箱"
+                {...register("vendor_Contact_Email", {
+                  required: "必填",
+                  validate: emailValidation
+                })}
+              />
+            </div>
+          </FormCard>
+        </FlexWrapper>
+        <StepControlSTY>
+          <button onClick={onCancel}>取消</button>
+          <div className="next-step">
+            {/* <button className="bordered" onClick={handleSubmitThenAddAnother}>
             儲存&新增另一筆
           </button> */}
-          <button className="fill" onClick={submitFormHandler}>
-            儲存供應商
-          </button>
-        </div>
-      </StepControlSTY>
+            <button className="fill" type="submit">
+              儲存供應商
+            </button>
+          </div>
+        </StepControlSTY>
+      </form>
     </Pane>
   );
 }

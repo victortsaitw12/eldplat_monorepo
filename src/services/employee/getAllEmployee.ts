@@ -13,19 +13,19 @@ export const getAllEmployees = async (filter: { [key: string]: any } = {}) => {
   }
   console.log("employeeFilter", employeeFilter);
 
-  const res = await fetch(
-    "https://localhost:7188/Gateway_AccountDriver/Account/QueryAccountList/api/QueryAccountList/1",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        filters: employeeFilter,
-        filter_Needed: true
-      })
-    }
-  );
+  const res = await fetch("https://localhost:7088/ATR/GetAccountList", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    },
+    body: JSON.stringify({
+      filters: employeeFilter,
+      filter_Needed: false,
+      pageInfo: { page_Index: 1, page_Size: 10 },
+      user_status: "1"
+    })
+  });
   return res.json();
 };
 

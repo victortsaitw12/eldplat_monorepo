@@ -1,6 +1,5 @@
 import React from "react";
 import { Pane, TextInputField } from "evergreen-ui";
-import { StepControlSTY } from "@components/FormCard/style";
 import FormCard from "@components/FormCard";
 
 function Lifecycle() {
@@ -64,15 +63,6 @@ function Lifecycle() {
           />
         </div>
       </FormCard>
-
-      {/* <StepControlSTY>
-        <button>Cancel</button>
-
-        <div className="next-step">
-          <button className="bordered">Save & Add Another</button>
-          <button className="fill">Save Vehicle</button>
-        </div>
-      </StepControlSTY> */}
     </Pane>
   );
 }

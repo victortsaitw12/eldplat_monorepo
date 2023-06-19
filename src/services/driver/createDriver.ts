@@ -1,19 +1,21 @@
 // 新增駕駛編號 (未填寫資料)  InsertFilterUserToDriver
 export const createDriverNO = async (data: any) => {
+  console.log("dataInsert:", data);
   const res = await fetch(
-    `https://localhost:7188/Gateway_AccountDriver/Driver/InsertFilterUserToDriver/api/InsertFilterUserToDriver/1?userNO=${data}`,
+    `https://localhost:7088/ATR/InsertFilterUserToDriver?userNo=${data}`,
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
       }
     }
   );
   return res.json();
 };
 
-// 新增駕駛資料 InsertDriver
-export const insertDriverInfo = async (driverData: any) => {
+// 新增駕駛資料 updateDriverInfo
+export const updateDriverInfo = async (driverData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
   for (const key in driverData) {
     console.log("key", key);
@@ -29,7 +31,8 @@ export const insertDriverInfo = async (driverData: any) => {
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
       },
       body: JSON.stringify(filteredNullData)
     }

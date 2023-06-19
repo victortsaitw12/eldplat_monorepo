@@ -7,16 +7,17 @@ interface Props {
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
   goToEditPageHandler: (id: string) => void;
+  goToDetailPage: (id: string) => void;
 }
 
 function ClientList({
   clientData,
   goToCreatePage,
   deleteItemHandler,
-  goToEditPageHandler
+  goToEditPageHandler,
+  goToDetailPage
 }: Props) {
   const clientTitle = getCustomerTitle();
-  console.log("clientData", clientData);
   return (
     <BodySTY>
       <TableWithEdit
@@ -26,6 +27,7 @@ function ClientList({
         goToCreatePage={goToCreatePage}
         deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}
+        viewItem={goToDetailPage}
       />
     </BodySTY>
   );

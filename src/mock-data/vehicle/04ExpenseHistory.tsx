@@ -16,7 +16,7 @@ export const EXPENSE_lIST_DATA = [
     id: 0,
     vehicle: (
       <>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         1100 [2018 Toyota Prius]
       </>
     ),
@@ -31,7 +31,7 @@ export const EXPENSE_lIST_DATA = [
     id: 1,
     vehicle: (
       <>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         1100 [2018 Toyota Prius]
       </>
     ),
@@ -46,7 +46,7 @@ export const EXPENSE_lIST_DATA = [
     id: 2,
     vehicle: (
       <>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         1100 [2018 Toyota Prius]
       </>
     ),
@@ -61,7 +61,7 @@ export const EXPENSE_lIST_DATA = [
     id: 3,
     vehicle: (
       <>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         1100 [2018 Toyota Prius]
       </>
     ),
@@ -73,11 +73,6 @@ export const EXPENSE_lIST_DATA = [
     watchers: ""
   }
 ];
-
-const handleCheck = (checkedItems: any) => {
-  console.log(checkedItems);
-};
-
 // =========================================================
 
 // ExpenseListDetail dummy data
@@ -86,7 +81,7 @@ export const EXPENSE_lIST_DETAIL_TITLE = "Details";
 export const EXPENSE_lIST_DETAIL_DATA = {
   Vehicle: (
     <>
-      <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+      <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
       1100 [2018 Toyota Prius]
     </>
   ),

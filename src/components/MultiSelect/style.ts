@@ -9,7 +9,10 @@ export const MultiSelectSTY = styled.div`
     .evergreen-group {
       width: 100%;
       .evergreen-tagInput {
+        color: ${({ theme }) => theme.color.B500};
         width: 100%;
+        padding-top: 0;
+        padding-bottom: 0;
         &:hover {
           cursor: pointer;
         }

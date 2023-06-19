@@ -1,11 +1,6 @@
 import Image from "next/image";
 
-import {
-  TagSTY,
-  ImageSTY,
-  StatusSTY,
-  AvatarSTY
-} from "@components/Table/style";
+import { TagSTY, ImageSTY } from "@components/Table/style";
 
 // ExpnseList dummy data
 export const EXPENSE_lIST_TITLES = [
@@ -22,7 +17,7 @@ export const EXPENSE_lIST_DATA = [
     id: 0,
     vehicle: (
       <>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         1100 [2018 Toyota Prius]
       </>
     ),
@@ -36,7 +31,7 @@ export const EXPENSE_lIST_DATA = [
     id: 1,
     vehicle: (
       <>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         1100 [2018 Toyota Prius]
       </>
     ),
@@ -50,7 +45,7 @@ export const EXPENSE_lIST_DATA = [
     id: 2,
     vehicle: (
       <>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         1100 [2018 Toyota Prius]
       </>
     ),
@@ -64,7 +59,7 @@ export const EXPENSE_lIST_DATA = [
     id: 3,
     vehicle: (
       <>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         1100 [2018 Toyota Prius]
       </>
     ),
@@ -82,7 +77,7 @@ export const MOCK_DATA = [
     Vehicle: (
       <>
         <ImageSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </ImageSTY>
         1100 [2018 Toyota Prius]
         <TagSTY>Sample</TagSTY>

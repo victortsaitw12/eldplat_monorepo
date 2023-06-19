@@ -1,25 +1,66 @@
-type MENU = {
-  no: string;
-  menu_no: string;
-  menu_name: string;
-  main_category?: string;
-  menu_url: string;
-  menu_lvl: number;
-  menu_sort?: number;
-  menu_status: string;
-  creid: string;
-  credate: Date;
-  updid?: string;
-  upddate?: Date;
-};
+// type MENU = {
+//   no: string;
+//   menu_no: string;
+//   menu_name: string;
+//   main_category?: string;
+//   menu_url: string;
+//   menu_lvl: number;
+//   menu_sort?: number;
+//   menu_status: string;
+//   creid: string;
+//   credate: Date;
+//   updid?: string;
+//   upddate?: Date;
+// };
 const homePageData = [
+  {
+    name: "公司設定",
+    url: "/",
+    subList: [
+      {
+        name: "公司清單",
+        url: "/company",
+        subList: null
+      }
+    ]
+  },
   {
     name: "供應商",
     url: "/",
     subList: [
       {
-        name: "供應商清單",
-        url: "/vendor",
+        name: "外部車隊",
+        url: "/vendor?codeType=01",
+        subList: null
+      },
+      {
+        name: "維修廠",
+        url: "/vendor?codeType=03",
+        subList: null
+      },
+      {
+        name: "燃料",
+        url: "/vendor?codeType=05",
+        subList: null
+      },
+      {
+        name: "Etag",
+        url: "/vendor?codeType=07",
+        subList: null
+      },
+      {
+        name: "設備庫存",
+        url: "/vendor?codeType=02",
+        subList: null
+      },
+      {
+        name: "保險",
+        url: "/vendor?codeType=04",
+        subList: null
+      },
+      {
+        name: "其他",
+        url: "/vendor?codeType=06",
         subList: null
       }
     ]
@@ -173,23 +214,18 @@ const homePageData = [
     url: "/",
     subList: [
       {
-        name: "維保歷史",
-        url: "/",
+        name: "維保通知",
+        url: "/maintenance/notice",
         subList: null
       },
       {
         name: "維保任務",
-        url: "/",
+        url: "/maintenance/mission",
         subList: null
       },
       {
-        name: "維保項目",
-        url: "/",
-        subList: null
-      },
-      {
-        name: "維修廠",
-        url: "/",
+        name: "維保紀錄",
+        url: "/maintenance/record",
         subList: null
       }
     ]

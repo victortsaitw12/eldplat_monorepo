@@ -2,13 +2,33 @@ import { create } from "zustand";
 import { deepClone } from "@utils/deepClone";
 
 interface StateTypes {
+  subFilter: any;
+  mainFilter: string;
+  selectedForm: string;
+  initializeSubFilter: () => void;
+  updateSubFilter: (key: string, value: string) => void;
+  isDrawerOpen: boolean;
+  setDrawerOpen: (value: boolean) => void;
+  updateMainFilter: (value: string) => void;
+  updateSelectedForm: (value: string) => void;
   filter: any;
-  initializeFilter: () => void;
-  updateFilter: (key: string, value: string) => void;
+  // initializeFilter: () => void;
+  // updateFilter: (key: string, value: string) => void;
 }
-export const useFilterStore = create<StateTypes>((set) => ({
+export const useEmployeeFilterStore = create<StateTypes>((set) => ({
+  subFilter: null,
+  mainFilter: "",
+  selectedForm: "",
+  isDrawerOpen: false,
+  setDrawerOpen: (value: boolean) => {
+    return set(() => {
+      return {
+        isDrawerOpen: value
+      };
+    });
+  },
   filter: null,
-  initializeFilter: () => {
+  initializeSubFilter: () => {
     const filter: any = {};
     const initFilter = localStorage.getItem("employeeInitFilter");
     if (!initFilter) return;
@@ -16,19 +36,33 @@ export const useFilterStore = create<StateTypes>((set) => ({
       filter[item.field_Name] = item;
       filter[item.field_Name].value = "";
     }
-    return set((state) => {
+    return set(() => {
       return {
         filter
       };
     });
   },
-  updateFilter: (key: string, value: string) => {
+  updateMainFilter: (value: string) => {
+    return set(() => {
+      return {
+        mainFilter: value
+      };
+    });
+  },
+  updateSubFilter: (key: string, value: string) => {
     console.log("updateFilter", key, value);
     return set((state) => {
-      const newFilter = deepClone(state.filter);
+      const newFilter = deepClone(state.subFilter);
       newFilter[key].value = value;
       return {
-        filter: newFilter
+        subFilter: newFilter
+      };
+    });
+  },
+  updateSelectedForm: (value: string) => {
+    return set(() => {
+      return {
+        selectedForm: value
       };
     });
   }

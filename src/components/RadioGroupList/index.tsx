@@ -13,7 +13,7 @@ function RadioGroupList({ title, hint, children }: I_RadioGroupList) {
     <RadioGroupListSTY>
       <h3 className="title">{title}</h3>
       <p className="hint">{hint}</p>
-      {children}
+      <div className="radio-container">{children}</div>
     </RadioGroupListSTY>
   );
 }

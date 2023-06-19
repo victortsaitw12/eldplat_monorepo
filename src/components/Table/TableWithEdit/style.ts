@@ -48,8 +48,7 @@ const TableContainerSTY = styled.div`
 
 // 表格本身
 const TableSTY = styled.table`
-  /* width: 100%; */
-  min-width: 100%;
+  /* min-width: 100%; */
   border: 1px solid ${({ theme }) => theme.color.N300};
   /* border-collapse: collapse; */
   border-radius: 4px;
@@ -102,6 +101,17 @@ const TableSTY = styled.table`
     height: 6px;
     border-radius: 50%;
     background-color: green;
+  }
+  .noDataShown {
+    min-height: 32px;
+    div {
+      width: 100%;
+      height: 32px;
+      vertical-align: middle;
+      line-height: 32px;
+      position: absolute;
+      text-align: center;
+    }
   }
 `;
 

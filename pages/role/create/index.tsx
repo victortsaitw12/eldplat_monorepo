@@ -2,7 +2,6 @@ import React from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
-import MainBookmark from "@contents/MainBookmark";
 import { Pane } from "evergreen-ui";
 import RoleEditForm from "@features/roles/RoleEditForm";
 import { BodySTY } from "./style";

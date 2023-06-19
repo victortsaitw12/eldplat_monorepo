@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { LightBoxBlock } from "./style";
 
 export interface I_LightBoxProps {
+  wrapperStyle?: React.CSSProperties;
   title: string;
   children?: React.ReactNode;
   isOpen: boolean;
@@ -10,6 +11,7 @@ export interface I_LightBoxProps {
 }
 
 function LightBox({
+  wrapperStyle,
   title,
   children,
   isOpen,
@@ -23,7 +25,7 @@ function LightBox({
   if (!mounted) return null;
   return createPortal(
     <LightBoxBlock isOpen={isOpen} onClick={handleCloseLightBox}>
-      <div className="wrapper" onClick={stopPropagation}>
+      <div style={wrapperStyle} className="wrapper" onClick={stopPropagation}>
         <div className="titleWrap">
           <div className="title">{title}</div>
           <div className="closeBtn" onClick={handleCloseLightBox}>

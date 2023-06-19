@@ -12,9 +12,10 @@ import React, { useEffect, useState } from "react";
 // import { language_DATA } from "./data";
 import NewLanguage from "./NewLanguage";
 import { BodySTY } from "./style";
+import { language_DATA } from "./data";
 
 interface I_languageType {
-  languag: string;
+  language: string;
   listen: string;
   speak: string;
   read: string;
@@ -25,17 +26,55 @@ interface I_languageType {
 interface I_Language_Props {
   insertData: any;
   setInsertData: (insertData: any) => void;
+  editData: any;
 }
 
-function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
-  const [insertLang, setInsertLang] = useState<I_languageType[]>([]);
+function LanguageAbility({
+  insertData,
+  setInsertData,
+  editData
+}: I_Language_Props) {
+  const [insertLang, setInsertLang] = useState<I_languageType[]>([]); // 檢視樣子的:
+  // [{language:"中文", listen:"聽-精通", read:"讀-精通", saved:true, speak:"說-精通", write:"寫-精通"}]
   const [LangForApi, setLangForApi] = useState<any[]>([]);
+
+  // 一進來有editData的話先設好要顯示的語言們
+  useEffect(() => {
+    const editLangArr = editData?.languages; // 從api取回來的資料是代碼形式的: speak:1 之類的
+    setLangForApi(editLangArr);
+    const transLangArr = editLangArr?.map((v: any) => {
+      const compareLang = language_DATA.language.find((item) => {
+        return item.value === v.language;
+      });
+      const compareListen = language_DATA.listen.find((item) => {
+        return item.value === v.listen;
+      });
+      const compareSpeak = language_DATA.speak.find((item) => {
+        return item.value === v.speak;
+      });
+      const compareRead = language_DATA.read.find((item) => {
+        return item.value === v.read;
+      });
+      const compareWrite = language_DATA.write.find((item) => {
+        return item.value === v.write;
+      });
+      return {
+        language: compareLang?.label,
+        listen: compareListen?.label,
+        speak: compareSpeak?.label,
+        read: compareRead?.label,
+        write: compareWrite?.label,
+        saved: true
+      };
+    });
+    setInsertLang(transLangArr);
+  }, [editData]);
 
   // 新增語言空欄位
   const handleInsertLang = () => {
     setInsertLang((prev) => [
       ...prev,
-      { languag: "", listen: "", speak: "", read: "", write: "", saved: false }
+      { language: "", listen: "", speak: "", read: "", write: "", saved: false }
     ]);
   };
 
@@ -44,19 +83,14 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
     return (lang: I_languageType) => {
       const newLangs = [...insertLang];
       newLangs[idx] = { ...lang, saved: true };
-      console.log("newLangs", newLangs);
       setInsertLang(newLangs);
     };
   };
 
   // 移除該欄語言
   const handleRemoveLang = (idx: number, e: any) => {
-    console.log("idx-------", idx);
-
-    console.log("e", e);
     setInsertLang(
       insertLang.filter((item, i) => {
-        console.log("新增的i", i);
         return i !== idx;
       })
     );
@@ -66,7 +100,7 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
       })
     );
     const newData = { ...insertData };
-    newData.languags = LangForApi;
+    newData.languages = LangForApi;
     setInsertData(newData);
   };
 
@@ -85,7 +119,7 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
 
     // TODO: 移除大物件(insertData)中該物件
     const newData = { ...insertData };
-    newData.languags = LangForApi;
+    newData.languages = LangForApi;
     setInsertData(newData);
   };
 
@@ -97,13 +131,9 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
 
   useEffect(() => {
     const newData = { ...insertData };
-    newData.languags = LangForApi;
-    console.log("newData", newData);
+    newData.languages = LangForApi;
     setInsertData(newData);
   }, [LangForApi, setInsertData]);
-
-  console.log("🎗insertLang", insertLang);
-  console.log("🎨LangForApi", LangForApi);
 
   return (
     <BodySTY>
@@ -120,13 +150,12 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
         </Button>
       </Pane>
 
-      {insertLang.map((lang_line, idx) => {
+      {insertLang?.map((lang_line, idx) => {
         console.log("lang_line", lang_line);
-
         if (lang_line.saved)
           return (
             <Pane className="input-line">
-              <Text>{lang_line.languag}</Text>
+              <Text>{lang_line.language}</Text>
               <Pane className="content-line">
                 <Pane className="description">
                   <Text>{lang_line.listen}</Text>
