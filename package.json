@@ -6,6 +6,7 @@
     "dev": "next dev",
     "dev:compile-lang": "npm-run-all --parallel dev lang:compile",
     "build": "next build",
+    "build:compile-lang": "npm-run-all --parallel lang:compile build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
