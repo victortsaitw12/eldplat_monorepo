@@ -57,8 +57,7 @@ const Quote = ({
   const handleToggle = () => {
     return;
   };
-  const currentStatus =
-    data.orderStatusesList[data.orderStatusesList.length - 1].status_code;
+
   return (
     <DivSTY>
       <PaymentBtn data={data} setData={setData} />
@@ -69,7 +68,9 @@ const Quote = ({
             <div className="collapse">
               <div className="collapse__title">
                 <span style={{ fontSize: "16px" }}>
-                  {currentStatus === "1" ? "初估金額" : "總金額"}
+                  {data.orderStatusesList[1].status === "pending"
+                    ? "初估金額"
+                    : "總金額"}
                 </span>
                 <span>NT${data.quote_total_amount}</span>
               </div>

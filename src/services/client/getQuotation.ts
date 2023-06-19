@@ -17,8 +17,9 @@ export const getQuotation = async (quote_no: string) => {
 };
 
 export interface I_StatusList {
-  status_code: string; //"1",
-  upddate: string; //"2023-06-07 16:31"
+  name: string;
+  status: string; //"ok","pending","error",
+  date: string; //"2023-06-07 16:31"
 }
 export interface I_Contact {
   quote_no: string;

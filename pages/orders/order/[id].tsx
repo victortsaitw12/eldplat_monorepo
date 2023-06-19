@@ -1,6 +1,5 @@
 import React from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
-import { useRouter } from "next/router";
 import { Spinner } from "evergreen-ui";
 
 import { getLayout } from "@layout/QuoteLayout";
@@ -12,6 +11,7 @@ import Quote from "@contents/Orders/Quote";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 import StatusCard from "@components/StatusCard";
 import { ParsedUrlQuery } from "querystring";
+import PaymentMethod from "@contents/Orders/PaymentMethod";
 
 const Page: NextPageWithLayout<never> = ({ quote_no }) => {
   // ----- variables, states ----- //
@@ -68,6 +68,9 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
         {data && (
           <div className="right">
             <Quote data={data} setData={setData} />
+            {data.orderStatusesList[1].status === "ok" && (
+              <PaymentMethod data={data} />
+            )}
           </div>
         )}
       </BodySTY>
