@@ -50,7 +50,7 @@ const Quote = ({
       label: "特殊需求小計",
       name: "extra_charge",
       value: data.extra_charge || 0,
-      hint: "特殊需求小計"
+      hint: "舉牌、司導、指定車齡、特殊行李、寵物、額外杯水瓶裝水、兒童與嬰兒座椅"
     }
   ];
   // ----- function ----- //
@@ -83,7 +83,7 @@ const Quote = ({
                 ) : (
                   <>
                     <span>訂金</span>
-                    <span> NT${data.deposit}</span>
+                    <span> NT${data.deposit_amount}</span>
                   </>
                 )}
               </div>

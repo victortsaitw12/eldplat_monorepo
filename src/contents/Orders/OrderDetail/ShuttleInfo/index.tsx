@@ -72,6 +72,8 @@ const ShuttleInfo = ({ isEdit, arrayName }: I_Props) => {
               isEdit={isEdit}
               disabledFirst={true}
               control={control}
+              pickup_location={child.pickup_location}
+              dropoff_location={child.dropoff_location}
             />
           </Pane>
         </Collapse>

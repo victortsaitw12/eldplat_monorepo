@@ -31,7 +31,8 @@ const PaymentBtn = ({
     //接後端API更改status_qode = '5'
     const status_code = "5";
     try {
-      const res = await updateStatus(status_code, data.quote_no);
+      const resFE = await updateStatus(status_code, "FE", data.quote_no);
+      const resBE = await updateStatus(status_code, "BE", data.quote_no);
       console.log("確認接受報價");
       setTimeout(() => setIsLightBoxOpen(false), 1000);
       toaster.success("接受報價", {
@@ -50,26 +51,35 @@ const PaymentBtn = ({
   const handlePayment = async (status_code: string) => {
     try {
       //接後端串金流API ->後端確認支付 -> 後端更改status_qode = '6' 已付全額 ('7'已付訂金 '8'已付尾款)
-      if (status_code === "6")
+      if (status_code === "6") {
+        //已付全額
+        const resBE = await updateStatus(status_code, "BE", data.quote_no);
         toaster.success("付款完成", {
           description: `訂單 ${data.quote_no} 總金額 ${data.quote_total_amount}，已付款完成。`,
           duration: 2,
           hasCloseButton: true
         });
-      if (status_code === "7")
+      }
+      if (status_code === "7") {
+        //已付訂金
+        const resBE = await updateStatus(status_code, "BE", data.quote_no);
         toaster.success("訂金付款完成", {
-          description: `訂單 ${data.quote_no} 訂金 ${data.deposit}，已付款完成。`,
+          description: `訂單 ${data.quote_no} 訂金 ${data.deposit_amount}，已付款完成。`,
           duration: 2,
           hasCloseButton: true
         });
-      if (status_code === "8")
+      }
+      if (status_code === "8") {
+        //已付尾款
+        const resBE = await updateStatus(status_code, "BE", data.quote_no);
         toaster.success("尾款付款完成", {
-          description: `訂單 ${data.quote_no} 尾款 ${data.final_payment}，已付款完成。`,
+          description: `訂單 ${data.quote_no} 尾款 ${data.balance_amount}，已付款完成。`,
           duration: 2,
           hasCloseButton: true
         });
+      }
     } catch (e: any) {
-      console.log("somehting wrong:", e.message);
+      console.log("somehting's wrong:", e.message);
     } finally {
       handleRefetch();
     }
@@ -104,7 +114,7 @@ const PaymentBtn = ({
             支付尾款
           </PrimaryRadiusBtn>
         );
-      return !data.isfullpay ? (
+      return data.isfullpay ? (
         <PrimaryRadiusBtn
           appearance="primary"
           onClick={handlePayment.bind(null, "6")}

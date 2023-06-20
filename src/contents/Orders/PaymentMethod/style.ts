@@ -6,13 +6,20 @@ export const DivSTY = styled.div`
     }
     &_content {
       padding: 20px;
-      li {
-        font-weight: ${({ theme }) => theme.fontWeight.Heading400};
-        height: 32px;
-        justify-content: space-between;
-        span {
-          flex: unset;
+      .detail_list {
+        gap: 14.5px;
+        .detail_item {
+          justify-content: space-between;
+          &:first-child {
+            font-weight: ${({ theme }) => theme.fontWeight.Heading400};
+          }
+          span {
+            flex: unset;
+          }
         }
+      }
+      .detail_list:not(:first-child) {
+        margin-top: 26.5px;
       }
     }
   }
