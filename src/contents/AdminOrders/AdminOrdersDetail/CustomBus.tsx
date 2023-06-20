@@ -73,9 +73,12 @@ const CustomBus = ({ isEdit, orderData, busData, methods }: I_Props) => {
       </Collapse>
       <Collapse opened={true} title="客製包車">
         {isEdit ? (
-          <CarInfoEdit />
+          <CarInfoEdit quote_type={orderData?.quote_type} />
         ) : (
-          <CarInfoView purpose={orderData?.purpose} />
+          <CarInfoView
+            quote_type={orderData?.quote_type}
+            purpose={orderData?.purpose}
+          />
         )}
       </Collapse>
       <Collapse opened={true} title="訂單聯絡人">

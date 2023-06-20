@@ -74,9 +74,12 @@ const AirlineShuttle = ({ isEdit, orderData, busData, methods }: I_Props) => {
       </Collapse>
       <Collapse opened={true} title="機場接送">
         {isEdit ? (
-          <CarInfoEdit />
+          <CarInfoEdit quote_type={orderData?.quote_type} />
         ) : (
-          <CarInfoView purpose={orderData?.purpose} />
+          <CarInfoView
+            quote_type={orderData?.quote_type}
+            purpose={orderData?.purpose}
+          />
         )}
       </Collapse>
       <Collapse opened={true} title="訂單聯絡人">

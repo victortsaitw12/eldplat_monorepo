@@ -17,7 +17,6 @@ interface I_Props {
   register: UseFormRegister<any>;
   isEdit?: boolean;
   disabledFirst?: boolean;
-  isCustomBus?: boolean;
 }
 
 const ScheduleList = ({
@@ -30,8 +29,7 @@ const ScheduleList = ({
   register,
   fatherArrayName,
   dayIndex,
-  arrayName,
-  isCustomBus = true
+  arrayName
 }: I_Props) => {
   const { fields, append, remove } = useFieldArray({
     control,
