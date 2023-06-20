@@ -180,6 +180,7 @@ const AirlineShuttle = ({ isEdit, orderData, busData, methods }: I_Props) => {
         quote_no={orderData.quote_no}
         arrayName="order_itinerary_list"
         isEdit={isEdit}
+        isCustomBus={false}
       />
       <Collapse opened={true} title="乘車資訊">
         {isEdit ? (

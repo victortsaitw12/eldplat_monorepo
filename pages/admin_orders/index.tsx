@@ -93,7 +93,6 @@ const Page: NextPageWithLayout<{
         //       label: order["order_status"],
         //       value: order["order_status"]
         //     },
-        //     //接單下階段才會做
         //     person_name: {
         //       label: "-",
         //       value: "-"
@@ -267,7 +266,13 @@ const Page: NextPageWithLayout<{
                 setDrawerOpen(false);
               }}
             >
-              <AdminOrderCreateForm />
+              <AdminOrderCreateForm
+                reloadData={() => {
+                  setDrawerOpen(false);
+                  setData([]);
+                  getDataByTab(nowTab);
+                }}
+              />
             </Drawer>
           )}
           {/* <SideBookMark /> */}
