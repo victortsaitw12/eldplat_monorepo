@@ -50,15 +50,14 @@ const Quote = ({
       label: "特殊需求小計",
       name: "extra_charge",
       value: data.extra_charge || 0,
-      hint: "特殊需求小計"
+      hint: "舉牌、司導、指定車齡、特殊行李、寵物、額外杯水瓶裝水、兒童與嬰兒座椅"
     }
   ];
   // ----- function ----- //
   const handleToggle = () => {
     return;
   };
-  const currentStatus =
-    data.orderStatusesList[data.orderStatusesList.length - 1].status_code;
+
   return (
     <DivSTY>
       <PaymentBtn data={data} setData={setData} />
@@ -69,7 +68,9 @@ const Quote = ({
             <div className="collapse">
               <div className="collapse__title">
                 <span style={{ fontSize: "16px" }}>
-                  {currentStatus === "1" ? "初估金額" : "總金額"}
+                  {data.orderStatusesList[1].status === "pending"
+                    ? "初估金額"
+                    : "總金額"}
                 </span>
                 <span>NT${data.quote_total_amount}</span>
               </div>
@@ -82,7 +83,7 @@ const Quote = ({
                 ) : (
                   <>
                     <span>訂金</span>
-                    <span> NT${data.deposit}</span>
+                    <span> NT${data.deposit_amount}</span>
                   </>
                 )}
               </div>

@@ -17,8 +17,9 @@ export const getQuotation = async (quote_no: string) => {
 };
 
 export interface I_StatusList {
-  status_code: string; //"1",
-  upddate: string; //"2023-06-07 16:31"
+  name: string;
+  status: string; //"ok","pending","error",
+  date: string; //"2023-06-07 16:31"
 }
 export interface I_Contact {
   quote_no: string;
@@ -48,9 +49,15 @@ export interface I_Itinerary {
   dropoff_location: string | null;
 }
 export interface I_OrderDetail {
+  actual_full_payment_date: string | null;
+  actual_deposit_date: string | null;
+  actual_balance_date: string | null;
   airport: string | null;
   airline: string | null;
   adult: number | null;
+  balance_amount: number | null;
+  balance_period: string | null;
+  balance_history: string | null; //01: 現金 02: 匯款
   bus_data: I_BusType[];
   bus_age_check: any | null;
   bus_age: string; //"01"
@@ -61,6 +68,8 @@ export interface I_OrderDetail {
   bring_pets_charge: number; // 100,
   bottled_water_charge: number; //100,
   basic_amount: number; //2000,
+  bus_age_charge: number; //100,
+  customer_check: number; //null,
   child_seat_charge: number; // 50,
   child_seat_check: string; //"1",
   child_seat_seller: number; //0,
@@ -72,23 +81,32 @@ export interface I_OrderDetail {
   check_in_luggage: number | null;
   carry_on_luggage: number | null;
   departure_date: string | null; // "2024-02-01T00:00:00",
+  deposit_tax: string | null;
+  deposit_percent: number | null;
+  deposit_amount: number | null;
+  deposit_period: string | null;
+  deposit_history: string | null; //01: 現金 02: 匯款
+  dropoff_time: string | null;
+  driver_guide_charge: number; //600,
+  driver_guide_check: string; //"0"
+  flight_date: string | null;
+  flight_number: string | null;
+  flight_departure_time: string | null;
+  full_payment_tax: string;
+  full_payment_period: string | null;
+  full_payment_history: string | null; //01: 現金 02: 匯款
   orderStatusesList: I_StatusList[];
   quote_no: string;
   quote_type: string;
   return_date: string | null; // "2024-02-01T00:00:00",
   purpose: string | null; //"01"
   pickup_date: string | null;
-  dropoff_time: string | null;
-  flight_date: string | null;
-  flight_number: string | null;
   terminal: string | null;
-  flight_departure_time: string | null;
   infant: number | null;
   isfullpay: boolean;
   order_contact_list: I_Contact[];
   pickup_sign_check: string; //"1"
   pickup_sign_remark: string; //"舉牌備註"
-  driver_guide_check: string; //"0"
   special_luggage_check: string; //"1"
   mineral_water_check: string; //"0"
   infant_seat_check: string; //1",
@@ -99,18 +117,14 @@ export interface I_OrderDetail {
   high_season_charge: number; //100,
   night_charge: number; //100,
   remote_charge: number; //100,
-  driver_guide_charge: number; //600,
-  bus_age_charge: number; //100,
   special_luggage_charge: number; //100,
   mineral_water_charge: number; // 100,
   infant_seat_charge: number; //50,
   extra_charge: number; // 0,
   discount: any | null;
   quote_change_count: number; // null,
-  customer_check: number; //null,
+  checkdeposit: boolean;
   deposit: number; // 0,
-  final_payment: any | null;
   quote_total_amount: number; //0,
   order_itinerary_list: I_Itinerary[];
-  checkdeposit: boolean;
 }
