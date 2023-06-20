@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, TextInput, Text } from "evergreen-ui";
+import { Pane, TextInput, Text, Radio } from "evergreen-ui";
 //@components
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import { useFormContext } from "react-hook-form";
@@ -16,6 +16,21 @@ const PaymentInfoEdit = () => {
         gap: "30px"
       }}
     >
+      <Pane className="radio_container">
+        <Radio
+          size={16}
+          name="group"
+          label={<span className="radio_label">全額支付</span>}
+        />
+      </Pane>
+      <Pane>
+        <Radio
+          size={16}
+          name="group"
+          label={<span className="radio_label">預付定金</span>}
+        />
+      </Pane>
+
       <CheckBoxWrapper
         control={control}
         inputName="full_payment_check"

@@ -31,24 +31,56 @@ const ShuttleInfo = ({
   arrayName,
   isCustomBus = true
 }: I_Props) => {
-  const { register, control, getValues } = useFormContext();
+  const { register, control, getValues, setValue } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: arrayName
   });
-
+  React.useEffect(() => {
+    console.log(fields.length);
+    onchange_date(0);
+  }, [fields]);
+  const onchange_date = (startIndex: number) => {
+    //往後加一天
+    for (let j = startIndex; j < fields.length - 1; j++) {
+      setValue(
+        arrayName + "[" + (j + 1) + "]" + ".day_date",
+        dayjs(getValues(arrayName + "[" + j + "]" + ".day_date"))
+          .add(1, "day")
+          .format("YYYY-MM-DD")
+      );
+    }
+    //往前減一天
+    for (let j = startIndex; j >= 0; j--) {
+      setValue(
+        arrayName + "[" + (j - 1) + "]" + ".day_date",
+        dayjs(getValues(arrayName + "[" + j + "]" + ".day_date"))
+          .subtract(1, "day")
+          .format("YYYY-MM-DD")
+      );
+    }
+  };
   const r_titleChildren = (isEdit: boolean, data: any, i: number) => {
     if (!isEdit) {
       return null;
     } else {
+      const { onChange, onBlur, name, ref } = register(
+        arrayName + "[" + i + "]" + ".day_date"
+      );
       return (
         <Pane className="title_children">
           {isCustomBus && (
             <>
-              <span>第{data.day_number}天</span>
+              <span>第{i + 1}天</span>
               <TextInput
                 type="date"
-                {...register(arrayName + "[" + i + "]" + ".day_date")}
+                onChange={(e: any) => {
+                  onChange(e);
+                  onchange_date(i);
+                }}
+                onBlur={onBlur}
+                name={name}
+                ref={ref}
               />
             </>
           )}
@@ -57,11 +89,13 @@ const ShuttleInfo = ({
               <span>接送資訊</span>
             </>
           )}
-          <TrashIcon
-            onClick={() => {
-              remove(i);
-            }}
-          />
+          {fields.length > 1 && (
+            <TrashIcon
+              onClick={() => {
+                remove(i);
+              }}
+            />
+          )}
         </Pane>
       );
     }
@@ -145,9 +179,7 @@ const ShuttleInfo = ({
               append({
                 quote_no: quote_no,
                 day_number: fields.length + 1,
-                day_date: dayjs(lastDate)
-                  .add(1, "day")
-                  .format("YYYY-MM-DDTHH:mm:ss"),
+                day_date: dayjs(lastDate).add(1, "day").format("YYYY-MM-DD"),
                 departure_time: "08:00",
                 dropoff_location: "",
                 pickup_location: "",

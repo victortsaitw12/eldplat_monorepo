@@ -1,4 +1,4 @@
-import { Pane } from "evergreen-ui";
+import { Pane, Text } from "evergreen-ui";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
@@ -63,46 +63,7 @@ const Page: NextPageWithLayout<{
     //串接API中
     getQuotationByFilter(subFilter)
       .then((data) => {
-        // const orderData = data.contentList?.map((order: any) => {
-        //   return {
-        //     id: { label: order["quote_no"], value: order["quote_no"] },
-        //     quote_no: { label: order["quote_no"], value: order["quote_no"] },
-        //     quote_type: {
-        //       label: order["quote_type"] == "1" ? "客製包車" : "接送機",
-        //       value: order["quote_type"]
-        //     },
-        //     name: {
-        //       label: order["family_name"] + order["name"],
-        //       value: order["name"]
-        //     },
-        //     contact_phone: {
-        //       label: (
-        //         <span>
-        //           {order["contact_phone_code"]} {order["contact_phone"]}
-        //           <br />
-        //           {order["contact_tel_code"]} {order["contact_tel"]}
-        //         </span>
-        //       ),
-        //       value: order["contact_phone"]
-        //     },
-        //     contact_email: {
-        //       label: order["contact_email"],
-        //       value: order["contact_email"]
-        //     },
-        //     order_status: {
-        //       label: order["order_status"],
-        //       value: order["order_status"]
-        //     },
-        //     person_name: {
-        //       label: "-",
-        //       value: "-"
-        //     },
-        //     order_label: {
-        //       label: <LabelTag text="服務讚" />,
-        //       value: order["order_label"]
-        //     }
-        //   };
-        // });
+        // const orderData =mapping_to_table(data.contentList)
         // console.log(data.conditionList);
         // setData(data.contentList || []);
         // setData(orderData);
@@ -134,7 +95,10 @@ const Page: NextPageWithLayout<{
   //進入詢價檢視頁
   const goToDetailPage = (id: string, item: any) => {
     router.push(
-      "/admin_orders/detail/" + id + "?type=" + item.quote_type.value
+      "/admin_orders/detail/" +
+        id +
+        "?type=" +
+        (item.quote_type.value || item.quote_type)
     );
   };
   //進入詢價編輯頁
@@ -150,7 +114,6 @@ const Page: NextPageWithLayout<{
   };
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {
-    console.log("deleteItemHandler", id);
     try {
       const res = await deleteQuotation(id);
       console.log(res);
@@ -159,55 +122,75 @@ const Page: NextPageWithLayout<{
       console.log(e);
     }
   };
-
+  const mapping_to_table = (data: any) => {
+    if (!data) {
+      return null;
+    }
+    const newdata = data.map((order: any) => {
+      return {
+        id: { label: order["quote_no"], value: order["quote_no"] },
+        quote_no: {
+          label: (
+            <Text
+              style={{
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                goToDetailPage(order["quote_no"], order);
+              }}
+            >
+              {order["quote_no"]}
+            </Text>
+          ),
+          value: order["quote_no"]
+        },
+        quote_type: {
+          label: order["quote_type"] == "1" ? "客製包車" : "接送機",
+          value: order["quote_type"]
+        },
+        name: {
+          label: order["family_name"] + order["name"],
+          value: order["name"]
+        },
+        contact_phone: {
+          label: (
+            <span>
+              {order["contact_phone_code"]} {order["contact_phone"]}
+              <br />
+              {order["contact_tel_code"]} {order["contact_tel"]}
+            </span>
+          ),
+          value: order["contact_phone"]
+        },
+        contact_email: {
+          label: order["contact_email"],
+          value: order["contact_email"]
+        },
+        order_status: {
+          label: order["order_status"],
+          value: order["order_status"]
+        },
+        //接單下階段才會做
+        person_name: {
+          label: "-",
+          value: "-"
+        },
+        order_label: {
+          label: order["label_list"].map(
+            (child: { label_name: string }, i: number) => {
+              return <LabelTag key={i} text={child.label_name} />;
+            }
+          ),
+          value: order["order_label"]
+        }
+      };
+    });
+    return newdata;
+  };
   const getDataByTab = async (tab_code: string) => {
     try {
       const res = await getQuotationByStatus(tab_code);
-      const orderData = res.data.map((order: any) => {
-        return {
-          id: { label: order["quote_no"], value: order["quote_no"] },
-          quote_no: { label: order["quote_no"], value: order["quote_no"] },
-          quote_type: {
-            label: order["quote_type"] == "1" ? "客製包車" : "接送機",
-            value: order["quote_type"]
-          },
-          name: {
-            label: order["family_name"] + order["name"],
-            value: order["name"]
-          },
-          contact_phone: {
-            label: (
-              <span>
-                {order["contact_phone_code"]} {order["contact_phone"]}
-                <br />
-                {order["contact_tel_code"]} {order["contact_tel"]}
-              </span>
-            ),
-            value: order["contact_phone"]
-          },
-          contact_email: {
-            label: order["contact_email"],
-            value: order["contact_email"]
-          },
-          order_status: {
-            label: order["order_status"],
-            value: order["order_status"]
-          },
-          //接單下階段才會做
-          person_name: {
-            label: "-",
-            value: "-"
-          },
-          order_label: {
-            label: order["label_list"].map(
-              (child: { label_name: string }, i: number) => {
-                return <LabelTag key={i} text={child.label_name} />;
-              }
-            ),
-            value: order["order_label"]
-          }
-        };
-      });
+      const orderData = mapping_to_table(res.data);
       // setData(data.contentList || []);
       setData(orderData);
     } catch {

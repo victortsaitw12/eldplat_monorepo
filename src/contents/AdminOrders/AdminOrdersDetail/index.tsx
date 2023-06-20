@@ -107,7 +107,6 @@ const AdminOrdersDetal = ({
     console.log("💕💕💕💕💕💕💕modify後的資料", newData);
     return newData;
   };
-
   const [loading, setLoading] = useState(false);
   const methods = useForm({
     defaultValues: {
@@ -119,7 +118,6 @@ const AdminOrdersDetal = ({
   // Callback version of watch.  It's your responsibility to unsubscribe when done.
   React.useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      console.log(value, name, type);
       if (name == "full_payment_check") {
         if (value.full_payment_check == "1") {
           //當為全額支付的時候
