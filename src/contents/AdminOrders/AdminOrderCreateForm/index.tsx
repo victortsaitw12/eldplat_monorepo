@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
-import { useRouter } from "next/router";
 //@sevices
 import { createQuotation } from "@services/admin_orders/createQuotation";
 import FiledInput from "./FieldInput";
-import { PlusIcon, Text, SelectField, Select } from "evergreen-ui";
+import { PlusIcon, Text, Select } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
 //@layout
@@ -51,22 +50,18 @@ interface I_Props {
   reloadData?: () => void;
 }
 
-function AdminOrderCreateForm({ data, reloadData }: I_Props) {
-  const router = useRouter();
+function AdminOrderCreateForm({ reloadData }: I_Props) {
   const { register, handleSubmit, control } = useForm({
     defaultValues
   });
-  const [loading, setLoading] = useState(false);
 
   const asyncSubmitForm = async (data: any) => {
-    setLoading(true);
     try {
       const res = await createQuotation(data);
     } catch (e: any) {
       console.log(e);
       alert(e.message);
     }
-    setLoading(false);
     reloadData && reloadData();
   };
 
