@@ -6,23 +6,23 @@ import { getLayout } from "@layout/ClientLayout";
 import { ReactNode } from "react";
 const FlowListData = [
   {
-    imageUrl: "/icons/Document.svg",
+    imageUrl: "/image/svg-icons/document.svg",
     label: "填寫詢價單"
   },
   {
-    imageUrl: "/icons/Reply.svg",
+    imageUrl: "/image/svg-icons/reply.svg",
     label: "回復報價"
   },
   {
-    imageUrl: "/icons/Car.svg",
+    imageUrl: "/image/svg-icons/car.svg",
     label: "確認訂單"
   },
   {
-    imageUrl: "/icons/Wallet.svg",
+    imageUrl: "/image/svg-icons/wallet.svg",
     label: "繳款確認"
   },
   {
-    imageUrl: "/icons/Reminder.svg",
+    imageUrl: "/image/svg-icons/reminder.svg",
     label: "行前提醒"
   }
 ];
@@ -41,7 +41,7 @@ const Page = () => {
         <div className="content-entry">
           <ServerEntry
             label="客製包車"
-            imageUrl="/icons/Custom-bus-pickup.svg"
+            imageUrl="/image/svg-icons/custom-bus-pickup.svg"
             onClick={() => {
               router.push({
                 pathname: "/client/quote/confirm",
@@ -53,7 +53,7 @@ const Page = () => {
           />
           <ServerEntry
             label="機場接送"
-            imageUrl="/icons/Airport-pickup.svg"
+            imageUrl="/image/svg-icons/airport-pickup.svg"
             onClick={() => {
               router.push({
                 pathname: "/client/quote/confirm",

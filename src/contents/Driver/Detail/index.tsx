@@ -5,7 +5,7 @@ import { FormSTY } from "./style";
 import { UpdateDriverInfoPayload } from "../driver.type";
 import DriverInfo from "./DriverInfo";
 import LicenseInfo from "./LicenseInfo";
-import HealthRecords from "./LicenseInfo";
+import HealthRecords from "./HealthRecords";
 
 import { formatDateFromAPI } from "@utils/formatDateFromAPI";
 

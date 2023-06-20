@@ -2,8 +2,6 @@ import React from "react";
 import {
   CogIcon,
   SearchIcon,
-  defaultTheme,
-  mergeTheme,
   TextInput
 } from "evergreen-ui";
 //

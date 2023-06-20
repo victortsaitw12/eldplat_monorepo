@@ -46,7 +46,7 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
         <Breadcrumbs
           routes={[
             { label: "首頁", url: "/" },
-            { label: "訂單管理", url: "/orders" },
+            { label: "訂單管理", url: "/client/orders" },
             {
               label: `訂單編號${data.quote_no}`,
               url: {

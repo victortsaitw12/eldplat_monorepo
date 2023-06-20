@@ -209,12 +209,6 @@ export function mappingSpecailNeededsInfo(data: any) {
   return specailInfo;
 }
 
-type StatusItemType = {
-  label: string;
-  status: "pending" | "error" | "ok" | "disabled";
-  date?: string | undefined;
-};
-
 export function mappingProgressInfo(list: any[]) {
   return list.map((item) => ({
     label: item.name,
@@ -222,61 +216,3 @@ export function mappingProgressInfo(list: any[]) {
     date: item.date ? dayjs(item.date).format("MM/DD HH:MM") : ""
   }));
 }
-
-// export function mappingProgressInfo(list: any[]) {
-//   const dataArr: Array<StatusItemType> = [
-//     "送出詢價", //1|2
-//     "收到報價", //3|4
-//     "接受報價", //5|7
-//     "訂單成立", //"6" || "8" || "12" || "13" || "14"
-//     "結案" //15
-//   ].map((item) => ({
-//     label: item,
-//     status: "pending", // "ok" | "pending" | "error" |"disabled"
-//     date: ""
-//   }));
-//   const renderOverdue = (item: any) => {
-//     dataArr.splice(3, 0, {
-//       label: STATUS_CODE[item.status_code].label,
-//       status: "error",
-//       date: dayjs(item.upddate).format("MM/DD HH:MM")
-//     });
-//     dataArr[dataArr.length - 2].status = "disabled";
-//     dataArr[dataArr.length - 1].status = "disabled";
-//     //TODO 更新訂單成立跟結案的狀態=>'due'? 待確認
-//   };
-//   list.forEach((item) => {
-//     switch (item.status_code) {
-//       case "1" || "2":
-//         dataArr[0].status = "ok";
-//         dataArr[0].date = dayjs(item.upddate).format("MM/DD HH:MM");
-//         break;
-//       case "3" || "4":
-//         dataArr[1].status = "ok";
-//         dataArr[1].date = dayjs(item.upddate).format("MM/DD HH:MM");
-//         break;
-//       case "5" || "7":
-//         dataArr[2].status = "ok";
-//         dataArr[2].date = dayjs(item.upddate).format("MM/DD HH:MM");
-//         break;
-//       case "9" || "10" || "11":
-//         renderOverdue(item);
-//         break;
-//       case "6" || "8" || "12" || "13" || "14":
-//         dataArr[dataArr.length - 2].status = "ok";
-//         dataArr[dataArr.length - 2].date = dayjs(item.upddate).format(
-//           "MM/DD HH:MM"
-//         );
-//         break;
-//       case "15":
-//         dataArr[dataArr.length - 1].status = "ok";
-//         dataArr[dataArr.length - 1].date = dayjs(item.upddate).format(
-//           "MM/DD HH:MM"
-//         );
-//         break;
-//       default:
-//         return;
-//     }
-//   });
-//   return dataArr;
-// }

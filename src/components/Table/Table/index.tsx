@@ -16,34 +16,6 @@ interface I_Table {
 Must provide id field in the Data Array
 */
 function Table({ titles, data }: I_Table) {
-  // const [checkedItems, setCheckedItems] = useState<Array<string | number>>([]);
-
-  // const handleCheck = (id: number | string) => {
-  //   const updatedItems = [...checkedItems];
-  //   console.log(updatedItems);
-  //   const itemIdx = checkedItems.indexOf(id);
-
-  //   if (itemIdx === -1) updatedItems.push(id);
-  //   if (itemIdx >= 0) updatedItems.splice(itemIdx, 1);
-
-  //   setCheckedItems(updatedItems);
-  //   if (onCheck) onCheck(updatedItems);
-  // };
-
-  // const handleCheckAll = function (e: React.ChangeEvent<HTMLInputElement>) {
-  //   if (!e.target?.checked) {
-  //     setCheckedItems([]);
-  //     if (onCheck) onCheck([]);
-  //     return;
-  //   }
-
-  //   const ids = data?.map((item: any) => item.id);
-  //   setCheckedItems(ids || []);
-  //   if (onCheck) onCheck(ids);
-  // };
-
-  // const allChecked = data?.length === checkedItems.length;
-
   if (!data) return <p>Loading</p>;
 
   return (

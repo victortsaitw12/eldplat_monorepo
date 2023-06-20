@@ -1,20 +1,13 @@
 import {
   Avatar,
-  ListIcon,
-  Button,
-  NotificationsIcon,
   MoonIcon,
   FlashIcon,
-  HelpIcon,
-  mergeTheme,
-  defaultTheme,
   ThemeProvider,
   Select,
   PersonIcon
 } from "evergreen-ui";
 import React from "react";
 import { BodySTY } from "./style";
-import { I_MultiLanguages } from "@typings/mutiLanguage_type";
 
 // const theme = mergeTheme(defaultTheme, {
 //   components: {
@@ -69,9 +62,9 @@ const Header = ({ layoutProps, theme, setTheme }: any) => {
   const handleToggleTheme = () => {
     setTheme(!theme);
   };
-  const handleClickMember = () => {
-    console.log("member");
-  };
+  // const handleClickMember = () => {
+  //   console.log("member");
+  // };
 
   return (
     <ThemeProvider value={theme}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, TimeIcon } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
 import { useForm, FormProvider } from "react-hook-form";
 import { SectionSTY } from "./style";
 import dayjs from "dayjs";

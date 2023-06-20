@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Pane, TextInputField, RadioGroup, Checkbox } from "evergreen-ui";
 import FormCard from "@components/FormCard";
-import { StepControlSTY } from "@components/FormCard/style";
 
 const primaryMeterOptions = [
   { label: "Miles", value: "0" },
@@ -80,15 +79,6 @@ function Settings() {
           />
         </div>
       </FormCard>
-
-      {/* <StepControlSTY>
-        <button>Cancel</button>
-
-        <div className="next-step">
-          <button className="bordered">Save & Add Another</button>
-          <button className="fill">Save Vehicle</button>
-        </div>
-      </StepControlSTY> */}
     </Pane>
   );
 }

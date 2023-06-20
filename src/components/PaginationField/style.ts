@@ -1,13 +1,9 @@
 import styled from "styled-components";
 
-interface BodyProps {
-
-}
-
-export const BodySTY = styled.div<BodyProps>`
-   align-items: center;
-   display: flex;
-   .container-pagination {
+export const BodySTY = styled.div`
+  align-items: center;
+  display: flex;
+  .container-pagination {
     display: flex;
     justify-content: flex-end;
     align-items: center;

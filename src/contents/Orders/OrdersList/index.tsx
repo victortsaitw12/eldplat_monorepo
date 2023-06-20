@@ -29,7 +29,7 @@ const OrdersList = ({
           <div className="list-item" key={item.quote_no}>
             <Link
               href={{
-                pathname: `/orders/order/${item.quote_no}`
+                pathname: `/client/orders/detail/${item.quote_no}`
               }}
             >
               <Collapse

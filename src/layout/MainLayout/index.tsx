@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import Head from "next/head";
-import React, { FC, ReactNode, useEffect } from "react";
+import React, { FC, ReactNode } from "react";
 //
 import Header from "./Header";
 import SideBar from "./SideBar";

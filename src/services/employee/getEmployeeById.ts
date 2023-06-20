@@ -24,21 +24,10 @@ export const employeePattern: PatternType = {
   contact_Email: "contact_Email"
 };
 
-const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
-  const result: { [key: string]: any } = {};
-  for (const key in pattern) {
-    result[key] = data[key];
-  }
-  return result;
-};
-
-/*
-  const defaultValues = {
-    customer_gui_no: "",
-    customer_name: "",
-    customer_typ: "01",
-    contact_name: "",
-    contact_phone: "",
-    contact_email: ""
-  }
-  */
+// const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
+//   const result: { [key: string]: any } = {};
+//   for (const key in pattern) {
+//     result[key] = data[key];
+//   }
+//   return result;
+// };

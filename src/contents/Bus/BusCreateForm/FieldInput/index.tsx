@@ -1,11 +1,11 @@
-import { HelpIcon, PlusIcon, ErrorIcon } from "evergreen-ui";
+import { HelpIcon, ErrorIcon } from "evergreen-ui";
 import { ItemSTY } from "./style";
 import { useController, UseControllerProps } from "react-hook-form";
-import { CreateCustomerPayload } from "../index";
+import { CreateBusPayload } from "../index";
 
 export interface FiledInputProps {
   horizonLabel?: boolean;
-  controlProps: UseControllerProps<CreateCustomerPayload>;
+  controlProps: UseControllerProps<CreateBusPayload>;
   required?: boolean;
   label: string | React.ReactNode;
   hint?: string;

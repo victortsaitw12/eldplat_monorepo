@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const BtnSTY = styled.button<{ color: string }>`
+export const BtnSTY = styled.button<{ color?: string }>`
   /* max-width: calc(100% / 7); */
-  background-color: ${({ theme, color }) => theme.color[color] || "unset"};
+  background-color: ${({ theme, color }) => color || "unset"};
   color: ${({ theme }) => theme.color.N0};
   padding: 4px 8px;
   margin-right: 10px;

@@ -1,4 +1,4 @@
-import { Pane, SettingsIcon, SearchIcon } from "evergreen-ui";
+import { SettingsIcon, SearchIcon } from "evergreen-ui";
 import React, { useState } from "react";
 import { countActiveFilter } from "@utils/countActiveFilter";
 import { BodySTY } from "./style";

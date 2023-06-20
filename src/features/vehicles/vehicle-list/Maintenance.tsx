@@ -4,7 +4,6 @@ import FormCard from "@components/FormCard";
 import RadioGroupColumn, {
   RadioColumnField
 } from "@components/RadioGroupColumn";
-import { StepControlSTY } from "@components/FormCard/style";
 
 function Maintenance() {
   const [schedule, setSchedule] = useState("0");
@@ -35,15 +34,6 @@ function Maintenance() {
           </RadioColumnField>
         </RadioGroupColumn>
       </FormCard>
-
-      {/* <StepControlSTY>
-        <button>Cancel</button>
-
-        <div className="next-step">
-          <button className="bordered">Save & Add Another</button>
-          <button className="fill">Save Vehicle</button>
-        </div>
-      </StepControlSTY> */}
     </Pane>
   );
 }

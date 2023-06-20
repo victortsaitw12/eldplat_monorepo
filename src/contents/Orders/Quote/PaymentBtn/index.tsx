@@ -163,7 +163,7 @@ const PaymentBtn = ({
             cancelLabel="取消"
             confirmLabel="確認"
           >
-            {({ close }) => (
+            {({}) => (
               <Pane>
                 <Paragraph style={{ lineHeight: "32px" }}>
                   接受報價後，此筆訂單即可繳款。

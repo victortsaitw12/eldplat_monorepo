@@ -5,27 +5,15 @@ import Collapse from "@components/Collapse";
 import CounterInput from "@components/CounterInput";
 import CustomSelect from "@components/CustomSelect";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
-import VerticalTextArea from "@components/VerticalTextArea";
 import DetailList from "@components/DetailList";
 import VerticalDetail from "@components/VerticalDetail";
-import ScheduleList from "@components/ScheduleList";
 import { useForm } from "react-hook-form";
 //
 function Home() {
   const { register, control, getValues, setValue } = useForm<any>({
     defaultValues: {
       counter: 0,
-      customSelect: "B",
-      "schedule-list": [
-        {
-          label: "",
-          location: "桃園國際機場"
-        },
-        {
-          label: "",
-          location: "你家"
-        }
-      ]
+      customSelect: "B"
     }
   });
   return (
@@ -97,17 +85,6 @@ function Home() {
       </div>
       <div>
         <VerticalDetail />
-      </div>
-      <div>
-        <ScheduleList
-          dayIndex={0}
-          fatherArrayName={"schedule-list"}
-          arrayName="stopover_addresses"
-          register={register}
-          isEdit={true}
-          disabledFirst={true}
-          control={control}
-        />
       </div>
     </div>
   );
