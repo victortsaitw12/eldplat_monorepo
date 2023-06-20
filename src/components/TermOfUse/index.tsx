@@ -5,15 +5,16 @@ import Modal from "@components/Modal";
 
 const TermOfUse = ({
   type,
+  checked,
   children,
   onCheck
 }: {
   type: "checkbox" | "view";
   children?: React.ReactNode;
+  checked: boolean;
   onCheck?: (value: boolean) => void;
 }) => {
   // ----- states ----- //
-  const [checked, setChecked] = React.useState(false);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
@@ -22,7 +23,6 @@ const TermOfUse = ({
         <Checkbox
           checked={checked}
           onChange={(e) => {
-            setChecked(e.target.checked);
             onCheck && onCheck(e.target.checked);
           }}
           style={{ margin: "0" }}

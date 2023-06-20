@@ -76,7 +76,7 @@ const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
           </Collapse>
         )}
         {/*變動*/}
-        <Collapse title="乘車資訊">
+        <Collapse title="乘車資訊" opened={true}>
           <TakeBusInfoView
             adult={orderData.adult}
             child={orderData.child}
@@ -86,7 +86,7 @@ const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
             bus_data={orderData.bus_data}
           />
         </Collapse>
-        <Collapse title="特殊需求">
+        <Collapse title="特殊需求" opened={true}>
           <SpecialInfoView
             listArray={specialInfo}
             remark={orderData["remark"]}
