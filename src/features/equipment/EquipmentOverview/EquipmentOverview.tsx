@@ -32,7 +32,7 @@ function EquipmentOverview({
                     <Image
                       width="50"
                       height="50"
-                      src="/images/avatar1.jpg"
+                      src="/image/avatar1.jpg"
                       alt="test"
                     />
                   </AvatarSTY>
@@ -58,7 +58,7 @@ function EquipmentOverview({
                 <Image
                   width="50"
                   height="50"
-                  src="/images/avatar1.jpg"
+                  src="/image/avatar1.jpg"
                   alt="test"
                 />
               </div>
@@ -72,7 +72,7 @@ function EquipmentOverview({
                   <Image
                     width="50"
                     height="50"
-                    src="/images/avatar1.jpg"
+                    src="/image/avatar1.jpg"
                     alt="test"
                   />
                 </AvatarSTY>
@@ -91,7 +91,7 @@ function EquipmentOverview({
               <Image
                 width="50"
                 height="50"
-                src="/images/avatar1.jpg"
+                src="/image/avatar1.jpg"
                 alt="test"
               />
             </div>

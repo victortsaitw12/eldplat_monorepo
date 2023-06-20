@@ -5,7 +5,7 @@ export const EXPENSE_lIST_DETAIL_TITLE = "Details";
 export const EXPENSE_lIST_DETAIL_DATA = {
   Vehicle: (
     <>
-      <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+      <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
       1100 [2018 Toyota Prius]
     </>
   ),

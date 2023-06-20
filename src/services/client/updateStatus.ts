@@ -1,13 +1,11 @@
 // 訂單狀態異動
 export const updateStatus = async (
   status_code: string,
-  quote_no: string,
-  costs_no: string,
-  status_type?: string
+  status_type: string,
+  quote_no: string
 ) => {
-  const type = status_type || "FE";
   const response = await fetch(
-    `https://localhost:7088/ORD/FEUpdateStatusLog?status_code=${status_code}&quote_no=${quote_no}&costs_no=${costs_no}&status_type=${type}`,
+    `https://localhost:7088/ORD/UpdateStatusLog?quote_no=${quote_no}&status_type=${status_type}&status_code=${status_code}`,
     {
       method: "PUT",
       headers: {

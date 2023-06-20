@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 const defaultContactInfo = [
   {
     name: "family_name",
@@ -32,7 +33,6 @@ const defaultContactInfo = [
 ];
 export function mappingContactInfo(data: any) {
   const contactInfo: { title: string; value: string | null }[] = [];
-  console.log("socail_media", data["socail_media"]);
   defaultContactInfo.forEach((item) => {
     if (item.name === "contact_phone") {
       contactInfo.push({
@@ -53,16 +53,11 @@ export function mappingContactInfo(data: any) {
       if (!data["social_media"]) {
         return;
       }
-      console.log("social_media", data["social_media"]);
       if (data["social_media_type"] === "01") {
         socialMediaType = "Line";
       } else if (data["social_media_type"] === "02") {
         socialMediaType = "WeChat";
       }
-      console.log(
-        "socialMediaType",
-        socialMediaType + ":" + data["social_media"]
-      );
       contactInfo.push({
         title: item.title,
         value: socialMediaType + ":" + data["social_media"]
@@ -214,19 +209,10 @@ export function mappingSpecailNeededsInfo(data: any) {
   return specailInfo;
 }
 
-const defaultExpenseInfo = [
-  {
-    name: "family_name",
-    title: "姓",
-    value: 0
-  },
-  {
-    name: "quote_total_amount",
-    title: "總計",
-    value: 0
-  }
-];
-
-export function mappingExpenseInfo(data: any) {
-  const expenseInfo: { title: string; value: number }[] = [];
+export function mappingProgressInfo(list: any[]) {
+  return list.map((item) => ({
+    label: item.name,
+    status: item.status,
+    date: item.date ? dayjs(item.date).format("MM/DD HH:MM") : ""
+  }));
 }

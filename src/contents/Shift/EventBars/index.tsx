@@ -3,7 +3,7 @@ import { TagIcon } from "evergreen-ui";
 import { EventBarsSTY, EventBarSTY } from "./style";
 
 import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS } from "../shift.data";
-import { formatDate, getDayStart, getDayEnd } from "../shift.util";
+import { formatDate, getDayStart } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";

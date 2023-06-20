@@ -1,19 +1,9 @@
-import React, { useState } from "react";
-import {
-  ErrorIcon,
-  Pane,
-  PlusIcon,
-  TextInput,
-  TrashIcon,
-  Text
-} from "evergreen-ui";
-import TableActionButton from "@components/Table/TableActionButton";
+import React from "react";
+import { Pane, PlusIcon, TextInput, TrashIcon, Text } from "evergreen-ui";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
-import { FormattedMessage } from "react-intl";
 import { TableSTY, TableContainerSTY } from "./style";
 import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
-import { textValidation } from "@utils/inputValidation";
 //
 interface I_Data {
   [key: string]: string | number | React.ReactNode;
@@ -32,7 +22,6 @@ Must provide id field in the Data Array
 */
 function ItemListTable({
   titles,
-  data,
   control,
   register,
   isEdit = false,
@@ -42,8 +31,6 @@ function ItemListTable({
     control,
     name: arrayName
   });
-
-  // if (!data) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
       {/* 新增按鈕 */}
@@ -165,44 +152,3 @@ function ItemListTable({
 }
 
 export default ItemListTable;
-
-// {data.length !== 0 ? (
-//   data.map((item: any) => {
-//     return (
-//       <tr key={uuid()}>
-
-//         {Object.keys(item).map((key) => {
-//           if (key === "id") return;
-
-//           if (!item[key].label) {
-//             return (
-//               <td key={item.id + key}>
-//                 <span className="no-data">
-//                   <div />
-//                 </span>
-//               </td>
-//             );
-//           }
-//           return (
-//             <td key={item.id + key}>
-//               <div className="data-row">
-//                 <div>{item[key].label}</div>
-//               </div>
-//             </td>
-//           );
-//         })}
-//         <td>
-//           <TableActionButton
-//             onView={viewItem.bind(null, item.id.value)}
-//             onEdit={goToEditPage.bind(null, item.id.value)}
-//             onDelete={deleteItem.bind(null, item.id.value)}
-//           />
-//         </td>
-//       </tr>
-//     );
-//   })
-// ) : (
-//   <div className="noDataShown">
-//     <div>查無資料</div>
-//   </div>
-// )}

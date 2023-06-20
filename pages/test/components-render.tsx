@@ -10,23 +10,23 @@ import CounterInput from "@components/CounterInput";
 import { useRef } from "react";
 const DummyFlowListData = [
   {
-    imageUrl: "/icons/Document.svg",
+    imageUrl: "/image/svg-icons/document.svg",
     label: "填寫詢價單"
   },
   {
-    imageUrl: "/icons/Reply.svg",
+    imageUrl: "/image/svg-icons/reply.svg",
     label: "回復報價"
   },
   {
-    imageUrl: "/icons/Car.svg",
+    imageUrl: "/image/svg-icons/car.svg",
     label: "確認訂單"
   },
   {
-    imageUrl: "/icons/Wallet.svg",
+    imageUrl: "/image/svg-icons/wallet.svg",
     label: "繳款確認"
   },
   {
-    imageUrl: "/icons/Reminder.svg",
+    imageUrl: "/image/svg-icons/reminder.svg",
     label: "行前提醒"
   }
 ];
@@ -183,7 +183,7 @@ const ComponentsRender = () => {
           justifyContent: "center"
         }}
       >
-        <ProgressList dataLists={DummyProgressListData} />
+        <ProgressList dataLists={DummyProgressListData} color={"#897AE3"} />
       </div>
       <form
         onSubmit={handleSubmit((data) => {
@@ -215,14 +215,14 @@ const ComponentsRender = () => {
       </form>
 
       <ServerEntry
-        imageUrl="/icons/Custom-bus-pickup.svg"
+        imageUrl="/image/svg-icons/custom-bus-pickup.svg"
         label="客製包車"
         onClick={() => {
           alert("客製包車");
         }}
       />
       <ServerEntry
-        imageUrl="/icons/Airport-pickup.svg"
+        imageUrl="/image/svg-icons/airport-pickup.svg"
         label="客製包車"
         onClick={() => {
           alert("客製包車");

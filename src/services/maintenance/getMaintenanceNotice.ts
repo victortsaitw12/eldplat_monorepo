@@ -1,6 +1,4 @@
 import { PatternType } from "@utils/mappingQueryData";
-import { createElement } from "react";
-
 // 取得維保通知資料
 export const getAllMaintenanceNotices = async (
   filter: { [key: string]: any } = {},
@@ -63,6 +61,7 @@ export const maintenancePattern: PatternType = {
   id: true,
   reminders_no: true,
   bus_name: true,
+  vendor_name: true,
   driver_name: true,
   meter: true,
   month: true,

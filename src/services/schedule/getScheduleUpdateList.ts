@@ -1,5 +1,3 @@
-import { token } from "./token";
-
 // 檢視個別排休詳情
 export const getScheduleUpdateList = async (drv_schedule_no: string) => {
   const res = await fetch(

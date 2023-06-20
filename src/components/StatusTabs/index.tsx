@@ -26,7 +26,7 @@ const StatusTabs = ({ defaultTab = 1, tabsArray, onTabChange }: Props) => {
             <DivSTY
               key={`tab-${item.value}`}
               data-val={item.value}
-              className={`${currentTab === item.value ? "isActive" : ""}`}
+              className={`${currentTab == item.value ? "isActive" : ""}`}
               onClick={handleClick}
             >
               {item.label}

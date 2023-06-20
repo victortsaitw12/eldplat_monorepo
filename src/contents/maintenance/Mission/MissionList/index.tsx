@@ -18,6 +18,7 @@ function MaintenanceMissionList({
   goToDetailPage
 }: Props) {
   const clientTitle = getMaintenanceMissionTitle();
+  console.log("clientData", clientData);
   return (
     <BodySTY>
       <TableWithEdit

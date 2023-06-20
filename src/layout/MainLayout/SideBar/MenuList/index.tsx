@@ -10,7 +10,6 @@ interface Props {
 }
 
 function Index({ menuData }: Props) {
-  const [selectedField, setSelectedField] = React.useState("");
   return (
     <BodySTY>
       {menuData.map((menu) => {

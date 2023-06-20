@@ -1,15 +1,12 @@
 import React from "react";
 import { BodySTY } from "./style";
-import { Button } from "evergreen-ui";
 import { Label } from "@components/Button/Primary";
-import { UpdateMaintenanceStatus } from "@services/maintenance/getMaintenanceMission";
-import router from "next/router";
 
 interface AddMissionBtn_Type {
   id?: string;
   setDrawerOpen: (v: boolean) => void;
 }
-const AddMissionBtn = ({ id, setDrawerOpen }: AddMissionBtn_Type) => {
+const AddMissionBtn = ({ setDrawerOpen }: AddMissionBtn_Type) => {
   const AddNewMission = (e: any) => {
     e.preventDefault();
     setDrawerOpen(true);

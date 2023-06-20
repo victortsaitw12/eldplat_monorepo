@@ -17,7 +17,9 @@ import PaginationField from "@components/PaginationField/";
 import React, { useState } from "react";
 import { UpdateDriverInfoPayload } from "../../driver.type";
 
-interface I_License_TYPE {
+type ObjectType = {[key: string]: any};
+
+interface I_License_TYPE extends ObjectType {
   id: string;
   licn_typ: string;
   licn_name: string;
@@ -56,6 +58,7 @@ function LicenseInfo({
   licenseData: I_License_TYPE[];
   userName: string;
   getValues: UseFormGetValues<UpdateDriverInfoPayload>;
+  register: UseFormRegister<UpdateDriverInfoPayload>;
 }) {
   const licenseInfo = [
     {

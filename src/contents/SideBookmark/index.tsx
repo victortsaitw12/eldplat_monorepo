@@ -1,4 +1,3 @@
-import { RightBookData } from "@contents/MainBookmark/ContentFrame/data";
 import {
   Pane,
   Tablist,
@@ -12,9 +11,18 @@ import {
 import React, { useState } from "react";
 import { BodySTY } from "./style";
 
+const RightBookData = [
+  {
+    bookmarkTitle: {
+      name: "項目1",
+      idx: 0
+    }
+  },
+  { bookmarkTitle: { name: "新增項目", idx: 1, value: "add" } }
+];
+
 function SideBookMark() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-
   return (
     <BodySTY>
       <Pane height="100%">
@@ -62,7 +70,6 @@ function SideBookMark() {
             />
           </Pane>
         </Tablist>
-
         {/* 內容欄 */}
         <Card
           height="calc(100% - 40px)"

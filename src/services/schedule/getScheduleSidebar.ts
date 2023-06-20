@@ -1,5 +1,3 @@
-import { token } from "./token";
-
 // 檢視個別駕駛單日所有排休
 export const getScheduleSidebar = async (
   schd_date: string,

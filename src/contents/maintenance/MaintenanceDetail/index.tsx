@@ -15,6 +15,8 @@ import { I_Maintenance_Type } from "@typings/maintenance_type";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import ItemListTable from "./ItemListTable";
+import { dashDate } from "@utils/convertDate";
+import { BodySTY } from "./style";
 interface I_Props {
   isEdit: boolean;
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
@@ -34,7 +36,14 @@ const CustomerDetail = ({
     getValues,
     handleSubmit
   } = useForm<I_Maintenance_Type>({
-    defaultValues: async () => getMaintenanceById(maintenance_id)
+    defaultValues: async () => {
+      return getMaintenanceById(maintenance_id).then((data) => {
+        const newData = { ...data };
+        newData["service_start_date"] = dashDate(data.service_start_date);
+        newData["service_end_date"] = dashDate(data.service_end_date);
+        return newData;
+      });
+    }
   });
 
   const [loading, setLoading] = useState(false);
@@ -132,13 +141,13 @@ const CustomerDetail = ({
     {
       req: false,
       label: "起始日期",
-      value: getValues("service_start_date"),
+      value: dashDate(getValues("service_start_date")),
       editEle: <TextInput type="date" {...register("service_start_date")} />
     },
     {
       req: false,
       label: "截止日期",
-      value: getValues("service_end_date"),
+      value: dashDate(getValues("service_end_date")),
       editEle: <TextInput type="date" {...register("service_end_date")} />
     },
     {
@@ -230,12 +239,9 @@ const CustomerDetail = ({
         <InfoBox isEdit={isEdit} infoData={vehicle_info} infoTitle="車輛資料" />
         <InfoBox isEdit={isEdit} infoData={check_info} infoTitle="檢查詳情" />
       </FlexWrapper>
-      <InfoBox
-        style={{ flex: "1" }}
-        isEdit={isEdit}
-        infoData={item_list}
-        infoTitle="項目清單"
-      />
+      <BodySTY>
+        <InfoBox isEdit={isEdit} infoData={item_list} infoTitle="項目清單" />
+      </BodySTY>
     </form>
   );
 };
