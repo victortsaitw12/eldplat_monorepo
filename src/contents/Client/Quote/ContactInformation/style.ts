@@ -57,4 +57,9 @@ export const StyledCollapseTitle = styled.div`
     font-size: 14px;
     color: ${({ theme }) => theme.color.N700};
   }
+  > label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 `;

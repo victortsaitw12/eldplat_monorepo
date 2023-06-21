@@ -180,7 +180,8 @@ const ComponentsRender = () => {
         style={{
           background: "#fff",
           display: "flex",
-          justifyContent: "center"
+          justifyContent: "center",
+          border: "1px solid red"
         }}
       >
         <ProgressList dataLists={DummyProgressListData} color={"#897AE3"} />

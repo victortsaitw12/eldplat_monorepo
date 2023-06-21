@@ -254,7 +254,11 @@ const Page: NextPageWithLayout<
               errors={errors}
               register={register}
               setValue={setValue}
+              flightTime={flightTime}
               type={type}
+              validateSubForm={(data) => {
+                validationList[1] = data;
+              }}
             />
           )}
           {currentTab === 2 && (
