@@ -70,6 +70,7 @@ export interface I_OrderDetail {
   basic_amount: number; //2000,
   bus_age_charge: number; //100,
   customer_check: number; //null,
+  checktimeout: string | null;
   child_seat_charge: number; // 50,
   child_seat_check: string; //"1",
   child_seat_seller: number; //0,

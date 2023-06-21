@@ -237,8 +237,8 @@ const Page: NextPageWithLayout<{
                 listData={data}
                 goToDetailPage={goToDetailPage}
                 goToCreatePage={goToCreatePage}
-                goToEditPageHandler={goToEditPageHandler}
-                deleteItemHandler={deleteItemHandler}
+                {...(nowTab !== "6" && { goToEditPageHandler })}
+                {...(nowTab !== "6" && { deleteItemHandler })}
               ></AdminOrdersList>
             </FilterWrapper>
           </TableWrapper>

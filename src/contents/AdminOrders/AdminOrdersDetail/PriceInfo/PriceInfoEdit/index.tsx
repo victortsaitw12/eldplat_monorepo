@@ -34,7 +34,11 @@ const PriceInfoEdit = ({
           <Text>總金額</Text>
           <Text>
             NT$
-            <TextInput type="number" {...register("quote_total_amount")} />
+            <TextInput
+              type="number"
+              {...register("quote_total_amount")}
+              disabled
+            />
           </Text>
         </Pane>
         <Text>{dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款</Text>
