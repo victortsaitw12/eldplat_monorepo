@@ -4,6 +4,7 @@ import {
   Pane,
   TimeIcon,
   TrashIcon,
+  CalendarIcon,
   Button,
   SmallPlusIcon,
   TextInput
@@ -21,9 +22,15 @@ interface I_Props {
   quote_no: string;
   isEdit: boolean;
   arrayName: string;
+  isCustomBus?: boolean;
 }
 
-const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
+const ShuttleInfo = ({
+  quote_no,
+  isEdit,
+  arrayName,
+  isCustomBus = true
+}: I_Props) => {
   const { register, control, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -36,11 +43,20 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
     } else {
       return (
         <Pane className="title_children">
-          <span>第{data.day_number}天</span>
-          <TextInput
-            type="date"
-            {...register(arrayName + "[" + i + "]" + ".day_date")}
-          />
+          {isCustomBus && (
+            <>
+              <span>第{data.day_number}天</span>
+              <TextInput
+                type="date"
+                {...register(arrayName + "[" + i + "]" + ".day_date")}
+              />
+            </>
+          )}
+          {!isCustomBus && (
+            <>
+              <span>接送資訊</span>
+            </>
+          )}
           <TrashIcon
             onClick={() => {
               remove(i);
@@ -56,18 +72,38 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
         opened={true}
         key={i}
         title={
-          "第" +
-          child.day_number +
-          "天  " +
-          dayjs(child.day_date).format("YYYY-MM-DD")
+          isCustomBus
+            ? "第" +
+              child.day_number +
+              "天  " +
+              dayjs(child.day_date).format("YYYY-MM-DD")
+            : "接送行程"
         }
         titleChildren={r_titleChildren(isEdit, child, i)}
       >
         <Pane style={{ padding: "20px" }}>
+          {!isCustomBus && (
+            <span className="detail-with-icon">
+              <CalendarIcon color="#8EA8C7" size={11} />
+              <DetailItem
+                title={"接送日期"}
+                value={
+                  isEdit ? (
+                    <TextInput
+                      type="date"
+                      {...register(arrayName + "[" + i + "]" + ".day_date")}
+                    />
+                  ) : (
+                    dayjs(child.day_date).format("YYYY-MM-DD") || "-"
+                  )
+                }
+              />
+            </span>
+          )}
           <span className="detail-with-icon">
             <TimeIcon color="#8EA8C7" size={11} />
             <DetailItem
-              title="出發時間"
+              title={isCustomBus ? "出發時間" : "接送時間"}
               value={
                 isEdit ? (
                   <TextInput
@@ -98,7 +134,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
   return (
     <BodySTY>
       {r_list(fields)}
-      {isEdit && (
+      {isEdit && isCustomBus && (
         <Pane className="add_day_container">
           <Button
             onClick={() => {

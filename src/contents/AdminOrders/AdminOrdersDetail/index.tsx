@@ -59,6 +59,10 @@ const AdminOrdersDetal = ({
       orderData["deposit_period"] &&
       dayjs(orderData["deposit_period"]).format("YYYY-MM-DD");
 
+    newData["flight_date"] =
+      orderData["flight_date"] &&
+      dayjs(orderData["flight_date"]).format("YYYY-MM-DD");
+
     newData["order_itinerary_list"] = orderData["order_itinerary_list"].map(
       (child: any) => {
         return {
@@ -100,6 +104,7 @@ const AdminOrdersDetal = ({
       });
     }
     newData["bus_data"] = formatedBusData;
+    console.log("💕💕💕💕💕💕💕modify後的資料", newData);
     return newData;
   };
 
@@ -160,11 +165,11 @@ const AdminOrdersDetal = ({
         <form
           onSubmit={methods.handleSubmit((data) => {
             console.log("🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡order", data);
-            if (data.full_payment_check == "1" || data.deposit_check == "1") {
-              submitForm && submitForm({ ...data });
-            } else {
-              alert("請最少選擇一種支付方式");
-            }
+            // if (data.full_payment_check == "1" || data.deposit_check == "1") {
+            //   submitForm && submitForm({ ...data });
+            // } else {
+            //   alert("請最少選擇一種支付方式");
+            // }
           })}
         >
           <Pane
