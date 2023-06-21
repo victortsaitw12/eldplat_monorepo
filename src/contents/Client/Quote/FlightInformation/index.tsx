@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Collapse from "@components/Collapse";
 import StepArragement from "@components/StepArragement";
 import { TextInput } from "evergreen-ui";
@@ -9,7 +9,8 @@ import {
   FieldErrors,
   UseFormRegister,
   UseFormSetValue,
-  useFieldArray
+  useFieldArray,
+  useWatch
 } from "react-hook-form";
 interface TravelInformationProps {
   control: Control<QuotationCreatePayload>;
@@ -17,17 +18,44 @@ interface TravelInformationProps {
   errors: FieldErrors<QuotationCreatePayload>;
   setValue: UseFormSetValue<QuotationCreatePayload>;
   type: string;
+  flightTime?: string;
+  validateSubForm: (data: { valid: boolean; errorMessage: string }) => void;
 }
 const FlightInformation = ({
   register,
   control,
   errors,
-  type
+  type,
+  flightTime,
+  validateSubForm
 }: TravelInformationProps) => {
   const { fields } = useFieldArray({
     name: "order_itinerary_list",
     control
   });
+  console.log("type", type);
+  console.log("flightTime", flightTime);
+  const departure_time = useWatch({
+    control,
+    name: "order_itinerary_list.0.departure_time"
+  });
+  useEffect(() => {
+    const flightTimeHour = Number(flightTime?.split(":")[0]);
+    const departureTimeHour = Number(departure_time?.split(":")[0]);
+    if (type === "dropOff" && flightTimeHour - departureTimeHour < 2) {
+      validateSubForm({
+        valid: false,
+        errorMessage: `起飛時間為:${flightTime},請至少於起飛前兩小時出發!`
+      });
+      return;
+    }
+    // else if(type === "pickUp" && departureTimeHour - flightTimeHour < 2){validateSubForm({
+    //   valid: false,
+    //   errorMessage: `起飛時間為:${flightTime},請至少於起飛前兩小時出發!`
+    // });
+    // return}
+    validateSubForm({ valid: true, errorMessage: "" });
+  }, [departure_time]);
   return (
     <div
       style={{
@@ -61,6 +89,7 @@ const FlightInformation = ({
                       `order_itinerary_list.${index}.departure_time`
                     )}
                     type="time"
+                    min={flightTime}
                     style={{ flex: "1" }}
                   />
                   <div className="option-container"></div>

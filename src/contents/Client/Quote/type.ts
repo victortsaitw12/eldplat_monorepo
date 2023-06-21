@@ -126,7 +126,7 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
   bus_age: "",
   special_luggage_check: "0",
   bring_pets_check: "0",
-  bring_pets_radio: "",
+  bring_pets_radio: "1",
   mineral_water_check: "0",
   bottled_water_check: "0",
   bottled_water_box: 0,

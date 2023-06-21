@@ -53,6 +53,17 @@ const ContactInformation = ({
       getValues("order_contact_list.0.contact_email")
     );
   }
+  function resetContactUser() {
+    setValue("order_contact_list.1.family_name", "");
+    setValue("order_contact_list.1.name", "");
+    setValue("order_contact_list.1.contact_phone_code", "");
+    setValue("order_contact_list.1.contact_phone", "");
+    setValue("order_contact_list.1.contact_tel_code", "");
+    setValue("order_contact_list.1.contact_tel", "");
+    setValue("order_contact_list.1.contact_email", "");
+    setValue("order_contact_list.1.social_media_type", "");
+    setValue("order_contact_list.1.social_media", "");
+  }
   return (
     <>
       <BodySTY>
@@ -149,14 +160,19 @@ const ContactInformation = ({
           titleChildren={
             <StyledCollapseTitle>
               <span>旅客代表人資訊</span>
-              <button
-                type="button"
-                onClick={() => {
-                  sameContactUser();
-                }}
-              >
-                同上方欄位內容
-              </button>
+              <label>
+                <input
+                  type="checkbox"
+                  onClick={(e) => {
+                    if (e.currentTarget.checked) {
+                      sameContactUser();
+                    } else {
+                      resetContactUser();
+                    }
+                  }}
+                />
+                <span>同上方欄位內容</span>
+              </label>
             </StyledCollapseTitle>
           }
           opened={true}

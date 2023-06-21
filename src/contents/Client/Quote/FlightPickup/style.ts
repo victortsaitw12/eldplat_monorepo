@@ -26,7 +26,7 @@ export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  gap: 58px;
+  gap: 40px;
   background-color: ${({ theme }) => theme.color.N0};
   > .form-item {
     display: flex;

@@ -94,6 +94,13 @@ const DummyExpenseDetailData = [
   }
 ];
 //
+const validationList: Array<{ valid: boolean; errorMessage: string }> = [
+  { valid: true, errorMessage: "1" },
+  { valid: true, errorMessage: "2" },
+  { valid: true, errorMessage: "3" },
+  { valid: true, errorMessage: "4" }
+];
+//
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({
@@ -247,7 +254,11 @@ const Page: NextPageWithLayout<
               errors={errors}
               register={register}
               setValue={setValue}
+              flightTime={flightTime}
               type={type}
+              validateSubForm={(data) => {
+                validationList[1] = data;
+              }}
             />
           )}
           {currentTab === 2 && (
@@ -257,6 +268,9 @@ const Page: NextPageWithLayout<
               register={register}
               setValue={setValue}
               getValues={getValues}
+              validateSubForm={(data) => {
+                validationList[2] = data;
+              }}
             />
           )}
 
@@ -267,6 +281,7 @@ const Page: NextPageWithLayout<
               register={register}
               setValue={setValue}
               getValues={getValues}
+              validationList={validationList}
             />
           )}
           {currentTab === 4 && (
@@ -295,7 +310,16 @@ const Page: NextPageWithLayout<
                   router.push({
                     pathname: "/client/quote/confirm",
                     query: {
-                      type: type === "custom" ? "custom" : "airport"
+                      type: type === "custom" ? "custom" : "airport",
+                      departureDate,
+                      returnDate,
+                      purpose,
+                      flightDate,
+                      flightNo,
+                      airport,
+                      terminal,
+                      airline,
+                      flightTime
                     }
                   });
                   return;
@@ -317,12 +341,17 @@ const Page: NextPageWithLayout<
                 border: "none"
               }}
               onClick={() => {
-                if (currentTab === 4) {
-                  alert("送出詢價單");
-                  submitRef.current?.click();
-                  return;
+                if (validationList[currentTab].valid) {
+                  if (currentTab === 4) {
+                    alert("送出詢價單");
+                    submitRef.current?.click();
+                    return;
+                  } else {
+                    setCurrentTab((prev) => prev + 1);
+                  }
+                } else {
+                  alert(validationList[currentTab].errorMessage);
                 }
-                setCurrentTab((prev) => prev + 1);
               }}
             >
               {currentTab === 4 ? "送出詢價單" : "下一步"}

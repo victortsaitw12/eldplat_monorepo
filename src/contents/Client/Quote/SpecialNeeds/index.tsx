@@ -9,23 +9,26 @@ import {
   FieldErrors,
   UseFormRegister,
   UseFormSetValue,
-  UseFormGetValues
+  UseFormGetValues,
+  useWatch
 } from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
-interface TravelInformationProps {
+interface SpecialNeedsInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
   setValue: UseFormSetValue<QuotationCreatePayload>;
   getValues: UseFormGetValues<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
+  validationList: Array<{ valid: boolean; errorMessage: string }>;
 }
-const TravelInformation = ({
+const SpecialNeedsInformation = ({
   register,
   control,
   errors,
   getValues,
-  setValue
-}: TravelInformationProps) => {
+  setValue,
+  validationList
+}: SpecialNeedsInformationProps) => {
   return (
     <CollapseCardSTY>
       <Collapse title="特殊需求" opened={true}>
@@ -181,4 +184,4 @@ const TravelInformation = ({
   );
 };
 
-export default TravelInformation;
+export default SpecialNeedsInformation;
