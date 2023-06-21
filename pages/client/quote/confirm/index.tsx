@@ -26,7 +26,7 @@ const Page: NextPageWithLayout<
       )}
       <TermOfUse type="checkbox">
         <div>
-          我以了解
+          我已了解
           <span style={{ color: "#3670C9" }}>預約注意事項</span>、
           <span style={{ color: "#3670C9" }}>使用條款</span>、
           <span style={{ color: "#3670C9" }}>隱私權條款</span>

@@ -19,8 +19,17 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
               <DetailList
                 listArray={[
                   {
-                    title: "全額支付",
-                    value: `NT$${data.quote_total_amount} ${
+                    title:
+                      data.checktimeout === "11" ? (
+                        <>
+                          <div>
+                            全額支付<span className="red">(已逾期)</span>
+                          </div>
+                        </>
+                      ) : (
+                        "全額支付"
+                      ),
+                    value: `NT$${data.quote_total_amount || 0} ${
                       data.full_payment_tax ? "(含稅)" : "(未稅)"
                     }`
                   },
@@ -35,7 +44,7 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                         : dayjs(data.full_payment_period).format("YYYY-MM-DD") +
                           "前繳款"
                     }`,
-                    value: `NT$${data.actual_full_payment_date}`
+                    value: data.actual_full_payment_date
                   }
                 ]}
               />
@@ -44,16 +53,29 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
             <>
               <DetailList
                 listArray={[
-                  { title: "預付訂金", value: `NT$${data.deposit_amount}` },
                   {
-                    title: "付款方式",
+                    title:
+                      data.checktimeout === "9" ? (
+                        <>
+                          <div>
+                            預付訂金<span className="red">(已逾期)</span>
+                          </div>
+                        </>
+                      ) : (
+                        "預付訂金"
+                      ),
+                    value: `NT$${data.deposit_amount || 0}`
+                  },
+                  {
+                    title: data.deposit_history && "付款方式",
                     value: data.deposit_history
                   },
                   {
                     title: `${
                       data.actual_deposit_date
                         ? "付款時間"
-                        : data.deposit_period
+                        : dayjs(data.deposit_period).format("YYYY-MM-DD") +
+                          "前繳款"
                     }`,
                     value: data.actual_deposit_date
                   }
@@ -62,13 +84,22 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
               <DetailList
                 listArray={[
                   {
-                    title: "尾款支付",
-                    value: `NT$${data.balance_amount}  ${
+                    title:
+                      data.checktimeout === "10" ? (
+                        <>
+                          <div>
+                            尾款支付<span className="red">(已逾期)</span>
+                          </div>
+                        </>
+                      ) : (
+                        "尾款支付"
+                      ),
+                    value: `NT$${data.balance_amount || 0}  ${
                       data.full_payment_tax ? "(含稅)" : "(未稅)"
                     }`
                   },
                   {
-                    title: "付款方式",
+                    title: data.balance_history && "付款方式",
                     value: data.balance_history
                   },
                   {

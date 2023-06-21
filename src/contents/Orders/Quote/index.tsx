@@ -83,7 +83,7 @@ const Quote = ({
                 ) : (
                   <>
                     <span>訂金</span>
-                    <span> NT${data.deposit_amount}</span>
+                    <span> NT${data.deposit_amount || 0}</span>
                   </>
                 )}
               </div>
