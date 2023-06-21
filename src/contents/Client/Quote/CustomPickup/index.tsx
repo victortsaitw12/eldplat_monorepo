@@ -10,8 +10,13 @@ type FormValues = {
   returnDate: string;
   purpose: string;
 };
-const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
-  {},
+interface Props {
+  departureDate?: string;
+  returnDate?: string;
+  purpose?: string;
+}
+const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
+  { departureDate, returnDate, purpose },
   formButtonRef
 ) {
   const router = useRouter();
@@ -22,9 +27,9 @@ const CustomPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
     formState: { errors, isDirty, dirtyFields }
   } = useForm<FormValues>({
     defaultValues: {
-      departureDate: formatDateToString(new Date()),
-      returnDate: "",
-      purpose: ""
+      departureDate: departureDate || formatDateToString(new Date()),
+      returnDate: returnDate || "",
+      purpose: purpose || ""
     }
   });
   const [minDate, setMinDate] = useState<string>(
