@@ -37,9 +37,7 @@ function Table({
   goToCreatePage,
   viewItem,
   goToEditPage,
-  deleteItem = (item) => {
-    console.log(item);
-  },
+  deleteItem,
   handleCheckboxChange = (item) => {
     console.log(item);
   },
@@ -165,7 +163,9 @@ function Table({
                         goToEditPage &&
                         goToEditPage.bind(null, item.id?.value, item)
                       }
-                      onDelete={deleteItem.bind(null, item.id?.value)}
+                      onDelete={
+                        deleteItem && deleteItem.bind(null, item.id?.value)
+                      }
                     />
                   </td>
                 </tr>

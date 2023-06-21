@@ -15,11 +15,18 @@ export const DivSTY = styled.div`
           }
           span {
             flex: unset;
+            &:first-child {
+              max-width: unset;
+            }
           }
         }
       }
       .detail_list:not(:first-child) {
         margin-top: 26.5px;
+      }
+
+      .red {
+        color: ${({ theme }) => theme.color.R400};
       }
     }
   }
