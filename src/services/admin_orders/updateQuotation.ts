@@ -1,24 +1,5 @@
 import API_Path from "./apiPath";
 // 編輯詢價/報價單
-const calcExtraChargeTotal = (data: any) => {
-  let subTotal = 0;
-  const option = [
-    { check: "pickup_sign_check", charge: "pickup_sign_charge" }, //舉牌
-    { check: "driver_guide_check", charge: "driver_guide_charge" }, //司導
-    { check: "bus_age_check", charge: "bus_age_charge" }, //指定車齡
-    { check: "special_luggage_check", charge: "special_luggage_charge" }, //攜帶特大行李
-    { check: "bring_pets_check", charge: "bring_pets_charge" }, //攜帶寵物
-    { check: "mineral_water_check", charge: "mineral_water_charge" }, //杯水
-    { check: "bottled_water_check", charge: "bottled_water_charge" }, //瓶裝水
-    { check: "child_seat_check", charge: "child_seat_charge" }, //兒童座椅
-    { check: "infant_seat_check", charge: "infant_seat_charge" } //嬰兒座椅
-  ];
-  option.forEach((item) => {
-    if (data[item.check] === "1") subTotal += data[item.charge];
-  });
-  console.log(subTotal);
-  return subTotal;
-};
 
 export const updateQuotation = async (data: any) => {
   console.log("😊😊😊😊😊😊😊😊data", data);
@@ -52,7 +33,6 @@ export const updateQuotation = async (data: any) => {
     }
   }
 
-  filteredNullData.extra_charge = calcExtraChargeTotal(data);
   const res = await fetch(API_Path["UpdateQuotation"], {
     method: "PUT",
     headers: {
