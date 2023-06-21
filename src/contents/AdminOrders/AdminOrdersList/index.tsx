@@ -5,8 +5,8 @@ interface Props {
   listData: any;
   goToCreatePage: () => void;
   goToDetailPage: (id: string, item: any) => void;
-  goToEditPageHandler: (id: string, item: any) => void;
-  deleteItemHandler: (id: string) => void;
+  goToEditPageHandler?: (id: string, item: any) => void;
+  deleteItemHandler?: (id: string) => void;
 }
 
 const AdminOrdersList = ({
