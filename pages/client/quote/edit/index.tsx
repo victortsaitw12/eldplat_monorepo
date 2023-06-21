@@ -16,7 +16,7 @@ import RidingInformation from "@contents/Client/Quote/RidingInformation";
 import SpecialNeeds from "@contents/Client/Quote/SpecialNeeds";
 import ContactInformation from "@contents/Client/Quote/ContactInformation";
 import FlightInformation from "@contents/Client/Quote/FlightInformation";
-import { Button } from "evergreen-ui";
+import { Button, toaster } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 //
@@ -95,10 +95,11 @@ const DummyExpenseDetailData = [
 ];
 //
 const validationList: Array<{ valid: boolean; errorMessage: string }> = [
-  { valid: true, errorMessage: "1" },
-  { valid: true, errorMessage: "2" },
-  { valid: true, errorMessage: "3" },
-  { valid: true, errorMessage: "4" }
+  { valid: true, errorMessage: "" },
+  { valid: true, errorMessage: "" },
+  { valid: true, errorMessage: "" },
+  { valid: true, errorMessage: "" },
+  { valid: true, errorMessage: "" }
 ];
 //
 const Page: NextPageWithLayout<
@@ -195,6 +196,8 @@ const Page: NextPageWithLayout<
     handleSubmit,
     getValues,
     setValue,
+    trigger,
+
     formState: { errors }
   } = useForm<QuotationCreatePayload>({
     defaultValues: async () => {
@@ -205,22 +208,24 @@ const Page: NextPageWithLayout<
     }
   });
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
-    try {
-      const result = await createQuotation(data);
-      const { quote_no } = result;
-      if (!quote_no) {
-        throw new Error("Fail to create quotation");
-      }
-      router.push({
-        pathname: `/client/quote/detail/${quote_no}`,
-        query: {
-          quote_type: type === "custom" ? "1" : type === "pickUp" ? "2" : "3"
-        }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    alert("送出詢價單");
+    // try {
+    //   const result = await createQuotation(data);
+    //   const { quote_no } = result;
+    //   if (!quote_no) {
+    //     throw new Error("Fail to create quotation");
+    //   }
+    //   router.push({
+    //     pathname: `/client/quote/detail/${quote_no}`,
+    //     query: {
+    //       quote_type: type === "custom" ? "1" : type === "pickUp" ? "2" : "3"
+    //     }
+    //   });
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
+  console.log("validationList", validationList);
   return isLoading ? (
     <LoadingSpinner />
   ) : (
@@ -240,14 +245,7 @@ const Page: NextPageWithLayout<
           <button type="submit" style={{ display: "none" }} ref={submitRef}>
             submit
           </button>
-          {currentTab === 1 && type === "custom" && (
-            <TravelInformation
-              control={control}
-              errors={errors}
-              register={register}
-              setValue={setValue}
-            />
-          )}
+
           {currentTab === 1 && type !== "custom" && (
             <FlightInformation
               control={control}
@@ -256,6 +254,17 @@ const Page: NextPageWithLayout<
               setValue={setValue}
               flightTime={flightTime}
               type={type}
+              validateSubForm={(data) => {
+                validationList[1] = data;
+              }}
+            />
+          )}
+          {currentTab === 1 && type === "custom" && (
+            <TravelInformation
+              control={control}
+              errors={errors}
+              register={register}
+              setValue={setValue}
               validateSubForm={(data) => {
                 validationList[1] = data;
               }}
@@ -282,8 +291,10 @@ const Page: NextPageWithLayout<
               setValue={setValue}
               getValues={getValues}
               validationList={validationList}
+              trigger={trigger}
             />
           )}
+
           {currentTab === 4 && (
             <ContactInformation
               control={control}
@@ -340,18 +351,43 @@ const Page: NextPageWithLayout<
                 flex: "1",
                 border: "none"
               }}
-              onClick={() => {
-                if (validationList[currentTab].valid) {
+              onClick={async () => {
+                console.log("validationList", validationList);
+                let isValid = true;
+                console.log("currentTab", currentTab);
+                if (currentTab === 1 || currentTab === 2) {
+                  isValid = validationList[currentTab].valid;
+                  if (!isValid) {
+                    toaster.danger("無法前往下一頁", {
+                      description: validationList[currentTab].errorMessage
+                    });
+                  }
+                } else if (currentTab === 3) {
+                  isValid = await trigger("pickup_sign_remark", {
+                    shouldFocus: true
+                  });
+                }
+                console.log("isValid", isValid);
+                if (isValid) {
                   if (currentTab === 4) {
-                    alert("送出詢價單");
                     submitRef.current?.click();
                     return;
                   } else {
                     setCurrentTab((prev) => prev + 1);
                   }
-                } else {
-                  alert(validationList[currentTab].errorMessage);
                 }
+
+                // if (validationList[currentTab].valid) {
+                //   if (currentTab === 4) {
+                //     alert("送出詢價單");
+                //     submitRef.current?.click();
+                //     return;
+                //   } else {
+                //     setCurrentTab((prev) => prev + 1);
+                //   }
+                // } else {
+                //   alert(validationList[currentTab].errorMessage);
+                // }
               }}
             >
               {currentTab === 4 ? "送出詢價單" : "下一步"}
