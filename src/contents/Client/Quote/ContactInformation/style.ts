@@ -24,7 +24,7 @@ export const ItemSTY = styled.li`
     display: flex;
     flex: 1 0 0;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     padding: 0px;
     gap: 21px;
     > .item-title {
@@ -36,11 +36,31 @@ export const ItemSTY = styled.li`
     }
     > .item-input-container {
       display: flex;
+      flex-direction: column;
       gap: 8px;
       flex: 1 0 0;
       > input {
         width: auto;
+      }
+      .input-error {
+        color: ${({ theme }) => theme.color.R400};
+      }
+    }
+    > .double-input-container {
+      display: flex;
+      /* gap: 8px; */
+      flex: 1 0 0;
+      > .item-input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
         flex: 1 0 0;
+        > input {
+          width: auto;
+        }
+        .input-error {
+          color: ${({ theme }) => theme.color.R400};
+        }
       }
     }
   }

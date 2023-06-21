@@ -35,27 +35,50 @@ const FlightInformation = ({
   });
   console.log("type", type);
   console.log("flightTime", flightTime);
-  const departure_time = useWatch({
+  const order_itinerary_list = useWatch({
     control,
-    name: "order_itinerary_list.0.departure_time"
+    name: "order_itinerary_list"
   });
   useEffect(() => {
+    if (!order_itinerary_list) return;
     const flightTimeHour = Number(flightTime?.split(":")[0]);
-    const departureTimeHour = Number(departure_time?.split(":")[0]);
-    if (type === "dropOff" && flightTimeHour - departureTimeHour < 2) {
-      validateSubForm({
-        valid: false,
-        errorMessage: `起飛時間為:${flightTime},請至少於起飛前兩小時出發!`
+    let isValid = true;
+    order_itinerary_list.forEach((item) => {
+      const departureTimeHour = Number(item.departure_time.split(":")[0]);
+      if (type === "dropOff" && flightTimeHour - departureTimeHour < 2) {
+        isValid = false;
+        console.log("valid date!!!");
+        console.log("flightTimeHour", flightTimeHour);
+        console.log("departureTimeHour", departureTimeHour);
+        validateSubForm({
+          valid: false,
+          errorMessage: `起飛時間為:${flightTime},請至少於起飛前兩小時出發!`
+        });
+        return;
+      } else if (type === "pickUp" && departureTimeHour - flightTimeHour < 0) {
+        isValid = false;
+        validateSubForm({
+          valid: false,
+          errorMessage: `接機時間為:${flightTime},請選擇合理的時間!`
+        });
+        return;
+      }
+      item.stopover_address_list.forEach((address) => {
+        console.log("address.stopover_address", address.stopover_address);
+        if (address.stopover_address.trim() === "") {
+          console.log("有空!");
+          isValid = false;
+          validateSubForm({
+            valid: false,
+            errorMessage: "中途點地址不得為空"
+          });
+          return;
+        }
       });
-      return;
-    }
-    // else if(type === "pickUp" && departureTimeHour - flightTimeHour < 2){validateSubForm({
-    //   valid: false,
-    //   errorMessage: `起飛時間為:${flightTime},請至少於起飛前兩小時出發!`
-    // });
-    // return}
-    validateSubForm({ valid: true, errorMessage: "" });
-  }, [departure_time]);
+    });
+    console.log("isValid", isValid);
+    if (isValid) validateSubForm({ valid: true, errorMessage: "" });
+  }, [order_itinerary_list]);
   return (
     <div
       style={{
@@ -101,7 +124,7 @@ const FlightInformation = ({
                 register={register}
                 startPointName={`order_itinerary_list.${index}.pickup_location`}
                 destinationPointName={`order_itinerary_list.${index}.dropoff_location`}
-                middlePointName={`order_itinerary_list.${index}.stopover_addresses`}
+                middlePointName={`order_itinerary_list.${index}.stopover_address_list`}
                 withStartPoint={type === "pickUp"}
                 withDestinationPoint={type === "dropOff"}
               />

@@ -59,11 +59,17 @@ const RidingInformation = ({
     const isValidPassenger = adult + child + infant > 0;
     const isValidBusData = validateBusData(bus_data);
     if (!isValidPassenger) {
-      validateSubForm({ valid: false, errorMessage: "乘客總數不能為0" });
+      validateSubForm({
+        valid: false,
+        errorMessage: "請填寫「乘客數量」與「車型及數量」欄位。"
+      });
       return;
     }
     if (!isValidBusData) {
-      validateSubForm({ valid: false, errorMessage: "車輛總數不能為0" });
+      validateSubForm({
+        valid: false,
+        errorMessage: "請填寫「乘客數量」與「車型及數量」欄位。"
+      });
       return;
     }
     validateSubForm({ valid: true, errorMessage: "" });
