@@ -1,7 +1,7 @@
 import React from "react";
 import { BodySTY } from "./style";
 import cx from "classnames";
-import { ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
+import { ChevronDownIcon, ChevronUpIcon, Text } from "evergreen-ui";
 interface I_Props {
   opened?: boolean;
   color?: string;
@@ -35,9 +35,26 @@ const Collapse = ({
   }, [isOpen]);
   return (
     <BodySTY color={color} className="collapse">
-      <div className="collapse_title">
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          const target = e.target as HTMLTextAreaElement;
+          if (
+            typeof target.className == "string" &&
+            (target.className?.indexOf("collapse_title") >= 0 ||
+              target.className?.indexOf("title_text") >= 0)
+          ) {
+            titleOnClick();
+          }
+        }}
+        className="collapse_title"
+      >
         <>
-          {titleChildren ? titleChildren : title}
+          {titleChildren ? (
+            titleChildren
+          ) : (
+            <Text className="title_text">{title}</Text>
+          )}
           {!viewOnly ? (
             isOpen ? (
               <ChevronUpIcon onClick={titleOnClick} />

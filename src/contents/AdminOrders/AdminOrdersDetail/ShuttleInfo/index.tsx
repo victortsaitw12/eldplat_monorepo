@@ -171,7 +171,8 @@ const ShuttleInfo = ({
       {isEdit && isCustomBus && (
         <Pane className="add_day_container">
           <Button
-            onClick={() => {
+            onClick={(e: any) => {
+              e.preventDefault();
               const lastDate = getValues(
                 "order_itinerary_list[" + (fields.length - 1) + "].day_date"
               );

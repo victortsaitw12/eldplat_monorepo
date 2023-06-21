@@ -48,9 +48,14 @@ const AdminOrdersDetal = ({
   orderData,
   busData
 }: I_Props) => {
-  console.log("🤣🤣🤣🤣detail頁的orderData", orderData, busData);
   const modifyDefaultValues = (data: any) => {
     const newData = { ...orderData };
+    if (
+      orderData["full_payment_check"] !== "1" &&
+      orderData["deposit_check"] !== "1"
+    ) {
+      newData["full_payment_check"] = "1";
+    }
     newData["full_payment_period"] =
       orderData["full_payment_period"] &&
       dayjs(orderData["full_payment_period"]).format("YYYY-MM-DD");
@@ -104,7 +109,6 @@ const AdminOrdersDetal = ({
       });
     }
     newData["bus_data"] = formatedBusData;
-    console.log("💕💕💕💕💕💕💕modify後的資料", newData);
     return newData;
   };
   const [loading, setLoading] = useState(false);
@@ -113,25 +117,14 @@ const AdminOrdersDetal = ({
       ...modifyDefaultValues(orderData)
     }
   });
+
   const { watch } = methods;
-  // const watchAllFields = watch();
+  const watchAllFields = watch();
+
   // Callback version of watch.  It's your responsibility to unsubscribe when done.
   React.useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      if (name == "full_payment_check") {
-        if (value.full_payment_check == "1") {
-          //當為全額支付的時候
-          methods.setValue("deposit_check", "0");
-          methods.setValue("deposit_period", null);
-        }
-      }
-      if (name == "deposit_check") {
-        if (value.deposit_check == "1") {
-          //當為訂金支付的時候
-          methods.setValue("full_payment_check", "0");
-          methods.setValue("full_payment_period", null);
-        }
-      }
+      console.log("watch😊😊😊😊😊😊😊😊😊😊", value);
     });
     return () => subscription.unsubscribe();
   }, [watch]);

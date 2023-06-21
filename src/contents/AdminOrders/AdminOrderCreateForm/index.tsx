@@ -81,9 +81,9 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
           required: "必填"
         })}
       >
+        <option value="1">客製包車</option>
         <option value="2">接機</option>
         <option value="3">送機</option>
-        <option value="1">客製包車</option>
       </Select>
       <Text>
         <span style={{ color: "#D14343" }}>* </span>姓
@@ -145,8 +145,7 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
           label=""
           controlProps={{
             name: "order_contact_list[0].contact_tel",
-            control,
-            rules: { required: "此欄位必填" }
+            control
           }}
         />
       </FlexWrapper>
