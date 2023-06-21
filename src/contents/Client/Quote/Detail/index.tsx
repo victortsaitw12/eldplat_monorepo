@@ -7,6 +7,7 @@ import Collapse from "@components/Collapse";
 //@contents
 import SummaryInfoView from "@contents/Client/Quote/Detail/SummaryInfoView";
 import ShuttleInfo from "./ShuttleInfo";
+import FlightShuttleInfo from "./FlightShuttleInfo";
 import TakeBusInfoView from "./TakeBusInfoView";
 import FlightInfoView from "./FlightInfoView";
 import SpecialInfoView from "./SpecialInfoView";
@@ -66,17 +67,21 @@ const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
         <Collapse opened={true} title="訂單聯絡人">
           <ContactInfoView listArray={contactInfo} />
         </Collapse>
-
-        {/*以下為變動*/}
-        {orderData["quote_type"] === "1" ? (
-          <ShuttleInfo arrayName="order_itinerary_list" isEdit={isEdit} />
+        {orderData["quote_type"] !== "1" ? (
+          <>
+            <Collapse opened={true} title="航班資訊">
+              <FlightInfoView data={orderData} />
+            </Collapse>
+            <FlightShuttleInfo
+              arrayName="order_itinerary_list"
+              isEdit={isEdit}
+            />
+          </>
         ) : (
-          <Collapse opened={true} title="航班資訊">
-            <FlightInfoView data={orderData} />
-          </Collapse>
+          <ShuttleInfo arrayName="order_itinerary_list" isEdit={isEdit} />
         )}
-        {/*變動*/}
-        <Collapse title="乘車資訊">
+
+        <Collapse title="乘車資訊" opened={true}>
           <TakeBusInfoView
             adult={orderData.adult}
             child={orderData.child}
@@ -86,7 +91,7 @@ const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
             bus_data={orderData.bus_data}
           />
         </Collapse>
-        <Collapse title="特殊需求">
+        <Collapse title="特殊需求" opened={true}>
           <SpecialInfoView
             listArray={specialInfo}
             remark={orderData["remark"]}

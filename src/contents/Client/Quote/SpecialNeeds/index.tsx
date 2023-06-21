@@ -12,20 +12,24 @@ import {
   UseFormGetValues
 } from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
-interface TravelInformationProps {
+interface SpecialNeedsInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
   setValue: UseFormSetValue<QuotationCreatePayload>;
   getValues: UseFormGetValues<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
+  validationList: Array<{ valid: boolean; errorMessage: string }>;
+  trigger?: any;
 }
-const TravelInformation = ({
+const SpecialNeedsInformation = ({
   register,
   control,
   errors,
   getValues,
-  setValue
-}: TravelInformationProps) => {
+  setValue,
+  validationList,
+  trigger
+}: SpecialNeedsInformationProps) => {
   return (
     <CollapseCardSTY>
       <Collapse title="特殊需求" opened={true}>
@@ -38,7 +42,30 @@ const TravelInformation = ({
                 inputName="pickup_sign_check"
                 description="若欲接送非母語人士/國外友人，建議選擇此選項。"
               >
-                <Textarea width={310} {...register("pickup_sign_remark")} />
+                <Textarea
+                  width={310}
+                  {...register("pickup_sign_remark", {
+                    validate: (value: any) => {
+                      if (
+                        getValues("pickup_sign_check") === "1" &&
+                        value.trim() === ""
+                      ) {
+                        return "請輸入舉牌文字";
+                      }
+                      return true;
+                    }
+                  })}
+                  onChange={(e: any) => {
+                    setValue("pickup_sign_remark", e.target.value);
+                    trigger && trigger("pickup_sign_remark");
+                  }}
+                  isInvalid={!!errors.pickup_sign_remark}
+                />
+                {errors.pickup_sign_remark && (
+                  <div style={{ color: "#D14343" }}>
+                    {errors.pickup_sign_remark?.message}
+                  </div>
+                )}
               </CheckBoxWrapper>
             </div>
             <div className="item">
@@ -181,4 +208,4 @@ const TravelInformation = ({
   );
 };
 
-export default TravelInformation;
+export default SpecialNeedsInformation;

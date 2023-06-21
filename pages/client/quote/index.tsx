@@ -11,7 +11,7 @@ const FlowListData = [
   },
   {
     imageUrl: "/image/svg-icons/reply.svg",
-    label: "回復報價"
+    label: "回覆報價"
   },
   {
     imageUrl: "/image/svg-icons/car.svg",
