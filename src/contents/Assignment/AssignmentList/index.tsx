@@ -21,7 +21,6 @@ function AssignmentList({
   goToDetailPage
 }: Props) {
   const assignmentTitle = getAssignmentTitle();
-  console.log("1️⃣assignData", assignData);
   return (
     <BodySTY>
       <OutsideTableOnAssignment

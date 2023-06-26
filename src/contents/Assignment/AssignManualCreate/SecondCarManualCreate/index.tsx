@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
 //@sevices
@@ -57,6 +57,8 @@ const defaultValues: I_ManualCreateType = {
 };
 
 interface I_AssignManualCreateProps {
+  timeRef: any;
+  handleAssignmentCarChange: (e: any) => void;
   createAssignData: I_ManualCreateType;
   showSecondTitle: any;
   data?: any;
@@ -64,6 +66,8 @@ interface I_AssignManualCreateProps {
 }
 
 function SecondCarAssignManualCreate({
+  timeRef,
+  handleAssignmentCarChange,
   showSecondTitle,
   reloadData,
   createAssignData
@@ -77,7 +81,9 @@ function SecondCarAssignManualCreate({
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
   ]);
-  const [busNameDDL, setBusNameDDL] = useState<any>(null);
+  const [busNameDDL, setBusNameDDL] = useState<any>([
+    { bus_no: "00", bus_name: "請選擇", license_plate: "" }
+  ]);
   const [plateNo, setPlateNo] = useState<string>("");
 
   useEffect(() => {
@@ -86,7 +92,10 @@ function SecondCarAssignManualCreate({
       setLoading(true);
       try {
         const res = await getAssignBusDDL();
-        setBusGroupDDL(res.dataList[0].bus_group_options);
+        setBusGroupDDL([
+          { bus_group: "00", bus_group_name: "請選擇" },
+          ...res.dataList[0].bus_group_options
+        ]);
       } catch (e: any) {
         console.log("getQuotationByID Error:", e);
         console.log(e);
@@ -97,7 +106,7 @@ function SecondCarAssignManualCreate({
     setLoading(false);
   }, []);
 
-  const handleClick = (e) => {
+  const handleClick = (e: any) => {
     e.preventDefault();
     setSecondDrawerOpen(!secondDrawerOpen);
   };
@@ -105,8 +114,11 @@ function SecondCarAssignManualCreate({
   const handleBusGroupChange = async (e: any) => {
     console.log("e", e);
     const res = await getAssignBusDDL(e.target.value);
-    console.log("res", res);
-    setBusNameDDL(res.dataList[0].bus_options);
+    // setBusNameDDL(res.dataList[0].bus_options);
+    setBusNameDDL([
+      { bus_no: "00", bus_name: "請選擇", license_plate: "" },
+      ...res.dataList[0].bus_options
+    ]);
   };
 
   const handleCarPlate = (e: any) => {
@@ -117,9 +129,6 @@ function SecondCarAssignManualCreate({
     setPlateNo(result[0].license_plate);
   };
 
-  console.log("1️⃣busGroupDDL", busGroupDDL);
-  console.log("2️⃣busNameDDL", busNameDDL);
-  console.log("3️⃣plateNo", plateNo);
   return (
     <FormSTY>
       {/* 資訊小方塊 */}
@@ -138,8 +147,12 @@ function SecondCarAssignManualCreate({
             <span style={{ color: "#D14343" }}>*</span>車隊
           </div>
         }
+        name="bus_group"
         onClick={(e: any) => {
           handleBusGroupChange(e);
+        }}
+        onChange={(e: any) => {
+          handleAssignmentCarChange(e);
         }}
       >
         {busGroupDDL?.map(
@@ -159,9 +172,12 @@ function SecondCarAssignManualCreate({
             <span style={{ color: "#D14343" }}>*</span>車輛名稱
           </div>
         }
-        onClick={(e) => {
-          console.log("e~~~~", e);
+        name="bus_no"
+        onClick={(e: any) => {
           handleCarPlate(e);
+        }}
+        onChange={(e: any) => {
+          handleAssignmentCarChange(e);
         }}
       >
         {busNameDDL?.map((item: any) => {
@@ -177,7 +193,13 @@ function SecondCarAssignManualCreate({
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <Select>
+        <Select
+          name="start_hours"
+          onClick={(e: any) => {
+            handleAssignmentCarChange(e);
+          }}
+          ref={timeRef}
+        >
           {hours.map((item: string) => (
             <option key={item} value={item}>
               {item}
@@ -185,14 +207,26 @@ function SecondCarAssignManualCreate({
           ))}
         </Select>
         <Text fontSize={20}> : </Text>
-        <Select>
+        <Select
+          name="start_minutes"
+          onClick={(e: any) => {
+            handleAssignmentCarChange(e);
+          }}
+          ref={timeRef}
+        >
           {minutes().map((item: string) => (
             <option key={item} value={item}>
               {item}
             </option>
           ))}
         </Select>
-        <Select>
+        <Select
+          name="start_type"
+          onClick={(e: any) => {
+            handleAssignmentCarChange(e);
+          }}
+          ref={timeRef}
+        >
           <option value="am">AM</option>
           <option value="pm">PM</option>
         </Select>
@@ -200,7 +234,13 @@ function SecondCarAssignManualCreate({
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <Select>
+        <Select
+          name="end_hours"
+          onClick={(e: any) => {
+            handleAssignmentCarChange(e);
+          }}
+          ref={timeRef}
+        >
           {hours.map((item: string) => (
             <option key={item} value={item}>
               {item}
@@ -208,20 +248,39 @@ function SecondCarAssignManualCreate({
           ))}
         </Select>
         <Text fontSize={20}> : </Text>
-        <Select>
+        <Select
+          name="end_minutes"
+          onClick={(e: any) => {
+            handleAssignmentCarChange(e);
+          }}
+          ref={timeRef}
+        >
           {minutes().map((item: string) => (
             <option key={item} value={item}>
               {item}
             </option>
           ))}
         </Select>
-        <Select>
+        <Select
+          name="end_type"
+          onClick={(e: any) => {
+            handleAssignmentCarChange(e);
+          }}
+          ref={timeRef}
+        >
           <option value="am">AM</option>
           <option value="pm">PM</option>
         </Select>
       </Pane>
 
-      <TextareaField label="備註" name="remark" placeholder="" marginTop={16} />
+      <TextareaField
+        label="備註"
+        name="remark"
+        onChange={(e: any) => {
+          handleAssignmentCarChange(e);
+        }}
+        marginTop={16}
+      />
     </FormSTY>
   );
 }

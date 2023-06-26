@@ -25,21 +25,25 @@ export interface I_ManualAssignType {
 export interface I_ManualCreateType {
   quote_no: string;
   maintenance_no?: string;
-  manual_driver: {
-    driver_no: string;
-    bus_day_number: number;
-    bus_group: string;
-    task_start_time: string;
-    task_end_time: string;
-    remark: string;
-  }[];
+  manual_driver: I_ManualDriver[];
+  manual_bus: I_ManualBus[];
+}
 
-  manual_bus: {
-    bus_no: string;
-    bus_day_number: number;
-    bus_group: string;
-    task_start_time: string;
-    task_end_time: string;
-    remark: string;
-  }[];
+export interface I_ManualBus {
+  bus_no: string;
+  bus_day_number: number;
+  bus_group: string;
+  task_start_time: string;
+  task_end_time: string;
+  remark: string;
+  filled?: boolean;
+}
+
+export interface I_ManualDriver {
+  driver_no: string;
+  bus_day_number: number;
+  bus_group: string;
+  task_start_time: string;
+  task_end_time: string;
+  remark: string;
 }
