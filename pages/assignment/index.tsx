@@ -13,6 +13,8 @@ import Drawer from "@components/Drawer";
 import AssignmentList from "@contents/Assignment/AssignmentList";
 import AutoAssignBtn from "@contents/Assignment/AssignmentList/AutoAssignBtn";
 import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn";
+import AdditionalVehicleBtn from "@contents/Assignment/AssignmentList/AdditionalVehicleBtn";
+import AdditionalDriverBtn from "@contents/Assignment/AssignmentList/AdditionalDriverBtn";
 import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
 import {
   assignParser,
@@ -102,23 +104,40 @@ const Page: NextPageWithLayout<never> = () => {
         newData.map((v, idx) => {
           const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
           v["no"] = { label: item_no, value: item_no };
-          if (v.maintenance_quote_no.label.substring(0, 3) === "ORD")
+          if (v.maintenance_quote_no.label.substring(0, 3) === "MTC") {
             v["auto_assign"] = {
-              label: <AutoAssignBtn></AutoAssignBtn>,
+              label: " ",
               value: null
             };
-          if (v.maintenance_quote_no.label.substring(0, 3) === "ORD")
             v["manual_assign"] = {
-              label: (
-                <ManualAssignBtn
-                  id={v.maintenance_quote_no.label}
-                  isDrawerOpen={isDrawerOpen}
-                  setDrawerOpen={setDrawerOpen}
-                  setOrderInfo={setOrderInfo}
-                />
-              ),
+              label: " ",
               value: null
             };
+          } else {
+            v["auto_assign"] = {
+              label:
+                newSubData[idx].length === 0 ? (
+                  <AutoAssignBtn />
+                ) : (
+                  <AdditionalVehicleBtn />
+                ),
+              value: null
+            };
+            v["manual_assign"] = {
+              label:
+                newSubData[idx].length === 0 ? (
+                  <ManualAssignBtn
+                    id={v.maintenance_quote_no.label}
+                    isDrawerOpen={isDrawerOpen}
+                    setDrawerOpen={setDrawerOpen}
+                    setOrderInfo={setOrderInfo}
+                  />
+                ) : (
+                  <AdditionalDriverBtn />
+                ),
+              value: null
+            };
+          }
         });
         setData(newData);
       })
