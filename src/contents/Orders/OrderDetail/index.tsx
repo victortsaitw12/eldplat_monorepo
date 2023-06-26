@@ -71,8 +71,6 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
             <Collapse opened={true} title="訂單聯絡人">
               <ContactInfoView listArray={contactInfo} />
             </Collapse>
-
-            {/*以下為變動*/}
             {orderData["quote_type"] === "1" ? (
               <ShuttleInfo arrayName="order_itinerary_list" isEdit={false} />
             ) : (
@@ -83,7 +81,6 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                 <ShuttleInfo arrayName="order_itinerary_list" isEdit={false} />
               </>
             )}
-            {/*變動*/}
             <Collapse title="乘車資訊">
               <TakeBusInfoView
                 adult={orderData.adult}

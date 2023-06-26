@@ -8,7 +8,7 @@ import LabelSecondaryButton from "@components/Button/Secondary/Label";
 import LightBox from "@components/Lightbox";
 //@service
 import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
-import { updateStatusLog } from "@services/admin_orders/updateStatusLog";
+import { updateBEStatusLog } from "@services/admin_orders/updateBEStatusLog";
 import dayjs from "dayjs";
 
 interface I_Props {
@@ -27,9 +27,18 @@ const PriceInfoView = ({ orderData }: I_Props) => {
       console.log(err);
     }
   };
-  const update_status = async (quote_no: string, status_code: string) => {
+  const update_BE_status = async (quote_no: string, status_code: string) => {
     try {
-      const res = await updateStatusLog(quote_no, status_code);
+      const res = await updateBEStatusLog(quote_no, status_code);
+      console.log(res);
+      router.push("/admin_orders/");
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+  const update_FE_status = async (quote_no: string, status_code: string) => {
+    try {
+      const res = await updateBEStatusLog(quote_no, status_code);
       console.log(res);
       router.push("/admin_orders/");
     } catch (err: any) {
@@ -80,7 +89,7 @@ const PriceInfoView = ({ orderData }: I_Props) => {
             {
               title: "小費",
               value: orderData?.tip
-                ? "NT" + orderData?.tip.toLocaleString()
+                ? "NT$" + orderData?.tip.toLocaleString()
                 : "0"
             },
             {
@@ -174,7 +183,7 @@ const PriceInfoView = ({ orderData }: I_Props) => {
           <LabelButton
             onClick={(e) => {
               e.preventDefault();
-              update_status(orderData.quote_no, "3");
+              update_BE_status(orderData.quote_no, "3");
             }}
             className="submit_btn"
             text="確認"

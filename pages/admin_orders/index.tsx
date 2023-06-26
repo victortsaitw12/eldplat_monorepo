@@ -93,7 +93,6 @@ const Page: NextPageWithLayout<{
         //       label: order["order_status"],
         //       value: order["order_status"]
         //     },
-        //     //接單下階段才會做
         //     person_name: {
         //       label: "-",
         //       value: "-"
@@ -255,8 +254,8 @@ const Page: NextPageWithLayout<{
                 listData={data}
                 goToDetailPage={goToDetailPage}
                 goToCreatePage={goToCreatePage}
-                goToEditPageHandler={goToEditPageHandler}
-                deleteItemHandler={deleteItemHandler}
+                {...(nowTab !== "6" && { goToEditPageHandler })}
+                {...(nowTab !== "6" && { deleteItemHandler })}
               ></AdminOrdersList>
             </FilterWrapper>
           </TableWrapper>
@@ -267,7 +266,13 @@ const Page: NextPageWithLayout<{
                 setDrawerOpen(false);
               }}
             >
-              <AdminOrderCreateForm />
+              <AdminOrderCreateForm
+                reloadData={() => {
+                  setDrawerOpen(false);
+                  setData([]);
+                  getDataByTab(nowTab);
+                }}
+              />
             </Drawer>
           )}
           {/* <SideBookMark /> */}
