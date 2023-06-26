@@ -45,7 +45,6 @@ const TableRow = ({
       <tr>
         {Object.keys(item).map((key) => {
           if (key === "id") return;
-
           if (!item[key].label) {
             return (
               <td key={item.id + key}>
@@ -69,7 +68,8 @@ const TableRow = ({
           {isOpen ? (
             <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pointer" />
           ) : (
-            subAssignData[idx].length !== 0 && (
+            (item.maintenance_quote_no.label.substring(0, 3) === "MTC" ||
+              subAssignData[idx].length !== 0) && (
               <ChevronDownIcon
                 onClick={handleInsideTableOpen}
                 cursor="pointer"
