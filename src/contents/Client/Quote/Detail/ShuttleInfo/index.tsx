@@ -14,12 +14,11 @@ import DetailItem from "@components/DetailList/DetailItem";
 import { BodySTY } from "./style";
 import dayjs from "dayjs";
 interface I_Props {
-  quote_no?: string;
   isEdit: boolean;
   arrayName: string;
 }
 
-const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
+const ShuttleInfo = ({ isEdit, arrayName }: I_Props) => {
   const { register, control, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -47,6 +46,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
     }
   };
   const r_list = (fields: any[]) => {
+    console.log("fields: ", fields);
     return fields.map((child, i) => (
       <Collapse
         opened={true}
@@ -91,42 +91,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
       </Collapse>
     ));
   };
-  return (
-    <BodySTY>
-      {r_list(fields)}
-      {isEdit && (
-        <Pane className="add_day_container">
-          <Button
-            onClick={() => {
-              const lastDate = getValues(
-                "order_itinerary_list[" + (fields.length - 1) + "].day_date"
-              );
-              // const lastDate = fields[fields.length - 1]?.day_date;
-              append({
-                quote_no: quote_no,
-                day_number: fields.length + 1,
-                day_date: dayjs(lastDate)
-                  .add(1, "day")
-                  .format("YYYY-MM-DDTHH:mm:ss"),
-                departure_time: "08:00",
-                dropoff_location: "",
-                pickup_location: "",
-                stopover_address_list: [
-                  {
-                    stopover_sort: 1,
-                    stopover_address: ""
-                  }
-                ]
-              });
-            }}
-          >
-            <SmallPlusIcon color="#718BAA" />
-            新增其他天
-          </Button>
-        </Pane>
-      )}
-    </BodySTY>
-  );
+  return <BodySTY>{r_list(fields)}</BodySTY>;
 };
 
 export default ShuttleInfo;

@@ -55,7 +55,6 @@ function StepArragement({
       </ItemSTY>
       {fields.map((item, index) => {
         const locationName = `中途點${index + 1}`;
-        console.log("item", item);
         return (
           <ItemSTY key={item.id}>
             <div className="item-content">{locationName}: </div>
@@ -71,7 +70,7 @@ function StepArragement({
               <button className="option-item" onClick={() => remove(index)}>
                 <TrashIcon size={12} />
               </button>
-              {index === fields.length - 1 ? (
+              {index === fields.length - 1 && fields.length < 8 ? (
                 <button
                   className="option-item"
                   onClick={() => {

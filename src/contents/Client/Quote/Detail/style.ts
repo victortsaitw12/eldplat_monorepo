@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledForm = styled.form`
+const BodySTY = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 0px 40px;
@@ -19,4 +19,4 @@ const StyledForm = styled.form`
   }
 `;
 
-export { StyledForm };
+export { BodySTY };
