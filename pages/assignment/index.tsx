@@ -16,6 +16,7 @@ import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn
 import AdditionalVehicleBtn from "@contents/Assignment/AssignmentList/AdditionalVehicleBtn";
 import AdditionalDriverBtn from "@contents/Assignment/AssignmentList/AdditionalDriverBtn";
 import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
+import AssignmentAdditionalVehicle from "@contents/Assignment/AssignmentAdditional/Vehicle";
 import {
   assignParser,
   assignPattern,
@@ -35,6 +36,7 @@ import {
   getDriverAssignmentInfo
 } from "@services/assignment/getAssignmentEdit";
 import DriverEdit from "@contents/Assignment/AssignManualEdit/DriverEdit";
+import PrimaryRadius from "@components/Button/PrimaryRadius";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -85,7 +87,9 @@ const Page: NextPageWithLayout<never> = () => {
     subFilter,
     updateSubFilter,
     isDrawerOpen,
-    setDrawerOpen
+    setDrawerOpen,
+    drawerType,
+    setDrawerType
   } = useAssignmentStore();
   //
 
@@ -113,6 +117,7 @@ const Page: NextPageWithLayout<never> = () => {
           const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
           v["no"] = { label: item_no, value: item_no };
           if (v.maintenance_quote_no.label.substring(0, 3) === "MTC") {
+            // 維保單無按鈕
             v["auto_assign"] = {
               label: " ",
               value: null
@@ -122,12 +127,16 @@ const Page: NextPageWithLayout<never> = () => {
               value: null
             };
           } else {
+            // 全新訂單排程按鈕 or 已排程訂單修改按鈕
             v["auto_assign"] = {
               label:
                 newSubData[idx].length === 0 ? (
                   <AutoAssignBtn />
                 ) : (
-                  <AdditionalVehicleBtn />
+                  <AdditionalVehicleBtn
+                    id={v.maintenance_quote_no.label}
+                    setOrderInfo={setOrderInfo}
+                  />
                 ),
               value: null
             };
@@ -421,26 +430,35 @@ const Page: NextPageWithLayout<never> = () => {
       </TableWrapper> */}
       {isDrawerOpen && (
         <Drawer
-          tabName={["手動派單"]}
+          tabName={[drawerType === "add" ? "編輯派車" : "手動派單"]}
           closeDrawer={() => {
             setDrawerOpen(false);
           }}
         >
-          <AssignManualCreate
-            assignData={data}
-            reloadData={() => {
-              fetchAssignData();
-              setDrawerOpen(false);
-            }}
-            secondDrawerOpen={secondDrawerOpen}
-            setSecondDrawerOpen={setSecondDrawerOpen}
-            orderInfo={orderInfo}
-            showSecondTitle={showSecondTitle}
-            setShowSecondTitle={setShowSecondTitle}
-            setPosition={setPosition}
-            createAssignData={createAssignData}
-            orderIndex={orderIndex}
-          />
+          {drawerType === "add" ? (
+            <AssignmentAdditionalVehicle
+              orderInfo={orderInfo}
+              createAssignData={createAssignData}
+              handleAssignmentCarChange={handleAssignmentCarChange}
+              timeRef={timeRef}
+            />
+          ) : (
+            <AssignManualCreate
+              assignData={data}
+              reloadData={() => {
+                fetchAssignData();
+                setDrawerOpen(false);
+              }}
+              secondDrawerOpen={secondDrawerOpen}
+              setSecondDrawerOpen={setSecondDrawerOpen}
+              orderInfo={orderInfo}
+              showSecondTitle={showSecondTitle}
+              setShowSecondTitle={setShowSecondTitle}
+              setPosition={setPosition}
+              createAssignData={createAssignData}
+              orderIndex={orderIndex}
+            />
+          )}
         </Drawer>
       )}
 
