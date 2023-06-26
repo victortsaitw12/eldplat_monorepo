@@ -6,18 +6,14 @@ interface Props {
   assignData: any;
   subAssignData: any;
   goToCreatePage: () => void;
-  deleteItemHandler: (id: string) => void;
   goToEditPageHandler: (id: string) => void;
-  goToDetailPage: (id: string) => void;
 }
 
 function AssignmentList({
   assignData,
   subAssignData,
   goToCreatePage,
-  deleteItemHandler,
-  goToEditPageHandler,
-  goToDetailPage
+  goToEditPageHandler
 }: Props) {
   const assignmentTitle = getAssignmentTitle();
   return (
@@ -28,9 +24,7 @@ function AssignmentList({
         data={assignData}
         subAssignData={subAssignData}
         goToCreatePage={goToCreatePage}
-        deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}
-        viewItem={goToDetailPage}
       />
     </BodySTY>
   );

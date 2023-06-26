@@ -91,6 +91,7 @@ function InsideTableOnAssignment({
         </thead>
         <tbody>
           {subAssignData[idx].map((item: I_SubAssignData, i: number) => {
+            console.log("item", item);
             const startDate = slashDate(item.task_start_time);
             const startTime = timeWithAPM(item.task_start_time);
             const endTime = timeWithAPM(item.task_end_time);
@@ -129,7 +130,8 @@ function InsideTableOnAssignment({
                   </td>
                   <td>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        console.log("e-----", e);
                         setOptionIsOpen((prev) => !prev);
                       }}
                     >

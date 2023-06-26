@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
 //@sevices
-// import { createVendor } from "@services/vendor/createVendor";
-import { createCustomer } from "@services/customer/createCustomer";
-import FiledInput from "./FieldInput";
 import {
-  PlusIcon,
   Text,
-  SelectField,
-  Select,
   Button,
   Pane,
   DocumentShareIcon,
@@ -19,9 +12,6 @@ import {
 import { IconLeft } from "@components/Button/Primary";
 
 //@layout
-import FlexWrapper from "@layout/FlexWrapper";
-import Drawer from "@components/Drawer";
-import SecondAssignManualCreate from "./SecondCarManualCreate";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import dayjs from "dayjs";
 import {
@@ -29,13 +19,12 @@ import {
   I_ManualCreateType
 } from "@typings/assignment_type";
 import { createAssignmentByManual } from "@services/assignment/createAssignmentByManual";
+import { deepClone } from "@utils/deepClone";
+import { useRouter } from "next/router";
 
 //@components
-// import { I_contactData } from "../vendor.type";
 
 interface I_AssignManualCreateProps {
-  carArr: any;
-  setCarArr: (t: any) => void;
   assignData?: any;
   reloadData?: () => void;
   secondDrawerOpen: string;
@@ -45,44 +34,59 @@ interface I_AssignManualCreateProps {
   setShowSecondTitle: (t: any) => void;
   setPosition: (dayNum: number, carNum: number) => void;
   createAssignData: I_ManualCreateType;
+  orderIndex?: number;
 }
 
 function AssignManualCreate({
-  carArr,
-  setCarArr,
   assignData,
   reloadData,
-  secondDrawerOpen,
   setSecondDrawerOpen,
   orderInfo,
   showSecondTitle,
   setShowSecondTitle,
   setPosition,
-  createAssignData
+  createAssignData,
+  orderIndex
 }: I_AssignManualCreateProps) {
   const [loading, setLoading] = useState(false);
-  // const []
+  const [dataFilled, setDataFilled] = useState<any>(null);
 
   // 做一個function來抓某筆訂單需要渲染幾個派車派工(側邊欄-1)
   function formatOrderInfo(orderInfoArr: any) {
     if (!orderInfoArr) return;
     const orderInfo = orderInfoArr[0];
-
     // 計算一開始到最後一天共有幾天
     const dayCount =
       dayjs(orderInfo.return_date).diff(orderInfo.departure_date, "day") + 1;
 
+    let carCounter = 0;
+
     // [...new Array(放數字)] 代表請產出一個有多少內容的陣列
-    const arr = [...new Array(dayCount)].reduce((acc, _, i) => {
+    const arr = [...new Array(dayCount)].reduce((acc, _, dayIdx) => {
       const data = {
         date: dayjs(orderInfo.departure_date)
-          .add(i, "day")
+          .add(dayIdx, "day")
           .format("YYYY/MM/DD"),
-        cars: [...new Array(orderInfo.order_quantity)].map((_, i) => i + 1)
+        cars: [...new Array(orderInfo.order_quantity)].map((_, carIdx) => {
+          carCounter++;
+          return {
+            no: carIdx + 1,
+            // filled:
+            //   showSecondTitle?.assignType === "派車"
+            //     ? dataFilled?.manual_bus[carCounter - 1]?.filled
+            //     : dataFilled?.manual_driver[carCounter - 1]?.filled,
+            filled: {
+              car: dataFilled?.manual_bus[carCounter - 1]?.filled,
+              driver: dataFilled?.manual_driver[carCounter - 1]?.filled
+            },
+            type: showSecondTitle?.assignType === "派車" ? "car" : "driver"
+          };
+        })
       };
       acc.push(data);
       return acc;
     }, []);
+
     return arr;
   }
   const orderArr = formatOrderInfo(orderInfo);
@@ -109,7 +113,6 @@ function AssignManualCreate({
     car_no: number
   ) => {
     e.preventDefault();
-
     setShowSecondTitle({
       date: orderItem.date,
       day: dayjs(orderItem.date).format("dddd"),
@@ -126,20 +129,42 @@ function AssignManualCreate({
     setPosition(dayNum + 1, car_no);
   };
 
+  // 複製大物件，如果必填項目有填寫的話，就給一個key叫做filled
   useEffect(() => {
-    const filledData = { ...createAssignData };
-    filledData.manual_bus.map((item, idx) => {
-      if (item.bus_group && item.bus_no) {
-        filledData.manual_bus[idx]["filled"] = true;
+    const filledData = deepClone(createAssignData);
+    filledData.manual_bus.map(
+      (item: { bus_group: any; bus_no: any }, idx: string | number) => {
+        if (item?.bus_group && item?.bus_no) {
+          filledData.manual_bus[idx]["filled"] = true;
+        }
       }
-    });
-    // if(filledData.manual_bus)
+    );
+    filledData.manual_driver.map(
+      (item: { bus_group: any; driver_no: any }, idx: string | number) => {
+        if (item?.bus_group && item?.driver_no) {
+          filledData.manual_driver[idx]["filled"] = true;
+        }
+      }
+    );
+    setDataFilled(filledData);
   }, [createAssignData]);
+
+  // 計算總共有幾個派車派工的按鈕要填
+  const arrCount = () => {
+    if (!orderInfo) return;
+    const count = dayjs(orderInfo[0]?.return_date).diff(
+      orderInfo[0]?.departure_date,
+      "day"
+    );
+    return (count + 1) * orderInfo[0]?.order_quantity;
+  };
 
   console.log("😊assignData", assignData);
   console.log("😋orderInfo", orderInfo);
   console.log("😴orderArr", orderArr);
   console.log("😎createAssignData", createAssignData);
+  console.log("😪orderIndex", orderIndex);
+  console.log("😍dataFilled", dataFilled);
 
   return (
     <FormSTY onSubmit={asyncSubmitForm}>
@@ -148,7 +173,15 @@ function AssignManualCreate({
         <Button iconBefore={DocumentShareIcon} marginRight={12}>
           車輛分配
         </Button>
-        <Button iconBefore={DocumentShareIcon}>駕駛排班</Button>
+        <Button
+          iconBefore={DocumentShareIcon}
+          onClick={(e: any) => {
+            e.preventDefault();
+            window.open("/driver", "_blank");
+          }}
+        >
+          駕駛排班
+        </Button>
       </Pane>
 
       {/* 資訊小方塊 */}
@@ -167,23 +200,35 @@ function AssignManualCreate({
       </Pane>
 
       {/* 全部都填好之後的儲存按鈕 */}
-      <IconLeft text={"儲存派單"} type="submit">
+      <IconLeft
+        text={"儲存派單"}
+        type="submit"
+        disabled={
+          createAssignData.manual_bus.length !== arrCount() ||
+          createAssignData.manual_driver.length !== arrCount()
+        }
+      >
         <FloppyDiskIcon size={14} />
       </IconLeft>
 
       {/* 派車派工小表格 */}
-      {orderArr?.map((item: any, idx: number) => {
+      {orderArr?.map((item: any, dateIdx: number) => {
         console.log("💙item", item);
+
         return (
-          <Pane key={idx} className="assign-table">
+          <Pane key={dateIdx} className="assign-table">
             <Pane borderBottom="1px solid #D5E2F1" paddingY={6} paddingX={12}>
               {item.date}
             </Pane>
 
-            {item.cars.map((v: number) => {
+            {item.cars.map((v: any) => {
               console.log("💛v", v);
               return (
-                <Pane key={v} display="flex" borderBottom="1px solid #D5E2F1">
+                <Pane
+                  key={v.no}
+                  display="flex"
+                  borderBottom="1px solid #D5E2F1"
+                >
                   <Pane
                     borderRight="1px solid #D5E2F1"
                     marginRight={10}
@@ -191,26 +236,37 @@ function AssignManualCreate({
                     display="flex"
                     alignItems="center"
                   >
-                    第{v}車
+                    第{v.no}車
                   </Pane>
                   <Pane>
                     <Button
                       name="car"
-                      className="finished"
+                      // className={`${
+                      //   v?.filled &&
+                      //   showSecondTitle?.assignType === "派車" &&
+                      //   "finished"
+                      // }`}
+                      className={`${v?.filled.car && "finished"}`}
                       display="flex"
                       flexWrap="wrap"
                       marginY={4}
                       onClick={(e: any) => {
-                        handleClick(e, item, v);
+                        handleClick(e, item, v.no);
                       }}
                     >
                       派車
                     </Button>
                     <Button
                       name="driver"
+                      // className={`${
+                      //   v?.filled &&
+                      //   showSecondTitle?.assignType === "派工" &&
+                      //   "finished"
+                      // }`}
+                      className={`${v?.filled.driver && "finished"}`}
                       marginBottom={4}
                       onClick={(e: any) => {
-                        handleClick(e, item, v);
+                        handleClick(e, item, v.no);
                       }}
                     >
                       派工
