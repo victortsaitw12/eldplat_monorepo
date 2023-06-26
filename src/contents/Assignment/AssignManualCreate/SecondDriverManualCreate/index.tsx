@@ -13,11 +13,11 @@ import {
 
 //@layout
 import { I_ManualCreateType } from "@typings/assignment_type";
-import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
+import {
+  getAssignBusDDL,
+  getAssignDriverDDL
+} from "@services/assignment/getAssignmentDDL";
 import { hours, minutes } from "@services/assignment/mock_data";
-
-//@components
-// import { I_contactData } from "../vendor.type";
 
 // default value
 // const defaultValues: I_ManualCreateType = {
@@ -45,6 +45,7 @@ import { hours, minutes } from "@services/assignment/mock_data";
 // };
 
 interface I_AssignManualCreateProps {
+  handleAssignmentDriverChange: (e: any) => void;
   createAssignData: I_ManualCreateType;
   showSecondTitle: any;
   data?: any;
@@ -52,62 +53,47 @@ interface I_AssignManualCreateProps {
 }
 
 function SecondDriverAssignManualCreate({
+  handleAssignmentDriverChange,
   showSecondTitle,
-  reloadData,
   createAssignData
 }: I_AssignManualCreateProps) {
-  // const { register, handleSubmit, control, reset } =
-  //   useForm<I_ManualCreateType>({
-  //     defaultValues
-  //   });
   const [loading, setLoading] = useState(false);
-  const [secondDrawerOpen, setSecondDrawerOpen] = useState<boolean>(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
   ]);
-  const [busNameDDL, setBusNameDDL] = useState<any>(null);
-  const [plateNo, setPlateNo] = useState<string>("");
+  const [driverNameDDL, setDriverNameDDL] = useState<any>(null);
 
   useEffect(() => {
     setLoading(true);
-    const getbusData = async () => {
+    const getDriverData = async () => {
       setLoading(true);
       try {
-        const res = await getAssignBusDDL();
-        setBusGroupDDL(res.dataList[0].bus_group_options);
+        const res = await getAssignDriverDDL();
+        setBusGroupDDL([
+          { bus_group: "00", bus_group_name: "請選擇" },
+          ...res.dataList[0].bus_group_options
+        ]);
       } catch (e: any) {
         console.log("getQuotationByID Error:", e);
         console.log(e);
       }
       setLoading(false);
     };
-    getbusData();
+    getDriverData();
     setLoading(false);
   }, []);
 
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   setSecondDrawerOpen(!secondDrawerOpen);
-  // };
-
   const handleBusGroupChange = async (e: any) => {
-    console.log("e", e);
-    const res = await getAssignBusDDL(e.target.value);
-    console.log("res", res);
-    setBusNameDDL(res.dataList[0].bus_options);
+    const res = await getAssignDriverDDL(e.target.value);
+    setDriverNameDDL([
+      { driver_no: "00", user_name: "請選擇" },
+      ...res.dataList[0].driver_options
+    ]);
   };
 
-  const handleCarPlate = (e: any) => {
-    const newDDL = [...busNameDDL];
-    const result = newDDL.filter((v) => {
-      return v.bus_no === e.target.value;
-    });
-    setPlateNo(result[0].license_plate);
-  };
+  console.log("busGroupDDL", busGroupDDL);
+  console.log("driverNameDDL", driverNameDDL);
 
-  console.log("1️⃣busGroupDDL", busGroupDDL);
-  console.log("2️⃣busNameDDL", busNameDDL);
-  console.log("3️⃣plateNo", plateNo);
   return (
     <FormSTY>
       {/* 資訊小方塊 */}
@@ -116,7 +102,7 @@ function SecondDriverAssignManualCreate({
           <Paragraph>
             {showSecondTitle?.date} {showSecondTitle?.day}
           </Paragraph>
-          <Paragraph>{`第0${showSecondTitle.car}車 ${showSecondTitle.assignType}`}</Paragraph>
+          <Paragraph>{`第0${showSecondTitle?.car}車 ${showSecondTitle?.assignType}`}</Paragraph>
         </Pane>
       </Pane>
 
@@ -126,8 +112,12 @@ function SecondDriverAssignManualCreate({
             <span style={{ color: "#D14343" }}>*</span>車隊
           </div>
         }
+        name="bus_group"
         onClick={(e: any) => {
           handleBusGroupChange(e);
+        }}
+        onChange={(e: any) => {
+          handleAssignmentDriverChange(e);
         }}
       >
         {busGroupDDL?.map(
@@ -147,14 +137,15 @@ function SecondDriverAssignManualCreate({
             <span style={{ color: "#D14343" }}>*</span>駕駛
           </div>
         }
-        onClick={(e: any) => {
-          handleCarPlate(e);
+        name="driver_no"
+        onChange={(e: any) => {
+          handleAssignmentDriverChange(e);
         }}
       >
-        {busNameDDL?.map((item: any) => {
+        {driverNameDDL?.map((item: any) => {
           return (
-            <option key={item.bus_no} value={item.bus_no}>
-              {item.bus_name}
+            <option key={item.driver_no} value={item.driver_no}>
+              {item.user_name}
             </option>
           );
         })}
@@ -162,7 +153,12 @@ function SecondDriverAssignManualCreate({
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <Select>
+        <Select
+          name="start_hours"
+          onClick={(e: any) => {
+            handleAssignmentDriverChange(e);
+          }}
+        >
           {hours.map((item: string) => (
             <option key={item} value={item}>
               {item}
@@ -170,14 +166,24 @@ function SecondDriverAssignManualCreate({
           ))}
         </Select>
         <Text fontSize={20}> : </Text>
-        <Select>
+        <Select
+          name="start_minutes"
+          onClick={(e: any) => {
+            handleAssignmentDriverChange(e);
+          }}
+        >
           {minutes().map((item: string) => (
             <option key={item} value={item}>
               {item}
             </option>
           ))}
         </Select>
-        <Select>
+        <Select
+          name="start_type"
+          onClick={(e: any) => {
+            handleAssignmentDriverChange(e);
+          }}
+        >
           <option value="am">AM</option>
           <option value="pm">PM</option>
         </Select>
@@ -185,7 +191,12 @@ function SecondDriverAssignManualCreate({
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <Select>
+        <Select
+          name="end_hours"
+          onClick={(e: any) => {
+            handleAssignmentDriverChange(e);
+          }}
+        >
           {hours.map((item: string) => (
             <option key={item} value={item}>
               {item}
@@ -193,20 +204,37 @@ function SecondDriverAssignManualCreate({
           ))}
         </Select>
         <Text fontSize={20}> : </Text>
-        <Select>
+        <Select
+          name="end_minutes"
+          onClick={(e: any) => {
+            handleAssignmentDriverChange(e);
+          }}
+        >
           {minutes().map((item: string) => (
             <option key={item} value={item}>
               {item}
             </option>
           ))}
         </Select>
-        <Select>
+        <Select
+          name="end_type"
+          onClick={(e: any) => {
+            handleAssignmentDriverChange(e);
+          }}
+        >
           <option value="am">AM</option>
           <option value="pm">PM</option>
         </Select>
       </Pane>
 
-      <TextareaField label="備註" name="remark" placeholder="" marginTop={16} />
+      <TextareaField
+        label="備註"
+        name="remark"
+        onChange={(e: any) => {
+          handleAssignmentDriverChange(e);
+        }}
+        marginTop={16}
+      />
     </FormSTY>
   );
 }

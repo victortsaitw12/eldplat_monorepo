@@ -40,7 +40,10 @@ export const getAllMaintenanceMissions = async (
 };
 
 // 更改維保狀態(結案與否)
-export const UpdateMaintenanceStatus = async (maintenance_no: string) => {
+export const UpdateMaintenanceStatus = async (
+  maintenance_no: string,
+  maintenance_status: string
+) => {
   const res = await fetch(
     "https://localhost:7088/CAR/UpdateMaintenanceStatus",
     {
@@ -51,7 +54,7 @@ export const UpdateMaintenanceStatus = async (maintenance_no: string) => {
       },
       body: JSON.stringify({
         maintenance_no,
-        maintenance_status: "2"
+        maintenance_status
       })
     }
   );

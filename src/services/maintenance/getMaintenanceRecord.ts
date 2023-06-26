@@ -4,7 +4,7 @@ import { createElement } from "react";
 // 取得維保任務資料
 export const getAllMaintenanceRecords = async (
   filter: { [key: string]: any } = {},
-  maintenance_status = "2"
+  maintenance_status = "3"
 ) => {
   const mainRecordFilter = [];
   for (const key in filter) {

@@ -21,6 +21,7 @@ import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
 import MaintenanceNoticeList from "@contents/maintenance/Notice/NoticeList";
 import MaintenanceMissionList from "@contents/maintenance/Mission/MissionList";
 import {
+  UpdateMaintenanceStatus,
   getAllMaintenanceMissions,
   maintenanceParser,
   maintenancePattern
@@ -116,9 +117,16 @@ const Page: NextPageWithLayout<never> = () => {
   };
   //
   const deleteItemHandler = async (id: string) => {
-    deleteCustomer(id).then((res) => {
-      fetchMaintenanceData(false);
-    });
+    console.log("888");
+    const maintenance_status = "2";
+    UpdateMaintenanceStatus(id, maintenance_status)
+      .then((res) => {
+        console.log("DELETE res", res);
+        router.reload();
+      })
+      .catch((err) => {
+        console.log("err of update status ", err);
+      });
   };
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
