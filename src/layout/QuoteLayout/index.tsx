@@ -4,7 +4,6 @@ import React, { FC, ReactNode } from "react";
 //
 import Header from "./Header";
 import { BodySTY, ContainerSTY } from "./style";
-import { fetchMenuData, MenuDataType } from "../../mock-data/side-bar/data";
 
 interface QuoteLayoutProps {
   children: ReactNode;
@@ -20,7 +19,6 @@ interface QuoteLayoutProps {
 
 const QuoteLayout: FC<QuoteLayoutProps> = ({ children, layoutProps }) => {
   const [theme, setTheme] = React.useState(false);
-  console.log("layoutProps:", layoutProps);
   return (
     <BodySTY>
       <Head>

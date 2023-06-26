@@ -1,6 +1,3 @@
-import Image from "next/image";
-import { TagSTY, ImageSTY, AvatarSTY } from "@components/Table/style";
-
 export const MOCK_DETAIL_DATA = {
   networkStatus: <a href="">Invite</a>,
   phone: <a href="">0955555555</a>,

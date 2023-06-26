@@ -13,8 +13,7 @@ const OrdersList = ({
   type: "query" | "quote" | "order" | "finish";
   orderData: any;
 }) => {
-  console.log("data:", orderData);
-  if (!orderData)
+  if (!orderData || orderData.length === 0)
     return (
       <BodySTY>
         <StatusCard>
@@ -30,7 +29,7 @@ const OrdersList = ({
           <div className="list-item" key={item.quote_no}>
             <Link
               href={{
-                pathname: `/orders/order/${item.quote_no}`
+                pathname: `/client/orders/detail/${item.quote_no}`
               }}
             >
               <Collapse

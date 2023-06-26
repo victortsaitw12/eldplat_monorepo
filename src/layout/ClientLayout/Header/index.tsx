@@ -1,66 +1,13 @@
 import {
   Avatar,
-  ListIcon,
-  Button,
-  NotificationsIcon,
   MoonIcon,
   FlashIcon,
-  HelpIcon,
-  mergeTheme,
-  defaultTheme,
   ThemeProvider,
   Select,
   PersonIcon
 } from "evergreen-ui";
 import React from "react";
 import { BodySTY } from "./style";
-import { I_MultiLanguages } from "@typings/mutiLanguage_type";
-
-// const theme = mergeTheme(defaultTheme, {
-//   components: {
-//     Button: {
-//       appearances: {
-//         link: {
-//           color: "white",
-//           fontSize: "14px",
-//           fontWeight: "600",
-//           paddingX: 16,
-//           paddingY: 8,
-//           borderRadius: 30,
-//           backgroundColor: "#679DEF",
-//           _hover: {
-//             backgroundColor: "firebrick"
-//           },
-//           _active: {
-//             backgroundColor: "darkred"
-//           },
-//           _focus: {
-//             boxShadow: "0 0 0 2px lightcoral"
-//           }
-//         },
-//         notification: {
-//           color: "#6BDAAE",
-//           fontSize: "14px",
-//           fontWeight: "600",
-//           paddingX: 8,
-//           paddingY: 10,
-//           border: "1px solid #6BDAAE",
-//           borderRadius: 20,
-//           backgroundColor: "#fff",
-//           _hover: {
-//             backgroundColor: "firebrick"
-//           },
-//           _active: {
-//             backgroundColor: "darkred"
-//           },
-//           _focus: {
-//             boxShadow: "0 0 0 2px lightcoral"
-//           }
-//         }
-//       }
-//     }
-//   }
-// });
 
 const Header = ({ layoutProps, theme, setTheme }: any) => {
   const handleLangChange = (e: any) => {
@@ -68,9 +15,6 @@ const Header = ({ layoutProps, theme, setTheme }: any) => {
   };
   const handleToggleTheme = () => {
     setTheme(!theme);
-  };
-  const handleClickMember = () => {
-    console.log("member");
   };
 
   return (

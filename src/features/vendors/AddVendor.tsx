@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Pane, TextInputField, SelectField, Checkbox } from "evergreen-ui";
+import React, { useState } from "react";
+import { Pane, TextInputField, SelectField } from "evergreen-ui";
 import FormCard from "@components/FormCard";
 import { StepControlSTY } from "@components/FormCard/style";
 import CheckboxField from "@components/CheckboxField";
-import { getAllVendors } from "@services/vendor/getAllVendors";
-import { createVendor } from "@services/vendor/createVendor";
 import { I_Add_Vendors_Type } from "@typings/vendors_type";
 import Router from "next/router";
 import { MOCK_FUEL_DATA } from "./FuelData";
-
+import { createVendor } from "@services/vendor/createVendor";
 interface I_addVendorProps {
   setAddVendorActive: (key: boolean) => void;
 }
@@ -18,9 +16,6 @@ function AddVendor({ setAddVendorActive }: I_addVendorProps) {
   const [countryValue, setCountryValue] = useState<string>("taiwan");
 
   const [fuelValue, setFuelValue] = useState<string[]>([]);
-
-  const [serviceChecked, setServiceChecked] = useState<boolean>(false);
-  const [vehicleChecked, setVehicleChecked] = useState<boolean>(false);
   const [insertData, setInsertData] = useState<I_Add_Vendors_Type>({
     vendor_name: "",
     vendor_label: "01",

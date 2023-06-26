@@ -1,12 +1,6 @@
 import Image from "next/image";
 
-import {
-  TagSTY,
-  ImageSTY,
-  StatusSTY,
-  AvatarSTY,
-  MultipleTxtSTY
-} from "@components/Table/style";
+import { ImageSTY, StatusSTY, MultipleTxtSTY } from "@components/Table/style";
 
 export const MOCK_TITLES = [
   "Contact",
@@ -23,7 +17,7 @@ export const MOCK_DATA = [
     Concact: (
       <>
         <ImageSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </ImageSTY>
         <a href="">Carlos Garcia</a>
       </>
@@ -43,7 +37,7 @@ export const MOCK_DATA = [
     Concact: (
       <>
         <ImageSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </ImageSTY>
         <a href="">Andy Miller</a>
       </>
@@ -63,7 +57,7 @@ export const MOCK_DATA = [
     Concact: (
       <>
         <ImageSTY>
-          <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+          <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
         </ImageSTY>
         <a href="">Jacob Silver</a>
       </>
@@ -84,7 +78,7 @@ export const MOCK_CERTIFICATIONDATA = {
   Concact: (
     <>
       <ImageSTY>
-        <Image width="50" height="50" src="/images/avatar1.jpg" alt="test" />
+        <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
       </ImageSTY>
       <a href="">Andy Miller</a>
     </>

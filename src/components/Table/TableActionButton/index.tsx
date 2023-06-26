@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { MoreIcon, EditIcon, DisableIcon, EyeOpenIcon } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
-import useClickOutside from "@hooks/useClickOutside";
+// import useClickOutside from "@hooks/useClickOutside";
 //
 interface Props {
-  onDelete: () => void;
+  onDelete?: () => void;
   onEdit?: () => void;
   onView?: () => void;
 }
 //
 function Index({ onDelete, onEdit, onView }: Props) {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
-  const handleClickOutside = () => {
-    setOptionIsOpen(false);
-  };
-  const ref = useClickOutside(handleClickOutside);
+  // const handleClickOutside = () => {
+  //   setOptionIsOpen(false);
+  // };
+  // const ref = useClickOutside(handleClickOutside);
 
   return (
     <BodySTY>
@@ -27,7 +27,7 @@ function Index({ onDelete, onEdit, onView }: Props) {
         <MoreIcon />
       </button>
       {optionIsOpen && (
-        <div className="table-row-option" ref={ref}>
+        <div className="table-row-option">
           {onView && (
             <button
               className="option-item"
@@ -52,16 +52,18 @@ function Index({ onDelete, onEdit, onView }: Props) {
               <div>編輯</div>
             </button>
           )}
-          <button
-            className="option-item"
-            onClick={() => {
-              onDelete();
-              setOptionIsOpen(false);
-            }}
-          >
-            <DisableIcon size={14} />
-            <div>停用</div>
-          </button>
+          {onDelete && (
+            <button
+              className="option-item"
+              onClick={() => {
+                onDelete();
+                setOptionIsOpen(false);
+              }}
+            >
+              <DisableIcon size={14} />
+              <div>停用</div>
+            </button>
+          )}
         </div>
       )}
     </BodySTY>

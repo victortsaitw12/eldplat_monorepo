@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Collapse from "@components/Collapse";
 import {
   Control,
   FieldErrors,
   UseFormRegister,
   UseFormSetValue,
-  useFieldArray
+  useFieldArray,
+  useWatch
 } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
 import { TextInput } from "evergreen-ui";
@@ -17,17 +18,44 @@ interface TravelInformationProps {
   register: UseFormRegister<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
   setValue: UseFormSetValue<QuotationCreatePayload>;
+  validateSubForm: (data: { valid: boolean; errorMessage: string }) => void;
 }
 const TravelInformation = ({
   register,
   control,
   errors,
-  setValue
+  setValue,
+  validateSubForm
 }: TravelInformationProps) => {
   const { fields } = useFieldArray({
     name: "order_itinerary_list",
     control
   });
+  const order_itinerary_list = useWatch({
+    control,
+    name: "order_itinerary_list"
+  });
+  useEffect(() => {
+    if (!order_itinerary_list) return;
+    let isValid = true;
+    console.log("order_itinerary_list", order_itinerary_list);
+    order_itinerary_list.forEach((item) => {
+      console.log("item", item);
+      item.stopover_address_list.forEach((address) => {
+        console.log("address.stopover_address", address.stopover_address);
+        if (address.stopover_address.trim() === "") {
+          console.log("有空!");
+          isValid = false;
+          validateSubForm({
+            valid: false,
+            errorMessage: "中途點地址不得為空"
+          });
+          return;
+        }
+      });
+    });
+    if (isValid) validateSubForm({ valid: true, errorMessage: "" });
+  }, [order_itinerary_list]);
   return (
     <div
       style={{

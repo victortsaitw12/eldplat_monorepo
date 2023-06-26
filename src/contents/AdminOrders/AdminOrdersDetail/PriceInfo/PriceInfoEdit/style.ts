@@ -35,6 +35,9 @@ const BodySTY = styled.div`
       & > input {
         height: 48px;
         width: 100%;
+        color: ${({ theme }) => theme.color.N700};
+        font-weight: 600;
+        font-size: 25px;
       }
     }
 

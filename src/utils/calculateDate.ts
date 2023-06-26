@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 function formatDateToString(date: Date) {
   const formatedString = dayjs(date).format("YYYY-MM-DD");
-  console.log("formatedString", formatedString);
   return formatedString;
 }
 

@@ -1,12 +1,12 @@
 import { ThemeProvider, Button, mergeTheme, defaultTheme } from "evergreen-ui";
 import theme from "@styles/theme";
-interface ComponentProps {}
 
 const ButtonPrimaryRadius = ({
   children,
   ...props
 }: {
   children: React.ReactNode;
+  [key: string]: any;
 }) => {
   const themeEvergreen = mergeTheme(defaultTheme, {
     components: {

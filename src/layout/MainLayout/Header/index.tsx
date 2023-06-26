@@ -11,7 +11,6 @@ import {
 } from "evergreen-ui";
 import React from "react";
 import { BodySTY, StyledButton } from "./style";
-import { I_MultiLanguages } from "@typings/mutiLanguage_type";
 const theme = mergeTheme(defaultTheme, {
   components: {
     Button: {

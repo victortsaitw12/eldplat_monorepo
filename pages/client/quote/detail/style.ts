@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   .body-container {
     display: flex;
+    align-items: flex-start;
     gap: 20px;
-    .content-container {
+    > .content-container {
       flex: 2;
       display: flex;
       flex-direction: column;
@@ -14,8 +15,10 @@ export const BodySTY = styled.div`
         gap: 20px;
       }
     }
-    .charge-container {
+    > .charge-container {
       flex: 1;
+      border-radius: 10px;
+      overflow: hidden;
     }
   }
 `;

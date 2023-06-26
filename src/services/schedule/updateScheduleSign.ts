@@ -1,5 +1,3 @@
-import { token } from "./token";
-
 // 修改簽核
 export const updateScheduleSign = async (data: any) => {
   console.log("updateScheduleSign", JSON.stringify(data));

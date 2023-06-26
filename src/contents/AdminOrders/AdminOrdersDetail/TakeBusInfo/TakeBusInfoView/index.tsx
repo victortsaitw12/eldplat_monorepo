@@ -9,7 +9,7 @@ interface I_Props {
   infant?: string | number;
   check_in_luggage?: string | number;
   carry_on_luggage?: string | number;
-  bus_type_list?: any[];
+  bus_data?: any[];
 }
 
 const TakeBusInfoView = ({
@@ -18,8 +18,9 @@ const TakeBusInfoView = ({
   infant,
   check_in_luggage,
   carry_on_luggage,
-  bus_type_list
+  bus_data
 }: I_Props) => {
+  console.log("busdata in takebusinfo", bus_data);
   return (
     <Pane
       style={{
@@ -59,19 +60,18 @@ const TakeBusInfoView = ({
           }
         ]}
       />
-      {/*TODO：車型車輛的API之後會改成另一隻API*/}
       <VerticalDetail
         title="車型及數量"
-        items={[
-          {
-            label: "車款名稱（21-25人）",
-            value: bus_type_list || "0"
-          },
-          {
-            label: "車款名稱（28-34人）",
-            value: bus_type_list || ""
-          }
-        ]}
+        items={bus_data?.map((child) => {
+          return {
+            label: (
+              <span style={{ marginRight: "8px" }}>
+                {child.bus_type + "(" + child.bus_seat + "人)"}
+              </span>
+            ),
+            value: child.order_quantity
+          };
+        })}
       />
     </Pane>
   );

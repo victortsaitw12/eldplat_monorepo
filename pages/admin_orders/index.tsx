@@ -17,6 +17,7 @@ import AdminOrderCreateForm from "@contents/AdminOrders/AdminOrderCreateForm";
 //@services
 import { getQuotationByFilter } from "@services/admin_orders/getQuotationByFilter";
 import { getQuotationByStatus } from "@services/admin_orders/getQuotationByStatus";
+import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
 
 //@components
 import Drawer from "@components/Drawer";
@@ -57,7 +58,7 @@ const Page: NextPageWithLayout<{
   }, [router.query.codeType, setDrawerOpen]);
 
   useEffect(() => {
-    change_tab("1");
+    getDataByTab("1");
     let isCanceled = false;
     //串接API中
     getQuotationByFilter(subFilter)
@@ -92,7 +93,6 @@ const Page: NextPageWithLayout<{
         //       label: order["order_status"],
         //       value: order["order_status"]
         //     },
-        //     //接單下階段才會做
         //     person_name: {
         //       label: "-",
         //       value: "-"
@@ -151,9 +151,16 @@ const Page: NextPageWithLayout<{
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {
     console.log("deleteItemHandler", id);
+    try {
+      const res = await deleteQuotation(id);
+      console.log(res);
+      getDataByTab(nowTab);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const change_tab = async (tab_code: string) => {
+  const getDataByTab = async (tab_code: string) => {
     try {
       const res = await getQuotationByStatus(tab_code);
       const orderData = res.data.map((order: any) => {
@@ -211,7 +218,7 @@ const Page: NextPageWithLayout<{
     setNowTab(value);
     setData([]);
     // updateSubFilter("status_code", value);
-    change_tab(value);
+    getDataByTab(value);
   };
   //
   const mainFilterArray = useMemo(
@@ -247,8 +254,8 @@ const Page: NextPageWithLayout<{
                 listData={data}
                 goToDetailPage={goToDetailPage}
                 goToCreatePage={goToCreatePage}
-                goToEditPageHandler={goToEditPageHandler}
-                deleteItemHandler={deleteItemHandler}
+                {...(nowTab !== "6" && { goToEditPageHandler })}
+                {...(nowTab !== "6" && { deleteItemHandler })}
               ></AdminOrdersList>
             </FilterWrapper>
           </TableWrapper>
@@ -259,7 +266,13 @@ const Page: NextPageWithLayout<{
                 setDrawerOpen(false);
               }}
             >
-              <AdminOrderCreateForm />
+              <AdminOrderCreateForm
+                reloadData={() => {
+                  setDrawerOpen(false);
+                  setData([]);
+                  getDataByTab(nowTab);
+                }}
+              />
             </Drawer>
           )}
           {/* <SideBookMark /> */}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Collapse from "@components/Collapse";
 import { BodySTY, CardSTY, CollapseCardSTY } from "./style";
 import CounterInput from "@components/CounterInput";
@@ -9,26 +9,71 @@ import {
   useFieldArray,
   UseFormRegister,
   UseFormSetValue,
-  UseFormGetValues
+  UseFormGetValues,
+  useWatch
 } from "react-hook-form";
-interface TravelInformationProps {
+interface RidingInformationProps {
   control: Control<QuotationCreatePayload>;
   register: UseFormRegister<QuotationCreatePayload>;
   errors: FieldErrors<QuotationCreatePayload>;
   setValue: UseFormSetValue<QuotationCreatePayload>;
   getValues: UseFormGetValues<QuotationCreatePayload>;
+  validateSubForm: (data: { valid: boolean; errorMessage: string }) => void;
 }
-const TravelInformation = ({
+function validateBusData(
+  bus_data: Array<{
+    type_name: string;
+    ddl_code: string;
+    bus_list: Array<{
+      bus_type: string;
+      bus_name: string;
+      bus_seat: number;
+      order_quantity: number;
+    }>;
+  }>
+) {
+  let totalBus = 0;
+  bus_data.forEach((item) => {
+    item.bus_list.forEach((bus) => {
+      totalBus += bus.order_quantity;
+    });
+  });
+  return totalBus > 0;
+}
+const RidingInformation = ({
   register,
   setValue,
   control,
   getValues,
-  errors
-}: TravelInformationProps) => {
+  validateSubForm
+}: RidingInformationProps) => {
   const { fields } = useFieldArray({
     control,
     name: "bus_data"
   });
+  const [adult, child, infant, bus_data] = useWatch({
+    control,
+    name: ["adult", "child", "infant", "bus_data"]
+  });
+  useEffect(() => {
+    const isValidPassenger = adult + child + infant > 0;
+    const isValidBusData = validateBusData(bus_data);
+    if (!isValidPassenger) {
+      validateSubForm({
+        valid: false,
+        errorMessage: "請填寫「乘客數量」與「車型及數量」欄位。"
+      });
+      return;
+    }
+    if (!isValidBusData) {
+      validateSubForm({
+        valid: false,
+        errorMessage: "請填寫「乘客數量」與「車型及數量」欄位。"
+      });
+      return;
+    }
+    validateSubForm({ valid: true, errorMessage: "" });
+  }, [adult, child, infant, bus_data]);
   return (
     <div
       style={{
@@ -99,6 +144,7 @@ const TravelInformation = ({
                     title={item.type_name}
                     color="#EEF8F4"
                     key={item.id}
+                    opened={true}
                   >
                     <CardSTY>
                       {item.bus_list.map((bus, i) => {
@@ -125,4 +171,4 @@ const TravelInformation = ({
   );
 };
 
-export default TravelInformation;
+export default RidingInformation;

@@ -2,13 +2,11 @@ import React from "react";
 import { NextPageWithLayout } from "next";
 import Head from "next/head";
 import { Pane } from "evergreen-ui";
-import { ShiftSTY, AlertSTY } from "./style";
-
+import { ShiftSTY } from "./style";
 import { getLayout } from "@layout/MainLayout";
 import UIProvider from "@contexts/scheduleContext/UIProvider";
 import { useShiftStore } from "@contexts/filter/shiftStore";
 import { getAllDriverScheduleListFiltered } from "@services/schedule/getAllDriverScheduleListFiltered";
-import MainBookmark from "@contents/MainBookmark";
 import MonthPicker from "@contents/Shift/MonthPicker";
 import Tabs from "@components/Tabs";
 import TableTitle from "@components/Table/TableTitle";
@@ -16,20 +14,11 @@ import OverviewTable from "@contents/Shift/OverviewTable";
 import ZoomBar from "@components/ZoomBar";
 import { EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
-import AlertBox from "@components/AlertBox";
-import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const ShiftPage: NextPageWithLayout<never> = () => {
-  const UI = React.useContext(UIContext);
-
   const [isExpand, setIsExpand] = React.useState(false);
-  const {
-    initializeSubFilter,
-    mainFilter,
-    updateMainFilter,
-    subFilter,
-    updateSubFilter
-  } = useShiftStore();
+  const { initializeSubFilter, mainFilter, updateMainFilter, subFilter } =
+    useShiftStore();
 
   React.useEffect(() => {
     updateMainFilter("active");
@@ -87,13 +76,6 @@ const ShiftPage: NextPageWithLayout<never> = () => {
         </Head>
         <Pane className="wrap">
           <Tabs titles={["啟用"]} />
-          {/* <MainBookmark
-            updateFilter={updateSubFilter}
-            resetFilter={() => {
-              initializeSubFilter();
-            }}
-            filter={subFilter}
-          > */}
           <Pane className="pageContent">
             <TableTitle
               tableName={[
@@ -116,9 +98,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
               initialMonthFirst={initialMonthFirst}
               isExpand={isExpand}
             />
-            {/* <Test />  for dnd*/}
           </Pane>
-          {/* </MainBookmark> */}
         </Pane>
       </ShiftSTY>
     </UIProvider>

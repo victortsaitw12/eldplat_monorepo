@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
-//@sevices
-import { createCustomer } from "@services/customer/createCustomer";
-import FiledInput from "./FieldInput";
-import {
-  PlusIcon,
-  Text,
-  SelectField,
-  Select,
-  TextInput,
-  TextInputField
-} from "evergreen-ui";
+import { PlusIcon, SelectField, TextInputField } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
 //@layout
-import FlexWrapper from "@layout/FlexWrapper";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import { createMaintenance } from "@services/maintenance/createMaintenance";
 import router from "next/router";

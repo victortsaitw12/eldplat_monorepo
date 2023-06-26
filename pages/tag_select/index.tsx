@@ -10,6 +10,9 @@ const tag_select = () => {
           { label: "日本", value: "JP" },
           { label: "美國", value: "US" }
         ]}
+        handleCustomData={(t) => {
+          console.log(t);
+        }}
       />
     </div>
   );

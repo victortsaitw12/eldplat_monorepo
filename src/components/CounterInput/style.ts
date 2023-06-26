@@ -17,6 +17,11 @@ export const BodySTY = styled.div`
       line-height: 32px;
       text-align: center;
     }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
     svg {
       cursor: pointer;
     }

@@ -172,10 +172,11 @@ function DriverInfo({
     >
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={basicInfo} infoTitle="基本資料" />
-        <LanguageAbility currentUserInfo={driverData} />
+        <InfoBox isEdit={isEdit} infoData={resumeInfo} infoTitle="駕駛履歷" />
       </FlexWrapper>
       <FlexWrapper flexDirection="column">
-        <InfoBox isEdit={isEdit} infoData={resumeInfo} infoTitle="駕駛履歷" />
+        <InfoBox isEdit={isEdit} infoData={licenseInfo} infoTitle="駕駛證照" />
+        <LanguageAbility currentUserInfo={driverData} />
       </FlexWrapper>
     </FlexWrapper>
   );

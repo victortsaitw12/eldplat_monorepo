@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { Spinner, Pane } from "evergreen-ui";
 import { MonthlySTY, MouseMenuBtnSTY } from "./style";
-import { getTotalDays, getLastMonthTotalDays, debounce } from "../shift.util";
+import { getTotalDays, debounce } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
@@ -30,8 +30,11 @@ const MonthlyView = ({
   UI.setId(router.query.id);
   const { cur } = router.query;
   const dateCellRef = React.useRef<HTMLDivElement>(null);
-  const initMaxEventCountRef = React.useRef(null);
-  const [maxEventCount, setMaxEventCount] = React.useState<number>(null);
+  // const initMaxEventCountRef = React.useRef(null);
+  const [initMaxEventCount, setInitMaxEventCount] = React.useState<
+    number | null
+  >(null);
+  const [maxEventCount, setMaxEventCount] = React.useState<number | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   //------ variables ------//
@@ -62,8 +65,11 @@ const MonthlyView = ({
     );
     console.log("dateCellRef:", dateCellRef);
     setMaxEventCount(updateMaxEventCount);
-    if (initMaxEventCountRef.current === null) {
-      initMaxEventCountRef.current = updateMaxEventCount;
+    // if (initMaxEventCountRef.current === null) {
+    //   initMaxEventCountRef.current = updateMaxEventCount;
+    // }
+    if (initMaxEventCount === null) {
+      setInitMaxEventCount(updateMaxEventCount);
     }
   }, []);
 
@@ -82,9 +88,7 @@ const MonthlyView = ({
 
   React.useEffect(() => {
     console.log(isExpand);
-    isExpand
-      ? setMaxEventCount(99)
-      : setMaxEventCount(initMaxEventCountRef.current);
+    isExpand ? setMaxEventCount(99) : setMaxEventCount(initMaxEventCount);
   }, [isExpand]);
 
   // fetch data from db
@@ -165,7 +169,7 @@ const MonthlyView = ({
           setIsOpenDrawer={setIsOpenDrawer}
           monthlyData={monthlyData}
           view={view}
-          maxEventCount={maxEventCount}
+          maxEventCount={maxEventCount || 0}
           dateCellRef={dateCellRef}
         />
       );

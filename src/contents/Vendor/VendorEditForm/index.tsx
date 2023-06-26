@@ -3,8 +3,6 @@ import { Pane, TextInputField, SelectField, TagInput } from "evergreen-ui";
 import FormCard from "@components/FormCard";
 import { StepControlSTY } from "@components/FormCard/style";
 import CheckboxField from "@components/CheckboxField";
-import InfoBox from "@components/InfoBox";
-import { I_Add_Vendors_Type } from "@typings/vendors_type";
 import { MOCK_FUEL_DATA } from "./FuelData";
 import { useForm } from "react-hook-form";
 import {
@@ -16,7 +14,7 @@ import FlexWrapper from "@layout/FlexWrapper";
 interface I_addVendorProps {
   submitForm: (data: any) => void;
   onCancel: () => void;
-  oldData?: any
+  oldData?: any;
 }
 
 // default value
@@ -34,7 +32,7 @@ const defaultValues = {
   vendor_Contact_Name: "",
   vendor_Contact_Phone: "",
   vendor_Contact_Email: "",
-  vendor_Code: ["01"],
+  vendor_Code: ["01"]
 };
 //🕯️🕯️🕯️此component未來會刪除
 function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
@@ -60,14 +58,17 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
     }
     setFuelValue(newData);
   };
-  const [tags, setTags] = React.useState(["Kauri", "Willow"])
+  const [tags, setTags] = React.useState(["Kauri", "Willow"]);
   console.log("🧨🧨insertData", getValues());
   console.log("🧨🧨🧨🧨form errors", errors);
   return (
     <Pane marginX="20px">
       <form
         onSubmit={handleSubmit((data) => {
-          console.log("🧨🧨🧨🧨🧨🧨這是用form-hook的data:", { ...data, vendor_Code: fuelValue });
+          console.log("🧨🧨🧨🧨🧨🧨這是用form-hook的data:", {
+            ...data,
+            vendor_Code: fuelValue
+          });
           submitForm({ ...data, vendor_Code: fuelValue });
         })}
       >
@@ -83,7 +84,11 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                   })}
                 />
                 {/*錯誤訊息範例*/}
-                {errors.vendor_Name && <span style={{ color: "red" }}>{errors.vendor_Name.message as string}</span>}
+                {errors.vendor_Name && (
+                  <span style={{ color: "red" }}>
+                    {errors.vendor_Name.message as string}
+                  </span>
+                )}
                 {/* {errors.vendor_Name && <span>{errors.vendor_Name?.message as string}</span>} */}
                 {/* {errors.vendor_Name && errors.vendor_Name.type === "maxLength" && <span>Max length exceeded</span>} */}
               </div>
@@ -98,7 +103,7 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                 <TextInputField
                   label="網站"
                   {...register("vendor_Website", {
-                    required: "必填",
+                    required: "必填"
                   })}
                 />
               </div>
@@ -107,7 +112,7 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                 <TextInputField
                   label="標籤 (最多只允許2字元)"
                   {...register("vendor_Label", {
-                    maxLength: 2,
+                    maxLength: 2
                   })}
                 />
               </div>
@@ -117,7 +122,7 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                   label="地址"
                   hint="街道地址、郵政信箱等"
                   {...register("vendor_Address", {
-                    required: "必填",
+                    required: "必填"
                   })}
                 />
               </div>
@@ -127,7 +132,7 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                   label="地址第二列"
                   hint="套房、建築、大樓、樓層等"
                   {...register("vendor_Address2", {
-                    required: "必填",
+                    required: "必填"
                   })}
                 />
               </div>
@@ -136,13 +141,13 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                 <TextInputField
                   label="城市"
                   {...register("vendor_City", {
-                    required: "必填",
+                    required: "必填"
                   })}
                 />
                 <TextInputField
                   label="州/省/地區"
                   {...register("vendor_State", {
-                    required: "必填",
+                    required: "必填"
                   })}
                 />
               </div>
@@ -150,13 +155,13 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                 <TextInputField
                   label="郵遞區號"
                   {...register("vendor_Zip", {
-                    required: "必填",
+                    required: "必填"
                   })}
                 />
                 <SelectField
                   label="國家"
                   {...register("vendor_Country", {
-                    required: "必填",
+                    required: "必填"
                   })}
                 >
                   <option value="TW">台灣</option>
@@ -189,7 +194,7 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
                   values={tags}
                   // width="100%"
                   onChange={(values) => {
-                    setTags(values)
+                    setTags(values);
                   }}
                 />
               </FormCard>
@@ -200,7 +205,7 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
               <TextInputField
                 label="聯絡人"
                 {...register("vendor_Contact_Name", {
-                  required: "必填",
+                  required: "必填"
                 })}
               />
             </div>
@@ -229,16 +234,13 @@ function AddVendor({ onCancel, submitForm, oldData }: I_addVendorProps) {
             {/* <button className="bordered" onClick={handleSubmitThenAddAnother}>
             儲存&新增另一筆
           </button> */}
-            <button
-              className="fill"
-              type="submit"
-            >
+            <button className="fill" type="submit">
               儲存供應商
             </button>
           </div>
         </StepControlSTY>
       </form>
-    </Pane >
+    </Pane>
   );
 }
 
