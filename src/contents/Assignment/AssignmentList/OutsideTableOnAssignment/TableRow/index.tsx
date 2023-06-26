@@ -69,7 +69,12 @@ const TableRow = ({
           {isOpen ? (
             <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pointer" />
           ) : (
-            <ChevronDownIcon onClick={handleInsideTableOpen} cursor="pointer" />
+            subAssignData[idx].length !== 0 && (
+              <ChevronDownIcon
+                onClick={handleInsideTableOpen}
+                cursor="pointer"
+              />
+            )
           )}
         </td>
       </tr>
