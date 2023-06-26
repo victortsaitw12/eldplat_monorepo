@@ -62,7 +62,7 @@ function VehicleForm({
     setLoading(false);
   }, []);
   // ----- function ----- //
-  const renderDateOptions = (startDate: Date, endDate: Date) => {
+  const renderDateOptions = (startDate: string, endDate: string) => {
     // total days
     const dayCount = dayjs(endDate).diff(startDate, "day") + 1;
     const arr = [];
