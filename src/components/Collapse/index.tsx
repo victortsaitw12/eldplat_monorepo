@@ -20,7 +20,7 @@ const Collapse = ({
   viewOnly = false,
   children = <p>內容</p>,
   OnToggle = (isOpen) => {
-    console.log("isOpen", isOpen);
+    return isOpen;
   }
 }: I_Props) => {
   const [isOpen, setIsOpen] = React.useState(opened);

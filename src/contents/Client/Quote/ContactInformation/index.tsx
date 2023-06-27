@@ -15,7 +15,6 @@ const ContactInformation = () => {
     formState: { errors }
   } = useFormContext<QuotationCreatePayload>();
   useWatch({ control, name: "order_contact_list" });
-  console.log("errors", errors);
   function sameContactUser() {
     setValue(
       "order_contact_list.1.family_name",
@@ -81,13 +80,6 @@ const ContactInformation = () => {
                       required: "不可空白"
                     })}
                     isInvalid={!!errors.order_contact_list?.[0]?.family_name}
-                    onChange={(e: any) => {
-                      setValue(
-                        "order_contact_list.0.family_name",
-                        e.target.value
-                      );
-                      trigger && trigger("order_contact_list.0.family_name");
-                    }}
                   />
                   {errors.order_contact_list?.[0]?.family_name && (
                     <div className="input-error">
@@ -107,10 +99,6 @@ const ContactInformation = () => {
                       required: "不可空白"
                     })}
                     isInvalid={!!errors.order_contact_list?.[0]?.name}
-                    onChange={(e: any) => {
-                      setValue("order_contact_list.0.name", e.target.value);
-                      trigger && trigger("order_contact_list.0.name");
-                    }}
                   />
                   {errors.order_contact_list?.[0]?.name && (
                     <div className="input-error">
@@ -152,14 +140,6 @@ const ContactInformation = () => {
                       {...register("order_contact_list.0.contact_phone", {
                         required: "不可空白"
                       })}
-                      onChange={(e: any) => {
-                        setValue(
-                          "order_contact_list.0.contact_phone",
-                          e.target.value
-                        );
-                        trigger &&
-                          trigger("order_contact_list.0.contact_phone");
-                      }}
                       isInvalid={
                         !!errors.order_contact_list?.[0]?.contact_phone
                       }
@@ -208,13 +188,6 @@ const ContactInformation = () => {
                     {...register("order_contact_list.0.contact_email", {
                       required: "不可空白"
                     })}
-                    onChange={(e: any) => {
-                      setValue(
-                        "order_contact_list.0.contact_email",
-                        e.target.value
-                      );
-                      trigger && trigger("order_contact_list.0.contact_email");
-                    }}
                     isInvalid={!!errors.order_contact_list?.[0]?.contact_email}
                   />
                   {errors.order_contact_list?.[0]?.contact_email && (
@@ -262,13 +235,6 @@ const ContactInformation = () => {
                     {...register("order_contact_list.1.family_name", {
                       required: "不可空白"
                     })}
-                    onChange={(e: any) => {
-                      setValue(
-                        "order_contact_list.1.family_name",
-                        e.target.value
-                      );
-                      trigger && trigger("order_contact_list.1.family_name");
-                    }}
                     isInvalid={!!errors.order_contact_list?.[1]?.family_name}
                   />
                   {errors.order_contact_list?.[1]?.family_name && (
@@ -288,10 +254,6 @@ const ContactInformation = () => {
                     {...register("order_contact_list.1.name", {
                       required: "不可空白"
                     })}
-                    onChange={(e: any) => {
-                      setValue("order_contact_list.1.name", e.target.value);
-                      trigger && trigger("order_contact_list.1.name");
-                    }}
                     isInvalid={!!errors.order_contact_list?.[1]?.name}
                   />
                   {errors.order_contact_list?.[1]?.name && (
@@ -334,14 +296,6 @@ const ContactInformation = () => {
                       {...register("order_contact_list.1.contact_phone", {
                         required: "不可空白"
                       })}
-                      onChange={(e: any) => {
-                        setValue(
-                          "order_contact_list.1.contact_phone",
-                          e.target.value
-                        );
-                        trigger &&
-                          trigger("order_contact_list.1.contact_phone");
-                      }}
                       isInvalid={
                         !!errors.order_contact_list?.[1]?.contact_phone
                       }
@@ -390,13 +344,6 @@ const ContactInformation = () => {
                     {...register("order_contact_list.1.contact_email", {
                       required: "不可空白"
                     })}
-                    onChange={(e: any) => {
-                      setValue(
-                        "order_contact_list.1.contact_email",
-                        e.target.value
-                      );
-                      trigger && trigger("order_contact_list.1.contact_email");
-                    }}
                     isInvalid={!!errors.order_contact_list?.[1]?.contact_email}
                   />
                   {errors.order_contact_list?.[1]?.contact_email && (
@@ -434,13 +381,6 @@ const ContactInformation = () => {
                       {...register("order_contact_list.1.social_media", {
                         required: "不可空白"
                       })}
-                      onChange={(e: any) => {
-                        setValue(
-                          "order_contact_list.1.social_media",
-                          e.target.value
-                        );
-                        trigger && trigger("order_contact_list.1.social_media");
-                      }}
                       isInvalid={!!errors.order_contact_list?.[1]?.social_media}
                     />
                     {errors.order_contact_list?.[1]?.social_media && (

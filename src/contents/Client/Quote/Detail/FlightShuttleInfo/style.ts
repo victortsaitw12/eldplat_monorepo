@@ -4,38 +4,32 @@ const BodySTY = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  .detail-with-icon {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 20px;
-    position: relative;
-    & > svg {
-      position: absolute;
-      left: 2px;
-      top: 10px;
-    }
-    .detail_item {
-      padding-left: 23px;
-      & > span {
-        line-height: 32px;
-      }
-    }
-  }
-  .add_day_container {
-    color: ${({ theme }) => theme.color.N700};
-    padding: 17.5px;
-    button {
-      width: 100%;
-      border: none;
-      background: transparent;
-      justify-content: flex-start;
-      gap: 9.5px;
-      &:hover {
-        border: none;
-        background: transparent;
+`;
+
+const ContainerSTY = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const HeaderSTY = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  > .detail-with-icon {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    align-self: stretch;
+    > li {
+      > span {
+        width: 115px;
       }
     }
   }
 `;
 
-export { BodySTY };
+export { BodySTY, HeaderSTY, ContainerSTY };

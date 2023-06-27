@@ -98,8 +98,7 @@ const DummyExpenseDetailData = [
     value: 300
   }
 ];
-//
-const validationList: Array<{ valid: boolean; errorMessage: string }> = [
+const initValidationList: Array<{ valid: boolean; errorMessage: string }> = [
   { valid: true, errorMessage: "" },
   { valid: true, errorMessage: "" },
   { valid: true, errorMessage: "" },
@@ -107,6 +106,8 @@ const validationList: Array<{ valid: boolean; errorMessage: string }> = [
   { valid: true, errorMessage: "" },
   { valid: true, errorMessage: "" }
 ];
+//
+let validationList = [...initValidationList];
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -126,14 +127,17 @@ const Page: NextPageWithLayout<
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const [remainTime, setRemainTime] = useState(5);
+  useEffect(() => {
+    validationList = [...initValidationList];
+  }, []);
   const router = useRouter();
   function goToOrdersPage() {
     setIsLoading(true);
     router.push("/client/orders");
   }
-  const asyncGetDefaultValues = async (
+  async function asyncGetDefaultValues(
     type: string
-  ): Promise<QuotationCreatePayload> => {
+  ): Promise<QuotationCreatePayload> {
     const busData = await getBusType();
     const formatedBusData = [];
     for (const key in busData) {
@@ -193,14 +197,20 @@ const Page: NextPageWithLayout<
             day_number: 1,
             day_date: flightDate!,
             departure_time: flightTime!,
-            pickup_location: type === "pickUp" ? airport! : "",
+            pickup_location:
+              type === "pickUp"
+                ? airport! + `${terminal ? `第${terminal}航廈` : ""}`
+                : "",
             stopover_address_list: [],
-            dropoff_location: type === "dropOff" ? airport! : ""
+            dropoff_location:
+              type === "dropOff"
+                ? airport! + `${terminal ? `第${terminal}航廈` : ""}`
+                : ""
           }
         ]
       };
     }
-  };
+  }
   const methods = useForm<QuotationCreatePayload>({
     defaultValues: async () => {
       setIsLoading(true);
@@ -211,24 +221,22 @@ const Page: NextPageWithLayout<
   });
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
     alert("送出詢價單");
-    console.log("submit data", data);
-    try {
-      const result = await createQuotation(data);
-      const { quote_no } = result;
-      if (!quote_no) {
-        throw new Error("Fail to create quotation");
-      }
-      setCurrentTab(6);
-    } catch (e) {
-      console.log(e);
-    }
+    // try {
+    //   const result = await createQuotation(data);
+    //   const { quote_no } = result;
+    //   if (!quote_no) {
+    //     throw new Error("Fail to create quotation");
+    //   }
+    //   setCurrentTab(6);
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
   useEffect(() => {
     let timmer: any;
     if (currentTab === 6) {
       timmer = setInterval(() => {
         setRemainTime((prev) => prev - 1);
-        console.log("current remainTime", remainTime);
       }, 1000);
     }
     if (remainTime <= 0) {
@@ -284,7 +292,10 @@ const Page: NextPageWithLayout<
         <FormProvider {...methods}>
           <form
             className="content-container"
-            onSubmit={methods.handleSubmit(asyncSubmitFormHandler)}
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+              e.preventDefault();
+              methods.handleSubmit(asyncSubmitFormHandler)(e);
+            }}
           >
             <button type="submit" style={{ display: "none" }} ref={submitRef}>
               submit
@@ -298,13 +309,7 @@ const Page: NextPageWithLayout<
                 }}
               />
             )}
-            {currentTab === 1 && type === "custom" && (
-              <TravelInformation
-                validateSubForm={(data) => {
-                  validationList[1] = data;
-                }}
-              />
-            )}
+            {currentTab === 1 && type === "custom" && <TravelInformation />}
             {currentTab === 2 && (
               <RidingInformation
                 validateSubForm={(data) => {
@@ -362,10 +367,8 @@ const Page: NextPageWithLayout<
                   flex: "1",
                   border: "none"
                 }}
-                onClick={async () => {
-                  console.log("validationList", validationList);
+                onClick={methods.handleSubmit(() => {
                   let isValid = true;
-                  console.log("currentTab", currentTab);
                   if (currentTab === 1 || currentTab === 2) {
                     isValid = validationList[currentTab].valid;
                     if (!isValid) {
@@ -373,12 +376,6 @@ const Page: NextPageWithLayout<
                         description: validationList[currentTab].errorMessage
                       });
                     }
-                  } else if (currentTab === 3) {
-                    isValid = await methods.trigger("pickup_sign_remark", {
-                      shouldFocus: true
-                    });
-                  } else if (currentTab === 4) {
-                    isValid = await methods.trigger("order_contact_list");
                   }
                   console.log("isValid", isValid);
                   if (isValid) {
@@ -389,7 +386,7 @@ const Page: NextPageWithLayout<
                       setCurrentTab((prev) => prev + 1);
                     }
                   }
-                }}
+                })}
               >
                 {currentTab === 5 ? "送出詢價單" : "下一步"}
               </Button>
