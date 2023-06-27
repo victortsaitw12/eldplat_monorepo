@@ -1,5 +1,6 @@
 import API_Path from "./apiPath";
 // 編輯詢價/報價單
+
 export const updateQuotation = async (data: any) => {
   console.log("😊😊😊😊😊😊😊😊data", data);
   const filteredNullData: { [key: string]: any } = {};
@@ -27,6 +28,9 @@ export const updateQuotation = async (data: any) => {
           quote_no: data.quote_no
         };
       });
+    } else if (key === "order_status_list") {
+      //update訂單的時候不用帶order_status_list欄位
+      continue;
     } else if (typeof data[key] !== "string" || data[key].trim() !== "") {
       filteredNullData[key] = data[key];
     }

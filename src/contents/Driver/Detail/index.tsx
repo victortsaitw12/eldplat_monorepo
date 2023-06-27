@@ -98,14 +98,6 @@ function DriverDetail({
         driverData={driverData}
       />
       {visibleForm === "2" && (
-        <LicenseInfo
-          register={register}
-          getValues={getValues}
-          licenseData={driverData.license}
-          userName={driverData.info.user_name}
-        />
-      )}
-      {visibleForm === "3" && (
         <HealthRecords
           healths={driverData.healths}
           userName={driverData.info.user_name}

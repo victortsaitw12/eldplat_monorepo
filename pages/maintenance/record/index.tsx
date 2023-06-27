@@ -60,9 +60,9 @@ const Page: NextPageWithLayout<never> = () => {
 
   const fetchMaintenanceData = async (
     isCanceled: boolean,
-    mainStatus = "2"
+    mainStatus = "3"
   ) => {
-    getAllMaintenanceRecords(subFilter, (mainStatus = "2")).then((res) => {
+    getAllMaintenanceRecords(subFilter, (mainStatus = "3")).then((res) => {
       console.log("1️⃣res for record", res);
       const copyResList = [...res.contentList];
       const newResList = copyResList?.map((v: any) => {

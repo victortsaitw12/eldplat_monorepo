@@ -2,30 +2,18 @@ import React from "react";
 import Collapse from "@components/Collapse";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import { BodySTY, ItemSTY, RemarkSTY, CollapseCardSTY } from "./style";
-import { Textarea, Select, Checkbox, Radio } from "evergreen-ui";
+import { Textarea, Select, Radio } from "evergreen-ui";
 import CounterInput from "@components/CounterInput";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormGetValues
-} from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
-interface TravelInformationProps {
-  control: Control<QuotationCreatePayload>;
-  register: UseFormRegister<QuotationCreatePayload>;
-  setValue: UseFormSetValue<QuotationCreatePayload>;
-  getValues: UseFormGetValues<QuotationCreatePayload>;
-  errors: FieldErrors<QuotationCreatePayload>;
-}
-const TravelInformation = ({
-  register,
-  control,
-  errors,
-  getValues,
-  setValue
-}: TravelInformationProps) => {
+const SpecialNeedsInformation = () => {
+  const {
+    register,
+    control,
+    formState: { errors },
+    getValues,
+    setValue
+  } = useFormContext<QuotationCreatePayload>();
   return (
     <CollapseCardSTY>
       <Collapse title="特殊需求" opened={true}>
@@ -38,7 +26,26 @@ const TravelInformation = ({
                 inputName="pickup_sign_check"
                 description="若欲接送非母語人士/國外友人，建議選擇此選項。"
               >
-                <Textarea width={310} {...register("pickup_sign_remark")} />
+                <Textarea
+                  width={310}
+                  {...register("pickup_sign_remark", {
+                    validate: (value: any) => {
+                      if (
+                        getValues("pickup_sign_check") === "1" &&
+                        value.trim() === ""
+                      ) {
+                        return "不可為空!";
+                      }
+                      return true;
+                    }
+                  })}
+                  isInvalid={!!errors.pickup_sign_remark}
+                />
+                {errors.pickup_sign_remark && (
+                  <div style={{ color: "#D14343" }}>
+                    {errors.pickup_sign_remark?.message}
+                  </div>
+                )}
               </CheckBoxWrapper>
             </div>
             <div className="item">
@@ -181,4 +188,4 @@ const TravelInformation = ({
   );
 };
 
-export default TravelInformation;
+export default SpecialNeedsInformation;

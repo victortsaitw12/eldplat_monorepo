@@ -104,5 +104,5 @@ const Page: NextPageWithLayout<never> = () => {
 };
 
 Page.getLayout = (page, layoutProps) =>
-  getLayout(page, { title: "訂單管理xxxx", ...layoutProps });
+  getLayout(page, { title: "訂單管理", ...layoutProps });
 export default Page;

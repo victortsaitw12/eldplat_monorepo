@@ -9,7 +9,7 @@ interface I_Props {
   infant?: string | number;
   check_in_luggage?: string | number;
   carry_on_luggage?: string | number;
-  bus_data?: any;
+  bus_data?: Array<any>;
 }
 
 const TakeBusInfoView = ({
@@ -20,6 +20,23 @@ const TakeBusInfoView = ({
   carry_on_luggage,
   bus_data
 }: I_Props) => {
+  const mappedBusData = bus_data?.reduce(
+    (
+      resultArray: Array<{ label: string; value: string | number }>,
+      child: any
+    ) => {
+      child.bus_list.forEach((bus: any) => {
+        if (bus.order_quantity) {
+          resultArray.push({
+            label: child.type_name + "(" + bus.bus_seat + "人)",
+            value: bus.order_quantity
+          });
+        }
+      });
+      return resultArray;
+    },
+    []
+  );
   return (
     <Pane
       style={{
@@ -60,19 +77,7 @@ const TakeBusInfoView = ({
         ]}
       />
       {/*TODO：車型車輛的API之後會改成另一隻API*/}
-      <VerticalDetail
-        title="車型及數量"
-        items={
-          bus_data
-            ? bus_data.map((child: any) => {
-                return {
-                  label: child.bus_type + "(" + child.bus_seat + "人)",
-                  value: child.order_quantity
-                };
-              })
-            : []
-        }
-      />
+      <VerticalDetail title="車型及數量" items={mappedBusData} />
     </Pane>
   );
 };

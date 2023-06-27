@@ -70,6 +70,23 @@ export interface QuotationCreatePayload {
     }>;
     dropoff_location: string;
   }>;
+  basic_amount?: number;
+  tip?: number;
+  pickup_sign_charge?: number;
+  high_season_charge?: number;
+  night_charge?: number;
+  remote_charge?: number;
+  driver_guide_charge?: number;
+  bus_age_charge?: number;
+  special_luggage_charge?: number;
+  bring_pets_charge?: number;
+  mineral_water_charge?: number;
+  bottled_water_charge?: number;
+  child_seat_charge?: number;
+  infant_seat_charge?: number;
+  extra_charge?: number;
+  discount?: number;
+  quote_change_count?: number;
 }
 
 export const defaultQuotationCreatePayload: QuotationCreatePayload = {
@@ -126,7 +143,7 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
   bus_age: "",
   special_luggage_check: "0",
   bring_pets_check: "0",
-  bring_pets_radio: "",
+  bring_pets_radio: "1",
   mineral_water_check: "0",
   bottled_water_check: "0",
   bottled_water_box: 0,
@@ -137,7 +154,7 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
   infant_seat_seller: 0,
   infant_seat_yourself: 0,
   remark: "",
-  quote_total_amount: 0,
+  quote_total_amount: 2200,
   order_itinerary_list: [
     {
       day_number: 1,
@@ -147,5 +164,13 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
       stopover_address_list: [],
       dropoff_location: ""
     }
-  ]
+  ],
+  basic_amount: 1200,
+  tip: 200,
+  high_season_charge: 300,
+  driver_guide_charge: 300,
+  night_charge: 300,
+  remote_charge: 300,
+  special_luggage_charge: 300,
+  quote_change_count: 2200
 };

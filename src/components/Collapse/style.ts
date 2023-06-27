@@ -10,13 +10,19 @@ export const BodySTY = styled.div<I_StyProps>`
   -webkit-user-select: none; /* for Chrome、Safari */
   -moz-user-select: none; /* for Mozilla、Firefox */
   .collapse_title {
-    position: relative;
     cursor: pointer;
+    position: relative;
+    padding: 14px 20px;
+    background-color: ${(props) => props.color};
+    font-size: 16px;
     font-weight: ${(props) => props.theme.fontWeight.Heading600};
     color: ${(props) => props.theme.color.N700};
-    padding: 14px 20px;
-    font-size: 16px;
-    background-color: ${(props) => props.color};
+    & > span {
+      font-size: 16px;
+      font-weight: ${(props) => props.theme.fontWeight.Heading600};
+      color: ${(props) => props.theme.color.N700};
+      cursor: pointer;
+    }
     svg {
       position: absolute;
       right: 10px;

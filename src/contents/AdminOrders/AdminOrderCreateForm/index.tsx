@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
-import { useRouter } from "next/router";
 //@sevices
 import { createQuotation } from "@services/admin_orders/createQuotation";
 import FiledInput from "./FieldInput";
-import { PlusIcon, Text, SelectField, Select } from "evergreen-ui";
+import { PlusIcon, Text, Select } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
 //@layout
@@ -51,22 +50,18 @@ interface I_Props {
   reloadData?: () => void;
 }
 
-function AdminOrderCreateForm({ data, reloadData }: I_Props) {
-  const router = useRouter();
+function AdminOrderCreateForm({ reloadData }: I_Props) {
   const { register, handleSubmit, control } = useForm({
     defaultValues
   });
-  const [loading, setLoading] = useState(false);
 
   const asyncSubmitForm = async (data: any) => {
-    setLoading(true);
     try {
       const res = await createQuotation(data);
     } catch (e: any) {
       console.log(e);
       alert(e.message);
     }
-    setLoading(false);
     reloadData && reloadData();
   };
 
@@ -86,9 +81,9 @@ function AdminOrderCreateForm({ data, reloadData }: I_Props) {
           required: "必填"
         })}
       >
+        <option value="1">客製包車</option>
         <option value="2">接機</option>
         <option value="3">送機</option>
-        <option value="1">客製包車</option>
       </Select>
       <Text>
         <span style={{ color: "#D14343" }}>* </span>姓
@@ -119,7 +114,7 @@ function AdminOrderCreateForm({ data, reloadData }: I_Props) {
       <FlexWrapper padding="0">
         {/*公司電話國碼*/}
         <FiledInput
-          style={{ width: "60px" }}
+          style={{ width: "60px", minWidth: "60px" }}
           label=""
           controlProps={{
             name: "order_contact_list[0].contact_phone_code",
@@ -128,6 +123,7 @@ function AdminOrderCreateForm({ data, reloadData }: I_Props) {
         />
         <FiledInput
           label=""
+          className="contact_phone"
           controlProps={{
             name: "order_contact_list[0].contact_phone",
             control,
@@ -139,7 +135,7 @@ function AdminOrderCreateForm({ data, reloadData }: I_Props) {
       <FlexWrapper padding="0">
         {/*公司電話國碼*/}
         <FiledInput
-          style={{ width: "60px" }}
+          style={{ width: "60px", minWidth: "60px" }}
           label=""
           controlProps={{
             name: "order_contact_list[0].contact_tel_code",
@@ -150,8 +146,7 @@ function AdminOrderCreateForm({ data, reloadData }: I_Props) {
           label=""
           controlProps={{
             name: "order_contact_list[0].contact_tel",
-            control,
-            rules: { required: "此欄位必填" }
+            control
           }}
         />
       </FlexWrapper>

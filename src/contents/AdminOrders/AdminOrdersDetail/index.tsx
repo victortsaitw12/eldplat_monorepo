@@ -3,7 +3,6 @@ import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useRouter } from "next/router";
 import { Pane, Icon, FloppyDiskIcon, EditIcon, TextInput } from "evergreen-ui";
 import { BodySTY } from "./style";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //@component
 
@@ -16,7 +15,8 @@ import CustomBus from "./CustomBus";
 import AirlineShuttle from "./AirlineShuttle";
 import dayjs from "dayjs";
 
-//@util
+//@utils
+import mappingProgressInfo from "@utils/mappingProgressInfo";
 
 //@context
 // import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
@@ -48,9 +48,20 @@ const AdminOrdersDetal = ({
   orderData,
   busData
 }: I_Props) => {
-  console.log("🤣🤣🤣🤣detail頁的orderData", orderData, busData);
   const modifyDefaultValues = (data: any) => {
     const newData = { ...orderData };
+    newData["adult"] = orderData["adult"] || 0;
+    newData["child"] = orderData["child"] || 0;
+    newData["infant"] = orderData["infant"] || 0;
+    newData["check_in_luggage"] = orderData["check_in_luggage"] || 0;
+    newData["carry_on_luggage"] = orderData["carry_on_luggage"] || 0;
+    if (
+      //假如“全額付款”跟“預付訂金”都為false的話就默認“全額付款”
+      orderData["full_payment_check"] !== "1" &&
+      orderData["deposit_check"] !== "1"
+    ) {
+      newData["full_payment_check"] = "1";
+    }
     newData["full_payment_period"] =
       orderData["full_payment_period"] &&
       dayjs(orderData["full_payment_period"]).format("YYYY-MM-DD");
@@ -58,6 +69,10 @@ const AdminOrdersDetal = ({
     newData["deposit_period"] =
       orderData["deposit_period"] &&
       dayjs(orderData["deposit_period"]).format("YYYY-MM-DD");
+
+    newData["flight_date"] =
+      orderData["flight_date"] &&
+      dayjs(orderData["flight_date"]).format("YYYY-MM-DD");
 
     newData["order_itinerary_list"] = orderData["order_itinerary_list"].map(
       (child: any) => {
@@ -102,36 +117,12 @@ const AdminOrdersDetal = ({
     newData["bus_data"] = formatedBusData;
     return newData;
   };
-
   const [loading, setLoading] = useState(false);
   const methods = useForm({
     defaultValues: {
       ...modifyDefaultValues(orderData)
     }
   });
-  const { watch } = methods;
-  // const watchAllFields = watch();
-  // Callback version of watch.  It's your responsibility to unsubscribe when done.
-  React.useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      console.log(value, name, type);
-      if (name == "full_payment_check") {
-        if (value.full_payment_check == "1") {
-          //當為全額支付的時候
-          methods.setValue("deposit_check", "0");
-          methods.setValue("deposit_period", null);
-        }
-      }
-      if (name == "deposit_check") {
-        if (value.deposit_check == "1") {
-          //當為訂金支付的時候
-          methods.setValue("full_payment_check", "0");
-          methods.setValue("full_payment_period", null);
-        }
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
 
   const r_template: { "1": React.ReactNode; "2": React.ReactNode } = {
     //客製包車
@@ -159,11 +150,24 @@ const AdminOrdersDetal = ({
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit((data) => {
-            console.log("🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡order", data);
-            if (data.full_payment_check == "1" || data.deposit_check == "1") {
-              submitForm && submitForm({ ...data });
-            } else {
+            console.log("data when submit", data);
+            //乘客數量
+            const passenger_amount = data.child + data.adult + data.infant;
+            //車數量
+            let bus_amount = 0;
+            for (const i in data.bus_data) {
+              for (const j in data.bus_data[i].bus_list) {
+                bus_amount += data.bus_data[i].bus_list[j].order_quantity;
+              }
+            }
+            if (data.full_payment_check == "0" && data.deposit_check == "0") {
               alert("請最少選擇一種支付方式");
+            } else if (passenger_amount < 1) {
+              alert("請至少選擇一位乘客");
+            } else if (bus_amount < 1) {
+              alert("請至少選擇一種車種");
+            } else {
+              submitForm && submitForm({ ...data });
             }
           })}
         >

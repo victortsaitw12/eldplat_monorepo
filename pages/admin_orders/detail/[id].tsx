@@ -33,7 +33,7 @@ const Index: NextPageWithLayout<never> = ({
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState(null);
   const [busData, setBusData] = useState([]);
-  const [isEdit, setIsEdit] = useState(editPage);
+
   const [nowTab, setNowTab] = useState("order");
 
   // const {
@@ -63,56 +63,43 @@ const Index: NextPageWithLayout<never> = ({
     try {
       const res = await updateQuotation(data);
       // console.log("response of order edit: ", res);
-      router.push({
+      router.replace({
         pathname: "/admin_orders/detail/" + p_order_no,
         query: { type: p_quote_type }
       });
+      fetch_quotation();
     } catch (e: any) {
       console.log(e);
       // alert(e.message);
     }
-
     // setLoading(false);
   };
-
+  const fetch_quotation = async () => {
+    setLoading(true);
+    try {
+      const res = await getQuotationByID(p_order_no);
+      const bus_res = await getBusType();
+      setBusData(bus_res);
+      setOrderData(res.data);
+    } catch (e: any) {
+      console.log(e);
+    }
+    setLoading(false);
+  };
   //
   useEffect(() => {
     setLoading(true);
-    const getCustomerData = async () => {
-      setLoading(true);
-      try {
-        const res = await getQuotationByID(p_order_no);
-        const bus_res = await getBusType();
-        setBusData(bus_res);
-        setOrderData(res.data);
-      } catch (e: any) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    getCustomerData();
+    fetch_quotation();
     setLoading(false);
   }, [p_order_no]);
-  useEffect(() => {
-    // 監聽query的變化
-    const handleRouteChange = (url: string) => {
-      // 在這裡觸發頁面刷新
-      router.reload();
-    };
 
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, []);
   return (
     <BodySTY>
       {!loading && orderData && (
         <>
           <Pane>
             <TableWrapper
-              isEdit={isEdit}
+              isEdit={editPage}
               onChangeTab={(value) => changeMainFilterHandler(value)}
               mainFilter={nowTab}
               mainFilterArray={mainFilterArray}
@@ -133,7 +120,7 @@ const Index: NextPageWithLayout<never> = ({
                 submitRef={submitRef}
                 busData={busData}
                 submitForm={asyncSubmitForm}
-                isEdit={isEdit}
+                isEdit={editPage}
                 quoteType={p_quote_type}
                 orderData={orderData}
               />

@@ -22,20 +22,17 @@ const CounterInput = ({
   getValues,
   setValue
 }: I_Props) => {
-  const [num, setNum] = React.useState(getValues(inputName) || 0);
   const click_add = () => {
-    setNum(num + 1);
+    setValue(`${inputName}`, parseInt(getValues(inputName), 10) + 1);
   };
   const click_minus = () => {
-    if (num - 1 <= 0) {
-      setNum(0);
+    if (parseInt(getValues(inputName), 10) - 1 <= 0) {
+      setValue(`${inputName}`, 0);
     } else {
-      setNum(num - 1);
+      setValue(`${inputName}`, parseInt(getValues(inputName), 10) - 1);
     }
   };
-  React.useEffect(() => {
-    setValue(`${inputName}`, num);
-  }, [num]);
+
   return (
     <BodySTY className="counter_input">
       {label && label !== "" && (
@@ -43,7 +40,18 @@ const CounterInput = ({
       )}
       <div className="counter_input_content">
         <MinusIcon onClick={click_minus} />
-        <TextInput value={num} {...register(`${inputName}`)} />
+        <TextInput
+          type="number"
+          {...register(`${inputName}`, {
+            setValueAs: (v) => {
+              if (v) {
+                return parseInt(v);
+              } else {
+                return 0;
+              }
+            }
+          })}
+        />
         <PlusIcon onClick={click_add} />
       </div>
     </BodySTY>

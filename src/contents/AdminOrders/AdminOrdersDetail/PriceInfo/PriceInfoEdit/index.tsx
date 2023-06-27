@@ -1,7 +1,7 @@
 import React from "react";
 import { Pane, Text, TextInput } from "evergreen-ui";
 import { BodySTY } from "./style";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import {
   emailValidation,
   numberValidation,
@@ -26,19 +26,106 @@ const PriceInfoEdit = ({
   status,
   priceList
 }: I_Props) => {
-  const { register, control } = useFormContext();
+  const { register, control, watch, setValue, getValues } = useFormContext();
+
+  React.useEffect(() => {
+    // --- func --- //
+    const calcExtraChargeTotal = (data: any) => {
+      let subTotal = 0;
+      const option = [
+        { check: "pickup_sign_check", charge: "pickup_sign_charge" }, //舉牌
+        { check: "driver_guide_check", charge: "driver_guide_charge" }, //司導
+        { check: "bus_age_check", charge: "bus_age_charge" }, //指定車齡
+        { check: "special_luggage_check", charge: "special_luggage_charge" }, //攜帶特大行李
+        { check: "bring_pets_check", charge: "bring_pets_charge" }, //攜帶寵物
+        { check: "mineral_water_check", charge: "mineral_water_charge" }, //杯水
+        { check: "bottled_water_check", charge: "bottled_water_charge" }, //瓶裝水
+        { check: "child_seat_check", charge: "child_seat_charge" }, //兒童座椅
+        { check: "infant_seat_check", charge: "infant_seat_charge" } //嬰兒座椅
+      ];
+      option.forEach((item) => {
+        if (data[item.check] === "1")
+          subTotal += parseInt(data[item.charge] || 0);
+      });
+
+      return subTotal;
+    };
+    const calcTotalAmount = (data: any) => {
+      const namesArr = [
+        "basic_amount",
+        "tip",
+        "high_season_charge",
+        "night_charge",
+        "remote_charge"
+      ];
+      const sum = namesArr.reduce(
+        (acc, item) => acc + parseInt(data[item] || 0),
+        0
+      );
+      return sum + calcExtraChargeTotal(data);
+    };
+    // --- subscribe & call func--- //
+    const subscription = watch((data, { name, type }) => {
+      if (name === "quote_total_amount" || name === "extra_charge") return;
+      setValue("extra_charge", calcExtraChargeTotal(data));
+      setValue("quote_total_amount", calcTotalAmount(data));
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  const isFullPayment = useWatch({
+    control,
+    name: "full_payment_check"
+  });
+  const isDepositPayment = useWatch({
+    control,
+    name: "deposit_check"
+  });
   return (
     <BodySTY>
       <Pane>
-        <Pane className="total_price">
-          <Text>總金額</Text>
-          <Text>
-            NT$
-            <TextInput type="number" {...register("quote_total_amount")} />
-          </Text>
-        </Pane>
-        <Text>{dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款</Text>
-        <hr />
+        {isFullPayment === "1" && (
+          <>
+            <Pane className="total_price">
+              <Text>總金額</Text>
+              <Text>
+                NT$
+                <TextInput
+                  type="number"
+                  {...register("quote_total_amount")}
+                  disabled
+                />
+              </Text>
+            </Pane>
+            <Text>
+              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
+            </Text>
+            <hr />
+          </>
+        )}
+        {isDepositPayment === "1" && (
+          <>
+            <Pane className="total_price">
+              <Text>訂金</Text>
+              <Text>
+                NT$
+                <TextInput type="number" {...register("deposit_amount")} />
+              </Text>
+            </Pane>
+            <Text> 前繳款</Text>
+            <hr />
+            <Pane className="total_price">
+              <Text>尾款</Text>
+              <Text>
+                NT$
+                <TextInput type="number" {...register("balance_amount")} />
+              </Text>
+            </Pane>
+            <Text> 前繳款</Text>
+            <hr />
+          </>
+        )}
       </Pane>
       <Pane className="price_detail">
         <Pane>

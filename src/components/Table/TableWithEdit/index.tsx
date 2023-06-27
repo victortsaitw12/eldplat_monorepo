@@ -26,6 +26,7 @@ interface I_Table {
   handleSelectAll?: () => void;
   handleDeselectAll?: () => void;
   checkboxData?: any[];
+  deleteText?: string;
 }
 /*
 Must provide id field in the Data Array
@@ -37,15 +38,14 @@ function Table({
   goToCreatePage,
   viewItem,
   goToEditPage,
-  deleteItem = (item) => {
-    console.log(item);
-  },
+  deleteItem,
   handleCheckboxChange = (item) => {
     console.log(item);
   },
   handleSelectAll,
   handleDeselectAll,
-  checkboxData
+  checkboxData,
+  deleteText
 }: I_Table) {
   // const [checkedItems, setCheckedItems] = useState<Array<string | number>>([]);
   // const router = useRouter();
@@ -147,13 +147,11 @@ function Table({
                       );
                     }
                     return (
-                      <>
-                        <td key={item.id + key}>
-                          <div className="data-row">
-                            <div>{item[key].label}</div>
-                          </div>
-                        </td>
-                      </>
+                      <td key={item.id + key}>
+                        <div className="data-row">
+                          <div>{item[key].label}</div>
+                        </div>
+                      </td>
                     );
                   })}
                   <td>
@@ -165,7 +163,10 @@ function Table({
                         goToEditPage &&
                         goToEditPage.bind(null, item.id?.value, item)
                       }
-                      onDelete={deleteItem.bind(null, item.id?.value)}
+                      onDelete={
+                        deleteItem && deleteItem.bind(null, item.id?.value)
+                      }
+                      deleteText={deleteText}
                     />
                   </td>
                 </tr>

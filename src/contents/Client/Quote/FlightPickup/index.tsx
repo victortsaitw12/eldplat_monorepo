@@ -2,9 +2,10 @@ import { StyledForm, StyledHeader, StyledButton, StyledCard } from "./style";
 import { useRouter } from "next/router";
 import { TextInput } from "evergreen-ui";
 import { useForm } from "react-hook-form";
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import Collapse from "@components/Collapse";
 import { formatDateToString } from "@utils/calculateDate";
+import Breadcrumbs from "@components/Breadcrumbs";
 type FormValues = {
   flightDate: string;
   flightNo: string;
@@ -14,16 +15,39 @@ type FormValues = {
   airline: string;
 };
 
-const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
-  {},
+interface Props {
+  flightDate?: string;
+  flightNo?: string;
+  airport?: string;
+  terminal?: string;
+  flightTime?: string;
+  airline?: string;
+  updateIsFilled: (value: boolean) => void;
+}
+
+const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
+  {
+    flightDate,
+    flightNo,
+    airport,
+    terminal,
+    flightTime,
+    airline,
+    updateIsFilled
+  },
   formButtonRef
 ) {
-  const [purpose, setPurpose] = useState<"pickUp" | "dropOff">("dropOff"); // ["pickUp", "dropOff"
+  const [currentType, setCurrentType] = useState<"pickUp" | "dropOff">(
+    "dropOff"
+  );
   const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    watch,
+    setValue,
+    reset
   } = useForm<FormValues>({
     defaultValues: {
       flightDate: formatDateToString(new Date()),
@@ -46,26 +70,51 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
         airport,
         terminal,
         airline,
-        type: purpose
+        type: currentType
       }
     });
   };
+  //
+  useEffect(() => {
+    const subscription = watch((value) => {
+      updateIsFilled(
+        !!value.flightDate && !!value.flightNo && !!value.flightTime
+      );
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+  //
+  useEffect(() => {
+    if (flightDate) setValue("flightDate", flightDate);
+    if (flightNo) setValue("flightNo", flightNo);
+    if (airport) setValue("airport", airport);
+    if (terminal) setValue("terminal", terminal);
+    if (flightTime) setValue("flightTime", flightTime);
+    if (airline) setValue("airline", airline);
+  }, []);
+  //
   return (
     <>
       <StyledHeader>
         <StyledButton
           onClick={() => {
-            setPurpose("dropOff");
+            if (currentType === "pickUp") {
+              reset();
+              setCurrentType("dropOff");
+            }
           }}
-          isSelected={purpose === "dropOff"}
+          isSelected={currentType === "dropOff"}
         >
           送機
         </StyledButton>
         <StyledButton
           onClick={() => {
-            setPurpose("pickUp");
+            if (currentType === "dropOff") {
+              reset();
+              setCurrentType("pickUp");
+            }
           }}
-          isSelected={purpose === "pickUp"}
+          isSelected={currentType === "pickUp"}
         >
           接機
         </StyledButton>
@@ -100,37 +149,28 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
                 />
               </label>
             </div>
+
             <div className="form-item">
               <label className="form-sub-item">
                 <div>
-                  <span style={{ color: "#D14343" }}>*</span>
                   <span>機場</span>
                 </div>
-                <TextInput
-                  {...register("airport", {
-                    required: true
-                  })}
-                  isInvalid={!!errors.airport}
-                />
+                <TextInput {...register("airport")} />
               </label>
               <label className="form-sub-item">
                 <div>
-                  <span style={{ color: "#D14343" }}>*</span>
                   <span>航廈</span>
                 </div>
-                <TextInput
-                  {...register("terminal", {
-                    required: true
-                  })}
-                  isInvalid={!!errors.terminal}
-                />
+                <TextInput {...register("terminal")} />
               </label>
             </div>
             <div className="form-item">
               <label className="form-sub-item">
                 <div>
                   <span style={{ color: "#D14343" }}>*</span>
-                  <span>航班{purpose === "pickUp" ? "抵達" : "出發"}時間</span>
+                  <span>
+                    航班{currentType === "pickUp" ? "抵達" : "出發"}時間
+                  </span>
                 </div>
                 <TextInput
                   type="time"
@@ -147,6 +187,7 @@ const FlightPickup = forwardRef<HTMLButtonElement>(function CustomPickup(
                 <TextInput {...register("airline")} />
               </label>
             </div>
+
             <button
               type="submit"
               style={{ display: "none" }}

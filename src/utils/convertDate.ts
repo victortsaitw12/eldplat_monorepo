@@ -10,6 +10,10 @@ export const dashDate = (date: string) => {
   return date?.substring(0, 10);
 };
 
+export const dashDate2 = (date: string) => {
+  return dayjs(date).format("YYYY-MM-DD");
+};
+
 // 把凌亂日期變成 YYYY/MM/DD
 export const slashDate = (date: string) => {
   return dayjs(date).format("YYYY/MM/DD");

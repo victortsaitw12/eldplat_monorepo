@@ -45,10 +45,11 @@ export const ItemSTY = styled.div<{
 export const ListSTY = styled.div`
   display: inline-flex;
   position: relative;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 0px;
-  gap: 80px;
+  /* gap: 80px; */
+  width: 100%;
 `;
 
 export const LineSTY = styled.div<{ color?: string }>`

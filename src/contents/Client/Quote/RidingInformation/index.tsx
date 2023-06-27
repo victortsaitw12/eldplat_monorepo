@@ -1,33 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Collapse from "@components/Collapse";
 import { BodySTY, CardSTY, CollapseCardSTY } from "./style";
 import CounterInput from "@components/CounterInput";
 import { QuotationCreatePayload } from "../type";
-import {
-  Control,
-  FieldErrors,
-  useFieldArray,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormGetValues
-} from "react-hook-form";
-interface TravelInformationProps {
-  control: Control<QuotationCreatePayload>;
-  register: UseFormRegister<QuotationCreatePayload>;
-  errors: FieldErrors<QuotationCreatePayload>;
-  setValue: UseFormSetValue<QuotationCreatePayload>;
-  getValues: UseFormGetValues<QuotationCreatePayload>;
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+interface RidingInformationProps {
+  validateSubForm: (data: { valid: boolean; errorMessage: string }) => void;
 }
-const TravelInformation = ({
-  register,
-  setValue,
-  control,
-  getValues
-}: TravelInformationProps) => {
+const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
+  const { register, control, getValues, setValue, watch } =
+    useFormContext<QuotationCreatePayload>();
   const { fields } = useFieldArray({
     control,
     name: "bus_data"
   });
+  useEffect(() => {
+    const initValue = getValues(["adult", "child", "infant"]);
+    if (initValue[0] + initValue[1] + initValue[2] > 0) {
+      validateSubForm({
+        valid: true,
+        errorMessage: ""
+      });
+    } else {
+      validateSubForm({
+        valid: false,
+        errorMessage: "請填寫「乘客數量」"
+      });
+    }
+    const subscription = watch((value) => {
+      const { adult, child, infant } = value;
+      const isValidPassenger = adult! + child! + infant! > 0;
+      if (!isValidPassenger) {
+        validateSubForm({
+          valid: false,
+          errorMessage: "請填寫「乘客數量」"
+        });
+        return;
+      } else {
+        validateSubForm({
+          valid: true,
+          errorMessage: ""
+        });
+      }
+    });
+    return () => {
+      console.log("unsubscribe to value");
+      subscription.unsubscribe();
+    };
+  }, []);
   return (
     <div
       style={{
@@ -98,6 +118,7 @@ const TravelInformation = ({
                     title={item.type_name}
                     color="#EEF8F4"
                     key={item.id}
+                    opened={true}
                   >
                     <CardSTY>
                       {item.bus_list.map((bus, i) => {
@@ -124,4 +145,4 @@ const TravelInformation = ({
   );
 };
 
-export default TravelInformation;
+export default RidingInformation;

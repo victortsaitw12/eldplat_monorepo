@@ -60,7 +60,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
         titleChildren={r_titleChildren(isEdit, child, i)}
       >
         <Pane style={{ padding: "20px" }}>
-          <span className="detail-with-icon">
+          <span className="detail-with-icon" style={{ marginBottom: "0" }}>
             <TimeIcon color="#8EA8C7" size={11} />
             <DetailItem
               title="出發時間"

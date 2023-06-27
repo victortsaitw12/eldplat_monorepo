@@ -24,75 +24,46 @@ import Drawer from "@components/Drawer";
 import SecondAssignManualCreate from "./SecondCarManualCreate";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import dayjs from "dayjs";
-import { log } from "console";
-import { I_ManualAssignType } from "@typings/assignment_type";
+import {
+  I_ManualAssignType,
+  I_ManualCreateType
+} from "@typings/assignment_type";
+import { createAssignmentByManual } from "@services/assignment/createAssignmentByManual";
 
 //@components
 // import { I_contactData } from "../vendor.type";
-export interface CreateCustomerPayload {
-  customer_name: string;
-  customer_gui_no: string;
-  customer_owner: string;
-  address1: string;
-  address2: string;
-  customer_city: string;
-  customer_area: string;
-  customer_district_code: string;
-  customer_country: string;
-  customer_tel_code: string;
-  customer_tel: string;
-  contact_name: string;
-  contact_phone_code: string;
-  contact_phone: string;
-  contact_tel_code: string;
-  contact_tel: string;
-  customer_typ: string;
-}
-
-// default value
-const defaultValues: CreateCustomerPayload = {
-  customer_name: "",
-  customer_gui_no: "",
-  customer_owner: "",
-  address1: "",
-  address2: "",
-  customer_city: "",
-  customer_area: "",
-  customer_district_code: "",
-  customer_country: "",
-  customer_tel_code: "",
-  customer_tel: "",
-  contact_name: "",
-  contact_phone_code: "",
-  contact_phone: "",
-  contact_tel_code: "",
-  contact_tel: "",
-  customer_typ: ""
-};
 
 interface I_AssignManualCreateProps {
+  carArr: any;
+  setCarArr: (t: any) => void;
   assignData?: any;
   reloadData?: () => void;
-  secondDrawerOpen: boolean;
-  setSecondDrawerOpen: (secondDrawerOpen: boolean) => void;
+  secondDrawerOpen: string;
+  setSecondDrawerOpen: (secondDrawerOpen: string) => void;
   orderInfo: I_ManualAssignType[];
+  showSecondTitle: any;
   setShowSecondTitle: (t: any) => void;
+  setPosition: (dayNum: number, carNum: number) => void;
+  createAssignData: I_ManualCreateType;
 }
 
 function AssignManualCreate({
+  carArr,
+  setCarArr,
   assignData,
   reloadData,
   secondDrawerOpen,
   setSecondDrawerOpen,
   orderInfo,
-  setShowSecondTitle
+  showSecondTitle,
+  setShowSecondTitle,
+  setPosition,
+  createAssignData
 }: I_AssignManualCreateProps) {
-  const { register, handleSubmit, control, reset } =
-    useForm<CreateCustomerPayload>({
-      defaultValues
-    });
   const [loading, setLoading] = useState(false);
+  // const []
 
+  // 做一個function來抓某筆訂單需要渲染幾個派車派工(側邊欄-1)
   function formatOrderInfo(orderInfoArr: any) {
     if (!orderInfoArr) return;
     const orderInfo = orderInfoArr[0];
@@ -117,18 +88,17 @@ function AssignManualCreate({
   const orderArr = formatOrderInfo(orderInfo);
 
   // 按下儲存派單按鈕
-  const asyncSubmitForm = async (data: any) => {
+  const asyncSubmitForm = async () => {
     setLoading(true);
     try {
-      console.log("👉data for click save", data);
-      // const res = await createCustomer(data);
+      console.log("👉data for click save", createAssignData);
+      const res = await createAssignmentByManual(createAssignData);
     } catch (e: any) {
       console.log(e);
       alert(e.message);
     }
     setLoading(false);
     reloadData && reloadData();
-    reset();
   };
 
   const handleClick = (
@@ -139,31 +109,40 @@ function AssignManualCreate({
     car_no: number
   ) => {
     e.preventDefault();
-    console.log("e", e);
-    console.log("orderItem", orderItem);
-    console.log("car_no", car_no);
+
     setShowSecondTitle({
       date: orderItem.date,
       day: dayjs(orderItem.date).format("dddd"),
       car: car_no,
-      assignType: e.target.name === "car" ? "派車" : "派工"
+      assignType: e.target.name === "car" ? "派車" : "派工",
+      id: `${orderItem.date}-${car_no}`
     });
-    setSecondDrawerOpen(!secondDrawerOpen);
+    setSecondDrawerOpen(e.target.name === "car" ? "派車" : "派工");
+
+    const dayNum = dayjs(orderItem.date).diff(
+      orderInfo[0].departure_date,
+      "day"
+    );
+    setPosition(dayNum + 1, car_no);
   };
+
+  useEffect(() => {
+    const filledData = { ...createAssignData };
+    filledData.manual_bus.map((item, idx) => {
+      if (item.bus_group && item.bus_no) {
+        filledData.manual_bus[idx]["filled"] = true;
+      }
+    });
+    // if(filledData.manual_bus)
+  }, [createAssignData]);
 
   console.log("😊assignData", assignData);
   console.log("😋orderInfo", orderInfo);
   console.log("😴orderArr", orderArr);
-  console.log("dayjs(orderItem.date)", dayjs("2023/05/15").format("dddd"));
+  console.log("😎createAssignData", createAssignData);
 
   return (
-    <FormSTY
-      onSubmit={handleSubmit((data) => {
-        asyncSubmitForm({
-          ...data
-        });
-      })}
-    >
+    <FormSTY onSubmit={asyncSubmitForm}>
       {/* 超連結按鈕 */}
       <Pane display="flex" justifyContent="center">
         <Button iconBefore={DocumentShareIcon} marginRight={12}>
@@ -194,6 +173,7 @@ function AssignManualCreate({
 
       {/* 派車派工小表格 */}
       {orderArr?.map((item: any, idx: number) => {
+        console.log("💙item", item);
         return (
           <Pane key={idx} className="assign-table">
             <Pane borderBottom="1px solid #D5E2F1" paddingY={6} paddingX={12}>
@@ -201,6 +181,7 @@ function AssignManualCreate({
             </Pane>
 
             {item.cars.map((v: number) => {
+              console.log("💛v", v);
               return (
                 <Pane key={v} display="flex" borderBottom="1px solid #D5E2F1">
                   <Pane
@@ -214,10 +195,11 @@ function AssignManualCreate({
                   </Pane>
                   <Pane>
                     <Button
+                      name="car"
+                      className="finished"
                       display="flex"
                       flexWrap="wrap"
                       marginY={4}
-                      name="car"
                       onClick={(e: any) => {
                         handleClick(e, item, v);
                       }}

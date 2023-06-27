@@ -4,6 +4,7 @@ import {
   Pane,
   TimeIcon,
   TrashIcon,
+  CalendarIcon,
   Button,
   SmallPlusIcon,
   TextInput
@@ -21,31 +22,86 @@ interface I_Props {
   quote_no: string;
   isEdit: boolean;
   arrayName: string;
+  isCustomBus?: boolean;
 }
 
-const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
-  const { register, control, getValues } = useFormContext();
+const ShuttleInfo = ({
+  quote_no,
+  isEdit,
+  arrayName,
+  isCustomBus = true
+}: I_Props) => {
+  const {
+    register,
+    control,
+    getValues,
+    setValue,
+    formState: { errors }
+  } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: arrayName
   });
-
+  React.useEffect(() => {
+    console.log(fields.length);
+    onchange_date(0);
+  }, [fields]);
+  const onchange_date = (startIndex: number) => {
+    //往後加一天
+    for (let j = startIndex; j < fields.length - 1; j++) {
+      setValue(
+        arrayName + "[" + (j + 1) + "]" + ".day_date",
+        dayjs(getValues(arrayName + "[" + j + "]" + ".day_date"))
+          .add(1, "day")
+          .format("YYYY-MM-DD")
+      );
+    }
+    //往前減一天
+    for (let j = startIndex; j >= 0; j--) {
+      setValue(
+        arrayName + "[" + (j - 1) + "]" + ".day_date",
+        dayjs(getValues(arrayName + "[" + j + "]" + ".day_date"))
+          .subtract(1, "day")
+          .format("YYYY-MM-DD")
+      );
+    }
+  };
   const r_titleChildren = (isEdit: boolean, data: any, i: number) => {
     if (!isEdit) {
       return null;
     } else {
+      const { onChange, onBlur, name, ref } = register(
+        arrayName + "[" + i + "]" + ".day_date"
+      );
       return (
         <Pane className="title_children">
-          <span>第{data.day_number}天</span>
-          <TextInput
-            type="date"
-            {...register(arrayName + "[" + i + "]" + ".day_date")}
-          />
-          <TrashIcon
-            onClick={() => {
-              remove(i);
-            }}
-          />
+          {isCustomBus && (
+            <>
+              <span>第{i + 1}天</span>
+              <TextInput
+                type="date"
+                onChange={(e: any) => {
+                  onChange(e);
+                  onchange_date(i);
+                }}
+                onBlur={onBlur}
+                name={name}
+                ref={ref}
+              />
+            </>
+          )}
+          {!isCustomBus && (
+            <>
+              <span>接送行程</span>
+            </>
+          )}
+          {fields.length > 1 && (
+            <TrashIcon
+              onClick={() => {
+                remove(i);
+              }}
+            />
+          )}
         </Pane>
       );
     }
@@ -56,18 +112,38 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
         opened={true}
         key={i}
         title={
-          "第" +
-          child.day_number +
-          "天  " +
-          dayjs(child.day_date).format("YYYY-MM-DD")
+          isCustomBus
+            ? "第" +
+              child.day_number +
+              "天  " +
+              dayjs(child.day_date).format("YYYY-MM-DD")
+            : "接送行程"
         }
         titleChildren={r_titleChildren(isEdit, child, i)}
       >
         <Pane style={{ padding: "20px" }}>
+          {!isCustomBus && (
+            <span className="detail-with-icon">
+              <CalendarIcon color="#8EA8C7" size={11} />
+              <DetailItem
+                title={"接送日期"}
+                value={
+                  isEdit ? (
+                    <TextInput
+                      type="date"
+                      {...register(arrayName + "[" + i + "]" + ".day_date")}
+                    />
+                  ) : (
+                    dayjs(child.day_date).format("YYYY-MM-DD") || "-"
+                  )
+                }
+              />
+            </span>
+          )}
           <span className="detail-with-icon">
             <TimeIcon color="#8EA8C7" size={11} />
             <DetailItem
-              title="出發時間"
+              title={isCustomBus ? "出發時間" : "接送時間"}
               value={
                 isEdit ? (
                   <TextInput
@@ -90,6 +166,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
             control={control}
             pickup_location={child.pickup_location}
             dropoff_location={child.dropoff_location}
+            errors={errors}
           />
         </Pane>
       </Collapse>
@@ -98,10 +175,11 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
   return (
     <BodySTY>
       {r_list(fields)}
-      {isEdit && (
+      {isEdit && isCustomBus && (
         <Pane className="add_day_container">
           <Button
-            onClick={() => {
+            onClick={(e: any) => {
+              e.preventDefault();
               const lastDate = getValues(
                 "order_itinerary_list[" + (fields.length - 1) + "].day_date"
               );
@@ -109,9 +187,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
               append({
                 quote_no: quote_no,
                 day_number: fields.length + 1,
-                day_date: dayjs(lastDate)
-                  .add(1, "day")
-                  .format("YYYY-MM-DDTHH:mm:ss"),
+                day_date: dayjs(lastDate).add(1, "day").format("YYYY-MM-DD"),
                 departure_time: "08:00",
                 dropoff_location: "",
                 pickup_location: "",

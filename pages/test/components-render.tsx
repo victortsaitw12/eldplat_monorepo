@@ -15,7 +15,7 @@ const DummyFlowListData = [
   },
   {
     imageUrl: "/image/svg-icons/reply.svg",
-    label: "回復報價"
+    label: "回覆報價"
   },
   {
     imageUrl: "/image/svg-icons/car.svg",
@@ -180,7 +180,8 @@ const ComponentsRender = () => {
         style={{
           background: "#fff",
           display: "flex",
-          justifyContent: "center"
+          justifyContent: "center",
+          border: "1px solid red"
         }}
       >
         <ProgressList dataLists={DummyProgressListData} color={"#897AE3"} />

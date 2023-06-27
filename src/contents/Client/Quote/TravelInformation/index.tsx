@@ -1,32 +1,24 @@
 import React from "react";
 import Collapse from "@components/Collapse";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  useFieldArray
-} from "react-hook-form";
+import { useFormContext, useFieldArray, useWatch } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
 import { TextInput } from "evergreen-ui";
 import { BodySTY, ItemSTY, CollapseCardSTY } from "./style";
 import { QuotationCreatePayload } from "../type";
 
-interface TravelInformationProps {
-  control: Control<QuotationCreatePayload>;
-  register: UseFormRegister<QuotationCreatePayload>;
-  errors: FieldErrors<QuotationCreatePayload>;
-  setValue: UseFormSetValue<QuotationCreatePayload>;
-}
-const TravelInformation = ({
-  register,
-  control,
-  errors,
-  setValue
-}: TravelInformationProps) => {
+const TravelInformation = () => {
+  const {
+    control,
+    register,
+    formState: { errors }
+  } = useFormContext<QuotationCreatePayload>();
   const { fields } = useFieldArray({
     name: "order_itinerary_list",
     control
+  });
+  useWatch({
+    control,
+    name: "order_itinerary_list"
   });
   return (
     <div

@@ -5,12 +5,13 @@ import { BodySTY } from "./style";
 // import useClickOutside from "@hooks/useClickOutside";
 //
 interface Props {
-  onDelete: () => void;
+  onDelete?: () => void;
   onEdit?: () => void;
   onView?: () => void;
+  deleteText?: string;
 }
 //
-function Index({ onDelete, onEdit, onView }: Props) {
+function Index({ onDelete, onEdit, onView, deleteText = "停用" }: Props) {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
   // const handleClickOutside = () => {
   //   setOptionIsOpen(false);
@@ -52,16 +53,18 @@ function Index({ onDelete, onEdit, onView }: Props) {
               <div>編輯</div>
             </button>
           )}
-          <button
-            className="option-item"
-            onClick={() => {
-              onDelete();
-              setOptionIsOpen(false);
-            }}
-          >
-            <DisableIcon size={14} />
-            <div>停用</div>
-          </button>
+          {onDelete && (
+            <button
+              className="option-item"
+              onClick={() => {
+                onDelete();
+                setOptionIsOpen(false);
+              }}
+            >
+              <DisableIcon size={14} />
+              <div>{deleteText}</div>
+            </button>
+          )}
         </div>
       )}
     </BodySTY>
