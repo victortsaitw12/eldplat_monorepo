@@ -8,7 +8,11 @@ const ContactInfoEdit = () => {
   const { register } = useFormContext();
   const contact_1 = [
     {
-      title: "姓",
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>姓
+        </>
+      ),
       value: (
         <TextInput
           {...register("order_contact_list[0].family_name", {
@@ -18,7 +22,11 @@ const ContactInfoEdit = () => {
       )
     },
     {
-      title: "手機",
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>手機
+        </>
+      ),
       value: (
         <Pane style={{ display: "flex", gap: "8px" }}>
           <CustomSelect
@@ -41,7 +49,11 @@ const ContactInfoEdit = () => {
       )
     },
     {
-      title: "信箱",
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>信箱
+        </>
+      ),
       value: (
         <TextInput
           {...register("order_contact_list[0].contact_email", {
@@ -53,7 +65,11 @@ const ContactInfoEdit = () => {
   ];
   const contact_2 = [
     {
-      title: "名",
+      title: (
+        <>
+          <span style={{ color: "#D14343" }}>*</span>名
+        </>
+      ),
       value: (
         <TextInput
           {...register("order_contact_list[0].name", {
@@ -77,9 +93,7 @@ const ContactInfoEdit = () => {
             ]}
           />
           <TextInput
-            {...register("order_contact_list[0].contact_tel", {
-              required: "此欄位必填"
-            })}
+            {...register("order_contact_list[0].contact_tel")}
             style={{ maxWidth: "198px" }}
           />
         </Pane>
