@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { BodySTY } from "./style";
 //@component
 import Collapse from "@components/Collapse";
@@ -32,6 +32,10 @@ const OrdersDetail = () => {
           <SummaryInfoView
             listArray={[
               {
+                title: "分類",
+                value: orderData["quote_type"] === "1" ? "客製包車" : "機場接送"
+              },
+              {
                 title: "用車目的",
                 value:
                   orderData["quote_type"]! === "2"
@@ -48,16 +52,13 @@ const OrdersDetail = () => {
         </Collapse>
         {orderData["quote_type"] !== "1" ? (
           <>
-            <Collapse opened={true} title="行程資訊">
+            <Collapse opened={true} title="航班資訊">
               <FlightInfoView data={orderData} />
             </Collapse>
-            <FlightShuttleInfo
-              arrayName="order_itinerary_list"
-              isEdit={false}
-            />
+            <FlightShuttleInfo listArray={orderData.order_itinerary_list} />
           </>
         ) : (
-          <ShuttleInfo arrayName="order_itinerary_list" isEdit={false} />
+          <ShuttleInfo listArray={orderData.order_itinerary_list} />
         )}
 
         <Collapse title="乘車資訊" opened={true}>

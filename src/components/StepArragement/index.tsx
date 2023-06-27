@@ -3,14 +3,14 @@ import {
   Control,
   FieldErrors,
   UseFormRegister,
-  useFieldArray
+  useFieldArray,
+  useFormContext,
+  useWatch
 } from "react-hook-form";
 import { PlusIcon, TrashIcon, TextInput } from "evergreen-ui";
 import { ItemSTY } from "./style";
 //
 function StepArragement({
-  control,
-  register,
   startPointName,
   destinationPointName,
   middlePointName,
@@ -26,6 +26,7 @@ function StepArragement({
   withStartPoint?: boolean;
   withDestinationPoint?: boolean;
 }) {
+  const { control, register, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: middlePointName
@@ -36,6 +37,10 @@ function StepArragement({
       stopover_address: ""
     });
   }
+  const startPointValue = useWatch({
+    control,
+    name: startPointName
+  });
   return (
     <>
       <ItemSTY>
@@ -47,13 +52,17 @@ function StepArragement({
         />
         <div className="option-container">
           {fields.length === 0 && (
-            <button className="option-item" onClick={() => appendMiddlePoint()}>
+            <button
+              className="option-item"
+              onClick={() => appendMiddlePoint()}
+              disabled={getValues(startPointName).trim() === ""}
+            >
               <PlusIcon size={12} />
             </button>
           )}
         </div>
       </ItemSTY>
-      {fields.map((item, index) => {
+      {fields.map((item: any, index) => {
         const locationName = `中途點${index + 1}`;
         return (
           <ItemSTY key={item.id}>
@@ -76,6 +85,11 @@ function StepArragement({
                   onClick={() => {
                     appendMiddlePoint();
                   }}
+                  disabled={
+                    getValues(
+                      `${middlePointName}.${index}.stopover_address`
+                    ).trim() === ""
+                  }
                 >
                   <PlusIcon size={12} />
                 </button>

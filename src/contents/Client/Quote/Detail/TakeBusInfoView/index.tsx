@@ -20,7 +20,6 @@ const TakeBusInfoView = ({
   carry_on_luggage,
   bus_data
 }: I_Props) => {
-  console.log("bus_data: ", bus_data);
   const mappedBusData = bus_data?.reduce(
     (
       resultArray: Array<{ label: string; value: string | number }>,
@@ -38,7 +37,6 @@ const TakeBusInfoView = ({
     },
     []
   );
-  console.log("mappedBusData: ", mappedBusData);
   return (
     <Pane
       style={{
@@ -79,21 +77,7 @@ const TakeBusInfoView = ({
         ]}
       />
       {/*TODO：車型車輛的API之後會改成另一隻API*/}
-      <VerticalDetail
-        title="車型及數量"
-        items={
-          // bus_data
-          //   ? bus_data.map((child: any) => {
-          //       console.log("child: ", child);
-          //       return {
-          //         label: child.bus_type + "(" + child.bus_seat + "人)",
-          //         value: child.order_quantity
-          //       };
-          //     })
-          //   : []
-          mappedBusData
-        }
-      />
+      <VerticalDetail title="車型及數量" items={mappedBusData} />
     </Pane>
   );
 };

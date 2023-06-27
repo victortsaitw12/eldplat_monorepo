@@ -12,8 +12,7 @@ const SpecialNeedsInformation = () => {
     control,
     formState: { errors },
     getValues,
-    setValue,
-    trigger
+    setValue
   } = useFormContext<QuotationCreatePayload>();
   return (
     <CollapseCardSTY>
@@ -40,10 +39,6 @@ const SpecialNeedsInformation = () => {
                       return true;
                     }
                   })}
-                  onChange={(e: any) => {
-                    setValue("pickup_sign_remark", e.target.value);
-                    trigger && trigger("pickup_sign_remark");
-                  }}
                   isInvalid={!!errors.pickup_sign_remark}
                 />
                 {errors.pickup_sign_remark && (
