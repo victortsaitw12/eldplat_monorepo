@@ -221,16 +221,16 @@ const Page: NextPageWithLayout<
   });
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
     alert("送出詢價單");
-    // try {
-    //   const result = await createQuotation(data);
-    //   const { quote_no } = result;
-    //   if (!quote_no) {
-    //     throw new Error("Fail to create quotation");
-    //   }
-    //   setCurrentTab(6);
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      const result = await createQuotation(data);
+      const { quote_no } = result;
+      if (!quote_no) {
+        throw new Error("Fail to create quotation");
+      }
+      setCurrentTab(6);
+    } catch (e) {
+      console.log(e);
+    }
   };
   useEffect(() => {
     let timmer: any;
