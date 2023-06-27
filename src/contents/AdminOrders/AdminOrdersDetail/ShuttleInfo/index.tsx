@@ -31,7 +31,13 @@ const ShuttleInfo = ({
   arrayName,
   isCustomBus = true
 }: I_Props) => {
-  const { register, control, getValues, setValue } = useFormContext();
+  const {
+    register,
+    control,
+    getValues,
+    setValue,
+    formState: { errors }
+  } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: arrayName
@@ -86,7 +92,7 @@ const ShuttleInfo = ({
           )}
           {!isCustomBus && (
             <>
-              <span>接送資訊</span>
+              <span>接送行程</span>
             </>
           )}
           {fields.length > 1 && (
@@ -160,6 +166,7 @@ const ShuttleInfo = ({
             control={control}
             pickup_location={child.pickup_location}
             dropoff_location={child.dropoff_location}
+            errors={errors}
           />
         </Pane>
       </Collapse>

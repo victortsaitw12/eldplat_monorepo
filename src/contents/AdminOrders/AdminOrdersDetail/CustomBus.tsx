@@ -20,8 +20,8 @@ import SpecialInfoView from "./SpecialInfo/SpecialInfoView";
 import SpecialInfoEdit from "./SpecialInfo/SpecialInfoEdit";
 import LabelInfoView from "./LabelInfo/LabelInfoView";
 
-//@mock_data
-import { mock_progressdata } from "@mock-data/adminOrders/mockData";
+//@utils
+import mappingProgressInfo from "@utils/mappingProgressInfo";
 
 interface I_Props {
   isEdit: boolean;
@@ -41,7 +41,9 @@ const CustomBus = ({ isEdit, orderData, busData, methods }: I_Props) => {
     <>
       <Collapse opened={true} title={orderData?.quote_no}>
         <Pane style={{ padding: "20px" }}>
-          <ProgressList dataLists={[...mock_progressdata]} />
+          <ProgressList
+            dataLists={mappingProgressInfo(orderData?.order_status_list)}
+          />
         </Pane>
       </Collapse>
       <Collapse opened={true} title="付款方式">

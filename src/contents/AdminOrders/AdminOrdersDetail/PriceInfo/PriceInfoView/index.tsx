@@ -69,7 +69,7 @@ const PriceInfoView = ({ orderData }: I_Props) => {
         <Pane className="total_price">
           <Text>總金額</Text>
           <Text>
-            NT${orderData?.quote_total_amount.toLocaleString() || "0"}
+            NT${orderData?.quote_total_amount?.toLocaleString() || "0"}
           </Text>
         </Pane>
         <Text>

@@ -94,6 +94,7 @@ const PaymentInfoEdit = () => {
         />
         <Pane>
           <TextInput
+            type="number"
             {...register("deposit_amount")}
             disabled={isFullPayment == "1"}
             placeholder="金額"
@@ -114,7 +115,8 @@ const PaymentInfoEdit = () => {
         <Pane>
           <Pane style={{ display: "flex" }}>
             <TextInput
-              {...register("balance_period")}
+              type="number"
+              {...register("balance_amount")}
               disabled={isFullPayment == "1"}
               placeholder="金額"
             />

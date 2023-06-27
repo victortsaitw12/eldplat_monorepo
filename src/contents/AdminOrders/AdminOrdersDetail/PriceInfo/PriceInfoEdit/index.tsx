@@ -74,7 +74,6 @@ const PriceInfoEdit = ({
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const { register, control, getValues } = useFormContext();
   const isFullPayment = useWatch({
     control,
     name: "full_payment_check"
@@ -111,23 +110,19 @@ const PriceInfoEdit = ({
               <Text>訂金</Text>
               <Text>
                 NT$
-                <TextInput type="number" {...register("quote_total_amount")} />
+                <TextInput type="number" {...register("deposit_amount")} />
               </Text>
             </Pane>
-            <Text>
-              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
-            </Text>
+            <Text> 前繳款</Text>
             <hr />
             <Pane className="total_price">
               <Text>尾款</Text>
               <Text>
                 NT$
-                <TextInput type="number" {...register("quote_total_amount")} />
+                <TextInput type="number" {...register("balance_amount")} />
               </Text>
             </Pane>
-            <Text>
-              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
-            </Text>
+            <Text> 前繳款</Text>
             <hr />
           </>
         )}

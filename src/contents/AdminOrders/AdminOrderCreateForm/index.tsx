@@ -114,7 +114,7 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
       <FlexWrapper padding="0">
         {/*公司電話國碼*/}
         <FiledInput
-          style={{ width: "60px" }}
+          style={{ width: "60px", minWidth: "60px" }}
           label=""
           controlProps={{
             name: "order_contact_list[0].contact_phone_code",
@@ -123,6 +123,7 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
         />
         <FiledInput
           label=""
+          className="contact_phone"
           controlProps={{
             name: "order_contact_list[0].contact_phone",
             control,
@@ -134,7 +135,7 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
       <FlexWrapper padding="0">
         {/*公司電話國碼*/}
         <FiledInput
-          style={{ width: "60px" }}
+          style={{ width: "60px", minWidth: "60px" }}
           label=""
           controlProps={{
             name: "order_contact_list[0].contact_tel_code",
