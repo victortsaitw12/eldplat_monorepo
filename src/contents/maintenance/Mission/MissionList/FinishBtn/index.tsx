@@ -11,8 +11,9 @@ interface FinishBtn_Type {
 }
 const FinishBtn = ({ id, disabled }: FinishBtn_Type) => {
   const handleFinished = () => {
+    const maintenance_status = "3";
     try {
-      UpdateMaintenanceStatus(id)
+      UpdateMaintenanceStatus(id, maintenance_status)
         .then((res) => {
           console.log("UpdateMaintenanceStatus res", res);
           router.push("/maintenance/record ");
