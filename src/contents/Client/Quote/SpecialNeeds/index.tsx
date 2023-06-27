@@ -2,34 +2,19 @@ import React from "react";
 import Collapse from "@components/Collapse";
 import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import { BodySTY, ItemSTY, RemarkSTY, CollapseCardSTY } from "./style";
-import { Textarea, Select, Checkbox, Radio } from "evergreen-ui";
+import { Textarea, Select, Radio } from "evergreen-ui";
 import CounterInput from "@components/CounterInput";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormGetValues
-} from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
-interface SpecialNeedsInformationProps {
-  control: Control<QuotationCreatePayload>;
-  register: UseFormRegister<QuotationCreatePayload>;
-  setValue: UseFormSetValue<QuotationCreatePayload>;
-  getValues: UseFormGetValues<QuotationCreatePayload>;
-  errors: FieldErrors<QuotationCreatePayload>;
-  validationList: Array<{ valid: boolean; errorMessage: string }>;
-  trigger?: any;
-}
-const SpecialNeedsInformation = ({
-  register,
-  control,
-  errors,
-  getValues,
-  setValue,
-  validationList,
-  trigger
-}: SpecialNeedsInformationProps) => {
+const SpecialNeedsInformation = () => {
+  const {
+    register,
+    control,
+    formState: { errors },
+    getValues,
+    setValue,
+    trigger
+  } = useFormContext<QuotationCreatePayload>();
   return (
     <CollapseCardSTY>
       <Collapse title="特殊需求" opened={true}>
@@ -50,7 +35,7 @@ const SpecialNeedsInformation = ({
                         getValues("pickup_sign_check") === "1" &&
                         value.trim() === ""
                       ) {
-                        return "請輸入舉牌文字";
+                        return "不可為空!";
                       }
                       return true;
                     }

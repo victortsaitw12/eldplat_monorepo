@@ -1,7 +1,6 @@
 import React from "react";
-import { useForm, FormProvider } from "react-hook-form";
-import { Pane } from "evergreen-ui";
-import { StyledForm } from "./style";
+import { useForm, useFormContext } from "react-hook-form";
+import { BodySTY } from "./style";
 //@component
 import Collapse from "@components/Collapse";
 //@contents
@@ -17,30 +16,14 @@ import {
   mappingContactInfo,
   mappingSpecailNeededsInfo
 } from "@services/client/mappingQuotationData";
+import { QuotationCreatePayload } from "../type";
 
-interface I_Props {
-  isEdit: boolean;
-  orderData: any;
-}
-
-const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
+const OrdersDetail = () => {
+  const methods = useFormContext<QuotationCreatePayload>();
+  const orderData = methods.getValues();
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
   const specialInfo = mappingSpecailNeededsInfo(orderData);
-  const methods = useForm({
-    defaultValues: {
-      ...orderData
-    }
-  });
-
-  const asyncSubmitForm = async (data: any) => {
-    try {
-      console.log("response of vendor edit: ");
-    } catch (e: any) {
-      console.log(e);
-      alert(e.message);
-    }
-  };
 
   const r_template = () => {
     return (
@@ -49,17 +32,13 @@ const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
           <SummaryInfoView
             listArray={[
               {
-                title: "訂單編號",
-                value: orderData["quote_no"]
-              },
-              {
                 title: "用車目的",
                 value:
-                  orderData["quote_type"] === "2"
+                  orderData["quote_type"]! === "2"
                     ? "接機"
-                    : orderData["quote_type"] === "3"
+                    : orderData["quote_type"]! === "3"
                     ? "送機"
-                    : orderData["purpose"]
+                    : orderData["purpose"]!
               }
             ]}
           />
@@ -69,16 +48,16 @@ const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
         </Collapse>
         {orderData["quote_type"] !== "1" ? (
           <>
-            <Collapse opened={true} title="航班資訊">
+            <Collapse opened={true} title="行程資訊">
               <FlightInfoView data={orderData} />
             </Collapse>
             <FlightShuttleInfo
               arrayName="order_itinerary_list"
-              isEdit={isEdit}
+              isEdit={false}
             />
           </>
         ) : (
-          <ShuttleInfo arrayName="order_itinerary_list" isEdit={isEdit} />
+          <ShuttleInfo arrayName="order_itinerary_list" isEdit={false} />
         )}
 
         <Collapse title="乘車資訊" opened={true}>
@@ -103,18 +82,7 @@ const OrdersDetail = ({ isEdit, orderData }: I_Props) => {
       </>
     );
   };
-  return (
-    <FormProvider {...methods}>
-      <StyledForm
-        onSubmit={methods.handleSubmit((data) => {
-          console.log(data);
-          asyncSubmitForm({ ...data });
-        })}
-      >
-        {r_template()}
-      </StyledForm>
-    </FormProvider>
-  );
+  return <BodySTY>{!orderData ? <div>loading...</div> : r_template()}</BodySTY>;
 };
 
 export default OrdersDetail;

@@ -4,31 +4,22 @@ import StepArragement from "@components/StepArragement";
 import { TextInput } from "evergreen-ui";
 import { BodySTY, ItemSTY } from "./style";
 import { QuotationCreatePayload } from "../type";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  useFieldArray,
-  useWatch
-} from "react-hook-form";
+import { useFieldArray, useWatch, useFormContext } from "react-hook-form";
 interface TravelInformationProps {
-  control: Control<QuotationCreatePayload>;
-  register: UseFormRegister<QuotationCreatePayload>;
-  errors: FieldErrors<QuotationCreatePayload>;
-  setValue: UseFormSetValue<QuotationCreatePayload>;
   type: string;
   flightTime?: string;
   validateSubForm: (data: { valid: boolean; errorMessage: string }) => void;
 }
 const FlightInformation = ({
-  register,
-  control,
-  errors,
   type,
   flightTime,
   validateSubForm
 }: TravelInformationProps) => {
+  const {
+    control,
+    register,
+    formState: { errors }
+  } = useFormContext<QuotationCreatePayload>();
   const { fields } = useFieldArray({
     name: "order_itinerary_list",
     control
