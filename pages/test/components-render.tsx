@@ -158,7 +158,7 @@ const ComponentsRender = () => {
         background: "#D5E2F1"
       }}
     >
-      <div
+      {/* <div
         style={{
           background: "#fff",
           display: "flex",
@@ -244,7 +244,7 @@ const ComponentsRender = () => {
         >
           sumbit data!
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

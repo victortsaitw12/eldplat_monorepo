@@ -67,7 +67,7 @@ function SecondCarAssignManualCreate({
   //     defaultValues
   //   });
   const [loading, setLoading] = useState(false);
-  // const [secondDrawerOpen, setSecondDrawerOpen] = useState<boolean>(false);
+  const [secondDrawerOpen, setSecondDrawerOpen] = useState<boolean>(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
   ]);
