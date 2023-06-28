@@ -1,5 +1,7 @@
+import API_Path from "./apiPath";
 export async function getBusType() {
-  const res = await fetch("https://localhost:7088/CAR/GetBusType", {
+  const url = new URL(API_Path["getBusType"]);
+  const res = await fetch(url.href, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
