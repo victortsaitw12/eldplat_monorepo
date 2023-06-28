@@ -48,7 +48,7 @@ export const ListSTY = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0px;
-  gap: 80px;
+  /* gap: 80px; */
   width: 100%;
 `;
 

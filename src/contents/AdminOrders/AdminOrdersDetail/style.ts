@@ -19,6 +19,12 @@ const BodySTY = styled.div`
       }
     }
   }
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: ${({ theme }) => theme.color.R400};
+  }
 `;
 
 export { BodySTY };

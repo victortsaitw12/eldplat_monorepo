@@ -3,77 +3,51 @@ import Collapse from "@components/Collapse";
 import { BodySTY, CardSTY, CollapseCardSTY } from "./style";
 import CounterInput from "@components/CounterInput";
 import { QuotationCreatePayload } from "../type";
-import {
-  Control,
-  FieldErrors,
-  useFieldArray,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormGetValues,
-  useWatch
-} from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 interface RidingInformationProps {
-  control: Control<QuotationCreatePayload>;
-  register: UseFormRegister<QuotationCreatePayload>;
-  errors: FieldErrors<QuotationCreatePayload>;
-  setValue: UseFormSetValue<QuotationCreatePayload>;
-  getValues: UseFormGetValues<QuotationCreatePayload>;
   validateSubForm: (data: { valid: boolean; errorMessage: string }) => void;
 }
-function validateBusData(
-  bus_data: Array<{
-    type_name: string;
-    ddl_code: string;
-    bus_list: Array<{
-      bus_type: string;
-      bus_name: string;
-      bus_seat: number;
-      order_quantity: number;
-    }>;
-  }>
-) {
-  let totalBus = 0;
-  bus_data.forEach((item) => {
-    item.bus_list.forEach((bus) => {
-      totalBus += bus.order_quantity;
-    });
-  });
-  return totalBus > 0;
-}
-const RidingInformation = ({
-  register,
-  setValue,
-  control,
-  getValues,
-  validateSubForm
-}: RidingInformationProps) => {
+const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
+  const { register, control, getValues, setValue, watch } =
+    useFormContext<QuotationCreatePayload>();
   const { fields } = useFieldArray({
     control,
     name: "bus_data"
   });
-  const [adult, child, infant, bus_data] = useWatch({
-    control,
-    name: ["adult", "child", "infant", "bus_data"]
-  });
   useEffect(() => {
-    const isValidPassenger = adult + child + infant > 0;
-    const isValidBusData = validateBusData(bus_data);
-    if (!isValidPassenger) {
+    const initValue = getValues(["adult", "child", "infant"]);
+    if (initValue[0] + initValue[1] + initValue[2] > 0) {
+      validateSubForm({
+        valid: true,
+        errorMessage: ""
+      });
+    } else {
       validateSubForm({
         valid: false,
-        errorMessage: "請填寫「乘客數量」與「車型及數量」欄位。"
+        errorMessage: "請填寫「乘客數量」"
       });
-      return;
     }
-    if (!isValidBusData) {
-      validateSubForm({
-        valid: false,
-        errorMessage: "請填寫「乘客數量」與「車型及數量」欄位。"
-      });
-      return;
-    }
-    validateSubForm({ valid: true, errorMessage: "" });
-  }, [adult, child, infant, bus_data]);
+    const subscription = watch((value) => {
+      const { adult, child, infant } = value;
+      const isValidPassenger = adult! + child! + infant! > 0;
+      if (!isValidPassenger) {
+        validateSubForm({
+          valid: false,
+          errorMessage: "請填寫「乘客數量」"
+        });
+        return;
+      } else {
+        validateSubForm({
+          valid: true,
+          errorMessage: ""
+        });
+      }
+    });
+    return () => {
+      console.log("unsubscribe to value");
+      subscription.unsubscribe();
+    };
+  }, []);
   return (
     <div
       style={{

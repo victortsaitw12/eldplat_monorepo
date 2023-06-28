@@ -36,6 +36,7 @@ const AdminOrdersList = ({
         goToEditPage={goToEditPageHandler}
         deleteItem={deleteItemHandler}
         viewItem={goToDetailPage}
+        deleteText={"取消"}
       />
     </BodySTY>
   );

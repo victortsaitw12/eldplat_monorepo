@@ -8,9 +8,10 @@ interface Props {
   onDelete?: () => void;
   onEdit?: () => void;
   onView?: () => void;
+  deleteText?: string;
 }
 //
-function Index({ onDelete, onEdit, onView }: Props) {
+function Index({ onDelete, onEdit, onView, deleteText = "停用" }: Props) {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
   // const handleClickOutside = () => {
   //   setOptionIsOpen(false);
@@ -61,7 +62,7 @@ function Index({ onDelete, onEdit, onView }: Props) {
               }}
             >
               <DisableIcon size={14} />
-              <div>停用</div>
+              <div>{deleteText}</div>
             </button>
           )}
         </div>

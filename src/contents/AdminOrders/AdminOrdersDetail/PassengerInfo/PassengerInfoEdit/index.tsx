@@ -10,13 +10,7 @@ const PassengerInfoEdit = () => {
   const contact_1 = [
     {
       title: "姓",
-      value: (
-        <TextInput
-          {...register("order_contact_list[1].family_name", {
-            required: "此欄位必填"
-          })}
-        />
-      )
+      value: <TextInput {...register("order_contact_list[1].family_name")} />
     },
     {
       title: "手機",
@@ -34,34 +28,20 @@ const PassengerInfoEdit = () => {
           />
           <TextInput
             style={{ maxWidth: "198px" }}
-            {...register("order_contact_list[1].contact_phone", {
-              required: "此欄位必填"
-            })}
+            {...register("order_contact_list[1].contact_phone")}
           />
         </Pane>
       )
     },
     {
       title: "信箱",
-      value: (
-        <TextInput
-          {...register("order_contact_list[1].contact_email", {
-            required: "此欄位必填"
-          })}
-        />
-      )
+      value: <TextInput {...register("order_contact_list[1].contact_email")} />
     }
   ];
   const contact_2 = [
     {
       title: "名",
-      value: (
-        <TextInput
-          {...register("order_contact_list[1].name", {
-            required: "此欄位必填"
-          })}
-        />
-      )
+      value: <TextInput {...register("order_contact_list[1].name")} />
     },
     {
       title: "電話",
@@ -79,9 +59,7 @@ const PassengerInfoEdit = () => {
           />
           <TextInput
             style={{ maxWidth: "198px" }}
-            {...register("order_contact_list[1].contact_tel", {
-              required: "此欄位必填"
-            })}
+            {...register("order_contact_list[1].contact_tel")}
           />
         </Pane>
       )
@@ -106,9 +84,7 @@ const PassengerInfoEdit = () => {
           />
           <TextInput
             style={{ maxWidth: "198px" }}
-            {...register("order_contact_list[1].social_media", {
-              required: "此欄位必填"
-            })}
+            {...register("order_contact_list[1].social_media")}
           />
         </Pane>
       )

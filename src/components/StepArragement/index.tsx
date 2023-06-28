@@ -3,14 +3,14 @@ import {
   Control,
   FieldErrors,
   UseFormRegister,
-  useFieldArray
+  useFieldArray,
+  useFormContext,
+  useWatch
 } from "react-hook-form";
 import { PlusIcon, TrashIcon, TextInput } from "evergreen-ui";
 import { ItemSTY } from "./style";
 //
 function StepArragement({
-  control,
-  register,
   startPointName,
   destinationPointName,
   middlePointName,
@@ -26,6 +26,7 @@ function StepArragement({
   withStartPoint?: boolean;
   withDestinationPoint?: boolean;
 }) {
+  const { control, register, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: middlePointName
@@ -36,6 +37,10 @@ function StepArragement({
       stopover_address: ""
     });
   }
+  const startPointValue = useWatch({
+    control,
+    name: startPointName
+  });
   return (
     <>
       <ItemSTY>
@@ -47,15 +52,18 @@ function StepArragement({
         />
         <div className="option-container">
           {fields.length === 0 && (
-            <button className="option-item" onClick={() => appendMiddlePoint()}>
+            <button
+              className="option-item"
+              onClick={() => appendMiddlePoint()}
+              disabled={getValues(startPointName).trim() === ""}
+            >
               <PlusIcon size={12} />
             </button>
           )}
         </div>
       </ItemSTY>
-      {fields.map((item, index) => {
+      {fields.map((item: any, index) => {
         const locationName = `中途點${index + 1}`;
-        console.log("item", item);
         return (
           <ItemSTY key={item.id}>
             <div className="item-content">{locationName}: </div>
@@ -71,12 +79,17 @@ function StepArragement({
               <button className="option-item" onClick={() => remove(index)}>
                 <TrashIcon size={12} />
               </button>
-              {index === fields.length - 1 ? (
+              {index === fields.length - 1 && fields.length < 8 ? (
                 <button
                   className="option-item"
                   onClick={() => {
                     appendMiddlePoint();
                   }}
+                  disabled={
+                    getValues(
+                      `${middlePointName}.${index}.stopover_address`
+                    ).trim() === ""
+                  }
                 >
                   <PlusIcon size={12} />
                 </button>

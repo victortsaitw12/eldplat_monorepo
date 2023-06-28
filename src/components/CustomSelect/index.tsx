@@ -3,46 +3,43 @@ import { Select } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { UseFormRegister } from "react-hook-form";
 interface I_Option {
-    value: string;
-    text: string;
+  value: string;
+  text: string;
 }
 interface I_Props {
-    label?: string;
-    selectName: string;
-    options: Array<I_Option>;
-    register: UseFormRegister<any>;
+  label?: string;
+  selectName?: string;
+  options: Array<I_Option>;
+  register: UseFormRegister<any>;
+  style?: React.CSSProperties;
+  disabled?: boolean;
 }
 const CustomSelect = ({
-    label,
-    selectName,
-    options = [
-        {
-            value: "A",
-            text: "A市",
-        }
-    ],
-    register
+  style,
+  label,
+  selectName,
+  options = [
+    {
+      value: "A",
+      text: "A市"
+    }
+  ],
+  register,
+  disabled
 }: I_Props) => {
-
-    return (
-        <BodySTY className="custom_select">
-            {label && <p>{label}</p>}
-            <Select
-                {...register(`${selectName}`)}
-            >
-                {options.map((child, i) => {
-                    return (
-                        <option
-                            key={child.value + "-" + i}
-                            value={child.value}
-                        >
-                            {child.text}
-                        </option>
-                    )
-                })}
-            </Select>
-        </BodySTY>
-    );
+  return (
+    <BodySTY style={style} className="custom_select">
+      {label && <p>{label}</p>}
+      <Select disabled={disabled} {...register(`${selectName}`)}>
+        {options.map((child, i) => {
+          return (
+            <option key={child.value + "-" + i} value={child.value}>
+              {child.text}
+            </option>
+          );
+        })}
+      </Select>
+    </BodySTY>
+  );
 };
 export default CustomSelect;
-
