@@ -41,6 +41,10 @@ const FormSTY = styled.form`
         background-color: #3670c9;
       }
     }
+
+    .finished {
+      background-color: ${({ theme }) => theme.color.B400};
+    }
   }
 
   select {

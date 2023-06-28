@@ -8,7 +8,7 @@ export const BodySTY = styled.div`
   /* padding: 28px 0; */
   width: 1240px;
   margin: 28px auto;
-  gap: 40px;
+  gap: 24px;
 `;
 
 export const StyledForm = styled.form`
