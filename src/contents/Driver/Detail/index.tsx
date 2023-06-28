@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import HealthRecords from "./HealthRecords";
+import { FormSTY } from "./style";
+
 import { UpdateDriverInfoPayload } from "../driver.type";
 import DriverInfo from "./DriverInfo";
+import LicenseInfo from "./LicenseInfo";
+import HealthRecords from "./HealthRecords";
+
 import { formatDateFromAPI } from "@utils/formatDateFromAPI";
-import { FormSTY } from "./style";
 
 interface Props {
   isEdit: boolean;
@@ -44,7 +47,6 @@ function DriverDetail({
   const {
     register,
     formState: { errors },
-    control,
     handleSubmit,
     getValues
   } = useForm<UpdateDriverInfoPayload>({

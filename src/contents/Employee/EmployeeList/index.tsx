@@ -1,8 +1,6 @@
 import Table from "@components/Table/TableWithEdit";
-import { Pane, Button, Heading, PlusIcon, Checkbox } from "evergreen-ui";
-import React, { useEffect } from "react";
+import React from "react";
 import { getEmployeeTitle } from "@services/employee/getAllEmployee";
-import { MOCK_LIST_TITLES } from "./data";
 import { BodySTY } from "./style";
 //
 interface I_EmployeeListType {

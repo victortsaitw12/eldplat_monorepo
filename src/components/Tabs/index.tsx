@@ -10,7 +10,9 @@ import { TabsSTY } from "./style";
 
 const Tabs = ({
   titles,
-  setIsOpenDrawer,
+  setIsOpenDrawer = () => {
+    console.log("open drawer!");
+  },
   isOpenDrawer
 }: {
   titles?: string[];

@@ -7,7 +7,7 @@ import {
   FilePicker,
   SelectField
 } from "evergreen-ui";
-import { StepControlSTY, FilePickBtnSTY } from "@components/FormCard/style";
+import { FilePickBtnSTY } from "@components/FormCard/style";
 
 function Indentification() {
   const [vehicleNameValue, setVehicleNameValue] = useState("");
@@ -158,13 +158,6 @@ function Indentification() {
           </SelectField>
         </div>
       </FormCard>
-      {/* <StepControlSTY>
-                <button>Cancel</button>
-                <div className="next-step">
-                    <button className="bordered">Save & Add Another</button>
-                    <button className="fill">Save Vehicle</button>
-                </div>
-            </StepControlSTY> */}
     </>
   );
 }

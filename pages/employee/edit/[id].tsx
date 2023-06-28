@@ -7,22 +7,22 @@ import {
 //
 import { getLayout } from "@layout/MainLayout";
 import { Pane } from "evergreen-ui";
-import BusEditForm from "@contents/Bus/BusEditForm";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { ParsedUrlQuery } from "querystring";
 import AddEmployee from "@contents/Employee";
 import { getEmployeeById } from "@services/employee/getEmployeeById";
-import { I_Add_Employees_Type } from "@typings/employee_type";
+import { I_Get_Employees_Type } from "@typings/employee_type";
 import { updateEmployee } from "@services/employee/updateEmployee";
 import LoadingSpinner from "@components/LoadingSpinner";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ userId }) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  const [editData, setEditData] = useState<I_Add_Employees_Type | any>();
+  const [editData, setEditData] = useState<I_Get_Employees_Type | any>();
 
   const cancelFormHandler = useCallback(() => {
     router.push("/employee");
@@ -34,59 +34,49 @@ const Page: NextPageWithLayout<
       console.log("single user data-----", data);
       const newData = { ...data.data };
       const result = {
-        user_name: newData.basicInfo["user_Name"],
-        user_first_name: newData.basicInfo["user_First_Name"],
-        user_english_name: newData.basicInfo["user_English_Name"],
-        user_identity: newData.basicInfo["user_Identity"],
-        user_country: newData.basicInfo["user_Country"],
-        user_birthday: newData.basicInfo["user_Birthday"],
-        user_sex: newData.basicInfo["user_Sex"],
-        user_photo_link: newData.basicInfo["user_Photo_Link"],
-        group_no: newData.groups.map((item: any) => {
-          return {
-            title: item["grouP_NAME"],
-            description: item["description"],
-            id: item["grouP_NO"]
-          };
-        }),
-        user_email: newData.basicInfo["user_Email"],
-        user_phone: newData.basicInfo["user_Phone"],
-        user_address: newData.basicInfo["user_Address"],
+        user_name: newData.basicInfo["user_name"],
+        user_first_name: newData.basicInfo["user_first_name"],
+        user_english_name: newData.basicInfo["user_english_name"],
+        user_identity: newData.basicInfo["user_identity"],
+        user_country: newData.basicInfo["user_country"],
+        user_birthday: newData.basicInfo["user_birthday"].substring(0, 10),
+        user_sex: newData.basicInfo["user_sex"],
+        user_photo_link: newData.basicInfo["user_photo_link"],
+        user_email: newData.basicInfo["user_email"],
+        user_phone_code: newData.basicInfo["user_phone_code"],
+        user_phone: newData.basicInfo["user_phone"],
+        dt_country: newData.basicInfo["dt_country"],
         city: newData.basicInfo["city"],
         district: newData.basicInfo["district"],
-        // street: newData.basicInfo["street"],
-        // lane: newData.basicInfo["lane"],
-        emgc_phone: newData.basicInfo["emgc_Phone"],
-        emgc_contact: newData.basicInfo["emgc_Contact"],
-        staff_no: newData.basicInfo["staff_No"],
-        job_title: newData.basicInfo["job_Title"],
+        zip_code: newData.basicInfo["zip_code"],
+        user_address1: newData.basicInfo["user_address1"],
+        user_address2: newData.basicInfo["user_address2"],
+        emgc_contact: newData.basicInfo["emgc_contact"],
+        emgc_phone_code: newData.basicInfo["emgc_phone_code"],
+        emgc_phone: newData.basicInfo["emgc_phone"],
+        staff_no: newData.basicInfo["staff_no"],
+        job_title: newData.basicInfo["job_title"],
+        working_hours_code: newData.basicInfo["working_hours_code"],
+        working_hours_name: newData.basicInfo["working_hours_name"],
+        company_name: newData.basicInfo["company_name"],
         department: newData.basicInfo["department"],
         group: newData.basicInfo["group"],
-        arrive_date: newData.basicInfo["arrive_Date"],
-        license_name: newData.licenses.map((item: any) => {
-          return item.license_name;
-        }),
-        languags: newData.languages.map((item: any) => {
-          return {
-            languag: item.languag,
-            listen: item.listen,
-            read: item.read,
-            speak: item.speak,
-            write: item.write
-          };
-        }),
-        healths: newData.healths.map((item: any) => {
-          return {
-            heal_date: item.heal_date,
-            heal_typ: item.heal_typ,
-            heal_agency: item.heal_agency,
-            heal_status: item.heal_status,
-            heal_examine_date: item.heal_examine_date,
-            heal_filename: item.heal_filename,
-            invalid: item.invalid,
-            invalid_remark: item.invalid_remark
-          };
-        })
+        arrive_date: newData.basicInfo["arrive_date"].substring(0, 10),
+        leave_date: newData.basicInfo["leave_date"]?.substring(0, 10),
+        leave_check: newData.basicInfo["leave_check"],
+        license_name: newData["licenses"].map(
+          (item: { license_name: any }) => item.license_name
+        ),
+        groups: newData["groups"],
+        // group_no: newData.groups.map((item: any) => {
+        //   return {
+        //     title: item["group_name"],
+        //     description: item["description"],
+        //     id: item["group_no"]
+        //   };
+        // }),
+        languages: newData["languages"],
+        healths: newData["healths"]
       };
       setEditData(result);
       setLoading(false);
@@ -94,7 +84,7 @@ const Page: NextPageWithLayout<
   }, [userId]);
 
   const asyncSubmitForm = async (data: any) => {
-    // setLoading(true);
+    setLoading(true);
     try {
       const res = await updateEmployee(userId, data);
       console.log("res in edit", res);
@@ -102,14 +92,17 @@ const Page: NextPageWithLayout<
     } catch (e: any) {
       console.log(e);
     }
-    // setLoading(false);
+    setLoading(false);
   };
+
+  console.log("1️⃣editData in edit page:", editData);
   return (
-    <BodySTY>
-      {
-        <Pane width="100%" height="100%" borderRadius="10px" overflow="auto">
-          {/* Put your component here */}
-          {/* {loading ? (
+    <RegionProvider>
+      <BodySTY>
+        {
+          <Pane width="100%" height="100%" borderRadius="10px" overflow="auto">
+            {/* Put your component here */}
+            {/* {loading ? (
             <LoadingSpinner />
           ) : (
             <AddEmployee
@@ -118,14 +111,15 @@ const Page: NextPageWithLayout<
               editData={editData}
             />
           )} */}
-          <AddEmployee
-            submitForm={asyncSubmitForm}
-            onCancel={cancelFormHandler}
-            editData={editData}
-          />
-        </Pane>
-      }
-    </BodySTY>
+            <AddEmployee
+              submitForm={asyncSubmitForm}
+              onCancel={cancelFormHandler}
+              editData={editData}
+            />
+          </Pane>
+        }
+      </BodySTY>
+    </RegionProvider>
   );
 };
 

@@ -59,7 +59,7 @@ function HealthRecords({
     dataDetail.heal_agency = item.heal_agency;
     dataDetail.invalid_remark = item.invalid_remark;
     dataDetail.heal_link = item.heal_link ? (
-      <Tooltip content={`下載${item.heal_filename}`}>
+      <Tooltip content={`下載${item.heal_filename || ""}`}>
         <DocumentIcon
           className="reportIcon"
           size={12}

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const DrawerSTY = styled.div`
-  width: 300px;
+  min-width: 280px;
   height: 100%;
   display: flex;
   flex-direction: column;

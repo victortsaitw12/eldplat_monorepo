@@ -1,5 +1,3 @@
-import { token } from "./token";
-
 // 檢視個別駕駛所有排休
 export const getScheduleList = async (id: any) => {
   const res = await fetch(

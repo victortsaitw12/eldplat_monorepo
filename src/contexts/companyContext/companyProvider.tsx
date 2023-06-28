@@ -1,7 +1,7 @@
 import { mock_company_data } from "@mock-data/company/mock_data";
 import { getSingleCompany } from "@services/company/getAllCompany";
+import { getDdlData } from "@services/ddl/getDdlData";
 import {
-  I_Company_Contact_Type,
   I_Company_Update_Type
 } from "@typings/company_type";
 import {
@@ -11,7 +11,11 @@ import {
   textValidation
 } from "@utils/inputValidation";
 import React, { useState, createContext, useEffect } from "react";
-import { useForm } from "react-hook-form";
+
+interface I_DDL_Type {
+  label: string;
+  value: string;
+}
 
 interface I_CountryNum {
   contactTel: string;
@@ -25,6 +29,7 @@ interface I_ErrMsg {
 export interface I_Company_Context {
   companyData: I_Company_Update_Type;
   setCompanyData: (companyData: I_Company_Update_Type) => void;
+  ddlLanguage: I_DDL_Type[];
   errMsg: I_ErrMsg[] | boolean | any;
   countryNumInput: any | I_CountryNum;
   setCountryNumInput: (countryNumInput: I_CountryNum) => void;
@@ -41,6 +46,7 @@ export const CompanyContext = createContext<I_Company_Context>({
   setCompanyData: function (): void {
     throw new Error("Function not implemented.");
   },
+  ddlLanguage: [{ label: "請選擇", value: "no" }],
   errMsg: { errField: "", errText: "" } || false,
   countryNumInput: { contactTel: "", contactPhone: "" },
   setCountryNumInput: function (): void {
@@ -59,6 +65,9 @@ export const CompanyContext = createContext<I_Company_Context>({
 
 // function component start
 export const CompanyProvider = ({ children }: any) => {
+  const [ddlLanguage, setDdlLanguage] = useState<I_DDL_Type[]>([
+    { label: "請選擇", value: "no" }
+  ]);
   const [companyData, setCompanyData] = useState<I_Company_Update_Type | any>(
     mock_company_data
   );
@@ -72,58 +81,40 @@ export const CompanyProvider = ({ children }: any) => {
     { errField: "", errText: "" } || false
   );
 
-  const companyNo = "BH49202304190001";
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // 取得下拉式選單的資料
   useEffect(() => {
+    setLoading(true);
+    const languageObj = { ddl_column: "company_language", ddl_type: "company" };
+    try {
+      getDdlData(languageObj).then((data) => {
+        console.log("ddl lang data", data);
+        const originData = [...ddlLanguage];
+        const newData = data.dataList.map(
+          (v: { label: string; value: string }) => {
+            return { label: v.label, value: v.value };
+          }
+        );
+        const concatData = originData.concat(newData);
+        setDdlLanguage(concatData);
+      });
+    } catch (e: any) {
+      console.log(e);
+      console.log("get DDL errors :", e.message);
+    }
+    setLoading(false);
+  }, []);
+
+  console.log("ddlLanguage", ddlLanguage);
+
+  // 取得登入公司的資料
+  useEffect(() => {
+    setLoading(true);
     getSingleCompany().then((data) => {
       console.log("company data", data);
-      // const newData = {
-      //   company: {
-      //     address1: data.company.address1,
-      //     address2: data.company.address2,
-      //     administrator: data.company.administrator,
-      //     agent_No: data.company.agent_No,
-      //     company_area: data.company.company_area,
-      //     company_city: data.company.company_city,
-      //     company_contact: data.company.company_contact,
-      //     company_country: data.company.company_country,
-      //     company_country2: data.company.company_country2,
-      //     company_currency: data.company.company_currency,
-      //     company_district_code: data.company.company_district_code,
-      //     company_email: data.company.company_email,
-      //     company_fax: data.company.company_fax,
-      //     company_fax_code: data.company.company_fax_code,
-      //     company_gui_no:data.company.company_gui_no,
-      //     company_language:data.company.company_language,
-
-      //     invoice_No: data.company.invoice_No,
-      //     corporation_Code: data.company.corporation_Code,
-      //     company_Typ: data.company.company_Typ,
-      //     com_Name: data.company.com_Name,
-      //     com_Country: data.company.com_Country,
-      //     owner: data.company.owner,
-      //     com_Logo_Link: data.company.com_Logo_Link,
-      //     plf_Typ: data.company.plf_Typ,
-      //     plan_Typ: data.company.plan_Typ,
-      //     sub_Status: data.company.sub_Status,
-      //     sub_Time: data.company.sub_Time,
-      //     com_Status: data.company.com_Status
-      //   },
-      //   company_Dt: {
-      //     tel: data.company_Dt.tel,
-      //     com_Email: data.company_Dt.coM_EMAIL,
-      //     com_Fax: data.company_Dt.com_Fax,
-      //     country: data.company_Dt.country,
-      //     city: data.company_Dt.city,
-      //     district: data.company_Dt.district,
-      //     zip_Code: data.company_Dt.zip_Code,
-      //     user_Address1: data.company_Dt.user_Address1,
-      //     user_Address2: data.company_Dt.user_Address2
-      //   },
-      //   company_Language: data.company_Language,
-      //   company_Leave: data.company_Leave,
-      //   company_Working_Hours: data.company_Working_Hours
-      // };
-      setCompanyData(data.company);
+      setCompanyData(data.dataList[0]);
+      setLoading(false);
     });
   }, [countryNumInput]);
 
@@ -156,12 +147,14 @@ export const CompanyProvider = ({ children }: any) => {
     setCompanyData(newData);
 
     // 設定error message
+    const contactInfo = { ...companyData.company_contact[0] };
+
     const telValid = numberValidation(companyData["company_tel"]);
     const comFaxValid = numberValidation(companyData["company_fax"]);
     const comEmailValid = emailValidation(companyData["company_email"]);
-    const contactTelValid = numberValidation(companyData["contact_tel"]);
-    const mobileValid = phoneValidation(companyData["contact_phone"]);
-
+    const contactTelValid = numberValidation(contactInfo["contact_tel"]);
+    const mobileValid = phoneValidation(contactInfo["contact_phone"]);
+    console.log("mobileValid", mobileValid);
     // 聯絡人手機
     if (mobileValid !== true) {
       return setErrMsg({
@@ -170,7 +163,7 @@ export const CompanyProvider = ({ children }: any) => {
       });
     } // 聯絡人電話
     else if (contactTelValid !== true) {
-      return setErrMsg({ errField: "contact_Tel", errText: contactTelValid });
+      return setErrMsg({ errField: "contact_tel", errText: contactTelValid });
     } // 公司電話
     else if (telValid !== true) {
       return setErrMsg({ errField: "company_tel", errText: telValid });
@@ -198,6 +191,7 @@ export const CompanyProvider = ({ children }: any) => {
   const allContextValues = {
     companyData,
     setCompanyData,
+    ddlLanguage,
     errMsg,
     countryNumInput,
     setCountryNumInput,
@@ -217,49 +211,3 @@ export const CompanyProvider = ({ children }: any) => {
 };
 
 export default CompanyProvider;
-
-// 0516換新的GET company前的資料物件
-/* {
-  company_No: data.company.company_No,
-  company: {
-    administrator: data.company.administrator,
-    agent_No: data.company.agent_No,
-    invoice_No: data.company.invoice_No,
-    corporation_Code: data.company.corporation_Code,
-    company_Typ: data.company.company_Typ,
-    com_Name: data.company.com_Name,
-    com_Country: data.company.com_Country,
-    owner: data.company.owner,
-    com_Logo_Link: data.company.com_Logo_Link,
-    plf_Typ: data.company.plf_Typ,
-    plan_Typ: data.company.plan_Typ,
-    sub_Status: data.company.sub_Status,
-    sub_Time: data.company.sub_Time,
-    com_Status: data.company.com_Status
-  },
-  company_Dt: {
-    tel: data.company_Dt.tel,
-    com_Email: data.company_Dt.coM_EMAIL,
-    com_Fax: data.company_Dt.com_Fax,
-    country: data.company_Dt.country,
-    city: data.company_Dt.city,
-    district: data.company_Dt.district,
-    zip_Code: data.company_Dt.zip_Code,
-    user_Address1: data.company_Dt.user_Address1,
-    user_Address2: data.company_Dt.user_Address2
-  },
-  company_Contact: [
-    {
-      contact_name: "",
-      contact_phone_code: "",
-      contact_phone: "",
-      contact_tel_code: "",
-      contact_tel: "",
-      contact_email: ""
-    }
-  ],
-  company_Currency: data.company_Currency,
-  company_Language: data.company_Language,
-  company_Leave: data.company_Leave,
-  company_Working_Hours: data.company_Working_Hours
-};  */

@@ -10,8 +10,7 @@ export const deleteEmployee = async (user_no: string): Promise<void> => {
         }),
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX05vIjoiVVNSMjAyMzA0MTIwMDAxIiwiTmFtZSI6IlNob2hlaSIsIkNvbXBhbnlfTm8iOiJCSDQ5MjAyMzAyMDIwMDAxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi6Kq_5bqm576k57WEIiwiZXhwIjoxNjg1MDY2NjYwLCJpc3MiOiJsb2NhbGhvc3Q6NzA3NiIsImF1ZCI6ImxvY2FsaG9zdDo3MDc2In0.TmrkcZZGF1pTw1VxAZX0ritaIIyi0ZH7wdz4x8vUBmA"
+          Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
         }
       }
     );

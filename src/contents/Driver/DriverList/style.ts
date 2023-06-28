@@ -3,8 +3,6 @@ import styled from "styled-components";
 export const DriverListSTY = styled.div`
   padding: 1rem;
   .TableContainerSTY {
-    /* overflow: hidden;
-    overflow-x: scroll; */
     overflow: visible;
     &::-webkit-scrollbar {
       display: none;
@@ -14,8 +12,13 @@ export const DriverListSTY = styled.div`
       left: 0;
     }
   }
+  tr > th {
+    &:nth-child(-n + 2) > span {
+      justify-content: flex-start;
+    }
+  }
   tr > td {
-    &:first-child > div {
+    &:nth-child(-n + 2) > div {
       justify-content: flex-start;
     }
   }

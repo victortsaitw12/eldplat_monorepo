@@ -55,8 +55,13 @@ const Page: NextPageWithLayout<{
   }, [router, setPageType]);
 
   useEffect(() => {
+    setDrawerOpen(false);
+    getResult(nowTab);
+  }, [router.query.codeType, setDrawerOpen]);
+
+  useEffect(() => {
     let isCanceled = false;
-    getAllVendors(subFilter, "1").then((data) => {
+    getAllVendors(subFilter, "1", router.query.codeType as string).then((data) => {
       const vendorData = data.contentList.map((vendors: Vendor) => {
         console.log("💫💫💫💫💫💫vendors的資料", vendors);
         return {
@@ -129,9 +134,9 @@ const Page: NextPageWithLayout<{
     };
   }, [subFilter]);
 
-  const getResult = async (type: string) => {
+  const getResult = async (status: string) => {
     try {
-      const res = await getAllVendors(subFilter, type)
+      const res = await getAllVendors(subFilter, status, router.query.codeType as string)
       const vendorData = res.contentList.map((vendors: Vendor) => {
         return {
           id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },

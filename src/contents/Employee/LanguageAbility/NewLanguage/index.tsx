@@ -10,7 +10,7 @@ import { language_DATA } from "../data";
 import { BodySTY } from "./style";
 
 interface I_languageType {
-  languag: string;
+  language: string;
   listen: string;
   speak: string;
   read: string;
@@ -32,7 +32,7 @@ function NewLanguage({
   setLangForApi
 }: I_newLanguage_props) {
   const [languageValue, setLanguageValue] = useState<any>({
-    languag: "",
+    language: "",
     listen: "",
     speak: "",
     read: "",
@@ -62,15 +62,15 @@ function NewLanguage({
     <BodySTY>
       <Pane className="add-language">
         <Combobox
-          items={language_DATA.languag.map((v) => {
+          items={language_DATA.language.map((v) => {
             return v;
           })}
           itemToString={(item) => (item ? item.label : "")}
           onChange={(selected) => {
-            handleChangeLang(selected, "languag");
+            handleChangeLang(selected, "language");
           }}
-          name="languag"
-          placeholder={languageLabel.languag || "選擇語言"}
+          name="language"
+          placeholder={languageLabel.language || "選擇語言"}
         />
         <Combobox
           openOnFocus

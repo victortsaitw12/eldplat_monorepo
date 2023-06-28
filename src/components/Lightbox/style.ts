@@ -12,6 +12,7 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
   z-index: 10;
 
   .wrapper {
+    padding: 17px;
     max-width: 572px;
     margin: 10vh auto;
     border-radius: 10px;
@@ -22,10 +23,11 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
       justify-content: space-between;
       align-items: center;
       padding: 15px;
-      border-bottom: 1px solid #e2e8f0;
+      /* border-bottom: 1px solid #e2e8f0; */
 
       .title {
-        color: #262c2d;
+        color: ${({ theme }) => theme.color.N900};
+        font-weight: 600;
         font-size: 18px;
       }
 

@@ -1,7 +1,21 @@
 import API_Path from "./apiPath";
 // 取得供應商資料
-export const getAllVendors = async (filter: { [key: string]: any } = {}, type: string) => {
+// status:"1"啟用 "2"停用
+// codeType:供應商分類
+export const getAllVendors = async (filter: { [key: string]: any } = {}, status: string, codeType: string) => {
   const vendorFilter = [];
+  let codeTypeValue = "";
+  switch (codeType) {
+    case "01":
+      codeTypeValue = "CAR_GROUP"
+      break;
+    case "03":
+      codeTypeValue = "REPAIR"
+      break;
+    default:
+      codeTypeValue = "OTHER"
+      break;
+  }
   for (const key in filter) {
     if (filter[key].value !== "") {
       vendorFilter.push({
@@ -21,7 +35,8 @@ export const getAllVendors = async (filter: { [key: string]: any } = {}, type: s
         "Authorization": "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
       },
       body: JSON.stringify({
-        vendor_Status: type,
+        vendor_main_type: codeTypeValue,
+        vendor_Status: status,
         vendor_Filter: vendorFilter,
         filter_Needed: true,
         pageInfo: {

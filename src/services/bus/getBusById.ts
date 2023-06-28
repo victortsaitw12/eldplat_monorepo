@@ -12,20 +12,7 @@ export const getBusById = async (bus_no: string) => {
     }
   );
   const data = await response.json();
-  console.log("data", data);
   const result = data.dataList[0];
-  console.log("ori result", result);
   const resultCloneWithDateFormat = deepCloneWithDateFormat(result);
-  console.log("resultCloneWithDateFormat", resultCloneWithDateFormat);
   return resultCloneWithDateFormat;
-};
-
-type PatternType = { [key: string]: string };
-
-const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
-  const result: { [key: string]: any } = {};
-  for (const key in pattern) {
-    result[key] = data[key];
-  }
-  return result;
 };

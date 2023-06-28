@@ -17,7 +17,7 @@ import { getVendorById } from "@services/vendor/getVendorById";
 
 //@contents
 import VendorDetail from "@contents/Vendor/VendorDetail";
-import VendorSubPoint from "@contents/Vendor/VendorSubPoint"
+import VendorSubPoint from "@contents/Vendor/VendorSubPoint";
 
 //@util
 import { keysToLowercase } from "@utils/keysToLowercase";
@@ -29,7 +29,6 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
@@ -55,7 +54,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
   //TableWrapper
   const changeMainFilterHandler = (value: string) => {
     console.log("changeMainFilterHandler", value);
-    setNowTab(value)
+    setNowTab(value);
   };
 
   const asyncSubmitForm = async (data: any) => {
@@ -112,16 +111,15 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
             router.push("/vendor");
           }}
         >
-          {
-            nowTab === "vendor" && <VendorDetail
+          {nowTab === "vendor" && (
+            <VendorDetail
               submitRef={submitRef}
               submitForm={asyncSubmitForm}
               isEdit={isEdit}
               vendorData={oldVendorData}
             />
-          }
-          {
-            nowTab === "subpoint" &&
+          )}
+          {nowTab === "subpoint" && (
             <FilterWrapper
               updateFilter={updateSubFilter}
               resetFilter={() => {
@@ -129,9 +127,9 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
               }}
               filter={subFilter}
             >
-              <VendorSubPoint />
+              <VendorSubPoint isEdit={isEdit} />
             </FilterWrapper>
-          }
+          )}
         </TableWrapper>
       )}
     </BodySTY>

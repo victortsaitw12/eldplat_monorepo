@@ -1,4 +1,4 @@
-import { IconComponent, PlusIcon } from "evergreen-ui";
+import { PlusIcon } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
 //

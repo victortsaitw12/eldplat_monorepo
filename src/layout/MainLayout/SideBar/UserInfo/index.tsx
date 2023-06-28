@@ -11,7 +11,7 @@ function Index() {
       <div className="user-container">
         <div className="user-info">
           <Image
-            src="/images/avatar1.jpg"
+            src="/image/avatar1.jpg"
             alt="user avatar"
             width={44}
             height={44}

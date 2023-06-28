@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FormSTY = styled.form<{ color?: string }>`
+export const FormSTY = styled.form`
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -76,11 +76,6 @@ export const ViewSTY = styled.div`
         align-items: center;
         gap: 6px;
         color: ${({ theme }) => theme.color.N600};
-      }
-    }
-    &__schdType-left {
-      span {
-        color: ${({ theme, color }) => (color ? theme.color[color] : "unset")};
       }
     }
     &__schdType-right {

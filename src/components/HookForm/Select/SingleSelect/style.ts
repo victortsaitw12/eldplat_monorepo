@@ -1,6 +1,6 @@
 // not use now
 import { StylesConfig } from "react-select";
-import { ColourOption } from "./data";
+import { ColourOption } from "../data";
 const dot = (color = "transparent") => ({
   alignItems: "center",
   display: "flex",
