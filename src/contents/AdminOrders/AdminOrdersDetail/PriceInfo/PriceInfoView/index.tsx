@@ -9,6 +9,7 @@ import LightBox from "@components/Lightbox";
 //@service
 import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
 import { updateBEStatusLog } from "@services/admin_orders/updateBEStatusLog";
+import { updateFEStatusLog } from "@services/admin_orders/updateFEStatusLog";
 import dayjs from "dayjs";
 
 interface I_Props {
@@ -55,7 +56,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
   };
   const update_FE_status = async (quote_no: string, status_code: string) => {
     try {
-      const res = await updateBEStatusLog(quote_no, status_code);
+      const res = await updateFEStatusLog(quote_no, status_code);
       console.log(res);
       router.push("/admin_orders/");
     } catch (err: any) {
@@ -242,6 +243,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
             onClick={(e) => {
               e.preventDefault();
               update_BE_status(orderData.quote_no, "3");
+              update_FE_status(orderData.quote_no, "4");
             }}
             className="submit_btn"
             text="確認"
