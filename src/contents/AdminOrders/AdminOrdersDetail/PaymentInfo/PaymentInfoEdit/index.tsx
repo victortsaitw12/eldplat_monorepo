@@ -6,6 +6,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { BodySTY } from "./style";
 
 const PaymentInfoEdit = () => {
+  const [calculateType, setCalculate] = React.useState<string>("$");
   const { register, control, setValue, getValues } = useFormContext();
 
   const isFullPayment = useWatch({
@@ -92,10 +93,47 @@ const PaymentInfoEdit = () => {
           }}
           checked={getValues("deposit_check") == "1"}
         />
-        <Pane>
+        <Pane
+          style={{
+            display: "flex",
+            maxWidth: "280px",
+            gap: "12px"
+          }}
+        >
+          <Select
+            style={{ width: "60px", flex: "unset" }}
+            value={calculateType}
+            onChange={(event) => {
+              console.log("select onchange!!!!");
+              setCalculate(event.target.value);
+            }}
+            disabled={isFullPayment == "1"}
+          >
+            <option value="$">$</option>
+            <option value="%">%</option>
+          </Select>
           <TextInput
+            style={{ width: "unset", flex: "1" }}
             type="number"
-            {...register("deposit_amount")}
+            {...(register("deposit_amount"),
+            {
+              onChange: (e: { target: { value: any } }) => {
+                setValue("deposit_amount", parseInt(e.target.value, 10));
+                if (calculateType == "$") {
+                  const quote_total_amount = parseInt(
+                    getValues("quote_total_amount"),
+                    10
+                  );
+                  quote_total_amount - e.target.value > 0 &&
+                    setValue(
+                      "balance_amount",
+                      quote_total_amount - e.target.value
+                    );
+                }
+                if (calculateType == "%") {
+                }
+              }
+            })}
             disabled={isFullPayment == "1"}
             placeholder="金額"
           />
@@ -113,14 +151,20 @@ const PaymentInfoEdit = () => {
       <Pane className="final_payment_content">
         <Text>尾款支付</Text>
         <Pane>
-          <Pane style={{ display: "flex" }}>
-            <TextInput
-              type="number"
-              {...register("balance_amount")}
-              disabled={isFullPayment == "1"}
-              placeholder="金額"
-            />
-          </Pane>
+          <TextInput
+            type="number"
+            {...register("balance_amount")}
+            disabled={true}
+            placeholder="金額"
+          />
+        </Pane>
+        <Pane>
+          <TextInput
+            {...register("balance_period")}
+            disabled={isFullPayment == "1"}
+            type="date"
+            placeholder="付款期限"
+          />
         </Pane>
         {r_payment_record()}
       </Pane>

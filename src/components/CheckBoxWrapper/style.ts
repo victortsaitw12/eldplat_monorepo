@@ -26,6 +26,9 @@ const BodySTY = styled.div`
   }
   .checkbox_children {
     padding-left: 30px;
+    &.hide {
+      display: none;
+    }
   }
 `;
 

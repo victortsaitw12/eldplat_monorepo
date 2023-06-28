@@ -82,6 +82,14 @@ const PriceInfoEdit = ({
     control,
     name: "deposit_check"
   });
+  const watch_deposit_amount = useWatch({
+    control,
+    name: "deposit_amount"
+  });
+  const watch_balance_amount = useWatch({
+    control,
+    name: "balance_amount"
+  });
   return (
     <BodySTY>
       <Pane>
@@ -107,10 +115,30 @@ const PriceInfoEdit = ({
         {isDepositPayment === "1" && (
           <>
             <Pane className="total_price">
+              <Text>總金額</Text>
+              <Text>
+                NT$
+                <TextInput
+                  type="number"
+                  {...register("quote_total_amount")}
+                  disabled
+                />
+              </Text>
+            </Pane>
+            <Text>
+              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
+            </Text>
+            <hr />
+            <Pane className="total_price">
               <Text>訂金</Text>
               <Text>
                 NT$
-                <TextInput type="number" {...register("deposit_amount")} />
+                <TextInput
+                  type="number"
+                  value={watch_deposit_amount}
+                  // {...register("deposit_amount")}
+                  disabled
+                />
               </Text>
             </Pane>
             <Text> 前繳款</Text>
@@ -119,7 +147,12 @@ const PriceInfoEdit = ({
               <Text>尾款</Text>
               <Text>
                 NT$
-                <TextInput type="number" {...register("balance_amount")} />
+                <TextInput
+                  type="number"
+                  value={watch_balance_amount}
+                  disabled
+                  // {...register("balance_amount")}
+                />
               </Text>
             </Pane>
             <Text> 前繳款</Text>
