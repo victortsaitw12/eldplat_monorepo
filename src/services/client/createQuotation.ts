@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 import { QuotationCreatePayload } from "@contents/Client/Quote/type";
 export const createQuotation = async (quotationData: any) => {
   const filteredNullData: { [key: string]: any } = {};
@@ -42,7 +43,8 @@ export const createQuotation = async (quotationData: any) => {
     }
   }
   console.log("filteredNullData", filteredNullData);
-  const res = await fetch("https://localhost:7088/ORD/CreateFEQuotation", {
+  const url = new URL(API_Path["CreateQuotation"]);
+  const res = await fetch(url.href, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
