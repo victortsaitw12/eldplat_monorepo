@@ -35,6 +35,11 @@ const BodySTY = styled.div`
       line-height: 22px;
     }
   }
+  .final_payment_content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
   .payment_record {
     & > span {
       display: inline-block;

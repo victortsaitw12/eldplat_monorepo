@@ -192,7 +192,10 @@ const AdminOrdersDetal = ({
                 ]}
               />
             ) : (
-              <PriceInfoView orderData={orderData} />
+              <PriceInfoView
+                orderStatusList={orderData.order_status_list}
+                orderData={orderData}
+              />
             )}
             <button style={{ display: "none" }} ref={submitRef} type="submit">
               發送表單
