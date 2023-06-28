@@ -1,6 +1,6 @@
 import API_Path from "./apiPath";
 //更改詢價/報價/訂單狀態
-export const updateBEStatusLog = async (
+export const updateFEStatusLog = async (
   quote_no: string,
   status_code: string
 ) => {
