@@ -34,7 +34,6 @@ const ScheduleList = ({
   arrayName,
   errors
 }: I_Props) => {
-  console.log("🐴🐴🐴🐴🐴🐴🐴🐴🐴", errors);
   const { fields, append, remove } = useFieldArray({
     control,
     name: `${fatherArrayName}.${dayIndex}.${arrayName}`
