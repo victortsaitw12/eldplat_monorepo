@@ -5,7 +5,14 @@ import cx from "classnames";
 import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { ErrorIcon, PlusIcon, TrashIcon, TextInput, Text } from "evergreen-ui";
+import {
+  ErrorIcon,
+  PlusIcon,
+  TrashIcon,
+  TextInput,
+  Text,
+  Pane
+} from "evergreen-ui";
 
 interface I_Props {
   pickup_location: string;
@@ -38,13 +45,14 @@ const ScheduleList = ({
     control,
     name: `${fatherArrayName}.${dayIndex}.${arrayName}`
   });
+  console.log("🐴🐴🐴🐴🐴", errors);
 
   const r_stopover = (fields: any[]) => {
     return fields.map((child, i) => (
       <li key={i} className="schedule-list-item">
         <Text className="schedule-list-label">
           {needLine && (
-            <Text className={cx("dot", { withLine: true })}>
+            <Text className={cx("dot")}>
               <DotIcon />
             </Text>
           )}
@@ -52,20 +60,40 @@ const ScheduleList = ({
         </Text>
         <Text>
           {isEdit ? (
-            <TextInput
-              placeholder="請輸入詳細地址"
-              {...register(
-                `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.stopover_address`,
-                { required: "中途點不得為空" }
-              )}
-              disabled={disabledFirst && i == 0}
-            />
+            <>
+              <TextInput
+                placeholder="請輸入詳細地址"
+                isInvalid={
+                  !!errors?.[fatherArrayName]?.[dayIndex]?.[arrayName]?.[i]
+                    ?.stopover_address
+                }
+                {...register(
+                  `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.stopover_address`,
+                  { required: "不可空白" }
+                )}
+                disabled={disabledFirst && i == 0}
+              />
+              <ErrorMessage
+                errors={errors}
+                name={`${fatherArrayName}.${dayIndex}.${arrayName}.${i}.stopover_address`}
+                render={({ message }) => (
+                  <Pane className="input-error">{message}</Pane>
+                )}
+              />
+            </>
           ) : (
             child.stopover_address
           )}
         </Text>
         {isEdit && (
           <Text className="schedule-item-action">
+            <TrashIcon
+              color="#718BAA"
+              size={11}
+              onClick={() => {
+                remove(i);
+              }}
+            />
             {i == fields.length - 1 && (
               <PlusIcon
                 color="#718BAA"
@@ -78,35 +106,23 @@ const ScheduleList = ({
                 }}
               />
             )}
-            <TrashIcon
-              color="#718BAA"
-              size={11}
-              onClick={() => {
-                remove(i);
-              }}
-            />
           </Text>
         )}
-        <ErrorMessage
-          errors={errors}
-          name={`${fatherArrayName}.${dayIndex}.${arrayName}.${i}.stopover_address`}
-          render={({ message }) => (
-            <div className="error-message">
-              <ErrorIcon />
-              {message}
-            </div>
-          )}
-        />
       </li>
     ));
   };
   return (
     <BodySTY className="schedule-list-container">
-      <ul className="schedule-list">
+      <ul
+        className={cx("schedule-list", {
+          dropoffError:
+            !!errors?.[fatherArrayName]?.[dayIndex]?.dropoff_location
+        })}
+      >
         <li className="schedule-list-item">
           <Text className="schedule-list-label">
             {needLine && (
-              <Text className={cx("dot", { withLine: true })}>
+              <Text className={cx("dot")}>
                 <DotIcon />
               </Text>
             )}
@@ -114,11 +130,29 @@ const ScheduleList = ({
           </Text>
           <Text>
             {isEdit ? (
-              <TextInput
-                placeholder="請輸入詳細地址"
-                {...register(`${fatherArrayName}.${dayIndex}.pickup_location`)}
-                disabled={disabledFirst}
-              />
+              <>
+                <TextInput
+                  placeholder="請輸入詳細地址"
+                  isInvalid={
+                    !!errors?.[fatherArrayName]?.[dayIndex]?.pickup_location
+                  }
+                  {...register(
+                    `${fatherArrayName}.${dayIndex}.pickup_location`,
+                    {
+                      required: "不可空白"
+                    }
+                  )}
+                  disabled={disabledFirst}
+                />
+
+                <ErrorMessage
+                  errors={errors}
+                  name={`${fatherArrayName}.${dayIndex}.pickup_location`}
+                  render={({ message }) => (
+                    <Pane className="input-error">{message}</Pane>
+                  )}
+                />
+              </>
             ) : (
               pickup_location
             )}
@@ -150,11 +184,26 @@ const ScheduleList = ({
           </Text>
           <Text>
             {isEdit ? (
-              <TextInput
-                placeholder="請輸入詳細地址"
-                {...register(`${fatherArrayName}.${dayIndex}.dropoff_location`)}
-                disabled={disabledFirst}
-              />
+              <>
+                <TextInput
+                  placeholder="請輸入詳細地址"
+                  isInvalid={
+                    !!errors?.[fatherArrayName]?.[dayIndex]?.dropoff_location
+                  }
+                  {...register(
+                    `${fatherArrayName}.${dayIndex}.dropoff_location`,
+                    { required: "不可空白" }
+                  )}
+                  disabled={disabledFirst}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name={`${fatherArrayName}.${dayIndex}.dropoff_location`}
+                  render={({ message }) => (
+                    <Pane className="input-error">{message}</Pane>
+                  )}
+                />
+              </>
             ) : (
               dropoff_location
             )}
