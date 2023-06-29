@@ -5,9 +5,7 @@ import { useForm } from "react-hook-form";
 import { forwardRef, useState, useEffect } from "react";
 import Collapse from "@components/Collapse";
 import { formatDateToString } from "@utils/calculateDate";
-import { getFakeFlightData } from "@services/client/getFlightData";
-import Modal from "@components/LoadingModal";
-import LoadingSpinner from "@components/LoadingSpinner";
+import Breadcrumbs from "@components/Breadcrumbs";
 type FormValues = {
   flightDate: string;
   flightNo: string;
@@ -24,17 +22,24 @@ interface Props {
   terminal?: string;
   flightTime?: string;
   airline?: string;
+  updateIsFilled: (value: boolean) => void;
 }
 
 const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
-  { flightDate, flightNo, airport, terminal, flightTime, airline },
+  {
+    flightDate,
+    flightNo,
+    airport,
+    terminal,
+    flightTime,
+    airline,
+    updateIsFilled
+  },
   formButtonRef
 ) {
   const [currentType, setCurrentType] = useState<"pickUp" | "dropOff">(
     "dropOff"
   );
-  const [isLoadingAirport, setIsLoadingAirport] = useState(false);
-  const [isAfterFetch, setIsAfterFetch] = useState(flightNo ? true : false);
   const router = useRouter();
   const {
     register,
@@ -53,31 +58,6 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
       airline: ""
     }
   });
-  //
-  const { flightDate: watchFlightDate, flightNo: watchFlightNo } = watch();
-  //
-  async function updateFlightData() {
-    const abortController = new AbortController();
-    if (!watchFlightDate || !watchFlightNo) {
-      setIsAfterFetch(false);
-      return;
-    }
-
-    setIsLoadingAirport(true);
-    getFakeFlightData(abortController)
-      .then((res) => {
-        setValue("airport", res.airport);
-        setValue("terminal", res.terminal);
-        setValue("flightTime", res.flightTime);
-        setValue("airline", res.airline);
-        setIsAfterFetch(true);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => {
-        setIsLoadingAirport(false);
-      });
-  }
-  //
   const submitFormHandler = (data: FormValues) => {
     const { flightDate, flightNo, airport, terminal, flightTime, airline } =
       data;
@@ -96,15 +76,21 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
   };
   //
   useEffect(() => {
-    if (flightDate && flightNo) {
-      setValue("flightDate", flightDate);
-      setValue("flightNo", flightNo);
-      if (airport) setValue("airport", airport);
-      if (terminal) setValue("terminal", terminal);
-      if (flightTime) setValue("flightTime", flightTime);
-      if (airline) setValue("airline", airline);
-      setIsAfterFetch(true);
-    }
+    const subscription = watch((value) => {
+      updateIsFilled(
+        !!value.flightDate && !!value.flightNo && !!value.flightTime
+      );
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+  //
+  useEffect(() => {
+    if (flightDate) setValue("flightDate", flightDate);
+    if (flightNo) setValue("flightNo", flightNo);
+    if (airport) setValue("airport", airport);
+    if (terminal) setValue("terminal", terminal);
+    if (flightTime) setValue("flightTime", flightTime);
+    if (airline) setValue("airline", airline);
   }, []);
   //
   return (
@@ -115,7 +101,6 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
             if (currentType === "pickUp") {
               reset();
               setCurrentType("dropOff");
-              setIsAfterFetch(false);
             }
           }}
           isSelected={currentType === "dropOff"}
@@ -127,7 +112,6 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
             if (currentType === "dropOff") {
               reset();
               setCurrentType("pickUp");
-              setIsAfterFetch(false);
             }
           }}
           isSelected={currentType === "pickUp"}
@@ -159,74 +143,50 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
                 </div>
                 <TextInput
                   {...register("flightNo", {
-                    required: true,
-                    onBlur: () => {
-                      updateFlightData();
-                    }
+                    required: true
                   })}
                   isInvalid={!!errors.flightNo}
                 />
               </label>
             </div>
-            {isLoadingAirport ? (
-              <Modal>
-                <LoadingSpinner />
-              </Modal>
-            ) : (
-              isAfterFetch && (
-                <>
-                  <div className="form-item">
-                    <label className="form-sub-item">
-                      <div>
-                        <span style={{ color: "#D14343" }}>*</span>
-                        <span>機場</span>
-                      </div>
-                      <TextInput
-                        {...register("airport", {
-                          required: true
-                        })}
-                        isInvalid={!!errors.airport}
-                      />
-                    </label>
-                    <label className="form-sub-item">
-                      <div>
-                        <span style={{ color: "#D14343" }}>*</span>
-                        <span>航廈</span>
-                      </div>
-                      <TextInput
-                        {...register("terminal", {
-                          required: true
-                        })}
-                        isInvalid={!!errors.terminal}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-item">
-                    <label className="form-sub-item">
-                      <div>
-                        <span style={{ color: "#D14343" }}>*</span>
-                        <span>
-                          航班{currentType === "pickUp" ? "抵達" : "出發"}時間
-                        </span>
-                      </div>
-                      <TextInput
-                        type="time"
-                        {...register("flightTime", {
-                          required: true
-                        })}
-                        isInvalid={!!errors.flightTime}
-                      />
-                    </label>
-                    <label className="form-sub-item">
-                      <div>
-                        <span>航空公司</span>
-                      </div>
-                      <TextInput {...register("airline")} />
-                    </label>
-                  </div>
-                </>
-              )
-            )}
+
+            <div className="form-item">
+              <label className="form-sub-item">
+                <div>
+                  <span>機場</span>
+                </div>
+                <TextInput {...register("airport")} />
+              </label>
+              <label className="form-sub-item">
+                <div>
+                  <span>航廈</span>
+                </div>
+                <TextInput {...register("terminal")} />
+              </label>
+            </div>
+            <div className="form-item">
+              <label className="form-sub-item">
+                <div>
+                  <span style={{ color: "#D14343" }}>*</span>
+                  <span>
+                    航班{currentType === "pickUp" ? "抵達" : "出發"}時間
+                  </span>
+                </div>
+                <TextInput
+                  type="time"
+                  {...register("flightTime", {
+                    required: true
+                  })}
+                  isInvalid={!!errors.flightTime}
+                />
+              </label>
+              <label className="form-sub-item">
+                <div>
+                  <span>航空公司</span>
+                </div>
+                <TextInput {...register("airline")} />
+              </label>
+            </div>
 
             <button
               type="submit"

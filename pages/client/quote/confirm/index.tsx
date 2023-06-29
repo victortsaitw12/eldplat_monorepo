@@ -12,6 +12,7 @@ import {
 } from "next";
 
 import { getLayout } from "@layout/ClientLayout";
+import Breadcrumbs from "@components/Breadcrumbs";
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({
@@ -27,16 +28,29 @@ const Page: NextPageWithLayout<
   flightTime
 }) => {
   const formButtonRef = useRef<HTMLButtonElement | null>(null);
-  const [checked, setChecked] = useState<boolean>(false);
-  console.log(departureDate, flightDate, flightNo, purpose, returnDate);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isFilled, setIsFilled] = useState<boolean>(false);
   return (
     <BodySTY>
+      <Breadcrumbs
+        routes={[
+          { label: "首頁", url: "/" },
+          { label: "線上訂車", url: "/client/quote" },
+          {
+            label: type === "custom" ? "課製包車" : "機場接送"
+          }
+        ]}
+        style={{ alignSelf: "flex-start" }}
+      />
       {type === "custom" ? (
         <CustomPickup
           ref={formButtonRef}
           departureDate={departureDate}
           purpose={purpose}
           returnDate={returnDate}
+          updateIsFilled={(value: boolean) => {
+            setIsFilled(value);
+          }}
         />
       ) : (
         <FlightPickup
@@ -47,13 +61,16 @@ const Page: NextPageWithLayout<
           terminal={terminal}
           airline={airline}
           flightTime={flightTime}
+          updateIsFilled={(value: boolean) => {
+            setIsFilled(value);
+          }}
         />
       )}
       <TermOfUse
         type="checkbox"
-        checked={checked}
+        checked={isChecked}
         onCheck={(value: boolean) => {
-          setChecked(value);
+          setIsChecked(value);
         }}
       >
         <div>
@@ -68,7 +85,7 @@ const Page: NextPageWithLayout<
         onClick={() => {
           formButtonRef.current?.click();
         }}
-        disabled={!checked}
+        disabled={!isChecked || !isFilled}
       />
     </BodySTY>
   );

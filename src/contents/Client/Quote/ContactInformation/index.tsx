@@ -3,34 +3,18 @@ import Collapse from "@components/Collapse";
 import { BodySTY, ItemSTY, ContainerSTY, StyledCollapseTitle } from "./style";
 import { TextInput } from "evergreen-ui";
 import CustomSelect from "@components/CustomSelect";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormGetValues,
-  useWatch
-} from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
-interface TravelInformationProps {
-  control: Control<QuotationCreatePayload>;
-  register: UseFormRegister<QuotationCreatePayload>;
-  errors: FieldErrors<QuotationCreatePayload>;
-  setValue: UseFormSetValue<QuotationCreatePayload>;
-  getValues: UseFormGetValues<QuotationCreatePayload>;
-}
-const ContactInformation = ({
-  register,
-  setValue,
-  getValues,
-  control,
-  errors
-}: TravelInformationProps) => {
-  console.log("errors", errors);
-  const contact_list = useWatch({
+const ContactInformation = () => {
+  const {
+    register,
+    setValue,
+    getValues,
     control,
-    name: "order_contact_list"
-  });
+    trigger,
+    formState: { errors }
+  } = useFormContext<QuotationCreatePayload>();
+  useWatch({ control, name: "order_contact_list" });
   function sameContactUser() {
     setValue(
       "order_contact_list.1.family_name",
@@ -338,12 +322,12 @@ const ContactInformation = ({
                         }
                       ]}
                       register={register}
-                      selectName="order_contact_list.0.contact_tel_code"
+                      selectName="order_contact_list.1.contact_tel_code"
                     />
                   </div>
                   <div className="item-input-container">
                     <TextInput
-                      {...register("order_contact_list.0.contact_tel")}
+                      {...register("order_contact_list.1.contact_tel")}
                     />
                   </div>
                 </div>

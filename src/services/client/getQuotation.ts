@@ -1,16 +1,18 @@
+import API_Path from "./apiPath";
 // 檢視訂單
-
 export const getQuotation = async (quote_no: string) => {
-  const response = await fetch(
-    `https://localhost:7088/ORD/GetFE_QuotationByID?quote_no=${quote_no}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-      }
+  const url = new URL(API_Path["getQuotation"]);
+  const searchParams = new URLSearchParams({
+    quote_no: quote_no
+  });
+  url.search = searchParams.toString();
+  const response = await fetch(url.href, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
     }
-  );
+  });
   const result = await response.json();
   const data: I_OrderDetail = result.data;
   return data;

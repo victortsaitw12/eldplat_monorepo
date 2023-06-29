@@ -3,8 +3,9 @@ import { BodySTY } from "./style";
 import DotIcon from "./DotIcon";
 import cx from "classnames";
 import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
-import { PlusIcon, TrashIcon, TextInput, Text } from "evergreen-ui";
+import { ErrorIcon, PlusIcon, TrashIcon, TextInput, Text } from "evergreen-ui";
 
 interface I_Props {
   pickup_location: string;
@@ -17,7 +18,7 @@ interface I_Props {
   register: UseFormRegister<any>;
   isEdit?: boolean;
   disabledFirst?: boolean;
-  isCustomBus?: boolean;
+  errors?: any;
 }
 
 const ScheduleList = ({
@@ -31,12 +32,14 @@ const ScheduleList = ({
   fatherArrayName,
   dayIndex,
   arrayName,
-  isCustomBus = true
+  errors
 }: I_Props) => {
+  console.log("🐴🐴🐴🐴🐴🐴🐴🐴🐴", errors);
   const { fields, append, remove } = useFieldArray({
     control,
     name: `${fatherArrayName}.${dayIndex}.${arrayName}`
   });
+
   const r_stopover = (fields: any[]) => {
     return fields.map((child, i) => (
       <li key={i} className="schedule-list-item">
@@ -53,7 +56,8 @@ const ScheduleList = ({
             <TextInput
               placeholder="請輸入詳細地址"
               {...register(
-                `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.stopover_address`
+                `${fatherArrayName}.${dayIndex}.${arrayName}.${i}.stopover_address`,
+                { required: "中途點不得為空" }
               )}
               disabled={disabledFirst && i == 0}
             />
@@ -84,6 +88,16 @@ const ScheduleList = ({
             />
           </Text>
         )}
+        <ErrorMessage
+          errors={errors}
+          name={`${fatherArrayName}.${dayIndex}.${arrayName}.${i}.stopover_address`}
+          render={({ message }) => (
+            <div className="error-message">
+              <ErrorIcon />
+              {message}
+            </div>
+          )}
+        />
       </li>
     ));
   };

@@ -22,9 +22,6 @@ const CounterInput = ({
   getValues,
   setValue
 }: I_Props) => {
-  if (!getValues(inputName)) {
-    setValue(`${inputName}`, 0);
-  }
   const click_add = () => {
     setValue(`${inputName}`, parseInt(getValues(inputName), 10) + 1);
   };
@@ -43,7 +40,18 @@ const CounterInput = ({
       )}
       <div className="counter_input_content">
         <MinusIcon onClick={click_minus} />
-        <TextInput type="number" {...register(`${inputName}`)} />
+        <TextInput
+          type="number"
+          {...register(`${inputName}`, {
+            setValueAs: (v) => {
+              if (v) {
+                return parseInt(v);
+              } else {
+                return 0;
+              }
+            }
+          })}
+        />
         <PlusIcon onClick={click_add} />
       </div>
     </BodySTY>

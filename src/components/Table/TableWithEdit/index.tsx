@@ -26,6 +26,7 @@ interface I_Table {
   handleSelectAll?: () => void;
   handleDeselectAll?: () => void;
   checkboxData?: any[];
+  deleteText?: string;
 }
 /*
 Must provide id field in the Data Array
@@ -43,7 +44,8 @@ function Table({
   },
   handleSelectAll,
   handleDeselectAll,
-  checkboxData
+  checkboxData,
+  deleteText
 }: I_Table) {
   // const [checkedItems, setCheckedItems] = useState<Array<string | number>>([]);
   // const router = useRouter();
@@ -145,13 +147,11 @@ function Table({
                       );
                     }
                     return (
-                      <>
-                        <td key={item.id + key}>
-                          <div className="data-row">
-                            <div>{item[key].label}</div>
-                          </div>
-                        </td>
-                      </>
+                      <td key={item.id + key}>
+                        <div className="data-row">
+                          <div>{item[key].label}</div>
+                        </div>
+                      </td>
                     );
                   })}
                   <td>
@@ -166,6 +166,7 @@ function Table({
                       onDelete={
                         deleteItem && deleteItem.bind(null, item.id?.value)
                       }
+                      deleteText={deleteText}
                     />
                   </td>
                 </tr>
