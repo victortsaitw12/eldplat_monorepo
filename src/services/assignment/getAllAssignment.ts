@@ -29,6 +29,7 @@ export const getSubAssignmentTitle = () => {
     "車隊",
     "車輛名稱",
     "車牌",
+    "駕駛",
     "起始時間",
     "截止時間"
   ];

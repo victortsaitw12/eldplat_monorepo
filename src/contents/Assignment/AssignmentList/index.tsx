@@ -6,7 +6,7 @@ interface Props {
   assignData: any;
   subAssignData: any;
   goToCreatePage: () => void;
-  goToEditPageHandler: (id: string) => void;
+  goToEditPageHandler: (item: any) => void;
 }
 
 function AssignmentList({

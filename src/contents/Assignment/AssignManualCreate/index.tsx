@@ -21,6 +21,7 @@ import {
 import { createAssignmentByManual } from "@services/assignment/createAssignmentByManual";
 import { deepClone } from "@utils/deepClone";
 import { useRouter } from "next/router";
+import { getOrderDates } from "@services/assignment/getOrderDates";
 
 //@components
 
@@ -105,7 +106,7 @@ function AssignManualCreate({
     reloadData && reloadData();
   };
 
-  const handleClick = (
+  const handleClick = async (
     e: any,
     orderItem: {
       date: string | number | Date | dayjs.Dayjs | null | undefined;
@@ -113,9 +114,20 @@ function AssignManualCreate({
     car_no: number
   ) => {
     e.preventDefault();
+
+    // 打API取得從起始日期到回程日期有的每一天日期和周幾
+    const result = await getOrderDates(
+      orderInfo[0].departure_date,
+      orderInfo[0].return_date
+    );
+    const day = result.dataList[0].order_date_options.find((v) => {
+      return dayjs(v.order_date).format("YYYY/MM/DD") === orderItem.date;
+    });
+
     setShowSecondTitle({
       date: orderItem.date,
-      day: dayjs(orderItem.date).format("dddd"),
+      day: day.order_weekday,
+      // day: dayjs(orderItem.date).format("dddd"),
       car: car_no,
       assignType: e.target.name === "car" ? "派車" : "派工",
       id: `${orderItem.date}-${car_no}`

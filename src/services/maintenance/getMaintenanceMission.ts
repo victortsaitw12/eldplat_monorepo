@@ -29,7 +29,7 @@ export const getAllMaintenanceMissions = async (
       filter_Needed: true,
       page_info: {
         page_index: 1,
-        page_size: 10,
+        page_size: 20,
         orderby: "maintenance_no",
         arrangement: "asc"
       }

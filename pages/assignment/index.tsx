@@ -29,13 +29,19 @@ import SecondCarAssignManualCreate from "@contents/Assignment/AssignManualCreate
 import SecondDriverAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondDriverManualCreate";
 import { dashDate, dashDate2 } from "@utils/convertDate";
 import { slashDate } from "@utils/convertDate";
+import CarEdit from "@contents/Assignment/AssignManualEdit/CarEdit";
+import {
+  getBusAssignmentInfo,
+  getDriverAssignmentInfo
+} from "@services/assignment/getAssignmentEdit";
+import DriverEdit from "@contents/Assignment/AssignManualEdit/DriverEdit";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
   { id: 2, label: "停用", value: "2" }
 ];
-const startTimeName = ["start_hours", "start_minutes", "start_type"];
-const endTimeName = ["end_hours", "end_minutes", "end_type"];
+export const startTimeName = ["start_hours", "start_minutes", "start_type"];
+export const endTimeName = ["end_hours", "end_minutes", "end_type"];
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -43,6 +49,8 @@ const Page: NextPageWithLayout<never> = () => {
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
   const [secondDrawerOpen, setSecondDrawerOpen] = useState<string>("");
+  const [EditDrawerOpen, setEditDrawerOpen] = useState<string>("");
+  const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
   const [showSecondTitle, setShowSecondTitle] = useState<any>();
   const [carArr, setCarArr] = useState<any[]>([]);
@@ -148,8 +156,28 @@ const Page: NextPageWithLayout<never> = () => {
   //
 
   // 打開派單編輯頁
-  const goToEditPageHandler = (id: string) => {
-    router.push("/customer/detail/" + id + "?editPage=edit");
+  const goToEditPageHandler = async (item: any) => {
+    console.log("item for EDIT : ", item);
+    if (item.assignment_no.substring(0, 3) === "BAM") {
+      const result = await getBusAssignmentInfo(item.assignment_no);
+      console.log("result for bus single assignment", result);
+      setEditDrawerOpen("car");
+      const newResult = { ...result.dataList[0] };
+      newResult["plate"] = item.license_plate;
+      newResult["car_no"] = item.bus_day_number;
+      newResult["assign_type"] = "派車";
+      newResult["assignment_no"] = item.assignment_no;
+      setEditData(newResult);
+    } else {
+      const result = await getDriverAssignmentInfo(item.assignment_no);
+      console.log("result for driver single assignment", result);
+      setEditDrawerOpen("driver");
+      const newResult = { ...result.dataList[0] };
+      newResult["car_no"] = item.bus_day_number;
+      newResult["assign_type"] = "派工";
+      newResult["assignment_no"] = item.assignment_no;
+      setEditData(newResult);
+    }
   };
 
   // ⭐新增派車單: onChange
@@ -162,7 +190,9 @@ const Page: NextPageWithLayout<never> = () => {
     const updatedTarget = {
       ...target,
       [e.target.name]: e.target.value,
-      bus_day_number: showSecondTitle.car
+      bus_day_number: showSecondTitle.car,
+      task_start_time: `${dashDate2(showSecondTitle.date)}T01:00`,
+      task_end_time: `${dashDate2(showSecondTitle.date)}T01:00`
     };
 
     // 判斷變動到的是起始時間而不是其他下拉選項的話:
@@ -257,7 +287,9 @@ const Page: NextPageWithLayout<never> = () => {
     const updatedTarget = {
       ...target,
       [e.target.name]: e.target.value,
-      bus_day_number: showSecondTitle.car
+      bus_day_number: showSecondTitle.car,
+      task_start_time: `${dashDate2(showSecondTitle.date)}T01:00`,
+      task_end_time: `${dashDate2(showSecondTitle.date)}T01:00`
     };
     // 判斷變動到的是起始時間而不是其他下拉選項的話:
     if (startTimeName.includes(e.target.name)) {
@@ -358,7 +390,9 @@ const Page: NextPageWithLayout<never> = () => {
   console.log("4️⃣manual_bus", createAssignData.manual_bus);
   console.log("5️⃣createAssignData", createAssignData);
   console.log("6️⃣subAssignData", subAssignData);
-  console.log("7️⃣index", orderIndex);
+  console.log("7️⃣orderIndex", orderIndex);
+  console.log("8️⃣EditDrawerOpen", EditDrawerOpen);
+  console.log("9️⃣editData", editData);
 
   return (
     <BodySTY>
@@ -435,6 +469,25 @@ const Page: NextPageWithLayout<never> = () => {
             showSecondTitle={showSecondTitle}
             handleAssignmentDriverChange={handleAssignmentDriverChange}
           ></SecondDriverAssignManualCreate>
+        </Drawer>
+      )}
+
+      {EditDrawerOpen === "car" && (
+        <Drawer
+          closeDrawer={() => {
+            setEditDrawerOpen("");
+          }}
+        >
+          <CarEdit editData={editData} />
+        </Drawer>
+      )}
+      {EditDrawerOpen === "driver" && (
+        <Drawer
+          closeDrawer={() => {
+            setEditDrawerOpen("");
+          }}
+        >
+          <DriverEdit editData={editData} />
         </Drawer>
       )}
     </BodySTY>
