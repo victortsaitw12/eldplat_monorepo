@@ -2,6 +2,7 @@ import React from "react";
 import { Pane, Button, DocumentShareIcon, Paragraph, Text } from "evergreen-ui";
 import { DivSTY } from "./style";
 
+import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import {
   I_ManualAssignType,
   I_ManualCreateType
@@ -12,7 +13,6 @@ import {
 } from "@services/assignment/updateReplaceAssignment";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import VehicleForm from "@contents/Assignment/AssignmentAdditional/Vehicle/VehicleForm";
-import PrimaryRadius from "@components/Button/PrimaryRadius";
 
 interface I_AssignmentAdditionalVehicleProps {
   orderInfo: I_ManualAssignType[];
@@ -27,14 +27,24 @@ const AssignmentAdditionalVehicle = ({
   handleAssignmentCarChange,
   timeRef
 }: I_AssignmentAdditionalVehicleProps) => {
+  const [loading, setLoading] = React.useState(false);
+  const { isDrawerOpen, setDrawerOpen, setDrawerType, drawerType } =
+    useAssignmentStore();
   // ----- function ----- //
-
-  const handleUpdate = React.useCallback((data: I_ReplaceAssignment) => {
-    console.log("handleUpdate");
+  const asyncSubmitForm = async (data: any) => {
+    console.log("replace assignment:", data);
+    // setLoading(true);
     try {
-      updateReplaceAssignment(data);
-    } catch (e) {}
-  }, []);
+      const res = await updateReplaceAssignment(data);
+      setDrawerOpen(false);
+    } catch (e: any) {
+      console.log(e);
+      // alert(e.message);
+    }
+
+    // setLoading(false);
+  };
+
   return (
     <DivSTY>
       <Pane display="flex" justifyContent="center">
@@ -57,14 +67,12 @@ const AssignmentAdditionalVehicle = ({
         </Pane>
       </Pane>{" "}
       <VehicleForm
+        orderInfo={orderInfo}
         createAssignData={createAssignData}
         handleAssignmentCarChange={handleAssignmentCarChange}
         timeRef={timeRef}
-        orderInfo={orderInfo}
+        setLoading={setLoading}
       />
-      <PrimaryRadius appearance="primary" onClick={handleUpdate}>
-        確定
-      </PrimaryRadius>
     </DivSTY>
   );
 };

@@ -9,7 +9,7 @@ import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
 interface AdditionalVehicleBtn_Type {
-  id?: string;
+  id: string;
   disabled?: boolean;
   setOrderInfo: (t: any) => void;
 }
