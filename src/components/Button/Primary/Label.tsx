@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ButtonProps } from "../type";
 //
 interface Props extends ButtonProps {
-  text: string;
+  text: string | React.ReactNode;
 }
 
 function Button(props: Props) {

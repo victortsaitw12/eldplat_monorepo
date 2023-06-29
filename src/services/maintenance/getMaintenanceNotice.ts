@@ -30,7 +30,7 @@ export const getAllMaintenanceNotices = async (
         filter_needed: true,
         page_info: {
           page_Index: 1,
-          page_Size: 10,
+          page_Size: 20,
           orderby: "reminders_no",
           arrangement: "desc"
         }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FormSTY } from "./style";
 //@sevices
-// import { createVendor } from "@services/vendor/createVendor";
 import {
   Text,
   SelectField,
@@ -18,31 +17,6 @@ import {
   getAssignDriverDDL
 } from "@services/assignment/getAssignmentDDL";
 import { hours, minutes } from "@services/assignment/mock_data";
-
-// default value
-// const defaultValues: I_ManualCreateType = {
-//   quote_no: "",
-//   manual_driver: [
-//     {
-//       driver_no: "",
-//       bus_day_number: 1,
-//       bus_group: "",
-//       task_start_time: "",
-//       task_end_time: "",
-//       remark: ""
-//     }
-//   ],
-//   manual_bus: [
-//     {
-//       bus_no: "",
-//       bus_day_number: 1,
-//       bus_group: "",
-//       task_start_time: "",
-//       task_end_time: "",
-//       remark: ""
-//     }
-//   ]
-// };
 
 interface I_AssignManualCreateProps {
   handleAssignmentDriverChange: (e: any) => void;
@@ -90,9 +64,6 @@ function SecondDriverAssignManualCreate({
       ...res.dataList[0].driver_options
     ]);
   };
-
-  console.log("busGroupDDL", busGroupDDL);
-  console.log("driverNameDDL", driverNameDDL);
 
   return (
     <FormSTY>

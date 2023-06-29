@@ -11,7 +11,7 @@ interface I_TableRow {
   data: I_Data[];
   subAssignData: any;
   goToCreatePage?: () => void;
-  goToEditPage?: (id: string, item: any) => void;
+  goToEditPage?: (item: any) => void;
   viewItem?: (id: any, item: any) => void;
   deleteItem?: (item: any) => void;
 }
@@ -25,8 +25,8 @@ const TableRow = ({
   viewItem = (id, item) => {
     console.log(id, item);
   },
-  goToEditPage = (id, item) => {
-    console.log(id, item);
+  goToEditPage = (item: any) => {
+    console.log("EDIT");
   },
   deleteItem = (item) => {
     console.log(item);
@@ -69,7 +69,12 @@ const TableRow = ({
           {isOpen ? (
             <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pointer" />
           ) : (
-            <ChevronDownIcon onClick={handleInsideTableOpen} cursor="pointer" />
+            subAssignData[idx].length !== 0 && (
+              <ChevronDownIcon
+                onClick={handleInsideTableOpen}
+                cursor="pointer"
+              />
+            )
           )}
         </td>
       </tr>
