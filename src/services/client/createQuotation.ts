@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 import { QuotationCreatePayload } from "@contents/Client/Quote/type";
 export const createQuotation = async (quotationData: any) => {
   const filteredNullData: { [key: string]: any } = {};
@@ -19,6 +20,21 @@ export const createQuotation = async (quotationData: any) => {
         }
       );
       filteredNullData[key] = flatternBusData;
+    } else if (key === "order_itinerary_list") {
+      const filteredIntineraryList = quotationData[key].map(
+        (item: QuotationCreatePayload["order_itinerary_list"][0]) => {
+          const filteredStopOver = item["stopover_address_list"]
+            .filter((stopOver) => stopOver.stopover_address !== "")
+            .map((stopOver, index) => ({
+              stopover_sort: index + 1 + "",
+              stopover_address: stopOver.stopover_address
+            }));
+          item["stopover_address_list"] = filteredStopOver;
+          console.log("item", item);
+          return item;
+        }
+      );
+      filteredNullData[key] = filteredIntineraryList;
     } else if (
       typeof quotationData[key] !== "string" ||
       quotationData[key].trim() !== ""
@@ -26,7 +42,9 @@ export const createQuotation = async (quotationData: any) => {
       filteredNullData[key] = quotationData[key];
     }
   }
-  const res = await fetch("https://localhost:7088/ORD/CreateFEQuotation", {
+  console.log("filteredNullData", filteredNullData);
+  const url = new URL(API_Path["CreateQuotation"]);
+  const res = await fetch(url.href, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

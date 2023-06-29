@@ -15,7 +15,6 @@ export const ModalSTY = styled.div`
   background: transparent;
   top: 50%;
   left: 50%;
-  /* overflow-y: scroll; */
   transform: translate(-50%, -50%);
   z-index: 10;
 `;

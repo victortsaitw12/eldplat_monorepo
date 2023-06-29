@@ -1,8 +1,8 @@
+import React, { forwardRef, useState, useEffect } from "react";
 import { StyledForm, StyledCard } from "./style";
 import { useRouter } from "next/router";
 import { TextInput, Select } from "evergreen-ui";
 import { useForm, Controller } from "react-hook-form";
-import React, { forwardRef, useState } from "react";
 import Collapse from "@components/Collapse";
 import { formatDateToString } from "@utils/calculateDate";
 type FormValues = {
@@ -14,9 +14,10 @@ interface Props {
   departureDate?: string;
   returnDate?: string;
   purpose?: string;
+  updateIsFilled: (value: boolean) => void;
 }
 const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
-  { departureDate, returnDate, purpose },
+  { departureDate, returnDate, purpose, updateIsFilled },
   formButtonRef
 ) {
   const router = useRouter();
@@ -24,14 +25,30 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
     register,
     handleSubmit,
     control,
-    formState: { errors, isDirty, dirtyFields }
+    watch,
+    setValue,
+    formState: { errors }
   } = useForm<FormValues>({
     defaultValues: {
-      departureDate: departureDate || formatDateToString(new Date()),
-      returnDate: returnDate || "",
-      purpose: purpose || ""
+      departureDate: formatDateToString(new Date()),
+      returnDate: "",
+      purpose: ""
     }
   });
+
+  useEffect(() => {
+    console.log("custom pickup useEffect!");
+    const subscription = watch((value) => {
+      console.log(value);
+      updateIsFilled(!!value.departureDate && !!value.returnDate);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, updateIsFilled]);
+  useEffect(() => {
+    if (departureDate) setValue("departureDate", departureDate);
+    if (returnDate) setValue("returnDate", returnDate);
+    if (purpose) setValue("purpose", purpose);
+  }, []);
   const [minDate, setMinDate] = useState<string>(
     formatDateToString(new Date())
   );
@@ -80,7 +97,7 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
             </div>
             <TextInput
               type="date"
-              {...register("returnDate", { required: true })}
+              {...register("returnDate", { required: "不可為空！" })}
               min={minDate}
               isInvalid={!!errors.returnDate}
             />

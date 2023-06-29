@@ -1,8 +1,10 @@
 import { HelpIcon, PlusIcon, ErrorIcon } from "evergreen-ui";
 import { ItemSTY } from "./style";
 import { useController, UseControllerProps } from "react-hook-form";
+import classNames from "classnames";
 
 export interface FiledInputProps {
+  className?: string;
   style?: React.CSSProperties;
   horizonLabel?: boolean;
   controlProps: UseControllerProps<any>;
@@ -11,6 +13,7 @@ export interface FiledInputProps {
 }
 
 const FiledInput = ({
+  className,
   style,
   horizonLabel = false,
   label,
@@ -22,7 +25,7 @@ const FiledInput = ({
     fieldState: { error }
   } = useController(controlProps);
   return (
-    <ItemSTY style={style} horizonLabel={horizonLabel}>
+    <ItemSTY className={className} style={style} horizonLabel={horizonLabel}>
       {label && label !== "" && (
         <div className="field-title">
           <span className="requier-icon">*</span>

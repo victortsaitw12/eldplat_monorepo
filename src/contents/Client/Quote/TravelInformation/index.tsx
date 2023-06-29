@@ -1,61 +1,25 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Collapse from "@components/Collapse";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  useFieldArray,
-  useWatch
-} from "react-hook-form";
+import { useFormContext, useFieldArray, useWatch } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
 import { TextInput } from "evergreen-ui";
 import { BodySTY, ItemSTY, CollapseCardSTY } from "./style";
 import { QuotationCreatePayload } from "../type";
 
-interface TravelInformationProps {
-  control: Control<QuotationCreatePayload>;
-  register: UseFormRegister<QuotationCreatePayload>;
-  errors: FieldErrors<QuotationCreatePayload>;
-  setValue: UseFormSetValue<QuotationCreatePayload>;
-  validateSubForm: (data: { valid: boolean; errorMessage: string }) => void;
-}
-const TravelInformation = ({
-  register,
-  control,
-  errors,
-  setValue,
-  validateSubForm
-}: TravelInformationProps) => {
+const TravelInformation = () => {
+  const {
+    control,
+    register,
+    formState: { errors }
+  } = useFormContext<QuotationCreatePayload>();
   const { fields } = useFieldArray({
     name: "order_itinerary_list",
     control
   });
-  const order_itinerary_list = useWatch({
+  useWatch({
     control,
     name: "order_itinerary_list"
   });
-  useEffect(() => {
-    if (!order_itinerary_list) return;
-    let isValid = true;
-    console.log("order_itinerary_list", order_itinerary_list);
-    order_itinerary_list.forEach((item) => {
-      console.log("item", item);
-      item.stopover_address_list.forEach((address) => {
-        console.log("address.stopover_address", address.stopover_address);
-        if (address.stopover_address.trim() === "") {
-          console.log("有空!");
-          isValid = false;
-          validateSubForm({
-            valid: false,
-            errorMessage: "中途點地址不得為空"
-          });
-          return;
-        }
-      });
-    });
-    if (isValid) validateSubForm({ valid: true, errorMessage: "" });
-  }, [order_itinerary_list]);
   return (
     <div
       style={{

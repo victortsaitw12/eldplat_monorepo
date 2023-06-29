@@ -1,7 +1,7 @@
 import React from "react";
 import { Pane, Text, TextInput } from "evergreen-ui";
 import { BodySTY } from "./style";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import {
   emailValidation,
   numberValidation,
@@ -74,22 +74,91 @@ const PriceInfoEdit = ({
     return () => subscription.unsubscribe();
   }, [watch]);
 
+  const isFullPayment = useWatch({
+    control,
+    name: "full_payment_check"
+  });
+  const isDepositPayment = useWatch({
+    control,
+    name: "deposit_check"
+  });
+  const watch_deposit_amount = useWatch({
+    control,
+    name: "deposit_amount"
+  });
+  const watch_balance_amount = useWatch({
+    control,
+    name: "balance_amount"
+  });
   return (
     <BodySTY>
       <Pane>
-        <Pane className="total_price">
-          <Text>總金額</Text>
-          <Text>
-            NT$
-            <TextInput
-              type="number"
-              {...register("quote_total_amount")}
-              disabled
-            />
-          </Text>
-        </Pane>
-        <Text>{dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款</Text>
-        <hr />
+        {isFullPayment === "1" && (
+          <>
+            <Pane className="total_price">
+              <Text>總金額</Text>
+              <Text>
+                NT$
+                <TextInput
+                  type="number"
+                  {...register("quote_total_amount")}
+                  disabled
+                />
+              </Text>
+            </Pane>
+            <Text>
+              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
+            </Text>
+            <hr />
+          </>
+        )}
+        {isDepositPayment === "1" && (
+          <>
+            <Pane className="total_price">
+              <Text>總金額</Text>
+              <Text>
+                NT$
+                <TextInput
+                  type="number"
+                  {...register("quote_total_amount")}
+                  disabled
+                />
+              </Text>
+            </Pane>
+            <Text>
+              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
+            </Text>
+            <hr />
+            <Pane className="total_price">
+              <Text>訂金</Text>
+              <Text>
+                NT$
+                <TextInput
+                  type="number"
+                  value={watch_deposit_amount}
+                  // {...register("deposit_amount")}
+                  disabled
+                />
+              </Text>
+            </Pane>
+            <Text> 前繳款</Text>
+            <hr />
+            <Pane className="total_price">
+              <Text>尾款</Text>
+              <Text>
+                NT$
+                <TextInput
+                  type="number"
+                  value={watch_balance_amount}
+                  disabled
+                  // {...register("balance_amount")}
+                />
+              </Text>
+            </Pane>
+            <Text> 前繳款</Text>
+            <hr />
+          </>
+        )}
       </Pane>
       <Pane className="price_detail">
         <Pane>
