@@ -14,12 +14,11 @@ export const updateReplaceAssignment = async (assignmentData: any) => {
 };
 
 export interface I_ReplaceAssignment {
-  assignment_no: string;
   quote_no: string;
-  bus_driver_no: string;
+  bus_driver_no: string | null;
   bus_day_number: number;
   bus_group: string;
-  task_start_time: string; //2023-06-26T08:12:19.812Z
+  task_start_time: string; //2023-06-26T 8:12:19.812Z
   task_end_time: string; //2023-06-26T08:12:19.812Z
   remark: string;
 }

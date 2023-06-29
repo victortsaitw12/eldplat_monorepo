@@ -32,14 +32,6 @@ const ButtonPrimaryRadius = ({
                 background: theme.color.B200
               }
             }
-          },
-          secondary: {
-            background: theme.color.N0,
-            selectors: {
-              _disabled: {
-                color: theme.color.N500
-              }
-            }
           }
         }
       }
@@ -47,7 +39,9 @@ const ButtonPrimaryRadius = ({
   });
   return (
     <ThemeProvider value={themeEvergreen}>
-      <Button {...props}>{children}</Button>
+      <Button appearance="primary" {...props}>
+        {children}
+      </Button>
     </ThemeProvider>
   );
 };

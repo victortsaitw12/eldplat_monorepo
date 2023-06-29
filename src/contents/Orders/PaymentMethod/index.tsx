@@ -29,12 +29,12 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                       ) : (
                         "全額支付"
                       ),
-                    value: `NT$${data.quote_total_amount || 0} ${
-                      data.full_payment_tax ? "(含稅)" : "(未稅)"
-                    }`
+                    value: `NT$${
+                      data.quote_total_amount?.toLocaleString("en-US") || 0
+                    } ${data.full_payment_tax ? "(含稅)" : "(未稅)"}`
                   },
                   {
-                    title: "付款方式",
+                    title: data.full_payment_history && "付款方式",
                     value: data.full_payment_history
                   },
                   {
@@ -64,7 +64,9 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                       ) : (
                         "預付訂金"
                       ),
-                    value: `NT$${data.deposit_amount || 0}`
+                    value: `NT$${
+                      data.deposit_amount?.toLocaleString("en-US") || 0
+                    }`
                   },
                   {
                     title: data.deposit_history && "付款方式",
@@ -94,9 +96,9 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                       ) : (
                         "尾款支付"
                       ),
-                    value: `NT$${data.balance_amount || 0}  ${
-                      data.full_payment_tax ? "(含稅)" : "(未稅)"
-                    }`
+                    value: `NT$${
+                      data.balance_amount?.toLocaleString("en-US") || 0
+                    }  ${data.full_payment_tax ? "(含稅)" : "(未稅)"}`
                   },
                   {
                     title: data.balance_history && "付款方式",
