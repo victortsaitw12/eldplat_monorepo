@@ -64,11 +64,22 @@ const PriceInfoEdit = ({
       );
       return sum + calcExtraChargeTotal(data);
     };
+    const calcBalanceAmount = (data: any) => {
+      return calcTotalAmount(data) - getValues("deposit_amount") > 0
+        ? calcTotalAmount(data) - getValues("deposit_amount")
+        : 0;
+    };
     // --- subscribe & call func--- //
     const subscription = watch((data, { name, type }) => {
-      if (name === "quote_total_amount" || name === "extra_charge") return;
+      if (
+        name === "quote_total_amount" ||
+        name === "extra_charge" ||
+        name === "balance_amount"
+      )
+        return;
       setValue("extra_charge", calcExtraChargeTotal(data));
       setValue("quote_total_amount", calcTotalAmount(data));
+      setValue("balance_amount", calcBalanceAmount(data));
     });
 
     return () => subscription.unsubscribe();

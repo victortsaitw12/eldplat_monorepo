@@ -7,6 +7,7 @@ const BodySTY = styled.div`
     & > div {
       &:first-child {
         flex: 1;
+        height: fit-content;
       }
     }
   }
