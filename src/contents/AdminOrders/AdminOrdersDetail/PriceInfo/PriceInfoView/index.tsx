@@ -10,6 +10,8 @@ import LightBox from "@components/Lightbox";
 import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
 import { updateBEStatusLog } from "@services/admin_orders/updateBEStatusLog";
 import { updateFEStatusLog } from "@services/admin_orders/updateFEStatusLog";
+import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
+
 import dayjs from "dayjs";
 
 interface I_Props {
@@ -39,7 +41,10 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
   const delete_quotation = async () => {
     try {
       const res = await deleteQuotation(orderData.quote_no);
-      console.log(res);
+      const res_assignmentClosed = await assignmentClosed(
+        orderData.quote_no,
+        "02"
+      );
       router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
@@ -49,7 +54,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
     try {
       const res = await updateBEStatusLog(quote_no, status_code);
       console.log(res);
-      router.push("/admin_orders/");
+      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -58,7 +63,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
     try {
       const res = await updateFEStatusLog(quote_no, status_code);
       console.log(res);
-      router.push("/admin_orders/");
+      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -68,6 +73,10 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
       <Pane>
         <Pane className="btn_list">
           <LabelSecondaryButton
+            style={{
+              fontWeight: "600",
+              fontSize: "12px"
+            }}
             onClick={(e) => {
               e.preventDefault();
               setIsCancelOpen(true);
@@ -75,19 +84,12 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
             className="cancel_btn"
             text="取消報價"
           />
-          {isCheckedStatus() && (
-            <LabelButton
-              onClick={(e) => {
-                e.preventDefault();
-                // console.log("車車出發！！！！");
-              }}
-              disabled={!isPaid()}
-              className="submit_btn"
-              text="預約派車"
-            />
-          )}
           {!isCheckedStatus() && (
             <LabelButton
+              style={{
+                fontWeight: "600",
+                fontSize: "12px"
+              }}
               onClick={(e) => {
                 e.preventDefault();
                 setIsConfirmOpen(true);
@@ -96,10 +98,26 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
               text="送出報價"
             />
           )}
+          {isCheckedStatus() && (
+            <LabelButton
+              style={{
+                fontWeight: "600",
+                fontSize: "12px"
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                update_FE_status(orderData.quote_no, "12");
+                update_BE_status(orderData.quote_no, "13");
+              }}
+              disabled={!isPaid()}
+              className="submit_btn"
+              text="預約派車"
+            />
+          )}
         </Pane>
         {isDeposit && (
           <>
-            <Pane className="total_price">
+            <Pane className="price_content">
               <Text>訂金</Text>
               <Text>
                 NT${orderData?.deposit_amount?.toLocaleString() || "0"}
@@ -109,7 +127,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
               {dayjs(orderData.deposit_period).format("YYYY-MM-DD")} 前繳款
             </Text>
             <hr />
-            <Pane className="total_price">
+            <Pane className="price_content">
               <Text>尾款</Text>
               <Text>
                 NT${orderData?.balance_amount?.toLocaleString() || "0"}
@@ -123,7 +141,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
         )}
         {isFullPayment && (
           <>
-            <Pane className="total_price">
+            <Pane className="price_content">
               <Text>總金額</Text>
               <Text>
                 NT${orderData?.quote_total_amount?.toLocaleString() || "0"}
@@ -228,25 +246,32 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
         }}
       >
         <Text style={{ display: "inline-block", padding: "15px 0" }}>
-          報價將傳送給客人
+          報價將傳送給客人。
         </Text>
         <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
           <LabelSecondaryButton
+            style={{
+              width: "unset",
+              fontSize: "12px",
+              fontWeight: "600"
+            }}
             onClick={(e) => {
               e.preventDefault();
               setIsConfirmOpen((prev) => !prev);
             }}
-            className="cancel_btn"
             text="取消"
           />
           <LabelButton
+            style={{
+              width: "unset",
+              fontSize: "12px"
+            }}
             onClick={(e) => {
               e.preventDefault();
               update_BE_status(orderData.quote_no, "3");
               update_FE_status(orderData.quote_no, "4");
             }}
-            className="submit_btn"
-            text="確認"
+            text="送出報價"
           />
         </Pane>
       </LightBox>
@@ -262,20 +287,27 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
         </Text>
         <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
           <LabelSecondaryButton
+            style={{
+              width: "unset",
+              fontSize: "12px",
+              fontWeight: "600"
+            }}
             onClick={(e) => {
               e.preventDefault();
               setIsCancelOpen((prev) => !prev);
             }}
-            className="cancel_btn"
-            text="取消"
+            text="離開"
           />
           <LabelButton
+            style={{
+              width: "unset",
+              fontSize: "12px"
+            }}
             onClick={(e) => {
               e.preventDefault();
               delete_quotation();
             }}
-            className="submit_btn"
-            text="確認"
+            text="取消報價"
           />
         </Pane>
       </LightBox>

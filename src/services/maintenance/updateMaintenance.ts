@@ -1,3 +1,5 @@
+import API_Path from "./apiPath";
+
 export const updateMaintenance = async (MaintenanceData: any) => {
   // for (const key in MaintenanceData) {
   //   if (MaintenanceData[key] === "") {
@@ -6,7 +8,7 @@ export const updateMaintenance = async (MaintenanceData: any) => {
   // }
 
   //
-  const res = await fetch("https://localhost:7088/CAR/UpdateMaintenance", {
+  const res = await fetch(API_Path["UpdateMaintenance"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

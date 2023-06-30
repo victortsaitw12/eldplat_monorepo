@@ -20,7 +20,7 @@ interface I_Table {
   subAssignData: any;
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
-  goToEditPage?: (id: string, item: any) => void;
+  goToEditPage?: (item: any) => void;
   viewItem?: (id: any, item: any) => void;
   // editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
@@ -42,8 +42,8 @@ function OutsideTableOnAssignment({
   viewItem = (id, item) => {
     console.log(id, item);
   },
-  goToEditPage = (id, item) => {
-    console.log(id, item);
+  goToEditPage = (item: any) => {
+    console.log("EDIT");
   },
   deleteItem = (item) => {
     console.log(item);

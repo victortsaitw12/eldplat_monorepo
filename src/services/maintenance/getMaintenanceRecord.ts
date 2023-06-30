@@ -1,5 +1,6 @@
 import { PatternType } from "@utils/mappingQueryData";
 import { createElement } from "react";
+import API_Path from "./apiPath";
 
 // 取得維保任務資料
 export const getAllMaintenanceRecords = async (
@@ -17,7 +18,7 @@ export const getAllMaintenanceRecords = async (
       });
     }
   }
-  const res = await fetch("https://localhost:7088/CAR/GetMaintenanceList", {
+  const res = await fetch(API_Path["GetMaintenanceListForMissionAndRecord"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +30,7 @@ export const getAllMaintenanceRecords = async (
       filter_Needed: true,
       page_info: {
         page_index: 1,
-        page_size: 10,
+        page_size: 20,
         orderby: "maintenance_no",
         arrangement: "desc"
       }

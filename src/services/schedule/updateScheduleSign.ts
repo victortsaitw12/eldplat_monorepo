@@ -1,7 +1,8 @@
+import API_Path from "./apiPath";
 // 修改簽核
 export const updateScheduleSign = async (data: any) => {
   console.log("updateScheduleSign", JSON.stringify(data));
-  const res = await fetch("https://localhost:7088/ATR/UpdateScheduleSign", {
+  const res = await fetch(`${API_Path["updateScheduleSign"]}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

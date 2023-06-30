@@ -42,9 +42,7 @@ const CheckBoxWrapper = ({
           )}
           {children && (
             <div className={`checkbox_children ${value !== "1" ? "hide" : ""}`}>
-              <fieldset style={{ border: "none" }} disabled={value === "0"}>
-                {children}
-              </fieldset>
+              <fieldset disabled={value === "0"}>{children}</fieldset>
             </div>
           )}
         </BodySTY>

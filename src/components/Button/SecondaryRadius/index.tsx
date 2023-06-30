@@ -3,16 +3,16 @@ import theme from "@styles/theme";
 
 const ButtonSecondaryRadius = ({
   children,
-  props
+  ...props
 }: {
   children: React.ReactNode;
-  props?: any;
+  [key: string]: any;
 }) => {
   const themeEvergreen = mergeTheme(defaultTheme, {
     components: {
       Button: {
         appearances: {
-          secondaryRadius: {
+          secondary: {
             color: theme.color.N700,
             paddingX: 12,
             paddingY: 8,
@@ -20,7 +20,8 @@ const ButtonSecondaryRadius = ({
             backgroundColor: theme.color.N0,
             selectors: {
               _hover: {
-                backgroundColor: theme.color.N0
+                color: theme.color.N800,
+                backgroundColor: theme.color.N100
               },
               _active: {
                 //Pressed
@@ -42,7 +43,7 @@ const ButtonSecondaryRadius = ({
   });
   return (
     <ThemeProvider value={themeEvergreen}>
-      <Button appearance="secondaryRadius" {...props}>
+      <Button appearance="secondary" {...props}>
         {children}
       </Button>
     </ThemeProvider>
