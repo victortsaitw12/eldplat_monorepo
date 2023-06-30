@@ -209,7 +209,12 @@ const SpecialInfoEdit = ({ methods }: I_Props) => {
         </Pane>
       </Pane>
       <Pane style={{ padding: "20px" }}>
-        <VerticalTextArea register={register} inputName="remark" title="備註" />
+        <VerticalTextArea
+          register={register}
+          inputName="remark"
+          title="備註"
+          description=""
+        />
       </Pane>
     </BodySTY>
   );
