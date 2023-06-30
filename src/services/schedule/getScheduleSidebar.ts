@@ -1,10 +1,11 @@
+import API_Path from "./apiPath";
 // 檢視個別駕駛單日所有排休
 export const getScheduleSidebar = async (
   schd_date: string,
   driver_no: string
 ) => {
   const res = await fetch(
-    `https://localhost:7088/ATR/QueryScheduleSidebar?schd_date=${schd_date}&driver_no=${driver_no}`,
+    `${API_Path["getScheduleSidebar"]}?schd_date=${schd_date}&driver_no=${driver_no}`,
     {
       method: "POST",
       headers: {
