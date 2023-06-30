@@ -35,6 +35,7 @@ import {
   getDriverAssignmentInfo
 } from "@services/assignment/getAssignmentEdit";
 import DriverEdit from "@contents/Assignment/AssignManualEdit/DriverEdit";
+import AssignAutoCreate from "@contents/Assignment/AssignAutoCreate";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -50,6 +51,7 @@ const Page: NextPageWithLayout<never> = () => {
   const [nowTab, setNowTab] = useState("1");
   const [secondDrawerOpen, setSecondDrawerOpen] = useState<string>("");
   const [EditDrawerOpen, setEditDrawerOpen] = useState<string>("");
+  const [autoDrawerOpen, setAutoDrawerOpen] = useState<boolean>(false);
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
   const [showSecondTitle, setShowSecondTitle] = useState<any>();
@@ -125,7 +127,11 @@ const Page: NextPageWithLayout<never> = () => {
             v["auto_assign"] = {
               label:
                 newSubData[idx].length === 0 ? (
-                  <AutoAssignBtn />
+                  <AutoAssignBtn
+                    setAutoDrawerOpen={setAutoDrawerOpen}
+                    id={v.maintenance_quote_no.label}
+                    setOrderInfo={setOrderInfo}
+                  />
                 ) : (
                   <AdditionalVehicleBtn />
                 ),
@@ -488,6 +494,30 @@ const Page: NextPageWithLayout<never> = () => {
           }}
         >
           <DriverEdit editData={editData} />
+        </Drawer>
+      )}
+
+      {autoDrawerOpen && (
+        <Drawer
+          closeDrawer={() => {
+            setAutoDrawerOpen(false);
+          }}
+        >
+          <AssignAutoCreate
+            assignData={data}
+            reloadData={() => {
+              fetchAssignData();
+              setDrawerOpen(false);
+            }}
+            secondDrawerOpen={secondDrawerOpen}
+            setSecondDrawerOpen={setSecondDrawerOpen}
+            orderInfo={orderInfo}
+            showSecondTitle={showSecondTitle}
+            setShowSecondTitle={setShowSecondTitle}
+            setPosition={setPosition}
+            createAssignData={createAssignData}
+            orderIndex={orderIndex}
+          />
         </Drawer>
       )}
     </BodySTY>

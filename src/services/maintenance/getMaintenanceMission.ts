@@ -1,5 +1,6 @@
 import { PatternType } from "@utils/mappingQueryData";
 import { createElement } from "react";
+import API_Path from "./apiPath";
 
 // 取得維保任務資料
 export const getAllMaintenanceMissions = async (
@@ -17,7 +18,7 @@ export const getAllMaintenanceMissions = async (
       });
     }
   }
-  const res = await fetch("https://localhost:7088/CAR/GetMaintenanceList", {
+  const res = await fetch(API_Path["GetMaintenanceListForMissionAndRecord"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -44,20 +45,17 @@ export const UpdateMaintenanceStatus = async (
   maintenance_no: string,
   maintenance_status: string
 ) => {
-  const res = await fetch(
-    "https://localhost:7088/CAR/UpdateMaintenanceStatus",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-      },
-      body: JSON.stringify({
-        maintenance_no,
-        maintenance_status
-      })
-    }
-  );
+  const res = await fetch(API_Path["UpdateMaintenanceStatus"], {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    },
+    body: JSON.stringify({
+      maintenance_no,
+      maintenance_status
+    })
+  });
   return res.json();
 };
 
