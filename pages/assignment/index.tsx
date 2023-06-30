@@ -503,21 +503,7 @@ const Page: NextPageWithLayout<never> = () => {
             setAutoDrawerOpen(false);
           }}
         >
-          <AssignAutoCreate
-            assignData={data}
-            reloadData={() => {
-              fetchAssignData();
-              setDrawerOpen(false);
-            }}
-            secondDrawerOpen={secondDrawerOpen}
-            setSecondDrawerOpen={setSecondDrawerOpen}
-            orderInfo={orderInfo}
-            showSecondTitle={showSecondTitle}
-            setShowSecondTitle={setShowSecondTitle}
-            setPosition={setPosition}
-            createAssignData={createAssignData}
-            orderIndex={orderIndex}
-          />
+          <AssignAutoCreate orderInfo={orderInfo} />
         </Drawer>
       )}
     </BodySTY>
