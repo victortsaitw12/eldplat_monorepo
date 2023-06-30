@@ -1,7 +1,10 @@
+import API_Path from "./apiPath";
+
+// 更新駕駛資料
 export const updateDriver = async (driver_no: string, driverData: any) => {
   driverData["driver_no"] = driver_no;
   console.log("updateDriver", driverData);
-  const res = await fetch("https://localhost:7088/ATR/UpdateDriver", {
+  const res = await fetch(`${API_Path["updateDriver"]}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
