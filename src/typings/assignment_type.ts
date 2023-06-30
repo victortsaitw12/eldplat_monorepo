@@ -11,7 +11,7 @@ export interface I_SubAssignData {
   license_plate: string;
   maintenance_quote_no: string;
   task_end_time: string;
-  task_start_time: string;
+  task_start_time: string | any | number;
 }
 
 export interface I_ManualAssignType {
