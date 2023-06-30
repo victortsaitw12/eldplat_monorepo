@@ -446,7 +446,7 @@ const Page: NextPageWithLayout<never> = () => {
       </TableWrapper> */}
       {isDrawerOpen && (
         <Drawer
-          tabName={["手動派單"]}
+          tabName={[drawerType === "add" ? "編輯派車" : "手動派單"]}
           closeDrawer={() => {
             setDrawerOpen(false);
           }}
