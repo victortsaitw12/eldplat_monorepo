@@ -49,7 +49,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
     try {
       const res = await updateBEStatusLog(quote_no, status_code);
       console.log(res);
-      router.push("/admin_orders/");
+      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -58,7 +58,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
     try {
       const res = await updateFEStatusLog(quote_no, status_code);
       console.log(res);
-      router.push("/admin_orders/");
+      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -79,7 +79,8 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
             <LabelButton
               onClick={(e) => {
                 e.preventDefault();
-                // console.log("車車出發！！！！");
+                update_FE_status(orderData.quote_no, "12");
+                update_BE_status(orderData.quote_no, "13");
               }}
               disabled={!isPaid()}
               className="submit_btn"
