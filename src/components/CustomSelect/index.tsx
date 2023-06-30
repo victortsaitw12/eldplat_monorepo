@@ -11,6 +11,7 @@ interface I_Props {
   selectName?: string;
   options: Array<I_Option>;
   register: UseFormRegister<any>;
+  registerProps?: any;
   style?: React.CSSProperties;
   disabled?: boolean;
 }
@@ -25,12 +26,16 @@ const CustomSelect = ({
     }
   ],
   register,
+  registerProps,
   disabled
 }: I_Props) => {
   return (
     <BodySTY style={style} className="custom_select">
       {label && <p>{label}</p>}
-      <Select disabled={disabled} {...register(`${selectName}`)}>
+      <Select
+        disabled={disabled}
+        {...register(`${selectName}`, { ...registerProps })}
+      >
         {options.map((child, i) => {
           return (
             <option key={child.value + "-" + i} value={child.value}>

@@ -49,7 +49,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
     try {
       const res = await updateBEStatusLog(quote_no, status_code);
       console.log(res);
-      router.push("/admin_orders/");
+      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -58,7 +58,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
     try {
       const res = await updateFEStatusLog(quote_no, status_code);
       console.log(res);
-      router.push("/admin_orders/");
+      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -79,7 +79,8 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
             <LabelButton
               onClick={(e) => {
                 e.preventDefault();
-                // console.log("車車出發！！！！");
+                update_FE_status(orderData.quote_no, "12");
+                update_BE_status(orderData.quote_no, "13");
               }}
               disabled={!isPaid()}
               className="submit_btn"
@@ -99,7 +100,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
         </Pane>
         {isDeposit && (
           <>
-            <Pane className="total_price">
+            <Pane className="price_content">
               <Text>訂金</Text>
               <Text>
                 NT${orderData?.deposit_amount?.toLocaleString() || "0"}
@@ -109,7 +110,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
               {dayjs(orderData.deposit_period).format("YYYY-MM-DD")} 前繳款
             </Text>
             <hr />
-            <Pane className="total_price">
+            <Pane className="price_content">
               <Text>尾款</Text>
               <Text>
                 NT${orderData?.balance_amount?.toLocaleString() || "0"}
@@ -123,7 +124,7 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
         )}
         {isFullPayment && (
           <>
-            <Pane className="total_price">
+            <Pane className="price_content">
               <Text>總金額</Text>
               <Text>
                 NT${orderData?.quote_total_amount?.toLocaleString() || "0"}

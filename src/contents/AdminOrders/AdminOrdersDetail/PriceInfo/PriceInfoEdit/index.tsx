@@ -64,11 +64,22 @@ const PriceInfoEdit = ({
       );
       return sum + calcExtraChargeTotal(data);
     };
+    const calcBalanceAmount = (data: any) => {
+      return calcTotalAmount(data) - getValues("deposit_amount") > 0
+        ? calcTotalAmount(data) - getValues("deposit_amount")
+        : 0;
+    };
     // --- subscribe & call func--- //
     const subscription = watch((data, { name, type }) => {
-      if (name === "quote_total_amount" || name === "extra_charge") return;
+      if (
+        name === "quote_total_amount" ||
+        name === "extra_charge" ||
+        name === "balance_amount"
+      )
+        return;
       setValue("extra_charge", calcExtraChargeTotal(data));
       setValue("quote_total_amount", calcTotalAmount(data));
+      setValue("balance_amount", calcBalanceAmount(data));
     });
 
     return () => subscription.unsubscribe();
@@ -82,6 +93,10 @@ const PriceInfoEdit = ({
     control,
     name: "deposit_check"
   });
+  const watch_quote_total_amount = useWatch({
+    control,
+    name: "quote_total_amount"
+  });
   const watch_deposit_amount = useWatch({
     control,
     name: "deposit_amount"
@@ -90,75 +105,66 @@ const PriceInfoEdit = ({
     control,
     name: "balance_amount"
   });
+  const watch_full_payment_period = useWatch({
+    control,
+    name: "full_payment_period"
+  });
+  const watch_deposit_period = useWatch({
+    control,
+    name: "deposit_period"
+  });
+  const watch_balance_period = useWatch({
+    control,
+    name: "balance_period"
+  });
   return (
     <BodySTY>
       <Pane>
-        {isFullPayment === "1" && (
-          <>
-            <Pane className="total_price">
-              <Text>總金額</Text>
-              <Text>
-                NT$
-                <TextInput
-                  type="number"
-                  {...register("quote_total_amount")}
-                  disabled
-                />
-              </Text>
-            </Pane>
+        <>
+          <Pane className="price_content">
+            <Text>總金額</Text>
             <Text>
-              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
+              NT$
+              {watch_quote_total_amount?.toLocaleString() || 0}
             </Text>
-            <hr />
-          </>
-        )}
-        {isDepositPayment === "1" && (
-          <>
-            <Pane className="total_price">
-              <Text>總金額</Text>
-              <Text>
-                NT$
-                <TextInput
-                  type="number"
-                  {...register("quote_total_amount")}
-                  disabled
-                />
-              </Text>
-            </Pane>
+          </Pane>
+          {watch_full_payment_period ? (
             <Text>
-              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
+              {dayjs(watch_full_payment_period).format("YYYY-MM-DD") + "前繳款"}
             </Text>
-            <hr />
-            <Pane className="total_price">
-              <Text>訂金</Text>
-              <Text>
-                NT$
-                <TextInput
-                  type="number"
-                  value={watch_deposit_amount}
-                  // {...register("deposit_amount")}
-                  disabled
-                />
-              </Text>
-            </Pane>
-            <Text> 前繳款</Text>
-            <hr />
-            <Pane className="total_price">
-              <Text>尾款</Text>
-              <Text>
-                NT$
-                <TextInput
-                  type="number"
-                  value={watch_balance_amount}
-                  disabled
-                  // {...register("balance_amount")}
-                />
-              </Text>
-            </Pane>
-            <Text> 前繳款</Text>
-            <hr />
-          </>
-        )}
+          ) : null}
+          <hr />
+          {isDepositPayment === "1" && (
+            <>
+              <Pane className="price_content xs">
+                <Text>訂金</Text>
+                <Text>
+                  NT$
+                  {watch_deposit_amount?.toLocaleString() || 0}
+                </Text>
+              </Pane>
+              {watch_deposit_period ? (
+                <Text>
+                  {dayjs(watch_deposit_period).format("YYYY-MM-DD")} 前繳款
+                </Text>
+              ) : null}
+              <hr />
+              <Pane className="price_content xs">
+                <Text>尾款</Text>
+                <Text>
+                  NT$
+                  {watch_balance_amount?.toLocaleString() || 0}
+                </Text>
+              </Pane>
+              {watch_balance_period ? (
+                <Text>
+                  {dayjs(watch_balance_period).format("YYYY-MM-DD")} 前繳款
+                </Text>
+              ) : null}
+              <hr />
+            </>
+          )}
+        </>
       </Pane>
       <Pane className="price_detail">
         <Pane>

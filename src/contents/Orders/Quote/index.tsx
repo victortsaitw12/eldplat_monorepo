@@ -1,6 +1,7 @@
 import React from "react";
 import { Pane } from "evergreen-ui";
 import { DivSTY } from "./style";
+
 // import { MOCK_expenseList } from "@mock-data/orders";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
@@ -50,7 +51,7 @@ const Quote = ({
       label: "特殊需求小計",
       name: "extra_charge",
       value: data.extra_charge || 0,
-      hint: "舉牌、司導、指定車齡、特殊行李、寵物、額外杯水瓶裝水、兒童與嬰兒座椅"
+      hint: "舉牌、司導等特殊需求加價"
     }
   ];
   // ----- function ----- //
@@ -72,7 +73,9 @@ const Quote = ({
                     ? "初估金額"
                     : "總金額"}
                 </span>
-                <span>NT${data.quote_total_amount}</span>
+                <span>
+                  NT${data.quote_total_amount?.toLocaleString("en-US")}
+                </span>
               </div>
 
               <div className="collapse__subTitle">
@@ -83,7 +86,10 @@ const Quote = ({
                 ) : (
                   <>
                     <span>訂金</span>
-                    <span> NT${data.deposit_amount || 0}</span>
+                    <span>
+                      {" "}
+                      NT${data.deposit_amount?.toLocaleString("en-US") || 0}
+                    </span>
                   </>
                 )}
               </div>

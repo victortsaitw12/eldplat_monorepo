@@ -29,6 +29,10 @@ export const ItemSTY = styled.li`
       border: none;
       background: transparent;
       color: ${({ theme }) => theme.color.N600};
+      &:disabled {
+        cursor: not-allowed;
+        color: ${({ theme }) => theme.color.N300};
+      }
     }
   }
 `;

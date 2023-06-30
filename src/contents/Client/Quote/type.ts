@@ -32,10 +32,10 @@ export interface QuotationCreatePayload {
     family_name: string;
     name: string;
     contact_phone_code?: string;
-    contact_phone?: string;
+    contact_phone: string;
     contact_tel_code?: string;
     contact_tel?: string;
-    contact_email?: string;
+    contact_email: string;
     contact_type?: string;
     social_media_type?: string;
     social_media?: string;

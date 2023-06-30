@@ -11,6 +11,8 @@ interface StateTypes {
   setDrawerOpen: (value: boolean) => void;
   updateMainFilter: (value: string) => void;
   updateSelectedForm: (value: string) => void;
+  drawerType: string | null;
+  setDrawerType: (value: string | null) => void;
 }
 // type FilterTypes = { [key: string]: any }[] | null;
 export const useAssignmentStore = create<StateTypes>((set) => ({
@@ -60,6 +62,14 @@ export const useAssignmentStore = create<StateTypes>((set) => ({
     return set(() => {
       return {
         selectedForm: value
+      };
+    });
+  },
+  drawerType: null,
+  setDrawerType: (value) => {
+    return set(() => {
+      return {
+        drawerType: value
       };
     });
   }

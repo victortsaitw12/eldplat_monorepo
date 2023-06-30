@@ -26,7 +26,7 @@ import { dateDiff, slashDate, timeWithAPM } from "@utils/convertDate";
 import EditBtn from "./EditBtn";
 //
 interface I_Data {
-  [key: string]: string | number | React.ReactNode;
+  [key: string]: string | number | React.ReactNode | any;
 }
 
 interface I_Table {
