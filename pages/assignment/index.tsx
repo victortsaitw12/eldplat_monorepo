@@ -522,19 +522,19 @@ const Page: NextPageWithLayout<never> = () => {
           }}
         >
           <AssignAutoCreate
-            assignData={data}
-            reloadData={() => {
-              fetchAssignData();
-              setDrawerOpen(false);
-            }}
-            secondDrawerOpen={secondDrawerOpen}
-            setSecondDrawerOpen={setSecondDrawerOpen}
+            // assignData={data}
+            // reloadData={() => {
+            //   fetchAssignData();
+            //   setDrawerOpen(false);
+            // }}
+            // secondDrawerOpen={secondDrawerOpen}
+            // setSecondDrawerOpen={setSecondDrawerOpen}
             orderInfo={orderInfo}
-            showSecondTitle={showSecondTitle}
-            setShowSecondTitle={setShowSecondTitle}
-            setPosition={setPosition}
-            createAssignData={createAssignData}
-            orderIndex={orderIndex}
+            // showSecondTitle={showSecondTitle}
+            // setShowSecondTitle={setShowSecondTitle}
+            // setPosition={setPosition}
+            // createAssignData={createAssignData}
+            // orderIndex={orderIndex}
           />
         </Drawer>
       )}
