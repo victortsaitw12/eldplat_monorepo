@@ -5,13 +5,13 @@ import { TextInput } from "evergreen-ui";
 import CustomSelect from "@components/CustomSelect";
 import { useFormContext, useWatch } from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
+import { emailValidation, phoneValidation } from "@utils/hookFormValidation";
 const ContactInformation = () => {
   const {
     register,
     setValue,
     getValues,
     control,
-    trigger,
     formState: { errors }
   } = useFormContext<QuotationCreatePayload>();
   useWatch({ control, name: "order_contact_list" });
@@ -66,7 +66,7 @@ const ContactInformation = () => {
   return (
     <>
       <BodySTY>
-        <Collapse title="訂單聯絡人資訊" opened={true}>
+        <Collapse title="訂單聯絡人" opened={true}>
           <ContainerSTY>
             <ItemSTY>
               <div className="item-container">
@@ -138,7 +138,8 @@ const ContactInformation = () => {
                   <div className="item-input-container">
                     <TextInput
                       {...register("order_contact_list.0.contact_phone", {
-                        required: "不可空白"
+                        required: "不可空白",
+                        validate: phoneValidation
                       })}
                       isInvalid={
                         !!errors.order_contact_list?.[0]?.contact_phone
@@ -186,7 +187,8 @@ const ContactInformation = () => {
                 <div className="item-input-container">
                   <TextInput
                     {...register("order_contact_list.0.contact_email", {
-                      required: "不可空白"
+                      required: "不可空白",
+                      validate: emailValidation
                     })}
                     isInvalid={!!errors.order_contact_list?.[0]?.contact_email}
                   />
@@ -205,7 +207,7 @@ const ContactInformation = () => {
         <Collapse
           titleChildren={
             <StyledCollapseTitle>
-              <span>旅客代表人資訊</span>
+              <span>旅客代表人</span>
               <label>
                 <input
                   type="checkbox"
@@ -217,7 +219,7 @@ const ContactInformation = () => {
                     }
                   }}
                 />
-                <span>同上方欄位內容</span>
+                <span>同訂單聯絡人</span>
               </label>
             </StyledCollapseTitle>
           }
@@ -294,7 +296,8 @@ const ContactInformation = () => {
                   <div className="item-input-container">
                     <TextInput
                       {...register("order_contact_list.1.contact_phone", {
-                        required: "不可空白"
+                        required: "不可空白",
+                        validate: phoneValidation
                       })}
                       isInvalid={
                         !!errors.order_contact_list?.[1]?.contact_phone
@@ -342,7 +345,8 @@ const ContactInformation = () => {
                 <div className="item-input-container">
                   <TextInput
                     {...register("order_contact_list.1.contact_email", {
-                      required: "不可空白"
+                      required: "不可空白",
+                      validate: emailValidation
                     })}
                     isInvalid={!!errors.order_contact_list?.[1]?.contact_email}
                   />

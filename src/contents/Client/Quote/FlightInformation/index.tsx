@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Collapse from "@components/Collapse";
 import StepArragement from "@components/StepArragement";
 import { TextInput } from "evergreen-ui";
-import { BodySTY, ItemSTY } from "./style";
+import { BodySTY, ItemSTY, CollapseCardSTY } from "./style";
 import { QuotationCreatePayload } from "../type";
 import { useFieldArray, useWatch, useFormContext } from "react-hook-form";
 interface TravelInformationProps {
@@ -38,7 +38,7 @@ const FlightInformation = ({
         isValid = false;
         validateSubForm({
           valid: false,
-          errorMessage: `起飛時間為:${flightTime},請至少於起飛前兩小時出發!`
+          errorMessage: `起飛時間為：${flightTime}，請至少於起飛前兩小時出發！`
         });
         return;
       } else if (type === "pickUp" && departureTimeHour - flightTimeHour < 0) {
@@ -65,47 +65,49 @@ const FlightInformation = ({
     >
       {fields.map((item, index) => {
         return (
-          <Collapse key={item.id} title="行程資訊" opened={true}>
-            <BodySTY>
-              <ItemSTY>
-                <div className="item-content-container">
-                  <div className="item-content">
-                    <span style={{ color: "#D14343" }}>*</span>接送日期
+          <CollapseCardSTY key={item.id}>
+            <Collapse title="行程資訊" opened={true}>
+              <BodySTY>
+                <ItemSTY>
+                  <div className="item-content-container">
+                    <div className="item-content">
+                      <span style={{ color: "#D14343" }}>*</span>接送日期
+                    </div>
+                    <TextInput
+                      type="date"
+                      {...register(`order_itinerary_list.${index}.day_date`)}
+                      style={{ flex: "1" }}
+                    />
+                    <div className="option-container"></div>
                   </div>
-                  <TextInput
-                    type="date"
-                    {...register(`order_itinerary_list.${index}.day_date`)}
-                    style={{ flex: "1" }}
-                  />
-                  <div className="option-container"></div>
-                </div>
-                <div className="item-content-container">
-                  <div className="item-content">
-                    <span style={{ color: "#D14343" }}>*</span>接送時間
+                  <div className="item-content-container">
+                    <div className="item-content">
+                      <span style={{ color: "#D14343" }}>*</span>接送時間
+                    </div>
+                    <TextInput
+                      {...register(
+                        `order_itinerary_list.${index}.departure_time`
+                      )}
+                      type="time"
+                      min={flightTime}
+                      style={{ flex: "1" }}
+                    />
+                    <div className="option-container"></div>
                   </div>
-                  <TextInput
-                    {...register(
-                      `order_itinerary_list.${index}.departure_time`
-                    )}
-                    type="time"
-                    min={flightTime}
-                    style={{ flex: "1" }}
-                  />
-                  <div className="option-container"></div>
-                </div>
-              </ItemSTY>
-              <StepArragement
-                control={control}
-                errors={errors}
-                register={register}
-                startPointName={`order_itinerary_list.${index}.pickup_location`}
-                destinationPointName={`order_itinerary_list.${index}.dropoff_location`}
-                middlePointName={`order_itinerary_list.${index}.stopover_address_list`}
-                withStartPoint={type === "pickUp"}
-                withDestinationPoint={type === "dropOff"}
-              />
-            </BodySTY>
-          </Collapse>
+                </ItemSTY>
+                <StepArragement
+                  control={control}
+                  errors={errors}
+                  register={register}
+                  startPointName={`order_itinerary_list.${index}.pickup_location`}
+                  destinationPointName={`order_itinerary_list.${index}.dropoff_location`}
+                  middlePointName={`order_itinerary_list.${index}.stopover_address_list`}
+                  withStartPoint={type === "pickUp"}
+                  withDestinationPoint={type === "dropOff"}
+                />
+              </BodySTY>
+            </Collapse>
+          </CollapseCardSTY>
         );
       })}
     </div>

@@ -34,7 +34,7 @@ const SpecialNeedsInformation = () => {
                         getValues("pickup_sign_check") === "1" &&
                         value.trim() === ""
                       ) {
-                        return "不可為空!";
+                        return "不可空白!";
                       }
                       return true;
                     }
@@ -104,7 +104,7 @@ const SpecialNeedsInformation = () => {
                 description="若有需要說明文字，車公司可自行輸入於此。"
               >
                 <CounterInput
-                  label="由店家提供 (+NT$ 200 / 天)"
+                  label="由店家提供 (NT$200/天)"
                   register={register}
                   setValue={setValue}
                   getValues={getValues}

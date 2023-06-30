@@ -97,7 +97,7 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
             </div>
             <TextInput
               type="date"
-              {...register("returnDate", { required: "不可為空！" })}
+              {...register("returnDate", { required: "不可空白！" })}
               min={minDate}
               isInvalid={!!errors.returnDate}
             />

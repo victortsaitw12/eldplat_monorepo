@@ -39,3 +39,8 @@ export const ItemSTY = styled.li`
     }
   }
 `;
+
+export const CollapseCardSTY = styled.div`
+  border-radius: 10px;
+  overflow: hidden;
+`;

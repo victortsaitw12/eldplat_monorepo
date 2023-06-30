@@ -7,6 +7,12 @@ import theme from "@styles/theme";
 import { GlobalStyles } from "@styles/global";
 import { getVendorsLang } from "@services/vendor/getAllVendors";
 import { useRouter } from "next/router";
+import { Noto_Sans } from "next/font/google";
+
+const notoSans = Noto_Sans({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  weight: ["400", "600", "700", "800"]
+});
 
 // 看現在狀態是哪個語言則去抓哪個語言的json檔
 
@@ -64,19 +70,21 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const getLayout = Component.getLayout || ((page: React.ReactNode) => page);
   return (
-    <I18Provider locale={locale} messages={messages} defaultLocale="zh">
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        {getLayout(
-          <Component
-            {...pageProps}
-            locale={locale}
-            setLocale={setLocale}
-            setPageType={setPageType}
-          />,
-          { ...pageProps, locale: locale, setLocale: setLocale }
-        )}
-      </ThemeProvider>
-    </I18Provider>
+    <main className={notoSans.className}>
+      <I18Provider locale={locale} messages={messages} defaultLocale="zh">
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          {getLayout(
+            <Component
+              {...pageProps}
+              locale={locale}
+              setLocale={setLocale}
+              setPageType={setPageType}
+            />,
+            { ...pageProps, locale: locale, setLocale: setLocale }
+          )}
+        </ThemeProvider>
+      </I18Provider>
+    </main>
   );
 }
