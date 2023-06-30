@@ -3,8 +3,6 @@ import { BodySTY } from "./style";
 import { PlusIcon } from "evergreen-ui";
 
 import { Label } from "@components/Button/Primary";
-import { getOrderInfo } from "@services/assignment/getOrderInfo";
-
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
