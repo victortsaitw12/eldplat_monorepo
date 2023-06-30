@@ -120,7 +120,7 @@ function AssignManualCreate({
       orderInfo[0].departure_date,
       orderInfo[0].return_date
     );
-    const day = result.dataList[0].order_date_options.find((v) => {
+    const day = result.dataList[0].order_date_options.find((v: any) => {
       return dayjs(v.order_date).format("YYYY/MM/DD") === orderItem.date;
     });
 

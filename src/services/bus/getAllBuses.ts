@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 import { PatternType } from "@utils/mappingQueryData";
 export const getAllBuses = async (
   filter: { [key: string]: any } = {},
@@ -14,7 +15,10 @@ export const getAllBuses = async (
       });
     }
   }
-  const res = await fetch("https://localhost:7088/CAR/GetBusList", {
+  //
+  const url = new URL(API_Path["getAllBuses"]);
+  //
+  const res = await fetch(url.href, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
