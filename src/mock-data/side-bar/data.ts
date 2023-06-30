@@ -1,17 +1,17 @@
-type MENU = {
-  no: string;
-  menu_no: string;
-  menu_name: string;
-  main_category?: string;
-  menu_url: string;
-  menu_lvl: number;
-  menu_sort?: number;
-  menu_status: string;
-  creid: string;
-  credate: Date;
-  updid?: string;
-  upddate?: Date;
-};
+// type MENU = {
+//   no: string;
+//   menu_no: string;
+//   menu_name: string;
+//   main_category?: string;
+//   menu_url: string;
+//   menu_lvl: number;
+//   menu_sort?: number;
+//   menu_status: string;
+//   creid: string;
+//   credate: Date;
+//   updid?: string;
+//   upddate?: Date;
+// };
 const homePageData = [
   {
     name: "公司設定",
@@ -214,23 +214,18 @@ const homePageData = [
     url: "/",
     subList: [
       {
-        name: "維保歷史",
-        url: "/",
+        name: "維保通知",
+        url: "/maintenance/notice",
         subList: null
       },
       {
         name: "維保任務",
-        url: "/",
+        url: "/maintenance/mission",
         subList: null
       },
       {
-        name: "維保項目",
-        url: "/",
-        subList: null
-      },
-      {
-        name: "維修廠",
-        url: "/",
+        name: "維保紀錄",
+        url: "/maintenance/record",
         subList: null
       }
     ]

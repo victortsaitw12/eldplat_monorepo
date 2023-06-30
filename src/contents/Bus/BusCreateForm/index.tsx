@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { ItemSTY, FormSTY } from "./style";
+import { FormSTY } from "./style";
 import { PlusIcon, SelectField } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 import FiledInput from "./FieldInput";
@@ -45,7 +45,7 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     try {
-      const res = await createBus(data);
+      await createBus(data);
     } catch (e: any) {
       console.log(e);
       alert(e.message);

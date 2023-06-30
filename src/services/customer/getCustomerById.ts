@@ -1,14 +1,13 @@
+import API_Path from "./apiPath";
 export const getCustomerById = async (customer_no: string) => {
-  const response = await fetch(
-    `https://localhost:7088/CTR/GetOneCustomer/${customer_no}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-      }
+  const url = new URL(API_Path["getCustomerById"]);
+  const response = await fetch(`${url.href}/${customer_no}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     }
-  );
+  });
   const data = await response.json();
   console.log("data.dataList[0]", data.dataList[0]);
   return data.dataList[0];
@@ -22,12 +21,4 @@ export const customerPattern: PatternType = {
   contact_name: "contact_Name",
   contact_phone: "contact_Phone",
   contact_email: "contact_Email"
-};
-
-const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
-  const result: { [key: string]: any } = {};
-  for (const key in pattern) {
-    result[key] = data[key];
-  }
-  return result;
 };

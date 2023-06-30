@@ -7,7 +7,6 @@ import {
 //
 import { getLayout } from "@layout/MainLayout";
 import { Pane } from "evergreen-ui";
-import BusEditForm from "@contents/Bus/BusEditForm";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { ParsedUrlQuery } from "querystring";
@@ -40,7 +39,7 @@ const Page: NextPageWithLayout<
         user_english_name: newData.basicInfo["user_english_name"],
         user_identity: newData.basicInfo["user_identity"],
         user_country: newData.basicInfo["user_country"],
-        user_birthday: newData.basicInfo["user_birthday"],
+        user_birthday: newData.basicInfo["user_birthday"].substring(0, 10),
         user_sex: newData.basicInfo["user_sex"],
         user_photo_link: newData.basicInfo["user_photo_link"],
         user_email: newData.basicInfo["user_email"],
@@ -62,7 +61,8 @@ const Page: NextPageWithLayout<
         company_name: newData.basicInfo["company_name"],
         department: newData.basicInfo["department"],
         group: newData.basicInfo["group"],
-        arrive_date: newData.basicInfo["arrive_date"],
+        arrive_date: newData.basicInfo["arrive_date"].substring(0, 10),
+        leave_date: newData.basicInfo["leave_date"]?.substring(0, 10),
         leave_check: newData.basicInfo["leave_check"],
         license_name: newData["licenses"].map(
           (item: { license_name: any }) => item.license_name

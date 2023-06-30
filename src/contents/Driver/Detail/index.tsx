@@ -5,7 +5,7 @@ import { FormSTY } from "./style";
 import { UpdateDriverInfoPayload } from "../driver.type";
 import DriverInfo from "./DriverInfo";
 import LicenseInfo from "./LicenseInfo";
-import HealthRecords from "./LicenseInfo";
+import HealthRecords from "./HealthRecords";
 
 import { formatDateFromAPI } from "@utils/formatDateFromAPI";
 
@@ -98,14 +98,6 @@ function DriverDetail({
         driverData={driverData}
       />
       {visibleForm === "2" && (
-        <LicenseInfo
-          register={register}
-          getValues={getValues}
-          licenseData={driverData.license}
-          userName={driverData.info.user_name}
-        />
-      )}
-      {visibleForm === "3" && (
         <HealthRecords
           healths={driverData.healths}
           userName={driverData.info.user_name}

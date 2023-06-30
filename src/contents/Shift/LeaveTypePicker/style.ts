@@ -8,7 +8,7 @@ export const LeaveTypePickerSTY = styled.div<{ color: string }>`
     align-items: center;
     gap: 4px;
     svg {
-      fill: ${({ theme, color }) => theme.color[color]};
+      fill: ${({ theme, color }) => color};
     }
   }
   .selectPlaceholder {

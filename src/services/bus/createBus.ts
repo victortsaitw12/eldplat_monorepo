@@ -1,13 +1,12 @@
 import { flattenObject } from "@utils/flattenObject";
 import { filterNullData } from "@utils/filterNullData";
+import API_Path from "./apiPath";
 export const createBus = async (busData: any) => {
-  console.log("busData", busData);
   const flattenBusData = flattenObject(busData);
-  console.log("flattenBusData", flattenBusData);
   const filteredData = filterNullData(flattenBusData);
-  console.log(filteredData);
+  const url = new URL(API_Path["createBus"]);
   try {
-    const res = await fetch("https://localhost:7088/CAR/CreateBus", {
+    const res = await fetch(url.href, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,19 +21,15 @@ export const createBus = async (busData: any) => {
   }
 };
 // prettier-ignore
-const DUMMY_INPUTS = {
-  bus_name: "國光-1",
-  vin: "55688",
-  license_plate: "99661155",
-  type: "c1",
-  status: "01",
-  ownership: "02",
-  // driver_seat: "1", //no
-  // bus_seat: "42", //no
-  // bus_seat_row: "20", //no
-  primary_meter: "3",
-  fuel_unit: "1",
-  measurement_units: "2",
-  // oil_capacity: "100", // no
-  estimated_resale: "100"
-};
+// const DUMMY_INPUTS = {
+//   bus_name: "國光-1",
+//   vin: "55688",
+//   license_plate: "99661155",
+//   type: "c1",
+//   status: "01",
+//   ownership: "02",
+//   primary_meter: "3",
+//   fuel_unit: "1",
+//   measurement_units: "2",
+//   estimated_resale: "100"
+// };

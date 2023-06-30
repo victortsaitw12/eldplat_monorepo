@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import { TextInputField, TextareaField, Checkbox, Label } from "evergreen-ui";
+import { TextInputField, Checkbox, Label } from "evergreen-ui";
 import FormCard from "@components/FormCard";
 import { AvatarSTY } from "@components/Table/style";
 import { StepControlSTY } from "@components/FormCard/style";
@@ -89,12 +89,7 @@ function VehicleReminderForm({ title, selectOptions }: Props) {
         <Label>Comment</Label>
         <div className="w50 gap-10">
           <AvatarSTY>
-            <Image
-              width="50"
-              height="50"
-              src="/images/avatar1.jpg"
-              alt="test"
-            />
+            <Image width="50" height="50" src="/image/avatar1.jpg" alt="test" />
           </AvatarSTY>
           <TextareaFieldSTY placeholder="Add an optional comment" />
         </div>

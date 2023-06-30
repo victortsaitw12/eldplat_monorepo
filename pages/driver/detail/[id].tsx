@@ -20,8 +20,7 @@ import TableWrapper from "@layout/TableWrapper";
 //
 const mainFilterArray = [
   { id: 1, label: "駕駛資訊", value: "1" },
-  { id: 2, label: "駕駛證照", value: "2" },
-  { id: 3, label: "健康紀錄", value: "3" }
+  { id: 2, label: "健康紀錄", value: "2" }
 ];
 //
 

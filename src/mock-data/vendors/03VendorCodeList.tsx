@@ -34,6 +34,10 @@ export const vendor_code_list = [
         vendor_code: "06",
         vendor_code_name: "其他"
     },
+    {
+        vendor_code: "07",
+        vendor_code_name: "Etag"
+    }
 ]
 //
 export const vendor_label_option = [

@@ -1,12 +1,9 @@
-import MainBookmark from "@contents/MainBookmark";
-import SideBookMark from "@contents/SideBookmark";
 import React, { useState } from "react";
 import { getLayout } from "@layout/MainLayout";
 import {
   Pane,
   Text,
   Group,
-  Button,
   IconButton,
   FullscreenIcon,
   SmallCrossIcon

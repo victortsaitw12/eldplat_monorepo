@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Pane } from "evergreen-ui";
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
-import MainBookmark from "@contents/MainBookmark";
 import { useEmployeeFilterStore } from "@contexts/filter/employeeFilterStore";
 import { useRouter } from "next/router";
 import { getAllEmployees } from "@services/employee/getAllEmployee";
@@ -13,10 +12,7 @@ import FilterWrapper from "@layout/FilterWrapper";
 import TableWrapper from "@layout/TableWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
-import {
-  createBriefEmployee,
-  createEmployee
-} from "@services/employee/createEmployee";
+import { createBriefEmployee } from "@services/employee/createEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
 
 //
@@ -153,10 +149,6 @@ const Page: NextPageWithLayout<never> = () => {
   const goToEditPageHandler = (id: string) => {
     router.push(`/employee/edit/${id}`);
   };
-
-  const goToCreatePage = () => {
-    router.push("/employee/create");
-  };
   const changeMainFilterHandler = (value: string) => {
     alert(value);
     updateMainFilter(value);
@@ -201,7 +193,6 @@ const Page: NextPageWithLayout<never> = () => {
             <Pane>
               <EmployeeList
                 data={employeeListData}
-                // goToCreatePage={goToCreatePage}
                 goToCreatePage={() => {
                   setDrawerOpen(true);
                 }}
@@ -228,12 +219,3 @@ const Page: NextPageWithLayout<never> = () => {
 
 Page.getLayout = getLayout;
 export default Page;
-{
-  /* <MainBookmark
-  filter={filter}
-  updateFilter={updateFilter}
-  resetFilter={() => {
-    initializeFilter();
-  }}
-></MainBookmark>; */
-}

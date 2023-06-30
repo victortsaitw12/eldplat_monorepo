@@ -15,7 +15,7 @@ import { BodySTY } from "./style";
 import UserInfo from "./UserInfo";
 import MenuList from "./MenuList";
 import Search from "./Search";
-import { MenuDataType } from "../../mock-data/side-bar/data";
+import { MenuDataType } from "@mock-data/side-bar/data";
 import FooterItem from "./Footer/FooterItem";
 //
 interface Props {

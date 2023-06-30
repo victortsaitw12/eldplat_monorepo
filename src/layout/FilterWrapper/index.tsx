@@ -1,4 +1,4 @@
-import { Pane, SettingsIcon, SearchIcon } from "evergreen-ui";
+import { SettingsIcon, SearchIcon } from "evergreen-ui";
 import React, { useState } from "react";
 import { countActiveFilter } from "@utils/countActiveFilter";
 import { BodySTY } from "./style";
@@ -29,8 +29,6 @@ function FilterWrapper({
       if (searchText.trim() === "") {
         updateFilter(field, "");
       } else {
-        console.log("field", field);
-        console.log("searchText", searchText);
         updateFilter(field, searchText);
       }
     }, 500);
