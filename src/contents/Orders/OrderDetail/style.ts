@@ -22,7 +22,9 @@ export const SectionSTY = styled.section`
   }
   .collapse {
     font-family: "Noto Sans";
-
+    &_title {
+      align-items: center;
+    }
     &__title {
       font-weight: 600;
       font-size: 18px;

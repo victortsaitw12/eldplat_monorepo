@@ -4,6 +4,8 @@ import { DivSTY } from "./style";
 
 import Table from "@components/Table/Table";
 import PrimaryRadiusBtn from "@components/Button/PrimaryRadius";
+import SecondaryRadiusBtn from "@components/Button/SecondaryRadius";
+
 import { updateStatus } from "@services/client/updateStatus";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 
@@ -14,7 +16,6 @@ const PaymentBtn = ({
   data: I_OrderDetail;
   setData: (data: any) => void;
 }) => {
-  const [isPayInFull, setIsPayInFull] = React.useState(true);
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
 
   const handleRefetch = async () => {
@@ -49,6 +50,7 @@ const PaymentBtn = ({
   }, [data]);
 
   const handlePayment = async (status_code: string) => {
+    console.log("called");
     try {
       //接後端串金流API ->後端確認支付 -> 後端更改status_qode = '6' 已付全額 ('7'已付訂金 '8'已付尾款)
       if (status_code === "6") {
@@ -85,10 +87,6 @@ const PaymentBtn = ({
     }
   };
 
-  const handleTogglePayment = () => {
-    setIsPayInFull(!isPayInFull);
-  };
-
   const renderBtn = (statusList: any[]) => {
     // 1: {name: '收到報價', status: 'ok', date: '06/20/2023 00:00:00'}
     // render 接受報價
@@ -123,16 +121,14 @@ const PaymentBtn = ({
         </PrimaryRadiusBtn>
       ) : (
         <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-          <PrimaryRadiusBtn
-            appearance={`${isPayInFull ? "secondary" : "primary"}`}
-            onMouseEnter={handleTogglePayment}
-            onMouseLeave={handleTogglePayment}
+          <SecondaryRadiusBtn
+            appearance="secondary"
             onClick={handlePayment.bind(null, "7")}
           >
             支付訂金
-          </PrimaryRadiusBtn>
+          </SecondaryRadiusBtn>
           <PrimaryRadiusBtn
-            appearance={`${isPayInFull ? "primary" : "secondary"}`}
+            appearance="primary"
             onClick={handlePayment.bind(null, "6")}
           >
             支付全額
