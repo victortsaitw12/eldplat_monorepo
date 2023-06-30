@@ -6,7 +6,7 @@ const BodySTY = styled.div`
   width: 280px;
   box-shadow: 0px 4px 8px rgba(16, 24, 64, 0.08);
   border-radius: 10px;
-  .total_price {
+  .price_content {
     display: flex;
     justify-content: space-between;
     span {
@@ -14,6 +14,15 @@ const BodySTY = styled.div`
       color: ${({ theme }) => theme.color.N700};
       font-weight: 600;
       font-size: 25px;
+      &:first-child {
+        max-width: 60px;
+        font-size: 16px;
+      }
+      &:last-child {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
     }
     & ~ span {
       display: inline-block;

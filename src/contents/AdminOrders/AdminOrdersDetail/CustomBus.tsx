@@ -166,11 +166,7 @@ const CustomBus = ({ isEdit, orderData, busData, methods }: I_Props) => {
         )}
       </Collapse>
       {/*接送資訊*/}
-      <ShuttleInfo
-        quote_no={orderData.quote_no}
-        arrayName="order_itinerary_list"
-        isEdit={isEdit}
-      />
+      <ShuttleInfo quote_no={orderData.quote_no} isEdit={isEdit} />
       <Collapse opened={true} title="乘車資訊">
         {isEdit ? (
           <TakeBusInfoEdit busData={busData} methods={methods} />

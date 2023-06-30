@@ -21,6 +21,8 @@ const PaymentInfoEdit = () => {
         setValue("deposit_check", "0");
         setValue("deposit_period", null);
         setValue("deposit_amount", null);
+        setValue("balance_amount", null);
+        setValue("balance_period", null);
       }
       if (value == "deposit") {
         setValue("deposit_check", "1");
@@ -118,12 +120,12 @@ const PaymentInfoEdit = () => {
             {...(register("deposit_amount"),
             {
               onChange: (e: { target: { value: any } }) => {
+                const quote_total_amount = parseInt(
+                  getValues("quote_total_amount"),
+                  10
+                );
                 setValue("deposit_amount", parseInt(e.target.value, 10));
                 if (calculateType == "$") {
-                  const quote_total_amount = parseInt(
-                    getValues("quote_total_amount"),
-                    10
-                  );
                   quote_total_amount - e.target.value > 0 &&
                     setValue(
                       "balance_amount",
@@ -131,6 +133,7 @@ const PaymentInfoEdit = () => {
                     );
                 }
                 if (calculateType == "%") {
+                  //當訂金是趴數的時候
                 }
               }
             })}
