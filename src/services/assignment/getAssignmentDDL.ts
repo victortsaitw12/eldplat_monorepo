@@ -1,6 +1,8 @@
+import API_Path from "./apiPath";
+
 export const getAssignBusDDL = async (bus_group?: string) => {
   const res = await fetch(
-    `https://localhost:7088/ANV/AssignmentByManual_GetBusDDL?bus_group=${bus_group}`,
+    `${API_Path["GetAssignBusDDL"]}?bus_group=${bus_group}`,
     {
       method: "POST",
       headers: {
@@ -14,7 +16,7 @@ export const getAssignBusDDL = async (bus_group?: string) => {
 
 export const getAssignDriverDDL = async (bus_group?: string) => {
   const res = await fetch(
-    `https://localhost:7088/ANV/AssignmentByManual_GetDriverDDL?bus_group=${bus_group}`,
+    `${API_Path["GetAssignDriverDDL"]}?bus_group=${bus_group}`,
     {
       method: "POST",
       headers: {

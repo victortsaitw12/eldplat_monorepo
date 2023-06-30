@@ -1,4 +1,5 @@
 import { PatternType } from "@utils/mappingQueryData";
+import API_Path from "./apiPath";
 // 取得維保通知資料
 export const getAllMaintenanceNotices = async (
   filter: { [key: string]: any } = {},
@@ -16,27 +17,24 @@ export const getAllMaintenanceNotices = async (
     }
   }
   console.log("mainNoticeFilter", mainNoticeFilter);
-  const res = await fetch(
-    "https://localhost:7088/CAR/ReminderMaintenance_GetAll",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-      },
-      body: JSON.stringify({
-        maintenance_status,
-        filter: mainNoticeFilter,
-        filter_needed: true,
-        page_info: {
-          page_Index: 1,
-          page_Size: 20,
-          orderby: "reminders_no",
-          arrangement: "desc"
-        }
-      })
-    }
-  );
+  const res = await fetch(API_Path["GetAllMaintenanceNotices"], {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    },
+    body: JSON.stringify({
+      maintenance_status,
+      filter: mainNoticeFilter,
+      filter_needed: true,
+      page_info: {
+        page_Index: 1,
+        page_Size: 20,
+        orderby: "reminders_no",
+        arrangement: "desc"
+      }
+    })
+  });
   console.log("notice res : ", res);
   return res.json();
 };
@@ -44,7 +42,7 @@ export const getAllMaintenanceNotices = async (
 // 停用維保通知
 export const CancelMaintenanceById = async (reminder_no: string) => {
   const response = await fetch(
-    `https://localhost:7088/CAR/ReminderMaintenance_Cancel/${reminder_no}`,
+    `${API_Path["CancelMaintenanceById"]}/${reminder_no}`,
     {
       method: "POST",
       headers: {

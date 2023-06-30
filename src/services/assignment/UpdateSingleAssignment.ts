@@ -1,5 +1,7 @@
+import API_Path from "./apiPath";
+
 export const UpdateSingleAssignment = async (editData: any) => {
-  const res = await fetch("https://localhost:7088/ANV/Assignment_Edit", {
+  const res = await fetch(API_Path["UpdateSingleAssignment"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
