@@ -25,7 +25,8 @@ const Page: NextPageWithLayout<
   airport,
   terminal,
   airline,
-  flightTime
+  flightTime,
+  quote_type
 }) => {
   const formButtonRef = useRef<HTMLButtonElement | null>(null);
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -34,10 +35,10 @@ const Page: NextPageWithLayout<
     <BodySTY>
       <Breadcrumbs
         routes={[
-          { label: "首頁", url: "/" },
+          { label: "首頁", url: "/client" },
           { label: "線上訂車", url: "/client/quote" },
           {
-            label: type === "custom" ? "課製包車" : "機場接送"
+            label: type === "custom" ? "客製包車" : "機場接送"
           }
         ]}
         style={{ alignSelf: "flex-start" }}
@@ -61,6 +62,7 @@ const Page: NextPageWithLayout<
           terminal={terminal}
           airline={airline}
           flightTime={flightTime}
+          quote_type={quote_type}
           updateIsFilled={(value: boolean) => {
             setIsFilled(value);
           }}
@@ -103,6 +105,7 @@ interface Props {
   terminal?: string;
   airline?: string;
   flightTime?: string;
+  quote_type?: string;
 }
 
 interface RouterQuery extends ParsedUrlQuery {
@@ -112,6 +115,7 @@ interface RouterQuery extends ParsedUrlQuery {
   purpose: string;
   flightDate: string;
   flightNo: string;
+  quote_type: string;
 }
 
 export const getServerSideProps: GetServerSideProps<
@@ -134,6 +138,7 @@ export const getServerSideProps: GetServerSideProps<
   if (query.terminal) pageProps.terminal = query.terminal as string;
   if (query.airline) pageProps.airline = query.airline as string;
   if (query.flightTime) pageProps.flightTime = query.flightTime as string;
+  if (query.quote_type) pageProps.quote_type = query.quote_type as string;
   return {
     props: pageProps
   };
