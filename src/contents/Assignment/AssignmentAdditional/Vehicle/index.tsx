@@ -2,48 +2,23 @@ import React from "react";
 import { Pane, Button, DocumentShareIcon, Paragraph, Text } from "evergreen-ui";
 import { DivSTY } from "./style";
 
-import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import {
   I_ManualAssignType,
   I_ManualCreateType
 } from "@typings/assignment_type";
-import {
-  updateReplaceAssignment,
-  I_ReplaceAssignment
-} from "@services/assignment/updateReplaceAssignment";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import VehicleForm from "@contents/Assignment/AssignmentAdditional/Vehicle/VehicleForm";
 
 interface I_AssignmentAdditionalVehicleProps {
   orderInfo: I_ManualAssignType[];
   createAssignData: I_ManualCreateType;
-  handleAssignmentCarChange: (e: any) => void;
-  timeRef: any;
 }
 
 const AssignmentAdditionalVehicle = ({
   orderInfo,
-  createAssignData,
-  handleAssignmentCarChange,
-  timeRef
+  createAssignData
 }: I_AssignmentAdditionalVehicleProps) => {
   const [loading, setLoading] = React.useState(false);
-  const { isDrawerOpen, setDrawerOpen, setDrawerType, drawerType } =
-    useAssignmentStore();
-  // ----- function ----- //
-  const asyncSubmitForm = async (data: any) => {
-    console.log("replace assignment:", data);
-    // setLoading(true);
-    try {
-      const res = await updateReplaceAssignment(data);
-      setDrawerOpen(false);
-    } catch (e: any) {
-      console.log(e);
-      // alert(e.message);
-    }
-
-    // setLoading(false);
-  };
 
   return (
     <DivSTY>
@@ -69,8 +44,6 @@ const AssignmentAdditionalVehicle = ({
       <VehicleForm
         orderInfo={orderInfo}
         createAssignData={createAssignData}
-        handleAssignmentCarChange={handleAssignmentCarChange}
-        timeRef={timeRef}
         setLoading={setLoading}
       />
     </DivSTY>

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import {
-  Text,
   SelectField,
   Select,
   Pane,
@@ -32,19 +31,12 @@ import {
 
 interface I_VehicleFormProps {
   orderInfo: I_ManualAssignType[];
-  timeRef: any;
-  handleAssignmentCarChange: (e: any) => void;
   createAssignData: I_ManualCreateType;
   data?: any;
   setLoading: (v: boolean) => void;
 }
 
-function VehicleForm({
-  orderInfo,
-  timeRef,
-  // handleAssignmentCarChange,
-  setLoading
-}: I_VehicleFormProps) {
+function VehicleForm({ orderInfo, setLoading }: I_VehicleFormProps) {
   const defaultValues = {
     quote_no: "",
     bus_driver_no: "",
@@ -116,7 +108,12 @@ function VehicleForm({
   const handleDateChange = React.useCallback(
     async (e: any) => {
       setDateBase(e.target.value);
-      if (!e.target.value) return;
+      if (!e.target.value) {
+        setBusDayNumberDDL([
+          { bus_day_number: "", assignment_no: "", label: "請選擇" }
+        ]);
+        return;
+      }
       // 取得當日可選車次
       const res = await getBusDayNumberDDL(
         orderInfo[0].quote_no,
@@ -138,7 +135,6 @@ function VehicleForm({
 
   const handleBusGroupChange = async (e: any) => {
     const res = await getAssignBusDDL(e.target.value);
-    // setBusNameDDL(res.dataList[0].bus_options);
     setBusNameDDL([
       { bus_no: "00", bus_name: "請選擇", license_plate: "" },
       ...res.dataList[0].bus_options
@@ -167,11 +163,6 @@ function VehicleForm({
           </div>
         }
         onChange={(e) => handleDateChange(e)}
-        // required
-        // {...register("base_date", {
-        //   required: "必填",
-        //   onChange: (e) => handleDateChange(e)
-        // })}
       >
         {dateDDL?.map((item: any, i: number) => (
           <option key={`day-${i}`} value={item.order_date}>
@@ -231,6 +222,7 @@ function VehicleForm({
             <span style={{ color: "#D14343" }}>*</span>車輛名稱
           </div>
         }
+        hint={!dateBase ? "(請先選取車隊) " : " "}
         // onClick={(e: any) => {
         //   handleCarPlate(e);
         // }}

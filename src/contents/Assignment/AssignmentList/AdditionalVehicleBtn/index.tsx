@@ -1,41 +1,35 @@
 import React from "react";
 import { BodySTY } from "./style";
-import { Button, PlusIcon } from "evergreen-ui";
-import { Label } from "@components/Button/Primary";
-import { UpdateMaintenanceStatus } from "@services/maintenance/getMaintenanceMission";
-import router from "next/router";
+import { PlusIcon } from "evergreen-ui";
 
-import { useAssignmentStore } from "@contexts/filter/assignmentStore";
+import { Label } from "@components/Button/Primary";
 import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
 interface AdditionalVehicleBtn_Type {
   id: string;
   disabled?: boolean;
   setOrderInfo: (t: any) => void;
+  setCreatDrawerOpen: (v: "car" | "driver" | "") => void;
 }
 const AdditionalVehicleBtn = ({
   id,
   disabled,
-  setOrderInfo
+  setOrderInfo,
+  setCreatDrawerOpen
 }: AdditionalVehicleBtn_Type) => {
-  const { isDrawerOpen, setDrawerOpen, setDrawerType, drawerType } =
-    useAssignmentStore();
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const renderAddVehicle = () => {
     setLoading(true);
     try {
-      setDrawerType("add");
       getOrderInfo(id).then((data) => {
         console.log("data", data);
         setOrderInfo(data.dataList);
       });
-      console.log("+派車");
-      setDrawerOpen(true);
+      setCreatDrawerOpen("car");
     } catch (err) {
       console.log("err of click the finish button", err);
     }
-    console.log(drawerType);
     setLoading(false);
   };
   return (
