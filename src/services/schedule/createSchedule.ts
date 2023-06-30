@@ -1,6 +1,8 @@
+import API_Path from "./apiPath";
+
 // 新增排休
 export const createSchedule = async (data: any) => {
-  const res = await fetch("https://localhost:7088/ATR/InsertDriverSchedule", {
+  const res = await fetch(`${API_Path["createSchedule"]}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
