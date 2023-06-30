@@ -4,24 +4,27 @@ import { Button } from "evergreen-ui";
 import { Label } from "@components/Button/Primary";
 import { UpdateMaintenanceStatus } from "@services/maintenance/getMaintenanceMission";
 import router from "next/router";
+import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
 interface AutoAssignBtn_Type {
-  id?: string;
+  id: string;
   disabled?: boolean;
+  setAutoDrawerOpen: (t: boolean) => void;
+  setOrderInfo: (t: any) => void;
 }
-const AutoAssignBtn = ({ id, disabled }: AutoAssignBtn_Type) => {
+const AutoAssignBtn = ({
+  id,
+  disabled,
+  setAutoDrawerOpen,
+  setOrderInfo
+}: AutoAssignBtn_Type) => {
   const handleAutoAssign = () => {
     try {
-      alert("設定排程");
-
-      // UpdateMaintenanceStatus(id)
-      //   .then((res) => {
-      //     console.log("UpdateMaintenanceStatus res", res);
-      //     router.push("/maintenance/record ");
-      //   })
-      //   .catch((err) => {
-      //     console.log("err of update status ", err);
-      //   });
+      setAutoDrawerOpen(true);
+      getOrderInfo(id).then((data) => {
+        console.log("AUTO data", data);
+        setOrderInfo(data?.dataList);
+      });
     } catch (err) {
       console.log("err of click the finish button", err);
     }

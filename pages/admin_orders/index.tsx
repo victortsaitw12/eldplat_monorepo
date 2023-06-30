@@ -18,6 +18,7 @@ import AdminOrderCreateForm from "@contents/AdminOrders/AdminOrderCreateForm";
 import { getQuotationByFilter } from "@services/admin_orders/getQuotationByFilter";
 import { getQuotationByStatus } from "@services/admin_orders/getQuotationByStatus";
 import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
+import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
 
 //@components
 import Drawer from "@components/Drawer";
@@ -116,7 +117,9 @@ const Page: NextPageWithLayout<{
   const deleteItemHandler = async (id: string) => {
     try {
       const res = await deleteQuotation(id);
+      const res_assignmentClosed = await assignmentClosed(id, "02");
       console.log(res);
+      console.log(res_assignmentClosed);
       getDataByTab(nowTab);
     } catch (e) {
       console.log(e);

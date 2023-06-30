@@ -25,7 +25,7 @@ const ManualAssignBtn = ({
     try {
       getOrderInfo(id).then((data) => {
         console.log("data", data);
-        setOrderInfo(data.dataList);
+        setOrderInfo(data?.dataList);
       });
     } catch (err) {
       console.log("err of click the finish button", err);

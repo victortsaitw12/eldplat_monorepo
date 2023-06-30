@@ -1,5 +1,6 @@
 import { PatternType } from "@utils/mappingQueryData";
 import { createElement } from "react";
+import API_Path from "./apiPath";
 export const getAllCustomers = async (
   filter: { [key: string]: any } = {},
   customer_status = "1"
@@ -15,7 +16,8 @@ export const getAllCustomers = async (
       });
     }
   }
-  const res = await fetch("https://localhost:7088/CTR/GetCustomer", {
+  const url = new URL(API_Path["getAllCustomers"]);
+  const res = await fetch(url.href, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

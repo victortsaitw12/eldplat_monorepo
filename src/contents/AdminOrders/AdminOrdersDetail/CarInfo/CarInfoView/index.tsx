@@ -18,7 +18,7 @@ const CarInfoView = ({ quote_type, purpose }: I_Props) => {
   };
   const r_purpose = () => {
     if (quote_type === "1") {
-      return (purpose && purposeList[purpose]) || "-";
+      return (purpose && purposeList[purpose]) || "--";
     } else if (quote_type === "2") {
       return "接機";
     } else {

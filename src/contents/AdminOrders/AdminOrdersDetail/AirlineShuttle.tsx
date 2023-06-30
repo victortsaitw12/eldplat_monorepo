@@ -182,7 +182,6 @@ const AirlineShuttle = ({ isEdit, orderData, busData, methods }: I_Props) => {
       {/*接送資訊*/}
       <ShuttleInfo
         quote_no={orderData.quote_no}
-        arrayName="order_itinerary_list"
         isEdit={isEdit}
         isCustomBus={false}
       />

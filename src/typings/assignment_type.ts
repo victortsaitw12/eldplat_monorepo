@@ -11,7 +11,7 @@ export interface I_SubAssignData {
   license_plate: string;
   maintenance_quote_no: string;
   task_end_time: string;
-  task_start_time: string;
+  task_start_time: string | any | number;
 }
 
 export interface I_ManualAssignType {
@@ -20,6 +20,13 @@ export interface I_ManualAssignType {
   quote_no: string;
   quote_type: string;
   return_date: string;
+}
+
+export interface AutoAssignType {
+  quote_No: string;
+  estimated_Start_Date: string;
+  estimated_End_Date: string;
+  areaConvoyGroupType: string;
 }
 
 export interface I_ManualCreateType {

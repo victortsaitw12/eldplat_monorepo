@@ -22,6 +22,7 @@ interface Props {
   terminal?: string;
   flightTime?: string;
   airline?: string;
+  quote_type?: string;
   updateIsFilled: (value: boolean) => void;
 }
 
@@ -33,12 +34,14 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
     terminal,
     flightTime,
     airline,
+    quote_type,
     updateIsFilled
   },
   formButtonRef
 ) {
+  console.log("quote_type:", quote_type);
   const [currentType, setCurrentType] = useState<"pickUp" | "dropOff">(
-    "dropOff"
+    quote_type === "2" ? "pickUp" : "dropOff" // 2: 接機, 3: 送機
   );
   const router = useRouter();
   const {

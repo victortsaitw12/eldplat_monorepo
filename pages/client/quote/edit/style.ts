@@ -49,6 +49,7 @@ export const BodySTY = styled.div`
       gap: 8px;
       font-size: 12px;
       font-weight: 600;
+      color: ${({ theme }) => theme.color.N700};
     }
   }
 `;

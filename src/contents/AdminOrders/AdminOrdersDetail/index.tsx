@@ -16,7 +16,6 @@ import AirlineShuttle from "./AirlineShuttle";
 import dayjs from "dayjs";
 
 //@utils
-import mappingProgressInfo from "@utils/mappingProgressInfo";
 
 //@context
 // import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";

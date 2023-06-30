@@ -1,6 +1,8 @@
+import API_Path from "./apiPath";
+
 export const getMaintenanceById = async (maintenance_no: string) => {
   const response = await fetch(
-    `https://localhost:7088/CAR/GetOneMaintenance/${maintenance_no}`,
+    `${API_Path["GetMaintenanceById"]}/${maintenance_no}`,
     {
       method: "POST",
       headers: {

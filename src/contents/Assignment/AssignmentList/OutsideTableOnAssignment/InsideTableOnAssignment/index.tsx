@@ -22,10 +22,11 @@ import { mock_progressdata } from "@mock-data/adminOrders/mockData";
 import { I_OpenTable } from "..";
 import { I_SubAssignData } from "@typings/assignment_type";
 import dayjs from "dayjs";
-import { slashDate, timeWithAPM } from "@utils/convertDate";
+import { dateDiff, slashDate, timeWithAPM } from "@utils/convertDate";
+import EditBtn from "./EditBtn";
 //
 interface I_Data {
-  [key: string]: string | number | React.ReactNode;
+  [key: string]: string | number | React.ReactNode | any;
 }
 
 interface I_Table {
@@ -37,7 +38,7 @@ interface I_Table {
   isOpen?: I_OpenTable[];
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
-  goToEditPage?: (id: string, item: any) => void;
+  goToEditPage?: (item: any) => void;
   viewItem?: (id: any, item: any) => void;
   // editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
@@ -56,8 +57,8 @@ function InsideTableOnAssignment({
   viewItem = (id, item) => {
     console.log(id, item);
   },
-  goToEditPage = (id, item) => {
-    console.log(id, item);
+  goToEditPage = (item: any) => {
+    console.log("EDIT");
   },
   deleteItem = (item) => {
     console.log(item);
@@ -66,7 +67,7 @@ function InsideTableOnAssignment({
   console.log("🅰subAssignData", subAssignData);
   console.log("🅱data", data);
   console.log("🅾idx", idx);
-  const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
+  // const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
 
   if (!data) return <p>Loading</p>;
   return (
@@ -90,69 +91,69 @@ function InsideTableOnAssignment({
           </tr>
         </thead>
         <tbody>
-          {subAssignData[idx].map((item: I_SubAssignData, i: number) => {
-            const startDate = slashDate(item.task_start_time);
-            const startTime = timeWithAPM(item.task_start_time);
-            const endTime = timeWithAPM(item.task_end_time);
-            return (
-              <>
-                <tr key={uuid()}>
-                  {i === 0 && (
-                    <td rowSpan={subAssignData[idx].length}>
-                      <td>
+          {subAssignData[idx].map(
+            (item: I_SubAssignData, i: number, arr: I_SubAssignData[]) => {
+              console.log("💥item", item);
+              const startDate = slashDate(item.task_start_time);
+              const startTime = timeWithAPM(item.task_start_time);
+              const endTime = timeWithAPM(item.task_end_time);
+
+              const dayCount =
+                dateDiff(
+                  data[idx]?.task_start_time?.label,
+                  data[idx]?.task_end_time?.label
+                ) + 1;
+
+              arr.sort((a, b) => {
+                const dateA: any = new Date(a.task_start_time);
+                const dateB: any = new Date(b.task_start_time);
+
+                return dateA - dateB || a.bus_day_number - b.bus_day_number;
+              });
+
+              return (
+                <>
+                  <tr key={uuid()}>
+                    {i % Math.ceil(arr.length / dayCount) === 0 && (
+                      <td rowSpan={arr.length / dayCount}>
+                        {/* <td rowSpan={Math.ceil(arr.length / dayCount)}> */}
                         <div>{startDate}</div>
                       </td>
-                    </td>
-                  )}
-                  {(i + 1) % 2 !== 0 && (
-                    <td rowSpan={2}>
-                      <div>第{item.bus_day_number}車</div>
-                    </td>
-                  )}
-                  <td>
-                    <div>{item.assignment_no}</div>
-                  </td>
-                  <td>
-                    <div>{item.bus_group_name}</div>
-                  </td>
-                  <td>
-                    <div>{item.bus_name}</div>
-                  </td>
-                  <td>
-                    <div>{item.license_plate}</div>
-                  </td>
-                  <td>
-                    <div>{startTime}</div>
-                  </td>
-                  <td>
-                    <div>{endTime}</div>
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        setOptionIsOpen((prev) => !prev);
-                      }}
-                    >
-                      <MoreIcon />
-                    </button>
-                    {optionIsOpen && (
-                      <div className="table-row-option">
-                        <button
-                          className="option-item"
-                          onClick={() => {
-                            setOptionIsOpen(false);
-                          }}
-                        >
-                          <EditIcon size={14} />
-                          <div>編輯</div>
-                        </button>
-                      </div>
                     )}
-                  </td>
-                </tr>
-              </>
-            );
-          })}
+                    {(i + 1) % 2 !== 0 && (
+                      <td rowSpan={2}>
+                        <div>第{item.bus_day_number}車</div>
+                      </td>
+                    )}
+                    <td>
+                      <div>{item.assignment_no}</div>
+                    </td>
+                    <td>
+                      <div>{item.bus_group_name}</div>
+                    </td>
+                    <td>
+                      <div>{item.bus_name}</div>
+                    </td>
+                    <td>
+                      <div>{item.license_plate}</div>
+                    </td>
+                    <td>
+                      <div>{item.driver_name}</div>
+                    </td>
+                    <td>
+                      <div>{startTime}</div>
+                    </td>
+                    <td>
+                      <div>{endTime}</div>
+                    </td>
+                    <td>
+                      <EditBtn item={item} goToEditPage={goToEditPage} />
+                    </td>
+                  </tr>
+                </>
+              );
+            }
+          )}
         </tbody>
       </TableSTY>
     </TableContainerSTY>

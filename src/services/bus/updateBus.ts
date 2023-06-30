@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 export const updateBus = async (busData: any) => {
   console.log("updateBus", busData);
   for (const key in busData) {
@@ -8,8 +9,8 @@ export const updateBus = async (busData: any) => {
       }
     }
   }
-  console.log("updateBus", busData);
-  const res = await fetch("https://localhost:7088/CAR/UpdateBus", {
+  const url = new URL(API_Path["updateBus"]);
+  const res = await fetch(url.href, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
