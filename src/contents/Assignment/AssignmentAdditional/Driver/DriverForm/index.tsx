@@ -54,7 +54,7 @@ function DriverForm({ orderInfo, setLoading }: I_DriverFormProps) {
     { order_date: "", order_weekday: "請選擇" }
   ]);
   const [busDayNumberDDL, setBusDayNumberDDL] = useState<any>([
-    { bus_day_number: "00", assignment_no: "", label: "請先選取日期" }
+    { bus_day_number: "00", assignment_no: "", label: "請選擇" }
   ]);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
@@ -209,6 +209,8 @@ function DriverForm({ orderInfo, setLoading }: I_DriverFormProps) {
             <span style={{ color: "#D14343" }}>*</span>駕駛
           </div>
         }
+        hint={!dateBase ? "(請先選擇車隊) " : " "}
+        disabled={!driverNameDDL[1]}
         {...register("bus_driver_no", {
           // API: bus_no vs driver_no 共用這個 "bus_driver_no"欄位
           required: "必填"
