@@ -104,13 +104,19 @@ function InsideTableOnAssignment({
                   data[idx]?.task_end_time?.label
                 ) + 1;
 
-              arr.sort((a, b) => a.bus_day_number - b.bus_day_number);
+              arr.sort((a, b) => {
+                const dateA = new Date(a.task_start_time);
+                const dateB = new Date(b.task_start_time);
+
+                return dateA - dateB || a.bus_day_number - b.bus_day_number;
+              });
 
               return (
                 <>
                   <tr key={uuid()}>
-                    {i % (arr.length / dayCount) === 0 && (
+                    {i % Math.ceil(arr.length / dayCount) === 0 && (
                       <td rowSpan={arr.length / dayCount}>
+                        {/* <td rowSpan={Math.ceil(arr.length / dayCount)}> */}
                         <div>{startDate}</div>
                       </td>
                     )}
