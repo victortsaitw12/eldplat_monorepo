@@ -11,17 +11,3 @@ export const getAllNonDriverUser = async () => {
   });
   return res.json();
 };
-
-export const getDriverTitle = () => {
-  const DUMMY_TITLES = [
-    "姓名",
-    "E-MAIL",
-    "車輛團隊",
-    "指定車輛",
-    "群組",
-    "登入次數",
-    "加入時間",
-    "加入狀態"
-  ];
-  return DUMMY_TITLES;
-};
