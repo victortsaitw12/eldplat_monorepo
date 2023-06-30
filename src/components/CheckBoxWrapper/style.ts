@@ -22,6 +22,7 @@ const BodySTY = styled.div`
     margin-left: 31px;
     font-size: 14px;
     font-weight: 400;
+    line-height: 19.07px;
     color: ${({ theme }) => theme.color.N700};
   }
   .checkbox_children {

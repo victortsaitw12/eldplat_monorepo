@@ -57,11 +57,11 @@ const PaymentInfoView = ({
       case "1":
         return full_payment_period
           ? dayjs(full_payment_period).format("YYYY-MM-DD") + " 前繳款"
-          : "-";
+          : "--";
       default:
         return full_payment_period
           ? dayjs(deposit_period).format("YYYY-MM-DD") + " 前繳款"
-          : "-";
+          : "--";
     }
   };
   const payment_price_text = (status: any) => {
@@ -71,13 +71,13 @@ const PaymentInfoView = ({
           ? "NT$" +
               quote_total_amount.toLocaleString() +
               (full_payment_tax ? " 含稅" : "")
-          : "-";
+          : "--";
       default:
         return quote_total_amount
           ? "NT$" +
               quote_total_amount.toLocaleString() +
               (full_payment_tax ? " 含稅" : "")
-          : "-";
+          : "--";
     }
   };
 

@@ -13,39 +13,43 @@ const PassengerInfoView = ({
   social_media_type,
   social_media
 }: any) => {
+  const socialMediaList: { [key: string]: string } = {
+    "01": "Line",
+    "02": "WeChat"
+  };
   const list_arr = [
     {
       title: "姓",
-      value: family_name || "-"
+      value: family_name || "--"
     },
     {
       title: "名",
-      value: name || "-"
+      value: name || "--"
     },
     {
       title: "手機",
       value:
         contact_phone_code && contact_phone
           ? contact_phone_code + " " + contact_phone
-          : "-"
+          : "--"
     },
     {
       title: "電話",
       value:
         contact_tel_code && contact_tel
           ? contact_tel_code + " " + contact_tel
-          : "-"
+          : "--"
     },
     {
       title: "信箱",
-      value: contact_email || "-"
+      value: contact_email || "--"
     },
     {
       title: "通訊軟體",
       value:
         social_media_type && social_media
-          ? social_media_type + " " + social_media
-          : "-"
+          ? socialMediaList[social_media_type] + " " + social_media
+          : "--"
     }
   ];
   return (
