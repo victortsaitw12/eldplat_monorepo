@@ -5,24 +5,6 @@ const FormSTY = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 20px;
-
-  .info-box {
-    background: #f1f6fd;
-    border-radius: 10px;
-    padding: 6px 20px;
-
-    .title {
-      display: flex;
-      justify-content: space-between;
-
-      p {
-        color: ${({ theme }) => theme.color.N700};
-        font-weight: 600;
-      }
-    }
-  }
-
   .time-area {
     width: max-content;
     select {

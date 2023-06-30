@@ -1,6 +1,8 @@
+import API_Path from "./apiPath";
+
 export const getBusAssignmentInfo = async (assignment_no: string) => {
   const res = await fetch(
-    `https://localhost:7088/ANV/Assignment_GetBusInfo?assignment_no=${assignment_no}`,
+    `${API_Path["GetBusAssignInfo"]}?assignment_no=${assignment_no}`,
     {
       method: "GET",
       headers: {
@@ -15,7 +17,7 @@ export const getBusAssignmentInfo = async (assignment_no: string) => {
 
 export const getDriverAssignmentInfo = async (assignment_no: string) => {
   const res = await fetch(
-    `https://localhost:7088/ANV/Assignment_GetDriverInfo?assignment_no=${assignment_no}`,
+    `${API_Path["GetDriverAssignInfo"]}?assignment_no=${assignment_no}`,
     {
       method: "GET",
       headers: {

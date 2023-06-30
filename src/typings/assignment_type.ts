@@ -22,6 +22,13 @@ export interface I_ManualAssignType {
   return_date: string;
 }
 
+export interface AutoAssignType {
+  quote_No: string;
+  estimated_Start_Date: string;
+  estimated_End_Date: string;
+  areaConvoyGroupType: string;
+}
+
 export interface I_ManualCreateType {
   quote_no: string;
   maintenance_no?: string;

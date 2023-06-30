@@ -1,8 +1,9 @@
+import API_Path from "./apiPath";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { PatternType } from "@utils/mappingQueryData";
 
 export const getAllAssignments = async () => {
-  const res = await fetch("https://localhost:7088/ANV/GetAssignmentList", {
+  const res = await fetch(API_Path["GetAllAssignments"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -10,7 +11,7 @@ export const getAllAssignments = async () => {
     },
     body: JSON.stringify({
       page_Index: 1,
-      page_Size: 10
+      page_Size: 30
     })
   });
   console.log("res for getting the list of assignment : ", res);

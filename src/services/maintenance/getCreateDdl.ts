@@ -1,6 +1,8 @@
+import API_Path from "./apiPath";
+
 // 取ddl下拉式資料
 export const getCreateDdl = async (): Promise<any> => {
-  const res = await fetch("https://localhost:7088/CAR/GetMaintenanceDDL", {
+  const res = await fetch(API_Path["GetCreateDDL"], {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
