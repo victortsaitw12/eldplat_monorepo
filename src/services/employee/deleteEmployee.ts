@@ -1,8 +1,9 @@
+import API_Path from "./apiPath";
 export const deleteEmployee = async (user_no: string): Promise<void> => {
   console.log("user_no", user_no);
   try {
     const response = await fetch(
-      `https://localhost:7088/ATR/DeleteAccount/api/DeleteAccount/1?user_no=${user_no}`,
+      `${API_Path["DeleteAccount"]}?user_no=${user_no}`,
       {
         method: "POST",
         body: JSON.stringify({
