@@ -2,15 +2,21 @@ import React from "react";
 import { Pane } from "evergreen-ui";
 import DetailList from "@components/DetailList";
 import dayjs from "dayjs";
-
-const FlightInfoView = ({
-  flight_date,
-  flight_number,
-  airport,
-  terminal,
-  flight_departure_time,
-  airline
-}: any) => {
+import { useFormContext, useWatch } from "react-hook-form";
+const FlightInfoView = () => {
+  const { control } = useFormContext();
+  //詢議價類型（1：客製包車 2：接機 3：送機）
+  const {
+    quote_type,
+    flight_date,
+    flight_number,
+    airport,
+    terminal,
+    flight_departure_time,
+    airline
+  } = useWatch({
+    control
+  });
   const listArr = [
     {
       title: "航班日期",
@@ -29,8 +35,11 @@ const FlightInfoView = ({
       value: terminal || "--"
     },
     {
-      title: "航班抵達時間",
-      value: flight_departure_time || "--"
+      title: quote_type == "2" ? "航班抵達時間" : "航班起飛時間",
+      value:
+        quote_type == "2"
+          ? flight_departure_time || "--" //TODO
+          : flight_departure_time || "--"
     },
     {
       title: "航空公司",
