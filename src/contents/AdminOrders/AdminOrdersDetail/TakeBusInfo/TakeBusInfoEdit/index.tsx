@@ -8,11 +8,10 @@ import CounterInput from "@components/CounterInput";
 import { BodySTY } from "./style";
 import { I_busType, I_busItem } from "@contents/AdminOrders/AdminOrdersDetail";
 interface I_Props {
-  methods: any;
-  busData: I_busType[];
+  busListData: I_busType[];
 }
-const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
-  const { register, control } = useFormContext();
+const TakeBusInfoEdit = ({ busListData }: I_Props) => {
+  const { register, setValue, getValues } = useFormContext();
   return (
     <BodySTY>
       <Pane style={{ padding: "20px" }}>
@@ -25,8 +24,8 @@ const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      setValue={methods.setValue}
-                      getValues={methods.getValues}
+                      setValue={setValue}
+                      getValues={getValues}
                       register={register}
                       inputName="adult"
                       label="成人"
@@ -37,8 +36,8 @@ const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      setValue={methods.setValue}
-                      getValues={methods.getValues}
+                      setValue={setValue}
+                      getValues={getValues}
                       register={register}
                       inputName="child"
                       label="兒童 (2~4歲)"
@@ -49,8 +48,8 @@ const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      setValue={methods.setValue}
-                      getValues={methods.getValues}
+                      setValue={setValue}
+                      getValues={getValues}
                       register={register}
                       inputName="infant"
                       label="嬰兒 (0~1歲)"
@@ -68,8 +67,8 @@ const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      setValue={methods.setValue}
-                      getValues={methods.getValues}
+                      setValue={setValue}
+                      getValues={getValues}
                       register={register}
                       inputName="check_in_luggage"
                       label="托運行李 (21吋以上)"
@@ -80,8 +79,8 @@ const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
                   label: "",
                   value: (
                     <CounterInput
-                      setValue={methods.setValue}
-                      getValues={methods.getValues}
+                      setValue={setValue}
+                      getValues={getValues}
                       register={register}
                       inputName="carry_on_luggage"
                       label="手提行李 (20吋以下)"
@@ -94,7 +93,7 @@ const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
         </Pane>
         <Text className="bus_amount_title">車型及數量</Text>
         <Pane className="bus_amount">
-          {busData.map((child: any, i: number) => {
+          {busListData.map((child: any, i: number) => {
             return (
               <Collapse
                 opened={true}
@@ -110,8 +109,8 @@ const TakeBusInfoEdit = ({ busData, methods }: I_Props) => {
                           label: "",
                           value: (
                             <CounterInput
-                              setValue={methods.setValue}
-                              getValues={methods.getValues}
+                              setValue={setValue}
+                              getValues={getValues}
                               register={register}
                               inputName={
                                 "bus_data[" +

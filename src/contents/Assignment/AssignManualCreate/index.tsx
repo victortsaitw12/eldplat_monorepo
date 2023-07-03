@@ -150,6 +150,7 @@ function AssignManualCreate({
     const filledData = deepClone(createAssignData);
     filledData.manual_bus.map(
       (item: { bus_group: any; bus_no: any }, idx: string | number) => {
+        console.log("idx", idx);
         if (item?.bus_group && item?.bus_no) {
           filledData.manual_bus[idx]["filled"] = true;
         }

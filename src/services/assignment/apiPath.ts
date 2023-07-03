@@ -13,7 +13,10 @@ const API_Path = {
   GetDriverAssignInfo: createUrlPath("ANV", "Assignment_GetDriverInfo"), //編輯單筆時查詢派工資料
   GetOrderDates: createUrlPath("ANV", "ReplaceAssignment_OrderDateDDL"), //查詢出發到回程日期中間每一天的日期和週幾
   GetOrderInfo: createUrlPath("ANV", "AssignmentByManual_GetOrderInfo"), //查詢訂單的資料
-  UpdateSingleAssignment: createUrlPath("ANV", "Assignment_Edit") //更新某筆派車或派工資料
+  UpdateSingleAssignment: createUrlPath("ANV", "Assignment_Edit"), //更新某筆派車或派工資料
+  GetAssignDateDDL: createUrlPath("ANV", "ReplaceAssignment_OrderDateDDL"), //取得新增派車or派工 可選日期
+  GetBusDayNumberDDL: createUrlPath("ANV", "ReplaceAssignment_DriverDDL"), //取得新增派車or派工 可選車次
+  GetDriverNameDDL: createUrlPath("ANV", "ReplaceAssignment_DriverDDL") //取得新增派工 可選駕駛
 };
 
 export default API_Path;

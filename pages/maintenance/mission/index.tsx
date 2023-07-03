@@ -30,6 +30,7 @@ import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
 import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
 import FinishBtn from "@contents/maintenance/Mission/MissionList/FinishBtn";
 import AssignBtn from "@contents/maintenance/Mission/MissionList/AssignBtn";
+import { CloseAssignment } from "@services/maintenance/updateMaintenance";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -66,6 +67,7 @@ const Page: NextPageWithLayout<never> = () => {
 
       // 由於table內不只有靜態資料顯示(有button功能)，所以客制加工一下 => 結案按鈕
       MainMissionData?.map((item) => {
+        console.log("maintainance item----", item);
         if (item["completion_time"].label === "---") {
           const active =
             item["all_assignment_no"].value.length > 30 ? false : true;
@@ -117,8 +119,12 @@ const Page: NextPageWithLayout<never> = () => {
   };
   //
   const deleteItemHandler = async (id: string) => {
-    console.log("888");
     const maintenance_status = "2";
+
+    // ⭐按下停用按鈕關閉派單表API
+    const assignRes = await CloseAssignment(id, "02");
+
+    // ⭐按下停用按鈕把維保狀態改為2停用
     UpdateMaintenanceStatus(id, maintenance_status)
       .then((res) => {
         console.log("DELETE res", res);
