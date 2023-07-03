@@ -44,7 +44,7 @@ function Table({
   checkboxData,
   deleteText
 }: I_Table) {
-  const [currentTab, setCurrentTab] = React.useState<number | null>(0);
+  const [currentTab, setCurrentTab] = React.useState<number | null>(null);
   if (!data) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
