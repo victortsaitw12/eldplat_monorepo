@@ -32,7 +32,7 @@ const Index: NextPageWithLayout<never> = ({
   // const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState(null);
-  const [busData, setBusData] = useState([]);
+  const [busListData, setBusListData] = useState([]);
 
   const [nowTab, setNowTab] = useState("order");
 
@@ -79,7 +79,8 @@ const Index: NextPageWithLayout<never> = ({
     try {
       const res = await getQuotationByID(p_order_no);
       const bus_res = await getBusType();
-      setBusData(bus_res);
+      setBusListData(bus_res);
+      console.log("詢議價的資料", res.data);
       setOrderData(res.data);
     } catch (e: any) {
       console.log(e);
@@ -118,7 +119,7 @@ const Index: NextPageWithLayout<never> = ({
             >
               <AdminOrdersDetal
                 submitRef={submitRef}
-                busData={busData}
+                busListData={busListData}
                 submitForm={asyncSubmitForm}
                 isEdit={editPage}
                 quoteType={p_quote_type}
