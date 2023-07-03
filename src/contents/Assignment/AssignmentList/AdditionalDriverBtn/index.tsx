@@ -1,30 +1,37 @@
 import React from "react";
 import { BodySTY } from "./style";
-import { Button, PlusIcon } from "evergreen-ui";
+import { PlusIcon } from "evergreen-ui";
+
 import { Label } from "@components/Button/Primary";
-import { UpdateMaintenanceStatus } from "@services/maintenance/getMaintenanceMission";
-import router from "next/router";
+import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
 interface AdditionalDriverBtn_Type {
   id?: string;
   disabled?: boolean;
+  setOrderInfo: (t: any) => void;
+  setCreatDrawerOpen: (v: "car" | "driver" | "") => void;
 }
-const AdditionalDriverBtn = ({ id, disabled }: AdditionalDriverBtn_Type) => {
-  const handleAddDriver = () => {
-    try {
-      alert("+派工");
+const AdditionalDriverBtn = ({
+  id,
+  disabled,
+  setOrderInfo,
+  setCreatDrawerOpen
+}: AdditionalDriverBtn_Type) => {
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-      // UpdateMaintenanceStatus(id)
-      //   .then((res) => {
-      //     console.log("UpdateMaintenanceStatus res", res);
-      //     router.push("/maintenance/record ");
-      //   })
-      //   .catch((err) => {
-      //     console.log("err of update status ", err);
-      //   });
+  const renderAddDriver = () => {
+    setLoading(true);
+
+    try {
+      getOrderInfo(id).then((data) => {
+        console.log("data", data);
+        setOrderInfo(data.dataList);
+      });
+      setCreatDrawerOpen("driver");
     } catch (err) {
       console.log("err of click the finish button", err);
     }
+    setLoading(false);
   };
   return (
     <BodySTY>
@@ -35,7 +42,7 @@ const AdditionalDriverBtn = ({ id, disabled }: AdditionalDriverBtn_Type) => {
             派工
           </span>
         }
-        onClick={handleAddDriver}
+        onClick={renderAddDriver}
         disabled={disabled}
       ></Label>
     </BodySTY>
