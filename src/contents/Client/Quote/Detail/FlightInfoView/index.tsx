@@ -10,8 +10,10 @@ const FlightInfoView = ({ data }: any) => {
     airport,
     terminal,
     flight_departure_time,
-    airline
+    airline,
+    quote_type
   } = data;
+  console.log("data", data);
   const listArr = [
     {
       title: "航班日期",
@@ -30,7 +32,7 @@ const FlightInfoView = ({ data }: any) => {
       value: terminal || "-"
     },
     {
-      title: "航班抵達時間",
+      title: `航班${quote_type === "3" ? "出發" : "抵達"}時間`,
       value: flight_departure_time || "-"
     },
     {

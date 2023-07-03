@@ -24,7 +24,7 @@ const DetailList = ({ listArray }: I_Props) => {
           );
         })
       ) : (
-        <span>no data...</span>
+        <span>--</span>
       )}
     </BodySTY>
   );

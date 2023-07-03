@@ -121,7 +121,7 @@ function VehicleForm({ orderInfo, setLoading }: I_VehicleFormProps) {
       );
 
       const resBusDayNumberDDL = res.dataList[0].day_bus_options.map(
-        (item, i) => {
+        (item: any, i: number) => {
           return { ...item, label: `第0${item.bus_day_number}車` };
         }
       );

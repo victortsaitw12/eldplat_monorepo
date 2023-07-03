@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 export const updateCustomer = async (customerData: any) => {
   for (const key in customerData) {
     if (customerData[key] === "") {
@@ -11,7 +12,9 @@ export const updateCustomer = async (customerData: any) => {
     }
   }
   //
-  const res = await fetch("https://localhost:7088/CTR/UpdateCustomer", {
+  const url = new URL(API_Path["updateCustomer"]);
+  //
+  const res = await fetch(url.href, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

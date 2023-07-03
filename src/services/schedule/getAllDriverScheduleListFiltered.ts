@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 // 檢視所有駕駛當月排休
 export const getAllDriverScheduleListFiltered = async (
   dateStr: string,
@@ -14,7 +15,7 @@ export const getAllDriverScheduleListFiltered = async (
       });
     }
   }
-  const res = await fetch("https://localhost:7088/ATR/GetFilterScheduleList", {
+  const res = await fetch(`${API_Path["getAllDriverScheduleListFiltered"]}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

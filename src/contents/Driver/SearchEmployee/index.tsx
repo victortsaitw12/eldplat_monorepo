@@ -1,7 +1,7 @@
 import { Pane, Spinner, Button, SearchInput, PlusIcon } from "evergreen-ui";
 import React from "react";
 
-import { getAllNonDriverEmployee } from "@services/driver/getAllDrivers";
+import { getAllNonDriverUser } from "@services/driver/getAllNonDriverUser";
 import { createDriverNO } from "@services/driver/createDriver";
 import { SearchEmployeeSTY } from "./style";
 import EmployeeItem from "./EmployeeItem";
@@ -14,7 +14,7 @@ function SearchEmployee({ update, closeSearch, refetch }: any) {
 
   React.useEffect(() => {
     setIsLoading(true);
-    getAllNonDriverEmployee().then((res) => {
+    getAllNonDriverUser().then((res) => {
       setAllemployees(res.dataList);
     });
     setIsLoading(false);

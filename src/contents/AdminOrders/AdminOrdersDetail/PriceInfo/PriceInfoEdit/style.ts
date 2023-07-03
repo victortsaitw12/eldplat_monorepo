@@ -13,16 +13,15 @@ const BodySTY = styled.div`
       }
     }
   }
-  .total_price {
+
+  .price_content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     & > span {
-      flex: 1;
       margin-bottom: 8px;
       color: ${({ theme }) => theme.color.N700};
       font-weight: 600;
-      font-size: 25px;
       &:first-child {
         max-width: 60px;
         font-size: 16px;
@@ -31,16 +30,17 @@ const BodySTY = styled.div`
         display: flex;
         align-items: center;
         gap: 4px;
-      }
-      & > input {
-        height: 48px;
-        width: 100%;
-        color: ${({ theme }) => theme.color.N700};
-        font-weight: 600;
-        font-size: 25px;
+        font-size: 24px;
       }
     }
-
+    &.xs {
+      & > span {
+        &:first-child,
+        &:last-child {
+          font-size: 16px;
+        }
+      }
+    }
     & ~ span {
       display: inline-block;
       width: 100%;
@@ -81,6 +81,21 @@ const BodySTY = styled.div`
   hr {
     margin: 20px 0;
     border-top: 1px solid ${({ theme }) => theme.color.N0};
+  }
+  input[type="number"] {
+    text-align: right;
+  }
+  //取消number input的上下箭頭
+  /* Chrome, Safari, Edge, Opera */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 `;
 

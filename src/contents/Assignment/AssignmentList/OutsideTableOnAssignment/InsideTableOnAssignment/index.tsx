@@ -26,7 +26,7 @@ import { dateDiff, slashDate, timeWithAPM } from "@utils/convertDate";
 import EditBtn from "./EditBtn";
 //
 interface I_Data {
-  [key: string]: string | number | React.ReactNode;
+  [key: string]: string | number | React.ReactNode | any;
 }
 
 interface I_Table {
@@ -47,21 +47,13 @@ interface I_Table {
 Must provide id field in the Data Array
 */
 function InsideTableOnAssignment({
-  tableName,
   idx,
   titles,
   data,
   subAssignData,
-  isOpen,
-  goToCreatePage,
-  viewItem = (id, item) => {
-    console.log(id, item);
-  },
+
   goToEditPage = (item: any) => {
     console.log("EDIT");
-  },
-  deleteItem = (item) => {
-    console.log(item);
   }
 }: I_Table) {
   console.log("🅰subAssignData", subAssignData);
@@ -93,7 +85,6 @@ function InsideTableOnAssignment({
         <tbody>
           {subAssignData[idx].map(
             (item: I_SubAssignData, i: number, arr: I_SubAssignData[]) => {
-              console.log("💥item", item);
               const startDate = slashDate(item.task_start_time);
               const startTime = timeWithAPM(item.task_start_time);
               const endTime = timeWithAPM(item.task_end_time);
@@ -104,13 +95,19 @@ function InsideTableOnAssignment({
                   data[idx]?.task_end_time?.label
                 ) + 1;
 
-              arr.sort((a, b) => a.bus_day_number - b.bus_day_number);
+              arr.sort((a, b) => {
+                const dateA: any = new Date(a.task_start_time);
+                const dateB: any = new Date(b.task_start_time);
+
+                return dateA - dateB || a.bus_day_number - b.bus_day_number;
+              });
 
               return (
                 <>
                   <tr key={uuid()}>
-                    {i % (arr.length / dayCount) === 0 && (
+                    {i % Math.ceil(arr.length / dayCount) === 0 && (
                       <td rowSpan={arr.length / dayCount}>
+                        {/* <td rowSpan={Math.ceil(arr.length / dayCount)}> */}
                         <div>{startDate}</div>
                       </td>
                     )}

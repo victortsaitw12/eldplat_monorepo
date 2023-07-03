@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 export const createCustomer = async (customerData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
   for (const key in customerData) {
@@ -5,7 +6,10 @@ export const createCustomer = async (customerData: any) => {
       filteredNullData[key] = customerData[key];
     }
   }
-  const res = await fetch("https://localhost:7088/CTR/CreateCustomer", {
+  //
+  const url = new URL(API_Path["createCustomer"]);
+  //
+  const res = await fetch(url.href, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

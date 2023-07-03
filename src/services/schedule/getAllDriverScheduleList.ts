@@ -1,7 +1,9 @@
+import API_Path from "./apiPath";
+
 // 檢視所有駕駛當月排休
 export const getAllDriverScheduleList = async (date: string) => {
   const res = await fetch(
-    `https://localhost:7088/ATR/GetAllDriverScheduleList?schd_date=${date}`,
+    `${API_Path["getAllDriverScheduleList"]}?schd_date=${date}`,
     {
       method: "POST",
       headers: {
