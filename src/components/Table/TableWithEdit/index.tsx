@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { ErrorIcon, PlusIcon } from "evergreen-ui";
 import TableActionButton from "@components/Table/TableActionButton";
-// import { useRouter } from "next/router";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
-import { FormattedMessage } from "react-intl";
-import { TableSTY, TableContainerSTY, StyledDot } from "./style";
-import FinishBtn from "@contents/maintenance/Mission/MissionList/FinishBtn";
+import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
 //
 interface I_Data {
@@ -47,8 +44,7 @@ function Table({
   checkboxData,
   deleteText
 }: I_Table) {
-  // const [checkedItems, setCheckedItems] = useState<Array<string | number>>([]);
-  // const router = useRouter();
+  const [currentTab, setCurrentTab] = React.useState<number | null>(0);
   if (!data) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
@@ -136,7 +132,6 @@ function Table({
                   )}
                   {Object.keys(item).map((key) => {
                     if (key === "id") return;
-
                     if (!item[key].label) {
                       return (
                         <td key={item.id + key}>
@@ -167,6 +162,9 @@ function Table({
                         deleteItem && deleteItem.bind(null, item.id?.value)
                       }
                       deleteText={deleteText}
+                      isOpen={currentTab === idx}
+                      openOption={() => setCurrentTab(idx)}
+                      closeOption={() => setCurrentTab(null)}
                     />
                   </td>
                 </tr>
