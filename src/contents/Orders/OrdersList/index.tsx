@@ -6,13 +6,7 @@ import StatusCard from "@components/StatusCard";
 import { PURPOSE, QUOTE_TYPE } from "@services/getDDL";
 import { I_Order } from "@services/client/getOrdersList";
 import OrderListItem from "./OrderListItem";
-const OrdersList = ({
-  type,
-  orderData
-}: {
-  type: "query" | "quote" | "order" | "finish";
-  orderData: any;
-}) => {
+const OrdersList = ({ orderData }: { orderData: I_Order[] }) => {
   if (!orderData || orderData.length === 0)
     return (
       <BodySTY>
@@ -46,8 +40,8 @@ const OrdersList = ({
                         : item.quote_type === "3"
                         ? "接機"
                         : item.purpose
-                        ? PURPOSE[item.purpose].label
-                        : "---"}
+                        ? `${PURPOSE[item.purpose]?.label}`
+                        : "--"}
                     </span>
                   </div>
                 }

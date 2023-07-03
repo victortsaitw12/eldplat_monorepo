@@ -2,6 +2,7 @@ import ProgressList from "@components/ProgressList";
 
 import { BodySTY } from "./style";
 import { mappingProgressInfo } from "@services/client/mappingQuotationData";
+import PaymentBtn from "./PaymentBtn";
 
 const OrderListItem = ({ itemData }: { itemData: any }) => {
   const progressInfo = mappingProgressInfo(itemData.status_list);
@@ -22,6 +23,7 @@ const OrderListItem = ({ itemData }: { itemData: any }) => {
       <div className="info-progress">
         <ProgressList dataLists={progressInfo} />
       </div>
+      {/* <PaymentBtn data={itemData} setData={setData} /> */}
     </BodySTY>
   );
 };

@@ -18,7 +18,12 @@ interface I_OrdersList {
 
 const Page: NextPageWithLayout<never> = () => {
   // ----- variables, states ----- //
-  const [data, setData] = React.useState<I_OrdersList>({});
+  const [data, setData] = React.useState<I_OrdersList>({
+    query: [],
+    quote: [],
+    order: [],
+    finish: []
+  });
   const [isLoading, setIsLoading] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(1);
 
@@ -87,17 +92,17 @@ const Page: NextPageWithLayout<never> = () => {
           <Spinner />
         </StatusCard>
       )}
-      {!isLoading && data && currentTab == 1 && (
-        <OrdersList type="query" orderData={data.query} />
+      {!isLoading && data.query && currentTab == 1 && (
+        <OrdersList orderData={data.query} />
       )}
-      {!isLoading && data && currentTab == 2 && (
-        <OrdersList type="quote" orderData={data.quote} />
+      {!isLoading && data.quote && currentTab == 2 && (
+        <OrdersList orderData={data.quote} />
       )}
-      {!isLoading && data && currentTab == 3 && (
-        <OrdersList type="order" orderData={data.order} />
+      {!isLoading && data.order && currentTab == 3 && (
+        <OrdersList orderData={data.order} />
       )}
-      {!isLoading && data && currentTab == 4 && (
-        <OrdersList type="finish" orderData={data.finish} />
+      {!isLoading && data.finish && currentTab == 4 && (
+        <OrdersList orderData={data.finish} />
       )}
     </BodySTY>
   );

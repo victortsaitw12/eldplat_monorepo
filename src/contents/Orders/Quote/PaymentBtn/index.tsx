@@ -8,12 +8,13 @@ import SecondaryRadiusBtn from "@components/Button/SecondaryRadius";
 
 import { updateStatus } from "@services/client/updateStatus";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
+import { I_Order } from "@services/client/getOrdersList";
 
 const PaymentBtn = ({
   data,
   setData
 }: {
-  data: I_OrderDetail;
+  data: I_OrderDetail | I_Order;
   setData: (data: any) => void;
 }) => {
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
@@ -136,8 +137,7 @@ const PaymentBtn = ({
         </div>
       );
     }
-    // 3: {name: '訂金逾期', status: 'error', date: '06/20/2023 00:00:00'}
-    // 有逾期狀況
+    // 3: 有逾期狀況{name: '訂金逾期', status: 'error', date: '06/20/2023 00:00:00'}
     if (statusList.filter((item) => item.status === "error").length !== 0)
       return (
         <InlineAlert intent="danger" className="inlineAlert">
@@ -177,9 +177,6 @@ const PaymentBtn = ({
                     }
                   ]}
                 />
-                {/* <Button marginTop={16} onClick={close}>
-                  Self Managed Close
-                </Button> */}
               </Pane>
             )}
           </Dialog>

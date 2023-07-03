@@ -38,8 +38,6 @@ export const EventBtnSTY = styled.div<{
     height: 100%;
     width: ${({ duration }) =>
       "calc(" + duration * 100 + "% + " + (duration - 1) * 17 + "px)"};
-    font-family: "Noto Sans";
-    font-style: normal;
     font-weight: ${({ theme }) => theme.fontWeight.Heading200};
     font-size: ${({ theme }) => theme.fontSize.Heading200};
     /* line-height: 16px; */
