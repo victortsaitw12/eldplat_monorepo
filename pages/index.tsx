@@ -1,93 +1,69 @@
 import React from "react";
-import { Textarea } from "evergreen-ui";
-//@componets
-import Collapse from "@components/Collapse";
-import CounterInput from "@components/CounterInput";
-import CustomSelect from "@components/CustomSelect";
-import CheckBoxWrapper from "@components/CheckBoxWrapper";
-import DetailList from "@components/DetailList";
-import VerticalDetail from "@components/VerticalDetail";
-import { useForm } from "react-hook-form";
+import { NextPageWithLayout } from "next";
+import { getLayout } from "@layout/MainLayout";
+import {
+  DriveTimeIcon,
+  WrenchIcon,
+  PersonIcon,
+  PeopleIcon,
+  DocumentIcon,
+  ThDerivedIcon
+} from "evergreen-ui";
+import styled from "styled-components";
+import EntranceList from "@contents/Home/EntranceList";
 //
-function Home() {
-  const { register, control, getValues, setValue } = useForm<any>({
-    defaultValues: {
-      counter: 0,
-      customSelect: "B"
+const BodySTY = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 30px;
+  > .home-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: ${({ theme }) => theme.color.N700};
+    > .header-title {
+      font-size: 24px;
+      font-weight: 600;
     }
-  });
+    > .header-description {
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+`;
+//
+const routerList: Array<{
+  iconImage: React.ReactNode;
+  label: string;
+  pathUrl: string;
+}> = [
+  {
+    iconImage: <DriveTimeIcon />,
+    label: "汽車分配",
+    pathUrl: "/bus"
+  },
+  { iconImage: <WrenchIcon />, label: "維保任務", pathUrl: "/maintenance" },
+  { iconImage: <PersonIcon />, label: "駕駛", pathUrl: "/driver" },
+  { iconImage: <PeopleIcon />, label: "客戶", pathUrl: "/customer" },
+  { iconImage: <DocumentIcon />, label: "訂單", pathUrl: "/order" },
+  { iconImage: <ThDerivedIcon />, label: "派單", pathUrl: "/dispatch" }
+];
+const Home: NextPageWithLayout<never> = () => {
   return (
-    <div style={{ height: "100vh", padding: "1rem" }}>
-      <h1>Lion EldPlat</h1>
-      <Collapse title="客製包車">
-        <p>內容內容</p>
-        <p>內容內容</p>
-        <p>內容內容</p>
-        <p>內容內容</p>
-        <p>內容內容</p>
-        <p>內容內容</p>
-        <p>內容內容</p>
-        <p>內容內容</p>
-      </Collapse>
-      <div style={{ width: "300px" }}>
-        <CounterInput
-          register={register}
-          inputName="counter"
-          label="成人"
-          getValues={getValues}
-          setValue={setValue}
-        />
+    <BodySTY>
+      <div className="home-header">
+        <div className="header-title">{"嗨！讓我們開始吧。"}</div>
+        <div className="header-description">
+          {"開始建立您的車隊並取得成功！利用這些核心功能立即啟用 EldPlat。"}
+        </div>
       </div>
-      <div>
-        <CustomSelect
-          selectName="customSelect"
-          register={register}
-          label="標籤"
-          options={[
-            {
-              value: "A",
-              text: "A市"
-            },
-            {
-              value: "B",
-              text: "B市"
-            }
-          ]}
-        />
+      <div className="home-body">
+        <EntranceList routerList={routerList} />
       </div>
-      <div>
-        <CheckBoxWrapper
-          control={control}
-          label="舉牌 (NT$200)"
-          inputName="remark-sign-check"
-        >
-          <Textarea />
-        </CheckBoxWrapper>
-      </div>
-      <div>{/* <VerticalTextArea /> */}</div>
-      <div>
-        <DetailList
-          listArray={[
-            {
-              title: "訂單編號",
-              value: "ORD0002992992000"
-            },
-            {
-              title: "訂單編號",
-              value: "ORD0002992992000"
-            },
-            {
-              title: <h4>訂單編號</h4>,
-              value: "ORD0002992992000"
-            }
-          ]}
-        />
-      </div>
-      <div>
-        <VerticalDetail />
-      </div>
-    </div>
+    </BodySTY>
   );
-}
+};
 
+Home.getLayout = getLayout;
 export default Home;
