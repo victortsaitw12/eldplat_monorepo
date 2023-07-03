@@ -15,7 +15,11 @@ const API_Path = {
   UpdateMaintenanceStatus: createUrlPath("CAR", "UpdateMaintenanceStatus"), //更新結案狀態(維保任務頁)
   GetAllMaintenanceNotices: createUrlPath("CAR", "ReminderMaintenance_GetAll"), //查詢所有維保通知列表
   CancelMaintenanceById: createUrlPath("CAR", "ReminderMaintenance_Cancel"), //停用單筆維保通知
-  UpdateMaintenance: createUrlPath("CAR", "UpdateMaintenance") //更新某筆維保資料
+  UpdateMaintenance: createUrlPath("CAR", "UpdateMaintenance"), //更新某筆維保資料
+  AssignmentClose: createUrlPath(
+    "ANV",
+    "Assignment_Closed/maintenance_quote_no"
+  ) //更新某筆維保資料
 };
 
 export default API_Path;

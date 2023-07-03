@@ -79,7 +79,11 @@ const Page: NextPageWithLayout<never> = () => {
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
   function setPosition(dayNum: number, carNum: number) {
-    setOrderIndex(2 * (dayNum - 1) + carNum - 1);
+    if (orderInfo[0].order_quantity === 1) {
+      setOrderIndex(dayNum - 1 + (carNum - 1));
+    } else {
+      setOrderIndex(2 * (dayNum - 1) + carNum - 1);
+    }
   }
 
   const {
