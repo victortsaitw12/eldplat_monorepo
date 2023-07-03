@@ -47,21 +47,13 @@ interface I_Table {
 Must provide id field in the Data Array
 */
 function InsideTableOnAssignment({
-  tableName,
   idx,
   titles,
   data,
   subAssignData,
-  isOpen,
-  goToCreatePage,
-  viewItem = (id, item) => {
-    console.log(id, item);
-  },
+
   goToEditPage = (item: any) => {
     console.log("EDIT");
-  },
-  deleteItem = (item) => {
-    console.log(item);
   }
 }: I_Table) {
   console.log("🅰subAssignData", subAssignData);
@@ -93,7 +85,6 @@ function InsideTableOnAssignment({
         <tbody>
           {subAssignData[idx].map(
             (item: I_SubAssignData, i: number, arr: I_SubAssignData[]) => {
-              console.log("💥item", item);
               const startDate = slashDate(item.task_start_time);
               const startTime = timeWithAPM(item.task_start_time);
               const endTime = timeWithAPM(item.task_end_time);
@@ -107,7 +98,11 @@ function InsideTableOnAssignment({
               arr.sort((a, b) => {
                 const dateA = new Date(a.task_start_time);
                 const dateB = new Date(b.task_start_time);
-
+                // if (dateA === dateB) {
+                //   return a.bus_day_number - b.bus_day_number;
+                // } else {
+                //   return dateA - dateB;
+                // }
                 return dateA - dateB || a.bus_day_number - b.bus_day_number;
               });
 
