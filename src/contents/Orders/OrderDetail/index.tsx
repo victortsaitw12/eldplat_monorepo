@@ -15,7 +15,7 @@ import {
 import { QUOTE_TYPE, PURPOSE } from "@services/getDDL";
 
 import ShuttleInfo from "@contents/Orders/OrderDetail/ShuttleInfo";
-import TakeBusInfoView from "@contents/AdminOrders/AdminOrdersDetail/TakeBusInfo/TakeBusInfoView";
+import TakeBusInfoView from "@contents/Client/Quote/Detail/TakeBusInfoView";
 import FlightInfoView from "@contents/Client/Quote/Detail/FlightInfoView";
 import SpecialInfoView from "@contents/Client/Quote/Detail/SpecialInfoView";
 import ContactInfoView from "@contents/Client/Quote/Detail/ContactInfoView";
