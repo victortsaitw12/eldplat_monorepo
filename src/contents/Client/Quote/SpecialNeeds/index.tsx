@@ -137,7 +137,7 @@ const SpecialNeedsInformation = () => {
                 description=""
               >
                 <CounterInput
-                  label="由店家提供 (+NT$ 200 / 天)"
+                  label="由店家提供 (NT$200/天)"
                   register={register}
                   setValue={setValue}
                   getValues={getValues}
