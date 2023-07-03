@@ -7,7 +7,11 @@ const API_Path = {
   UpdateQuotation: createUrlPath("ORD", "UpdateQuotation"), // 編輯詢價/報價/訂單列表
   CancelQuotation: createUrlPath("ORD", "CancelQuotation"), // 取消報價（成立訂單並產生新的訂單號）
   GetQuotationByStatus: createUrlPath("ORD", "GetQuotationByStatus"), //查詢tab詢價/報價/訂單列表
-  UpdateStatusLog: createUrlPath("ORD", "UpdateStatusLog") //更改詢價/報價/訂單狀態
+  UpdateStatusLog: createUrlPath("ORD", "UpdateStatusLog"), //更改詢價/報價/訂單狀態
+  AssignmentClosed: createUrlPath(
+    "ANV",
+    "Assignment_Closed/maintenance_quote_no"
+  ) //編輯派車單/派工單狀態(結案)
 };
 
 export default API_Path;

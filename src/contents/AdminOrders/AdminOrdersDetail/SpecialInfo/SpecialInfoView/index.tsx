@@ -62,7 +62,7 @@ const SpecialInfoView = ({
   if (pickup_sign_check == "1") {
     listArray.push({
       title: "舉牌",
-      value: pickup_sign_remark || "-"
+      value: pickup_sign_remark || "--"
     });
   }
   if (driver_guide_check == "1") {

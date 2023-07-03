@@ -96,11 +96,7 @@ const ShuttleInfo = ({
               </Pane>
             </>
           )}
-          {!isCustomBus && (
-            <>
-              <span>接送行程</span>
-            </>
-          )}
+          {!isCustomBus && <Text>行程資訊</Text>}
           {fields.length > 1 && (
             <TrashIcon
               onClick={() => {
@@ -140,7 +136,7 @@ const ShuttleInfo = ({
                       {...register(`order_itinerary_list.${i}.day_date`)}
                     />
                   ) : (
-                    dayjs(child.day_date).format("YYYY-MM-DD") || "-"
+                    dayjs(child.day_date).format("YYYY-MM-DD") || "--"
                   )
                 }
               />
@@ -173,7 +169,7 @@ const ShuttleInfo = ({
                     </Pane>
                   </>
                 ) : (
-                  child.departure_time || "-"
+                  child.departure_time || "--"
                 )
               }
             />

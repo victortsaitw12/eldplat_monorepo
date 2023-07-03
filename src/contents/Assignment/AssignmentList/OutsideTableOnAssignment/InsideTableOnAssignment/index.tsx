@@ -96,13 +96,9 @@ function InsideTableOnAssignment({
                 ) + 1;
 
               arr.sort((a, b) => {
-                const dateA = new Date(a.task_start_time);
-                const dateB = new Date(b.task_start_time);
-                // if (dateA === dateB) {
-                //   return a.bus_day_number - b.bus_day_number;
-                // } else {
-                //   return dateA - dateB;
-                // }
+                const dateA: any = new Date(a.task_start_time);
+                const dateB: any = new Date(b.task_start_time);
+
                 return dateA - dateB || a.bus_day_number - b.bus_day_number;
               });
 

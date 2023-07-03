@@ -1,7 +1,8 @@
+import API_Path from "./apiPath";
 // 修改排休
 export const updateSchedule = async (data: any) => {
   console.log("updateSchedule:", JSON.stringify(data));
-  const res = await fetch("https://localhost:7088/ATR/UpdateDriverSchedule", {
+  const res = await fetch(`${API_Path["updateSchedule"]}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

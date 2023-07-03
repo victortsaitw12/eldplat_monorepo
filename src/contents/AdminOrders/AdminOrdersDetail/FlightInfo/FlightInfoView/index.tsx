@@ -14,27 +14,27 @@ const FlightInfoView = ({
   const listArr = [
     {
       title: "航班日期",
-      value: dayjs(flight_date).format("YYYY-MM-DD") || "-"
+      value: dayjs(flight_date).format("YYYY-MM-DD") || "--"
     },
     {
       title: "航班編號",
-      value: flight_number || "-"
+      value: flight_number || "--"
     },
     {
       title: "機場",
-      value: airport || "-"
+      value: airport || "--"
     },
     {
       title: "航廈",
-      value: terminal || "-"
+      value: terminal || "--"
     },
     {
       title: "航班抵達時間",
-      value: flight_departure_time || "-"
+      value: flight_departure_time || "--"
     },
     {
       title: "航空公司",
-      value: airline || "-"
+      value: airline || "--"
     }
   ];
   return (

@@ -1,7 +1,10 @@
+import API_Path from "./apiPath";
+
+// 取得單一駕駛資料
 import { deepCloneWithDateFormat } from "@utils/formatDateFromAPI";
 export const getDriverById = async (driver_no: string) => {
   const response = await fetch(
-    `https://localhost:7088/ATR/QueryDriverInfo?driver_no=${driver_no}`,
+    `${API_Path["getDriverById"]}?driver_no=${driver_no}}`,
     {
       method: "POST",
       headers: {
