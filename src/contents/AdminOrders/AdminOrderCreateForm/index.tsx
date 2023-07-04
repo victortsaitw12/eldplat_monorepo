@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
+import { ErrorMessage } from "@hookform/error-message";
 //@sevices
 import { createQuotation } from "@services/admin_orders/createQuotation";
 import FiledInput from "./FieldInput";
@@ -51,7 +52,12 @@ interface I_Props {
 }
 
 function AdminOrderCreateForm({ reloadData }: I_Props) {
-  const { register, handleSubmit, control } = useForm({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm({
     defaultValues
   });
 
@@ -77,14 +83,20 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
         分類
       </Text>
       <Select
+        isInvalid={!!errors.quote_type}
         {...register("quote_type", {
-          required: "必填"
+          required: "不可空白"
         })}
       >
         <option value="1">客製包車</option>
         <option value="2">接機</option>
         <option value="3">送機</option>
       </Select>
+      <ErrorMessage
+        errors={errors}
+        name="quote_type"
+        render={({ message }) => <Text className="input-error">{message}</Text>}
+      />
       <Text>
         <span style={{ color: "#D14343" }}>* </span>姓
       </Text>
@@ -93,7 +105,7 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
         controlProps={{
           name: "order_contact_list[0].family_name",
           control,
-          rules: { required: "此欄位必填" }
+          rules: { required: "不可空白" }
         }}
       />
       <Text>
@@ -104,7 +116,7 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
         controlProps={{
           name: "order_contact_list[0].name",
           control,
-          rules: { required: "此欄位必填" }
+          rules: { required: "不可空白" }
         }}
       />
       <Text>
@@ -112,13 +124,13 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
         手機
       </Text>
       <FlexWrapper padding="0">
-        {/*公司電話國碼*/}
         <FiledInput
           style={{ width: "60px", minWidth: "60px" }}
           label=""
           controlProps={{
             name: "order_contact_list[0].contact_phone_code",
-            control
+            control,
+            rules: { required: "不可空白" }
           }}
         />
         <FiledInput
@@ -127,7 +139,7 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
           controlProps={{
             name: "order_contact_list[0].contact_phone",
             control,
-            rules: { required: "此欄位必填" }
+            rules: { required: "不可空白" }
           }}
         />
       </FlexWrapper>
@@ -159,7 +171,7 @@ function AdminOrderCreateForm({ reloadData }: I_Props) {
         controlProps={{
           name: "order_contact_list[0].contact_email",
           control,
-          rules: { required: "此欄位必填" }
+          rules: { required: "不可空白" }
         }}
       />
       <IconLeft text={"新增詢價單"} type="submit">
