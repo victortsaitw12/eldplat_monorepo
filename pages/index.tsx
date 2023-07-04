@@ -43,11 +43,15 @@ const routerList: Array<{
     label: "汽車分配",
     pathUrl: "/bus"
   },
-  { iconImage: <WrenchIcon />, label: "維保任務", pathUrl: "/maintenance" },
+  {
+    iconImage: <WrenchIcon />,
+    label: "維保任務",
+    pathUrl: "/maintenance/record"
+  },
   { iconImage: <PersonIcon />, label: "駕駛", pathUrl: "/driver" },
   { iconImage: <PeopleIcon />, label: "客戶", pathUrl: "/customer" },
-  { iconImage: <DocumentIcon />, label: "訂單", pathUrl: "/order" },
-  { iconImage: <ThDerivedIcon />, label: "派單", pathUrl: "/dispatch" }
+  { iconImage: <DocumentIcon />, label: "訂單", pathUrl: "/admin_orders" },
+  { iconImage: <ThDerivedIcon />, label: "派單", pathUrl: "/assignment" }
 ];
 const Home: NextPageWithLayout<never> = () => {
   return (
