@@ -192,13 +192,15 @@ const SpecialInfoEdit = () => {
           >
             <Pane>
               <Radio
+                size={16}
                 {...register("bring_pets_radio")}
-                value="01"
+                value="1"
                 label="攜帶小型寵物，且會裝於寵物籠/背包中。"
               />
               <Radio
+                size={16}
                 {...register("bring_pets_radio")}
-                value="02"
+                value="2"
                 label="寵物無法裝籠，將直接帶上車（NT$1,000） "
               />
             </Pane>
