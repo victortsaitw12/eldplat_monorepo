@@ -6,12 +6,13 @@ import Document, {
   DocumentContext
 } from "next/document";
 import { ServerStyleSheet } from "styled-components";
+import { extractStyles } from "evergreen-ui";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
-
+    const { css: evergreenCss, hydrationScript } = extractStyles();
     try {
       ctx.renderPage = () =>
         originalRenderPage({
@@ -25,9 +26,14 @@ export default class MyDocument extends Document {
         styles: (
           <>
             {initialProps.styles}
+            <style
+              id="evergreen-css"
+              dangerouslySetInnerHTML={{ __html: evergreenCss }}
+            />
             {sheet.getStyleElement()}
           </>
-        )
+        ),
+        hydrationScript
       };
     } finally {
       sheet.seal();
@@ -36,7 +42,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head></Head>
+        <Head />
         <body>
           <Main />
           <div id="backdrop-root" />

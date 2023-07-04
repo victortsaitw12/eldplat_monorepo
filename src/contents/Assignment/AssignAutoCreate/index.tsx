@@ -24,6 +24,7 @@ import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
 import { v4 as uuid } from "uuid";
 import { createAssignmentByAuto } from "@services/assignment/createAssignByAuto";
 import { useRouter } from "next/router";
+import CreateFail from "../CreateFail";
 
 //@components
 
@@ -38,6 +39,8 @@ function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
     { bus_group: "00", bus_group_name: "請選擇" }
   ]);
   const [autoAssignData, setAutoAssignData] = useState<AutoAssignType>();
+  const [failIsShown, setFailIsShown] = useState<boolean>(false);
+  const [failMessage, setFailMessage] = useState<string>("");
 
   // 一進來先抓bus_group DDL
   useEffect(() => {
@@ -76,10 +79,15 @@ function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
     try {
       const res = await createAssignmentByAuto(autoAssignData);
       console.log("auto assign res: ", res);
+      if (res.statusCode === "200") {
+        // router.reload();
+      } else {
+        setFailMessage(res.message);
+        setFailIsShown(true);
+      }
     } catch (err) {
       console.log("auto assign err: ", err);
     }
-    router.reload();
     console.log("autoAssignData", autoAssignData);
   };
 
@@ -139,6 +147,14 @@ function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
           }
         )}
       </SelectField>
+
+      {failIsShown && (
+        <CreateFail
+          failIsShown={failIsShown}
+          setFailIsShown={setFailIsShown}
+          failMessage={failMessage}
+        />
+      )}
 
       {/* 全部都填好之後的儲存按鈕 */}
       <IconLeft text={"確定"} type="submit">

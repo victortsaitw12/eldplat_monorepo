@@ -25,6 +25,9 @@ const FormSTY = styled.form`
       margin-left: -70px;
     }
   }
+  .input-error {
+    color: ${({ theme }) => theme.color.R400};
+  }
 `;
 const ItemSTY = styled.label`
   position: relative;

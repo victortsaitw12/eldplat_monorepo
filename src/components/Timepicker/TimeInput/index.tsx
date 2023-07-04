@@ -41,7 +41,7 @@ const TimeInput = ({
 
   React.useEffect(() => {
     const updatedDate = dayjs(dateBase)
-      .add(hour + timeslot, "hour")
+      .add(((hour % 12) + timeslot) % 24, "hour")
       .add(minute, "minute")
       .format("YYYY-MM-DDTHH:mm:ss");
     setDate(updatedDate);
@@ -60,13 +60,16 @@ const TimeInput = ({
     const options = [];
     let i = 0;
     while (i <= 12) {
-      const option = { value: i, label: i.toString().padStart(2, "0") };
+      const option =
+        i === 0
+          ? { value: i, label: "12" }
+          : { value: i, label: i.toString().padStart(2, "0") };
       options.push(option);
       i++;
     }
     const optionArr = options.map((item, i) =>
       i === 0 ? (
-        <option key={`hour-${item.value}`} value={item.value} disabled selected>
+        <option key={`hour-${item.value}`} value={item.value} disabled>
           {item.label}
         </option>
       ) : (
@@ -82,9 +85,13 @@ const TimeInput = ({
     let i = 0;
     while (i < 60) {
       i === 0
-        ? arr.push(<option selected>{i.toString().padStart(2, "0")}</option>)
-        : arr.push(<option>{i.toString().padStart(2, "0")}</option>);
-      i += 15;
+        ? arr.push(
+            <option selected value={0}>
+              {i.toString().padStart(2, "0")}
+            </option>
+          )
+        : arr.push(<option value={i}>{i.toString().padStart(2, "0")}</option>);
+      i += 1;
     }
     arr.push(<option>59</option>);
     return arr;
@@ -105,7 +112,7 @@ const TimeInput = ({
 
   return (
     <ThemeProvider value={customTheme}>
-      <Group className="startRow__time">
+      <Group className="startRow__time" style={{ gap: "8px" }}>
         <input {...props} value={date} style={{ display: "none" }} />
         <Select
           className="timepicker-time"
@@ -114,7 +121,7 @@ const TimeInput = ({
         >
           {hourOptions()}
         </Select>
-        <span>:</span>
+        <span style={{ lineHeight: "32px" }}>:</span>
         <Select
           className="timepicker-time"
           value={minute}

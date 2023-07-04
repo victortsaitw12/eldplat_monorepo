@@ -2,25 +2,35 @@ import React from "react";
 import { Pane } from "evergreen-ui";
 
 import VerticalDetail from "@components/VerticalDetail";
+import { useFormContext, useWatch } from "react-hook-form";
 
-interface I_Props {
-  adult?: string | number;
-  child?: string | number;
-  infant?: string | number;
-  check_in_luggage?: string | number;
-  carry_on_luggage?: string | number;
-  bus_data?: any[];
-}
+const TakeBusInfoView = () => {
+  const { control } = useFormContext();
+  const {
+    adult,
+    child,
+    infant,
+    check_in_luggage,
+    carry_on_luggage,
+    bus_data,
+    quote_no
+  } = useWatch({ control });
 
-const TakeBusInfoView = ({
-  adult,
-  child,
-  infant,
-  check_in_luggage,
-  carry_on_luggage,
-  bus_data
-}: I_Props) => {
-  console.log("busdata in takebusinfo", bus_data);
+  const flatternBusData: any[] = [];
+  bus_data.forEach((item: any) => {
+    const busList = item.bus_list;
+    for (const listData of busList) {
+      if (listData.order_quantity !== 0) {
+        flatternBusData.push({
+          quote_no: quote_no.quote_no,
+          bus_type: item.type_name,
+          bus_seat: listData.bus_seat,
+          order_quantity: listData.order_quantity
+        });
+      }
+    }
+  });
+
   return (
     <Pane
       style={{
@@ -62,14 +72,14 @@ const TakeBusInfoView = ({
       />
       <VerticalDetail
         title="車型及數量"
-        items={bus_data?.map((child) => {
+        items={flatternBusData?.map((ele: any) => {
           return {
             label: (
               <span style={{ marginRight: "8px" }}>
-                {child.bus_type + "(" + child.bus_seat + "人)"}
+                {ele.bus_type + "(" + ele.bus_seat + "人)"}
               </span>
             ),
-            value: child.order_quantity
+            value: ele.order_quantity
           };
         })}
       />
