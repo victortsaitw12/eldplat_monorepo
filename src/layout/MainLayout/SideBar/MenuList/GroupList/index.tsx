@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ChevronDownIcon } from "evergreen-ui";
+import { useRouter } from "next/router";
 //
 import { MenuDataType } from "src/mock-data/side-bar/data";
 import { BodySTY, StyledButton } from "./style";
@@ -11,6 +12,7 @@ interface Props {
 }
 //
 function Index({ menu }: Props) {
+  const router = useRouter();
   const [openList, setOpenList] = useState(false);
   return (
     <BodySTY>
@@ -18,6 +20,9 @@ function Index({ menu }: Props) {
         onClick={() => {
           console.log("select!");
           setOpenList((prev) => !prev);
+          if (menu.url) {
+            router.push(menu.url);
+          }
         }}
       >
         <div>{menu.name}</div>

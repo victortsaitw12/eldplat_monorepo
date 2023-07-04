@@ -21,6 +21,10 @@ const StyledButton = styled.button`
   height: 40px;
   padding: 8px 12px;
   gap: 8px;
+  &:hover {
+    background-color: ${({ theme }) => theme.color.B100};
+    color: ${({ theme }) => theme.color.B400};
+  }
 `;
 
 export { BodySTY, StyledButton };
