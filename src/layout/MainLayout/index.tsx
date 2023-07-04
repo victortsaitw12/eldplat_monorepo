@@ -15,15 +15,38 @@ const MainLayout: FC<{
 }> = ({ children, layoutProps }) => {
   const menuData: MenuDataType = fetchMenuData();
   const [loading, setLoading] = React.useState(false);
-  const [menu, setMenu] = React.useState(null);
+
+  const [menu, setMenu] = React.useState([]);
+  const [personalmenu, setPersonalmenu] = React.useState([]);
+
+  const mapping_menus = (list: any, key: string) => {
+    return list.map((ele: any) => {
+      return {
+        name: ele?.[key + "_name"],
+        url: ele?.[key + "_url"] || null,
+        subList:
+          ele.sidemenu_lv2 && ele.sidemenu_lv2.length > 0
+            ? ele.sidemenu_lv2.map((c: any) => {
+                return {
+                  name: c?.menu_name || "--",
+                  url: c?.menu_url || "/",
+                  subList: null
+                };
+              })
+            : null
+      };
+    });
+  };
 
   const fetch_menus = async () => {
     setLoading(true);
     try {
       const res_menu = await getSideMenuBackend();
       const res_personalmenu = await getSideMenuPersonal();
-      console.log("📃📃📃", res_menu);
-      console.log("😊😊😊", res_personalmenu);
+      setMenu(mapping_menus(res_menu.dataList, "menu"));
+      setPersonalmenu(
+        mapping_menus(res_personalmenu.dataList, "menu_personal")
+      );
     } catch (e: any) {
       console.log(e);
     }
@@ -41,7 +64,7 @@ const MainLayout: FC<{
         <title>管理者頁</title>
         <meta property="og:title" content="管理者頁" />
       </Head>
-      <SideBar menuData={menuData} />
+      <SideBar menuData={menu} personalData={personalmenu} />
       <ContainerSTY>
         <Header layoutProps={layoutProps} />
         <div className="content">{children}</div>
