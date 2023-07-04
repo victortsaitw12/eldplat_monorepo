@@ -27,8 +27,13 @@ export const BodySTY = styled.div`
   }
   .paymentBtn {
     width: unset;
-    button {
-      border: 1px solid #afc3da;
+    display: flex;
+    align-items: center;
+    div {
+      flex-direction: column;
+      button {
+        border: 1px solid #afc3da;
+      }
     }
   }
 `;

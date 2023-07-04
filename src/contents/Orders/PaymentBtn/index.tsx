@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, InlineAlert, Dialog, Paragraph, toaster } from "evergreen-ui";
+import { Pane, Dialog, Paragraph, toaster } from "evergreen-ui";
 import { DivSTY } from "./style";
 
 import Table from "@components/Table/Table";
@@ -120,7 +120,7 @@ const PaymentBtn = ({
           支付全額
         </PrimaryRadiusBtn>
       ) : (
-        <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+        <div>
           <SecondaryRadiusBtn
             appearance="secondary"
             onClick={handlePayment.bind(null, "7")}
@@ -136,13 +136,6 @@ const PaymentBtn = ({
         </div>
       );
     }
-    // 3: 有逾期狀況{name: '訂金逾期', status: 'error', date: '06/20/2023 00:00:00'}
-    if (statusList.filter((item) => item.status === "error").length !== 0)
-      return (
-        <InlineAlert intent="danger" className="inlineAlert">
-          繳費期限已截止，未成功完成訂車作業。若仍想要訂車， 請聯繫客服。
-        </InlineAlert>
-      );
   };
 
   return (

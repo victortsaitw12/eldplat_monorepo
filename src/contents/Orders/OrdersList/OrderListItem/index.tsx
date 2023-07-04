@@ -22,8 +22,6 @@ const OrderListItem = ({ itemData }: { itemData: any }) => {
           <h4>詢價編號</h4>
           <div>{itemData.quote_no}</div>
         </div>
-        {/* <DetailItem title="乘車日期" value={itemData.date?.split(" ")[0]} />
-        <DetailItem title="詢價編號" value={itemData.quote_no} /> */}
       </div>
       <div className="info-progress">
         <ProgressList dataLists={progressInfo} />

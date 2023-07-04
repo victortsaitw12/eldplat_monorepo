@@ -1,6 +1,5 @@
 import React from "react";
 import { NextPageWithLayout } from "next";
-import { useRouter } from "next/router";
 import { Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
