@@ -25,4 +25,10 @@ export const BodySTY = styled.div`
     border-radius: 10px;
     padding: 10px 19px;
   }
+  .paymentBtn {
+    width: unset;
+    button {
+      border: 1px solid #afc3da;
+    }
+  }
 `;

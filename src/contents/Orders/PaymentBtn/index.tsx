@@ -23,7 +23,6 @@ const PaymentBtn = ({
     try {
       const res = await getQuotation(data.quote_no);
       setData(res);
-      console.log("called");
     } catch (e) {
       console.log("更新訂單失敗:", e);
     }
@@ -147,8 +146,10 @@ const PaymentBtn = ({
   };
 
   return (
-    <DivSTY>
-      {renderBtn(data.orderStatusesList)}
+    <DivSTY className="paymentBtn">
+      {renderBtn(
+        "orderStatusesList" in data ? data.orderStatusesList : data.status_list
+      )}
       {isLightBoxOpen && (
         <Pane>
           <Dialog

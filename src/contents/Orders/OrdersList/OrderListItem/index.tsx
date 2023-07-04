@@ -2,10 +2,15 @@ import ProgressList from "@components/ProgressList";
 
 import { BodySTY } from "./style";
 import { mappingProgressInfo } from "@services/client/mappingQuotationData";
-import PaymentBtn from "./PaymentBtn";
+import PaymentBtn from "@contents/orders/PaymentBtn";
 
 const OrderListItem = ({ itemData }: { itemData: any }) => {
   const progressInfo = mappingProgressInfo(itemData.status_list);
+
+  const handlePaymentClick = (e) => {
+    console.log("🍅🍅🍅 clicked");
+    e.stopPropagation();
+  };
   return (
     <BodySTY>
       <div className="info-content">
@@ -23,7 +28,7 @@ const OrderListItem = ({ itemData }: { itemData: any }) => {
       <div className="info-progress">
         <ProgressList dataLists={progressInfo} />
       </div>
-      {/* <PaymentBtn data={itemData} setData={setData} /> */}
+      <PaymentBtn data={itemData} setData={(e) => handlePaymentClick(e)} />
     </BodySTY>
   );
 };

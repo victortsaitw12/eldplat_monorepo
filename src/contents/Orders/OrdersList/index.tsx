@@ -6,6 +6,8 @@ import StatusCard from "@components/StatusCard";
 import { PURPOSE, QUOTE_TYPE } from "@services/getDDL";
 import { I_Order } from "@services/client/getOrdersList";
 import OrderListItem from "./OrderListItem";
+import OverdueMsg from "@contents/Orders/OverdueMsg";
+
 const OrdersList = ({ orderData }: { orderData: I_Order[] }) => {
   if (!orderData || orderData.length === 0)
     return (
@@ -48,6 +50,7 @@ const OrdersList = ({ orderData }: { orderData: I_Order[] }) => {
                 opened
               >
                 <OrderListItem itemData={item} />
+                <OverdueMsg data={item} />
               </Collapse>
             </Link>
           </div>

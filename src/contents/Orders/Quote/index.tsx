@@ -5,7 +5,7 @@ import { DivSTY } from "./style";
 // import { MOCK_expenseList } from "@mock-data/orders";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
-import PaymentBtn from "./PaymentBtn";
+import PaymentBtn from "../PaymentBtn";
 import { I_OrderDetail } from "@services/client/getQuotation";
 
 const Quote = ({
