@@ -41,7 +41,7 @@ const TimeInput = ({
 
   React.useEffect(() => {
     const updatedDate = dayjs(dateBase)
-      .add(hour + timeslot, "hour")
+      .add(((hour % 12) + timeslot) % 24, "hour")
       .add(minute, "minute")
       .format("YYYY-MM-DDTHH:mm:ss");
     setDate(updatedDate);
@@ -60,13 +60,16 @@ const TimeInput = ({
     const options = [];
     let i = 0;
     while (i <= 12) {
-      const option = { value: i, label: i.toString().padStart(2, "0") };
+      const option =
+        i === 0
+          ? { value: i, label: "12" }
+          : { value: i, label: i.toString().padStart(2, "0") };
       options.push(option);
       i++;
     }
     const optionArr = options.map((item, i) =>
       i === 0 ? (
-        <option key={`hour-${item.value}`} value={item.value} disabled selected>
+        <option key={`hour-${item.value}`} value={item.value} disabled>
           {item.label}
         </option>
       ) : (

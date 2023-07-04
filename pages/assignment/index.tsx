@@ -16,8 +16,7 @@ import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn
 import AdditionalVehicleBtn from "@contents/Assignment/AssignmentList/AdditionalVehicleBtn";
 import AdditionalDriverBtn from "@contents/Assignment/AssignmentList/AdditionalDriverBtn";
 import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
-import AssignmentAdditionalVehicle from "@contents/Assignment/AssignmentAdditional/Vehicle";
-import AssignmentAdditionalDriver from "@contents/Assignment/AssignmentAdditional/Driver";
+import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 
 import {
   assignParser,
@@ -502,9 +501,12 @@ const Page: NextPageWithLayout<never> = () => {
             setCreatDrawerOpen("");
           }}
         >
-          <AssignmentAdditionalVehicle
+          <AssignmentAdditional
+            type="car"
             orderInfo={orderInfo}
             createAssignData={createAssignData}
+            setSubAssignData={setSubAssignData}
+            setCreatDrawerOpen={setCreatDrawerOpen}
           />
         </Drawer>
       )}
@@ -515,9 +517,12 @@ const Page: NextPageWithLayout<never> = () => {
             setCreatDrawerOpen("");
           }}
         >
-          <AssignmentAdditionalDriver
+          <AssignmentAdditional
+            type="driver"
             orderInfo={orderInfo}
             createAssignData={createAssignData}
+            setSubAssignData={setSubAssignData}
+            setCreatDrawerOpen={setCreatDrawerOpen}
           />
         </Drawer>
       )}
