@@ -3,6 +3,7 @@ import { Pane, Text } from "evergreen-ui";
 import VerticalDetail from "@components/VerticalDetail";
 import dayjs from "dayjs";
 import { useFormContext, useWatch } from "react-hook-form";
+import { BodySTY } from "./style";
 const PaymentInfoView = () => {
   const { control } = useFormContext();
   const {
@@ -68,26 +69,30 @@ const PaymentInfoView = () => {
 
   if (full_payment_check == "1" || deposit_check == "1") {
     return (
-      <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
-        <VerticalDetail
-          title={payment_status_text(full_payment_check)}
-          items={[
-            {
-              label: payment_period_date(full_payment_check)
-            }
-          ]}
-        />
-        <VerticalDetail
-          title={payment_price_text(full_payment_check)}
-          items={[{}]}
-        />
-      </Pane>
+      <BodySTY>
+        <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
+          <VerticalDetail
+            title={payment_status_text(full_payment_check)}
+            items={[
+              {
+                label: payment_period_date(full_payment_check)
+              }
+            ]}
+          />
+          <VerticalDetail
+            title={payment_price_text(full_payment_check)}
+            items={[{}]}
+          />
+        </Pane>
+      </BodySTY>
     );
   } else {
     return (
-      <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
-        <Text>尚未選擇支付方式</Text>
-      </Pane>
+      <BodySTY>
+        <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
+          <Text className="error">尚未選擇支付方式</Text>
+        </Pane>
+      </BodySTY>
     );
   }
 };
