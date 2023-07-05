@@ -7,12 +7,12 @@ import PaymentBtn from "@contents/orders/PaymentBtn";
 const OrderListItem = ({ itemData }: { itemData: any }) => {
   const progressInfo = mappingProgressInfo(itemData.status_list);
 
-  const handlePaymentClick = (e) => {
+  const handlePaymentClick = (e: any) => {
     console.log("🍅🍅🍅 clicked");
     e.stopPropagation();
   };
   return (
-    <BodySTY>
+    <BodySTY className="orderListItem">
       <div className="info-content">
         <div className="content_item">
           <h4>乘車日期</h4>
@@ -26,7 +26,10 @@ const OrderListItem = ({ itemData }: { itemData: any }) => {
       <div className="info-progress">
         <ProgressList dataLists={progressInfo} />
       </div>
-      <PaymentBtn data={itemData} setData={(e) => handlePaymentClick(e)} />
+      {itemData.status_list[1].status !== "pending" &&
+        itemData.status_list[3].status === "pending" && (
+          <PaymentBtn data={itemData} setData={(e) => handlePaymentClick(e)} />
+        )}{" "}
     </BodySTY>
   );
 };

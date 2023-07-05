@@ -17,14 +17,10 @@ export const BodySTY = styled.div`
       border-radius: 10px 10px 0px 0px;
     }
     &_content {
-      /* Pane */
-      & > div {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        border-radius: 0px 0px 10px 10px;
-        padding: 20px;
-      }
+      padding: 20px;
+      display: flex !important;
+      flex-direction: column;
+      gap: 20px;
     }
   }
 `;

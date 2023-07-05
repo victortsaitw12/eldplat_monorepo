@@ -139,44 +139,50 @@ const PaymentBtn = ({
   };
 
   return (
-    <DivSTY className="paymentBtn">
-      {renderBtn(
-        "orderStatusesList" in data ? data.orderStatusesList : data.status_list
-      )}
-      {isLightBoxOpen && (
-        <Pane>
-          <Dialog
-            isShown={isLightBoxOpen}
-            title="確認接受此報價嗎?"
-            onConfirm={handleTakeQuote}
-            onCloseComplete={() => setIsLightBoxOpen(false)}
-            cancelLabel="取消"
-            confirmLabel="確認"
-          >
-            {({}) => (
-              <Pane>
-                <Paragraph style={{ lineHeight: "32px" }}>
-                  接受報價後，此筆訂單即可繳款。
-                  <br />
-                  報價詳情：
-                </Paragraph>
+    <>
+      {
+        <DivSTY className="paymentBtn">
+          {renderBtn(
+            "orderStatusesList" in data
+              ? data.orderStatusesList
+              : data.status_list
+          )}
+          {isLightBoxOpen && (
+            <Pane>
+              <Dialog
+                isShown={isLightBoxOpen}
+                title="確認接受此報價嗎?"
+                onConfirm={handleTakeQuote}
+                onCloseComplete={() => setIsLightBoxOpen(false)}
+                cancelLabel="取消"
+                confirmLabel="確認"
+              >
+                {({}) => (
+                  <Pane>
+                    <Paragraph style={{ lineHeight: "32px" }}>
+                      接受報價後，此筆訂單即可繳款。
+                      <br />
+                      報價詳情：
+                    </Paragraph>
 
-                <Table
-                  titles={["訂單編號", "總金額"]}
-                  data={[
-                    {
-                      id: data.quote_no,
-                      quote_no: data.quote_no,
-                      quote_total_amount: data.quote_total_amount
-                    }
-                  ]}
-                />
-              </Pane>
-            )}
-          </Dialog>
-        </Pane>
-      )}
-    </DivSTY>
+                    <Table
+                      titles={["訂單編號", "總金額"]}
+                      data={[
+                        {
+                          id: data.quote_no,
+                          quote_no: data.quote_no,
+                          quote_total_amount: data.quote_total_amount
+                        }
+                      ]}
+                    />
+                  </Pane>
+                )}
+              </Dialog>
+            </Pane>
+          )}
+        </DivSTY>
+      }
+    </>
   );
 };
 

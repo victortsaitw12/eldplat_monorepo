@@ -4,7 +4,6 @@ export const BodySTY = styled.div`
   display: flex;
   flex-direction: row !important;
   gap: 20px;
-  padding: 20px;
   > .info-content {
     border: 1px solid ${({ theme }) => theme.color.N300};
     display: flex;
