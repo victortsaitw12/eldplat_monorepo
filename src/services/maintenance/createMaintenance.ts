@@ -1,3 +1,5 @@
+import API_Path from "./apiPath";
+
 // 側邊快速新增資料
 export const createMaintenance = async (maintenanceData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
@@ -6,7 +8,7 @@ export const createMaintenance = async (maintenanceData: any) => {
       filteredNullData[key] = maintenanceData[key];
     }
   }
-  const res = await fetch("https://localhost:7088/CAR/CreateMaintenance", {
+  const res = await fetch(API_Path["CreateMaintenance"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -25,16 +27,13 @@ export const createMaintenanceAssignment = async (maintenanceData: any) => {
       filteredNullData[key] = maintenanceData[key];
     }
   }
-  const res = await fetch(
-    "https://localhost:7088/CAR/CreateMaintenanceAssignment",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-      },
-      body: JSON.stringify(filteredNullData)
-    }
-  );
+  const res = await fetch(API_Path["CreateMaintenanceAssignment"], {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    },
+    body: JSON.stringify(filteredNullData)
+  });
   return res.json();
 };

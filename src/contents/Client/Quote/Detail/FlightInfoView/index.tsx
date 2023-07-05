@@ -1,6 +1,7 @@
 import React from "react";
 import { Pane } from "evergreen-ui";
 import DetailList from "@components/DetailList";
+import dayjs from "dayjs";
 
 const FlightInfoView = ({ data }: any) => {
   const {
@@ -9,12 +10,14 @@ const FlightInfoView = ({ data }: any) => {
     airport,
     terminal,
     flight_departure_time,
-    airline
+    airline,
+    quote_type
   } = data;
+  console.log("data", data);
   const listArr = [
     {
       title: "航班日期",
-      value: flight_date || "-"
+      value: dayjs(flight_date).format("YYYY-MM-DD") || "-"
     },
     {
       title: "航班編號",
@@ -29,7 +32,7 @@ const FlightInfoView = ({ data }: any) => {
       value: terminal || "-"
     },
     {
-      title: "航班抵達時間",
+      title: `航班${quote_type === "3" ? "出發" : "抵達"}時間`,
       value: flight_departure_time || "-"
     },
     {

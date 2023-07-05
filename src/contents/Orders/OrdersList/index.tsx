@@ -41,15 +41,13 @@ const OrdersList = ({
                       {" | "}
                     </span>
                     <span className="collapse__subTitle">
-                      {`${
-                        item.quote_type === "2"
-                          ? "送機"
-                          : item.quote_type === "3"
-                          ? "接機"
-                          : item.purpose
-                          ? PURPOSE[item.purpose].label
-                          : "---"
-                      }`}
+                      {item.quote_type === "2"
+                        ? "送機"
+                        : item.quote_type === "3"
+                        ? "接機"
+                        : item.purpose
+                        ? PURPOSE[item.purpose]?.label
+                        : "---"}
                     </span>
                   </div>
                 }

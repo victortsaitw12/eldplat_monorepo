@@ -24,3 +24,7 @@ export const timeWithAPM = (date: string) => {
   return dayjs(date).format("hh:mm A");
 };
 // console.log("first", dayjs("2023-06-07T08:27:50.767").format("hh:mm A"));
+
+export const dateDiff = (start_date: string | any, end_date: string | any) => {
+  return dayjs(end_date).diff(start_date, "day");
+};

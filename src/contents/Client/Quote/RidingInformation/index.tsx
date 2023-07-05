@@ -109,7 +109,6 @@ const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
             </div>
             <div className="content-container">
               <div style={{ color: "#567190", fontWeight: "700" }}>
-                <span style={{ color: "#D14343" }}>*</span>
                 <span>車型及數量</span>
               </div>
               {fields.map((item, index) => {

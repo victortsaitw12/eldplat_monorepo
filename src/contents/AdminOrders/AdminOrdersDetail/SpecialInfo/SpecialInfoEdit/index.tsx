@@ -8,12 +8,9 @@ import CounterInput from "@components/CounterInput";
 import CustomSelect from "@components/CustomSelect";
 import VerticalTextArea from "@components/VerticalTextArea";
 import { BodySTY } from "./style";
-interface I_Props {
-  methods: any;
-}
 
-const SpecialInfoEdit = ({ methods }: I_Props) => {
-  const { register, control } = useFormContext();
+const SpecialInfoEdit = () => {
+  const { register, control, getValues, setValue } = useFormContext();
 
   return (
     <BodySTY>
@@ -65,8 +62,8 @@ const SpecialInfoEdit = ({ methods }: I_Props) => {
                     value: (
                       <CounterInput
                         register={register}
-                        getValues={methods.getValues}
-                        setValue={methods.setValue}
+                        getValues={getValues}
+                        setValue={setValue}
                         inputName="bottled_water_box"
                         label="24瓶/箱"
                       />
@@ -114,8 +111,8 @@ const SpecialInfoEdit = ({ methods }: I_Props) => {
                     value: (
                       <CounterInput
                         register={register}
-                        getValues={methods.getValues}
-                        setValue={methods.setValue}
+                        getValues={getValues}
+                        setValue={setValue}
                         inputName="child_seat_seller"
                         label="由店家提供（+NT$200/ 天）"
                       />
@@ -126,8 +123,8 @@ const SpecialInfoEdit = ({ methods }: I_Props) => {
                     value: (
                       <CounterInput
                         register={register}
-                        getValues={methods.getValues}
-                        setValue={methods.setValue}
+                        getValues={getValues}
+                        setValue={setValue}
                         inputName="child_seat_yourself"
                         label="自備"
                       />
@@ -162,8 +159,8 @@ const SpecialInfoEdit = ({ methods }: I_Props) => {
                     value: (
                       <CounterInput
                         register={register}
-                        getValues={methods.getValues}
-                        setValue={methods.setValue}
+                        getValues={getValues}
+                        setValue={setValue}
                         inputName="infant_seat_seller"
                         label="由店家提供（+NT$200/ 天）"
                       />
@@ -174,8 +171,8 @@ const SpecialInfoEdit = ({ methods }: I_Props) => {
                     value: (
                       <CounterInput
                         register={register}
-                        getValues={methods.getValues}
-                        setValue={methods.setValue}
+                        getValues={getValues}
+                        setValue={setValue}
                         inputName="infant_seat_yourself"
                         label="自備"
                       />
@@ -195,13 +192,15 @@ const SpecialInfoEdit = ({ methods }: I_Props) => {
           >
             <Pane>
               <Radio
+                size={16}
                 {...register("bring_pets_radio")}
-                value="01"
+                value="1"
                 label="攜帶小型寵物，且會裝於寵物籠/背包中。"
               />
               <Radio
+                size={16}
                 {...register("bring_pets_radio")}
-                value="02"
+                value="2"
                 label="寵物無法裝籠，將直接帶上車（NT$1,000） "
               />
             </Pane>
@@ -209,7 +208,12 @@ const SpecialInfoEdit = ({ methods }: I_Props) => {
         </Pane>
       </Pane>
       <Pane style={{ padding: "20px" }}>
-        <VerticalTextArea register={register} inputName="remark" title="備註" />
+        <VerticalTextArea
+          register={register}
+          inputName="remark"
+          title="備註"
+          description=""
+        />
       </Pane>
     </BodySTY>
   );

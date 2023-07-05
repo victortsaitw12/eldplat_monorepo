@@ -1,40 +1,47 @@
-import React, { useState } from "react";
+import React from "react";
 import { MoreIcon, EditIcon, DisableIcon, EyeOpenIcon } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
-// import useClickOutside from "@hooks/useClickOutside";
-//
 interface Props {
   onDelete?: () => void;
   onEdit?: () => void;
   onView?: () => void;
+  openOption?: () => void;
+  closeOption?: () => void;
   deleteText?: string;
+  isOpen?: boolean;
 }
 //
-function Index({ onDelete, onEdit, onView, deleteText = "停用" }: Props) {
-  const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
-  // const handleClickOutside = () => {
-  //   setOptionIsOpen(false);
-  // };
-  // const ref = useClickOutside(handleClickOutside);
-
+function Index({
+  onDelete,
+  onEdit,
+  onView,
+  openOption,
+  closeOption,
+  deleteText = "停用",
+  isOpen = false
+}: Props) {
   return (
     <BodySTY>
       <button
         onClick={() => {
-          setOptionIsOpen((prev) => !prev);
+          if (isOpen) {
+            closeOption && closeOption();
+          } else {
+            openOption && openOption();
+          }
         }}
       >
         <MoreIcon />
       </button>
-      {optionIsOpen && (
+      {isOpen && (
         <div className="table-row-option">
           {onView && (
             <button
               className="option-item"
               onClick={() => {
                 onView();
-                setOptionIsOpen(false);
+                closeOption && closeOption();
               }}
             >
               <EyeOpenIcon size={14} />
@@ -46,7 +53,7 @@ function Index({ onDelete, onEdit, onView, deleteText = "停用" }: Props) {
               className="option-item"
               onClick={() => {
                 onEdit();
-                setOptionIsOpen(false);
+                closeOption && closeOption();
               }}
             >
               <EditIcon size={14} />
@@ -58,7 +65,7 @@ function Index({ onDelete, onEdit, onView, deleteText = "停用" }: Props) {
               className="option-item"
               onClick={() => {
                 onDelete();
-                setOptionIsOpen(false);
+                closeOption && closeOption();
               }}
             >
               <DisableIcon size={14} />

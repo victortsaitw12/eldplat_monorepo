@@ -1,12 +1,13 @@
 import React from "react";
 import { Pane } from "evergreen-ui";
 import DetailList from "@components/DetailList";
-interface I_Props {
-  quote_type: string;
-  purpose: string | number;
-}
+import { useFormContext, useWatch } from "react-hook-form";
 
-const CarInfoView = ({ quote_type, purpose }: I_Props) => {
+const CarInfoView = () => {
+  const { control } = useFormContext();
+  const { purpose, quote_type } = useWatch({
+    control
+  });
   const purposeList: { [key: string]: string } = {
     "01": "學校/企業參訪",
     "02": "旅遊",
@@ -18,7 +19,7 @@ const CarInfoView = ({ quote_type, purpose }: I_Props) => {
   };
   const r_purpose = () => {
     if (quote_type === "1") {
-      return (purpose && purposeList[purpose]) || "-";
+      return (purpose && purposeList[purpose]) || "--";
     } else if (quote_type === "2") {
       return "接機";
     } else {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
+import { useFormContext, useFieldArray, useWatch } from "react-hook-form";
 import {
   Pane,
   TimeIcon,
@@ -7,51 +7,47 @@ import {
   CalendarIcon,
   Button,
   SmallPlusIcon,
-  TextInput
+  TextInput,
+  Text
 } from "evergreen-ui";
 import Collapse from "@components/Collapse";
 import ScheduleList from "@components/ScheduleList";
 import DetailItem from "@components/DetailList/DetailItem";
 import { BodySTY } from "./style";
+import { ErrorMessage } from "@hookform/error-message";
 import dayjs from "dayjs";
-interface I_ShuttleInfo {
-  date: string;
-}
-
+import { QuotationEditPayload } from "@contents/AdminOrders/type";
 interface I_Props {
-  quote_no: string;
   isEdit: boolean;
-  arrayName: string;
-  isCustomBus?: boolean;
 }
 
-const ShuttleInfo = ({
-  quote_no,
-  isEdit,
-  arrayName,
-  isCustomBus = true
-}: I_Props) => {
+const ShuttleInfo = ({ isEdit }: I_Props) => {
   const {
     register,
     control,
     getValues,
     setValue,
     formState: { errors }
-  } = useFormContext();
+  } = useFormContext<QuotationEditPayload>();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: arrayName
+    name: "order_itinerary_list"
   });
+
+  const { quote_no = "", quote_type } = useWatch({
+    control
+  });
+
+  const isCustomBus = quote_type === "1";
   React.useEffect(() => {
-    console.log(fields.length);
     onchange_date(0);
   }, [fields]);
   const onchange_date = (startIndex: number) => {
     //往後加一天
     for (let j = startIndex; j < fields.length - 1; j++) {
       setValue(
-        arrayName + "[" + (j + 1) + "]" + ".day_date",
-        dayjs(getValues(arrayName + "[" + j + "]" + ".day_date"))
+        `order_itinerary_list.${j + 1}.day_date`,
+        dayjs(getValues(`order_itinerary_list.${j}.day_date`))
           .add(1, "day")
           .format("YYYY-MM-DD")
       );
@@ -59,8 +55,8 @@ const ShuttleInfo = ({
     //往前減一天
     for (let j = startIndex; j >= 0; j--) {
       setValue(
-        arrayName + "[" + (j - 1) + "]" + ".day_date",
-        dayjs(getValues(arrayName + "[" + j + "]" + ".day_date"))
+        `order_itinerary_list.${j - 1}.day_date`,
+        dayjs(getValues(`order_itinerary_list.${j}.day_date`))
           .subtract(1, "day")
           .format("YYYY-MM-DD")
       );
@@ -70,31 +66,35 @@ const ShuttleInfo = ({
     if (!isEdit) {
       return null;
     } else {
-      const { onChange, onBlur, name, ref } = register(
-        arrayName + "[" + i + "]" + ".day_date"
-      );
       return (
         <Pane className="title_children">
           {isCustomBus && (
             <>
               <span>第{i + 1}天</span>
-              <TextInput
-                type="date"
-                onChange={(e: any) => {
-                  onChange(e);
-                  onchange_date(i);
-                }}
-                onBlur={onBlur}
-                name={name}
-                ref={ref}
-              />
+              <Pane>
+                <TextInput
+                  type="date"
+                  isInvalid={!!errors.order_itinerary_list?.[i]?.day_date}
+                  {...register(`order_itinerary_list.${i}.day_date`, {
+                    required: "不可空白",
+                    onChange: (e: any) => {
+                      onchange_date(i);
+                    }
+                  })}
+                />
+                <Pane>
+                  <ErrorMessage
+                    errors={errors}
+                    name={`order_itinerary_list.${i}.day_date`}
+                    render={({ message }) => (
+                      <Text className="input-error">{message}</Text>
+                    )}
+                  />
+                </Pane>
+              </Pane>
             </>
           )}
-          {!isCustomBus && (
-            <>
-              <span>接送行程</span>
-            </>
-          )}
+          {!isCustomBus && <span>行程資訊</span>}
           {fields.length > 1 && (
             <TrashIcon
               onClick={() => {
@@ -131,10 +131,10 @@ const ShuttleInfo = ({
                   isEdit ? (
                     <TextInput
                       type="date"
-                      {...register(arrayName + "[" + i + "]" + ".day_date")}
+                      {...register(`order_itinerary_list.${i}.day_date`)}
                     />
                   ) : (
-                    dayjs(child.day_date).format("YYYY-MM-DD") || "-"
+                    dayjs(child.day_date).format("YYYY-MM-DD") || "--"
                   )
                 }
               />
@@ -146,19 +146,35 @@ const ShuttleInfo = ({
               title={isCustomBus ? "出發時間" : "接送時間"}
               value={
                 isEdit ? (
-                  <TextInput
-                    type="time"
-                    {...register(arrayName + "[" + i + "]" + ".departure_time")}
-                  />
+                  <>
+                    <TextInput
+                      type="time"
+                      isInvalid={
+                        !!errors.order_itinerary_list?.[i]?.departure_time
+                      }
+                      {...register(`order_itinerary_list.${i}.departure_time`, {
+                        required: "不可空白"
+                      })}
+                    />
+                    <Pane>
+                      <ErrorMessage
+                        errors={errors}
+                        name={`order_itinerary_list.${i}.departure_time`}
+                        render={({ message }) => (
+                          <Text className="input-error">{message}</Text>
+                        )}
+                      />
+                    </Pane>
+                  </>
                 ) : (
-                  child.departure_time || "-"
+                  child.departure_time || "--"
                 )
               }
             />
           </span>
           <ScheduleList
             dayIndex={i}
-            fatherArrayName={arrayName}
+            fatherArrayName={"order_itinerary_list"}
             arrayName="stopover_address_list"
             register={register}
             isEdit={isEdit}
@@ -181,7 +197,7 @@ const ShuttleInfo = ({
             onClick={(e: any) => {
               e.preventDefault();
               const lastDate = getValues(
-                "order_itinerary_list[" + (fields.length - 1) + "].day_date"
+                `order_itinerary_list.${fields.length - 1}.day_date`
               );
               // const lastDate = fields[fields.length - 1]?.day_date;
               append({
@@ -193,7 +209,7 @@ const ShuttleInfo = ({
                 pickup_location: "",
                 stopover_address_list: [
                   {
-                    stopover_sort: 1,
+                    stopover_sort: "1",
                     stopover_address: ""
                   }
                 ]

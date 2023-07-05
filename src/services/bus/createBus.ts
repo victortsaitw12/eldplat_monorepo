@@ -1,13 +1,12 @@
 import { flattenObject } from "@utils/flattenObject";
 import { filterNullData } from "@utils/filterNullData";
+import API_Path from "./apiPath";
 export const createBus = async (busData: any) => {
-  console.log("busData", busData);
   const flattenBusData = flattenObject(busData);
-  console.log("flattenBusData", flattenBusData);
   const filteredData = filterNullData(flattenBusData);
-  console.log(filteredData);
+  const url = new URL(API_Path["createBus"]);
   try {
-    const res = await fetch("https://localhost:7088/CAR/CreateBus", {
+    const res = await fetch(url.href, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,3 +1,4 @@
+import API_Path from "./apiPath";
 // 新增員工資料
 export const createEmployee = async (employeeData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
@@ -33,7 +34,7 @@ export const createBriefEmployee = async (
   user_phone: string
 ) => {
   const res = await fetch(
-    `https://localhost:7088/ATR/CreateAccountInfo?user_first_name=${user_first_name}&user_name=${user_name}&user_email=${user_email}&user_phone=${user_phone}`,
+    `${API_Path["CreateAccountInfo"]}?user_first_name=${user_first_name}&user_name=${user_name}&user_email=${user_email}&user_phone=${user_phone}`,
     {
       method: "POST",
       headers: {

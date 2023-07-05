@@ -4,9 +4,9 @@ import { ChevronDownIcon } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
 
-function Index() {
+function Index(props: any) {
   return (
-    <BodySTY>
+    <BodySTY {...props}>
       <div className="title">雄獅通運公司</div>
       <div className="user-container">
         <div className="user-info">
