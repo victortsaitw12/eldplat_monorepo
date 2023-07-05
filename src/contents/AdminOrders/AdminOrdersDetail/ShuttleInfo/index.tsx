@@ -97,6 +97,9 @@ const ShuttleInfo = ({ isEdit }: I_Props) => {
           {!isCustomBus && <span>行程資訊</span>}
           {fields.length > 1 && (
             <TrashIcon
+              style={{
+                position: "absolute"
+              }}
               onClick={() => {
                 remove(i);
               }}
