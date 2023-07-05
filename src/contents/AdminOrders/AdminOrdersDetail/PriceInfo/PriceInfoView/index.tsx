@@ -94,7 +94,6 @@ const PriceInfoView = () => {
     try {
       const res = await updateFEStatusLog(quote_no, status_code);
       console.log(res);
-      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -139,6 +138,7 @@ const PriceInfoView = () => {
                 e.preventDefault();
                 update_FE_status(quote_no, "12");
                 update_BE_status(quote_no, "13");
+                router.push("/admin_orders/");
               }}
               disabled={!isPaid()}
               className="submit_btn"
@@ -285,8 +285,9 @@ const PriceInfoView = () => {
               e.preventDefault();
               const formData = getValues();
               console.log("當點擊送出報價後的表單資料:", formData);
-              // update_BE_status(quote_no, "3");
-              // update_FE_status(quote_no, "4");
+              update_BE_status(quote_no, "3");
+              update_FE_status(quote_no, "4");
+              router.push("/admin_orders/");
             }}
             text="送出報價"
           />

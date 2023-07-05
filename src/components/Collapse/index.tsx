@@ -5,7 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon, Text } from "evergreen-ui";
 interface I_Props {
   opened?: boolean;
   color?: string;
-  title?: string;
+  title?: string | React.ReactNode;
   titleChildren?: React.ReactNode;
   viewOnly?: boolean;
   children: React.ReactNode;
