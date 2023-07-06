@@ -1,16 +1,18 @@
 import React from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { Spinner } from "evergreen-ui";
+import { BodySTY } from "./style";
 
 import { getLayout } from "@layout/QuoteLayout";
 import Breadcrumbs from "@components/Breadcrumbs";
-import { BodySTY } from "./style";
 import ConditionCard from "@components/ConditionCard";
 import OrderDetail from "@contents/Orders/OrderDetail";
-import Quote from "@contents/Orders/Quote";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 import StatusCard from "@components/StatusCard";
 import { ParsedUrlQuery } from "querystring";
+import OverdueMsg from "@contents/Orders/OverdueMsg";
+import PaymentBtn from "@contents/Orders/PaymentBtn";
+import Quote from "@contents/Orders/Quote";
 import PaymentMethod from "@contents/Orders/PaymentMethod";
 
 const Page: NextPageWithLayout<never> = ({ quote_no }) => {
@@ -67,8 +69,15 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
         )}
         {data && (
           <div className="right">
+            {data.status_list.filter(
+              (statusItem) => statusItem.status === "error"
+            ) && <OverdueMsg data={data} />}
+            {data.status_list[1].status !== "pending" &&
+              data.status_list[3].status === "pending" && (
+                <PaymentBtn data={data} setData={setData} />
+              )}
             <Quote data={data} setData={setData} />
-            {data.orderStatusesList[1].status === "ok" && (
+            {data.status_list[1].status === "ok" && (
               <PaymentMethod data={data} />
             )}
           </div>

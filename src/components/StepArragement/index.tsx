@@ -32,6 +32,7 @@ function StepArragement({
     name: middlePointName
   });
   function appendMiddlePoint() {
+    console.log("appendMiddlePoint");
     append({
       stopover_sort: fields.length + 1 + "",
       stopover_address: ""
@@ -54,7 +55,11 @@ function StepArragement({
           {fields.length === 0 && (
             <button
               className="option-item"
-              onClick={() => appendMiddlePoint()}
+              type="button"
+              onClick={(e) => {
+                console.log("e", e);
+                appendMiddlePoint();
+              }}
               disabled={getValues(startPointName).trim() === ""}
             >
               <PlusIcon size={12} />
@@ -76,12 +81,20 @@ function StepArragement({
               style={{ flex: "1" }}
             />
             <div className="option-container">
-              <button className="option-item" onClick={() => remove(index)}>
+              <button
+                className="option-item"
+                type="button"
+                onClick={() => {
+                  console.log("remove", index);
+                  remove(index);
+                }}
+              >
                 <TrashIcon size={12} />
               </button>
               {index === fields.length - 1 && fields.length < 8 ? (
                 <button
                   className="option-item"
+                  type="button"
                   onClick={() => {
                     appendMiddlePoint();
                   }}

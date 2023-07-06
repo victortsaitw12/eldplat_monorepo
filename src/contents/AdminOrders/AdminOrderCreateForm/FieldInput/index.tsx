@@ -33,13 +33,8 @@ const FiledInput = ({
           {!!hint && <HelpIcon />}
         </div>
       )}
-      <input type="string" {...field} />
-      {error && (
-        <div className="error-message">
-          <ErrorIcon />
-          {error.message}
-        </div>
-      )}
+      <input className={`${error ? "error" : ""}`} type="string" {...field} />
+      {error && <div className="error-message">{error.message}</div>}
     </ItemSTY>
   );
 };

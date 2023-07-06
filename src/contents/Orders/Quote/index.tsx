@@ -5,7 +5,7 @@ import { DivSTY } from "./style";
 // import { MOCK_expenseList } from "@mock-data/orders";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
-import PaymentBtn from "./PaymentBtn";
+// import PaymentBtn from "../PaymentBtn";
 import { I_OrderDetail } from "@services/client/getQuotation";
 
 const Quote = ({
@@ -61,7 +61,7 @@ const Quote = ({
 
   return (
     <DivSTY>
-      <PaymentBtn data={data} setData={setData} />
+      {/* <PaymentBtn data={data} setData={setData} /> */}
       <Pane className="quote">
         <Collapse
           title="金額試算"
@@ -69,7 +69,7 @@ const Quote = ({
             <div className="collapse">
               <div className="collapse__title">
                 <span style={{ fontSize: "16px" }}>
-                  {data.orderStatusesList[1].status === "pending"
+                  {data.status_list[1].status === "pending"
                     ? "初估金額"
                     : "總金額"}
                 </span>

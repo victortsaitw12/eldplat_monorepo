@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
+import { useFormContext, useFieldArray, useWatch } from "react-hook-form";
 import {
   Pane,
   TimeIcon,
@@ -18,17 +18,10 @@ import { ErrorMessage } from "@hookform/error-message";
 import dayjs from "dayjs";
 import { QuotationEditPayload } from "@contents/AdminOrders/type";
 interface I_Props {
-  quote_no: string;
   isEdit: boolean;
-  isCustomBus?: boolean;
 }
 
-const ShuttleInfo = ({
-  quote_no,
-  isEdit,
-
-  isCustomBus = true
-}: I_Props) => {
+const ShuttleInfo = ({ isEdit }: I_Props) => {
   const {
     register,
     control,
@@ -40,8 +33,13 @@ const ShuttleInfo = ({
     control,
     name: "order_itinerary_list"
   });
+
+  const { quote_no = "", quote_type } = useWatch({
+    control
+  });
+
+  const isCustomBus = quote_type === "1";
   React.useEffect(() => {
-    console.log(fields.length);
     onchange_date(0);
   }, [fields]);
   const onchange_date = (startIndex: number) => {
@@ -96,13 +94,12 @@ const ShuttleInfo = ({
               </Pane>
             </>
           )}
-          {!isCustomBus && (
-            <>
-              <span>接送行程</span>
-            </>
-          )}
+          {!isCustomBus && <span>行程資訊</span>}
           {fields.length > 1 && (
             <TrashIcon
+              style={{
+                position: "absolute"
+              }}
               onClick={() => {
                 remove(i);
               }}
@@ -140,7 +137,7 @@ const ShuttleInfo = ({
                       {...register(`order_itinerary_list.${i}.day_date`)}
                     />
                   ) : (
-                    dayjs(child.day_date).format("YYYY-MM-DD") || "-"
+                    dayjs(child.day_date).format("YYYY-MM-DD") || "--"
                   )
                 }
               />
@@ -173,7 +170,7 @@ const ShuttleInfo = ({
                     </Pane>
                   </>
                 ) : (
-                  child.departure_time || "-"
+                  child.departure_time || "--"
                 )
               }
             />

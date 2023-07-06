@@ -91,7 +91,7 @@ const PassengerInfoEdit = () => {
     }
   ];
   return (
-    <Pane style={{ padding: "20px", display: "flex" }}>
+    <Pane style={{ padding: "20px", display: "flex", gap: "20px" }}>
       <Pane style={{ flex: "1" }}>
         <DetailList listArray={contact_1} />
       </Pane>

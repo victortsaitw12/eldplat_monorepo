@@ -1,17 +1,20 @@
 import React from "react";
 import { Pane, Select, Text } from "evergreen-ui";
-import { useFormContext } from "react-hook-form";
-interface I_Props {
-  quote_type?: string;
-}
-const CarInfoEdit = ({ quote_type = "1" }: I_Props) => {
-  const { register } = useFormContext();
+import { useFormContext, useWatch } from "react-hook-form";
+
+const CarInfoEdit = () => {
+  const { register, control } = useFormContext();
+  const watch_quote_type =
+    useWatch({
+      control,
+      name: "quote_type"
+    }) || "1";
   return (
     <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
       <Pane style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
         <Pane style={{ display: "flex", gap: "20px" }}>
           <Text style={{ minWidth: "115px" }}>用車目的</Text>
-          {quote_type === "1" && (
+          {watch_quote_type === "1" && (
             <Select
               {...register("purpose", { required: "此欄位必填" })}
               style={{ width: "270px" }}
@@ -25,8 +28,8 @@ const CarInfoEdit = ({ quote_type = "1" }: I_Props) => {
               <option value="07">其他</option>
             </Select>
           )}
-          {quote_type === "2" && <Text>接機</Text>}
-          {quote_type === "3" && <Text>送機</Text>}
+          {watch_quote_type === "2" && <Text>接機</Text>}
+          {watch_quote_type === "3" && <Text>送機</Text>}
         </Pane>
         <Pane style={{ display: "flex", gap: "20px" }}>
           <Text style={{ minWidth: "115px" }}>訂車注意事項</Text>

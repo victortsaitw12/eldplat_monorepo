@@ -8,7 +8,8 @@ import {
   LayoutGridIcon,
   PropertiesIcon,
   TimelineAreaChartIcon,
-  GanttChartIcon
+  GanttChartIcon,
+  ArrowLeftIcon
 } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
@@ -20,15 +21,34 @@ import FooterItem from "./Footer/FooterItem";
 //
 interface Props {
   menuData: MenuDataType;
+  personalData: MenuDataType;
 }
 //
-function SideBar({ menuData }: Props) {
+function SideBar({ menuData, personalData }: Props) {
+  const [isPersonal, setIsPersonal] = React.useState(false);
   return (
     <BodySTY>
-      <UserInfo />
+      <UserInfo
+        onClick={() => {
+          setIsPersonal(true);
+        }}
+      />
       <div className="container">
-        <Search />
-        <MenuList menuData={menuData} />
+        {isPersonal && (
+          <span
+            className="back_to"
+            onClick={() => {
+              setIsPersonal(false);
+            }}
+          >
+            <ArrowLeftIcon size={16} />
+            返回公司首頁
+          </span>
+        )}
+        {!isPersonal && <Search />}
+        {menuData && (
+          <MenuList menuData={!isPersonal ? menuData : personalData} />
+        )}
       </div>
       <div className="footer">
         <button className="footer-button">

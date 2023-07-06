@@ -7,7 +7,13 @@ import { BodySTY } from "./style";
 
 const PaymentInfoEdit = () => {
   const [calculateType, setCalculate] = React.useState<string>("$");
+  const [persent, setPersent] = React.useState<number>(0);
   const { register, control, setValue, getValues } = useFormContext();
+
+  const quote_total_amount = useWatch({
+    control,
+    name: "quote_total_amount"
+  });
 
   const isFullPayment = useWatch({
     control,
@@ -61,6 +67,26 @@ const PaymentInfoEdit = () => {
       </Pane>
     );
   };
+
+  React.useEffect(() => {
+    setPersent(0);
+    setValue("deposit_amount", 0);
+  }, [calculateType]);
+
+  React.useEffect(() => {
+    const quote_total_amount = parseInt(getValues("quote_total_amount"), 10);
+    if (quote_total_amount > 0) {
+      setValue("deposit_amount", quote_total_amount * (persent / 100));
+    } else {
+      setValue("deposit_amount", 0);
+    }
+    console.log("💕💕💕💕", quote_total_amount);
+  }, [persent]);
+
+  React.useEffect(() => {
+    setValue("deposit_amount", quote_total_amount * ((100 - persent) / 100));
+  }, [quote_total_amount]);
+
   return (
     <BodySTY>
       <Pane className="radio_container">
@@ -114,32 +140,59 @@ const PaymentInfoEdit = () => {
             <option value="$">$</option>
             <option value="%">%</option>
           </Select>
-          <TextInput
-            style={{ width: "unset", flex: "1" }}
-            type="number"
-            {...(register("deposit_amount"),
-            {
-              onChange: (e: { target: { value: any } }) => {
-                const quote_total_amount = parseInt(
-                  getValues("quote_total_amount"),
-                  10
-                );
-                setValue("deposit_amount", parseInt(e.target.value, 10));
-                if (calculateType == "$") {
-                  quote_total_amount - e.target.value > 0 &&
-                    setValue(
-                      "balance_amount",
-                      quote_total_amount - e.target.value
-                    );
+          {calculateType === "$" && (
+            <TextInput
+              style={{ width: "unset", flex: "1" }}
+              type="number"
+              {...(register("deposit_amount"),
+              {
+                onChange: (e: { target: { value: any } }) => {
+                  const quote_total_amount = parseInt(
+                    getValues("quote_total_amount"),
+                    10
+                  );
+                  setValue("deposit_amount", parseInt(e.target.value, 10));
+                  if (calculateType == "$") {
+                    quote_total_amount - e.target.value > 0 &&
+                      setValue(
+                        "balance_amount",
+                        quote_total_amount - e.target.value
+                      );
+                  }
                 }
-                if (calculateType == "%") {
-                  //當訂金是趴數的時候
-                }
-              }
-            })}
-            disabled={isFullPayment == "1"}
-            placeholder="金額"
-          />
+              })}
+              disabled={isFullPayment == "1"}
+              placeholder="金額"
+            />
+          )}
+          {calculateType === "%" && (
+            <Pane className="deposit_persent">
+              <TextInput
+                style={{ width: "50%" }}
+                type="number"
+                value={persent}
+                onChange={(e: any) => {
+                  const newPersent = parseInt(e.target.value, 10);
+                  if (newPersent <= 100 && newPersent >= 0) {
+                    setPersent(newPersent);
+                  }
+                  if (Number.isNaN(newPersent)) {
+                    setPersent(0);
+                  }
+                }}
+                disabled={isFullPayment == "1"}
+                placeholder="金額"
+              />
+              <span>=</span>
+              <TextInput
+                style={{ width: "50%" }}
+                type="number"
+                {...register("deposit_amount")}
+                disabled={true}
+                placeholder="金額"
+              />
+            </Pane>
+          )}
         </Pane>
         <Pane>
           <TextInput

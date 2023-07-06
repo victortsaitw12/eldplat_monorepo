@@ -21,7 +21,6 @@ export const SectionSTY = styled.section`
     gap: 12px;
   }
   .collapse {
-    font-family: "Noto Sans";
     &_title {
       align-items: center;
     }

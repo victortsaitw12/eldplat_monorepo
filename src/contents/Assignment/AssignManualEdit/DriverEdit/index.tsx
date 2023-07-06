@@ -190,7 +190,7 @@ function DriverEdit({ editData }: I_AssignManualCreateProps) {
     } catch (e: any) {
       console.log("error for update assignment: ", e);
     }
-    // router.reload();
+    router.reload();
     console.log("newUpdateData", newUpdateData);
   };
 

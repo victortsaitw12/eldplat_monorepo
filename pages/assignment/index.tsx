@@ -16,7 +16,8 @@ import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn
 import AdditionalVehicleBtn from "@contents/Assignment/AssignmentList/AdditionalVehicleBtn";
 import AdditionalDriverBtn from "@contents/Assignment/AssignmentList/AdditionalDriverBtn";
 import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
-import AssignmentAdditionalVehicle from "@contents/Assignment/AssignmentAdditional/Vehicle";
+import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
+
 import {
   assignParser,
   assignPattern,
@@ -53,6 +54,9 @@ const Page: NextPageWithLayout<never> = () => {
   const [nowTab, setNowTab] = useState("1");
   const [secondDrawerOpen, setSecondDrawerOpen] = useState<string>("");
   const [EditDrawerOpen, setEditDrawerOpen] = useState<string>("");
+  const [creatDrawerOpen, setCreatDrawerOpen] = useState<"car" | "driver" | "">(
+    ""
+  );
   const [autoDrawerOpen, setAutoDrawerOpen] = useState<boolean>(false);
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
@@ -79,7 +83,11 @@ const Page: NextPageWithLayout<never> = () => {
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
   function setPosition(dayNum: number, carNum: number) {
-    setOrderIndex(2 * (dayNum - 1) + carNum - 1);
+    if (orderInfo[0].order_quantity === 1) {
+      setOrderIndex(dayNum - 1 + (carNum - 1));
+    } else {
+      setOrderIndex(2 * (dayNum - 1) + carNum - 1);
+    }
   }
 
   const {
@@ -142,6 +150,7 @@ const Page: NextPageWithLayout<never> = () => {
                   <AdditionalVehicleBtn
                     id={v.maintenance_quote_no.label}
                     setOrderInfo={setOrderInfo}
+                    setCreatDrawerOpen={setCreatDrawerOpen}
                   />
                 ),
               value: null
@@ -156,7 +165,11 @@ const Page: NextPageWithLayout<never> = () => {
                     setOrderInfo={setOrderInfo}
                   />
                 ) : (
-                  <AdditionalDriverBtn />
+                  <AdditionalDriverBtn
+                    id={v.maintenance_quote_no.label}
+                    setOrderInfo={setOrderInfo}
+                    setCreatDrawerOpen={setCreatDrawerOpen}
+                  />
                 ),
               value: null
             };
@@ -441,33 +454,23 @@ const Page: NextPageWithLayout<never> = () => {
             setDrawerOpen(false);
           }}
         >
-          {drawerType === "add" ? (
-            <AssignmentAdditionalVehicle
-              orderInfo={orderInfo}
-              createAssignData={createAssignData}
-              handleAssignmentCarChange={handleAssignmentCarChange}
-              timeRef={timeRef}
-            />
-          ) : (
-            <AssignManualCreate
-              assignData={data}
-              reloadData={() => {
-                fetchAssignData();
-                setDrawerOpen(false);
-              }}
-              secondDrawerOpen={secondDrawerOpen}
-              setSecondDrawerOpen={setSecondDrawerOpen}
-              orderInfo={orderInfo}
-              showSecondTitle={showSecondTitle}
-              setShowSecondTitle={setShowSecondTitle}
-              setPosition={setPosition}
-              createAssignData={createAssignData}
-              orderIndex={orderIndex}
-            />
-          )}
+          <AssignManualCreate
+            assignData={data}
+            reloadData={() => {
+              fetchAssignData();
+              setDrawerOpen(false);
+            }}
+            secondDrawerOpen={secondDrawerOpen}
+            setSecondDrawerOpen={setSecondDrawerOpen}
+            orderInfo={orderInfo}
+            showSecondTitle={showSecondTitle}
+            setShowSecondTitle={setShowSecondTitle}
+            setPosition={setPosition}
+            createAssignData={createAssignData}
+            orderIndex={orderIndex}
+          />
         </Drawer>
       )}
-
       {secondDrawerOpen === "派車" && (
         <Drawer
           closeDrawer={() => {
@@ -495,7 +498,38 @@ const Page: NextPageWithLayout<never> = () => {
           ></SecondDriverAssignManualCreate>
         </Drawer>
       )}
-
+      {creatDrawerOpen === "car" && (
+        <Drawer
+          tabName={["新增派車"]}
+          closeDrawer={() => {
+            setCreatDrawerOpen("");
+          }}
+        >
+          <AssignmentAdditional
+            type="car"
+            orderInfo={orderInfo}
+            createAssignData={createAssignData}
+            setSubAssignData={setSubAssignData}
+            setCreatDrawerOpen={setCreatDrawerOpen}
+          />
+        </Drawer>
+      )}
+      {creatDrawerOpen === "driver" && (
+        <Drawer
+          tabName={["新增派工"]}
+          closeDrawer={() => {
+            setCreatDrawerOpen("");
+          }}
+        >
+          <AssignmentAdditional
+            type="driver"
+            orderInfo={orderInfo}
+            createAssignData={createAssignData}
+            setSubAssignData={setSubAssignData}
+            setCreatDrawerOpen={setCreatDrawerOpen}
+          />
+        </Drawer>
+      )}
       {EditDrawerOpen === "car" && (
         <Drawer
           closeDrawer={() => {
@@ -514,7 +548,6 @@ const Page: NextPageWithLayout<never> = () => {
           <DriverEdit editData={editData} />
         </Drawer>
       )}
-
       {autoDrawerOpen && (
         <Drawer
           closeDrawer={() => {
