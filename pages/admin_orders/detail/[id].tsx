@@ -5,6 +5,11 @@ import { Pane } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
+//@components
+import LightBox from "@components/Lightbox";
+import LabelButton from "@components/Button/Primary/Label";
+import LabelSecondaryButton from "@components/Button/Secondary/Label";
+
 //@layout
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
@@ -32,7 +37,8 @@ const Index: NextPageWithLayout<never> = ({
   // const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState(null);
-  const [busData, setBusData] = useState([]);
+  const [busListData, setBusListData] = useState([]);
+  const [isLightOpen, setLightOpen] = useState(false);
 
   const [nowTab, setNowTab] = useState("order");
 
@@ -79,7 +85,8 @@ const Index: NextPageWithLayout<never> = ({
     try {
       const res = await getQuotationByID(p_order_no);
       const bus_res = await getBusType();
-      setBusData(bus_res);
+      setBusListData(bus_res);
+      console.log("詢議價的資料", res.data);
       setOrderData(res.data);
     } catch (e: any) {
       console.log(e);
@@ -113,12 +120,13 @@ const Index: NextPageWithLayout<never> = ({
                 });
               }}
               onClose={() => {
-                router.push("/admin_orders/");
+                setLightOpen(true);
+                // router.push("/admin_orders/");
               }}
             >
               <AdminOrdersDetal
                 submitRef={submitRef}
-                busData={busData}
+                busListData={busListData}
                 submitForm={asyncSubmitForm}
                 isEdit={editPage}
                 quoteType={p_quote_type}
@@ -128,6 +136,39 @@ const Index: NextPageWithLayout<never> = ({
           </Pane>
         </>
       )}
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => {
+          setLightOpen((prev) => !prev);
+        }}
+      >
+        如果你現在離開 ，將會遺失未儲存的資料。
+        <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
+          <LabelSecondaryButton
+            style={{
+              width: "unset",
+              fontSize: "12px",
+              fontWeight: "600"
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+            text="取消"
+          />
+          <LabelButton
+            style={{
+              width: "unset",
+              fontSize: "12px"
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/admin_orders/");
+            }}
+            text="確定離開"
+          />
+        </Pane>
+      </LightBox>
     </BodySTY>
   );
 };

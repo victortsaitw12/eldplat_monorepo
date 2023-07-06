@@ -6,7 +6,7 @@ import { Label } from "@components/Button/Primary";
 import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
 interface AdditionalDriverBtn_Type {
-  id?: string;
+  id: string;
   disabled?: boolean;
   setOrderInfo: (t: any) => void;
   setCreatDrawerOpen: (v: "car" | "driver" | "") => void;

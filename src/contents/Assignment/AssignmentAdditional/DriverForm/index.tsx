@@ -1,43 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import {
   SelectField,
-  Select,
   Pane,
   Paragraph,
-  TextInputField,
-  TextareaField
+  TextareaField,
+  toaster
 } from "evergreen-ui";
 import { FormSTY } from "./style";
 
 //@layout
-import {
-  I_ManualAssignType,
-  I_ManualCreateType
-} from "@typings/assignment_type";
+import { I_ManualAssignType } from "@typings/assignment_type";
 import {
   getAssignBusDDL,
   getAssignDateDDL,
   getBusDayNumberDDL,
   getDriverNameDDL
 } from "@services/assignment/getAssignmentDDL";
-import { hours, minutes } from "@services/assignment/mock_data";
-import PrimaryRadius from "@components/Button/PrimaryRadius";
-import TimeInput from "@components/Timepicker/TimeInput";
 import {
   I_ReplaceAssignment,
-  updateReplaceAssignment
-} from "@services/assignment/updateReplaceAssignment";
+  createReplaceAssignment,
+  I_creatOtherAssignment
+} from "@services/assignment/createReplaceAssignment";
+import PrimaryRadius from "@components/Button/PrimaryRadius";
+import TimeInput from "@components/Timepicker/TimeInput";
 
 interface I_DriverFormProps {
   orderInfo: I_ManualAssignType[];
-  createAssignData: I_ManualCreateType;
-  data?: any;
   setLoading: (v: boolean) => void;
+  refetch: (v: I_creatOtherAssignment) => void;
 }
 
-function DriverForm({ orderInfo, setLoading }: I_DriverFormProps) {
+function DriverForm({ orderInfo, setLoading, refetch }: I_DriverFormProps) {
   const defaultValues = {
     quote_no: "",
     bus_driver_no: "",
@@ -47,7 +42,7 @@ function DriverForm({ orderInfo, setLoading }: I_DriverFormProps) {
     task_end_time: "", //2023-06-26T08:12:19.812Z
     remark: ""
   };
-  const { register, handleSubmit, control, getValues, setValue } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues
   });
   const [dateDDL, setDateDDL] = useState<any>([
@@ -62,7 +57,6 @@ function DriverForm({ orderInfo, setLoading }: I_DriverFormProps) {
   const [driverNameDDL, setDriverNameDDL] = useState<any>([
     { bus_no: "00", bus_name: "請選擇", license_plate: "" }
   ]);
-
   const [dateBase, setDateBase] = useState("");
 
   useEffect(() => {
@@ -95,13 +89,29 @@ function DriverForm({ orderInfo, setLoading }: I_DriverFormProps) {
     getbusData();
     setLoading(false);
   }, [orderInfo]);
+
   // ----- function ----- //
-  const asyncSubmitForm = async (data: any) => {
+  const asyncSubmitForm = async (data: I_ReplaceAssignment) => {
     try {
-      const res = await updateReplaceAssignment(data);
+      // 新增替代(駕駛)API
+      const res = await createReplaceAssignment(data);
+      // 成功or失敗訊息
+      if (res.statusCode !== "200") throw new Error(` ${res.resultString}`);
+      toaster.success("新增成功", {
+        description: `新增${dayjs(data.task_start_time).format(
+          "YYYY-MM-DD"
+        )}派工`,
+        duration: 2,
+        hasCloseButton: true
+      });
+      // refetch, close drawer, ask update the rest shift?
+      refetch(res.dataList[0]);
     } catch (e: any) {
-      console.log(e);
-      alert(e.message);
+      toaster.success("新增失敗", {
+        description: `${e.message || ""}`,
+        duration: 3,
+        hasCloseButton: true
+      });
     }
   };
 
@@ -116,7 +126,7 @@ function DriverForm({ orderInfo, setLoading }: I_DriverFormProps) {
       );
 
       const resBusDayNumberDDL = res.dataList[0].day_bus_options.map(
-        (item, i) => {
+        (item: any, i: number) => {
           return { ...item, label: `第0${item.bus_day_number}車` };
         }
       );
@@ -143,7 +153,6 @@ function DriverForm({ orderInfo, setLoading }: I_DriverFormProps) {
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
-        console.log("🍅🍅🍅 data:", data);
         asyncSubmitForm({ ...data });
       })}
     >

@@ -30,10 +30,11 @@ const MonthlyView = ({
   UI.setId(router.query.id);
   const { cur } = router.query;
   const dateCellRef = React.useRef<HTMLDivElement>(null);
-  // const initMaxEventCountRef = React.useRef(null);
+  // 初始頁面、resize 的顯示事件數: initMaxEventCount
   const [initMaxEventCount, setInitMaxEventCount] = React.useState<
     number | null
   >(null);
+  // 配合zoombar展開收合 的顯示事件數: maxEventCount
   const [maxEventCount, setMaxEventCount] = React.useState<number | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -55,23 +56,21 @@ const MonthlyView = ({
     setIsOpenDrawer(true);
   };
 
-  const handleEventCount = React.useCallback(() => {
+  const eventCount = React.useCallback(() => {
     const eventH = 20;
     const gapH = 4;
-    const cellH = dateCellRef.current?.offsetHeight || 16;
+    const cellH = dateCellRef.current?.offsetHeight || 36 + 4; //保證至少eventCount=1
     const cellPd = 8;
     const updateMaxEventCount = Math.floor(
       (cellH - cellPd * 2 - eventH) / (eventH + gapH)
     );
-    console.log("dateCellRef:", dateCellRef);
+    return updateMaxEventCount;
+  }, [dateCellRef]);
+  const handleEventCount = React.useCallback(() => {
+    const updateMaxEventCount = eventCount();
     setMaxEventCount(updateMaxEventCount);
-    // if (initMaxEventCountRef.current === null) {
-    //   initMaxEventCountRef.current = updateMaxEventCount;
-    // }
-    if (initMaxEventCount === null) {
-      setInitMaxEventCount(updateMaxEventCount);
-    }
-  }, []);
+    if (!initMaxEventCount) setInitMaxEventCount(updateMaxEventCount);
+  }, [initMaxEventCount]);
 
   // ------- useEffect ------- //
   // monitor window for eventCount shown
@@ -79,17 +78,21 @@ const MonthlyView = ({
     handleEventCount();
   }, []);
 
-  React.useEffect(() => {
-    window.addEventListener("resize", debounce(handleEventCount, 250));
-    return () => {
-      window.removeEventListener("resize", debounce(handleEventCount, 250));
-    };
-  }, [handleEventCount]);
+  // React.useEffect(() => {
+  //   const handleResize = () => {
+  //     const updateMaxEventCount = eventCount();
+  //     setMaxEventCount(updateMaxEventCount);
+  //     setInitMaxEventCount(updateMaxEventCount);
+  //   };
+  //   window.addEventListener("resize", debounce(handleResize, 250));
+  //   return () => {
+  //     window.removeEventListener("resize", debounce(handleResize, 250));
+  //   };
+  // }, []);
 
   React.useEffect(() => {
-    console.log(isExpand);
     isExpand ? setMaxEventCount(99) : setMaxEventCount(initMaxEventCount);
-  }, [isExpand]);
+  }, [isExpand, initMaxEventCount]);
 
   // fetch data from db
   React.useEffect(() => {

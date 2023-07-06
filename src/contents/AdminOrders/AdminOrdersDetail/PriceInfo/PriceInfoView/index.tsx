@@ -2,6 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import { Pane, Text } from "evergreen-ui";
 import { BodySTY } from "./style";
+import { useFormContext, useWatch } from "react-hook-form";
+
 import DetailList from "@components/DetailList";
 import LabelButton from "@components/Button/Primary/Label";
 import LabelSecondaryButton from "@components/Button/Secondary/Label";
@@ -14,24 +16,62 @@ import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
 
 import dayjs from "dayjs";
 
-interface I_Props {
-  orderStatusList: any;
-  orderData: any;
-}
-const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
+const PriceInfoView = () => {
+  const {
+    register,
+    control,
+    watch,
+    setValue,
+    getValues,
+    trigger,
+    formState: { errors }
+  } = useFormContext();
+  const {
+    quote_no,
+    full_payment_check,
+    deposit_check,
+    order_status_list,
+    deposit_amount,
+    deposit_period,
+    balance_period,
+    full_payment_period,
+    balance_amount,
+    quote_total_amount,
+    basic_amount,
+    tip,
+    high_season_charge,
+    night_charge,
+    remote_charge,
+    driver_guide_charge,
+    bus_age_charge,
+    special_luggage_charge,
+    bring_pets_charge,
+    mineral_water_charge,
+    bottled_water_charge,
+    child_seat_charge,
+    infant_seat_charge
+  } = useWatch({
+    control
+  });
   //全額付款
-  const isFullPayment = orderData.full_payment_check === "1";
+  const isFullPayment = full_payment_check === "1";
   //訂金付款
-  const isDeposit = orderData.deposit_check === "1";
+  const isDeposit = deposit_check === "1";
   const isCheckedStatus = () => {
-    const checkedObj = orderStatusList.filter(
+    const checkedObj = order_status_list.filter(
       (child: any) => child.name == "接受報價"
     )[0];
-    return checkedObj.status === "ok";
+    return checkedObj?.status === "ok";
   };
   const isPaid = () => {
-    const paidObj = orderStatusList.filter(
+    const paidObj = order_status_list.filter(
       (child: any) => child.name == "已付全額" || child.name == "已付尾款"
+    )[0];
+    return !!paidObj?.status && paidObj?.status === "ok";
+  };
+  const isAssign = () => {
+    const paidObj = order_status_list.filter(
+      (child: any) => child.name == "預約完成" || child.name == "結案"
     )[0];
     return !!paidObj?.status && paidObj?.status === "ok";
   };
@@ -40,11 +80,8 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
   const router = useRouter();
   const delete_quotation = async () => {
     try {
-      const res = await deleteQuotation(orderData.quote_no);
-      const res_assignmentClosed = await assignmentClosed(
-        orderData.quote_no,
-        "02"
-      );
+      const res = await deleteQuotation(quote_no);
+      const res_assignmentClosed = await assignmentClosed(quote_no, "02");
       router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
@@ -63,7 +100,6 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
     try {
       const res = await updateFEStatusLog(quote_no, status_code);
       console.log(res);
-      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -71,71 +107,67 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
   return (
     <BodySTY>
       <Pane>
-        <Pane className="btn_list">
-          <LabelSecondaryButton
-            style={{
-              fontWeight: "600",
-              fontSize: "12px"
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              setIsCancelOpen(true);
-            }}
-            className="cancel_btn"
-            text="取消報價"
-          />
-          {!isCheckedStatus() && (
-            <LabelButton
+        {!isAssign() && (
+          <Pane className="btn_list">
+            <LabelSecondaryButton
               style={{
                 fontWeight: "600",
                 fontSize: "12px"
               }}
               onClick={(e) => {
                 e.preventDefault();
-                setIsConfirmOpen(true);
+                setIsCancelOpen(true);
               }}
-              className="submit_btn"
-              text="送出報價"
+              className="cancel_btn"
+              text="取消報價"
             />
-          )}
-          {isCheckedStatus() && (
-            <LabelButton
-              style={{
-                fontWeight: "600",
-                fontSize: "12px"
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                update_FE_status(orderData.quote_no, "12");
-                update_BE_status(orderData.quote_no, "13");
-              }}
-              disabled={!isPaid()}
-              className="submit_btn"
-              text="預約派車"
-            />
-          )}
-        </Pane>
+            {!isCheckedStatus() && (
+              <LabelButton
+                style={{
+                  fontWeight: "600",
+                  fontSize: "12px"
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsConfirmOpen(true);
+                }}
+                className="submit_btn"
+                text="送出報價"
+              />
+            )}
+            {isCheckedStatus() && (
+              <LabelButton
+                style={{
+                  fontWeight: "600",
+                  fontSize: "12px"
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  update_FE_status(quote_no, "12");
+                  update_BE_status(quote_no, "13");
+                  router.push("/admin_orders/");
+                }}
+                disabled={!isPaid()}
+                className="submit_btn"
+                text="預約派車"
+              />
+            )}
+          </Pane>
+        )}
+
         {isDeposit && (
           <>
             <Pane className="price_content">
               <Text>訂金</Text>
-              <Text>
-                NT${orderData?.deposit_amount?.toLocaleString() || "0"}
-              </Text>
+              <Text>NT${deposit_amount?.toLocaleString() || "0"}</Text>
             </Pane>
-            <Text>
-              {dayjs(orderData.deposit_period).format("YYYY-MM-DD")} 前繳款
-            </Text>
+            <Text>{dayjs(deposit_period).format("YYYY-MM-DD")} 前繳款</Text>
             <hr />
             <Pane className="price_content">
               <Text>尾款</Text>
-              <Text>
-                NT${orderData?.balance_amount?.toLocaleString() || "0"}
-              </Text>
+              <Text>NT${balance_amount?.toLocaleString() || "0"}</Text>
             </Pane>
-            <Text>
-              {dayjs(orderData.balance_period).format("YYYY-MM-DD")} 前繳款
-            </Text>
+            <Text>{dayjs(balance_period).format("YYYY-MM-DD")} 前繳款</Text>
             <hr />
           </>
         )}
@@ -143,12 +175,10 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
           <>
             <Pane className="price_content">
               <Text>總金額</Text>
-              <Text>
-                NT${orderData?.quote_total_amount?.toLocaleString() || "0"}
-              </Text>
+              <Text>NT${quote_total_amount?.toLocaleString() || "0"}</Text>
             </Pane>
             <Text>
-              {dayjs(orderData.full_payment_period).format("YYYY-MM-DD")} 前繳款
+              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
             </Text>
             <hr />
           </>
@@ -159,80 +189,74 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
           listArray={[
             {
               title: "基本車資",
-              value: orderData?.basic_amount
-                ? "NT$" + orderData?.basic_amount.toLocaleString()
-                : "0"
+              value: basic_amount ? "NT$" + basic_amount.toLocaleString() : "0"
             },
             {
               title: "小費",
-              value: orderData?.tip
-                ? "NT$" + orderData?.tip.toLocaleString()
-                : "0"
+              value: tip ? "NT$" + tip.toLocaleString() : "0"
             },
             {
               title: "旺季加價",
-              value: orderData?.high_season_charge
-                ? "NT$" + orderData?.high_season_charge.toLocaleString()
+              value: high_season_charge
+                ? "NT$" + high_season_charge.toLocaleString()
                 : "0"
             },
             {
               title: "夜間加價",
-              value: orderData?.night_charge
-                ? "NT$" + orderData?.night_charge.toLocaleString()
-                : "0"
+              value: night_charge ? "NT$" + night_charge.toLocaleString() : "0"
             },
             {
               title: "偏遠地區加價",
-              value: orderData?.remote_charge
-                ? "NT$" + orderData?.remote_charge.toLocaleString()
+              value: remote_charge
+                ? "NT$" + remote_charge.toLocaleString()
                 : "0"
             },
             {
               title: "司導",
-              value: orderData?.driver_guide_charge
-                ? "NT$" + orderData?.driver_guide_charge.toLocaleString()
+              value: driver_guide_charge
+                ? "NT$" + driver_guide_charge.toLocaleString()
                 : "0"
             },
             {
               title: "指定車齡",
-              value: orderData?.bus_age_charge
-                ? "NT$" + orderData?.bus_age_charge.toLocaleString()
+              value: bus_age_charge
+                ? "NT$" + bus_age_charge.toLocaleString()
                 : "0"
             },
             {
               title: "特大/特殊行李",
-              value: orderData?.special_luggage_charge
-                ? "NT$" + orderData?.special_luggage_charge.toLocaleString()
+              value: special_luggage_charge
+                ? "NT$" + special_luggage_charge.toLocaleString()
                 : "0"
             },
             {
               title: "攜帶寵物",
-              value: orderData?.bring_pets_charge
-                ? "NT" + orderData?.bring_pets_charge.toLocaleString()
+              value: bring_pets_charge
+                ? "NT" + bring_pets_charge.toLocaleString()
                 : "0"
             },
             {
               title: "杯水",
-              value: orderData?.mineral_water_charge
-                ? "NT$" + orderData?.mineral_water_charge.toLocaleString()
+              value: mineral_water_charge
+                ? "NT$" + mineral_water_charge.toLocaleString()
                 : "0"
             },
             {
               title: "瓶裝水",
-              value: orderData?.bottled_water_charge
-                ? "NT$" + orderData?.bottled_water_charge.toLocaleString()
+              value: bottled_water_charge
+                ? "NT$" + bottled_water_charge.toLocaleString()
                 : "0"
             },
             {
               title: "兒童座椅",
-              value: orderData?.child_seat_charge
-                ? "NT$" + orderData?.child_seat_charge.toLocaleString()
+              value: child_seat_charge
+                ? "NT$" + child_seat_charge.toLocaleString()
                 : "0"
             },
             {
               title: "嬰兒座椅",
-              value: orderData?.infant_seat_charge
-                ? "NT$" + orderData?.infant_seat_charge.toLocaleString()
+              value: infant_seat_charge
+                ? "NT$" + infant_seat_charge.toLocaleString()
                 : "0"
             }
           ]}
@@ -268,8 +292,11 @@ const PriceInfoView = ({ orderData, orderStatusList }: I_Props) => {
             }}
             onClick={(e) => {
               e.preventDefault();
-              update_BE_status(orderData.quote_no, "3");
-              update_FE_status(orderData.quote_no, "4");
+              const formData = getValues();
+              console.log("當點擊送出報價後的表單資料:", formData);
+              update_BE_status(quote_no, "3");
+              update_FE_status(quote_no, "4");
+              router.push("/admin_orders/");
             }}
             text="送出報價"
           />

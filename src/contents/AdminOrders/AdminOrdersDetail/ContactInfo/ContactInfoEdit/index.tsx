@@ -177,7 +177,7 @@ const ContactInfoEdit = () => {
     }
   ];
   return (
-    <BodySTY style={{ padding: "20px", display: "flex" }}>
+    <BodySTY style={{ padding: "20px", display: "flex", gap: "20px" }}>
       <Pane style={{ flex: "1" }}>
         <DetailList listArray={contact_1} />
       </Pane>

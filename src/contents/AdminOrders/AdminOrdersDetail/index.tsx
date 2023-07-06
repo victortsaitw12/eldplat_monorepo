@@ -36,7 +36,7 @@ interface I_Props {
   isEdit: boolean;
   quoteType: "1" | "2" | "3"; //1:客製包車 2:接送機
   orderData: any;
-  busData: I_busType[];
+  busListData: I_busType[];
 }
 
 const AdminOrdersDetal = ({
@@ -45,7 +45,7 @@ const AdminOrdersDetal = ({
   isEdit,
   quoteType = "1",
   orderData,
-  busData
+  busListData
 }: I_Props) => {
   const modifyDefaultValues = (data: any) => {
     const newData = { ...orderData };
@@ -55,9 +55,10 @@ const AdminOrdersDetal = ({
     newData["check_in_luggage"] = orderData["check_in_luggage"] || 0;
     newData["carry_on_luggage"] = orderData["carry_on_luggage"] || 0;
     if (
-      //假如“全額付款”跟“預付訂金”都為false的話就默認“全額付款”
+      //假如“全額付款”跟“預付訂金”都為false的話就編輯模式下要默認“全額付款”
       orderData["full_payment_check"] !== "1" &&
-      orderData["deposit_check"] !== "1"
+      orderData["deposit_check"] !== "1" &&
+      isEdit == true
     ) {
       newData["full_payment_check"] = "1";
     }
@@ -98,17 +99,18 @@ const AdminOrdersDetal = ({
       }
     );
     const formatedBusData = [];
-    for (const key in busData) {
+    for (const key in busListData) {
       formatedBusData.push({
-        type_name: busData[key].type_name,
-        ddl_code: busData[key].ddl_code,
-        bus_list: busData[key].bus_list.map((child: any) => {
+        type_name: busListData[key].type_name,
+        ddl_code: busListData[key].ddl_code,
+        bus_list: busListData[key].bus_list.map((child: any) => {
           return {
             bus_name: child.bus_name,
             bus_seat: child.bus_seat,
             bus_type: child.type,
             order_quantity:
-              res_bus_data[busData[key].type_name + "-" + child.bus_seat] || 0
+              res_bus_data[busListData[key].type_name + "-" + child.bus_seat] ||
+              0
           };
         })
       });
@@ -122,26 +124,21 @@ const AdminOrdersDetal = ({
       ...modifyDefaultValues(orderData)
     }
   });
-
+  React.useEffect(() => {
+    if (
+      methods.getValues("full_payment_check") !== "1" &&
+      methods.getValues("deposit_check") !== "1" &&
+      isEdit == true
+    ) {
+      methods.setValue("full_payment_check", "1");
+    }
+    console.log("isEdit", isEdit);
+  }, [isEdit]);
   const r_template: { "1": React.ReactNode; "2": React.ReactNode } = {
     //客製包車
-    "1": (
-      <CustomBus
-        orderData={orderData}
-        methods={methods}
-        busData={busData}
-        isEdit={isEdit}
-      />
-    ),
+    "1": <CustomBus busListData={busListData} isEdit={isEdit} />,
     //接送機
-    "2": (
-      <AirlineShuttle
-        orderData={orderData}
-        methods={methods}
-        busData={busData}
-        isEdit={isEdit}
-      />
-    )
+    "2": <AirlineShuttle busListData={busListData} isEdit={isEdit} />
   };
 
   return (
@@ -191,10 +188,7 @@ const AdminOrdersDetal = ({
                 ]}
               />
             ) : (
-              <PriceInfoView
-                orderStatusList={orderData.order_status_list}
-                orderData={orderData}
-              />
+              <PriceInfoView />
             )}
             <button style={{ display: "none" }} ref={submitRef} type="submit">
               發送表單

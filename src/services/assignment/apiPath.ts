@@ -16,7 +16,9 @@ const API_Path = {
   UpdateSingleAssignment: createUrlPath("ANV", "Assignment_Edit"), //更新某筆派車或派工資料
   GetAssignDateDDL: createUrlPath("ANV", "ReplaceAssignment_OrderDateDDL"), //取得新增派車or派工 可選日期
   GetBusDayNumberDDL: createUrlPath("ANV", "ReplaceAssignment_DriverDDL"), //取得新增派車or派工 可選車次
-  GetDriverNameDDL: createUrlPath("ANV", "ReplaceAssignment_DriverDDL") //取得新增派工 可選駕駛
+  GetDriverNameDDL: createUrlPath("ANV", "ReplaceAssignment_DriverDDL"), //取得新增派工 可選駕駛
+  createReplaceAssignment: createUrlPath("ANV", "CreateReplaceAssignment"), //新增派工 派車單
+  createOtherAssignment: createUrlPath("ANV", "CreateOtherAssignment") //新增其他派工 派車單
 };
 
 export default API_Path;
