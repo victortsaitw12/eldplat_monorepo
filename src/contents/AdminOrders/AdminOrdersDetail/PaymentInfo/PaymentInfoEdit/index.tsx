@@ -9,7 +9,10 @@ const PaymentInfoEdit = () => {
   const [calculateType, setCalculate] = React.useState<string>("$");
   const [persent, setPersent] = React.useState<number>(0);
   const { register, control, setValue, getValues } = useFormContext();
-
+  const deposit_amount = useWatch({
+    control,
+    name: "deposit_amount"
+  });
   const quote_total_amount = useWatch({
     control,
     name: "quote_total_amount"
@@ -70,22 +73,25 @@ const PaymentInfoEdit = () => {
 
   React.useEffect(() => {
     setPersent(0);
-    setValue("deposit_amount", 0);
+    // setValue("deposit_amount", 0);
   }, [calculateType]);
 
   React.useEffect(() => {
-    const quote_total_amount = parseInt(getValues("quote_total_amount"), 10);
-    if (quote_total_amount > 0) {
-      setValue("deposit_amount", quote_total_amount * (persent / 100));
-    } else {
-      setValue("deposit_amount", 0);
+    if (calculateType === "%") {
+      const quote_total_amount = parseInt(getValues("quote_total_amount"), 10);
+      if (quote_total_amount > 0) {
+        setValue("deposit_amount", quote_total_amount * (persent / 100));
+      } else {
+        setValue("deposit_amount", 0);
+      }
     }
-    console.log("💕💕💕💕", quote_total_amount);
-  }, [persent]);
+  }, [persent, calculateType]);
 
   React.useEffect(() => {
-    setValue("deposit_amount", quote_total_amount * ((100 - persent) / 100));
-  }, [quote_total_amount]);
+    if (calculateType === "%") {
+      setValue("deposit_amount", quote_total_amount * ((100 - persent) / 100));
+    }
+  }, [quote_total_amount, calculateType]);
 
   return (
     <BodySTY>
@@ -132,7 +138,7 @@ const PaymentInfoEdit = () => {
             style={{ width: "60px", flex: "unset" }}
             value={calculateType}
             onChange={(event) => {
-              console.log("select onchange!!!!");
+              // console.log("select onchange!!!!");
               setCalculate(event.target.value);
             }}
             disabled={isFullPayment == "1"}
@@ -140,18 +146,20 @@ const PaymentInfoEdit = () => {
             <option value="$">$</option>
             <option value="%">%</option>
           </Select>
+
           {calculateType === "$" && (
             <TextInput
               style={{ width: "unset", flex: "1" }}
               type="number"
               {...(register("deposit_amount"),
               {
+                value: deposit_amount,
                 onChange: (e: { target: { value: any } }) => {
+                  setValue("deposit_amount", parseInt(e.target.value, 10));
                   const quote_total_amount = parseInt(
                     getValues("quote_total_amount"),
                     10
                   );
-                  setValue("deposit_amount", parseInt(e.target.value, 10));
                   if (calculateType == "$") {
                     quote_total_amount - e.target.value > 0 &&
                       setValue(
@@ -187,7 +195,7 @@ const PaymentInfoEdit = () => {
               <TextInput
                 style={{ width: "50%" }}
                 type="number"
-                {...register("deposit_amount")}
+                value={deposit_amount}
                 disabled={true}
                 placeholder="金額"
               />
