@@ -1,9 +1,24 @@
 import React from "react";
-import { Pane, PlusIcon, TextInput, TrashIcon, Text } from "evergreen-ui";
+import {
+  Pane,
+  PlusIcon,
+  TextInput,
+  TrashIcon,
+  Text,
+  FileCard,
+  FileUploader
+} from "evergreen-ui";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
 import { TableSTY, TableContainerSTY } from "./style";
-import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
+import {
+  Control,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+  useFieldArray
+} from "react-hook-form";
+import InvoiceFile from "./InvoiceFile";
 //
 interface I_Data {
   [key: string]: string | number | React.ReactNode;
@@ -14,6 +29,8 @@ interface I_Table {
   data?: I_Data[];
   control: Control<any>;
   register: UseFormRegister<any>;
+  setValue: UseFormSetValue<any>;
+  getValues: UseFormGetValues<any>;
   isEdit?: boolean;
   arrayName: string;
 }
@@ -25,12 +42,16 @@ function ItemListTable({
   control,
   register,
   isEdit = false,
-  arrayName
+  arrayName,
+  setValue,
+  getValues
 }: I_Table) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: arrayName
   });
+  console.log("fields", fields);
+  console.log("arrayName", arrayName);
   return (
     <TableContainerSTY className="TableContainerSTY">
       {/* 新增按鈕 */}
@@ -42,7 +63,7 @@ function ItemListTable({
               e.preventDefault();
               append({
                 no: null,
-                // files:null,
+                // receipt_url: "",
                 receipt_number: "",
                 price: 0,
                 service_remark: ""
@@ -73,6 +94,7 @@ function ItemListTable({
         <tbody>
           {fields.length !== 0 ? (
             fields.map((item: any, index) => {
+              console.log("invoice item", item);
               const invoiceItem = [
                 {
                   keyName: "receipt_number",
@@ -84,16 +106,17 @@ function ItemListTable({
                     />
                   ]
                 },
-                // {
-                //   keyName: "files",
-                //   value: item.files || "---",
-                //   editEle: [
-                //     <TextInput
-                //       key={`${arrayName}.${index}.files`}
-                //       {...register(`${arrayName}.${index}.files`)}
-                //     />
-                //   ]
-                // },
+
+                {
+                  keyName: "files",
+                  value: item.files || "---",
+                  editEle: [
+                    // <TextInput
+                    //   key={`${arrayName}.${index}.files`}
+                    //   {...register(`${arrayName}.${index}.files`)}
+                    // />
+                  ]
+                },
                 {
                   keyName: "price",
                   value: item.price || "---",
@@ -121,11 +144,25 @@ function ItemListTable({
                     return (
                       <td key={uuid()}>
                         {isEdit ? (
-                          <TextInput
-                            disabled={v.keyName === "files" && true}
-                            key={`${arrayName}.${index}.${v.keyName}`}
-                            {...register(`${arrayName}.${index}.${v.keyName}`)}
-                          />
+                          v.keyName === "files" ? (
+                            <InvoiceFile
+                              register={register}
+                              arrayName={arrayName}
+                              setValue={setValue}
+                              getValues={getValues}
+                              index={index}
+                              keyName={`${arrayName}.${index}.${v.keyName}`}
+                            />
+                          ) : (
+                            <TextInput
+                              // disabled={v.keyName === "files" && true}
+                              // type={v.keyName === "files" && "file"}
+                              key={`${arrayName}.${index}.${v.keyName}`}
+                              {...register(
+                                `${arrayName}.${index}.${v.keyName}`
+                              )}
+                            />
+                          )
                         ) : (
                           <Text>{v.value}</Text>
                         )}

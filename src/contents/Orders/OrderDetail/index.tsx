@@ -13,7 +13,6 @@ import {
   mappingProgressInfo
 } from "@services/client/mappingQuotationData";
 import { QUOTE_TYPE, PURPOSE } from "@services/getDDL";
-
 import ShuttleInfo from "@contents/Orders/OrderDetail/ShuttleInfo";
 import TakeBusInfoView from "@contents/Client/Quote/Detail/TakeBusInfoView";
 import FlightInfoView from "@contents/Client/Quote/Detail/FlightInfoView";
@@ -31,7 +30,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
   const specialInfo = mappingSpecailNeededsInfo(orderData);
-  const progressInfo = mappingProgressInfo(orderData.orderStatusesList);
+  const progressInfo = mappingProgressInfo(orderData.status_list);
 
   return (
     <FormProvider {...methods}>
@@ -40,16 +39,24 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
           <Collapse
             title={QUOTE_TYPE[orderData.quote_type]?.label}
             titleChildren={
-              <div style={{ display: "flex", flexDirection: "row" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}
+              >
                 <span className="collapse__title">
                   {orderData.quote_type === "1" ? "客製包車" : "機場接送"}
                 </span>
                 <span className="collapse__subTitle">
-                  {orderData.quote_type === "3"
-                    ? "送機"
-                      ? "接機"
-                      : PURPOSE[orderData.purpose]?.label
-                    : orderData.quote_type === "2"}
+                  {orderData.quote_type === "2"
+                    ? "| 送機"
+                    : orderData.quote_type === "3"
+                    ? "| 接機"
+                    : orderData.purpose
+                    ? `| ${PURPOSE[orderData.purpose]?.label}`
+                    : "| --"}
                 </span>
               </div>
             }
@@ -81,7 +88,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                 <ShuttleInfo arrayName="order_itinerary_list" isEdit={false} />
               </>
             )}
-            <Collapse title="乘車資訊">
+            <Collapse title="乘車資訊" opened={true}>
               <TakeBusInfoView
                 adult={orderData.adult}
                 child={orderData.child}
@@ -91,7 +98,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                 bus_data={orderData.bus_data}
               />
             </Collapse>
-            <Collapse title="特殊需求">
+            <Collapse title="特殊需求" opened={true}>
               <SpecialInfoView
                 listArray={specialInfo}
                 remark={orderData["remark"]}

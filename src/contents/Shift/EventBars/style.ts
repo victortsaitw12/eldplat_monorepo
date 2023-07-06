@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ThemeType } from "@styles/theme";
 
 export const EventBarsSTY = styled.div`
   position: absolute;
@@ -13,6 +14,7 @@ export const EventBarsSTY = styled.div`
 
 export const EventBarSTY = styled.div<{
   duration: number;
+  color: keyof ThemeType["color"] | null;
   cellWidth: number;
   left: number;
 }>`
@@ -41,7 +43,7 @@ export const EventBarSTY = styled.div<{
     align-items: center;
     flex-wrap: nowrap;
     gap: 4px;
-    background: ${({ theme, color }) => (color ? color : "unset")};
+    background: ${({ theme, color }) => (color ? theme.color[color] : "unset")};
     border: none;
     border-radius: 4px;
     color: ${({ theme }) => theme.color.N0};

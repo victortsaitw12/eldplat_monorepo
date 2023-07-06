@@ -28,7 +28,6 @@ const BodySTY = styled.div`
     & > label .radio_label {
       display: inline-block;
       color: ${({ theme }) => theme.color.N700};
-      font-family: "Noto Sans";
       font-style: normal;
       font-weight: 600;
       font-size: 16px;

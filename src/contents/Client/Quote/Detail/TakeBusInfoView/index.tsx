@@ -25,14 +25,21 @@ const TakeBusInfoView = ({
       resultArray: Array<{ label: string; value: string | number }>,
       child: any
     ) => {
-      child.bus_list.forEach((bus: any) => {
-        if (bus.order_quantity) {
-          resultArray.push({
-            label: child.type_name + "(" + bus.bus_seat + "人)",
-            value: bus.order_quantity
-          });
-        }
-      });
+      if ("bus_list" in child) {
+        child.bus_list.forEach((bus: any) => {
+          if (bus.order_quantity) {
+            resultArray.push({
+              label: child.type_name + "(" + bus.bus_seat + "人)",
+              value: bus.order_quantity
+            });
+          }
+        });
+      } else {
+        resultArray.push({
+          label: child.bus_type + "(" + child.bus_seat + "人)",
+          value: child.order_quantity
+        });
+      }
       return resultArray;
     },
     []

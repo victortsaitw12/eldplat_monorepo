@@ -7,6 +7,13 @@ import theme from "@styles/theme";
 import { GlobalStyles } from "@styles/global";
 import { getVendorsLang } from "@services/vendor/getAllVendors";
 import { useRouter } from "next/router";
+import { Noto_Sans } from "next/font/google";
+import LoadingModal from "@components/LoadingModal";
+import LoadingSpinner from "@components/LoadingSpinner";
+const notoSans = Noto_Sans({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  weight: ["400", "600", "700", "800"]
+});
 
 // 看現在狀態是哪個語言則去抓哪個語言的json檔
 
@@ -25,6 +32,38 @@ async function bootstrapApplication(locale: string) {
   return mess;
 }
 
+function Loader() {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    const handleStart = (url: string) => {
+      console.log("handleStart");
+      console.log("current url", url);
+      console.log("router.asPath", router.asPath);
+      setLoading(true);
+    };
+    const handleComplete = (url: string) => {
+      console.log("handleComplete");
+      console.log("current url", url);
+      console.log("router.asPath", router.asPath);
+      setLoading(false);
+    };
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, [router]);
+  return loading ? (
+    <LoadingModal>
+      <LoadingSpinner></LoadingSpinner>
+    </LoadingModal>
+  ) : null;
+}
+
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   const [locale, setLocale] = useState<string>(LOCALES.CHINESE);
@@ -33,7 +72,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [pageType, setPageType] = useState<string>(
     router.pathname.replace("/", "")
   ); // 先預設是vendor頁的多國語page
-
   // 存放從後端打API取回的多國語系JSON資料
   const [langJSONData, setLangJSONData] = useState<any>(null);
 
@@ -50,7 +88,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     setMessages(langJSONData);
   }, [langJSONData]);
-
   const loadLocaleData = () => {
     return langJSONData;
   };
@@ -64,19 +101,22 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const getLayout = Component.getLayout || ((page: React.ReactNode) => page);
   return (
-    <I18Provider locale={locale} messages={messages} defaultLocale="zh">
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        {getLayout(
-          <Component
-            {...pageProps}
-            locale={locale}
-            setLocale={setLocale}
-            setPageType={setPageType}
-          />,
-          { ...pageProps, locale: locale, setLocale: setLocale }
-        )}
-      </ThemeProvider>
-    </I18Provider>
+    <main className={notoSans.className}>
+      <Loader />
+      <I18Provider locale={locale} messages={messages} defaultLocale="zh">
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          {getLayout(
+            <Component
+              {...pageProps}
+              locale={locale}
+              setLocale={setLocale}
+              setPageType={setPageType}
+            />,
+            { ...pageProps, locale: locale, setLocale: setLocale }
+          )}
+        </ThemeProvider>
+      </I18Provider>
+    </main>
   );
 }

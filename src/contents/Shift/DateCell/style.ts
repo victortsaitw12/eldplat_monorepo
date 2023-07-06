@@ -38,8 +38,6 @@ export const CellSTY = styled.div`
         -webkit-line-clamp: 1;
         text-overflow: ellipsis;
         white-space: nowrap;
-
-        font-family: "Noto Sans";
         font-style: normal;
         font-weight: ${({ theme }) => theme.fontWeight.Heading200};
         font-size: ${({ theme }) => theme.fontSize.Heading200};

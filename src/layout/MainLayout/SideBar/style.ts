@@ -22,6 +22,14 @@ export const BodySTY = styled.div`
     &::-webkit-scrollbar {
       display: none;
     }
+    & > .back_to {
+      padding: 8px 12px;
+      font-size: 0.875rem;
+      font-weight: 400;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
   }
   .footer {
     position: absolute;

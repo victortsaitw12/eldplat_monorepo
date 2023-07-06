@@ -22,13 +22,19 @@ const BodySTY = styled.div`
     margin-left: 31px;
     font-size: 14px;
     font-weight: 400;
-    line-height: 19.07px;
+    line-height: normal;
     color: ${({ theme }) => theme.color.N700};
   }
   .checkbox_children {
     padding-left: 30px;
     &.hide {
       display: none;
+    }
+    > fieldset {
+      border: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
   }
 `;

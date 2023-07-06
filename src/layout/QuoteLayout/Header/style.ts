@@ -7,7 +7,6 @@ export const BodySTY = styled.div`
   justify-content: space-between;
   padding: 12px 20px;
   /* font */
-  font-family: "Noto Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;

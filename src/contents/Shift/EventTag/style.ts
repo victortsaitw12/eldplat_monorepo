@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { ThemeType } from "@styles/theme";
 
-export const BtnSTY = styled.button<{ color?: string }>`
-  /* max-width: calc(100% / 7); */
-  background-color: ${({ theme, color }) => color || "unset"};
+export const BtnSTY = styled.button<{ color: keyof ThemeType["color"] }>`
+  /* define an index signature on theme object type to allow indexing with any string value*/
+  background-color: ${({ theme, color }) => theme.color[color] || "unset"};
   color: ${({ theme }) => theme.color.N0};
   padding: 4px 8px;
   margin-right: 10px;

@@ -98,7 +98,7 @@ export interface I_OrderDetail {
   full_payment_tax: string;
   full_payment_period: string | null;
   full_payment_history: string | null; //01: 現金 02: 匯款
-  orderStatusesList: I_StatusList[];
+  status_list: I_StatusList[];
   quote_no: string;
   quote_type: string;
   return_date: string | null; // "2024-02-01T00:00:00",

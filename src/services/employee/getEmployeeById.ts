@@ -1,6 +1,8 @@
+import API_Path from "./apiPath";
+
 export const getEmployeeById = async (user_no: string) => {
   const response = await fetch(
-    `https://localhost:7088/ATR/GetUpdateList?user_no=${user_no}`,
+    `${API_Path["GetEmployeeById"]}?user_no=${user_no}`,
     {
       method: "GET",
       headers: {

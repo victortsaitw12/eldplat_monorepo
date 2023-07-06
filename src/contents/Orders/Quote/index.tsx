@@ -1,10 +1,11 @@
 import React from "react";
 import { Pane } from "evergreen-ui";
 import { DivSTY } from "./style";
+
 // import { MOCK_expenseList } from "@mock-data/orders";
 import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
-import PaymentBtn from "./PaymentBtn";
+// import PaymentBtn from "../PaymentBtn";
 import { I_OrderDetail } from "@services/client/getQuotation";
 
 const Quote = ({
@@ -50,7 +51,7 @@ const Quote = ({
       label: "特殊需求小計",
       name: "extra_charge",
       value: data.extra_charge || 0,
-      hint: "舉牌、司導、指定車齡、特殊行李、寵物、額外杯水瓶裝水、兒童與嬰兒座椅"
+      hint: "舉牌、司導等特殊需求加價"
     }
   ];
   // ----- function ----- //
@@ -60,7 +61,7 @@ const Quote = ({
 
   return (
     <DivSTY>
-      <PaymentBtn data={data} setData={setData} />
+      {/* <PaymentBtn data={data} setData={setData} /> */}
       <Pane className="quote">
         <Collapse
           title="金額試算"
@@ -68,11 +69,13 @@ const Quote = ({
             <div className="collapse">
               <div className="collapse__title">
                 <span style={{ fontSize: "16px" }}>
-                  {data.orderStatusesList[1].status === "pending"
+                  {data.status_list[1].status === "pending"
                     ? "初估金額"
                     : "總金額"}
                 </span>
-                <span>NT${data.quote_total_amount}</span>
+                <span>
+                  NT${data.quote_total_amount?.toLocaleString("en-US")}
+                </span>
               </div>
 
               <div className="collapse__subTitle">
@@ -83,7 +86,10 @@ const Quote = ({
                 ) : (
                   <>
                     <span>訂金</span>
-                    <span> NT${data.deposit_amount || 0}</span>
+                    <span>
+                      {" "}
+                      NT${data.deposit_amount?.toLocaleString("en-US") || 0}
+                    </span>
                   </>
                 )}
               </div>

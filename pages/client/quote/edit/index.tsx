@@ -124,7 +124,6 @@ const Page: NextPageWithLayout<
   airline
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const [remainTime, setRemainTime] = useState(5);
   useEffect(() => {
@@ -220,7 +219,6 @@ const Page: NextPageWithLayout<
     }
   });
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
-    alert("送出詢價單");
     try {
       const result = await createQuotation(data);
       const { quote_no } = result;
@@ -263,7 +261,7 @@ const Page: NextPageWithLayout<
           </div>
         </div>
         <div className="redirect-container">
-          <p>頁面即將於{remainTime}後跳轉至訂單管理頁</p>
+          <p>頁面即將於{remainTime}秒後跳轉至訂單管理頁</p>
           <button
             onClick={() => {
               goToOrdersPage();
@@ -294,10 +292,9 @@ const Page: NextPageWithLayout<
             className="content-container"
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
               e.preventDefault();
-              methods.handleSubmit(asyncSubmitFormHandler)(e);
             }}
           >
-            <button type="submit" style={{ display: "none" }} ref={submitRef}>
+            <button type="submit" style={{ display: "none" }}>
               submit
             </button>
             {currentTab === 1 && type !== "custom" && (
@@ -333,11 +330,10 @@ const Page: NextPageWithLayout<
                 type="button"
                 onClick={() => {
                   if (currentTab === 1) {
-                    alert("回到日期選擇頁!");
                     router.push({
                       pathname: "/client/quote/confirm",
                       query: {
-                        type: type === "custom" ? "custom" : "airport",
+                        type,
                         departureDate,
                         returnDate,
                         purpose,
@@ -346,7 +342,13 @@ const Page: NextPageWithLayout<
                         airport,
                         terminal,
                         airline,
-                        flightTime
+                        flightTime,
+                        quote_type:
+                          type === "custom"
+                            ? "1"
+                            : type === "pickUp"
+                            ? "2"
+                            : "3"
                       }
                     });
                     return;
@@ -373,15 +375,14 @@ const Page: NextPageWithLayout<
                     isValid = validationList[currentTab].valid;
                     if (!isValid) {
                       toaster.danger("無法前往下一頁", {
-                        description: validationList[currentTab].errorMessage
+                        description: validationList[currentTab].errorMessage,
+                        id: "validation-error"
                       });
                     }
                   }
-                  console.log("isValid", isValid);
                   if (isValid) {
                     if (currentTab === 5) {
-                      submitRef.current?.click();
-                      return;
+                      methods.handleSubmit(asyncSubmitFormHandler)();
                     } else {
                       setCurrentTab((prev) => prev + 1);
                     }
