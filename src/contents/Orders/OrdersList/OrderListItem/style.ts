@@ -4,7 +4,6 @@ export const BodySTY = styled.div`
   display: flex;
   flex-direction: row !important;
   gap: 20px;
-  padding: 20px;
   > .info-content {
     border: 1px solid ${({ theme }) => theme.color.N300};
     display: flex;
@@ -24,5 +23,16 @@ export const BodySTY = styled.div`
     flex: 1 0 0;
     border-radius: 10px;
     padding: 10px 19px;
+  }
+  .paymentBtn {
+    width: unset;
+    display: flex;
+    align-items: center;
+    div {
+      flex-direction: column;
+      button {
+        border: 1px solid #afc3da;
+      }
+    }
   }
 `;
