@@ -16,7 +16,6 @@ import TableTitle from "@components/Table/TableTitle";
 import ZoomBar from "@components/ZoomBar";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
-import AlertBox from "@components/AlertBox";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();

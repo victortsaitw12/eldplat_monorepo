@@ -111,7 +111,7 @@ const EventBars = ({
     return (
       <EventBarSTY
         key={`event-${cellTimestamp}-${i}`}
-        color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
+        color={SCHD_TYPE.get(item.schd_Type)?.color || false}
         duration={getEventDuration(item)}
         cellWidth={cellWidth}
         left={getEventStart(item)}
