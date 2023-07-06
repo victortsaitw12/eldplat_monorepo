@@ -92,16 +92,16 @@ const Page: NextPageWithLayout<never> = () => {
         </StatusCard>
       )}
       {!isLoading && data.query && currentTab == 1 && (
-        <OrdersList orderData={data.query} />
+        <OrdersList orderData={data.query} setData={setData} />
       )}
       {!isLoading && data.quote && currentTab == 2 && (
-        <OrdersList orderData={data.quote} />
+        <OrdersList orderData={data.quote} setData={setData} />
       )}
       {!isLoading && data.order && currentTab == 3 && (
-        <OrdersList orderData={data.order} />
+        <OrdersList orderData={data.order} setData={setData} />
       )}
       {!isLoading && data.finish && currentTab == 4 && (
-        <OrdersList orderData={data.finish} />
+        <OrdersList orderData={data.finish} setData={setData} />
       )}
     </BodySTY>
   );

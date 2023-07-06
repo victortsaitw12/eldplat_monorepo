@@ -19,9 +19,10 @@ export const getOrdersList = async (status_code: 1 | 2 | 3 | 4) => {
 };
 
 export interface I_Order {
-  basic_amount: string; //"2000.00"
+  quote_total_amount: string; //"2000.00"
   date: string; // "2023/5/5 上午 12:00:00"
   isfullpay: boolean;
+  checkdeposit: boolean;
   purpose: string;
   quote_no: string; //"ORD202306050015"
   quote_type: string; //"2"

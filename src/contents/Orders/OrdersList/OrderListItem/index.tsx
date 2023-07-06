@@ -2,13 +2,36 @@ import ProgressList from "@components/ProgressList";
 
 import { BodySTY } from "./style";
 import { mappingProgressInfo } from "@services/client/mappingQuotationData";
+import { getOrdersList, I_Order } from "@services/client/getOrdersList";
 import PaymentBtn from "@contents/orders/PaymentBtn";
 
-const OrderListItem = ({ itemData }: { itemData: any }) => {
+const OrderListItem = ({
+  itemData,
+  setData
+}: {
+  itemData: any;
+  setData: (v: any) => void;
+}) => {
   const progressInfo = mappingProgressInfo(itemData.status_list);
 
   const handlePaymentClick = (e: any) => {
-    console.log("🍅🍅🍅 clicked");
+    const fetchData = async () => {
+      try {
+        const queryRes = await getOrdersList(1);
+        const quoteRes = await getOrdersList(2);
+        const orderRes = await getOrdersList(3);
+        const finishRes = await getOrdersList(4);
+        setData({
+          query: queryRes,
+          quote: quoteRes,
+          order: orderRes,
+          finish: finishRes
+        });
+      } catch (e) {
+        console.log("出現錯誤");
+      }
+    };
+    fetchData();
     e.stopPropagation();
   };
   return (

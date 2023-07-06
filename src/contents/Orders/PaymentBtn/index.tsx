@@ -6,7 +6,7 @@ import Table from "@components/Table/Table";
 import PrimaryRadiusBtn from "@components/Button/PrimaryRadius";
 import SecondaryRadiusBtn from "@components/Button/SecondaryRadius";
 
-import { updateStatus } from "@services/client/updateStatus";
+import { updatePayment } from "@services/client/updatePayment";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 import { I_Order } from "@services/client/getOrdersList";
 
@@ -32,21 +32,18 @@ const PaymentBtn = ({
     //接後端API更改status_qode = '5'
     const status_code = "5";
     try {
-      const resFE = await updateStatus(status_code, "FE", data.quote_no);
-      const resBE = await updateStatus(status_code, "BE", data.quote_no);
-      console.log("確認接受報價");
-      setTimeout(() => setIsLightBoxOpen(false), 1000);
+      const res = await updatePayment(status_code, data.quote_no);
       toaster.success("接受報價", {
-        description: `訂單 ${data.quote_no} 確認總金額 ${data.quote_total_amount}，請於繳費期限內付款，完成訂車作業。`,
+        description: res.resultString,
         duration: 2,
         hasCloseButton: true
       });
+      setTimeout(() => setIsLightBoxOpen(false), 100);
     } catch (e) {
       console.log("接受報價失敗");
     } finally {
       handleRefetch();
     }
-    //refetch to update status
   }, [data]);
 
   const handlePayment = async (status_code: string) => {
@@ -55,27 +52,27 @@ const PaymentBtn = ({
       //接後端串金流API ->後端確認支付 -> 後端更改status_qode = '6' 已付全額 ('7'已付訂金 '8'已付尾款)
       if (status_code === "6") {
         //已付全額
-        const resBE = await updateStatus(status_code, "BE", data.quote_no);
+        const res = await updatePayment(status_code, data.quote_no);
         toaster.success("付款完成", {
-          description: `訂單 ${data.quote_no} 總金額 ${data.quote_total_amount}，已付款完成。`,
+          description: res.resultString,
           duration: 2,
           hasCloseButton: true
         });
       }
       if (status_code === "7") {
         //已付訂金
-        const resBE = await updateStatus(status_code, "BE", data.quote_no);
+        const res = await updatePayment(status_code, data.quote_no);
         toaster.success("訂金付款完成", {
-          description: `訂單 ${data.quote_no} 訂金 ${data.deposit_amount}，已付款完成。`,
+          description: res.resultString,
           duration: 2,
           hasCloseButton: true
         });
       }
       if (status_code === "8") {
         //已付尾款
-        const resBE = await updateStatus(status_code, "BE", data.quote_no);
+        const res = await updatePayment(status_code, data.quote_no);
         toaster.success("尾款付款完成", {
-          description: `訂單 ${data.quote_no} 尾款 ${data.balance_amount}，已付款完成。`,
+          description: res.resultString,
           duration: 2,
           hasCloseButton: true
         });
@@ -141,12 +138,8 @@ const PaymentBtn = ({
   return (
     <>
       {
-        <DivSTY className="paymentBtn">
-          {renderBtn(
-            "orderStatusesList" in data
-              ? data.orderStatusesList
-              : data.status_list
-          )}
+        <DivSTY className="paymentBtn" onClick={(e: any) => e.preventDefault()}>
+          {renderBtn(data.status_list)}
           {isLightBoxOpen && (
             <Pane>
               <Dialog

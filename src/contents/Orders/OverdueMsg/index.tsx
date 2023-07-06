@@ -19,9 +19,7 @@ const OverdueMsg = ({ data }: { data: I_OrderDetail | I_Order }) => {
 
   return (
     <>
-      {renderBtn(
-        "orderStatusesList" in data ? data.orderStatusesList : data.status_list
-      )}
+      {renderBtn(data.status_list)}
     </>
   );
 };

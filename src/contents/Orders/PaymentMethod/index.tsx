@@ -44,8 +44,10 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                     title: `${
                       data.actual_full_payment_date
                         ? "付款時間"
-                        : dayjs(data.full_payment_period).format("YYYY-MM-DD") +
+                        : data.full_payment_period
+                        ? dayjs(data.full_payment_period).format("YYYY-MM-DD") +
                           "前繳款"
+                        : ""
                     }`,
                     value:
                       data.actual_full_payment_date &&
@@ -75,16 +77,22 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                       data.deposit_amount?.toLocaleString("en-US") || 0
                     }`
                   },
-                  {
-                    title: data.deposit_history && "付款方式",
-                    value: PAYMENT_HISTORY[data.deposit_history]?.label
-                  },
+                  ...(data.deposit_history
+                    ? [
+                        {
+                          title: data.deposit_history && "付款方式",
+                          value: PAYMENT_HISTORY[data.deposit_history]?.label
+                        }
+                      ]
+                    : []),
                   {
                     title: `${
                       data.actual_deposit_date
                         ? "付款時間"
-                        : dayjs(data.deposit_period).format("YYYY-MM-DD") +
+                        : data.deposit_period
+                        ? dayjs(data.deposit_period).format("YYYY-MM-DD") +
                           "前繳款"
+                        : ""
                     }`,
                     value:
                       data.actual_deposit_date &&
@@ -119,8 +127,10 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                     title: `${
                       data.actual_balance_date
                         ? "付款時間"
-                        : dayjs(data.balance_period).format("YYYY-MM-DD") +
+                        : data.balance_period
+                        ? dayjs(data.balance_period).format("YYYY-MM-DD") +
                           "前繳款"
+                        : ""
                     }`,
                     value:
                       data.actual_balance_date &&

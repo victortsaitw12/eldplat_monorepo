@@ -9,7 +9,13 @@ import { I_Order } from "@services/client/getOrdersList";
 import OrderListItem from "./OrderListItem";
 import OverdueMsg from "@contents/Orders/OverdueMsg";
 
-const OrdersList = ({ orderData }: { orderData: I_Order[] }) => {
+const OrdersList = ({
+  orderData,
+  setData
+}: {
+  orderData: I_Order[];
+  setData: (v: any) => void;
+}) => {
   if (!orderData || orderData.length === 0)
     return (
       <BodySTY>
@@ -49,14 +55,14 @@ const OrdersList = ({ orderData }: { orderData: I_Order[] }) => {
                       </span>
                     </div>
                     <div style={{ fontSize: "18px" }}>{`NT$${parseFloat(
-                      item.basic_amount || "0"
+                      item.quote_total_amount || "0"
                     )?.toLocaleString()}`}</div>
                   </div>
                 }
                 viewOnly
                 opened
               >
-                <OrderListItem itemData={item} />
+                <OrderListItem itemData={item} setData={setData} />
                 {item.status_list.filter(
                   (statusItem) => statusItem.status === "error"
                 ) && <OverdueMsg data={item} />}

@@ -30,7 +30,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
   const specialInfo = mappingSpecailNeededsInfo(orderData);
-  const progressInfo = mappingProgressInfo(orderData.orderStatusesList);
+  const progressInfo = mappingProgressInfo(orderData.status_list);
 
   return (
     <FormProvider {...methods}>

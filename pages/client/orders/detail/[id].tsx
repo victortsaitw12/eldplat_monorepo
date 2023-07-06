@@ -69,13 +69,15 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
         )}
         {data && (
           <div className="right">
-            {data.orderStatusesList.filter(
+            {data.status_list.filter(
               (statusItem) => statusItem.status === "error"
             ) && <OverdueMsg data={data} />}
-            <PaymentBtn data={data} setData={setData} />
-
+            {data.status_list[1].status !== "pending" &&
+              data.status_list[3].status === "pending" && (
+                <PaymentBtn data={data} setData={setData} />
+              )}
             <Quote data={data} setData={setData} />
-            {data.orderStatusesList[1].status === "ok" && (
+            {data.status_list[1].status === "ok" && (
               <PaymentMethod data={data} />
             )}
           </div>

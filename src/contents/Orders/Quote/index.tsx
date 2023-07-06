@@ -69,7 +69,7 @@ const Quote = ({
             <div className="collapse">
               <div className="collapse__title">
                 <span style={{ fontSize: "16px" }}>
-                  {data.orderStatusesList[1].status === "pending"
+                  {data.status_list[1].status === "pending"
                     ? "初估金額"
                     : "總金額"}
                 </span>
