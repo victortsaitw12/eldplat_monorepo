@@ -1,3 +1,5 @@
+import API_Path from "./apiPath";
+
 // 取得員工資料
 export const getAllEmployees = async (filter: { [key: string]: any } = {}) => {
   const employeeFilter = [];
@@ -13,7 +15,7 @@ export const getAllEmployees = async (filter: { [key: string]: any } = {}) => {
   }
   console.log("employeeFilter", employeeFilter);
 
-  const res = await fetch("https://localhost:7088/ATR/GetAccountList", {
+  const res = await fetch(API_Path["GetAllEmployees"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

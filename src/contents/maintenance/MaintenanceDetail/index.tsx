@@ -8,9 +8,6 @@ import FlexWrapper from "@layout/FlexWrapper";
 //@service
 //@utils
 //
-import ContactList from "@components/ContactList";
-import { CustomerDataTypes } from "@contents/Customer/customer.type";
-import { getCustomerById } from "@services/customer/getCustomerById";
 import { I_Maintenance_Type } from "@typings/maintenance_type";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
@@ -23,7 +20,7 @@ interface I_Props {
   asyncSubmitForm: (data: any) => Promise<void>;
   maintenance_id: string;
 }
-const CustomerDetail = ({
+const MaintenanceDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
@@ -33,6 +30,7 @@ const CustomerDetail = ({
     register,
     control,
     formState: { errors },
+    setValue,
     getValues,
     handleSubmit
   } = useForm<I_Maintenance_Type>({
@@ -208,9 +206,11 @@ const CustomerDetail = ({
       editEle: (
         <ItemListTable
           key="item_List"
-          titles={["發票", "金額", "備註"]}
+          titles={["發票", "單據資料", "金額", "備註"]}
           control={control}
           register={register}
+          setValue={setValue}
+          getValues={getValues}
           isEdit={isEdit}
           arrayName="maintenanceDts"
         ></ItemListTable>
@@ -229,6 +229,7 @@ const CustomerDetail = ({
     }
   ];
 
+  console.log("register", register("meter"));
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>
@@ -246,4 +247,4 @@ const CustomerDetail = ({
   );
 };
 
-export default CustomerDetail;
+export default MaintenanceDetail;
