@@ -119,9 +119,10 @@ const EventList = ({
   const eventBtns = items?.map((item, i) => (
     <EventBtnSTY
       key={`event-${cellTimestamp}-${i}`}
-      color={SCHD_TYPE.get(item.schd_Type)?.color}
+      color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
       duration={getEventDurationLeft(item)}
-      className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}`}
+      className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}
+      `}
     >
       <button
         value={item.drv_Schedule_No}
@@ -151,7 +152,7 @@ const EventList = ({
     new Date(cellTimestamp).getDay() === 0 ? (
       <EventBtnSTY
         key={`event-${cellTimestamp}-${i}`}
-        color={SCHD_TYPE.get(item.schd_Type)?.color}
+        color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
         duration={getEventDurationLeft(item)}
         className={`${
           placeholders.length + i + 1 > maxEventCount ? "hide" : ""
@@ -183,7 +184,6 @@ const EventList = ({
       <EventBtnSTY
         aria-hidden="true"
         key={`placeholder-${cellTimestamp}-${i}`}
-        color={null}
         duration={1}
         className="placeholder"
         style={{
