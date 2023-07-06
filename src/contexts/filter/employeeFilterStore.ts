@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { deepClone } from "@utils/deepClone";
 
 interface StateTypes {
+  filter: any;
   subFilter: any;
   mainFilter: string;
   selectedForm: string;
@@ -11,7 +12,7 @@ interface StateTypes {
   setDrawerOpen: (value: boolean) => void;
   updateMainFilter: (value: string) => void;
   updateSelectedForm: (value: string) => void;
-  filter: any;
+  // filter: any;
   // initializeFilter: () => void;
   // updateFilter: (key: string, value: string) => void;
 }

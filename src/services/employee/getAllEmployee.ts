@@ -24,7 +24,7 @@ export const getAllEmployees = async (filter: { [key: string]: any } = {}) => {
     body: JSON.stringify({
       filters: employeeFilter,
       filter_Needed: false,
-      pageInfo: { page_Index: 1, page_Size: 10 },
+      pageInfo: { page_Index: 1, page_Size: 20 },
       user_status: "1"
     })
   });
