@@ -1,7 +1,8 @@
 import API_Path from "./apiPath";
+
 export const getEmployeeById = async (user_no: string) => {
   const response = await fetch(
-    `${API_Path["GetUpdateList"]}?user_no=${user_no}`,
+    `${API_Path["GetEmployeeById"]}?user_no=${user_no}`,
     {
       method: "GET",
       headers: {
