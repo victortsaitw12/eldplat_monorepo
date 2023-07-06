@@ -119,7 +119,7 @@ const EventList = ({
   const eventBtns = items?.map((item, i) => (
     <EventBtnSTY
       key={`event-${cellTimestamp}-${i}`}
-      color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
+      color={SCHD_TYPE.get(item.schd_Type)?.color}
       duration={getEventDurationLeft(item)}
       className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}`}
     >
@@ -151,7 +151,7 @@ const EventList = ({
     new Date(cellTimestamp).getDay() === 0 ? (
       <EventBtnSTY
         key={`event-${cellTimestamp}-${i}`}
-        color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
+        color={SCHD_TYPE.get(item.schd_Type)?.color}
         duration={getEventDurationLeft(item)}
         className={`${
           placeholders.length + i + 1 > maxEventCount ? "hide" : ""
@@ -183,7 +183,7 @@ const EventList = ({
       <EventBtnSTY
         aria-hidden="true"
         key={`placeholder-${cellTimestamp}-${i}`}
-        color="inherit"
+        color={null}
         duration={1}
         className="placeholder"
         style={{

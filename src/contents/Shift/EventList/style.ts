@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { ThemeType } from "@styles/theme";
 
-export const EventListSTY = styled.div<{ maxEventCount?: number }>`
+export const EventListSTY = styled.div<{
+  maxEventCount?: number;
+}>`
   ${({ theme }) => `
     --minBtnHeight: ${"calc(" + theme.fontSize.Heading200 + " + 4px * 2)"}};
   `}
@@ -15,7 +18,7 @@ export const EventListSTY = styled.div<{ maxEventCount?: number }>`
 `;
 export const EventBtnSTY = styled.div<{
   duration: number;
-  color?: string;
+  color: keyof ThemeType["color"] | null;
 }>`
   min-height: var(--minBtnHeight);
   min-width: 100%;
@@ -38,7 +41,6 @@ export const EventBtnSTY = styled.div<{
     height: 100%;
     width: ${({ duration }) =>
       "calc(" + duration * 100 + "% + " + (duration - 1) * 17 + "px)"};
-    font-family: "Noto Sans";
     font-style: normal;
     font-weight: ${({ theme }) => theme.fontWeight.Heading200};
     font-size: ${({ theme }) => theme.fontSize.Heading200};
@@ -51,7 +53,7 @@ export const EventBtnSTY = styled.div<{
     align-items: center;
     flex-wrap: nowrap;
     gap: 4px;
-    background: ${({ theme, color }) => (color ? color : "unset")};
+    background: ${({ theme, color }) => (color ? theme.color[color] : "unset")};
     border: none;
     border-radius: 4px;
     color: ${({ theme }) => theme.color.N0};

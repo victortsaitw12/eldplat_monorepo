@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const ShiftSTY = styled.div`
-  font-family: "Noto Sans";
   font-weight: ${({ theme }) => theme.fontWeight.Heading200};
   font-size: ${({ theme }) => theme.fontSize.Heading200};
   line-height: 16px;
