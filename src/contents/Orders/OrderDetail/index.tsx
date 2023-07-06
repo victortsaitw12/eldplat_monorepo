@@ -30,7 +30,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
   const specialInfo = mappingSpecailNeededsInfo(orderData);
-  const progressInfo = mappingProgressInfo(orderData.orderStatusesList);
+  const progressInfo = mappingProgressInfo(orderData.status_list);
 
   return (
     <FormProvider {...methods}>
@@ -39,7 +39,13 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
           <Collapse
             title={QUOTE_TYPE[orderData.quote_type]?.label}
             titleChildren={
-              <div style={{ display: "flex", flexDirection: "row" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}
+              >
                 <span className="collapse__title">
                   {orderData.quote_type === "1" ? "客製包車" : "機場接送"}
                 </span>
@@ -50,7 +56,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                     ? "| 接機"
                     : orderData.purpose
                     ? `| ${PURPOSE[orderData.purpose]?.label}`
-                    : "| ---"}
+                    : "| --"}
                 </span>
               </div>
             }

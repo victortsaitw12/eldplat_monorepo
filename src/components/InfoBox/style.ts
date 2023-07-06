@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const InfoBoxSTY = styled.div`
-  font-family: "Noto Sans";
   width: 100%;
   min-height: 224px;
   background: #ffffff;
