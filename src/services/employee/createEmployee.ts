@@ -41,8 +41,8 @@ export const createBriefEmployee = async (
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-      },
-      body: JSON.stringify({})
+      }
+      // body: JSON.stringify({})
     }
   );
   return res.json();

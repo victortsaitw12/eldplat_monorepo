@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  height: 100vh;
+  padding: 1rem;
+  background-color: rgb(255, 255, 255);
+  overflow-x: auto;
+  min-height: 100vh;
+  /* height: 100vh;
   .employee-list-title {
     display: flex;
     justify-content: space-between;
-  }
+  } */
 `;
