@@ -1,8 +1,9 @@
 import { I_Company_Update_Type } from "@typings/company_type";
+import API_Path from "./apiPath";
 
 // 取得單一公司資料
 export const getSingleCompany = async () => {
-  const res = await fetch("https://localhost:7088/ATR/QueryCompany", {
+  const res = await fetch(API_Path["GetSingleCompany"], {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +18,7 @@ export const getSingleCompany = async () => {
 export const updateCompany = async (
   companyData: I_Company_Update_Type
 ): Promise<any> => {
-  const res = await fetch("https://localhost:7088/ATR/UpdateCompany", {
+  const res = await fetch(API_Path["UpdateCompany"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
