@@ -32,7 +32,7 @@ const VerticalDetail = ({
             </li>
           ))
         ) : (
-          <li>no data...</li>
+          <li>--</li>
         )}
       </ul>
     </BodySTY>
