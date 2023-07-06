@@ -90,7 +90,11 @@ function HealthRecords({
         <PaginationField />
         <CogIcon color="#718BAA" size={11} />
       </Pane>
-      <Table titles={table_title} data={orderedTableData} />
+      {healths.length !== 0 ? (
+        <Table titles={table_title} data={orderedTableData} />
+      ) : (
+        <div style={{ textAlign: "center" }}>無資料，請至員工設定頁面編輯</div>
+      )}
     </BodySTY>
   );
 }

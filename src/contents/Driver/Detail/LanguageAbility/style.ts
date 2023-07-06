@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   background: ${({ theme }) => theme.color.N0};
   width: 100%;
-  min-height: 224px;
+  min-height: 100px;
   background: #ffffff;
   border-radius: 10px;
   overflow: auto;
