@@ -294,6 +294,9 @@ const Page: NextPageWithLayout<
               e.preventDefault();
             }}
           >
+            <button type="submit" style={{ display: "none" }}>
+              submit
+            </button>
             {currentTab === 1 && type !== "custom" && (
               <FlightInformation
                 flightTime={flightTime}
