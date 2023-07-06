@@ -1,9 +1,10 @@
 import API_Path from "./apiPath";
+
 export const deleteEmployee = async (user_no: string): Promise<void> => {
   console.log("user_no", user_no);
   try {
     const response = await fetch(
-      `${API_Path["DeleteAccount"]}?user_no=${user_no}`,
+      `${API_Path["DeleteEmployee"]}?user_no=${user_no}`,
       {
         method: "POST",
         body: JSON.stringify({

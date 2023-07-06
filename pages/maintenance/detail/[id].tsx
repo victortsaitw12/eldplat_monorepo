@@ -34,7 +34,7 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
   //
   const asyncSubmitForm = async (data: any) => {
     console.log("⚽data", data);
-    setLoading(true);
+    // setLoading(true);
 
     const newData = {
       maintenance_no: data.maintenance_no,
@@ -47,6 +47,7 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
       vendor_no: data.vendor_no,
       package_code: data.package_code,
       maintenanceDts: data.maintenanceDts
+      // files: data.files
     };
     data["maintenanceDts"]?.map((v: { price: string | number }) => {
       return (v.price = Number(v.price));
@@ -55,13 +56,14 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
     console.log("🉐edited data", newData);
 
     try {
-      const res = await updateMaintenance(newData);
+      const res = await updateMaintenance(newData, data["files"]);
+      console.log("儲存 res", res);
       setIsEdit(false);
     } catch (e: any) {
       console.log(e);
     }
-    router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
-    router.reload();
+    // router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
+    // router.reload();
     setLoading(false);
     return;
   };

@@ -7,13 +7,14 @@ import Collapse from "@components/Collapse";
 import { I_OrderDetail } from "@services/client/getQuotation";
 import DetailItem from "@components/DetailList/DetailItem";
 import DetailList from "@components/DetailList";
+import { PAYMENT_HISTORY } from "@services/getDDL";
 
 const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
   return (
     <DivSTY>
       <Pane style={{ borderRadius: "10px", overflow: "hidden" }}>
         <Collapse title="付款方式" opened>
-          {data.isfullpay ? (
+          {data.isfullpay || data.actual_full_payment_date ? (
             <>
               {" "}
               <DetailList
@@ -35,16 +36,24 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                   },
                   {
                     title: data.full_payment_history && "付款方式",
-                    value: data.full_payment_history
+                    value:
+                      data.full_payment_history &&
+                      PAYMENT_HISTORY[data.full_payment_history]?.label
                   },
                   {
                     title: `${
                       data.actual_full_payment_date
                         ? "付款時間"
-                        : dayjs(data.full_payment_period).format("YYYY-MM-DD") +
+                        : data.full_payment_period
+                        ? dayjs(data.full_payment_period).format("YYYY-MM-DD") +
                           "前繳款"
+                        : ""
                     }`,
-                    value: data.actual_full_payment_date
+                    value:
+                      data.actual_full_payment_date &&
+                      dayjs(data.actual_full_payment_date).format(
+                        "YYYY-MM-DD HH:mm"
+                      )
                   }
                 ]}
               />
@@ -68,18 +77,26 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                       data.deposit_amount?.toLocaleString("en-US") || 0
                     }`
                   },
-                  {
-                    title: data.deposit_history && "付款方式",
-                    value: data.deposit_history
-                  },
+                  ...(data.deposit_history
+                    ? [
+                        {
+                          title: data.deposit_history && "付款方式",
+                          value: PAYMENT_HISTORY[data.deposit_history]?.label
+                        }
+                      ]
+                    : []),
                   {
                     title: `${
                       data.actual_deposit_date
                         ? "付款時間"
-                        : dayjs(data.deposit_period).format("YYYY-MM-DD") +
+                        : data.deposit_period
+                        ? dayjs(data.deposit_period).format("YYYY-MM-DD") +
                           "前繳款"
+                        : ""
                     }`,
-                    value: data.actual_deposit_date
+                    value:
+                      data.actual_deposit_date &&
+                      dayjs(data.actual_deposit_date).format("YYYY-MM-DD HH:mm")
                   }
                 ]}
               />
@@ -102,16 +119,22 @@ const PaymentMethod = ({ data }: { data: I_OrderDetail }) => {
                   },
                   {
                     title: data.balance_history && "付款方式",
-                    value: data.balance_history
+                    value:
+                      data.balance_history &&
+                      PAYMENT_HISTORY[data.balance_history]?.label
                   },
                   {
                     title: `${
                       data.actual_balance_date
                         ? "付款時間"
-                        : dayjs(data.balance_period).format("YYYY-MM-DD") +
+                        : data.balance_period
+                        ? dayjs(data.balance_period).format("YYYY-MM-DD") +
                           "前繳款"
+                        : ""
                     }`,
-                    value: data.actual_balance_date
+                    value:
+                      data.actual_balance_date &&
+                      dayjs(data.actual_balance_date).format("YYYY-MM-DD HH:mm")
                   }
                 ]}
               />

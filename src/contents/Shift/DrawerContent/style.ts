@@ -6,7 +6,6 @@ export const FormSTY = styled.form`
     display: none;
   }
   label {
-    font-family: "Noto Sans";
     font-style: normal;
     font-weight: ${({ theme }) => theme.fontWeight.Paragraph200};
     font-size: ${({ theme }) => theme.fontSize.Paragraph200};

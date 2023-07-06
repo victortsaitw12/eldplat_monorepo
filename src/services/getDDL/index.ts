@@ -82,4 +82,16 @@ export const payment_status = {
   "04": { label: "已過付款期限", value: "04" }
 };
 
+// 資料表名稱: QUOTATION_COSTS (報價單資料)
+export const PAYMENT_HISTORY: I_PaymentHistory = {
+  "01": { label: "現金", value: "01" },
+  "02": { label: "匯款", value: "02" }
+};
+interface I_PaymentHistory {
+  [key: string]: {
+    label: string;
+    value: string;
+  };
+}
+
 //資料表名稱: ORDER_STATUS_CODE (狀態代號名稱)

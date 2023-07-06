@@ -55,9 +55,10 @@ const AdminOrdersDetal = ({
     newData["check_in_luggage"] = orderData["check_in_luggage"] || 0;
     newData["carry_on_luggage"] = orderData["carry_on_luggage"] || 0;
     if (
-      //假如“全額付款”跟“預付訂金”都為false的話就默認“全額付款”
+      //假如“全額付款”跟“預付訂金”都為false的話就編輯模式下要默認“全額付款”
       orderData["full_payment_check"] !== "1" &&
-      orderData["deposit_check"] !== "1"
+      orderData["deposit_check"] !== "1" &&
+      isEdit == true
     ) {
       newData["full_payment_check"] = "1";
     }
@@ -123,7 +124,16 @@ const AdminOrdersDetal = ({
       ...modifyDefaultValues(orderData)
     }
   });
-
+  React.useEffect(() => {
+    if (
+      methods.getValues("full_payment_check") !== "1" &&
+      methods.getValues("deposit_check") !== "1" &&
+      isEdit == true
+    ) {
+      methods.setValue("full_payment_check", "1");
+    }
+    console.log("isEdit", isEdit);
+  }, [isEdit]);
   const r_template: { "1": React.ReactNode; "2": React.ReactNode } = {
     //客製包車
     "1": <CustomBus busListData={busListData} isEdit={isEdit} />,
