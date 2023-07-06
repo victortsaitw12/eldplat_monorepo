@@ -3,6 +3,7 @@ import { Pane, Text } from "evergreen-ui";
 import VerticalDetail from "@components/VerticalDetail";
 import dayjs from "dayjs";
 import { useFormContext, useWatch } from "react-hook-form";
+
 import { BodySTY } from "./style";
 const PaymentInfoView = () => {
   const { control } = useFormContext();
@@ -30,66 +31,96 @@ const PaymentInfoView = () => {
     control
   });
 
-  const payment_status_text = (paymentType: any) => {
-    switch (paymentType) {
-      case "1":
-        return "全額支付";
-      default:
-        return "預付訂金";
-    }
-  };
-  const payment_period_date = (paymentType: any) => {
-    switch (paymentType) {
-      case "1":
-        return full_payment_period
-          ? dayjs(full_payment_period).format("YYYY-MM-DD") + " 前繳款"
-          : "--";
-      default:
-        return deposit_period
-          ? dayjs(deposit_period).format("YYYY-MM-DD") + " 前繳款"
-          : "--";
-    }
-  };
-  const payment_price_text = (paymentType: any) => {
-    switch (paymentType) {
-      case "1":
-        return quote_total_amount
-          ? "NT$" +
-              quote_total_amount.toLocaleString() +
-              (full_payment_tax ? " 含稅" : "")
-          : "--";
-      default:
-        return quote_total_amount
-          ? "NT$" +
-              quote_total_amount.toLocaleString() +
-              (full_payment_tax ? " 含稅" : "")
-          : "--";
-    }
-  };
-
   if (full_payment_check == "1" || deposit_check == "1") {
     return (
       <BodySTY>
-        <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
-          <VerticalDetail
-            title={payment_status_text(full_payment_check)}
-            items={[
-              {
-                label: payment_period_date(full_payment_check)
+        {full_payment_check == "1" && (
+          <Pane style={{ padding: "1.25rem", display: "flex", gap: "191px" }}>
+            <VerticalDetail
+              title={"全額支付"}
+              items={[
+                {
+                  label:
+                    dayjs(full_payment_period).format("YYYY-MM-DD") + " 前繳款"
+                }
+              ]}
+            />
+            <VerticalDetail
+              style={{
+                textAlign: "right"
+              }}
+              title={
+                quote_total_amount
+                  ? "NT$" +
+                    quote_total_amount.toLocaleString() +
+                    (full_payment_tax ? " 含稅" : "")
+                  : "--"
               }
-            ]}
-          />
-          <VerticalDetail
-            title={payment_price_text(full_payment_check)}
-            items={[{}]}
-          />
-        </Pane>
+              items={[{}]}
+            />
+          </Pane>
+        )}
+        {deposit_check == "1" && (
+          <>
+            <Pane style={{ padding: "1.25rem", display: "flex", gap: "191px" }}>
+              <VerticalDetail
+                title={"預付訂金"}
+                items={[
+                  {
+                    label: "付款方式"
+                  },
+                  {
+                    label: "付款時間"
+                  }
+                ]}
+              />
+              <VerticalDetail
+                style={{
+                  textAlign: "right"
+                }}
+                title={
+                  deposit_amount
+                    ? "NT$" +
+                      deposit_amount.toLocaleString() +
+                      (deposit_tax ? " 含稅" : "")
+                    : "--"
+                }
+                items={[
+                  {
+                    label: "--"
+                  },
+                  {
+                    label: "--"
+                  }
+                ]}
+              />
+            </Pane>
+            <Pane
+              style={{
+                padding: "1.25rem",
+                paddingTop: "0rem",
+                display: "flex",
+                gap: "191px"
+              }}
+            >
+              <VerticalDetail
+                title={"尾款支付"}
+                items={[
+                  {
+                    label:
+                      dayjs(balance_period).format("YYYY-MM-DD") + " 前繳款"
+                  }
+                ]}
+              />
+            </Pane>
+          </>
+        )}
       </BodySTY>
     );
   } else {
     return (
       <BodySTY>
-        <Pane style={{ padding: "20px", display: "flex", gap: "191px" }}>
+        <Pane style={{ padding: "1.25rem", display: "flex", gap: "191px" }}>
           <Text className="error">尚未選擇支付方式</Text>
         </Pane>
       </BodySTY>

@@ -45,7 +45,6 @@ const ScheduleList = ({
     control,
     name: `${fatherArrayName}.${dayIndex}.${arrayName}`
   });
-  console.log("🐴🐴🐴🐴🐴", errors);
 
   const r_stopover = (fields: any[]) => {
     return fields.map((child, i) => (
