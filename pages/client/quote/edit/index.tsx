@@ -124,7 +124,6 @@ const Page: NextPageWithLayout<
   airline
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const [remainTime, setRemainTime] = useState(5);
   useEffect(() => {
@@ -293,12 +292,8 @@ const Page: NextPageWithLayout<
             className="content-container"
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
               e.preventDefault();
-              methods.handleSubmit(asyncSubmitFormHandler)(e);
             }}
           >
-            <button type="submit" style={{ display: "none" }} ref={submitRef}>
-              submit
-            </button>
             {currentTab === 1 && type !== "custom" && (
               <FlightInformation
                 flightTime={flightTime}
@@ -382,11 +377,9 @@ const Page: NextPageWithLayout<
                       });
                     }
                   }
-                  console.log("isValid", isValid);
                   if (isValid) {
                     if (currentTab === 5) {
-                      submitRef.current?.click();
-                      return;
+                      methods.handleSubmit(asyncSubmitFormHandler)();
                     } else {
                       setCurrentTab((prev) => prev + 1);
                     }
