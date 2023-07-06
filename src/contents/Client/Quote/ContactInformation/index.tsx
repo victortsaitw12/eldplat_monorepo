@@ -5,7 +5,11 @@ import { TextInput } from "evergreen-ui";
 import CustomSelect from "@components/CustomSelect";
 import { useFormContext, useWatch } from "react-hook-form";
 import { QuotationCreatePayload } from "../type";
-import { emailValidation, phoneValidation } from "@utils/hookFormValidation";
+import {
+  emailValidation,
+  phoneValidation,
+  tellValidation
+} from "@utils/hookFormValidation";
 const ContactInformation = () => {
   const {
     register,
