@@ -3,7 +3,7 @@ import ProgressList from "@components/ProgressList";
 import { BodySTY } from "./style";
 import { mappingProgressInfo } from "@services/client/mappingQuotationData";
 import { getOrdersList, I_Order } from "@services/client/getOrdersList";
-import PaymentBtn from "@contents/orders/PaymentBtn";
+import PaymentBtn from "@contents/Orders/PaymentBtn";
 
 const OrderListItem = ({
   itemData,

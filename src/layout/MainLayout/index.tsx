@@ -57,7 +57,6 @@ const MainLayout: FC<{
     fetch_menus();
   }, []);
 
-  console.log("main layout sidebar data");
   return (
     <BodySTY>
       <Head>
