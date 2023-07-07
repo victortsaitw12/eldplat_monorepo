@@ -101,7 +101,7 @@ const SpecialNeedsInformation = () => {
                 label="兒童座椅"
                 control={control}
                 inputName="child_seat_check"
-                description="若有需要說明文字，車公司可自行輸入於此。"
+                description=""
               >
                 <CounterInput
                   label="由店家提供 (NT$200/天)"

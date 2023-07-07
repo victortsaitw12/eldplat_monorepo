@@ -86,7 +86,7 @@ const CustomerDetail = ({
     {
       req: true,
       label: "",
-      value: getValues("customer_typ") ? getValues("customer_typ") : "---",
+      value: getValues("customer_typ") ? getValues("customer_typ") : "--",
       editEle: (
         <SelectField
           key="customer_typ"
@@ -196,7 +196,7 @@ const CustomerDetail = ({
       label: "公司電話",
       value: getValues("customer_tel")
         ? getValues("customer_tel_code") + " " + getValues("customer_tel")
-        : "---",
+        : "--",
       editEle: [
         <TextInput
           key="customer_tel_code"
@@ -214,7 +214,7 @@ const CustomerDetail = ({
       label: "公司傳真",
       value: getValues("customer_fax")
         ? getValues("customer_fax_code") + " " + getValues("customer_fax")
-        : "---",
+        : "--",
       editEle: [
         <TextInput
           key="customer_fax_code"
@@ -227,7 +227,7 @@ const CustomerDetail = ({
     {
       req: false,
       label: "公司信箱",
-      value: getValues("customer_email") || "---",
+      value: getValues("customer_email") || "--",
       editEle: [
         <TextInput key="customer_email" {...register("customer_email")} />
       ]
@@ -235,7 +235,7 @@ const CustomerDetail = ({
     {
       req: false,
       label: "公司網址",
-      value: getValues("customer_url") || "---",
+      value: getValues("customer_url") || "--",
       editEle: [<TextInput key="customer_url" {...register("customer_url")} />]
     },
     // TODO:主要聯絡人區塊 因為變成Array所以先緩緩再做。

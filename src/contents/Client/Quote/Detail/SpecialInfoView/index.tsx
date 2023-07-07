@@ -6,7 +6,7 @@ interface I_Props {
   listArray: { title: string; value: string | number | null }[];
   remark?: string;
 }
-const SpecialInfoView = ({ listArray, remark = "---" }: I_Props) => {
+const SpecialInfoView = ({ listArray, remark = "--" }: I_Props) => {
   return (
     <BodySTY>
       <DetailList listArray={listArray} />
