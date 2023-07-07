@@ -14,16 +14,20 @@ interface Props {
 //
 function Index({ menu }: Props) {
   const router = useRouter();
+
   const default_open =
     menu?.subList !== null &&
     menu?.subList &&
     menu?.subList
       .map((child) => {
-        return child.url;
+        if (child.url !== "/") {
+          return child.url;
+        }
       })
       .indexOf(router.asPath) >= 0;
   const [openList, setOpenList] = useState(default_open);
   const isActive = router.asPath === menu.url;
+
   return (
     <BodySTY>
       <StyledButton

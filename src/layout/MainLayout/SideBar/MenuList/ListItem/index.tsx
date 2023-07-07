@@ -13,7 +13,8 @@ interface Props {
 //
 function Index({ data }: Props) {
   const router = useRouter();
-  const defaultSelect = data.url === router.asPath;
+  const defaultSelect =
+    data.name !== "入門" && data.url !== "/" && data.url === router.asPath;
   const [isSelect, setIsSelect] = useState(defaultSelect);
   return (
     <BodySTY
