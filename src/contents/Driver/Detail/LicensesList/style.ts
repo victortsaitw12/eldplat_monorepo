@@ -8,6 +8,18 @@ export const BodySTY = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .addLicnBtn {
+      font-weight: ${({ theme }) => theme.fontWeight.Heading200};
+      font-size: ${({ theme }) => theme.fontSize.Heading200};
+      color: ${({ theme }) => theme.color.N700};
+      border: none;
+      &:focus,
+      &:hover,
+      &:active {
+        border: none;
+        outline: none;
+      }
+    }
   }
   .licn-title-right {
     display: flex;
@@ -20,8 +32,7 @@ export const BodySTY = styled.div`
     }
   }
 
-  .health-table {
-    margin-top: 10px;
-    text-align: center;
+  .documentIcon {
+    cursor: pointer;
   }
 `;

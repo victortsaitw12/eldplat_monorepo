@@ -1,5 +1,5 @@
 import React from "react";
-import { ErrorIcon, PlusIcon } from "evergreen-ui";
+import { ErrorIcon, PlusIcon, Checkbox } from "evergreen-ui";
 import TableActionButton from "@components/Table/TableActionButton";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
@@ -14,7 +14,7 @@ interface I_Table {
   tableName: string | any;
   titles: Array<string | number | React.ReactNode> | any;
   data: I_Data[];
-  onCheck?: (items: any) => void;
+  // onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
   goToEditPage?: (id: string, item: any) => void;
   viewItem?: (id: string, item: any) => void;
@@ -45,7 +45,33 @@ function Table({
   deleteText
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
+  const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
   if (!data) return <p>Loading</p>;
+
+  // checkbox +++
+  const handleCheckAll = (e: any) => {
+    checkedItems.length === data.length
+      ? setCheckedItems([])
+      : setCheckedItems(data.map((item) => item.id?.value));
+    if (!handleSelectAll || !handleDeselectAll) return;
+    e.target.checked ? handleSelectAll() : handleDeselectAll();
+  };
+
+  const handleCheck = (e: any) => {
+    if (checkedItems.includes(e.target.id)) {
+      const updated = checkedItems.filter((item) => item !== e.target.id);
+      setCheckedItems(updated);
+    } else {
+      const updated = [...checkedItems, e.target.id];
+      setCheckedItems(updated);
+    }
+
+    if (!handleCheckboxChange) return;
+    e.target.checked
+      ? handleCheckboxChange(e.target.value)
+      : handleCheckboxChange("");
+  };
+
   return (
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
@@ -75,10 +101,14 @@ function Table({
       <TableSTY>
         <thead>
           <tr>
-            {/* <th>
-              <Checkbox onChange={handleCheckAll} />
-            </th> */}
-
+            {tableName !== "維保通知" && (
+              <th>
+                <Checkbox
+                  onChange={(e) => handleCheckAll(e)}
+                  checked={checkedItems.length === data.length}
+                />
+              </th>
+            )}
             {tableName === "維保通知" && (
               <th>
                 <input
@@ -113,12 +143,15 @@ function Table({
             data.map((item: any, idx) => {
               return (
                 <tr key={uuid()}>
-                  {/* <td>
-                  <Checkbox
-                    checked={checkedItems.includes(item.id)}
-                    onChange={() => handleCheck(item.id)}
-                  />
-                </td> */}
+                  {tableName !== "維保通知" && (
+                    <td>
+                      <Checkbox
+                        checked={checkedItems.includes(item.id.value)}
+                        onChange={(e) => handleCheck(e)}
+                        id={item.id.value}
+                      />
+                    </td>
+                  )}
                   {tableName === "維保通知" && (
                     <td>
                       <input

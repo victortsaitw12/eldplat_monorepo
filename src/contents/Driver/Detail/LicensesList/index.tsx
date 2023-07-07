@@ -10,7 +10,8 @@ import {
   Dialog,
   TextInput,
   Select,
-  Checkbox
+  Checkbox,
+  PlusIcon
 } from "evergreen-ui";
 import { UseFormRegister, UseFormGetValues } from "react-hook-form";
 import { BodySTY } from "./style";
@@ -23,7 +24,6 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 import { mappingQueryData } from "@utils/mappingQueryData";
 
 const table_title = [
-  <Checkbox key={"checkbox-title"} />,
   "證照種類",
   "證照名稱",
   "發照單位",
@@ -53,7 +53,6 @@ function LicensesList({
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
 
   const driverPattern = {
-    id: true,
     licn_typ: true,
     licn_name: true,
     licn_unit: true,
@@ -69,7 +68,7 @@ function LicensesList({
   ): { label: any; value: any } | any => {
     if (key === "id") {
       return {
-        label: <Checkbox key={`checkbox-${data["license_no"]}`} />,
+        label: data["license_no"],
         value: data["license_no"]
       };
     }
@@ -91,7 +90,7 @@ function LicensesList({
           label: (
             <Tooltip content={`下載${data["licn_filename"] || ""}`}>
               <DocumentIcon
-                className="reportIcon"
+                className="documentIcon"
                 size={12}
                 color="#718BAA"
                 onClick={() => {
@@ -115,13 +114,12 @@ function LicensesList({
   const handleConfirm = () => {
     console.log("handleConfirm");
   };
-  //打開編輯彈窗
-  const goToEditPageHandler = (id: string, item: any) => {
+  const handleEdit = (id: string, item: any) => {
     setIsLightBoxOpen(true);
-    console.log("打開編輯彈窗");
+    console.log("打開新增彈窗");
   };
   //刪除該筆證照資料
-  const deleteItemHandler = async (id: string) => {
+  const handleDelete = async (id: string) => {
     try {
       alert("刪除該筆證照資料");
     } catch (e) {
@@ -189,6 +187,16 @@ function LicensesList({
     <BodySTY>
       <Pane className="licn-title">
         <Heading is="h4">{userName}</Heading>
+        <Button
+          className="addLicnBtn"
+          type="button"
+          iconBefore={PlusIcon}
+          onClick={() => {
+            console.log(setIsLightBoxOpen(true));
+          }}
+        >
+          新增駕駛證照
+        </Button>
       </Pane>
       <Pane className="licn-title-right">
         <PaginationField />
@@ -199,23 +207,13 @@ function LicensesList({
           tableName=""
           titles={table_title}
           data={orderedDriverData}
-          goToEditPage={goToEditPageHandler}
-          deleteItem={deleteItemHandler}
+          goToEditPage={handleEdit}
+          deleteItem={handleDelete}
         />
       ) : (
         <div style={{ textAlign: "center" }}>無資料，請至員工設定頁面編輯</div>
       )}
-      <Button
-        type="button"
-        style={{ background: "red" }}
-        onClick={() => {
-          setIsLightBoxOpen(true);
-          console.log("🍅🍅🍅 driverData:", driverData);
-          console.log("🍅🍅🍅 orderedDriverData:", orderedDriverData);
-        }}
-      >
-        新增駕駛證照
-      </Button>
+
       {isLightBoxOpen && (
         <Pane>
           <Dialog
