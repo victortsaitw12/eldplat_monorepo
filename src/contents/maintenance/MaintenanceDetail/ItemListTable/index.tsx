@@ -6,7 +6,9 @@ import {
   TrashIcon,
   Text,
   FileCard,
-  FileUploader
+  FileUploader,
+  Icon,
+  DocumentIcon
 } from "evergreen-ui";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
@@ -19,6 +21,8 @@ import {
   useFieldArray
 } from "react-hook-form";
 import InvoiceFile from "./InvoiceFile";
+import Link from "next/link";
+import { useRouter } from "next/router";
 //
 interface I_Data {
   [key: string]: string | number | React.ReactNode;
@@ -46,10 +50,18 @@ function ItemListTable({
   setValue,
   getValues
 }: I_Table) {
+  const router = useRouter();
   const { fields, append, remove } = useFieldArray({
     control,
     name: arrayName
   });
+
+  const handleFiles = (item: any) => {
+    // const url = item.receipt_url.replace(/\/{2,}/g, "/");
+    window.open(`http:${item.receipt_url}`, "_blank");
+    // router.push("http://hv-ha003004:5000/sharing/bGCYARrfm");
+  };
+
   console.log("fields", fields);
   console.log("arrayName", arrayName);
   return (
@@ -106,14 +118,13 @@ function ItemListTable({
                     />
                   ]
                 },
-
                 {
-                  keyName: "files",
-                  value: item.files || "---",
+                  keyName: "receipt_url",
+                  value: item.receipt_url || "---",
                   editEle: [
                     // <TextInput
-                    //   key={`${arrayName}.${index}.files`}
-                    //   {...register(`${arrayName}.${index}.files`)}
+                    //   key={`${arrayName}.${index}.receipt_url`}
+                    //   {...register(`${arrayName}.${index}.receipt_url`)}
                     // />
                   ]
                 },
@@ -144,7 +155,7 @@ function ItemListTable({
                     return (
                       <td key={uuid()}>
                         {isEdit ? (
-                          v.keyName === "files" ? (
+                          v.keyName === "receipt_url" ? (
                             <InvoiceFile
                               register={register}
                               arrayName={arrayName}
@@ -155,24 +166,33 @@ function ItemListTable({
                             />
                           ) : (
                             <TextInput
-                              // disabled={v.keyName === "files" && true}
-                              // type={v.keyName === "files" && "file"}
+                              // disabled={v.keyName === "receipt_url" && true}
+                              // type={v.keyName === "receipt_url" && "file"}
                               key={`${arrayName}.${index}.${v.keyName}`}
                               {...register(
                                 `${arrayName}.${index}.${v.keyName}`
                               )}
                             />
                           )
+                        ) : v.keyName === "receipt_url" ? (
+                          <DocumentIcon
+                            onClick={() => {
+                              handleFiles(item);
+                            }}
+                            cursor="pointer"
+                          ></DocumentIcon>
                         ) : (
                           <Text>{v.value}</Text>
                         )}
                       </td>
                     );
                   })}
-                  {isEdit && index !== 0 && (
-                    <button className="delete" onClick={() => remove(index)}>
-                      <TrashIcon size={20} marginX={12} marginTop={16} />
-                    </button>
+                  {isEdit && (
+                    <td>
+                      <button className="delete" onClick={() => remove(index)}>
+                        <TrashIcon size={20} marginX={12} marginTop={16} />
+                      </button>
+                    </td>
                   )}
                 </tr>
               );
