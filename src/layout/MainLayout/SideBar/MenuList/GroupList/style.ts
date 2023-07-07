@@ -25,6 +25,10 @@ const StyledButton = styled.button`
     background-color: ${({ theme }) => theme.color.B100};
     color: ${({ theme }) => theme.color.B400};
   }
+  &.active {
+    background-color: ${({ theme }) => theme.color.B100};
+    color: ${({ theme }) => theme.color.B400};
+  }
 `;
 
 export { BodySTY, StyledButton };
