@@ -12,8 +12,9 @@ interface Props {
 }
 //
 function Index({ data }: Props) {
-  const [isSelect, setIsSelect] = useState(false);
   const router = useRouter();
+  const defaultSelect = data.url === router.asPath;
+  const [isSelect, setIsSelect] = useState(defaultSelect);
   return (
     <BodySTY
       onClick={() => {
