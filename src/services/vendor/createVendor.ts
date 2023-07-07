@@ -22,17 +22,15 @@ export const createVendor = async (vendorData: any) => {
       filteredNullData[key] = vendorData[key];
     }
   }
+  filteredNullData["vendor_main_type"] = "CAR_GROUP";
   //
-  const res = await fetch(
-    API_Path["CreateVendor"],
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-      },
-      body: JSON.stringify(filteredNullData)
-    }
-  );
+  const res = await fetch(API_Path["CreateVendor"], {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    },
+    body: JSON.stringify(filteredNullData)
+  });
   return res.json();
 };
