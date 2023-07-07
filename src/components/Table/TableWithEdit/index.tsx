@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ErrorIcon, PlusIcon } from "evergreen-ui";
 import TableActionButton from "@components/Table/TableActionButton";
 import { v4 as uuid } from "uuid";
@@ -45,6 +45,20 @@ function Table({
   deleteText
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      console.log("currentTab", currentTab);
+      console.log("event", event);
+
+      setCurrentTab(null);
+    };
+    document.addEventListener("click", handleClickOutside);
+    console.log("add event listener register");
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+      console.log("remove event listener register");
+    };
+  }, []);
   if (!data) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
@@ -78,7 +92,6 @@ function Table({
             {/* <th>
               <Checkbox onChange={handleCheckAll} />
             </th> */}
-
             {tableName === "維保通知" && (
               <th>
                 <input
@@ -163,8 +176,14 @@ function Table({
                       }
                       deleteText={deleteText}
                       isOpen={currentTab === idx}
-                      openOption={() => setCurrentTab(idx)}
-                      closeOption={() => setCurrentTab(null)}
+                      openOption={() => {
+                        console.log("openOption");
+                        setCurrentTab(idx);
+                      }}
+                      closeOption={() => {
+                        console.log("closeOption");
+                        setCurrentTab(null);
+                      }}
                     />
                   </td>
                 </tr>

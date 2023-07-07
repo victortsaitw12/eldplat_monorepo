@@ -17,7 +17,8 @@ import {
   mappingSpecailNeededsInfo
 } from "@services/client/mappingQuotationData";
 import { QuotationCreatePayload } from "../type";
-
+import { convertMap } from "@utils/convertValueToText";
+//
 const OrdersDetail = () => {
   const methods = useFormContext<QuotationCreatePayload>();
   const orderData = methods.getValues();
@@ -42,7 +43,7 @@ const OrdersDetail = () => {
                     ? "接機"
                     : orderData["quote_type"]! === "3"
                     ? "送機"
-                    : orderData["purpose"]!
+                    : convertMap["purpose"][orderData["purpose"]!]?.ch
               }
             ]}
           />

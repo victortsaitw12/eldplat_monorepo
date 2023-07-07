@@ -34,7 +34,7 @@ function StyledSelect<
   const defaultOption = options.find(
     (option: any) => option.value === formDefaultValue
   );
-  const placeholder = isDisabled ? "---" : "請選擇";
+  const placeholder = isDisabled ? "--" : "請選擇";
   return (
     <BodySYT>
       <div className="title">

@@ -45,7 +45,7 @@ const FlightInformation = ({
         isValid = false;
         validateSubForm({
           valid: false,
-          errorMessage: `接機時間為:${flightTime},請選擇合理的時間!`
+          errorMessage: `接機時間為:${flightTime}，請選擇合理的時間！`
         });
         return;
       }
