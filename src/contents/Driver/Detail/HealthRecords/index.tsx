@@ -1,5 +1,4 @@
-import { DriverInfo } from "@contents/Driver/driver.type";
-import { I_Content_Props, I_Health_TYPE } from "@typings/employee_type";
+import { I_Health_TYPE } from "@typings/employee_type";
 import Table from "@components/Table/Table";
 import PaginationField from "@components/PaginationField/";
 import { Heading, Pane, DocumentIcon, CogIcon, Tooltip } from "evergreen-ui";
