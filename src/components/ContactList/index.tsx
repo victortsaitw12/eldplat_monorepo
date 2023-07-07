@@ -44,7 +44,7 @@ function ContactList({
           {
             req: index === 0 ? true : false,
             label: contactUserName,
-            value: item.contact_name || "---",
+            value: item.contact_name || "--",
             editEle: [
               <TextInput
                 key={`${arrayName}.${index}.contact_name`}
@@ -59,7 +59,7 @@ function ContactList({
             label: contactUserName + "電話",
             value: item.contact_tel
               ? item.contact_tel_code + " " + item.contact_tel
-              : "---",
+              : "--",
             editEle: [
               <Pane
                 display="flex"
@@ -72,7 +72,10 @@ function ContactList({
                   style={{ width: "60px" }}
                   {...register(`${arrayName}.${index}.contact_tel_code`)}
                 />
-                <TextInput style={{ width: "48%" }} {...register(`${arrayName}.${index}.contact_tel`)} />
+                <TextInput
+                  style={{ width: "48%" }}
+                  {...register(`${arrayName}.${index}.contact_tel`)}
+                />
               </Pane>
             ]
           },
@@ -80,7 +83,7 @@ function ContactList({
             label: contactUserName + "手機",
             value: item.contact_phone
               ? item.contact_phone_code + " " + item.contact_phone
-              : "---",
+              : "--",
             editEle: [
               <Pane
                 display="flex"
@@ -102,7 +105,7 @@ function ContactList({
           },
           {
             label: contactUserName + "信箱",
-            value: item.contact_email || "---",
+            value: item.contact_email || "--",
             editEle: [
               <TextInput
                 key={`${arrayName}.${index}.contact_email`}

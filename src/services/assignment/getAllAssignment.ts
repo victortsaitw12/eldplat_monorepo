@@ -59,11 +59,11 @@ export const assignParser = (data: any, key: string) => {
       label:
         data.task_start_time !== null
           ? convertDateAndTimeFormat(data.task_start_time)
-          : "---",
+          : "--",
       value:
         data.task_start_time !== null
           ? convertDateAndTimeFormat(data.task_start_time)
-          : "---"
+          : "--"
     };
   }
   if (key === "task_end_time") {
@@ -71,16 +71,16 @@ export const assignParser = (data: any, key: string) => {
       label:
         data.task_end_time !== null
           ? convertDateAndTimeFormat(data.task_end_time)
-          : "---",
+          : "--",
       value:
         data.task_end_time !== null
           ? convertDateAndTimeFormat(data.task_end_time)
-          : "---"
+          : "--"
     };
   }
 
   return {
-    label: data[key] || "---",
+    label: data[key] || "--",
     value: data[key] || null
   };
 };

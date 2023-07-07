@@ -16,6 +16,8 @@ const ScheduleListView = ({
   dropoff_location,
   listArray
 }: I_Props) => {
+  console.log("pickup_location", pickup_location);
+  console.log("dropoff_location", dropoff_location);
   const r_stopover = (listArray: any[]) => {
     const filterArray = listArray.filter(
       (item) => item.stopover_address.trim() !== ""
@@ -42,7 +44,7 @@ const ScheduleListView = ({
             </Text>
             上車地點
           </Text>
-          <Text>{pickup_location}</Text>
+          <Text>{pickup_location || "--"}</Text>
         </li>
         {r_stopover(listArray)}
         <li className="schedule-list-item">
@@ -52,7 +54,7 @@ const ScheduleListView = ({
             </Text>
             下車地點
           </Text>
-          <Text>{dropoff_location}</Text>
+          <Text>{dropoff_location || "--"}</Text>
         </li>
       </ul>
     </BodySTY>
