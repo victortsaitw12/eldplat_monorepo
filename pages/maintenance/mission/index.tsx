@@ -33,8 +33,8 @@ import AssignBtn from "@contents/maintenance/Mission/MissionList/AssignBtn";
 import { CloseAssignment } from "@services/maintenance/updateMaintenance";
 //
 const mainFilterArray = [
-  { id: 1, label: "啟用", value: "1" },
-  { id: 2, label: "停用", value: "2" }
+  { id: 1, label: "通知", value: "1" },
+  { id: 2, label: "取消", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {

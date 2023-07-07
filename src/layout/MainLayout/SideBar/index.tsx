@@ -26,6 +26,7 @@ interface Props {
 //
 function SideBar({ menuData, personalData }: Props) {
   const [isPersonal, setIsPersonal] = React.useState(false);
+  console.log("🏀menuData", menuData);
   return (
     <BodySTY>
       <UserInfo

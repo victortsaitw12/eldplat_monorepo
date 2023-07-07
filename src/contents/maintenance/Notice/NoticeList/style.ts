@@ -20,13 +20,14 @@ export const BodySTY = styled.div`
       position: absolute;
     }
 
-    select {
+    select,
+    button {
       width: 100%;
       height: 100%;
       border: none;
       background: transparent;
       color: #3670c9;
-      padding-left: 30px;
+      /* padding-left: 30px; */
       cursor: pointer;
     }
   }

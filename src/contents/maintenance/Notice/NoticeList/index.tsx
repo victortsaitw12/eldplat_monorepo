@@ -21,7 +21,7 @@ function MaintenanceNoticeList({
   deleteItemHandler
 }: Props) {
   const clientTitle = getMaintenanceNoticeTitle();
-  const [value, setValue] = useState("動作");
+  const [value, setValue] = useState("cancel");
   const [selectCount, setSelectCount] = useState<number>(0);
   const [isShown, setIsShown] = useState<boolean>(false);
 
@@ -61,21 +61,26 @@ function MaintenanceNoticeList({
 
   return (
     <BodySTY>
-      <Pane className="select">
-        <Pill display="inline-flex" margin={6}>
-          {selectCount}
-        </Pill>
-        <select
-          value={value}
-          onChange={(event) => {
-            setValue(event.target.value);
-            handleShown();
-          }}
-        >
-          <option value="">動作</option>
-          <option value="">取消</option>
-        </select>
-      </Pane>
+      {selectCount !== 0 && (
+        <Pane className="select">
+          <Pill display="inline-flex" margin={6}>
+            {selectCount}
+          </Pill>
+          <button onClick={handleShown}>取消</button>
+          {/* <select
+            value={value}
+            onChange={(event) => {
+              setValue(event.target.value);
+              handleShown(event);
+            }}
+          >
+            <option value="">動作</option>
+            <option value="cancel" onClick={handleShown}>
+              取消
+            </option>
+          </select> */}
+        </Pane>
+      )}
 
       <DeleteDialog
         isShown={isShown}

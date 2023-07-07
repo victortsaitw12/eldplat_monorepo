@@ -1,5 +1,6 @@
 export interface I_Receipt_Type {
   receipt_number: string;
+  receipt_url: string;
   price: number;
   service_remark: string;
   files?: string[] | any;

@@ -53,7 +53,7 @@ const TableSTY = styled.table`
   td,
   th {
     padding: 8px 10px;
-    text-align: left;
+    text-align: center;
     white-space: nowrap;
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
@@ -72,6 +72,9 @@ const TableSTY = styled.table`
       width: 20px;
       height: 1px;
       background: #e3e3e3;
+    }
+    .delete {
+      color: ${({ theme }) => theme.color.N600};
     }
   }
   button {

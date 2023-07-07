@@ -6,6 +6,7 @@ import { IconLeft } from "@components/Button/Primary";
 import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
 //
+const dontShowList = ["維保通知", "維保任務", "維保紀錄"];
 interface I_Data {
   [key: string]: string | number | React.ReactNode;
 }
@@ -64,8 +65,14 @@ function Table({
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
         <div className="container-header-left">
-          <span>{tableName}列表</span>
-          <ErrorIcon color="#8EA8C7" />
+          {dontShowList.includes(tableName) ? (
+            <span>{tableName}</span>
+          ) : (
+            <>
+              <span>{tableName}列表</span>
+              <ErrorIcon color="#8EA8C7" />
+            </>
+          )}
         </div>
         {!noButtonData.includes(tableName) && (
           <IconLeft text={`新增${tableName}`} onClick={goToCreatePage}>
