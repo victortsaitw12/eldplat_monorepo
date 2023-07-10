@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { Pane } from "evergreen-ui";
@@ -197,5 +197,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     };
   }
 };
-Index.getLayout = getLayout;
+// Index.getLayout = getLayout;
+Index.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: "訂單/詳情" });
 export default Index;

@@ -1,4 +1,5 @@
 import {
+  Text,
   ListIcon,
   Button,
   NotificationsIcon,
@@ -66,10 +67,11 @@ const Header = ({ layoutProps }: any) => {
     <ThemeProvider value={theme}>
       <BodySTY>
         <div className="tool-container">
-          <ListIcon color="#91A9C5" size={16} />
-          <Button appearance="link">數據資料</Button>
+          <ListIcon color="#FFFFFF" size={16} />
+          <Text className="header-title">{layoutProps?.title}</Text>
+          {/* <Button appearance="link">數據資料</Button>
           <Button appearance="link">自動化</Button>
-          <Button appearance="link">對接口</Button>
+          <Button appearance="link">對接口</Button> */}
         </div>
         <div className="plan-info">
           <NotificationsIcon color="#F53630" size={16} />
