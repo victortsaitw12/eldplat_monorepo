@@ -21,7 +21,7 @@ function Index(props: any) {
             <p>最高管理員</p>
           </div>
         </div>
-        <ChevronDownIcon color="#fff" size={16} />
+        {/* <ChevronDownIcon color="#fff" size={16} /> */}
       </div>
     </BodySTY>
   );

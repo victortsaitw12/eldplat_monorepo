@@ -14,10 +14,16 @@ export const BodySTY = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 8px 12px;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    &:hover {
+      background-color: ${({ theme }) => theme.color.N400};
+    }
     .user-info {
       display: flex;
       align-items: center;
       gap: 12px;
+
       img {
         border-radius: 16px;
       }
