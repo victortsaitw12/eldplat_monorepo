@@ -13,21 +13,13 @@ import {
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
-  selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
 }
-function Details({
-  selected,
-  register,
-  errors,
-  getValues,
-  control,
-  isEdit
-}: Props) {
+function Details({ register, errors, getValues, control, isEdit }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 尺寸
   const sizeInfo = [
@@ -465,10 +457,7 @@ function Details({
     }
   ];
   return (
-    <FlexWrapper
-      padding="0"
-      style={{ display: `${selected ? "flex" : "none"}` }}
-    >
+    <FlexWrapper padding="0">
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={sizeInfo} infoTitle="尺寸" />
         <InfoBox isEdit={isEdit} infoData={tireInfo} infoTitle="車輪 & 輪胎" />

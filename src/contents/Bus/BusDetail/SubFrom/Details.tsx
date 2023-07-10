@@ -13,21 +13,13 @@ import {
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
-  selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
 }
-function Details({
-  selected,
-  register,
-  errors,
-  getValues,
-  control,
-  isEdit
-}: Props) {
+function Details({ register, errors, getValues, control, isEdit }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 身分識別
   const identityInfo = [
@@ -280,10 +272,7 @@ function Details({
   ];
   // 標籤
   return (
-    <FlexWrapper
-      padding="0"
-      style={{ display: `${selected ? "flex" : "none"}` }}
-    >
+    <FlexWrapper padding="0">
       <InfoBox
         isEdit={isEdit}
         infoData={identityInfo}

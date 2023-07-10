@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   position: relative;
+  > button {
+    > svg {
+      color: ${({ theme }) => theme.color.N700};
+    }
+  }
   .table-row-option {
     display: flex;
     flex-direction: column;

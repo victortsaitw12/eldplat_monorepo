@@ -63,7 +63,7 @@ const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
               <div className="header-item">
                 <div className="header-title">
                   <span style={{ color: "#D14343" }}>*</span>
-                  <span>乘車數量</span>
+                  <span>乘客數量</span>
                 </div>
                 <CounterInput
                   register={register}

@@ -47,17 +47,12 @@ function Table({
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      console.log("currentTab", currentTab);
-      console.log("event", event);
-
+    const handleClickOutside = () => {
       setCurrentTab(null);
     };
     document.addEventListener("click", handleClickOutside);
-    console.log("add event listener register");
     return () => {
       document.removeEventListener("click", handleClickOutside);
-      console.log("remove event listener register");
     };
   }, []);
   if (!data) return <p>Loading</p>;
@@ -69,8 +64,7 @@ function Table({
             <span>{tableName}</span>
           ) : (
             <>
-              <span>{tableName}列表</span>
-              <ErrorIcon color="#8EA8C7" />
+              <span>{tableName}清單</span>
             </>
           )}
         </div>

@@ -20,6 +20,7 @@ function StyledSelect<
   formDefaultValue,
   isRequire,
   label,
+  vertical,
   hint
 }: {
   options: Array<{ label: string; value: string; color: string }>;
@@ -27,6 +28,7 @@ function StyledSelect<
   isRequire?: boolean;
   label: string;
   hint?: string;
+  vertical: boolean;
   formDefaultValue: PathValue<TFieldValues, TName>;
   onFormChange: (value: string) => void;
 }) {
@@ -36,7 +38,7 @@ function StyledSelect<
   );
   const placeholder = isDisabled ? "--" : "請選擇";
   return (
-    <BodySYT>
+    <BodySYT vertical={vertical}>
       <div className="title">
         {!!isRequire && <span className="required">*</span>}
         <span>{label}</span>
@@ -74,12 +76,14 @@ function ControlledSelect<
   isDisabled,
   isRequire,
   label,
-  hint
+  hint,
+  vertical = false
 }: {
   name: TName;
   control?: Control<TFieldValues>;
   options: Array<{ label: string; value: string; color: string }>;
   isDisabled: boolean;
+  vertical?: boolean;
   isRequire?: boolean;
   label: string;
   hint?: string;
@@ -97,6 +101,7 @@ function ControlledSelect<
           hint={hint}
           onFormChange={onChange}
           formDefaultValue={value}
+          vertical={vertical}
         />
       )}
     />

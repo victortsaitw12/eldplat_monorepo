@@ -96,7 +96,6 @@ function ControlledRadio<
       control={control}
       name={name}
       render={({ field: { onChange, value } }) => {
-        console.log("ControlledRadio", value);
         return (
           <Radio
             options={options}

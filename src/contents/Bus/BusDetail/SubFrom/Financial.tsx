@@ -12,21 +12,13 @@ import FlexWrapper from "@layout/FlexWrapper";
 import InfoBox from "@components/InfoBox";
 import Radio from "@components/HookForm/Radio";
 interface Props {
-  selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
 }
-function Financial({
-  selected,
-  register,
-  errors,
-  getValues,
-  control,
-  isEdit
-}: Props) {
+function Financial({ register, errors, getValues, control, isEdit }: Props) {
   const loan_lease = useWatch({
     control,
     name: "bus_loan_lease.loan_lease"
@@ -361,7 +353,6 @@ function Financial({
   return (
     <FlexWrapper
       padding="0"
-      style={{ display: `${selected ? "flex" : "none"}` }}
     >
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={purchaseInfo} infoTitle="購買詳情" />

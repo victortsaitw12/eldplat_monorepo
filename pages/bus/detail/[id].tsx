@@ -10,11 +10,11 @@ import { updateBus } from "@services/bus/updateBus";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { ParsedUrlQuery } from "querystring";
-
 import TableWrapper from "@layout/TableWrapper";
 import { useBusStore } from "@contexts/filter/busStore";
 import LoadingSpinner from "@components/LoadingSpinner";
 import BusDetail from "@contents/Bus/BusDetail";
+import { getBusById } from "@services/bus/getBusById";
 //
 const mainFilterArray = [
   { id: 1, label: "細項", value: "1" },
@@ -31,11 +31,24 @@ const Page: NextPageWithLayout<
   const { mainFilter, updateMainFilter } = useBusStore();
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [busDefaultData, setBusDefaultData] = useState<any>(null);
   useEffect(() => {
     updateMainFilter("1");
+    console.log("busId", busId);
+    setLoading(true);
+    getBusById(busId)
+      .then((res) => {
+        console.log("res", res);
+        setBusDefaultData(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
@@ -83,6 +96,7 @@ const Page: NextPageWithLayout<
           asyncSubmitForm={asyncSubmitForm}
           busId={busId}
           formType={mainFilter}
+          busDefaultData={busDefaultData}
         />
       </TableWrapper>
     </BodySTY>

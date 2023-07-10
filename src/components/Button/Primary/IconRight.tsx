@@ -25,10 +25,10 @@ const StyledButton = styled(Button)`
   gap: 8px;
   color: ${({ theme }) => theme.color.N0};
   font-weight: ${({ theme }) => theme.fontWeight.Heading400};
-  background: ${({ theme }) => theme.color.B300};
+  background: ${({ theme }) => theme.color.B400};
   transition: all 0.3s;
   &:hover {
-    background: ${({ theme }) => theme.color.B400};
+    background: ${({ theme }) => theme.color.B500};
   }
   &:active {
     background: ${({ theme }) => theme.color.B500};

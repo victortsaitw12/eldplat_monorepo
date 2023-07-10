@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 const FormSTY = styled.form`
-  /* border: 1px solid #ccc; */
+  > * {
+    margin-bottom: 0px !important;
+  }
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   padding: 20px;
   select {
     height: 34px;

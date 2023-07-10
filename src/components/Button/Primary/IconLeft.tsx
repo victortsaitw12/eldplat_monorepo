@@ -19,16 +19,17 @@ const StyledButton = styled(Button)`
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   border: none;
   padding: 8px 16px;
   border-radius: 32px;
   gap: 8px;
   color: ${({ theme }) => theme.color.N0};
   font-weight: ${({ theme }) => theme.fontWeight.Heading400};
-  background: ${({ theme }) => theme.color.B300};
+  background: ${({ theme }) => theme.color.B400};
   transition: all 0.3s;
   &:hover {
-    background: ${({ theme }) => theme.color.B400};
+    background: ${({ theme }) => theme.color.B500};
   }
   &:active {
     background: ${({ theme }) => theme.color.B500};

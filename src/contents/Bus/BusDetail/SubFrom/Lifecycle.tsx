@@ -10,23 +10,13 @@ import {
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
-  selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
 }
-function Lifecycle({
-  selected,
-  register,
-  errors,
-  getValues,
-  control,
-  isEdit
-}: Props) {
-  console.log("Lifecycle", getValues("bus_lifecycle"));
-  // 服務中
+function Lifecycle({ register, getValues, isEdit }: Props) {
   const serviceInfo = [
     {
       req: false,
@@ -115,10 +105,7 @@ function Lifecycle({
     }
   ];
   return (
-    <FlexWrapper
-      padding="0"
-      style={{ display: `${selected ? "flex" : "none"}` }}
-    >
+    <FlexWrapper padding="0">
       <FlexWrapper flexDirection="column" style={{ flex: "1" }}>
         <InfoBox isEdit={isEdit} infoData={serviceInfo} infoTitle="服務中" />
         <InfoBox
