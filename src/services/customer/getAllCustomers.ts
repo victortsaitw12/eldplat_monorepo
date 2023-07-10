@@ -87,7 +87,7 @@ export const customerParser = (data: any, key: string) => {
         translatedLabel = "旅行社";
         break;
       default:
-        translatedLabel = "---";
+        translatedLabel = "--";
     }
     return {
       label: translatedLabel,
@@ -96,7 +96,7 @@ export const customerParser = (data: any, key: string) => {
   }
   if (key === "customer_tel") {
     return {
-      label: data[key] || "---",
+      label: data[key] || "--",
       value: data[key] || null
     };
   }
@@ -110,14 +110,14 @@ export const customerParser = (data: any, key: string) => {
           { key: "contact_tel" },
           data["contact_tel"]
             ? data["contact_tel_code"] + " " + data["contact_tel"]
-            : "---"
+            : "--"
         ),
         createElement(
           "div",
           { key: "contact_phone" },
           data["contact_phone"]
             ? data["contact_phone_code"] + " " + data["contact_phone"]
-            : "---"
+            : "--"
         )
       ]
     );
@@ -131,7 +131,7 @@ export const customerParser = (data: any, key: string) => {
     };
   }
   return {
-    label: data[key] || "---",
+    label: data[key] || "--",
     value: data[key] || null
   };
 };

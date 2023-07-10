@@ -19,6 +19,7 @@ export const ItemSTY = styled.li`
     display: flex;
     align-items: center;
     gap: 20px;
+    flex: 1 0 0;
     > .item-content {
       width: 70px;
     }
@@ -36,6 +37,10 @@ export const ItemSTY = styled.li`
         background: transparent;
         color: ${({ theme }) => theme.color.N600};
       }
+    }
+    > input {
+      width: auto !important;
+      flex: 1 0 0;
     }
   }
 `;

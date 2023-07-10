@@ -245,7 +245,7 @@ const VendorDetail = ({
     {
       req: true,
       label: "公司電話",
-      value: vendor_Tel ? vendor_Tel_Code + " " + vendor_Tel : "---",
+      value: vendor_Tel ? vendor_Tel_Code + " " + vendor_Tel : "--",
       editEle: [
         <TextInput
           key="vendor_Tel_Code"
@@ -265,7 +265,7 @@ const VendorDetail = ({
     {
       req: false,
       label: "公司傳真",
-      value: vendor_Fax ? vendor_Fax_Code + " " + vendor_Fax : "---",
+      value: vendor_Fax ? vendor_Fax_Code + " " + vendor_Fax : "--",
       editEle: [
         <TextInput
           key="vendor_Fax_Code"
@@ -285,7 +285,7 @@ const VendorDetail = ({
     {
       req: false,
       label: "公司信箱",
-      value: vendor_Email || "---",
+      value: vendor_Email || "--",
       editEle: [
         <TextInput
           key="vendor_Email"
@@ -298,7 +298,7 @@ const VendorDetail = ({
     {
       req: false,
       label: "公司網址",
-      value: vendor_Url || "---",
+      value: vendor_Url || "--",
       editEle: [
         <TextInput
           key="vendor_Url"

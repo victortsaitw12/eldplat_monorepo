@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ErrorIcon, PlusIcon, Checkbox } from "evergreen-ui";
 import TableActionButton from "@components/Table/TableActionButton";
 import { v4 as uuid } from "uuid";
@@ -6,6 +6,7 @@ import { IconLeft } from "@components/Button/Primary";
 import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
 //
+const dontShowList = ["維保通知", "維保任務", "維保紀錄"];
 interface I_Data {
   [key: string]: string | number | React.ReactNode | any;
 }
@@ -46,6 +47,20 @@ function Table({
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
   const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      console.log("currentTab", currentTab);
+      console.log("event", event);
+
+      setCurrentTab(null);
+    };
+    document.addEventListener("click", handleClickOutside);
+    console.log("add event listener register");
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+      console.log("remove event listener register");
+    };
+  }, []);
   if (!data) return <p>Loading</p>;
 
   // checkbox +++
@@ -76,8 +91,14 @@ function Table({
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
         <div className="container-header-left">
-          <span>{tableName}列表</span>
-          <ErrorIcon color="#8EA8C7" />
+          {dontShowList.includes(tableName) ? (
+            <span>{tableName}</span>
+          ) : (
+            <>
+              <span>{tableName}列表</span>
+              <ErrorIcon color="#8EA8C7" />
+            </>
+          )}
         </div>
         {!noButtonData.includes(tableName) && (
           <IconLeft text={`新增${tableName}`} onClick={goToCreatePage}>
@@ -196,8 +217,14 @@ function Table({
                       }
                       deleteText={deleteText}
                       isOpen={currentTab === idx}
-                      openOption={() => setCurrentTab(idx)}
-                      closeOption={() => setCurrentTab(null)}
+                      openOption={() => {
+                        console.log("openOption");
+                        setCurrentTab(idx);
+                      }}
+                      closeOption={() => {
+                        console.log("closeOption");
+                        setCurrentTab(null);
+                      }}
                     />
                   </td>
                 </tr>

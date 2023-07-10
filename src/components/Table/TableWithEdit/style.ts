@@ -19,6 +19,10 @@ const TableContainerSTY = styled.div`
       font-size: ${({ theme }) => theme.fontSize.Heading500};
       font-weight: ${({ theme }) => theme.fontWeight.Heading500};
     }
+    button {
+      background-color: ${({ theme }) => theme.color.B400};
+      padding: 8px 16px;
+    }
   }
   .container-pagination {
     display: flex;

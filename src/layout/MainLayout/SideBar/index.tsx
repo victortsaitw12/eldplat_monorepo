@@ -18,6 +18,8 @@ import MenuList from "./MenuList";
 import Search from "./Search";
 import { MenuDataType } from "@mock-data/side-bar/data";
 import FooterItem from "./Footer/FooterItem";
+
+import { useRouter } from "next/router";
 //
 interface Props {
   menuData: MenuDataType;
@@ -26,11 +28,13 @@ interface Props {
 //
 function SideBar({ menuData, personalData }: Props) {
   const [isPersonal, setIsPersonal] = React.useState(false);
+  const router = useRouter();
   return (
     <BodySTY>
       <UserInfo
         onClick={() => {
           setIsPersonal(true);
+          router.push("/company");
         }}
       />
       <div className="container">
@@ -39,6 +43,7 @@ function SideBar({ menuData, personalData }: Props) {
             className="back_to"
             onClick={() => {
               setIsPersonal(false);
+              router.push("/");
             }}
           >
             <ArrowLeftIcon size={16} />

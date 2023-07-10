@@ -273,8 +273,8 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
         <FiledInput
           controlProps={{
             name: "vendor_Contact_List.0.contact_tel",
-            control,
-            rules: { required: "此欄位必填" }
+            control
+            // rules: { required: "此欄位必填" }
           }}
           label=""
         />

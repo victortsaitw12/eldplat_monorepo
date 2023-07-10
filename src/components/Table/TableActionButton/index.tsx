@@ -24,10 +24,14 @@ function Index({
   return (
     <BodySTY>
       <button
-        onClick={() => {
-          if (isOpen) {
-            closeOption && closeOption();
-          } else {
+        onClick={(event) => {
+          // if (isOpen) {
+          //   closeOption && closeOption();
+          // } else {
+          //   openOption && openOption();
+          // }
+          if (!isOpen) {
+            event.stopPropagation();
             openOption && openOption();
           }
         }}

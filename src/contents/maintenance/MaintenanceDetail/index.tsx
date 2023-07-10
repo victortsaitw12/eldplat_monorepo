@@ -36,6 +36,7 @@ const MaintenanceDetail = ({
   } = useForm<I_Maintenance_Type>({
     defaultValues: async () => {
       return getMaintenanceById(maintenance_id).then((data) => {
+        console.log("data for single one", data);
         const newData = { ...data };
         newData["service_start_date"] = dashDate(data.service_start_date);
         newData["service_end_date"] = dashDate(data.service_end_date);

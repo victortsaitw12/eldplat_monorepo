@@ -44,8 +44,8 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
       driver_name: data.driver_name,
       vendor_no: data.vendor_no,
       package_code: data.package_code,
-      maintenanceDts: data.maintenanceDts
-      // files: data.files
+      maintenanceDts: data.maintenanceDts,
+      files: data.files
     };
     data["maintenanceDts"]?.map((v: { price: string | number }) => {
       return (v.price = Number(v.price));
