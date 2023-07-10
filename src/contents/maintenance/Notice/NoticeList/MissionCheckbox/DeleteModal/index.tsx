@@ -1,5 +1,13 @@
 import { CancelMaintenanceById } from "@services/maintenance/getMaintenanceNotice";
-import { Pane, Dialog } from "evergreen-ui";
+import theme from "@styles/theme";
+import {
+  Pane,
+  Dialog,
+  ThemeProvider,
+  mergeTheme,
+  defaultTheme,
+  Button
+} from "evergreen-ui";
 import router from "next/router";
 
 interface Dialog_Type {
@@ -26,7 +34,6 @@ function DeleteDialog({ isShown, setIsShown, data }: Dialog_Type) {
       <Dialog
         isShown={isShown}
         title="刪除通知"
-        intent="danger"
         onCloseComplete={() => setIsShown(false)}
         confirmLabel="確定"
         cancelLabel="取消"

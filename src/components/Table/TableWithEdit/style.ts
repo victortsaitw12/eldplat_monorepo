@@ -61,6 +61,7 @@ const TableSTY = styled.table`
     background-color: ${({ theme }) => theme.color.N50};
     text-align: left;
   }
+
   td,
   th {
     padding: 8px 10px;
@@ -71,7 +72,7 @@ const TableSTY = styled.table`
     span,
     div {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
     }
   }
@@ -96,7 +97,7 @@ const TableSTY = styled.table`
   }
   .data-row {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 8px;
   }
@@ -108,6 +109,7 @@ const TableSTY = styled.table`
   }
   .noDataShown {
     min-height: 32px;
+
     div {
       width: 100%;
       height: 32px;
