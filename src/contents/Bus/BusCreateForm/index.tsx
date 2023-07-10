@@ -188,11 +188,6 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
             {item.name}
           </option>
         ))}
-        {/* <option value="簡忠華(007415)">簡忠華(007415)</option>
-        <option value="陳正烽(00F470)">陳正烽(00F470)</option>
-        <option value="吳啟元(00A371)">吳啟元(00A371)</option>
-        <option value="施純鈞(200120)">施純鈞(200120)</option>
-        <option value="王百華(230014)">王百華(230014)</option> */}
       </SelectField>
       <DottedSelect
         control={control}

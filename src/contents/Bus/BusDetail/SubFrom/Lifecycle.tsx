@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextInput } from "evergreen-ui";
 import InfoBox from "@components/InfoBox";
 import {
@@ -69,11 +69,11 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "估計轉售價值",
-      value: getValues("bus_lifecycle.out_service_date"),
+      value: getValues("bus_lifecycle.estimated_resale"),
       editEle: (
         <TextInput
-          key={"bus_lifecycle.out_service_date"}
-          {...register("bus_lifecycle.out_service_date")}
+          key={"bus_lifecycle.estimated_resale"}
+          {...register("bus_lifecycle.estimated_resale")}
         />
       )
     }

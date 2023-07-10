@@ -8,7 +8,6 @@ import {
   Specifications
 } from "./SubFrom";
 import { BusDataTypes } from "../bus.type";
-import { getBusById } from "@services/bus/getBusById";
 interface I_Props {
   isEdit: boolean;
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
@@ -16,16 +15,17 @@ interface I_Props {
   busId: string;
   formType: string;
   busDefaultData: BusDataTypes;
+  busOptions: any;
 }
 const BusDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
   formType,
-  busDefaultData
+  busDefaultData,
+  busOptions
 }: I_Props) => {
   const [visibleForm, setVisibleForm] = useState("1");
-  console.log("busDefaultData", busDefaultData);
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
@@ -55,6 +55,7 @@ const BusDetail = ({
           getValues={getValues}
           control={control}
           isEdit={isEdit}
+          busOptions={busOptions}
         />
       )}
       {visibleForm === "2" && (

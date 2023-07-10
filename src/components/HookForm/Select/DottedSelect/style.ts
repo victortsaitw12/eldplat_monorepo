@@ -50,14 +50,16 @@ export const BodySYT = styled.div<{ vertical: boolean }>`
   /* border: 1px solid red; */
   flex-direction: ${({ vertical }) => (vertical ? "column" : "row")};
   align-items: ${({ vertical }) => (vertical ? "flex-start" : "center")};
-  gap: 12px;
+  > div {
+    flex: 1 0 0;
+  }
   > .title {
     display: flex;
     align-items: center;
     font-weight: 400;
     font-size: 14px;
     width: 160px;
-    gap: 4px;
+    gap: 10px;
     color: ${({ theme }) => theme.color.N800};
     .required {
       color: ${({ theme }) => theme.color.R400};

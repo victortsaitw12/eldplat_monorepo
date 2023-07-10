@@ -17,9 +17,17 @@ interface Props {
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
+  busOptions: any;
   isEdit: boolean;
 }
-function Details({ register, errors, getValues, control, isEdit }: Props) {
+function Details({
+  register,
+  errors,
+  getValues,
+  control,
+  isEdit,
+  busOptions
+}: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 身分識別
   const identityInfo = [
@@ -149,7 +157,7 @@ function Details({ register, errors, getValues, control, isEdit }: Props) {
   const categoryInfo = [
     {
       req: true,
-      label: "車輛群組",
+      label: "車隊",
       value: getValues("bus.bus_group"),
       editEle: (
         <Select
@@ -174,11 +182,16 @@ function Details({ register, errors, getValues, control, isEdit }: Props) {
           {...register("bus.operator")}
           marginBottom="0"
         >
-          <option value="簡忠華(007415)">簡忠華(007415)</option>
+          {/* <option value="簡忠華(007415)">簡忠華(007415)</option>
           <option value="陳正烽(00F470)">陳正烽(00F470)</option>
           <option value="吳啟元(00A371)">吳啟元(00A371)</option>
           <option value="施純鈞(200120)">施純鈞(200120)</option>
-          <option value="王百華(230014)">王百華(230014)</option>
+          <option value="王百華(230014)">王百華(230014)</option> */}
+          {busOptions?.operator_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
         </Select>
       )
     },

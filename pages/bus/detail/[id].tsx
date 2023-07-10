@@ -15,6 +15,7 @@ import { useBusStore } from "@contexts/filter/busStore";
 import LoadingSpinner from "@components/LoadingSpinner";
 import BusDetail from "@contents/Bus/BusDetail";
 import { getBusById } from "@services/bus/getBusById";
+import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 //
 const mainFilterArray = [
   { id: 1, label: "細項", value: "1" },
@@ -34,13 +35,16 @@ const Page: NextPageWithLayout<
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [busDefaultData, setBusDefaultData] = useState<any>(null);
+  const [options, setOptions] = useState<any>(null);
   useEffect(() => {
     updateMainFilter("1");
-    console.log("busId", busId);
     setLoading(true);
-    getBusById(busId)
+    getCreateBusOptions()
       .then((res) => {
-        console.log("res", res);
+        setOptions(res.dataList[0]);
+        return getBusById(busId);
+      })
+      .then((res) => {
         setBusDefaultData(res);
       })
       .catch((e) => {
@@ -50,6 +54,7 @@ const Page: NextPageWithLayout<
         setLoading(false);
       });
   }, []);
+  console.log("options", options);
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
   };
@@ -97,6 +102,7 @@ const Page: NextPageWithLayout<
           busId={busId}
           formType={mainFilter}
           busDefaultData={busDefaultData}
+          busOptions={options}
         />
       </TableWrapper>
     </BodySTY>
