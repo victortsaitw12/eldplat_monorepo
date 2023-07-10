@@ -7,7 +7,7 @@ import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
 //
 interface I_Data {
-  [key: string]: string | number | React.ReactNode;
+  [key: string]: string | number | React.ReactNode | any;
 }
 
 interface I_Table {
