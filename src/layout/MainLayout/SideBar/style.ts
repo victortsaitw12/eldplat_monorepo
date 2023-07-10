@@ -23,6 +23,7 @@ export const BodySTY = styled.div`
       display: none;
     }
     & > .back_to {
+      cursor: pointer;
       padding: 8px 12px;
       font-size: 0.875rem;
       font-weight: 400;
