@@ -46,10 +46,6 @@ const InvoiceFile = ({
     setFileRejections([]);
   }, []);
 
-  console.log("files", files);
-  console.log("keyName", keyName);
-  console.log("arrayName,index", arrayName, index);
-  console.log("getValues(`${keyName}`)", getValues(`${keyName}`));
   return (
     <Pane maxWidth={654}>
       <FileUploader
@@ -76,7 +72,7 @@ const InvoiceFile = ({
             />
           );
         }}
-        values={files || JSON.parse(localStorage.getItem("file"))}
+        values={files}
         // values={files}
         // {...register(`${arrayName}.${index}.files`)}
       />
