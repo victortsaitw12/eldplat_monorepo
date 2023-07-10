@@ -36,4 +36,10 @@ export const BodySTY = styled.div`
       margin-top: 40px;
     }
   }
+
+  .ub-box-szg_border-box {
+    .ub-b-top-clr_1F3D99_hxa9p6 {
+      background-color: salmon;
+    }
+  }
 `;

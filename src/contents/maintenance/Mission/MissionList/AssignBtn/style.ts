@@ -6,6 +6,7 @@ export const BodySTY = styled.div`
     padding: 8px 16px;
     color: ${({ theme }) => theme.color.N0};
     font-weight: ${({ theme }) => theme.fontWeight.Heading400};
+    font-size: 12px;
     border: none;
     border-radius: 32px;
     gap: 8px;

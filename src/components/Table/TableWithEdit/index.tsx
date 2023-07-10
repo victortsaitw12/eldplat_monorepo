@@ -191,6 +191,7 @@ function Table({
                         console.log("closeOption");
                         setCurrentTab(null);
                       }}
+                      tableName={tableName}
                     />
                   </td>
                 </tr>
