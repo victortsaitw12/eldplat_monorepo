@@ -66,7 +66,6 @@ export const InfoBoxSTY = styled.div`
     display: flex;
     flex-wrap: wrap;
     > li {
-      /* flex: 1; */
       width: 50%;
       margin: 6px 0;
       > label {
