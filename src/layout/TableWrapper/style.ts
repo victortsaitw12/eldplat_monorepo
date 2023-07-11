@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 const BodySTY = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: calc(100vh - 76px);
   /* border: 1px solid ${({ theme }) => theme.color.N100}; */
-  overflow-y: scroll;
+  overflow-y: auto;
   .filter-header {
     display: flex;
     justify-content: space-between;

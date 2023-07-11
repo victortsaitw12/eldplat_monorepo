@@ -16,6 +16,7 @@ const ContainerSTY = styled.div`
     background-color: ${({ theme }) => theme.color.N300};
   }
   overflow: auto;
+  overflow: hidden;
 `;
 
 export { BodySTY, ContainerSTY };
