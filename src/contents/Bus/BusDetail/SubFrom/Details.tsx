@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import { Select, Button, FilePicker, TextInput } from "evergreen-ui";
+import { Select, TextInput } from "evergreen-ui";
 import DottedSelect from "@components/HookForm/Select/DottedSelect";
 import InfoBox from "@components/InfoBox";
 import { FilePickBtnSTY } from "@components/FormCard/style";
