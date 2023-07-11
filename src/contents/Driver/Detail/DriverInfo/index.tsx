@@ -1,5 +1,6 @@
 import React from "react";
 import { Select, TextInput } from "evergreen-ui";
+
 import InfoBox from "@components/InfoBox";
 import { UseFormRegister, UseFormGetValues } from "react-hook-form";
 import FlexWrapper from "@layout/FlexWrapper";
@@ -107,63 +108,7 @@ function DriverInfo({
       )
     }
   ];
-  // 駕駛證照
-  const licenseInfo = [
-    {
-      req: false,
-      label: "證照種類",
-      value: getValues("licn_typ"),
-      editEle: (
-        <Select key="licn_typ" {...register("licn_typ")} marginBottom="0">
-          <option value="01">小型車普通駕駛執照</option>
-          <option value="02">大貨車普通駕駛執照</option>
-          <option value="03">大客車普通駕駛執照</option>
-          <option value="04">聯結車普通駕駛執照</option>
-          <option value="05">小型車職業駕駛執照</option>
-          <option value="06">大貨車職業駕駛執照</option>
-          <option value="07">大客車職業駕駛執照</option>
-          <option value="08">聯結車職業駕駛執照</option>
-          <option value="09">國際駕駛執照</option>
-          <option value="10">輕型機車駕駛執照</option>
-          <option value="11">小型輕型機車駕駛執照</option>
-          <option value="12">普通輕型機車駕駛執照</option>
-          <option value="13">重型機車駕駛執照</option>
-          <option value="14">普通重型機車駕駛執照</option>
-          <option value="15">大型重型機車駕駛執照</option>
-        </Select>
-      )
-    },
-    {
-      req: false,
-      label: "證照名稱",
-      value: getValues("licn_name"),
-      editEle: <TextInput {...register("licn_name")} />
-    },
-    {
-      req: false,
-      label: "發照單位",
-      value: getValues("licn_unit"),
-      editEle: <TextInput {...register("licn_unit")} />
-    },
-    {
-      req: false,
-      label: "發照日期",
-      value: getValues("licn_issue"),
-      editEle: <TextInput type="date" {...register("licn_issue")} />
-    },
-    {
-      req: false,
-      label: "有效日期",
-      value: getValues("licn_exp"),
-      editEle: <TextInput type="date" {...register("licn_exp")} />
-    },
-    {
-      req: false,
-      label: "下次審驗日期",
-      value: getValues("licn_examine_date"),
-      editEle: <TextInput type="date" {...register("licn_examine_date")} />
-    }
-  ];
+
   // 語言
   return (
     <FlexWrapper
@@ -172,11 +117,10 @@ function DriverInfo({
     >
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={basicInfo} infoTitle="基本資料" />
-        <InfoBox isEdit={isEdit} infoData={resumeInfo} infoTitle="駕駛履歷" />
+        <LanguageAbility currentUserInfo={driverData} />
       </FlexWrapper>
       <FlexWrapper flexDirection="column">
-        <InfoBox isEdit={isEdit} infoData={licenseInfo} infoTitle="駕駛證照" />
-        <LanguageAbility currentUserInfo={driverData} />
+        <InfoBox isEdit={isEdit} infoData={resumeInfo} infoTitle="駕駛履歷" />
       </FlexWrapper>
     </FlexWrapper>
   );

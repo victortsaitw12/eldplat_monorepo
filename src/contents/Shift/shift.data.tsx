@@ -42,11 +42,11 @@ export const EVENT_TYPE = new Map([
   ["03", { label: "排休", color: "R200", icon: <TimelineEventsIcon /> }], //"03"
   ["040", { label: "需簽核", color: "ChartYellow", icon: <WarningSignIcon /> }], //"04+0"
   ["041", { label: "已簽核", color: "ChartYellow", icon: <TickCircleIcon /> }], //"04+1"
-  ["042", { label: "退回", color: "N300", icon: <WarningSignIcon /> }], //"04+2???"
-  ["05", { label: "派訂單", color: "ChartGreen", icon: <ClipboardIcon /> }], //01?
-  ["06", { label: "派工單(車)", color: "T300", icon: <ClipboardIcon /> }], //01?
-  ["01", { label: "派工單(駕)", color: "ChartAqua", icon: <ClipboardIcon /> }], //01?
-  ["08", { label: "派單完成", color: "N300", icon: <ClipboardIcon /> }] //01?
+  ["042", { label: "退回", color: "N300", icon: <WarningSignIcon /> }] //"04+2???"
+  // ["05", { label: "派訂單", color: "ChartGreen", icon: <ClipboardIcon /> }], //01?
+  // ["06", { label: "派工單(車)", color: "T300", icon: <ClipboardIcon /> }], //01?
+  // ["01", { label: "派工單(駕)", color: "ChartAqua", icon: <ClipboardIcon /> }], //01?
+  // ["08", { label: "派單完成", color: "N300", icon: <ClipboardIcon /> }] //01?
 ]);
 
 // index to 周幾

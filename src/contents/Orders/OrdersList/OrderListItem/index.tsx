@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import ProgressList from "@components/ProgressList";
 
 import { BodySTY } from "./style";
@@ -39,7 +40,7 @@ const OrderListItem = ({
       <div className="info-content">
         <div className="content_item">
           <h4>乘車日期</h4>
-          <div>{itemData.date?.split(" ")[0]}</div>
+          <div>{dayjs(itemData.date?.split(" ")[0]).format("YYYY/MM/DD")}</div>
         </div>
         <div className="content_item">
           <h4>詢價編號</h4>
