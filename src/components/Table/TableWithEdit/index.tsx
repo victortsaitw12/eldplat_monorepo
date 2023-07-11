@@ -5,8 +5,9 @@ import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
 import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
+import PaginationField, { I_PageInfo } from "@components/PaginationField";
 //
-const dontShowList = ["維保通知", "維保任務", "維保紀錄"];
+const dontShowList = ["維保通知", "維保任務", "維保紀錄", "駕駛列表"];
 interface I_Data {
   [key: string]: string | number | React.ReactNode | any;
 }
@@ -25,6 +26,8 @@ interface I_Table {
   handleDeselectAll?: () => void;
   checkboxData?: any[];
   deleteText?: string;
+  pageInfo?: I_PageInfo;
+  onPageChange?: (pageQuery: I_PageInfo) => void;
 }
 /*
 Must provide id field in the Data Array
@@ -43,7 +46,9 @@ function Table({
   handleSelectAll,
   handleDeselectAll,
   checkboxData,
-  deleteText
+  deleteText,
+  pageInfo,
+  onPageChange
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
   const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
@@ -106,19 +111,10 @@ function Table({
           </IconLeft>
         )}
       </div>
-      {/* <div className="container-pagination">
-        <span>
-          第{1}-{5}筆, 共{5}筆
-        </span>
-        <div className="actions">
-          <button>
-            <ChevronLeftIcon size={12} />
-          </button>
-          <button>
-            <ChevronRightIcon size={12} />
-          </button>
-        </div>
-      </div> */}
+      <div className="container-pagination">
+        <PaginationField pageInfo={pageInfo} onPageChange={onPageChange} />
+      </div>
+
       <TableSTY>
         <thead>
           <tr>

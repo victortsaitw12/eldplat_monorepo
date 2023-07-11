@@ -13,13 +13,37 @@ export const DriverListSTY = styled.div`
     }
   }
   tr > th {
-    &:nth-child(-n + 2) > span {
+    &:nth-child(-n + 2),
+    &:nth-child(-n + 3),
+    &:nth-child(-n + 5),
+    &:nth-child(-n + 6) > span {
       justify-content: flex-start;
     }
   }
   tr > td {
-    &:nth-child(-n + 2) > div {
+    &:nth-child(-n + 2),
+    &:nth-child(-n + 3),
+    &:nth-child(-n + 5),
+    &:nth-child(-n + 6) > div {
       justify-content: flex-start;
     }
+    &:nth-child(-n + 6) {
+      .data-row > div {
+        max-width: 220px;
+        white-space: break-spaces;
+        line-height: 1.5;
+      }
+    }
+    /* 駕駛列表頁確認全部顯示，過長折行
+    .data-row {
+      width: 6rem;
+      overflow: hidden;
+      div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+    } */
   }
 `;
