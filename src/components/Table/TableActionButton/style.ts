@@ -27,8 +27,12 @@ export const BodySTY = styled.div`
       align-items: center;
       cursor: pointer;
       padding: 0 10px;
-      gap: 5px;
+      gap: 8px;
       border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+      color: ${({ theme }) => theme.color.N800};
+      > svg {
+        color: ${({ theme }) => theme.color.N500};
+      }
     }
   }
 `;

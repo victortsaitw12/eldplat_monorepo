@@ -30,6 +30,9 @@ const FilterItemSTY = styled.div<{ isActive: boolean }>`
   padding: 8px 12px;
   border-radius: 10px 10px 0px 0px;
   background-color: ${({ isActive }) => (isActive ? "#fff" : "transparent")};
+  > .require {
+    color: ${({ theme }) => theme.color.R400};
+  }
   span {
     color: ${({ theme }) => theme.color.N700};
     font-size: 14px;

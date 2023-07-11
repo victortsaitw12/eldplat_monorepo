@@ -18,7 +18,7 @@ import { getBusById } from "@services/bus/getBusById";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 //
 const mainFilterArray = [
-  { id: 1, label: "細項", value: "1" },
+  { id: 1, label: "細項", value: "1", require: true },
   { id: 2, label: "維保", value: "2" },
   { id: 3, label: "生命週期", value: "3" },
   { id: 4, label: "財務", value: "4" },
@@ -36,6 +36,7 @@ const Page: NextPageWithLayout<
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [busDefaultData, setBusDefaultData] = useState<any>(null);
   const [options, setOptions] = useState<any>(null);
+  console.log("isEdit", isEdit);
   useEffect(() => {
     updateMainFilter("1");
     setLoading(true);
@@ -53,7 +54,7 @@ const Page: NextPageWithLayout<
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [router]);
   console.log("options", options);
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
@@ -62,13 +63,13 @@ const Page: NextPageWithLayout<
     setLoading(true);
     console.log("asyncSubmitForm", data);
     try {
-      const res = await updateBus(data);
-      console.log("response of bus update: ", res);
+      await updateBus(data);
+      setIsEdit(false);
     } catch (e: any) {
       alert(e.message);
       console.log(e);
     }
-    router.push("/bus");
+    router.push("/bus/detail/" + busId + "?editPage=view");
     setLoading(false);
   };
   const onCancelHandler = () => {

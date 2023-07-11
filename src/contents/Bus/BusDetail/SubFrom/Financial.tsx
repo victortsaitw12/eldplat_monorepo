@@ -25,7 +25,7 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
   });
   const purchaseInfo = [
     {
-      req: true,
+      req: false,
       label: "採購供應商",
       value: getValues("bus_loan_lease.vendor_no"),
       editEle: (
@@ -53,7 +53,7 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: "購買價格",
-      value: getValues("bus_loan_lease.purchase_price"),
+      value: getValues("bus_loan_lease.purchase_price")?.toLocaleString(),
       editEle: (
         <TextInput
           key="bus_loan_lease.purchase_price"
@@ -64,7 +64,7 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: "里程表",
-      value: getValues("bus_loan_lease.odometer"),
+      value: getValues("bus_loan_lease.odometer")?.toLocaleString(),
       editEle: (
         <TextInput
           key="bus_loan_lease.odometer"
@@ -100,7 +100,7 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: "最大里程數值",
-      value: getValues("bus_loan_lease.warranty_max_meter"),
+      value: getValues("bus_loan_lease.warranty_max_meter")?.toLocaleString(),
       editEle: <TextInput {...register("bus_loan_lease.warranty_max_meter")} />
     }
   ];
@@ -154,7 +154,7 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: "貸款金額",
-      value: getValues("bus_loan_lease.amount_of_loan"),
+      value: getValues("bus_loan_lease.amount_of_loan")?.toLocaleString(),
       editEle: (
         <TextInput
           key="bus_loan_lease.amount_of_loan"
@@ -176,8 +176,8 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     },
     {
       req: false,
-      label: "首期付款",
-      value: getValues("bus_loan_lease.down_payment"),
+      label: "首期付款金額",
+      value: getValues("bus_loan_lease.down_payment")?.toLocaleString(),
       editEle: (
         <TextInput
           key="bus_loan_lease.down_payment"
@@ -201,7 +201,7 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: "月付金額",
-      value: getValues("bus_loan_lease.monthly_payment"),
+      value: getValues("bus_loan_lease.monthly_payment")?.toLocaleString(),
       editEle: (
         <TextInput
           key="bus_loan_lease.monthly_payment"
@@ -280,14 +280,14 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     },
     {
       req: false,
-      label: "租賃化成本",
-      value: getValues("bus_loan_lease.capitalized_cost"),
+      label: "資本化成本",
+      value: getValues("bus_loan_lease.capitalized_cost")?.toLocaleString(),
       editEle: <TextInput {...register("bus_loan_lease.capitalized_cost")} />
     },
     {
       req: false,
-      label: "首期付款",
-      value: getValues("bus_loan_lease.down_payment"),
+      label: "首期付款金額",
+      value: getValues("bus_loan_lease.down_payment")?.toLocaleString(),
       editEle: <TextInput {...register("bus_loan_lease.down_payment")} />
     },
     {
@@ -299,7 +299,7 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: "月付金額",
-      value: getValues("bus_loan_lease.monthly_payment"),
+      value: getValues("bus_loan_lease.monthly_payment")?.toLocaleString(),
       editEle: <TextInput {...register("bus_loan_lease.monthly_payment")} />
     },
     {
@@ -317,13 +317,13 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: "殘值",
-      value: getValues("bus_loan_lease.residual_value"),
+      value: getValues("bus_loan_lease.residual_value")?.toLocaleString(),
       editEle: <TextInput {...register("bus_loan_lease.residual_value")} />
     },
     {
       req: false,
       label: "契約里程限制",
-      value: getValues("bus_loan_lease.contract_mileage_cap"),
+      value: getValues("bus_loan_lease.contract_mileage_cap")?.toLocaleString(),
       editEle: (
         <TextInput {...register("bus_loan_lease.contract_mileage_cap")} />
       )
@@ -331,7 +331,9 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: "里程超出費用",
-      value: getValues("bus_loan_lease.excess_mileage_charge"),
+      value: getValues(
+        "bus_loan_lease.excess_mileage_charge"
+      )?.toLocaleString(),
       editEle: (
         <TextInput {...register("bus_loan_lease.excess_mileage_charge")} />
       )
@@ -351,9 +353,7 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
   ];
 
   return (
-    <FlexWrapper
-      padding="0"
-    >
+    <FlexWrapper padding="0">
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={purchaseInfo} infoTitle="購買詳情" />
         <InfoBox isEdit={isEdit} infoData={maintainInfo} infoTitle="保固" />

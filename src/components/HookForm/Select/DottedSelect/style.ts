@@ -50,6 +50,7 @@ export const BodySYT = styled.div<{ vertical: boolean }>`
   /* border: 1px solid red; */
   flex-direction: ${({ vertical }) => (vertical ? "column" : "row")};
   align-items: ${({ vertical }) => (vertical ? "flex-start" : "center")};
+  gap: 12px;
   > div {
     flex: 1 0 0;
   }

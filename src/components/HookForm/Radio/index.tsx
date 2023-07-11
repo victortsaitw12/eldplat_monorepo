@@ -40,19 +40,12 @@ const RadioItem = ({
           onFormChange(e.target.value);
         }}
       />
-      {description && <div>{description}</div>}
+      {description && <div className="description">{description}</div>}
     </RadioListFieldSTY>
   );
 };
 
-const Radio = ({
-  value,
-  options,
-  onFormChange,
-  errorMessage,
-  hint,
-  isDisabled
-}: RadioProps) => {
+const Radio = ({ value, options, onFormChange, isDisabled }: RadioProps) => {
   const id = useId();
   return (
     <RadioGroupListSTY>

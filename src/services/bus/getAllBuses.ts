@@ -80,6 +80,11 @@ export const busParser = (
       label: data["bus_no"] || null,
       value: data["bus_no"] || null
     };
+  } else if (key === "age") {
+    return {
+      label: data["age"] + "年" || null,
+      value: data["age"] || null
+    };
   }
   return {
     label: data[key] || null,

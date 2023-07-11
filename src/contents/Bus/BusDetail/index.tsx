@@ -30,6 +30,8 @@ const BusDetail = ({
     setVisibleForm(formType);
   }, [formType]);
   //
+  console.log("busDefaultData", busDefaultData);
+  //
   const {
     register,
     control,

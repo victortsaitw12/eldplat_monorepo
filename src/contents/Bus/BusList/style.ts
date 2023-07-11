@@ -4,6 +4,7 @@ export const BodySTY = styled.div`
   padding: 1rem;
   background-color: #fff;
   overflow-x: auto;
+  height: 100%;
 `;
 
 export const StyleIdIcon = styled.div<{ status: string }>`

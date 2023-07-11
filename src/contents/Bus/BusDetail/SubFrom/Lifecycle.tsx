@@ -33,7 +33,7 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "服務里程數",
-      value: getValues("bus_lifecycle.in_service_odometer"),
+      value: getValues("bus_lifecycle.in_service_odometer")?.toLocaleString(),
       editEle: (
         <TextInput
           key={"bus_lifecycle.in_service_odometer"}
@@ -58,7 +58,9 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "估計使用壽命(里程)",
-      value: getValues("bus_lifecycle.estimated_service_meter"),
+      value: getValues(
+        "bus_lifecycle.estimated_service_meter"
+      )?.toLocaleString(),
       editEle: (
         <TextInput
           key={"bus_lifecycle.estimated_service_meter"}
@@ -95,7 +97,7 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "停用里程表數值",
-      value: getValues("bus_lifecycle.out_service_odometer"),
+      value: getValues("bus_lifecycle.out_service_odometer")?.toLocaleString(),
       editEle: (
         <TextInput
           key={"bus_lifecycle.out_service_odometer"}
