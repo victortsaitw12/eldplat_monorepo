@@ -14,6 +14,7 @@ export const BodySTY = styled.div`
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
+    padding-bottom: 54px;
     gap: 12px;
     flex-grow: 1;
     border-top: 1px solid #d6e2f0;
