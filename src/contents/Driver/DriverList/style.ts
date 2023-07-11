@@ -26,6 +26,9 @@ export const DriverListSTY = styled.div`
     &:nth-child(-n + 5),
     &:nth-child(-n + 6) > div {
       justify-content: flex-start;
+      span {
+        justify-content: center;
+      }
     }
     &:nth-child(-n + 6) {
       .data-row > div {

@@ -40,7 +40,7 @@ function DriverList({
           handleDeleteDriver(id);
         }}
         pageInfo={pageInfo}
-        onPageChange={handlePageChange}
+        // onPageChange={handlePageChange}
       />
     </DriverListSTY>
   );
