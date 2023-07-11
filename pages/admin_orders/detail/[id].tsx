@@ -140,7 +140,7 @@ const Index: NextPageWithLayout<never> = ({
         title="確定要離開嗎?"
         isOpen={isLightOpen}
         handleCloseLightBox={() => {
-          setLightOpen((prev) => !prev);
+          setLightOpen((prev) => false);
         }}
       >
         如果你現在離開 ，將會遺失未儲存的資料。
@@ -153,6 +153,7 @@ const Index: NextPageWithLayout<never> = ({
             }}
             onClick={(e) => {
               e.preventDefault();
+              setLightOpen((prev) => false);
             }}
             text="取消"
           />
