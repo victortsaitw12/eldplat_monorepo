@@ -5,6 +5,7 @@ const TableContainerSTY = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow-x: auto;
   .container-header {
     display: flex;
     justify-content: space-between;

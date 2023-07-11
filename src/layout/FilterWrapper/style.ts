@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  height: 100%;
-  overflow-x: scroll;
+  /* height: 100%; */
+  /* overflow-x: scroll; */
   .sub-filter {
     display: flex;
     align-items: center;
