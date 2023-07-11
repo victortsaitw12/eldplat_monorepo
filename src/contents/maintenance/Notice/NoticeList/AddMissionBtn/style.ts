@@ -3,8 +3,11 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   button {
     cursor: pointer;
-    padding: 8px 16px;
+    width: 102px;
+    height: 24px;
+    padding: 4px 12px;
     color: ${({ theme }) => theme.color.N0};
+    font-size: 12px;
     font-weight: ${({ theme }) => theme.fontWeight.Heading400};
     border: none;
     border-radius: 32px;

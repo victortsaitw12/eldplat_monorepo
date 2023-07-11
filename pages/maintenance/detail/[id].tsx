@@ -12,6 +12,7 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import MaintenanceDetail from "@contents/maintenance/MaintenanceDetail";
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
 import { updateMaintenance } from "@services/maintenance/updateMaintenance";
+import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 const mainFilterArray = [{ id: 1, label: "維保資料", value: "1" }];
 //
 const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
@@ -19,11 +20,18 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
   const { mainFilter, updateMainFilter } = useMaintenanceStore();
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [isFinished, setIsFinished] = useState<boolean>(false); // 維保任務是否結案的boolean
   useEffect(() => {
     updateMainFilter("1");
+
+    // 如果進到檢視頁會先判斷這筆維保單是否已經結案，已結案就不會有編輯按鈕出現
+    getMaintenanceById(maintenance_id).then((data) => {
+      if (data.maintenance_status === "3") {
+        setIsFinished(true);
+      }
+    });
   }, []);
   //TableWrapper
   const changeMainFilterHandler = () => {
@@ -85,6 +93,7 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
         }}
         onClose={onCancelHandler}
         isEdit={isEdit}
+        viewOnly={isFinished}
       >
         <MaintenanceDetail
           isEdit={isEdit}
