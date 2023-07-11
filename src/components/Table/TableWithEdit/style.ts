@@ -80,6 +80,9 @@ const TableSTY = styled.table`
   tr:last-child td {
     border-bottom: none;
   }
+  tr:hover {
+    background-color: #f9fafc;
+  }
   td {
     a {
       text-decoration: dotted underline;
