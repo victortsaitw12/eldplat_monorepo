@@ -153,7 +153,7 @@ const ScheduleList = ({
                 />
               </>
             ) : (
-              pickup_location
+              pickup_location || "--"
             )}
           </Text>
           {isEdit && fields.length == 0 && (
@@ -204,7 +204,7 @@ const ScheduleList = ({
                 />
               </>
             ) : (
-              dropoff_location
+              dropoff_location || "--"
             )}
           </Text>
         </li>
