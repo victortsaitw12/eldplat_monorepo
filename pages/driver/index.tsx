@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { NextPageWithLayout } from "next";
 import Link from "next/link";
 import { Avatar } from "evergreen-ui";
 
 import { mappingQueryData } from "@utils/mappingQueryData";
 import SearchEmployee from "@contents/Driver/SearchEmployee";
-import { getAllDriver } from "@services/driver/getAllDrivers";
+import { getAllDriver, defaultPageInfo } from "@services/driver/getAllDrivers";
 import { deleteDriver } from "@services/driver/deleteDriver";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import { getLayout } from "@layout/MainLayout";
@@ -14,6 +14,7 @@ import { BodySTY, StyledDot, UserSTY } from "./style";
 import Drawer from "@components/Drawer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
+import { I_PageInfo } from "@components/PaginationField";
 
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -23,35 +24,45 @@ const mainFilterArray = [
 const Page: NextPageWithLayout<never> = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState("1");
   const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
   React.useEffect(() => {
     let isCanceled = false;
-    fetchDriverData(isCanceled, nowTab);
+    fetchDriverData(isCanceled, nowTab, pageInfo);
     return () => {
       isCanceled = true;
     };
   }, [nowTab]);
 
-  const fetchDriverData = async (isCanceled: boolean, mainFilter = "1") => {
-    getAllDriver(subFilter, mainFilter).then((res) => {
-      const driverData = mappingQueryData(
-        res.contentList || [],
-        driverPattern,
-        driverParser
-      );
-      if (isCanceled) return;
-
-      if (!subFilter) {
-        localStorage.setItem(
-          "driverInitFilter",
-          JSON.stringify(res.conditionList)
+  const fetchDriverData = React.useCallback(
+    async (
+      isCanceled: boolean,
+      mainFilter = "1",
+      pageQuery = defaultPageInfo
+    ) => {
+      getAllDriver(subFilter, mainFilter, pageQuery).then((res) => {
+        const driverData = mappingQueryData(
+          res.contentList || [],
+          driverPattern,
+          driverParser
         );
-        initializeSubFilter();
-      }
-      setData(driverData);
-    });
-  };
+        const getPageInfo = res.pageInfo;
+        setPageInfo(getPageInfo);
+        if (isCanceled) return;
+
+        if (!subFilter) {
+          localStorage.setItem(
+            "driverInitFilter",
+            JSON.stringify(res.conditionList)
+          );
+          initializeSubFilter();
+        }
+        setData(driverData);
+      });
+    },
+    []
+  );
 
   // ordered data pattern
   const driverPattern = {
@@ -91,7 +102,7 @@ const Page: NextPageWithLayout<never> = () => {
                 <IssueIcon size={16} color={"#D14343"} />
               )} */}
             </UserSTY>
-          ) || null,
+          ) || "--",
         value: data["user_Name"] || null
       };
     }
@@ -113,12 +124,12 @@ const Page: NextPageWithLayout<never> = () => {
               <StyledDot value={data["invt_Status"] as string} />
               <div>{data["invt_Status"]}</div>
             </div>
-          ) || null,
+          ) || "--",
         value: data["invt_Status"] || null
       };
     }
     return {
-      label: data[key] || null,
+      label: data[key] || "--",
       value: data[key] || null
     };
   };
@@ -134,6 +145,12 @@ const Page: NextPageWithLayout<never> = () => {
       fetchDriverData(false);
     });
   };
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      fetchDriverData(false, nowTab, pageQuery);
+    },
+    [fetchDriverData, nowTab]
+  );
 
   return (
     <BodySTY isOpenDrawer={isOpenDrawer}>
@@ -152,8 +169,10 @@ const Page: NextPageWithLayout<never> = () => {
         >
           <DriverList
             driverData={data}
+            pageInfo={pageInfo}
             goToCreatePage={handleOpenSearch}
             handleDeleteDriver={handleDeleteDriver}
+            handlePageChange={handlePageChange}
           />
         </FilterWrapper>
       </TableWrapper>

@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
-import { ErrorIcon, PlusIcon } from "evergreen-ui";
+import { ErrorIcon, PlusIcon, Checkbox } from "evergreen-ui";
 import TableActionButton from "@components/Table/TableActionButton";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
 import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
+import PaginationField, { I_PageInfo } from "@components/PaginationField";
 //
-const dontShowList = ["維保通知", "維保任務", "維保紀錄"];
+const dontShowList = ["維保通知", "維保任務", "維保紀錄", "駕駛列表"];
 interface I_Data {
-  [key: string]: string | number | React.ReactNode;
+  [key: string]: string | number | React.ReactNode | any;
 }
 
 interface I_Table {
   tableName: string | any;
   titles: Array<string | number | React.ReactNode> | any;
   data: I_Data[];
-  onCheck?: (items: any) => void;
+  // onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
   goToEditPage?: (id: string, item: any) => void;
   viewItem?: (id: string, item: any) => void;
@@ -25,6 +26,8 @@ interface I_Table {
   handleDeselectAll?: () => void;
   checkboxData?: any[];
   deleteText?: string;
+  pageInfo?: I_PageInfo;
+  onPageChange?: (pageQuery: I_PageInfo) => void;
 }
 /*
 Must provide id field in the Data Array
@@ -43,24 +46,47 @@ function Table({
   handleSelectAll,
   handleDeselectAll,
   checkboxData,
-  deleteText
+  deleteText,
+  pageInfo,
+  onPageChange
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
+  const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      console.log("currentTab", currentTab);
-      console.log("event", event);
-
+    const handleClickOutside = () => {
       setCurrentTab(null);
     };
     document.addEventListener("click", handleClickOutside);
-    console.log("add event listener register");
     return () => {
       document.removeEventListener("click", handleClickOutside);
-      console.log("remove event listener register");
     };
   }, []);
   if (!data) return <p>Loading</p>;
+
+  // checkbox +++
+  const handleCheckAll = (e: any) => {
+    checkedItems.length === data.length
+      ? setCheckedItems([])
+      : setCheckedItems(data.map((item) => item.id?.value));
+    if (!handleSelectAll || !handleDeselectAll) return;
+    e.target.checked ? handleSelectAll() : handleDeselectAll();
+  };
+
+  const handleCheck = (e: any) => {
+    if (checkedItems.includes(e.target.id)) {
+      const updated = checkedItems.filter((item) => item !== e.target.id);
+      setCheckedItems(updated);
+    } else {
+      const updated = [...checkedItems, e.target.id];
+      setCheckedItems(updated);
+    }
+
+    if (!handleCheckboxChange) return;
+    e.target.checked
+      ? handleCheckboxChange(e.target.value)
+      : handleCheckboxChange("");
+  };
+
   return (
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
@@ -69,8 +95,7 @@ function Table({
             <span>{tableName}</span>
           ) : (
             <>
-              <span>{tableName}列表</span>
-              <ErrorIcon color="#8EA8C7" />
+              <span>{tableName}清單</span>
             </>
           )}
         </div>
@@ -80,25 +105,21 @@ function Table({
           </IconLeft>
         )}
       </div>
-      {/* <div className="container-pagination">
-        <span>
-          第{1}-{5}筆, 共{5}筆
-        </span>
-        <div className="actions">
-          <button>
-            <ChevronLeftIcon size={12} />
-          </button>
-          <button>
-            <ChevronRightIcon size={12} />
-          </button>
-        </div>
-      </div> */}
+      <div className="container-pagination">
+        <PaginationField pageInfo={pageInfo} onPageChange={onPageChange} />
+      </div>
+
       <TableSTY>
         <thead>
           <tr>
-            {/* <th>
-              <Checkbox onChange={handleCheckAll} />
-            </th> */}
+            {tableName !== "維保通知" && (
+              <th>
+                <Checkbox
+                  onChange={(e) => handleCheckAll(e)}
+                  checked={checkedItems.length === data.length}
+                />
+              </th>
+            )}
             {tableName === "維保通知" && (
               <th>
                 <input
@@ -133,12 +154,15 @@ function Table({
             data.map((item: any, idx) => {
               return (
                 <tr key={uuid()}>
-                  {/* <td>
-                  <Checkbox
-                    checked={checkedItems.includes(item.id)}
-                    onChange={() => handleCheck(item.id)}
-                  />
-                </td> */}
+                  {tableName !== "維保通知" && (
+                    <td>
+                      <Checkbox
+                        checked={checkedItems.includes(item.id.value)}
+                        onChange={(e) => handleCheck(e)}
+                        id={item.id.value}
+                      />
+                    </td>
+                  )}
                   {tableName === "維保通知" && (
                     <td>
                       <input

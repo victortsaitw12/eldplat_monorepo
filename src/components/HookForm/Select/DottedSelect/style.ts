@@ -25,7 +25,7 @@ export const colourStyles: StylesConfig<ColourOption> = {
       : "1px solid #AFC3DA",
     backgroundColor: isDisabled ? "transparent" : "white",
     boxShadow: isFocused ? "0 0 0 2px #D6E0FF" : "none",
-    width: "120px"
+    width: "auto"
   }),
   indicatorsContainer: (baseStyles, { isDisabled }) => ({
     ...baseStyles,
@@ -45,17 +45,22 @@ export const colourStyles: StylesConfig<ColourOption> = {
   })
 };
 
-export const BodySYT = styled.div`
+export const BodySYT = styled.div<{ vertical: boolean }>`
   display: flex;
-  align-items: center;
-  gap: 20px;
-  .title {
+  /* border: 1px solid red; */
+  flex-direction: ${({ vertical }) => (vertical ? "column" : "row")};
+  align-items: ${({ vertical }) => (vertical ? "flex-start" : "center")};
+  gap: 12px;
+  > div {
+    flex: 1 0 0;
+  }
+  > .title {
     display: flex;
     align-items: center;
     font-weight: 400;
     font-size: 14px;
     width: 160px;
-    gap: 4px;
+    gap: 10px;
     color: ${({ theme }) => theme.color.N800};
     .required {
       color: ${({ theme }) => theme.color.R400};

@@ -10,14 +10,15 @@ import { updateBus } from "@services/bus/updateBus";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { ParsedUrlQuery } from "querystring";
-
 import TableWrapper from "@layout/TableWrapper";
 import { useBusStore } from "@contexts/filter/busStore";
 import LoadingSpinner from "@components/LoadingSpinner";
 import BusDetail from "@contents/Bus/BusDetail";
+import { getBusById } from "@services/bus/getBusById";
+import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 //
 const mainFilterArray = [
-  { id: 1, label: "細項", value: "1" },
+  { id: 1, label: "細項", value: "1", require: true },
   { id: 2, label: "維保", value: "2" },
   { id: 3, label: "生命週期", value: "3" },
   { id: 4, label: "財務", value: "4" },
@@ -31,12 +32,30 @@ const Page: NextPageWithLayout<
   const { mainFilter, updateMainFilter } = useBusStore();
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [busDefaultData, setBusDefaultData] = useState<any>(null);
+  const [options, setOptions] = useState<any>(null);
+  console.log("isEdit", isEdit);
   useEffect(() => {
     updateMainFilter("1");
-  }, []);
+    setLoading(true);
+    getCreateBusOptions()
+      .then((res) => {
+        setOptions(res.dataList[0]);
+        return getBusById(busId);
+      })
+      .then((res) => {
+        setBusDefaultData(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [router]);
+  console.log("options", options);
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
   };
@@ -44,13 +63,13 @@ const Page: NextPageWithLayout<
     setLoading(true);
     console.log("asyncSubmitForm", data);
     try {
-      const res = await updateBus(data);
-      console.log("response of bus update: ", res);
+      await updateBus(data);
+      setIsEdit(false);
     } catch (e: any) {
       alert(e.message);
       console.log(e);
     }
-    router.push("/bus");
+    router.push("/bus/detail/" + busId + "?editPage=view");
     setLoading(false);
   };
   const onCancelHandler = () => {
@@ -83,6 +102,8 @@ const Page: NextPageWithLayout<
           asyncSubmitForm={asyncSubmitForm}
           busId={busId}
           formType={mainFilter}
+          busDefaultData={busDefaultData}
+          busOptions={options}
         />
       </TableWrapper>
     </BodySTY>

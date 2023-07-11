@@ -33,11 +33,6 @@ function Index({
     <BodySTY>
       <button
         onClick={(event) => {
-          // if (isOpen) {
-          //   closeOption && closeOption();
-          // } else {
-          //   openOption && openOption();
-          // }
           if (!isOpen) {
             event.stopPropagation();
             openOption && openOption();

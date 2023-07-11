@@ -69,4 +69,7 @@ export const BodySTY = styled.div`
       display: none;
     }
   }
+  > .children-container {
+    flex: 1 0 0;
+  }
 `;

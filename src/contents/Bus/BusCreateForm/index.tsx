@@ -9,6 +9,7 @@ import DottedSelect from "@components/HookForm/Select/DottedSelect";
 interface I_BusCreateFormProps {
   data?: any;
   reloadData?: () => void;
+  options: any;
 }
 export interface CreateBusPayload {
   bus_name: string;
@@ -19,7 +20,7 @@ export interface CreateBusPayload {
   license_plate: string;
   year: string;
   bus_group: string;
-  operator: string;
+  operator_no: string;
   status: string;
   ownership: string;
 }
@@ -32,15 +33,15 @@ const defaultValues: CreateBusPayload = {
   license_plate: "",
   year: "",
   bus_group: "",
-  operator: "",
+  operator_no: "",
   status: "",
   ownership: ""
 };
-const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
+const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
   const { register, handleSubmit, control, reset } = useForm<CreateBusPayload>({
     defaultValues
   });
-
+  console.log("options", options);
   const [loading, setLoading] = useState(false);
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
@@ -70,7 +71,6 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
         }}
         required
         label="車輛名稱"
-        hint="車輛名稱的hint"
       />
       <FiledInput
         controlProps={{
@@ -88,7 +88,11 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
           </div>
         }
         {...register("type", { required: "此欄位必填" })}
+        defaultValue=""
       >
+        <option value="" disabled hidden>
+          請選擇
+        </option>
         <option value="01">沙灘車</option>
         <option value="02">船</option>
         <option value="03">巴士</option>
@@ -121,7 +125,11 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
           </div>
         }
         {...register("make", { required: "此欄位必填" })}
+        defaultValue=""
       >
+        <option value="" disabled hidden>
+          請選擇
+        </option>
         <option value="01">Toyota</option>
         <option value="02">Mercedes-Benz</option>
         <option value="03">Volkswagen</option>
@@ -145,16 +153,19 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
         }}
         required
         label="出廠年份"
-        hint="出廠年份的hint"
       />
       <SelectField
         label={
           <div>
-            <span style={{ color: "#D14343" }}>*</span>車輛群組
+            <span style={{ color: "#D14343" }}>*</span>車隊
           </div>
         }
         {...register("bus_group", { required: "此欄位必填" })}
+        defaultValue=""
       >
+        <option value="" disabled hidden>
+          請選擇
+        </option>
         <option value="01">群組1</option>
         <option value="02">群組2</option>
         <option value="03">群組3</option>
@@ -166,13 +177,17 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
             <span style={{ color: "#D14343" }}>*</span>主要駕駛
           </div>
         }
-        {...register("operator", { required: "此欄位必填" })}
+        {...register("operator_no", { required: "此欄位必填" })}
+        defaultValue=""
       >
-        <option value="簡忠華(007415)">簡忠華(007415)</option>
-        <option value="陳正烽(00F470)">陳正烽(00F470)</option>
-        <option value="吳啟元(00A371)">吳啟元(00A371)</option>
-        <option value="施純鈞(200120)">施純鈞(200120)</option>
-        <option value="王百華(230014)">王百華(230014)</option>
+        <option value="" disabled hidden>
+          請選擇
+        </option>
+        {options?.operator_options.map((item: any) => (
+          <option key={item.no} value={item.no}>
+            {item.name}
+          </option>
+        ))}
       </SelectField>
       <DottedSelect
         control={control}
@@ -180,6 +195,7 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
         label="狀態"
         isRequire={true}
         isDisabled={false}
+        vertical={true}
         options={[
           { label: "活躍中", value: "01", color: "#52BD94" },
           { label: "已售出", value: "02", color: "#8EA8C7" },
@@ -195,7 +211,11 @@ const BusCreateForm = ({ reloadData }: I_BusCreateFormProps) => {
           </div>
         }
         {...register("ownership", { required: "此欄位必填" })}
+        defaultValue=""
       >
+        <option value="" disabled hidden>
+          請選擇
+        </option>
         <option value="01">擁有的</option>
         <option value="02">租來的</option>
         <option value="03">出租中</option>

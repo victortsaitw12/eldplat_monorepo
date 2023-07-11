@@ -37,15 +37,9 @@ function Loader() {
   const router = useRouter();
   useEffect(() => {
     const handleStart = (url: string) => {
-      console.log("handleStart");
-      console.log("current url", url);
-      console.log("router.asPath", router.asPath);
       setLoading(true);
     };
     const handleComplete = (url: string) => {
-      console.log("handleComplete");
-      console.log("current url", url);
-      console.log("router.asPath", router.asPath);
       setLoading(false);
     };
     router.events.on("routeChangeStart", handleStart);

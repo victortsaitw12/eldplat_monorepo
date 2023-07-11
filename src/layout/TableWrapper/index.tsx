@@ -17,6 +17,7 @@ interface Props {
     id: number;
     label: string;
     value: string;
+    require?: boolean;
   }[];
   isEdit?: boolean;
   viewOnly?: boolean;
@@ -52,6 +53,7 @@ function TableWrapper({
                 }}
                 isActive={item.value === mainFilter}
               >
+                {item.require && <div className="require">*</div>}
                 <span>{item.label}</span>
                 {item.value === mainFilter && <ChevronDownIcon />}
               </FilterItemSTY>

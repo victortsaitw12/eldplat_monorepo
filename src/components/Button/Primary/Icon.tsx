@@ -21,10 +21,10 @@ const StyledButton = styled(Button)`
   border: none;
   border-radius: 50%;
   gap: 8px;
-  background: ${({ theme }) => theme.color.B300};
+  background: ${({ theme }) => theme.color.B400};
   transition: all 0.3s;
   &:hover {
-    background: ${({ theme }) => theme.color.B400};
+    background: ${({ theme }) => theme.color.B500};
   }
   &:active {
     background: ${({ theme }) => theme.color.B500};

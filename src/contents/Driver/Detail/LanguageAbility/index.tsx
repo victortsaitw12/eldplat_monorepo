@@ -22,6 +22,9 @@ function LanguageAbility({ currentUserInfo }: { currentUserInfo: DriverInfo }) {
             </Pane>
           </Pane>
         ))}
+      {currentUserInfo.languages.length === 0 && (
+        <div style={{ textAlign: "center" }}>無資料，請至員工設定頁面編輯</div>
+      )}
     </BodySTY>
   );
 }
