@@ -43,7 +43,7 @@ export const getAllVendors = async (
       filter_Needed: true,
       pageInfo: {
         page_Index: 1,
-        page_Size: 10,
+        page_Size: 30,
         orderby: "vendor_no",
         // arrangement: "asc",
         total: 0,
