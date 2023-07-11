@@ -13,6 +13,9 @@ export const TableSTY = styled.table`
     background-color: ${({ theme }) => theme.color.N50};
     text-align: left;
   }
+  tr:hover {
+    background-color: #f9fafc;
+  }
   td,
   th {
     padding: 8px 10px;
@@ -34,13 +37,12 @@ export const TableSTY = styled.table`
       text-decoration: dotted underline;
     }
 
-      .no-data div {
-        width: 20px;
-        height: 1px;
-        background: #e3e3e3;
-      }
+    .no-data div {
+      width: 20px;
+      height: 1px;
+      background: #e3e3e3;
     }
-  
+  }
 
   .no-data {
     display: flex;
@@ -98,17 +100,17 @@ export const TrSTY = styled.tr<I_TrSTY>`
       transform: translateY(-50%);
       border-radius: 10px;
       background-color: ${(props) => {
-    switch (props.statusBar) {
-      case "success":
-        return "#52bd94";
-      case "error":
-        return "#d14343";
-      case "warning":
-        return "#ffb020";
-      default:
-        return "unset";
-    }
-  }};
+        switch (props.statusBar) {
+          case "success":
+            return "#52bd94";
+          case "error":
+            return "#d14343";
+          case "warning":
+            return "#ffb020";
+          default:
+            return "unset";
+        }
+      }};
     }
   }
 `;
