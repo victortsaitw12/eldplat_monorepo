@@ -13,20 +13,20 @@ import {
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
-  selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
+  busOptions: any;
   isEdit: boolean;
 }
 function Details({
-  selected,
   register,
   errors,
   getValues,
   control,
-  isEdit
+  isEdit,
+  busOptions
 }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 身分識別
@@ -132,7 +132,7 @@ function Details({
     {
       readonly: true,
       label: "車齡",
-      value: getValues("bus.age")
+      value: getValues("bus.age") + "年"
     },
     {
       req: true,
@@ -157,7 +157,7 @@ function Details({
   const categoryInfo = [
     {
       req: true,
-      label: "車輛群組",
+      label: "車隊",
       value: getValues("bus.bus_group"),
       editEle: (
         <Select
@@ -175,18 +175,20 @@ function Details({
     {
       req: true,
       label: "主要駕駛",
-      value: getValues("bus.operator"),
+      value: busOptions?.operator_options.find(
+        (option: any) => option.no === getValues("bus.operator_no")
+      )?.name,
       editEle: (
         <Select
           key="bus.operator"
-          {...register("bus.operator")}
+          {...register("bus.operator_no")}
           marginBottom="0"
         >
-          <option value="簡忠華(007415)">簡忠華(007415)</option>
-          <option value="陳正烽(00F470)">陳正烽(00F470)</option>
-          <option value="吳啟元(00A371)">吳啟元(00A371)</option>
-          <option value="施純鈞(200120)">施純鈞(200120)</option>
-          <option value="王百華(230014)">王百華(230014)</option>
+          {busOptions?.operator_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
         </Select>
       )
     },
@@ -280,10 +282,7 @@ function Details({
   ];
   // 標籤
   return (
-    <FlexWrapper
-      padding="0"
-      style={{ display: `${selected ? "flex" : "none"}` }}
-    >
+    <FlexWrapper padding="0">
       <InfoBox
         isEdit={isEdit}
         infoData={identityInfo}

@@ -154,6 +154,21 @@ const PriceInfoView = () => {
             )}
           </Pane>
         )}
+        {((!isDeposit && !isFullPayment) || isFullPayment) && (
+          <>
+            <Pane className="price_content">
+              <Text>總金額</Text>
+              <Text>NT${quote_total_amount?.toLocaleString() || "0"}</Text>
+            </Pane>
+            <Text>
+              {dayjs(full_payment_period).isValid()
+                ? dayjs(full_payment_period).format("YYYY-MM-DD") + " "
+                : "--"}
+              前繳款
+            </Text>
+            <hr />
+          </>
+        )}
 
         {isDeposit && (
           <>
@@ -168,18 +183,6 @@ const PriceInfoView = () => {
               <Text>NT${balance_amount?.toLocaleString() || "0"}</Text>
             </Pane>
             <Text>{dayjs(balance_period).format("YYYY-MM-DD")} 前繳款</Text>
-            <hr />
-          </>
-        )}
-        {isFullPayment && (
-          <>
-            <Pane className="price_content">
-              <Text>總金額</Text>
-              <Text>NT${quote_total_amount?.toLocaleString() || "0"}</Text>
-            </Pane>
-            <Text>
-              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
-            </Text>
             <hr />
           </>
         )}

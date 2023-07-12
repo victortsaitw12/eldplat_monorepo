@@ -8,6 +8,7 @@ import { IconLeft } from "@components/Button/Primary";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import { createMaintenance } from "@services/maintenance/createMaintenance";
 import router from "next/router";
+import dayjs from "dayjs";
 
 //@components
 export interface CreateMaintenancePayload {
@@ -19,7 +20,7 @@ export interface CreateMaintenancePayload {
   vendor_no: string;
   package_code: string;
   service_start_date: string;
-  service_end_date: string;
+  service_end_date: string | any;
 }
 
 interface I_MaintenanceCreateFormProps {
@@ -51,7 +52,7 @@ function MaintenanceCreateForm({
   const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
 
   console.log("data for create", data);
-
+  console.log("defaultValues", defaultValues);
   // 取得新增時的下拉式資料
   useEffect(() => {
     setLoading(true);
@@ -86,6 +87,9 @@ function MaintenanceCreateForm({
       }
     );
     newData["driver_name"] = selectedDriver[0].name;
+    // if (newData["service_end_date"] === "") {
+    //   newData["service_end_date"] = dayjs().format("YYYY-MM-DD");
+    // }
     console.log("💦newData", newData);
     try {
       const res = await createMaintenance(newData);
@@ -198,11 +202,7 @@ function MaintenanceCreateForm({
         {...register("service_start_date")}
       />
       <TextInputField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>截止日期
-          </div>
-        }
+        label="截止日期"
         type="date"
         {...register("service_end_date")}
       />

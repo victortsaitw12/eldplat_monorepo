@@ -26,5 +26,8 @@ export const BodySTY = styled.div`
         background: none;
       }
     }
+    svg {
+      color: ${({ theme }) => theme.color.N600};
+    }
   }
 `;

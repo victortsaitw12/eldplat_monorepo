@@ -1,5 +1,11 @@
 import React from "react";
-import { MoreIcon, EditIcon, DisableIcon, EyeOpenIcon } from "evergreen-ui";
+import {
+  MoreIcon,
+  EditIcon,
+  DisableIcon,
+  EyeOpenIcon,
+  DeleteIcon
+} from "evergreen-ui";
 //
 import { BodySTY } from "./style";
 interface Props {
@@ -10,6 +16,7 @@ interface Props {
   closeOption?: () => void;
   deleteText?: string;
   isOpen?: boolean;
+  tableName?: string;
 }
 //
 function Index({
@@ -18,6 +25,7 @@ function Index({
   onView,
   openOption,
   closeOption,
+  tableName,
   deleteText = "停用",
   isOpen = false
 }: Props) {
@@ -25,11 +33,6 @@ function Index({
     <BodySTY>
       <button
         onClick={(event) => {
-          // if (isOpen) {
-          //   closeOption && closeOption();
-          // } else {
-          //   openOption && openOption();
-          // }
           if (!isOpen) {
             event.stopPropagation();
             openOption && openOption();
@@ -72,8 +75,17 @@ function Index({
                 closeOption && closeOption();
               }}
             >
-              <DisableIcon size={14} />
-              <div>{deleteText}</div>
+              {tableName === "維保通知" ? (
+                <>
+                  <DeleteIcon size={14} color="#8EA8C7" />
+                  <div>取消</div>
+                </>
+              ) : (
+                <>
+                  <DisableIcon size={14} />
+                  <div>{deleteText}</div>
+                </>
+              )}
             </button>
           )}
         </div>

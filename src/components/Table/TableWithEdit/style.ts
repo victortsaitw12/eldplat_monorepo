@@ -5,6 +5,7 @@ const TableContainerSTY = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow-x: auto;
   .container-header {
     display: flex;
     justify-content: space-between;
@@ -12,12 +13,17 @@ const TableContainerSTY = styled.div`
     padding: 0px;
     gap: 4px;
     width: 100%;
+    color: ${({ theme }) => theme.color.N700};
     .container-header-left {
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: ${({ theme }) => theme.fontSize.Heading500};
-      font-weight: ${({ theme }) => theme.fontWeight.Heading500};
+      font-size: 16px;
+      font-weight: 600;
+    }
+    button {
+      background-color: ${({ theme }) => theme.color.B400};
+      padding: 8px 16px;
     }
   }
   .container-pagination {
@@ -48,15 +54,15 @@ const TableContainerSTY = styled.div`
 
 // 表格本身
 const TableSTY = styled.table`
-  /* min-width: 100%; */
   border: 1px solid ${({ theme }) => theme.color.N300};
-  /* border-collapse: collapse; */
   border-radius: 4px;
   border-spacing: 0px;
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
     text-align: left;
+    color: ${({ theme }) => theme.color.N700};
   }
+
   td,
   th {
     padding: 8px 10px;
@@ -67,12 +73,15 @@ const TableSTY = styled.table`
     span,
     div {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
     }
   }
   tr:last-child td {
     border-bottom: none;
+  }
+  tr:hover {
+    background-color: #f9fafc;
   }
   td {
     a {
@@ -92,7 +101,7 @@ const TableSTY = styled.table`
   }
   .data-row {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 8px;
   }
@@ -104,6 +113,7 @@ const TableSTY = styled.table`
   }
   .noDataShown {
     min-height: 32px;
+
     div {
       width: 100%;
       height: 32px;

@@ -16,8 +16,8 @@ function Button(props: Props) {
 
 const StyledButton = styled(Button)`
   cursor: pointer;
-  width: 160px;
-  padding: 8px 16px;
+  /* width: 160px; */
+  padding: 4px 12px;
   color: ${({ theme }) => theme.color.N0};
   font-weight: ${({ theme }) => theme.fontWeight.Heading400};
   border: none;
@@ -27,6 +27,9 @@ const StyledButton = styled(Button)`
   font-weight: 600;
   background: ${({ theme }) => theme.color.B400};
   transition: all 0.3s;
+  > .text {
+    line-height: normal;
+  }
   &:hover {
     background: ${({ theme }) => theme.color.B500};
   }

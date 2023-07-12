@@ -14,7 +14,9 @@ export const DetailTableSTY = styled.div`
     tr th:nth-child(1) {
       width: 35%;
     }
-
+    tr:hover {
+      background-color: #f9fafc;
+    }
     td,
     th {
       padding: 15px 0;

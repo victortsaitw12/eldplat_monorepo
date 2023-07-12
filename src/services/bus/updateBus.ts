@@ -4,7 +4,9 @@ export const updateBus = async (busData: any) => {
   for (const key in busData) {
     const subForm = busData[key];
     for (const subKey in subForm) {
-      if (subForm[subKey] === "") {
+      console.log(subForm[subKey]);
+      // if (!subForm[subKey] || subForm[subKey].toString().trim() === "") {
+      if (subForm[subKey] === null || subForm[subKey] === "") {
         delete subForm[subKey];
       }
     }

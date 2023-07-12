@@ -34,7 +34,6 @@ interface I_AssignmentAdditionalVehicleProps {
   setCreatDrawerOpen: (v: "car" | "driver" | "") => void;
 }
 
-// TODO merge Vehicle/Driver, merge VehicleForm/DriverForm components
 const AssignmentAdditional = ({
   type,
   orderInfo,

@@ -20,19 +20,26 @@ export const BodySTY = styled.div`
       position: absolute;
     }
 
-    select {
+    select,
+    button {
       width: 100%;
       height: 100%;
       border: none;
       background: transparent;
       color: #3670c9;
-      padding-left: 30px;
+      /* padding-left: 30px; */
       cursor: pointer;
     }
   }
   div {
     table {
       margin-top: 40px;
+    }
+  }
+
+  .ub-box-szg_border-box {
+    .ub-b-top-clr_1F3D99_hxa9p6 {
+      background-color: salmon;
     }
   }
 `;
