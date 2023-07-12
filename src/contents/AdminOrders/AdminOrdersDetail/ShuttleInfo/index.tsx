@@ -119,7 +119,7 @@ const ShuttleInfo = ({ isEdit }: I_Props) => {
             ? "第" +
               (child.day_number || "1") +
               "天  " +
-              ((dayjs.isDayjs(child.day_date) &&
+              ((dayjs(child.day_date).isValid() &&
                 dayjs(child.day_date).format("YYYY-MM-DD")) ||
                 "")
             : "接送行程"

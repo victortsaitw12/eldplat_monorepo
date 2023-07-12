@@ -120,8 +120,11 @@ const Index: NextPageWithLayout<never> = ({
                 });
               }}
               onClose={() => {
-                setLightOpen(true);
-                // router.push("/admin_orders/");
+                if (editPage) {
+                  setLightOpen(true);
+                } else {
+                  router.push("/admin_orders/");
+                }
               }}
             >
               <AdminOrdersDetal
