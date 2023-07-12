@@ -62,21 +62,37 @@ const Page: NextPageWithLayout<
   }, [driverNo]);
 
   // ------- function ------- //
+  const refetch = React.useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const data = await getDriverById(driverNo);
+      setDriverData(data);
+      setIsEdit(false);
+    } catch (e: any) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  }, [driverNo]);
 
   const changeMainFilterHandler = (value: string) => updateMainFilter(value);
 
   const asyncSubmitForm = async (data: any) => {
+    setIsLoading(true);
     try {
       const res = await updateDriver(driverNo, data);
-      console.log("updateDriver:", res);
-      if (res.status === 200) toaster.success("成功更新駕駛履歷");
-      router.push("/driver");
-      console.log(res);
+      if (res.statusCode === "200") {
+        await refetch();
+        toaster.success("成功更新駕駛履歷");
+      }
+      //router.push("/driver");
     } catch (e: any) {
       console.log(e);
       toaster.warning(e.message);
     }
     setIsLoading(false);
+  };
+  const onCancelHandler = () => {
+    router.push("/driver");
   };
 
   return (
@@ -88,14 +104,12 @@ const Page: NextPageWithLayout<
           mainFilterArray={mainFilterArray}
           isEdit={isEdit}
           onSave={() => {
-            submitRef.current && submitRef.current.click();
+            submitRef.current?.click();
           }}
           onEdit={() => {
             setIsEdit(true);
           }}
-          onClose={() => {
-            router.push("/driver");
-          }}
+          onClose={onCancelHandler}
         >
           <DriverDetail
             isEdit={isEdit}
@@ -103,6 +117,7 @@ const Page: NextPageWithLayout<
             asyncSubmitForm={asyncSubmitForm}
             driverData={driverData}
             formType={mainFilter}
+            refetch={refetch}
           />
         </TableWrapper>
       )) || (

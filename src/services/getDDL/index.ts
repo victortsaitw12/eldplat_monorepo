@@ -95,3 +95,22 @@ interface I_PaymentHistory {
 }
 
 //資料表名稱: ORDER_STATUS_CODE (狀態代號名稱)
+
+//證照種類
+export const LICN_TYP: any = {
+  "01": { label: "小型車普通駕駛執照", value: "01" },
+  "02": { label: "大貨車普通駕駛執照", value: "02" },
+  "03": { label: "大客車普通駕駛執照", value: "03" },
+  "04": { label: "聯結車普通駕駛執照", value: "04" },
+  "05": { label: "小型車職業駕駛執照", value: "05" },
+  "06": { label: "大貨車職業駕駛執照", value: "06" },
+  "07": { label: "大客車職業駕駛執照", value: "07" },
+  "08": { label: "聯結車職業駕駛執照", value: "08" },
+  "09": { label: "國際駕駛執照", value: "09" },
+  "10": { label: "輕型機車駕駛執照", value: "10" },
+  "11": { label: "小型輕型機車駕駛執照", value: "11" },
+  "12": { label: "普通輕型機車駕駛執照", value: "12" },
+  "13": { label: "重型機車駕駛執照", value: "13" },
+  "14": { label: "普通重型機車駕駛執照", value: "14" },
+  "15": { label: "大型重型機車駕駛執照", value: "15" }
+};

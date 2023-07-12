@@ -7,13 +7,20 @@ import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
 import PaginationField, { I_PageInfo } from "@components/PaginationField";
 //
-const dontShowList = ["維保通知", "維保任務", "維保紀錄", "駕駛列表"];
+const dontShowList = [
+  "維保通知",
+  "維保任務",
+  "維保紀錄",
+  "駕駛列表",
+  "駕駛證照"
+];
 interface I_Data {
   [key: string]: string | number | React.ReactNode | any;
 }
 
 interface I_Table {
   tableName: string | any;
+  btnName?: string;
   titles: Array<string | number | React.ReactNode> | any;
   data: I_Data[];
   // onCheck?: (items: any) => void;

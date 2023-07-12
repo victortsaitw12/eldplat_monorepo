@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DivSTY = styled.div`
+export const FormSTY = styled.form`
   background-color: ${({ theme }) => theme.color.N0};
   padding: 20px;
   border-radius: 10px;
@@ -34,14 +34,5 @@ export const DivSTY = styled.div`
 
   .documentIcon {
     cursor: pointer;
-  }
-  .noDataShown {
-    height: 32px;
-    position: relative;
-    td {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-    }
   }
 `;
