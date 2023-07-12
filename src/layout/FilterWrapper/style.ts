@@ -1,8 +1,11 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
+  /* height: 100%; */
+  /* overflow-x: scroll; */
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  overflow-x: scroll;
   .sub-filter {
     display: flex;
     align-items: center;
@@ -38,6 +41,7 @@ export const BodySTY = styled.div`
       color: ${({ theme }) => theme.color.B500};
     }
   }
+
   .search-tool {
     display: flex;
     align-items: center;
@@ -68,5 +72,9 @@ export const BodySTY = styled.div`
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+  > .children-container {
+    flex: 1 0 0;
+    background: #ffffff;
   }
 `;

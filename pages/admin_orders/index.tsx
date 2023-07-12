@@ -1,6 +1,6 @@
 import { Pane, Text } from "evergreen-ui";
 import { GetServerSideProps, NextPageWithLayout } from "next";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, ReactNode } from "react";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
@@ -286,5 +286,7 @@ export const getServerSideProps: GetServerSideProps<Params> = async (
     props: {}
   };
 };
-Page.getLayout = getLayout;
+// Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: "訂單" });
 export default Page;

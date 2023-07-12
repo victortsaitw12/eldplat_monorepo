@@ -13,21 +13,13 @@ import {
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
-  selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
 }
-function Details({
-  selected,
-  register,
-  errors,
-  getValues,
-  control,
-  isEdit
-}: Props) {
+function Details({ register, errors, getValues, control, isEdit }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 尺寸
   const sizeInfo = [
@@ -208,7 +200,7 @@ function Details({
     },
     {
       req: false,
-      label: "最大有效乘載",
+      label: "最大有效承載",
       value: getValues("bus_specifications.max_payload"),
       editEle: <TextInput {...register("bus_specifications.max_payload")} />
     }
@@ -230,8 +222,8 @@ function Details({
       req: false,
       label: (
         <div>
-          <div>EPA城市燃油經濟性</div>
-          <div>市區油耗表現</div>
+          <div>EPA高速公路燃油經濟性</div>
+          <div>高速公路油耗表現</div>
         </div>
       ),
       value: getValues("bus_specifications.epa_highway"),
@@ -241,8 +233,8 @@ function Details({
       req: false,
       label: (
         <div>
-          <div>EPA城市燃油經濟性</div>
-          <div>市區油耗表現</div>
+          <div>EPA綜合燃油經濟性</div>
+          <div>綜合油耗表現</div>
         </div>
       ),
       value: getValues("bus_specifications.epa_combined"),
@@ -283,7 +275,7 @@ function Details({
     },
     {
       req: false,
-      label: "變速器欄位",
+      label: "變速器檔位",
       value: getValues("bus_specifications.transmission_gears"),
       editEle: (
         <TextInput {...register("bus_specifications.transmission_gears")} />
@@ -315,7 +307,7 @@ function Details({
     },
     {
       req: false,
-      label: "濾氣系統",
+      label: "進氣系統",
       value: getValues("bus_specifications.aspiration"),
       editEle: (
         <Select
@@ -465,10 +457,7 @@ function Details({
     }
   ];
   return (
-    <FlexWrapper
-      padding="0"
-      style={{ display: `${selected ? "flex" : "none"}` }}
-    >
+    <FlexWrapper padding="0">
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={sizeInfo} infoTitle="尺寸" />
         <InfoBox isEdit={isEdit} infoData={tireInfo} infoTitle="車輪 & 輪胎" />

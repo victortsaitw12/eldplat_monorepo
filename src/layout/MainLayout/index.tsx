@@ -5,39 +5,36 @@ import React, { FC, ReactNode } from "react";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import { BodySTY, ContainerSTY } from "./style";
-import { fetchMenuData, MenuDataType } from "../../mock-data/side-bar/data";
 import { getSideMenuBackend } from "@services/siderbar/getSideMenuBackend";
 import { getSideMenuPersonal } from "@services/siderbar/getSideMenuPersonal";
+//
+function mapping_menus(list: any, key: string) {
+  return list.map((ele: any) => {
+    return {
+      name: ele?.[key + "_name"],
+      url: ele?.[key + "_url"] || null,
+      subList:
+        ele.sidemenu_lv2 && ele.sidemenu_lv2.length > 0
+          ? ele.sidemenu_lv2.map((c: any) => {
+              return {
+                name: c?.menu_name || "--",
+                url: c?.menu_url || "/",
+                subList: null
+              };
+            })
+          : null
+    };
+  });
+}
 //
 const MainLayout: FC<{
   children: ReactNode;
   layoutProps: any;
 }> = ({ children, layoutProps }) => {
-  const menuData: MenuDataType = fetchMenuData();
+  const [showMenu, setShowMenu] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
-
   const [menu, setMenu] = React.useState([]);
   const [personalmenu, setPersonalmenu] = React.useState([]);
-
-  const mapping_menus = (list: any, key: string) => {
-    return list.map((ele: any) => {
-      return {
-        name: ele?.[key + "_name"],
-        url: ele?.[key + "_url"] || null,
-        subList:
-          ele.sidemenu_lv2 && ele.sidemenu_lv2.length > 0
-            ? ele.sidemenu_lv2.map((c: any) => {
-                return {
-                  name: c?.menu_name || "--",
-                  url: c?.menu_url || "/",
-                  subList: null
-                };
-              })
-            : null
-      };
-    });
-  };
-
   const fetch_menus = async () => {
     setLoading(true);
     try {
@@ -58,14 +55,29 @@ const MainLayout: FC<{
   }, []);
 
   return (
-    <BodySTY>
+    <BodySTY showMenu={showMenu}>
       <Head>
         <title>管理者頁</title>
         <meta property="og:title" content="管理者頁" />
       </Head>
-      <SideBar menuData={menu} personalData={personalmenu} />
+      <SideBar
+        menuData={menu}
+        personalData={personalmenu}
+        isLoading={loading}
+      />
       <ContainerSTY>
-        <Header layoutProps={layoutProps} />
+        <Header
+          layoutProps={{
+            ...layoutProps,
+            openMenu: () => {
+              setShowMenu(true);
+            },
+            closeMenu: () => {
+              setShowMenu(false);
+            },
+            showMenu: showMenu
+          }}
+        />
         <div className="content">{children}</div>
       </ContainerSTY>
     </BodySTY>

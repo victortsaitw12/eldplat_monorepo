@@ -96,7 +96,7 @@ function FilterWrapper({
           </button>
         )}
       </div>
-      {children}
+      <div className="children-container">{children}</div>
     </BodySTY>
   );
 }

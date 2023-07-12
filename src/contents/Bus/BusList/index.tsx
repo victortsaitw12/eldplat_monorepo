@@ -1,7 +1,7 @@
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { getBusTitle } from "@services/bus/getAllBuses";
 import { BodySTY } from "./style";
-
+import StatusIcon from "@components/StatusIcon";
 interface Props {
   busData: any;
   goToCreatePage: () => void;
@@ -9,6 +9,7 @@ interface Props {
   goToEditPageHandler: (id: string) => void;
   goToDetailPage: (id: string) => void;
 }
+
 
 function BusList({
   busData,
@@ -18,7 +19,13 @@ function BusList({
   goToDetailPage
 }: Props) {
   const busTitle = getBusTitle();
-  console.log(busData);
+  busData.forEach((data: any) => {
+    data["status"] = {
+      label: <StatusIcon status={data["status"].value}></StatusIcon>,
+      value: data.status.value
+    };
+  });
+  console.log("busData", busData);
   return (
     <BodySTY>
       <TableWithEdit

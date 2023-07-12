@@ -36,38 +36,39 @@ export const getAllBuses = async (
       }
     })
   });
-  console.log("res", res);
-  return res.json();
+  const data = await res.json();
+  console.log("getAllBuses", data);
+  return data;
 };
 
 export const getBusTitle = () => {
   const DUMMY_TITLES = [
-    "車輛系統編號",
+    "車輛名稱",
     "車種",
-    "廠牌",
+    "品牌",
     "車型",
     "車牌",
     "車齡",
-    "車輛群組",
-    "駕駛",
+    "車隊",
+    "主要駕駛",
     "狀態",
-    "標籤"
+    "所有權"
   ];
   return DUMMY_TITLES;
 };
 
 export const busPattern: PatternType = {
   id: true,
-  bus_no: true,
+  bus_name: true,
   type: true,
   make: true,
   model: true,
   license_plate: true,
-  year: true,
+  age: true,
   bus_group: true,
-  operator: true,
+  driver_name: true,
   status: true,
-  labels: true
+  ownership: true
 };
 
 export const busParser = (
@@ -78,6 +79,11 @@ export const busParser = (
     return {
       label: data["bus_no"] || null,
       value: data["bus_no"] || null
+    };
+  } else if (key === "age") {
+    return {
+      label: data["age"] + "年" || null,
+      value: data["age"] || null
     };
   }
   return {

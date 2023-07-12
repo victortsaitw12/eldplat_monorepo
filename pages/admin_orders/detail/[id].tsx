@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { Pane } from "evergreen-ui";
@@ -120,8 +120,11 @@ const Index: NextPageWithLayout<never> = ({
                 });
               }}
               onClose={() => {
-                setLightOpen(true);
-                // router.push("/admin_orders/");
+                if (editPage) {
+                  setLightOpen(true);
+                } else {
+                  router.push("/admin_orders/");
+                }
               }}
             >
               <AdminOrdersDetal
@@ -140,7 +143,7 @@ const Index: NextPageWithLayout<never> = ({
         title="確定要離開嗎?"
         isOpen={isLightOpen}
         handleCloseLightBox={() => {
-          setLightOpen((prev) => !prev);
+          setLightOpen((prev) => false);
         }}
       >
         如果你現在離開 ，將會遺失未儲存的資料。
@@ -153,6 +156,7 @@ const Index: NextPageWithLayout<never> = ({
             }}
             onClick={(e) => {
               e.preventDefault();
+              setLightOpen((prev) => false);
             }}
             text="取消"
           />
@@ -197,5 +201,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     };
   }
 };
-Index.getLayout = getLayout;
+// Index.getLayout = getLayout;
+Index.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: "訂單" });
 export default Index;

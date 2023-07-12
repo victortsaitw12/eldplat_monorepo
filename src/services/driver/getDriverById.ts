@@ -4,7 +4,7 @@ import API_Path from "./apiPath";
 import { deepCloneWithDateFormat } from "@utils/formatDateFromAPI";
 export const getDriverById = async (driver_no: string) => {
   const response = await fetch(
-    `${API_Path["getDriverById"]}?driver_no=${driver_no}}`,
+    `${API_Path["getDriverById"]}?driver_no=${driver_no}`,
     {
       method: "POST",
       headers: {
