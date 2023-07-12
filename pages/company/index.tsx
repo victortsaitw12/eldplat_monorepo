@@ -22,8 +22,6 @@ import RegionProvider from "@contexts/regionContext/regionProvider";
 // };
 
 const Page: NextPageWithLayout<never> = () => {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
-
   const [loading, setLoading] = useState<boolean>(false);
 
   return (

@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
-import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
@@ -27,7 +26,6 @@ const mainFilterArray = [
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
-  const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [checkItems, setCheckItems] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback, ReactNode } from "react";
-import { NextPageWithLayout } from "next";
-//
+import React, { useState, useEffect, ReactNode } from "react";
+import { NextPageWithLayout } from "next"; //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
