@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import Link from "next/link";
 import { Avatar } from "evergreen-ui";
@@ -194,5 +194,6 @@ const Page: NextPageWithLayout<never> = () => {
 
       
 */
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: <span>駕駛設定</span> });
 export default Page;

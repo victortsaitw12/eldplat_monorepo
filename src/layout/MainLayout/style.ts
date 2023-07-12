@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
-const BodySTY = styled.div`
+const BodySTY = styled.div<{ showMenu: boolean }>`
   display: grid;
-  grid-template-columns: 240px 1fr;
+  /* grid-template-columns: 240px 1fr; */
+  grid-template-columns: ${({ showMenu }) =>
+    showMenu ? "240px 1fr" : "0px 1fr"};
   height: 100vh;
 `;
 

@@ -2,13 +2,22 @@ import styled from "styled-components";
 
 const BodySTY = styled.div`
   display: flex;
-  background-color: #e2ecf7;
+  /* background-color: #e2ecf7; */
+  background: ${({ theme }) => theme.color.N500};
   justify-content: space-between;
   padding: 12px 20px;
   .tool-container {
     display: flex;
     align-items: center;
     gap: 10px;
+    & > .header-title {
+      color: ${({ theme }) => theme.color.N0};
+      /* Headline/H-500 */
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
   }
   .plan-info {
     display: flex;
