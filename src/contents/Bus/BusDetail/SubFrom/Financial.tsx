@@ -11,6 +11,7 @@ import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 import InfoBox from "@components/InfoBox";
 import Radio from "@components/HookForm/Radio";
+import Checkbox from "@components/CheckBox";
 interface Props {
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
@@ -255,6 +256,18 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
           {...register("bus_loan_lease.loan_lease_notes")}
         />
       )
+    },
+    {
+      req: false,
+      inputType: "custom",
+      editEle: (
+        <Checkbox
+          label="加入計算報表"
+          key="bus_loan_lease.loan_check"
+          marginBottom="0"
+          disabled={!isEdit}
+        />
+      )
     }
   ];
   const leaseInfo = [
@@ -367,6 +380,18 @@ function Financial({ register, errors, getValues, control, isEdit }: Props) {
       label: "備註",
       value: getValues("bus_loan_lease.loan_lease_notes"),
       editEle: <TextInput {...register("bus_loan_lease.loan_lease_notes")} />
+    },
+    {
+      req: false,
+      inputType: "custom",
+      editEle: (
+        <Checkbox
+          label="加入計算報表"
+          key="bus_loan_lease.lease_check"
+          marginBottom="0"
+          disabled={!isEdit}
+        />
+      )
     }
   ];
 

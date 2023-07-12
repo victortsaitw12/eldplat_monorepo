@@ -59,7 +59,7 @@ function StyledSelect<
           isMulti={false}
           options={options}
           placeholder={placeholder}
-          onChange={(e) => {
+          onChange={(e: any) => {
             if (e) {
               onFormChange(e.value);
             }

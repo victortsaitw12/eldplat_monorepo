@@ -36,7 +36,6 @@ const Page: NextPageWithLayout<
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [busDefaultData, setBusDefaultData] = useState<any>(null);
   const [options, setOptions] = useState<any>(null);
-  console.log("isEdit", isEdit);
   useEffect(() => {
     updateMainFilter("1");
     setLoading(true);

@@ -132,7 +132,6 @@ const AdminOrdersDetal = ({
     ) {
       methods.setValue("full_payment_check", "1");
     }
-    console.log("isEdit", isEdit);
   }, [isEdit]);
   const r_template: { "1": React.ReactNode; "2": React.ReactNode } = {
     //客製包車
