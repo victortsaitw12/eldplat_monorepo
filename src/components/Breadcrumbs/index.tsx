@@ -18,7 +18,7 @@ const Breadcrumbs = ({
   routes: Route[];
   style?: any;
   linkStyle?: any;
-  splitEle: React.ReactNode;
+  splitEle?: React.ReactNode;
 }) => {
   const STY = style || {};
   return (
