@@ -1,7 +1,7 @@
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { getBusTitle } from "@services/bus/getAllBuses";
-import { BodySTY, StyleIdIcon } from "./style";
-
+import { BodySTY } from "./style";
+import StatusIcon from "@components/StatusIcon";
 interface Props {
   busData: any;
   goToCreatePage: () => void;
@@ -10,22 +10,6 @@ interface Props {
   goToDetailPage: (id: string) => void;
 }
 
-const statusTextMap: { [key: string]: string } = {
-  "01": "活躍中",
-  "02": "已售出",
-  "03": "終止服務",
-  "04": "在維修廠",
-  "05": "閒置中"
-};
-
-function StatusIcon({ status }: { status: string }) {
-  return (
-    <StyleIdIcon status={status}>
-      <div className="icon-dot"></div>
-      <div className="icon-text">{statusTextMap[status]}</div>
-    </StyleIdIcon>
-  );
-}
 
 function BusList({
   busData,

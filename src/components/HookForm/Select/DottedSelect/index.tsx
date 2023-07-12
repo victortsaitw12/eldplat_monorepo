@@ -10,6 +10,7 @@ import Select from "react-select";
 import { BodySYT, colourStyles } from "./style";
 import { HelpIcon } from "evergreen-ui";
 import Tooltip from "@components/Tooltip";
+import StatusIcon from "@components/StatusIcon";
 function StyledSelect<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -48,20 +49,25 @@ function StyledSelect<
           </Tooltip>
         )}
       </div>
-      <Select
-        instanceId={id}
-        isMulti={false}
-        options={options}
-        placeholder={placeholder}
-        onChange={(e) => {
-          if (e) {
-            onFormChange(e.value);
-          }
-        }}
-        defaultValue={defaultOption}
-        isDisabled={isDisabled}
-        styles={colourStyles}
-      />
+      {isDisabled ? (
+        <div>
+          <StatusIcon status="01"></StatusIcon>
+        </div>
+      ) : (
+        <Select
+          instanceId={id}
+          isMulti={false}
+          options={options}
+          placeholder={placeholder}
+          onChange={(e: any) => {
+            if (e) {
+              onFormChange(e.value);
+            }
+          }}
+          defaultValue={defaultOption}
+          styles={colourStyles}
+        />
+      )}
     </BodySYT>
   );
 }
