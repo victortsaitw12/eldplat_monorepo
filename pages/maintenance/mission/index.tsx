@@ -1,24 +1,13 @@
-import React, { useState, useEffect, useCallback, ReactNode } from "react";
-import { NextPageWithLayout } from "next";
-//
+import React, { useState, useEffect, ReactNode } from "react";
+import { NextPageWithLayout } from "next"; //
 import { getLayout } from "@layout/MainLayout";
-import CustomerList from "@contents/Customer/CustomerList";
-import {
-  getAllCustomers,
-  customerParser,
-  customerPattern
-} from "@services/customer/getAllCustomers";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { useCustomerStore } from "@contexts/filter/customerStore";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
-import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
-import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
-import MaintenanceNoticeList from "@contents/maintenance/Notice/NoticeList";
 import MaintenanceMissionList from "@contents/maintenance/Mission/MissionList";
 import {
   UpdateMaintenanceStatus,

@@ -14,7 +14,6 @@ import AddEmployee from "@contents/Employee";
 import { getEmployeeById } from "@services/employee/getEmployeeById";
 import { I_Get_Employees_Type } from "@typings/employee_type";
 import { updateEmployee } from "@services/employee/updateEmployee";
-import LoadingSpinner from "@components/LoadingSpinner";
 import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 const Page: NextPageWithLayout<
