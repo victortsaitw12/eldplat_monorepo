@@ -14,6 +14,7 @@ const PaymentInfoEdit = () => {
     control,
     setValue,
     getValues,
+    clearErrors,
     formState: { errors }
   } = useFormContext();
   const deposit_amount = useWatch({
@@ -34,6 +35,7 @@ const PaymentInfoEdit = () => {
   });
 
   const on_radioChange = (value: string, checked: boolean) => {
+    // console.log("🐴🐴🐴🐴🐴🐴🐴當支付方式有變的時候", value);
     if (checked) {
       if (value == "full_payment") {
         setValue("full_payment_check", "1");
@@ -42,11 +44,15 @@ const PaymentInfoEdit = () => {
         setValue("deposit_amount", null);
         setValue("balance_amount", null);
         setValue("balance_period", null);
+        clearErrors("balance_period");
+        clearErrors("deposit_amount");
+        clearErrors("deposit_period");
       }
       if (value == "deposit") {
         setValue("deposit_check", "1");
         setValue("full_payment_check", "0");
         setValue("full_payment_period", null);
+        clearErrors("full_payment_period");
       }
     }
   };
@@ -86,7 +92,6 @@ const PaymentInfoEdit = () => {
   // }, [calculateType]);
 
   React.useEffect(() => {
-    console.log("第一個useEffect");
     if (calculateType === "%") {
       const quote_total_amount = parseInt(getValues("quote_total_amount"), 10);
       if (quote_total_amount > 0) {
@@ -124,7 +129,7 @@ const PaymentInfoEdit = () => {
           <TextInput
             isInvalid={!!errors?.full_payment_period}
             {...register("full_payment_period", {
-              required: isFullPayment !== "1" ? false : "不可空白"
+              required: isFullPayment !== "1" ? false : "不可空白。"
             })}
             disabled={isFullPayment !== "1"}
             type="date"
@@ -174,13 +179,13 @@ const PaymentInfoEdit = () => {
           </Select>
 
           {calculateType === "$" && (
-            <>
+            <Pane style={{ flex: "1" }}>
               <TextInput
                 isInvalid={!!errors?.deposit_amount}
-                style={{ width: "unset", flex: "1" }}
+                style={{ width: "100%" }}
                 type="number"
                 {...register("deposit_amount", {
-                  required: isFullPayment == "1" ? false : "不可空白",
+                  required: isFullPayment == "1" ? false : "不可空白。",
                   onChange: (e: { target: { value: any } }) => {
                     setValue("deposit_amount", parseInt(e.target.value, 10));
                     const quote_total_amount = parseInt(
@@ -208,15 +213,16 @@ const PaymentInfoEdit = () => {
                   </Pane>
                 )}
               />
-            </>
+            </Pane>
           )}
           {calculateType === "%" && (
             <Pane className="deposit_persent">
               <TextInput
+                isInvalid={!!errors?.deposit_percent}
                 style={{ width: "50%" }}
                 type="number"
                 {...register("deposit_percent", {
-                  required: isFullPayment == "1" ? false : "不可空白",
+                  required: isFullPayment == "1" ? false : "不可空白。",
                   onChange: (e: { target: { value: any } }) => {
                     const newPersent = parseInt(e.target.value, 10);
                     if (newPersent <= 100 && newPersent >= 0) {
@@ -256,7 +262,7 @@ const PaymentInfoEdit = () => {
           <TextInput
             isInvalid={!!errors?.deposit_period}
             {...register("deposit_period", {
-              required: "不可空白"
+              required: isFullPayment == "1" ? false : "不可空白。"
             })}
             disabled={isFullPayment == "1"}
             type="date"
@@ -286,12 +292,22 @@ const PaymentInfoEdit = () => {
         </Pane>
         <Pane>
           <TextInput
+            isInvalid={!!errors?.balance_period}
             {...register("balance_period", {
-              required: "不可空白"
+              required: isFullPayment == "1" ? false : "不可空白。"
             })}
             disabled={isFullPayment == "1"}
             type="date"
             placeholder="付款期限"
+          />
+          <ErrorMessage
+            errors={errors}
+            name="balance_period"
+            render={({ message }) => (
+              <Pane>
+                <Text className="input-error">{message}</Text>
+              </Pane>
+            )}
           />
         </Pane>
         {r_payment_record()}

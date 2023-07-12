@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -31,6 +31,7 @@ import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
 import FinishBtn from "@contents/maintenance/Mission/MissionList/FinishBtn";
 import AssignBtn from "@contents/maintenance/Mission/MissionList/AssignBtn";
 import { CloseAssignment } from "@services/maintenance/updateMaintenance";
+import Link from "next/link";
 //
 const mainFilterArray = [
   { id: 1, label: "通知", value: "1" },
@@ -41,6 +42,7 @@ const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [nowTab, setNowTab] = useState("1");
+  const [listStatus, setListStatus] = useState("1");
   const {
     initializeSubFilter,
     mainFilter,
@@ -76,6 +78,7 @@ const Page: NextPageWithLayout<never> = () => {
             <FinishBtn
               id={item.maintenance_no["value"]}
               disabled={active}
+              setListStatus={setListStatus}
             ></FinishBtn>
           ));
         }
@@ -98,6 +101,22 @@ const Page: NextPageWithLayout<never> = () => {
               disabled={assignActive[idx]}
               assignmentData={res.contentList}
             ></AssignBtn>
+          ));
+        }
+
+        const newString = item["all_assignment_no"].value.split(", ");
+        console.log("newString", newString);
+        if (item["all_assignment_no"].value.length > 15) {
+          return (item["all_assignment_no"].label = (
+            <div className="assignment-link">
+              {newString.map((v: string) => {
+                return (
+                  <Link href="/assignment" key={v}>
+                    {v}
+                  </Link>
+                );
+              })}
+            </div>
           ));
         }
       });
@@ -151,7 +170,7 @@ const Page: NextPageWithLayout<never> = () => {
     return () => {
       isCanceled = true;
     };
-  }, [nowTab]);
+  }, [nowTab, listStatus]);
   if (!data) {
     return <LoadingSpinner />;
   }
@@ -201,5 +220,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: <span>維保</span> });
 export default Page;

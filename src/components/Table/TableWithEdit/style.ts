@@ -5,6 +5,7 @@ const TableContainerSTY = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow-x: auto;
   .container-header {
     display: flex;
     justify-content: space-between;
@@ -61,6 +62,7 @@ const TableSTY = styled.table`
     text-align: left;
     color: ${({ theme }) => theme.color.N700};
   }
+
   td,
   th {
     padding: 8px 10px;
@@ -71,12 +73,15 @@ const TableSTY = styled.table`
     span,
     div {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
     }
   }
   tr:last-child td {
     border-bottom: none;
+  }
+  tr:hover {
+    background-color: #f9fafc;
   }
   td {
     a {
@@ -96,7 +101,7 @@ const TableSTY = styled.table`
   }
   .data-row {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 8px;
   }
@@ -108,6 +113,7 @@ const TableSTY = styled.table`
   }
   .noDataShown {
     min-height: 32px;
+
     div {
       width: 100%;
       height: 32px;

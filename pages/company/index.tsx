@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, ReactNode } from "react";
 import { BodySTY } from "./style";
 import { NextPageWithLayout } from "next";
 //
@@ -37,5 +37,6 @@ const Page: NextPageWithLayout<never> = () => {
     </CompanyProvider>
   );
 };
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: <span>公司設定</span> });
 export default Page;

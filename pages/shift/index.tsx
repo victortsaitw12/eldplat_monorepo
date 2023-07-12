@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import Head from "next/head";
 import { Pane } from "evergreen-ui";
@@ -67,6 +67,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   );
 
   // TODO 滑鼠左右滾的動作 目前用onWeel 放在 OverviewTable裡面 TableSTY上
+  // 跟雯雯確認萬一駕駛數量多到要下滾 左右滾的設定?
 
   return (
     <UIProvider>
@@ -105,5 +106,6 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   );
 };
 
-ShiftPage.getLayout = getLayout;
+ShiftPage.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: <span>駕駛排班</span> });
 export default ShiftPage;

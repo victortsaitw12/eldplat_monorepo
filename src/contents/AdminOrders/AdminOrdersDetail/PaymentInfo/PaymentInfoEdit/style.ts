@@ -63,6 +63,9 @@ const BodySTY = styled.div`
       gap: 12px;
     }
   }
+  .input-error {
+    color: ${({ theme }) => theme.color.R400};
+  }
 `;
 
 export { BodySTY };

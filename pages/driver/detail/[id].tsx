@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { toaster, Pane, Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
+import { mappingQueryData } from "@utils/mappingQueryData";
 import { DriverInfo } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
@@ -20,7 +21,8 @@ import TableWrapper from "@layout/TableWrapper";
 //
 const mainFilterArray = [
   { id: 1, label: "駕駛資訊", value: "1" },
-  { id: 2, label: "健康紀錄", value: "2" }
+  { id: 2, label: "駕駛證照", value: "2" },
+  { id: 3, label: "健康紀錄", value: "3" }
 ];
 //
 
@@ -60,6 +62,7 @@ const Page: NextPageWithLayout<
   }, [driverNo]);
 
   // ------- function ------- //
+
   const changeMainFilterHandler = (value: string) => updateMainFilter(value);
 
   const asyncSubmitForm = async (data: any) => {
@@ -135,6 +138,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   };
 };
 
-Page.getLayout = getLayout;
-
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: <span>駕駛設定</span> });
 export default Page;

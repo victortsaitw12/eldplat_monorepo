@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -10,7 +10,7 @@ const isFullWidth = true;
 //
 const DUMMY_DATA = [];
 //
-const Index: NextPageWithLayout<never> = () => {
+const Page: NextPageWithLayout<never> = () => {
   const asyncSubmitForm = async (data: any) => {
     console.log("data", data);
   };
@@ -29,5 +29,6 @@ const Index: NextPageWithLayout<never> = () => {
     </BodySTY>
   );
 };
-Index.getLayout = getLayout;
-export default Index;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: <span>群組設定</span> });
+export default Page;

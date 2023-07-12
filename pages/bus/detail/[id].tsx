@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, ReactNode } from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -127,5 +127,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   };
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: <span>車輛清單</span> });
 export default Page;

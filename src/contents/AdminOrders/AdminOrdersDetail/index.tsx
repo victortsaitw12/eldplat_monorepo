@@ -82,6 +82,19 @@ const AdminOrdersDetal = ({
         };
       }
     );
+    if (orderData["order_itinerary_list"].length == 0) {
+      newData["order_itinerary_list"] = [
+        {
+          day_date: null,
+          day_number: null,
+          departure_time: null,
+          dropoff_location: null,
+          pickup_location: null,
+          quote_no: orderData["quote_no"],
+          stopover_address_list: []
+        }
+      ];
+    }
     //處理巴士資訊的部分
     let res_bus_data: { [key: string]: number } = {};
     orderData.bus_data.forEach(

@@ -31,6 +31,7 @@ const MainLayout: FC<{
   children: ReactNode;
   layoutProps: any;
 }> = ({ children, layoutProps }) => {
+  const [showMenu, setShowMenu] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
   const [personalmenu, setPersonalmenu] = React.useState([]);
@@ -54,7 +55,7 @@ const MainLayout: FC<{
   }, []);
 
   return (
-    <BodySTY>
+    <BodySTY showMenu={showMenu}>
       <Head>
         <title>管理者頁</title>
         <meta property="og:title" content="管理者頁" />
@@ -65,7 +66,18 @@ const MainLayout: FC<{
         isLoading={loading}
       />
       <ContainerSTY>
-        <Header layoutProps={layoutProps} />
+        <Header
+          layoutProps={{
+            ...layoutProps,
+            openMenu: () => {
+              setShowMenu(true);
+            },
+            closeMenu: () => {
+              setShowMenu(false);
+            },
+            showMenu: showMenu
+          }}
+        />
         <div className="content">{children}</div>
       </ContainerSTY>
     </BodySTY>

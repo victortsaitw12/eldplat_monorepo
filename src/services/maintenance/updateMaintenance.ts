@@ -19,7 +19,7 @@ import API_Path from "./apiPath";
 //   const result = await res.json();
 //   return result;
 // };
-export const updateMaintenance = async (MaintenanceData: any, files: any) => {
+export const updateMaintenance = async (MaintenanceData: any, files?: any) => {
   // for (const key in MaintenanceData) {
   //   if (MaintenanceData[key] === "") {
   //     delete MaintenanceData[key];
@@ -60,17 +60,17 @@ export const updateMaintenance = async (MaintenanceData: any, files: any) => {
   formData.append("service_end_date", MaintenanceData["service_end_date"]);
   formData.append("vendor_no", MaintenanceData["vendor_no"]);
 
-  const newFiles = files.map((v: any) => {
-    return {
-      name: v.name,
-      lastModified: v.lastModified,
-      lastModifiedDate: v.lastModifiedDate,
-      type: v.type,
-      webkitRelativePath: v.webkitRelativePath
-    };
-  });
+  // const newFiles = files.map((v: any) => {
+  //   return {
+  //     name: v.name,
+  //     lastModified: v.lastModified,
+  //     lastModifiedDate: v.lastModifiedDate,
+  //     type: v.type,
+  //     webkitRelativePath: v.webkitRelativePath
+  //   };
+  // });
   // formData.append("files", JSON.stringify(newFiles));
-  files.forEach((file: any) => {
+  files?.forEach((file: any) => {
     formData.append("files", file);
   });
 
