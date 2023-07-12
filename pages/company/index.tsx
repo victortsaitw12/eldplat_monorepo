@@ -36,5 +36,5 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: <span>公司設定</span> });
+  getLayout(page, { ...layoutProps });
 export default Page;

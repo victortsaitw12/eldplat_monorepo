@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
+
 //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
@@ -17,6 +18,8 @@ import {
 } from "@services/maintenance/getMaintenanceRecord";
 import MaintenanceRecordList from "@contents/maintenance/Record/RecordList";
 import { slashDate } from "@utils/convertDate";
+import getPageTilte from "@utils/getPageBreadCrumbs";
+
 //
 const mainFilterArray = [
   { id: 1, label: "通知", value: "1" },
@@ -138,5 +141,5 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: <span>維保</span> });
+  getLayout(page, { ...layoutProps });
 export default Page;

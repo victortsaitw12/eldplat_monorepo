@@ -557,7 +557,7 @@ const Page: NextPageWithLayout<never> = () => {
 };
 
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: "派單" });
+  getLayout(page, { ...layoutProps });
 export default Page;
 
 /*

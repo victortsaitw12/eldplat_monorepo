@@ -107,5 +107,5 @@ const ShiftPage: NextPageWithLayout<never> = () => {
 };
 
 ShiftPage.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: <span>駕駛排班</span> });
+  getLayout(page, { ...layoutProps });
 export default ShiftPage;
