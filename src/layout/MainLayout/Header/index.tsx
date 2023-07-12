@@ -79,7 +79,7 @@ const Header = ({ layoutProps }: any) => {
             color="#FFFFFF"
             size={16}
           />
-          <Text className="header-title">{layoutProps?.title}</Text>
+          <Text className="header-title">{layoutProps?.breadcrumbs}</Text>
           {/* <Button appearance="link">數據資料</Button>
           <Button appearance="link">自動化</Button>
           <Button appearance="link">對接口</Button> */}

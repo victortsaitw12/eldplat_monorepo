@@ -326,5 +326,5 @@ export const getServerSideProps: GetServerSideProps<Params> = async (
   }
 };
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: <span>供應商</span> });
+  getLayout(page, { ...layoutProps });
 export default Page;

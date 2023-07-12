@@ -36,7 +36,6 @@ const Page: NextPageWithLayout<
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [busDefaultData, setBusDefaultData] = useState<any>(null);
   const [options, setOptions] = useState<any>(null);
-  console.log("isEdit", isEdit);
   useEffect(() => {
     updateMainFilter("1");
     setLoading(true);
@@ -129,5 +128,5 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
 };
 
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: <span>車輛清單</span> });
+  getLayout(page, { ...layoutProps });
 export default Page;

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import { Select, Button, FilePicker, TextInput } from "evergreen-ui";
+import { Select, TextInput } from "evergreen-ui";
 import DottedSelect from "@components/HookForm/Select/DottedSelect";
 import InfoBox from "@components/InfoBox";
-import { FilePickBtnSTY } from "@components/FormCard/style";
+import ImageUploader from "@components/ImageUploader";
 import {
   UseFormRegister,
   FieldErrors,
@@ -151,6 +150,18 @@ function Details({
           {...register("bus.registration_province")}
         />
       ]
+    },
+    {
+      req: false,
+      inputType: "custom",
+      editEle: [
+        <div
+          key="bus.bus_picture"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <ImageUploader isEdit={isEdit} />
+        </div>
+      ]
     }
   ];
   // 分類
@@ -280,6 +291,13 @@ function Details({
       editEle: <TextInput {...register("bus.mspr")} />
     }
   ];
+
+  const label_info = [
+    {
+      label: "",
+      value: ""
+    }
+  ];
   // 標籤
   return (
     <FlexWrapper padding="0">
@@ -295,6 +313,12 @@ function Details({
           isEdit={isEdit}
           infoData={otherDetailInfo}
           infoTitle="其他細項"
+        />
+        <InfoBox
+          isEdit={isEdit}
+          infoData={label_info}
+          infoType="label"
+          infoTitle="標籤"
         />
       </FlexWrapper>
     </FlexWrapper>

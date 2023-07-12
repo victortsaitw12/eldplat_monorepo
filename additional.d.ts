@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 interface LayoutProps {
   locale?: any;
   setLocale?: (locale: any) => void;
+  breadcrumbs?: string | ReactNode;
 }
 //
 declare module "next" {

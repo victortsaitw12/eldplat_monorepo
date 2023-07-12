@@ -14,7 +14,6 @@ interface Props {
 //
 function Index({ menu }: Props) {
   const router = useRouter();
-
   const default_open =
     menu?.subList !== null &&
     menu?.subList &&
