@@ -110,7 +110,7 @@ function TableWrapper({
           />
         </div>
       </div>
-      {children}
+      <div className="table-content">{children}</div>
     </BodySTY>
   );
 }

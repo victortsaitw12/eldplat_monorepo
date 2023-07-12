@@ -6,6 +6,8 @@ const BodySTY = styled.div`
   height: calc(100vh - 76px);
   /* border: 1px solid ${({ theme }) => theme.color.N100}; */
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   .filter-header {
     display: flex;
     justify-content: space-between;
@@ -21,6 +23,10 @@ const BodySTY = styled.div`
   }
   .tab-options {
     display: flex;
+  }
+  & > .table-content {
+    border-radius: 10px 10px 0 0;
+    flex: 1;
   }
 `;
 
