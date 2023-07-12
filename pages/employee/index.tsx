@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, ReactNode } from "react";
 import { Pane } from "evergreen-ui";
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
@@ -217,5 +217,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps, title: <span>員工設定</span> });
 export default Page;
