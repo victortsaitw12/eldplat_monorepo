@@ -119,5 +119,5 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   };
 };
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: <span>維保</span> });
+  getLayout(page, { ...layoutProps });
 export default Page;
