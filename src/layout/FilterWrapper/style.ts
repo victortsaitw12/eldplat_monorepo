@@ -3,6 +3,9 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   /* height: 100%; */
   /* overflow-x: scroll; */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   .sub-filter {
     display: flex;
     align-items: center;
@@ -37,6 +40,10 @@ export const BodySTY = styled.div`
       font-weight: ${({ theme }) => theme.fontWeight.Heading400};
       color: ${({ theme }) => theme.color.B500};
     }
+  }
+  .child-content {
+    flex: 1;
+    background: #ffffff;
   }
   .search-tool {
     display: flex;
