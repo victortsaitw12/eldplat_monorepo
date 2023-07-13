@@ -2,11 +2,9 @@ import React from "react";
 import {
   Select,
   TextInput,
-  IconButton,
   EyeOpenIcon,
   Checkbox,
-  Textarea,
-  Tag
+  Textarea
 } from "evergreen-ui";
 
 import InfoBox from "@components/InfoBox";
@@ -15,6 +13,13 @@ import FlexWrapper from "@layout/FlexWrapper";
 import { UpdateDriverInfoPayload } from "../../driver.type";
 import LanguageAbility from "@contents/Driver/Detail/LanguageAbility";
 import TagSelect from "@components/TagSelect";
+import {
+  DRIVER_COUNTRY,
+  LICENSE_AREA,
+  DSPH_AREA,
+  DSPH_CITY
+} from "@services/getDDL";
+
 interface Props {
   selected?: boolean;
   register: UseFormRegister<UpdateDriverInfoPayload>;
@@ -30,10 +35,8 @@ function DriverInfo({
   isEdit,
   driverData
 }: Props) {
-  const { info, healths, languages } = driverData;
+  const { info } = driverData;
   const [checked, setChecked] = React.useState(false);
-  console.log("driverData", driverData);
-  console.log("getValues", getValues());
   // 基本資料
   const basicInfo = [
     {
@@ -57,7 +60,7 @@ function DriverInfo({
     {
       readonly: true,
       label: "使用者編號",
-      value: driverData["user_name"] || "目前無資料"
+      value: info["user_no"] || "目前無資料"
     },
     {
       req: false,
@@ -75,9 +78,11 @@ function DriverInfo({
           {...register("driver_country")}
           marginBottom="0"
         >
-          <option value="01">美國</option>
-          <option value="02">新加坡</option>
-          <option value="03">台灣</option>
+          {Object.keys(DRIVER_COUNTRY).map((key) => (
+            <option key={key} value={key}>
+              {DRIVER_COUNTRY[key].label}
+            </option>
+          ))}
         </Select>
       )
     },
@@ -91,9 +96,11 @@ function DriverInfo({
           {...register("license_area")}
           marginBottom="0"
         >
-          <option value="01">美加</option>
-          <option value="02">東南亞</option>
-          <option value="03">台灣</option>
+          {Object.keys(LICENSE_AREA).map((key) => (
+            <option key={key} value={key}>
+              {LICENSE_AREA[key].label}
+            </option>
+          ))}
         </Select>
       )
     },
@@ -115,9 +122,11 @@ function DriverInfo({
       value: getValues("dsph_area") || "目前無資料",
       editEle: (
         <Select key="dsph_area" {...register("dsph_area")} marginBottom="0">
-          <option value="01">美加</option>
-          <option value="02">東南亞</option>
-          <option value="03">台灣</option>
+          {Object.keys(DSPH_AREA).map((key) => (
+            <option key={key} value={key}>
+              {DSPH_AREA[key].label}
+            </option>
+          ))}
         </Select>
       )
     },
@@ -127,9 +136,11 @@ function DriverInfo({
       value: getValues("dsph_city") || "目前無資料",
       editEle: (
         <Select key="dsph_city" {...register("dsph_city")} marginBottom="0">
-          <option value="01">台北</option>
-          <option value="02">台中</option>
-          <option value="03">台南</option>
+          {Object.keys(DSPH_CITY).map((key) => (
+            <option key={key} value={key}>
+              {DSPH_CITY[key].label}
+            </option>
+          ))}
         </Select>
       )
     },

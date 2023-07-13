@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FormSTY } from "./style";
+import { DivSTY } from "./style";
 
 import { UpdateDriverInfoPayload } from "../driver.type";
-import DriverInfo from "./DriverInfo";
+import DriverInfo from "@contents/Driver/Detail/DriverInfo";
 import LicensesList from "@contents/Driver/Detail/LicensesList";
-import HealthRecords from "./HealthRecords";
+import HealthRecords from "@contents/Driver/Detail/HealthRecords";
 
 interface Props {
   isEdit: boolean;
@@ -24,7 +24,6 @@ function DriverDetail({
   formType,
   refetch
 }: Props) {
-  console.log("Driver data", driverData);
   const {
     register,
     formState: { errors },
@@ -52,23 +51,23 @@ function DriverDetail({
     setVisibleForm(formType);
   }, [formType]);
   return (
-    <FormSTY
-      onSubmit={handleSubmit((currentData) => {
-        console.log("currentData");
-        console.log(currentData);
-        asyncSubmitForm(currentData);
-      })}
-    >
-      <button ref={submitRef} type="submit" style={{ display: "none" }}>
-        儲存
-      </button>
-      <DriverInfo
-        selected={visibleForm === "1"}
-        register={register}
-        getValues={getValues}
-        isEdit={isEdit}
-        driverData={driverData}
-      />
+    <DivSTY>
+      <form
+        onSubmit={handleSubmit((currentData) => {
+          asyncSubmitForm(currentData);
+        })}
+      >
+        <button ref={submitRef} type="submit" style={{ display: "none" }}>
+          儲存
+        </button>
+        <DriverInfo
+          selected={visibleForm === "1"}
+          register={register}
+          getValues={getValues}
+          isEdit={isEdit}
+          driverData={driverData}
+        />
+      </form>
       {visibleForm === "2" && (
         <LicensesList
           licensesData={driverData.licenses}
@@ -82,7 +81,7 @@ function DriverDetail({
           userName={driverData.info.user_name}
         />
       )}
-    </FormSTY>
+    </DivSTY>
   );
 }
 

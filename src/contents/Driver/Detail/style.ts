@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FormSTY = styled.form`
+export const DivSTY = styled.div`
   /* 全部input欄位寬度 */
   li > div > div {
     flex-grow: 10;

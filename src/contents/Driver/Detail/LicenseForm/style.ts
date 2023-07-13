@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const FormSTY = styled.form`
   background-color: ${({ theme }) => theme.color.N0};
-  padding: 20px;
   border-radius: 10px;
   .licn-title {
     display: flex;
@@ -34,5 +33,10 @@ export const FormSTY = styled.form`
 
   .documentIcon {
     cursor: pointer;
+  }
+  li {
+    div:nth-child(2) {
+      min-width: 278px;
+    }
   }
 `;

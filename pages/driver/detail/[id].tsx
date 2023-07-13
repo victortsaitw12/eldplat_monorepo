@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import { toaster, Pane, Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { mappingQueryData } from "@utils/mappingQueryData";
 import { DriverInfo } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
@@ -47,7 +46,6 @@ const Page: NextPageWithLayout<
       setIsLoading(true);
       try {
         const data = await getDriverById(driverNo);
-        console.log("getDriverById:", data);
         if (!data.info) {
           toaster.warning("查無此使用者，請重新選擇");
           router.push("/driver");
@@ -67,7 +65,6 @@ const Page: NextPageWithLayout<
     try {
       const data = await getDriverById(driverNo);
       setDriverData(data);
-      setIsEdit(false);
     } catch (e: any) {
       console.log(e);
     }
@@ -82,7 +79,10 @@ const Page: NextPageWithLayout<
       const res = await updateDriver(driverNo, data);
       if (res.statusCode === "200") {
         await refetch();
-        toaster.success("成功更新駕駛履歷");
+        toaster.success("成功更新駕駛履歷", {
+          duration: 1.5
+        });
+        setIsEdit(false);
       }
       //router.push("/driver");
     } catch (e: any) {

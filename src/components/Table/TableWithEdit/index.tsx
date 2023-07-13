@@ -98,7 +98,7 @@ function Table({
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
         <div className="container-header-left">
-          {dontShowList.includes(tableName) ? (
+          {!tableName || dontShowList.includes(tableName) ? (
             <span>{tableName}</span>
           ) : (
             <>
@@ -106,7 +106,7 @@ function Table({
             </>
           )}
         </div>
-        {!noButtonData.includes(tableName) && (
+        {!noButtonData.includes(tableName) && tableName && (
           <IconLeft text={`新增${tableName}`} onClick={goToCreatePage}>
             <PlusIcon size={14} />
           </IconLeft>

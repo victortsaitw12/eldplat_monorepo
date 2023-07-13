@@ -114,3 +114,33 @@ export const LICN_TYP: any = {
   "14": { label: "普通重型機車駕駛執照", value: "14" },
   "15": { label: "大型重型機車駕駛執照", value: "15" }
 };
+
+//駕駛國家
+export const DRIVER_COUNTRY: any = {
+  "01": { label: "美國", value: "01" },
+  "02": { label: "泰國", value: "02" },
+  "03": { label: "台灣", value: "03" }
+};
+
+//執照州/省/地區
+export const LICENSE_AREA: any = {
+  "01": { label: "華盛頓州", value: "01" },
+  "02": { label: "泰國", value: "02" },
+  "03": { label: "台灣", value: "03" }
+};
+
+//派遣區域
+export const DSPH_AREA: any = {
+  "01": { label: "美加", value: "01" },
+  "02": { label: "東南亞", value: "02" },
+  "03": { label: "台灣", value: "03" }
+};
+
+//派遣都市
+export const DSPH_CITY: any = {
+  "01": { label: "西雅圖", value: "01" },
+  "02": { label: "曼谷", value: "02" },
+  "03": { label: "台北", value: "03" },
+  "04": { label: "台中", value: "01" },
+  "05": { label: "台南", value: "02" }
+};

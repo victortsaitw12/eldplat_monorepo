@@ -8,33 +8,54 @@ export const DivSTY = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .addLicnBtn {
-      font-weight: ${({ theme }) => theme.fontWeight.Heading200};
-      font-size: ${({ theme }) => theme.fontSize.Heading200};
+    .licn-title-left {
       color: ${({ theme }) => theme.color.N700};
-      border: none;
-      &:focus,
-      &:hover,
-      &:active {
+      font-size: ${({ theme }) => theme.fontSize.Heading500};
+      font-weight: ${({ theme }) => theme.fontWeight.Heading500};
+      line-height: 21.97px;
+    }
+    .licn-title-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      button {
         border: none;
-        outline: none;
+        padding: 0;
+        margin-right: 10px;
+      }
+      .addLicnBtn {
+        font-weight: ${({ theme }) => theme.fontWeight.Heading200};
+        font-size: ${({ theme }) => theme.fontSize.Heading200};
+        color: ${({ theme }) => theme.color.N700};
+        border: none;
+        &:focus,
+        &:hover,
+        &:active {
+          border: none;
+          outline: none;
+        }
       }
     }
   }
-  .licn-title-right {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    button {
-      border: none;
-      padding: 0;
-      margin-right: 10px;
+  thead > tr > th {
+    &:nth-last-child(-n + 2) {
+      div,
+      span {
+        justify-content: center;
+      }
     }
   }
-
+  tbody > tr > td {
+    &:nth-last-child(-n + 2) {
+      div {
+        justify-content: center;
+      }
+    }
+  }
   .documentIcon {
     cursor: pointer;
   }
+
   .noDataShown {
     height: 32px;
     position: relative;

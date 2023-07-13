@@ -1,12 +1,22 @@
 import React from "react";
 import dayjs from "dayjs";
-import { DocumentIcon, Tooltip } from "evergreen-ui";
+import {
+  Pane,
+  Text,
+  PlusIcon,
+  DocumentIcon,
+  Tooltip,
+  toaster,
+  Dialog
+} from "evergreen-ui";
 import { DivSTY } from "./style";
 
+import { IconLeft } from "@components/Button/Primary";
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import LicenseForm from "@contents/Driver/Detail/LicenseForm";
 import { LICN_TYP } from "@services/getDDL";
+import { updateDriverLicense } from "@services/driver/updateDriverLicense";
 
 const table_title = [
   "證照種類",
@@ -25,7 +35,9 @@ interface Props {
 
 function LicensesList({ licensesData, userName, refetch }: Props) {
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
-
+  const [editNo, setEditNo] = React.useState<number | null>(null);
+  const btnRef = React.useRef<any>(null);
+  // ordering for <TableWithEdit/>
   const driverPattern = {
     id: true,
     licn_typ: true,
@@ -94,16 +106,42 @@ function LicensesList({ licensesData, userName, refetch }: Props) {
     driverParser
   );
 
+  // ----- function ----- //
   const handleCreate = () => {
+    setEditNo(null);
     setIsLightBoxOpen(true);
   };
 
-  const handleEdit = (id: string) => {
+  const handleEdit = (id: any) => {
+    setEditNo(id);
     setIsLightBoxOpen(true);
     console.log("打開新增彈窗");
   };
+  const handleCancel = () => {
+    setIsLightBoxOpen(false);
+  };
+
+  const handleConfirm = () => {
+    if (btnRef.current) btnRef.current.click();
+  };
+  const asyncSubmitForm = async (data: any) => {
+    console.log("😒😒😒 asyncSubmitForm called", data);
+    const type = editNo ? false : true;
+    try {
+      const res = await updateDriverLicense(data, type); //type: true = 新增，false = 更新
+      if (res.result === true)
+        toaster.success("成功更新駕駛證照", { duration: 1.5 });
+      // update license list
+      await refetch();
+      setIsLightBoxOpen(false);
+    } catch (e: any) {
+      console.log(e);
+      toaster.warning(e.message);
+    }
+  };
+
   //刪除該筆證照資料
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: number) => {
     try {
       alert("刪除該筆證照資料");
     } catch (e) {
@@ -113,9 +151,20 @@ function LicensesList({ licensesData, userName, refetch }: Props) {
 
   return (
     <DivSTY>
+      <Pane className="licn-title">
+        <Text className="licn-title-left">{userName}</Text>
+        <IconLeft
+          className="licn-title-right"
+          type="button"
+          text={"新增駕駛證照"}
+          onClick={handleCreate}
+        >
+          <PlusIcon size={14} />
+        </IconLeft>
+      </Pane>
       {orderedLicensesData && (
         <TableWithEdit
-          tableName="駕駛證照"
+          tableName={null}
           titles={table_title}
           data={orderedLicensesData}
           goToEditPage={handleEdit}
@@ -124,78 +173,35 @@ function LicensesList({ licensesData, userName, refetch }: Props) {
       )}
 
       {isLightBoxOpen && (
-        <LicenseForm
-          licensesData={licensesData}
-          userName={userName}
-          refetch={refetch}
-        />
+        <Pane>
+          <Dialog
+            isShown={isLightBoxOpen}
+            title={`${editNo ? "編輯" : "新增"}駕駛證照`}
+            onConfirm={handleConfirm}
+            onCloseComplete={handleCancel}
+            cancelLabel="取消"
+            confirmLabel="確定"
+          >
+            {({}) => (
+              <>
+                <hr
+                  style={{ border: "none", borderBottom: "1px solid #D5E2F1" }}
+                />
+                <LicenseForm
+                  btnRef={btnRef}
+                  type={editNo ? false : true}
+                  licensesData={
+                    licensesData.filter((item: any) => item.no === editNo)[0]
+                  }
+                  asyncSubmitForm={asyncSubmitForm}
+                />
+              </>
+            )}
+          </Dialog>
+        </Pane>
       )}
     </DivSTY>
   );
 }
 
 export default LicensesList;
-
-/* 舊的，昱光稍後會改回傳結構跟欄位 參考用 7/7
-driverData = {
-  "info": {
-      "user_name": "WEI",
-      "user_email": "football@test.com",
-      "user_phone": "0963258741",
-      "driver_no": "DRV202305220003",
-      "license_no": "L05251003",
-      "license_area": "02",
-      "license_lvl": "最高級",
-      "driver_seniority": 5,
-      "dsph_area": "02",
-      "dsph_city": "02",
-      "licn_typ": "03",
-      "licn_name": "大客車駕照",
-      "licn_unit": "台北市監理所",
-      "licn_issue": "2023-05-25T00:00:00",
-      "licn_exp": "2023-05-25T00:00:00",
-      "licn_examine_Date": "2023-05-25T00:00:00",
-      "licn_link": "link",
-      "licn_filename": "testFileName"
-  },
-  "languages": [
-      {
-          "user_no": "USR202305220017",
-          "language": "02",
-          "listen": "1",
-          "speak": "1",
-          "read": "1",
-          "write": "1"
-      }
-  ],
-  "healths": [
-      {
-          "user_no": "USR202305220017",
-          "heal_date": "2023-03-24T00:00:00",
-          "heal_typ": "01",
-          "heal_agency": "台北榮總",
-          "heal_status": "01",
-          "heal_examine_date": null,
-          "heal_filename": null,
-          "heal_link": "路徑設定-等待討論中",
-          "invalid": null,
-          "invalid_remark": null
-      }
-  ]
-}
-
-
-
-orderedDriverData = [
-  { 
-    id: {label: {…}, value: 'L05251003'},
-    licn_examine_date: {label: '2023 / 07 / 07', value: undefined},
-    licn_exp: {label: '2023 / 05 / 25', value: '2023-05-25T00:00:00'},
-    licn_issue: {label: '2023 / 05 / 25', value: '2023-05-25T00:00:00'},
-    licn_link: {label: {…}, value: 'link'},
-    licn_name: {label: '大客車駕照', value: '大客車駕照'},
-    licn_typ: {label: '03', value: '03'},
-    licn_unit: {label: '台北市監理所', value: '台北市監理所'
-  },
-]
-*/
