@@ -13,14 +13,12 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { useCustomerStore } from "@contexts/filter/customerStore";
 const mainFilterArray = [{ id: 1, label: "客戶資料", value: "1" }];
 //
-const Page: NextPageWithLayout<never> = ({ customerId }) => {
+const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useCustomerStore();
   const router = useRouter();
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
-
   const [loading, setLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+
   useEffect(() => {
     updateMainFilter("1");
   }, []);
@@ -38,7 +36,10 @@ const Page: NextPageWithLayout<never> = ({ customerId }) => {
       console.log(e);
     }
     setLoading(false);
-    router.push("/customer");
+    router.push({
+      pathname: "/customer/detail/" + customerId,
+      query: { editPage: "view" }
+    });
   };
   //
   const onCancelHandler = () => {
@@ -57,14 +58,16 @@ const Page: NextPageWithLayout<never> = ({ customerId }) => {
           submitRef.current?.click();
         }}
         onEdit={() => {
-          console.log("set is Edit to true");
-          setIsEdit(true);
+          router.push({
+            pathname: "/customer/detail/" + customerId,
+            query: { editPage: "edit" }
+          });
         }}
         onClose={onCancelHandler}
-        isEdit={isEdit}
+        isEdit={editPage}
       >
         <CustomerDetail
-          isEdit={isEdit}
+          isEdit={editPage}
           submitRef={submitRef}
           asyncSubmitForm={asyncSubmitForm}
           customerId={customerId}
@@ -79,9 +82,10 @@ interface Props {
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
 ) => {
-  const { params } = context;
+  const { params, query } = context;
   return {
     props: {
+      editPage: query.editPage == "edit",
       customerId: params ? params.id : ""
     }
   };
