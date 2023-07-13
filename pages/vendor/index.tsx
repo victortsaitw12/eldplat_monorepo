@@ -71,7 +71,20 @@ const Page: NextPageWithLayout<{
               label: vendors["vendor_No"],
               value: vendors["vendor_No"]
             },
-            vendor_data: { label: "無", value: "無" },
+            vendor_data: {
+              label: (
+                <Pane
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center"
+                  }}
+                >
+                  無
+                </Pane>
+              ),
+              value: "無"
+            },
             vendor_name: {
               label: vendors["vendor_Name"],
               value: vendors["vendor_Name"]
@@ -110,13 +123,21 @@ const Page: NextPageWithLayout<{
             },
             vendor_website: {
               label: (
-                <a
-                  href={vendors["vendor_Website"]}
-                  target="_blank"
-                  rel="noreferrer"
+                <Pane
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center"
+                  }}
                 >
-                  <GlobeIcon size={16} color="#718BAA" />
-                </a>
+                  <a
+                    href={vendors["vendor_Website"]}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <GlobeIcon size={16} color="#718BAA" />
+                  </a>
+                </Pane>
               ),
               value: vendors["vendor_Website"]
             },
@@ -256,6 +277,7 @@ const Page: NextPageWithLayout<{
             onChangeTab={changeMainFilterHandler}
             mainFilter={nowTab}
             mainFilterArray={mainFilterArray}
+            viewOnly={true}
           >
             <FilterWrapper
               updateFilter={updateSubFilter}

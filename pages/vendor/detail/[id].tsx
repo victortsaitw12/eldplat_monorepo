@@ -117,15 +117,16 @@ const Index: NextPageWithLayout<never> = ({ vendor_id, editPage }) => {
             />
           )}
           {nowTab === "subpoint" && (
-            <FilterWrapper
-              updateFilter={updateSubFilter}
-              resetFilter={() => {
-                initializeSubFilter();
-              }}
-              filter={subFilter}
-            >
-              <VendorSubPoint isEdit={editPage} />
-            </FilterWrapper>
+            // <FilterWrapper
+            //   updateFilter={updateSubFilter}
+            //   resetFilter={() => {
+            //     initializeSubFilter();
+            //   }}
+            //   filter={subFilter}
+            // >
+            //   <VendorSubPoint isEdit={editPage} />
+            // </FilterWrapper>
+            <VendorSubPoint isEdit={editPage} />
           )}
         </TableWrapper>
       )}

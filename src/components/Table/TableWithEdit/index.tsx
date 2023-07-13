@@ -187,9 +187,7 @@ function Table({
                     }
                     return (
                       <td key={item.id + key}>
-                        <div className="data-row">
-                          <div>{item[key].label}</div>
-                        </div>
+                        <div className="data-row">{item[key].label}</div>
                       </td>
                     );
                   })}
