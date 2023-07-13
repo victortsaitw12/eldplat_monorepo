@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import Head from "next/head";
 import { Pane } from "evergreen-ui";
@@ -106,5 +106,6 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   );
 };
 
-ShiftPage.getLayout = getLayout;
+ShiftPage.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default ShiftPage;

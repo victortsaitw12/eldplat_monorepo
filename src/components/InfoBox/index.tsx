@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { Text, UnorderedList, ListItem, Pane } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
@@ -28,6 +28,7 @@ function InfoBox({
   infoData,
   infoType
 }: I_InfoBoxProps) {
+  const infoBoxId = useId();
   const r_switch_info = (type?: string) => {
     switch (type) {
       case "label":
@@ -64,9 +65,8 @@ function InfoBox({
       if (inputType === "custom") {
         return editEle;
       }
-
       return (
-        <ListItem key={value + i}>
+        <ListItem key={infoBoxId + "_text_" + i}>
           {label && (
             <Pane>
               {req && label !== "" && <span className="req">*</span>}
@@ -95,7 +95,7 @@ function InfoBox({
       ) {
         return infoData[0].value.map((child: any, i: number) => {
           return (
-            <ListItem key={child + i}>
+            <ListItem key={infoBoxId + "_label_" + i}>
               <Text>{child}</Text>
             </ListItem>
           );
@@ -111,7 +111,7 @@ function InfoBox({
     }
     return infoData.map((child: any, i: number) => {
       return (
-        <ListItem key={child.value + i}>
+        <ListItem key={infoBoxId + "_checkBox_" + i}>
           <Checkbox
             disabled={isEdit ? false : true}
             name={child.value}

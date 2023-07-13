@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -7,7 +7,7 @@ import RoleList from "@features/roles/RoleList";
 import { BodySTY } from "./style";
 //
 //
-const Index: NextPageWithLayout<never> = () => {
+const Page: NextPageWithLayout<never> = () => {
   return (
     <BodySTY>
       <Pane
@@ -25,5 +25,6 @@ const Index: NextPageWithLayout<never> = () => {
   );
 };
 
-Index.getLayout = getLayout;
-export default Index;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
+export default Page;

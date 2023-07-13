@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -14,9 +14,10 @@ import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
+import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 //
 const mainFilterArray = [
-  { id: 1, label: "全部", value: "1" },
+  { id: 1, label: "啟用", value: "1" },
   { id: 2, label: "停用", value: "2" }
 ];
 //
@@ -24,6 +25,7 @@ const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [nowTab, setNowTab] = useState("1");
+  const [options, setOptions] = useState<any>(null);
   const {
     initializeSubFilter,
     updateMainFilter,
@@ -36,6 +38,7 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchBusData = useCallback(
     async (isCanceled: boolean, mainFilter = "1") => {
       getAllBuses(subFilter, mainFilter).then((res) => {
+        console.log("res.contentList", res.contentList);
         const busesData = mappingQueryData(
           res.contentList,
           busPattern,
@@ -61,6 +64,9 @@ const Page: NextPageWithLayout<never> = () => {
   useEffect(() => {
     console.log("update mainFilter to 1");
     updateMainFilter("1");
+    getCreateBusOptions().then((res) => {
+      setOptions(res.dataList[0]);
+    });
   }, []);
   //
   useEffect(() => {
@@ -70,14 +76,6 @@ const Page: NextPageWithLayout<never> = () => {
       isCanceled = true;
     };
   }, [nowTab]);
-  //
-  if (!data) {
-    return <LoadingSpinner />;
-  }
-  /**
-   * CUD handler
-   */
-  //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
     router.push("/bus/detail/" + id + "?editPage=edit");
   };
@@ -135,6 +133,7 @@ const Page: NextPageWithLayout<never> = () => {
               fetchBusData(false);
               setDrawerOpen(false);
             }}
+            options={options}
           />
         </Drawer>
       )}
@@ -142,5 +141,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

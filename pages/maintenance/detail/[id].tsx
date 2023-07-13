@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 //@layout
@@ -15,7 +15,7 @@ import { updateMaintenance } from "@services/maintenance/updateMaintenance";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 const mainFilterArray = [{ id: 1, label: "維保資料", value: "1" }];
 //
-const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
+const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useMaintenanceStore();
   const router = useRouter();
@@ -118,5 +118,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     }
   };
 };
-Index.getLayout = getLayout;
-export default Index;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
+export default Page;

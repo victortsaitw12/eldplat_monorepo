@@ -152,7 +152,7 @@ const MaintenanceDetail = ({
     {
       req: false,
       label: "里程數",
-      value: getValues("meter"),
+      value: getValues("meter")?.toLocaleString(),
       editEle: (
         <TextInput
           {...register("meter", {

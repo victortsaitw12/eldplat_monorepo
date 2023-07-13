@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -148,5 +148,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     }
   };
 };
-Index.getLayout = getLayout;
+Index.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Index;

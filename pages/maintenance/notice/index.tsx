@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -171,5 +171,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

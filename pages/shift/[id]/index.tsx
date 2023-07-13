@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -123,5 +123,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   );
 };
 
-DriverScheduleView.getLayout = getLayout;
+DriverScheduleView.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
+
 export default DriverScheduleView;

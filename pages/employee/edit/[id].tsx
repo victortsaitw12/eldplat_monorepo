@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -141,5 +141,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   };
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

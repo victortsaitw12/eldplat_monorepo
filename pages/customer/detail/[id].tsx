@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 //@layout
@@ -13,7 +13,7 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { useCustomerStore } from "@contexts/filter/customerStore";
 const mainFilterArray = [{ id: 1, label: "客戶資料", value: "1" }];
 //
-const Index: NextPageWithLayout<never> = ({ customerId }) => {
+const Page: NextPageWithLayout<never> = ({ customerId }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useCustomerStore();
   const router = useRouter();
@@ -86,5 +86,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     }
   };
 };
-Index.getLayout = getLayout;
-export default Index;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
+export default Page;

@@ -6,10 +6,15 @@ import { I18Provider, LOCALES } from "@contexts/i18n";
 import theme from "@styles/theme";
 import { GlobalStyles } from "@styles/global";
 import { getVendorsLang } from "@services/vendor/getAllVendors";
-import { useRouter } from "next/router";
+import { useRouter, Router } from "next/router";
 import { Noto_Sans } from "next/font/google";
 import LoadingModal from "@components/LoadingModal";
 import LoadingSpinner from "@components/LoadingSpinner";
+import dynamic from "next/dynamic";
+import getPageBreadCrumbs from "@utils/getPageBreadCrumbs";
+const DynamicBreadcrumbs = dynamic(() => import("@components/Breadcrumbs"), {
+  ssr: false
+});
 const notoSans = Noto_Sans({
   subsets: ["latin", "latin-ext", "vietnamese"],
   weight: ["400", "600", "700", "800"]
@@ -37,15 +42,9 @@ function Loader() {
   const router = useRouter();
   useEffect(() => {
     const handleStart = (url: string) => {
-      console.log("handleStart");
-      console.log("current url", url);
-      console.log("router.asPath", router.asPath);
       setLoading(true);
     };
     const handleComplete = (url: string) => {
-      console.log("handleComplete");
-      console.log("current url", url);
-      console.log("router.asPath", router.asPath);
       setLoading(false);
     };
     router.events.on("routeChangeStart", handleStart);
@@ -113,7 +112,18 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
               setLocale={setLocale}
               setPageType={setPageType}
             />,
-            { ...pageProps, locale: locale, setLocale: setLocale }
+            {
+              ...pageProps,
+              locale: locale,
+              setLocale: setLocale,
+              breadcrumbs: (
+                <DynamicBreadcrumbs
+                  splitEle={<span style={{ margin: "0 0.5rem" }}>/</span>}
+                  routes={getPageBreadCrumbs(router)}
+                  linkStyle={{ color: "#ffffff" }}
+                />
+              )
+            }
           )}
         </ThemeProvider>
       </I18Provider>
