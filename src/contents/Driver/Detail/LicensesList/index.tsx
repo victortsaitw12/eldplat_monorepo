@@ -1,14 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
-import {
-  Pane,
-  Text,
-  PlusIcon,
-  DocumentIcon,
-  Tooltip,
-  toaster,
-  Dialog
-} from "evergreen-ui";
+import { Pane, DocumentIcon, Tooltip, toaster, Dialog } from "evergreen-ui";
 import { DivSTY } from "./style";
 
 import { IconLeft } from "@components/Button/Primary";
@@ -31,9 +23,10 @@ interface Props {
   licensesData: any;
   userName: string;
   refetch: () => void;
+  driverNo: string;
 }
 
-function LicensesList({ licensesData, userName, refetch }: Props) {
+function LicensesList({ licensesData, userName, refetch, driverNo }: Props) {
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
   const [editNo, setEditNo] = React.useState<number | null>(null);
   const btnRef = React.useRef<any>(null);
@@ -197,6 +190,7 @@ function LicensesList({ licensesData, userName, refetch }: Props) {
                     licensesData.filter((item: any) => item.no === editNo)[0]
                   }
                   asyncSubmitForm={asyncSubmitForm}
+                  driverNo={driverNo}
                 />
               </>
             )}

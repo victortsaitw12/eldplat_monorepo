@@ -1,7 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import dayjs from "dayjs";
-import { TextInput, Select, Checkbox, Textarea, Button } from "evergreen-ui";
+import {
+  TextInput,
+  Select,
+  Checkbox,
+  Textarea,
+  UploadIcon,
+  Pane,
+  Text,
+  IconButton,
+  DocumentIcon
+} from "evergreen-ui";
 import { FormSTY } from "./style";
 
 import { UpdateLicensePayload } from "@contents/Driver/driver.type";
@@ -9,23 +18,33 @@ import FlexWrapper from "@layout/FlexWrapper";
 import InfoBox from "@components/InfoBox";
 import { formatDateFromAPI } from "@utils/formatDateFromAPI";
 import { LICN_TYP } from "@services/getDDL";
+import ButtonPrimaryRadius from "@components/Button/PrimaryRadius";
 
 interface Props {
   type: boolean; //true = 新增，false = 更新
   licensesData: any;
   btnRef: any;
   asyncSubmitForm: (data: any) => void;
+  driverNo: string;
 }
 
-function LicenseForm({ type, licensesData, btnRef, asyncSubmitForm }: Props) {
+function LicenseForm({
+  type,
+  licensesData,
+  btnRef,
+  asyncSubmitForm,
+  driverNo
+}: Props) {
   const {
     register,
     formState: { errors },
     handleSubmit,
-    getValues
+    getValues,
+    setValue
   } = useForm<UpdateLicensePayload>({
     defaultValues: type
       ? {
+          driver_no: driverNo,
           licn_typ: null,
           licn_name: null,
           licn_unit: null,
@@ -49,6 +68,12 @@ function LicenseForm({ type, licensesData, btnRef, asyncSubmitForm }: Props) {
         }
   });
   const [checked, setChecked] = React.useState(false);
+  const [isUploadFile, setIsUpladFile] = React.useState(false);
+
+  // ----- function ----- //
+  const handleUploadClick = () => {
+    alert("上傳檔案");
+  };
 
   // 駕駛證照
   const licenseInfo = [
@@ -94,14 +119,39 @@ function LicenseForm({ type, licensesData, btnRef, asyncSubmitForm }: Props) {
     {
       req: true,
       label: "證照檔案",
-      editEle: (
-        <Button
-          marginRight={16}
-          appearance="primary"
-          {...register("licn_examine_date")}
-        >
-          Primary
-        </Button>
+      editEle: getValues("licn_filename") ? (
+        <Pane>
+          <Text>{getValues("licn_filename")}</Text>
+          <Pane className="licnFileBox">
+            <IconButton className="DocumentIcon" icon={DocumentIcon} />
+            <div className="licnFileInfo">
+              {getValues("licn_filename")}
+              <div className="fileSize">1.2MB</div>
+            </div>
+          </Pane>
+        </Pane>
+      ) : (
+        <Pane>
+          <ButtonPrimaryRadius
+            type="button"
+            className="license-file-btn"
+            iconBefore={UploadIcon}
+            onClick={() => {
+              setIsUpladFile(true);
+              setValue("licn_filename", `${getValues("licn_name")}.jpg`);
+              setValue("licn_link", "uwww.eldplat.com/img0000");
+            }}
+          >
+            {/* //TODO style this */}
+            <input
+              className="uploadFileBtn"
+              type="file"
+              name="licn_filename"
+              accept="image/png, image/jpeg"
+            />
+            上傳證照檔案
+          </ButtonPrimaryRadius>
+        </Pane>
       )
     },
     {

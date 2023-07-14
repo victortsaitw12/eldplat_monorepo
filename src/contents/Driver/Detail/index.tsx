@@ -14,6 +14,7 @@ interface Props {
   driverData: any;
   formType: string;
   refetch: () => void;
+  driverNo: string;
 }
 
 function DriverDetail({
@@ -22,7 +23,8 @@ function DriverDetail({
   asyncSubmitForm,
   driverData,
   formType,
-  refetch
+  refetch,
+  driverNo
 }: Props) {
   const {
     register,
@@ -73,6 +75,7 @@ function DriverDetail({
           licensesData={driverData.licenses}
           userName={driverData.info.user_name}
           refetch={refetch}
+          driverNo={driverNo}
         />
       )}
       {visibleForm === "3" && (
