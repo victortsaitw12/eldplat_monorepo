@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput } from "evergreen-ui";
+import TextInput from "@components/CustomTextInput";
 import InfoBox from "@components/InfoBox";
 import {
   UseFormRegister,

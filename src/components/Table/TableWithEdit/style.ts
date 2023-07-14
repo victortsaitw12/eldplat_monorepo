@@ -84,6 +84,9 @@ const TableSTY = styled.table`
       justify-content: flex-start;
       align-items: center;
     }
+    label > div:not(.table-action) {
+      justify-content: center;
+    }
   }
   tr:last-child td {
     border-bottom: none;
