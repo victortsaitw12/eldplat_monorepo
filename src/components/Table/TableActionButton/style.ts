@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   position: relative;
   display: flex;
+  align-items: center;
   justify-content: center;
   > button {
     > svg {
