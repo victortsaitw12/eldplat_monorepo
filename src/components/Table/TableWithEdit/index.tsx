@@ -7,13 +7,20 @@ import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
 import PaginationField, { I_PageInfo } from "@components/PaginationField";
 //
-const dontShowList = ["維保通知", "維保任務", "維保紀錄", "駕駛列表"];
+const dontShowList = [
+  "維保通知",
+  "維保任務",
+  "維保紀錄",
+  "駕駛列表",
+  "駕駛證照"
+];
 interface I_Data {
   [key: string]: string | number | React.ReactNode | any;
 }
 
 interface I_Table {
   tableName: string | any;
+  cleanTableName?: string | React.ReactNode;
   titles: Array<string | number | React.ReactNode> | any;
   data: I_Data[];
   // onCheck?: (items: any) => void;
@@ -35,6 +42,7 @@ Must provide id field in the Data Array
 */
 function Table({
   tableName,
+  cleanTableName,
   titles,
   data,
   goToCreatePage,
@@ -93,7 +101,9 @@ function Table({
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
         <div className="container-header-left">
-          {dontShowList.includes(tableName) ? (
+          {cleanTableName ? (
+            <span>{cleanTableName}</span>
+          ) : !tableName || dontShowList.includes(tableName) ? (
             <span>{tableName}</span>
           ) : (
             <>
