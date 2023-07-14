@@ -151,7 +151,7 @@ function LicensesList({ licensesData, userName, refetch }: Props) {
 
   return (
     <DivSTY>
-      <Pane className="licn-title">
+      {/* <Pane className="licn-title">
         <Text className="licn-title-left">{userName}</Text>
         <IconLeft
           className="licn-title-right"
@@ -161,14 +161,17 @@ function LicensesList({ licensesData, userName, refetch }: Props) {
         >
           <PlusIcon size={14} />
         </IconLeft>
-      </Pane>
+      </Pane> */}
       {orderedLicensesData && (
         <TableWithEdit
-          tableName={null}
+          tableName=""
+          cleanTableName={userName}
           titles={table_title}
           data={orderedLicensesData}
+          goToCreatePage={handleCreate}
           goToEditPage={handleEdit}
           deleteItem={handleDelete}
+          createBtnText="新增駕駛證照"
         />
       )}
 

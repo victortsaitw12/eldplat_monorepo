@@ -20,7 +20,7 @@ interface I_Data {
 
 interface I_Table {
   tableName: string | any;
-  btnName?: string;
+  cleanTableName?: string | React.ReactNode;
   titles: Array<string | number | React.ReactNode> | any;
   data: I_Data[];
   // onCheck?: (items: any) => void;
@@ -42,6 +42,7 @@ Must provide id field in the Data Array
 */
 function Table({
   tableName,
+  cleanTableName,
   titles,
   data,
   goToCreatePage,
@@ -100,7 +101,9 @@ function Table({
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
         <div className="container-header-left">
-          {!tableName || dontShowList.includes(tableName) ? (
+          {cleanTableName ? (
+            <span>{cleanTableName}</span>
+          ) : !tableName || dontShowList.includes(tableName) ? (
             <span>{tableName}</span>
           ) : (
             <>
