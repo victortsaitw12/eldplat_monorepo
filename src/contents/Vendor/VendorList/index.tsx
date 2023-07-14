@@ -22,12 +22,12 @@ const VendorList = ({
   // const vendorTitle = getVendorTitle();
   // multi languages for tabel title
   // console.log("💫💫vendorData", vendorData);
-  console.log(
-    "vendorData.map",
-    vendorData?.map((c: any) => {
-      return c;
-    })
-  );
+  // console.log(
+  //   "vendorData.map",
+  //   vendorData?.map((c: any) => {
+  //     return c;
+  //   })
+  // );
   const vendorTitleArrI18 = [
     <FormattedMessage key="vendor_name" id="vendor_name" />,
     <FormattedMessage key="vendor_city" id="vendor_city" />,

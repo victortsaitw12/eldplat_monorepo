@@ -45,15 +45,28 @@ const mock_data = [
     label: <LabelTag text="標籤" />
   }
 ];
+
 const VendorSubPoint = ({ isEdit }: I_Props) => {
   const [modalOpen, setModalOpen] = useState(false);
-  console.log(isEdit ? "子據點編輯模式" : "檢視模式");
   const tableData = () => {
     return mock_data.map((child) => {
       return {
         id: { label: child["no"], value: child["no"] },
         no: { label: child["no"], value: child["no"] },
-        data: { label: child["data"], value: child["data"] },
+        data: {
+          label: (
+            <Pane
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center"
+              }}
+            >
+              無
+            </Pane>
+          ),
+          value: child["data"]
+        },
         name: { label: child["name"], value: child["name"] },
         area: { label: child["area"], value: child["area"] },
         phone: { label: child["phone"], value: child["phone"] },
@@ -68,9 +81,17 @@ const VendorSubPoint = ({ isEdit }: I_Props) => {
         },
         website: {
           label: (
-            <a href={child["website"]} target="_blank" rel="noreferrer">
-              <GlobeIcon size={16} color="#718BAA" />
-            </a>
+            <Pane
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center"
+              }}
+            >
+              <a href={child["website"]} target="_blank" rel="noreferrer">
+                <GlobeIcon size={16} color="#718BAA" />
+              </a>
+            </Pane>
           ),
           value: child["website"]
         },
@@ -99,12 +120,25 @@ const VendorSubPoint = ({ isEdit }: I_Props) => {
         <CogIcon color="#718BAA" size={11} />
       </Pane> */}
       <TableWithEdit
+        createBtnText="新增子據點"
         tableName={"富豪車隊"}
         titles={mock_title}
         data={tableData()}
+        goToCreatePage={() => {
+          setModalOpen(true);
+        }}
+        goToEditPage={() => {
+          console.log("點擊編輯");
+        }}
+        deleteItem={() => {
+          console.log("點擊刪除");
+        }}
+        viewItem={() => {
+          console.log("點擊檢視");
+        }}
       />
       <LightBox
-        wrapperStyle={{ maxWidth: "unset" }}
+        wrapperStyle={{ maxWidth: "60%" }}
         title={"新增子據點"}
         isOpen={modalOpen}
         handleCloseLightBox={() => {
