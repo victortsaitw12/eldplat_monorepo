@@ -33,20 +33,20 @@ const EditSubPoint = ({ onClickCancel }: I_Props) => {
     },
     {
       label: " ",
-      editEle: [<input key="address2" value={"地址2"}></input>]
+      editEle: [<input key="address2"></input>]
     },
     {
       label: " ",
       editEle: [
-        <input key="subpoint_city" value={"城市"}></input>,
-        <input key="subpoint_state" value={"州省區"}></input>
+        <input key="subpoint_city"></input>,
+        <input key="subpoint_state"></input>
       ]
     },
     {
       label: " ",
       editEle: [
-        <input key="subpoint_zipcode" value={"郵政編碼"}></input>,
-        <input key="subpoint_country" value={"國家"}></input>
+        <input key="subpoint_zipcode"></input>,
+        <input key="subpoint_country"></input>
       ]
     },
     {
@@ -54,15 +54,15 @@ const EditSubPoint = ({ onClickCancel }: I_Props) => {
       label: "公司電話",
       editEle: [
         <input key="subpoint_zipcode" value={"+886"} disabled={true}></input>,
-        <input key="subpoint_country" value={"02999888"}></input>
+        <input key="subpoint_country"></input>
       ]
     },
     {
       req: true,
       label: "公司傳真",
       editEle: [
-        <input key="subpoint_zipcode" value={"+886"} disabled={true}></input>,
-        <input key="subpoint_country" value={"02999888"}></input>
+        <input key="subpoint_zipcode" disabled={true}></input>,
+        <input key="subpoint_country"></input>
       ]
     }
   ];

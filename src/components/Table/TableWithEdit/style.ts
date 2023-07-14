@@ -71,10 +71,13 @@ const TableSTY = styled.table`
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
     span,
-    div {
+    div:not(.table-action) {
       display: flex;
       justify-content: flex-start;
       align-items: center;
+    }
+    label > div:not(.table-action) {
+      justify-content: center;
     }
   }
   tr:last-child td {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Select, Button, FilePicker, TextInput } from "evergreen-ui";
+import { Select, Button, FilePicker } from "evergreen-ui";
 import DottedSelect from "@components/HookForm/Select/DottedSelect";
 import InfoBox from "@components/InfoBox";
 import { FilePickBtnSTY } from "@components/FormCard/style";
@@ -10,6 +10,7 @@ import {
   UseFormGetValues,
   Control
 } from "react-hook-form";
+import TextInput from "@components/CustomTextInput";
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
 }
+
 function Details({ register, errors, getValues, control, isEdit }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 尺寸
@@ -210,7 +212,7 @@ function Details({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           <div>EPA城市燃油經濟性</div>
           <div>市區油耗表現</div>
         </div>
@@ -221,7 +223,7 @@ function Details({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           <div>EPA高速公路燃油經濟性</div>
           <div>高速公路油耗表現</div>
         </div>
@@ -232,7 +234,7 @@ function Details({ register, errors, getValues, control, isEdit }: Props) {
     {
       req: false,
       label: (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           <div>EPA綜合燃油經濟性</div>
           <div>綜合油耗表現</div>
         </div>

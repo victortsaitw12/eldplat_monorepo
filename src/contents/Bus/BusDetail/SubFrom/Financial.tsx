@@ -1,5 +1,6 @@
 import React from "react";
-import { Select, TextInput, Textarea } from "evergreen-ui";
+import { Select, Textarea } from "evergreen-ui";
+// import { Select, TextInput, Textarea } from "evergreen-ui";
 import {
   UseFormRegister,
   FieldErrors,
@@ -12,6 +13,8 @@ import FlexWrapper from "@layout/FlexWrapper";
 import InfoBox from "@components/InfoBox";
 import Radio from "@components/HookForm/Radio";
 import Checkbox from "@components/CheckBox";
+
+import TextInput from "@components/CustomTextInput";
 interface Props {
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;

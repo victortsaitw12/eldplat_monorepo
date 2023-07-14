@@ -30,7 +30,7 @@ function Index({
   isOpen = false
 }: Props) {
   return (
-    <BodySTY>
+    <BodySTY className="table-action">
       <button
         onClick={(event) => {
           if (!isOpen) {

@@ -113,6 +113,7 @@ function InfoBox({
       return (
         <ListItem key={infoBoxId + "_checkBox_" + i}>
           <Checkbox
+            style={{ gap: "10px" }}
             disabled={isEdit ? false : true}
             name={child.value}
             label={child.label}
