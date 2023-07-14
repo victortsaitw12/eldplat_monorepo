@@ -1,4 +1,4 @@
-import React, { useCallback, useState, ReactNode } from "react";
+import React, { useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import Link from "next/link";
 import { Avatar } from "evergreen-ui";
