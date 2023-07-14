@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const DriverListSTY = styled.div`
+  height: 100%;
   padding: 1rem;
   .TableContainerSTY {
     overflow: visible;

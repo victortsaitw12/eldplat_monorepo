@@ -190,16 +190,14 @@ const Page: NextPageWithLayout<never> = () => {
             filter={filter}
           >
             {/* Put your component here */}
-            <Pane>
-              <EmployeeList
-                data={employeeListData}
-                goToCreatePage={() => {
-                  setDrawerOpen(true);
-                }}
-                deleteItemHandler={deleteItemHandler}
-                goToEditPageHandler={goToEditPageHandler}
-              />
-            </Pane>
+            <EmployeeList
+              data={employeeListData}
+              goToCreatePage={() => {
+                setDrawerOpen(true);
+              }}
+              deleteItemHandler={deleteItemHandler}
+              goToEditPageHandler={goToEditPageHandler}
+            />
           </FilterWrapper>
         </TableWrapper>
         {isDrawerOpen && (
