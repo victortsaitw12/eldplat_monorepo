@@ -6,10 +6,15 @@ interface Props {
   busData: any;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
-  goToEditPageHandler: (id: string) => void;
-  goToDetailPage: (id: string) => void;
+  goToEditPageHandler: (
+    id: string,
+    item: { [key: string]: { value: any; label: any } }
+  ) => void;
+  goToDetailPage: (
+    id: string,
+    item: { [key: string]: { value: any; label: any } }
+  ) => void;
 }
-
 
 function BusList({
   busData,
