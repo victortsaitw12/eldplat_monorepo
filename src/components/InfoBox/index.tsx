@@ -16,7 +16,7 @@ export interface I_infoData {
 export interface I_InfoBoxProps {
   style?: React.CSSProperties;
   isEdit: boolean;
-  infoTitle?: string;
+  infoTitle?: string | React.ReactNode;
   infoData?: I_infoData[];
   infoType?: string;
 }
@@ -113,6 +113,7 @@ function InfoBox({
       return (
         <ListItem key={infoBoxId + "_checkBox_" + i}>
           <Checkbox
+            style={{ gap: "10px" }}
             disabled={isEdit ? false : true}
             name={child.value}
             label={child.label}

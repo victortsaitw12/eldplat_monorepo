@@ -28,6 +28,7 @@ interface I_Table {
   deleteText?: string;
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
+  createBtnText?: string;
 }
 /*
 Must provide id field in the Data Array
@@ -48,7 +49,8 @@ function Table({
   checkboxData,
   deleteText,
   pageInfo,
-  onPageChange
+  onPageChange,
+  createBtnText
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
   const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
@@ -100,7 +102,10 @@ function Table({
           )}
         </div>
         {!noButtonData.includes(tableName) && (
-          <IconLeft text={`新增${tableName}`} onClick={goToCreatePage}>
+          <IconLeft
+            text={createBtnText ? createBtnText : `新增${tableName}`}
+            onClick={goToCreatePage}
+          >
             <PlusIcon size={14} />
           </IconLeft>
         )}
@@ -157,9 +162,9 @@ function Table({
                   {tableName !== "維保通知" && (
                     <td>
                       <Checkbox
-                        checked={checkedItems.includes(item.id.value)}
+                        checked={checkedItems.includes(item?.id?.value)}
                         onChange={(e) => handleCheck(e)}
-                        id={item.id.value}
+                        id={item?.id?.value}
                       />
                     </td>
                   )}
@@ -187,9 +192,7 @@ function Table({
                     }
                     return (
                       <td key={item.id + key}>
-                        <div className="data-row">
-                          <div>{item[key].label}</div>
-                        </div>
+                        <div className="data-row">{item[key].label}</div>
                       </td>
                     );
                   })}
