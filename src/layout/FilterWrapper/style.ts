@@ -76,5 +76,7 @@ export const BodySTY = styled.div`
   > .children-container {
     flex: 1 0 0;
     background: #ffffff;
+    //
+    overflow: hidden;
   }
 `;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   margin: 10px;
-
+  height: 100%;
   // 最上面標題欄
   .title-bar {
     .title-label {
