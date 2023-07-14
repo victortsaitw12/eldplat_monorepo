@@ -25,12 +25,9 @@ export const InfoBoxSTY = styled.div`
   & > ul.info_content.type_text {
     > li {
       display: flex;
+      align-items: center;
       font-size: 14px;
-      margin-bottom: 33px;
-      align-items: baseline;
-      /* input{
-        width: unset;
-      } */
+      margin-bottom: 20px;
       .req {
         color: #d14343;
       }
