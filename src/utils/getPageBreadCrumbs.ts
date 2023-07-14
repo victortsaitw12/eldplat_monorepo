@@ -141,23 +141,7 @@ const routers: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
-  // console.log("📃📃📃📃📃", router);
-  // console.log(router?.query?.license_plate);
-  let newRouters = routers[router.pathname] || routers[router.asPath] || [];
-  //麵包屑要帶車牌哦
-  if (
-    (router?.query?.license_plate as string) &&
-    (router.asPath === "/bus/detail/[id]" ||
-      router.pathname === "/bus/detail/[id]")
-  ) {
-    newRouters = [
-      ...newRouters,
-      {
-        label: router?.query?.license_plate as string,
-        url: { pathname: router.pathname, query: router?.query }
-      }
-    ];
-  }
+  const newRouters = routers[router.pathname] || routers[router.asPath] || [];
   return newRouters;
 };
 

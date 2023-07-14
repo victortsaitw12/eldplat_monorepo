@@ -38,7 +38,7 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchBusData = useCallback(
     async (isCanceled: boolean, mainFilter = "1") => {
       getAllBuses(subFilter, mainFilter).then((res) => {
-        console.log("res.contentList", res.contentList);
+        // console.log("res.contentList", res.contentList);
         const busesData = mappingQueryData(
           res.contentList,
           busPattern,
@@ -77,14 +77,14 @@ const Page: NextPageWithLayout<never> = () => {
     };
   }, [nowTab]);
   const goToEditPageHandler = (id: string, item: any) => {
-    console.log("item", item);
+    // console.log("item", item);
     const license_plate = item?.license_plate?.value;
     router.push(
       "/bus/detail/" + id + "?editPage=edit&license_plate=" + license_plate
     );
   };
   const goToDetailPageHandler = (id: string, item: any) => {
-    console.log("item", item);
+    // console.log("item", item);
     const license_plate = item?.license_plate?.value;
     router.push(
       `/bus/detail/${id}?editPage=view&license_plate=${license_plate}`

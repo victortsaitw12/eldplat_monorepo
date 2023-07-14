@@ -118,9 +118,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
               setLocale: setLocale,
               breadcrumbs: (
                 <DynamicBreadcrumbs
+                  className="main-layout"
                   splitEle={<span style={{ margin: "0 0.5rem" }}>/</span>}
                   routes={getPageBreadCrumbs(router)}
-                  linkStyle={{ color: "#ffffff" }}
                 />
               )
             }
