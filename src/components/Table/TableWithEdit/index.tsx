@@ -149,44 +149,52 @@ function Table({
                 );
               })}
               <th>
-                {/* <span>{<FormattedMessage key="action" id="action" />}</span> */}
-                <span>操作</span>
+                <span style={{ justifySelf: "center" }}>操作</span>
               </th>
-            )}
-            {tableName === "維保通知" && (
-              <th>
-                <input
-                  type="checkbox"
-                  checked={checkboxData?.every((item) => item.checked)}
-                  onChange={
-                    checkboxData?.every((item) => item.checked)
-                      ? handleDeselectAll
-                      : handleSelectAll
-                  }
-                />
-              </th>
-            )}
-            {titles.map((title: any) => {
-              if (title === "id") {
-                return;
-              }
-              return (
-                <th key={uuid()}>
-                  <span>{title}</span>
-                </th>
-              );
-            })}
-            <th>
-              <span style={{ justifySelf: "center" }}>操作</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.length !== 0 ? (
-            data.map((item: any, idx) => {
-              return (
-                <tr key={uuid()}>
-                  {tableName !== "維保通知" && (
+            </tr>
+          </thead>
+          <tbody>
+            {data.length !== 0 ? (
+              data.map((item: any, idx) => {
+                return (
+                  <tr key={uuid()}>
+                    {tableName !== "維保通知" && (
+                      <td>
+                        <Checkbox
+                          checked={checkedItems.includes(item?.id?.value)}
+                          onChange={(e) => handleCheck(e)}
+                          id={item?.id?.value}
+                        />
+                      </td>
+                    )}
+                    {tableName === "維保通知" && (
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={checkboxData?.map((v) => v.checked)[idx]}
+                          onChange={() => {
+                            handleCheckboxChange(item.mission.value);
+                          }}
+                        />
+                      </td>
+                    )}
+                    {Object.keys(item).map((key) => {
+                      if (key === "id") return;
+                      if (!item[key].label) {
+                        return (
+                          <td key={item.id + key}>
+                            <span className="no-data">
+                              <div />
+                            </span>
+                          </td>
+                        );
+                      }
+                      return (
+                        <td key={item.id + key}>
+                          <div className="data-row">{item[key].label}</div>
+                        </td>
+                      );
+                    })}
                     <td>
                       <TableActionButton
                         onView={
