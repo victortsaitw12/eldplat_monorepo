@@ -1,7 +1,10 @@
 import { NextRouter } from "next/router";
 
 interface I_routers {
-  [index: string]: { label: string; url: string }[];
+  [index: string]: {
+    label: string;
+    url?: string | { pathname: string; query: any };
+  }[];
 }
 
 const routers: I_routers = {
@@ -12,8 +15,7 @@ const routers: I_routers = {
   ],
   "/bus/detail/[id]": [
     { label: "入門", url: "/" },
-    { label: "汽車", url: "/bus" },
-    { label: "檢視", url: "" }
+    { label: "汽車", url: "/bus" }
   ],
   "/bus?type=1": [
     { label: "入門", url: "/" },
@@ -139,8 +141,8 @@ const routers: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
-  console.log("📃📃📃📃📃", router);
-  return routers[router.pathname] || routers[router.asPath] || [];
+  const newRouters = routers[router.pathname] || routers[router.asPath] || [];
+  return newRouters;
 };
 
 export default getPageBreadCrumbs;

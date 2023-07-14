@@ -157,7 +157,6 @@ const VendorDetail = ({
       editEle: (
         <TextInputField
           className="text-input-field w100"
-          key="address1"
           label="地址1"
           {...methods.register("address1", {
             validate: textValidation
@@ -173,9 +172,8 @@ const VendorDetail = ({
       editEle: (
         <TextInputField
           className="text-input-field w100"
-          key="address2"
           label="地址2"
-          {...methods.register("address1", {
+          {...methods.register("address2", {
             validate: textValidation
           })}
           marginBottom="0"
@@ -275,9 +273,7 @@ const VendorDetail = ({
         />,
         <TextInput
           key="vendor_Fax"
-          {...methods.register("vendor_Fax", {
-            validate: numberValidation
-          })}
+          {...methods.register("vendor_Fax")}
           style={{ width: "58%" }}
         />
       ]
@@ -287,12 +283,7 @@ const VendorDetail = ({
       label: "公司信箱",
       value: vendor_Email || "--",
       editEle: [
-        <TextInput
-          key="vendor_Email"
-          {...methods.register("vendor_Email", {
-            validate: emailValidation
-          })}
-        />
+        <TextInput key="vendor_Email" {...methods.register("vendor_Email")} />
       ]
     },
     {
@@ -300,12 +291,7 @@ const VendorDetail = ({
       label: "公司網址",
       value: vendor_Url || "--",
       editEle: [
-        <TextInput
-          key="vendor_Url"
-          {...methods.register("vendor_Url", {
-            required: "必填"
-          })}
-        />
+        <TextInput key="vendor_Url" {...methods.register("vendor_Url")} />
       ]
     },
     {

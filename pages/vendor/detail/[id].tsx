@@ -25,23 +25,14 @@ import { keysToLowercase } from "@utils/keysToLowercase";
 //@context
 import { useVendorStore } from "@contexts/filter/vendorStore";
 //
-const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
+const Index: NextPageWithLayout<never> = ({ vendor_id, editPage }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  // const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const [loading, setLoading] = useState(false);
   const [oldVendorData, setOldVendorData] = useState(null);
-  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [nowTab, setNowTab] = useState("vendor");
-  const {
-    initializeSubFilter,
-    mainFilter,
-    updateMainFilter,
-    subFilter,
-    updateSubFilter,
-    isDrawerOpen,
-    setDrawerOpen
-  } = useVendorStore();
+  const { initializeSubFilter, subFilter, updateSubFilter } = useVendorStore();
 
   //
   const mainFilterArray = useMemo(
@@ -68,44 +59,50 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
       alert(e.message);
     }
     setLoading(false);
-    router.push("/vendor");
+    router.push({
+      pathname: "/vendor/detail/" + vendor_id,
+      query: { editPage: "view" }
+    });
+    getDefaultData();
+  };
+  const getDefaultData = async () => {
+    setLoading(true);
+    try {
+      const data = await getVendorById(vendor_id);
+      console.log("✨✨✨✨✨Get data by id", data);
+      data.vendor_Contact_List = data.vendor_Contact_List.map(
+        (child: { [key: string]: string }) => {
+          return keysToLowercase(child);
+        }
+      );
+      setOldVendorData(data);
+    } catch (e: any) {
+      console.log("取單一供應商data的時候錯了", e);
+      console.log(e);
+    }
+    setLoading(false);
   };
   //
   useEffect(() => {
-    const getCustomerData = async () => {
-      setLoading(true);
-      try {
-        const data = await getVendorById(vendor_id);
-        console.log("✨✨✨✨✨Get data by id", data);
-        data.vendor_Contact_List = data.vendor_Contact_List.map(
-          (child: { [key: string]: string }) => {
-            return keysToLowercase(child);
-          }
-        );
-        setOldVendorData(data);
-      } catch (e: any) {
-        console.log("取單一供應商data的時候錯了", e);
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    getCustomerData();
+    getDefaultData();
   }, [vendor_id]);
 
   return (
     <BodySTY>
       {!loading && oldVendorData && (
         <TableWrapper
-          isEdit={isEdit}
+          isEdit={editPage}
           onChangeTab={(value) => changeMainFilterHandler(value)}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
           onSave={() => {
-            // setIsEdit(!isEdit)
             submitRef.current && submitRef.current.click();
           }}
           onEdit={() => {
-            setIsEdit(true);
+            router.push({
+              pathname: "/vendor/detail/" + vendor_id,
+              query: { editPage: "edit" }
+            });
           }}
           onClose={() => {
             router.push("/vendor");
@@ -115,7 +112,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
             <VendorDetail
               submitRef={submitRef}
               submitForm={asyncSubmitForm}
-              isEdit={isEdit}
+              isEdit={editPage}
               vendorData={oldVendorData}
             />
           )}
@@ -127,7 +124,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id }) => {
               }}
               filter={subFilter}
             >
-              <VendorSubPoint isEdit={isEdit} />
+              <VendorSubPoint isEdit={editPage} />
             </FilterWrapper>
           )}
         </TableWrapper>
@@ -141,9 +138,10 @@ interface Props {
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
 ) => {
-  const { params } = context;
+  const { params, query } = context;
   return {
     props: {
+      editPage: query.editPage == "edit",
       vendor_id: params ? params.id : ""
     }
   };
