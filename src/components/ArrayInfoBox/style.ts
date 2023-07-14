@@ -22,7 +22,7 @@ export const InfoBoxSTY = styled.div`
     > li {
       display: flex;
       font-size: 14px;
-      margin-bottom: 33px;
+      margin-bottom: 20px;
       align-items: center;
       .req {
         color: #d14343;

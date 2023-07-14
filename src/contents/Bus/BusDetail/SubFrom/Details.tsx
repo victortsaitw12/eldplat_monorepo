@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Select, TextInput } from "evergreen-ui";
+// import { Select, TextInput } from "evergreen-ui";
+import { Select } from "evergreen-ui";
 import DottedSelect from "@components/HookForm/Select/DottedSelect";
 import InfoBox from "@components/InfoBox";
 import ImageUploader from "@components/ImageUploader";
@@ -11,6 +12,7 @@ import {
 } from "react-hook-form";
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
+import TextInput from "@components/CustomTextInput";
 interface Props {
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
@@ -134,14 +136,14 @@ function Details({
       value: getValues("bus.age") + "年"
     },
     {
-      req: true,
+      req: false,
       label: "配置",
       value: getValues("bus.trim"),
 
       editEle: [<TextInput key="bus.trim" {...register("bus.trim")} />]
     },
     {
-      req: true,
+      req: false,
       label: "註冊州/省",
       value: getValues("bus.registration_province"),
       editEle: [
