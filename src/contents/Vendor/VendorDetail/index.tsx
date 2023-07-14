@@ -351,7 +351,11 @@ const VendorDetail = ({
                   isEdit={isEdit}
                   infoData={category_info}
                   infoType="checkbox"
-                  infoTitle="分類"
+                  infoTitle={
+                    <span>
+                      <span style={{ color: "#D14343" }}>*</span>分類
+                    </span>
+                  }
                 />
                 <InfoBox
                   isEdit={isEdit}

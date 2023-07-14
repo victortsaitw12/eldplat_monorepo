@@ -57,9 +57,14 @@ function ContactList({
           },
           {
             label: contactUserName + "電話",
-            value: item.contact_tel
-              ? item.contact_tel_code + " " + item.contact_tel
-              : "--",
+            value: item.contact_tel ? (
+              <>
+                <span style={{ marginRight: "1rem" }}>市話</span>{" "}
+                {item.contact_tel_code} {item.contact_tel}
+              </>
+            ) : (
+              "市話 --"
+            ),
             editEle: [
               <Pane
                 display="flex"
@@ -80,10 +85,15 @@ function ContactList({
             ]
           },
           {
-            label: contactUserName + "手機",
-            value: item.contact_phone
-              ? item.contact_phone_code + " " + item.contact_phone
-              : "--",
+            label: " ",
+            value: item.contact_phone ? (
+              <>
+                <span style={{ marginRight: "1rem" }}>手機</span>{" "}
+                {item.contact_phone_code} {item.contact_phone}
+              </>
+            ) : (
+              "手機 --"
+            ),
             editEle: [
               <Pane
                 display="flex"

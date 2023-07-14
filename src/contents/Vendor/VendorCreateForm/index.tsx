@@ -41,7 +41,7 @@ const defaultValues = {
   address2: "",
   vendor_Area: "",
   vendor_District_Code: "",
-  vendor_Tel_Code: "",
+  vendor_Tel_Code: "+886",
   vendor_Tel: "",
   vendor_Contact_List: [
     {
@@ -130,21 +130,21 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
         公司地址
       </Text>
       <FiledInput
+        req={false}
         label="地址1"
         horizonLabel={true}
         controlProps={{
           name: "address1",
-          control,
-          rules: { required: "此欄位必填" }
+          control
         }}
       />
       <FiledInput
+        req={false}
         label="地址2"
         horizonLabel={true}
         controlProps={{
           name: "address2",
-          control,
-          rules: { required: "此欄位必填" }
+          control
         }}
       />
       <FlexWrapper
@@ -175,14 +175,9 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
         }}
       >
         <label style={{ width: "41%" }} htmlFor="">
-          <span style={{ color: "#D14343" }}>*</span>
           州/省/區域
         </label>
-        <Select
-          {...register("vendor_Area", {
-            required: "必填"
-          })}
-        >
+        <Select {...register("vendor_Area")}>
           <option value="A">A區</option>
           <option value="B">B區</option>
           <option value="C">C區</option>
@@ -190,12 +185,12 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
         </Select>
       </FlexWrapper>
       <FiledInput
-        label="郵遞區號"
+        req={false}
+        label="郵政編碼"
         horizonLabel={true}
         controlProps={{
           name: "vendor_District_Code",
-          control,
-          rules: { required: "此欄位必填", maxLength: 5 }
+          control
         }}
       />
       <FlexWrapper
@@ -226,6 +221,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
       <FlexWrapper padding="0">
         {/*公司電話國碼*/}
         <FiledInput
+          disabled={true}
           style={{ width: "60px" }}
           label=""
           controlProps={{
