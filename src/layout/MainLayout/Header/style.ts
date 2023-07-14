@@ -33,6 +33,26 @@ const BodySTY = styled.div`
       }
     }
   }
+  .breadcrumbs.main-layout {
+    .breadcrumbs-item {
+      & > * {
+        color: ${({ theme }) => theme.color.N0};
+        opacity: 0.5;
+      }
+      .breadcrumbs__route {
+        color: ${({ theme }) => theme.color.N0};
+        &:hover {
+          opacity: 1;
+        }
+      }
+      &:last-child {
+        & > .breadcrumbs__route,
+        & > div {
+          opacity: 1;
+        }
+      }
+    }
+  }
 `;
 
 const StyledButton = styled.button`
