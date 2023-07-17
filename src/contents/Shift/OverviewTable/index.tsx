@@ -10,17 +10,27 @@ import EventTag from "@contents/Shift/EventTag";
 import { getDayStart } from "../shift.util";
 import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
 
-const OverviewTable = ({
-  initialMonthFirst,
-  isExpand
-}: {
+interface I_OverviewTable {
   initialMonthFirst: Date;
   isExpand: boolean;
-}) => {
+  handleCheckboxChange?: (item: any) => void;
+  handleSelectAll?: () => void;
+  handleDeselectAll?: () => void;
+}
+const OverviewTable = ({
+  initialMonthFirst,
+  isExpand,
+  handleCheckboxChange = (item) => {
+    console.log(item);
+  },
+  handleSelectAll,
+  handleDeselectAll
+}: I_OverviewTable) => {
   const UI = React.useContext(UIContext);
   const router = useRouter();
-  const [allData, setAllData] = React.useState<DriverData[]>([]);
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const [allData, setAllData] = React.useState<DriverData[]>([]);
+  const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
 
   React.useEffect(() => {
     const queryString = `${initialMonthFirst.getFullYear()}-${(
@@ -32,7 +42,11 @@ const OverviewTable = ({
       .padStart(2, "0")}`;
     const fetchData = async () => {
       const result = await getAllDriverScheduleList(queryString);
-      setAllData(result.data);
+      const data = [...result.data];
+      const updatedData = data.map(
+        (item) => (item.scheduleInfo.id = item.scheduleInfo.driver_No)
+      );
+      setAllData(data);
       console.log("data:", result.data);
     };
     fetchData();
@@ -50,7 +64,6 @@ const OverviewTable = ({
   ).getDate();
 
   //------ functions ------//
-
   const handleScroll = (event: any) => {
     event.preventDefault();
     const container = containerRef.current;
@@ -91,6 +104,30 @@ const OverviewTable = ({
     }
   };
 
+  // checkbox +++
+  const handleCheckAll = (e: any) => {
+    checkedItems.length === allData.length
+      ? setCheckedItems([])
+      : setCheckedItems(allData.map((item) => item.id?.value));
+    if (!handleSelectAll || !handleDeselectAll) return;
+    e.target.checked ? handleSelectAll() : handleDeselectAll();
+  };
+
+  const handleCheck = (e: any) => {
+    if (checkedItems.includes(e.target.id)) {
+      const updated = checkedItems.filter((item) => item !== e.target.id);
+      setCheckedItems(updated);
+    } else {
+      const updated = [...checkedItems, e.target.id];
+      setCheckedItems(updated);
+    }
+
+    if (!handleCheckboxChange) return;
+    e.target.checked
+      ? handleCheckboxChange(e.target.value)
+      : handleCheckboxChange("");
+  };
+
   // get current date arr
   const dateArr: Array<DateItem> = [];
   for (let i = 0; i < curMonthTotal; i++) {
@@ -120,7 +157,13 @@ const OverviewTable = ({
     >
       <Table className="eg-table">
         <Table.Head className="eg-head">
-          <Checkbox className="eg-th checkbox" key="selectAll" label="" />
+          <Checkbox
+            className="eg-th checkbox"
+            key="selectAll"
+            label=""
+            onChange={(e) => handleCheckAll(e)}
+            checked={checkedItems.length === allData.length}
+          />
           <Table.TextHeaderCell className="eg-th">
             駕駛姓名
           </Table.TextHeaderCell>

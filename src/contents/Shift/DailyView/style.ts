@@ -8,12 +8,12 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
   overflow: hidden;
   overflow-x: scroll;
   overflow-y: hidden;
-
   &::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
   }
   display: flex;
   flex-direction: column;
+  padding-right: 20px;
 
   .headerCell__row {
     height: 32px;
@@ -106,7 +106,7 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
     min-width: 52px;
   }
   .time {
-    width: ${({ cellWidth }) => cellWidth + "%"};
+    width: ${({ cellWidth }) => cellWidth + "px"};
     min-width: 70px;
   }
 

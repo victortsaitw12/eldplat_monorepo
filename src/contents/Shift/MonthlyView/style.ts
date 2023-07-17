@@ -1,18 +1,13 @@
 import styled from "styled-components";
 
 export const MonthlySTY = styled.div<{ rows: number }>`
-  flex-grow: 10;
+  /* flex-grow: 10; */
   border: 1px solid ${({ theme }) => theme.color.N300};
   border-radius: 5px;
   width: 100%;
   height: 100%;
   position: relative;
-  overflow: hidden;
-  overflow-x: scroll;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+
   .headerCells {
     display: flex;
     flex-direction: row;
@@ -41,6 +36,7 @@ export const MonthlySTY = styled.div<{ rows: number }>`
     width: 100%;
     position: relative;
     height: calc(100% - 32px);
+    min-height: 100px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;

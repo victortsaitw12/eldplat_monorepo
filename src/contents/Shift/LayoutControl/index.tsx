@@ -17,7 +17,7 @@ const LayoutControl = ({
   const renderToggleView = (type: "monthly" | "daily") => {
     setState(type);
     UI.resetState();
-    UI.setTimeframe(1000 * 60 * 60 * 2);
+    UI.setTimeframe(1000 * 60 * 60 * 1);
   };
   return (
     <LayoutControlSTY>

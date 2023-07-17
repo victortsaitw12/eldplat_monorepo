@@ -203,6 +203,7 @@ const MonthlyView = ({
 
   return (
     <MonthlySTY rows={dateArr.length / 7}>
+      <div></div>
       <div className="headerCells">
         {wkDays.map((item, i) => (
           <div

@@ -12,15 +12,25 @@ export const DriverListSTY = styled.div`
       left: 0;
     }
   }
-
-  tr > td {
+  th {
+    &:nth-child(7) > span {
+      justify-content: flex-end !important;
+    }
+    &:nth-child(9) > span {
+      justify-content: center !important;
+    }
+    &:last-child > span {
+      justify-content: center !important;
+    }
+  }
+  td {
     &:nth-child(7) > div {
-      justify-content: flex-end;
+      justify-content: flex-end !important;
     }
     &:nth-child(9) > div {
-      justify-content: center;
+      justify-content: center !important;
     }
-    /* 駕駛列表頁確認全部顯示，過長折行
+    /* 駕駛列表頁確認全部顯示，過長折行(先不用)
     .data-row {
       width: 6rem;
       overflow: hidden;

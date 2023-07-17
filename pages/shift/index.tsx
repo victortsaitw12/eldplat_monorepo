@@ -14,11 +14,21 @@ import OverviewTable from "@contents/Shift/OverviewTable";
 import ZoomBar from "@components/ZoomBar";
 import { EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
+import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
+
+const mainFilterArray = [{ id: 1, label: "啟用", value: "1" }];
 
 const ShiftPage: NextPageWithLayout<never> = () => {
+  const {
+    initializeSubFilter,
+    mainFilter,
+    updateMainFilter,
+    subFilter,
+    updateSubFilter
+  } = useShiftStore();
   const [isExpand, setIsExpand] = React.useState(false);
-  const { initializeSubFilter, mainFilter, updateMainFilter, subFilter } =
-    useShiftStore();
+  const [nowTab, setNowTab] = React.useState("1");
 
   React.useEffect(() => {
     updateMainFilter("active");
@@ -51,9 +61,10 @@ const ShiftPage: NextPageWithLayout<never> = () => {
     return () => {
       isCanceled = true;
     };
-  }, [mainFilter, subFilter, initializeSubFilter]);
+  }, [nowTab, mainFilter, subFilter, initializeSubFilter]);
 
   //------ functions ------//
+  const changeMainFilterHandler = (value: string) => setNowTab(value);
   const handleZoombar = (value: boolean) => {
     setIsExpand(value);
   };
@@ -75,32 +86,52 @@ const ShiftPage: NextPageWithLayout<never> = () => {
         <Head>
           <title>駕駛排班總覽</title>
         </Head>
-        <Pane className="wrap">
-          <Tabs titles={["啟用"]} />
-          <Pane className="pageContent">
-            <TableTitle
-              tableName={[
-                <MonthPicker
-                  key="monthpicker"
+        <TableWrapper
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={nowTab}
+          mainFilterArray={mainFilterArray}
+          viewOnly={true}
+        >
+          <FilterWrapper
+            updateFilter={updateSubFilter}
+            resetFilter={() => {
+              initializeSubFilter();
+            }}
+            filter={subFilter}
+          >
+            <Pane className="wrap">
+              <Pane className="pageContent">
+                <TableTitle
+                  tableName={[
+                    <MonthPicker
+                      key="monthpicker"
+                      initialMonthFirst={initialMonthFirst}
+                    />,
+                    <div
+                      key="tabelTitle-type"
+                      className="container-header-left"
+                    >
+                      <span>全部區域</span>
+                      <span>全部都市</span>
+                    </div>
+                  ]}
+                  control={[<ZoomBar key="zoombar" setState={handleZoombar} />]}
+                  sub={Array.from(EVENT_TYPE).map(([key, value]) => {
+                    if (key !== "00")
+                      return <EventTag key={key} value={value} />;
+                  })}
+                  page={true}
+                  //pageInfo={pageInfo}
+                  //onPageChange={onPageChange}
+                />
+                <OverviewTable
                   initialMonthFirst={initialMonthFirst}
-                />,
-                <div key="tabelTitle-type" className="container-header-left">
-                  <span>全部區域</span>
-                  <span>全部都市</span>
-                </div>
-              ]}
-              control={[<ZoomBar key="zoombar" setState={handleZoombar} />]}
-              sub={Array.from(EVENT_TYPE).map(([key, value]) => {
-                if (key !== "00") return <EventTag key={key} value={value} />;
-              })}
-              page={true}
-            />
-            <OverviewTable
-              initialMonthFirst={initialMonthFirst}
-              isExpand={isExpand}
-            />
-          </Pane>
-        </Pane>
+                  isExpand={isExpand}
+                />
+              </Pane>
+            </Pane>{" "}
+          </FilterWrapper>
+        </TableWrapper>
       </ShiftSTY>
     </UIProvider>
   );

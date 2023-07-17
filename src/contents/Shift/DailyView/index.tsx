@@ -16,15 +16,13 @@ const DailyView = ({
   setIsOpenDrawer,
   monthlyData,
   setMonthlyData,
-  view,
-  isExpand
+  view
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
-  isExpand: boolean;
 }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -64,11 +62,6 @@ const DailyView = ({
     };
   }, [UI.isSelect]);
 
-  React.useEffect(() => {
-    isExpand
-      ? UI.setTimeframe(1000 * 60 * 60 * 1) //1hour
-      : UI.setTimeframe(1000 * 60 * 60 * 2); //2hour
-  }, [isExpand]);
   //------ functions ------//
   const handleCreateFullDayEvent = (timestamp: number) => {
     const selectedDT = new Date(timestamp);
@@ -87,7 +80,6 @@ const DailyView = ({
     setIsOpenDrawer(true);
   };
   //------ render body ------//
-
   const times: Array<TimeItem> = [];
   for (let h = 0; h < 24; h += UI.timeframe / (1000 * 60 * 60 * 1)) {
     const hour = h === 0 ? 12 : h > 12 ? h - 12 : h;
@@ -100,7 +92,8 @@ const DailyView = ({
     times.push(time);
   }
 
-  const cellWidth = 100 / times.length; //%
+  // const cellWidth = 100 / times.length; //%
+  const cellWidth = 104;
 
   // get current date arr
   const dateArr = [];
