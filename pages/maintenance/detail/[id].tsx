@@ -58,7 +58,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     console.log("⚽data", data);
     // setLoading(true);
 
-    const driver = mainCreateDdl?.driver_options?.filter((v) => {
+    const driver = mainCreateDdl?.driver_options?.filter((v: { no: any }) => {
       return v.no === data.driver_no;
     });
     console.log("driver+++++++++", driver);
