@@ -1,27 +1,24 @@
-import React, { useState, forwardRef } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { TextInputField, TextInput, SelectField } from "evergreen-ui";
 //@components
 import InfoBox from "@components/InfoBox";
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
-//@service
-//@utils
-//
 import ContactList from "@components/ContactList";
 import { CustomerDataTypes } from "../customer.type";
-import { getCustomerById } from "@services/customer/getCustomerById";
 interface I_Props {
   isEdit: boolean;
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
   asyncSubmitForm: (data: any) => Promise<void>;
   customerId: string;
+  customerDefaultData: CustomerDataTypes;
 }
 const CustomerDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
-  customerId
+  customerDefaultData
 }: I_Props) => {
   const {
     register,
@@ -30,11 +27,16 @@ const CustomerDetail = ({
     getValues,
     handleSubmit
   } = useForm<CustomerDataTypes>({
-    defaultValues: async () => getCustomerById(customerId)
+    defaultValues: customerDefaultData
   });
-  //TODO 分類的選法
-  if (getValues("customer_no") === undefined) {
-    return <div></div>;
+  useWatch({
+    control,
+    name: "customer_no"
+  });
+  //
+  console.log("getValues", getValues());
+  if (!customerDefaultData) {
+    return <div>查無相關資料...</div>;
   }
   //基本資料
   const basic_info = [
@@ -101,44 +103,44 @@ const CustomerDetail = ({
     }
   ];
   //標籤 label_Name(?)
-  // const label_info = getValues("labels")
-  //   ? [
-  //       {
-  //         label: getValues("labels")
-  //           ? getValues("labels")[0].label_name
-  //           : undefined,
-  //         value: getValues("labels")
-  //           ? getValues("labels")[0].label_name
-  //           : undefined
-  //       }
-  //     ]
-  //   : undefined;
+  const label_info = [
+    {
+      label: "",
+      value: ""
+    }
+  ];
   //聯絡方式
-
   const contact_info = [
     {
       req: true,
       label: "公司地址",
-      subLabel: <span>地址1</span>,
       value: getValues("address1"),
       editEle: (
-        <TextInput
+        <TextInputField
+          label="地址1"
+          className="text-input-field w100"
           {...register("address1", {
             required: "必填"
           })}
+          marginBottom="0"
         />
       )
     },
     {
       req: false,
-      label: "",
-      subLabel: <span>地址2</span>,
+      label: " ",
       value: getValues("address2"),
-      editEle: <TextInput {...register("address2")} />
+      editEle: (
+        <TextInputField
+          label="地址2"
+          {...register("address2")}
+          marginBottom="0"
+        />
+      )
     },
     {
       req: false,
-      label: "",
+      label: " ",
       value: [getValues("customer_city"), getValues("customer_area")],
       editEle: [
         <SelectField
@@ -167,7 +169,7 @@ const CustomerDetail = ({
     },
     {
       req: false,
-      label: "",
+      label: " ",
       value: [
         getValues("customer_district_code"),
         getValues("customer_country")
@@ -195,33 +197,54 @@ const CustomerDetail = ({
       req: true,
       label: "公司電話",
       value: getValues("customer_tel")
-        ? getValues("customer_tel_code") + " " + getValues("customer_tel")
+        ? "+" + getValues("customer_tel_code") + " " + getValues("customer_tel")
         : "--",
       editEle: [
-        <TextInput
-          key="customer_tel_code"
-          {...register("customer_tel_code")}
-          style={{ width: "60px" }}
-        />,
-        <TextInput
+        <div
           key="customer_tel"
-          {...register("customer_tel", { required: "必填！" })}
-        />
+          style={{
+            display: "flex",
+            flex: "1",
+            gap: "8px"
+          }}
+        >
+          <TextInput
+            {...register("customer_tel_code")}
+            style={{ width: "60px" }}
+          />
+          <TextInput
+            {...register("customer_tel", { required: "必填！" })}
+            style={{ flex: "1", width: "auto" }}
+          />
+        </div>
       ]
     },
     {
       req: false,
       label: "公司傳真",
       value: getValues("customer_fax")
-        ? getValues("customer_fax_code") + " " + getValues("customer_fax")
+        ? "+" + getValues("customer_fax_code") + " " + getValues("customer_fax")
         : "--",
       editEle: [
-        <TextInput
-          key="customer_fax_code"
-          style={{ width: "60px" }}
-          {...register("customer_fax_code")}
-        />,
-        <TextInput key="customer_fax" {...register("customer_fax")} />
+        <div
+          key="customer_tel"
+          style={{
+            display: "flex",
+            flex: "1",
+            gap: "8px"
+          }}
+        >
+          <TextInput
+            key="customer_fax_code"
+            style={{ width: "60px" }}
+            {...register("customer_fax_code")}
+          />
+          <TextInput
+            key="customer_fax"
+            {...register("customer_fax")}
+            style={{ flex: "1", width: "auto" }}
+          />
+        </div>
       ]
     },
     {
@@ -229,16 +252,25 @@ const CustomerDetail = ({
       label: "公司信箱",
       value: getValues("customer_email") || "--",
       editEle: [
-        <TextInput key="customer_email" {...register("customer_email")} />
+        <TextInput
+          key="customer_email"
+          {...register("customer_email")}
+          style={{ flex: "1" }}
+        />
       ]
     },
     {
       req: false,
       label: "公司網址",
       value: getValues("customer_url") || "--",
-      editEle: [<TextInput key="customer_url" {...register("customer_url")} />]
+      editEle: [
+        <TextInput
+          key="customer_url"
+          {...register("customer_url")}
+          style={{ flex: "1" }}
+        />
+      ]
     },
-    // TODO:主要聯絡人區塊 因為變成Array所以先緩緩再做。
     {
       req: false,
       inputType: "custom",
@@ -267,14 +299,18 @@ const CustomerDetail = ({
             <InfoBox
               isEdit={isEdit}
               infoData={category_info}
-              infoTitle="分類"
+              infoTitle={
+                <div>
+                  <span style={{ color: "#D14343" }}>*</span>分類
+                </div>
+              }
             />
-            {/* <InfoBox
+            <InfoBox
               isEdit={isEdit}
               infoData={label_info}
               infoType="label"
               infoTitle="標籤"
-            /> */}
+            />
           </FlexWrapper>
         </div>
         <InfoBox

@@ -54,7 +54,6 @@ const Page: NextPageWithLayout<
         setLoading(false);
       });
   }, [router]);
-  console.log("options", options);
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
   };

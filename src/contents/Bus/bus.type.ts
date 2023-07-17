@@ -5,7 +5,7 @@ export interface BusDataTypes {
     bus_name: string;
     vin: string;
     license_plate: string;
-    bus_type: string;
+    type: string;
     year: number;
     make: string;
     model: string;
