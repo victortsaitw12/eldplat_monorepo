@@ -12,6 +12,7 @@ export interface I_Maintenance_Type {
   license_plate: string;
   year: number;
   operator_no: string;
+  operator_name: string;
   bus_assignment_no: string;
   driver_assignment_no: string;
   driver_name: string;

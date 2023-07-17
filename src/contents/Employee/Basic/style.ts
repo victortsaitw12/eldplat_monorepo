@@ -3,9 +3,8 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   form {
     .input-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: grid;
+      grid-template-columns: 5fr 8fr;
       margin: 16px auto;
       span {
         font-size: 14px;
@@ -21,11 +20,7 @@ export const BodySTY = styled.div`
       .gender-radio {
         display: flex;
         align-items: center;
-        width: 400px;
 
-        > span {
-          margin-right: 80px;
-        }
         label {
           margin-right: 24px;
         }
