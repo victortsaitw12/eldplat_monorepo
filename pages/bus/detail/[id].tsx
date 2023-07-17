@@ -67,7 +67,7 @@ const Page: NextPageWithLayout<
       alert(e.message);
       console.log(e);
     }
-    // router.push("/bus/detail/" + busId + "?editPage=view");
+    router.push("/bus/detail/" + busId + "?editPage=view");
     setLoading(false);
   };
   const onCancelHandler = () => {
