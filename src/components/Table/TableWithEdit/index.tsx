@@ -28,6 +28,7 @@ interface I_Table {
   deleteText?: string;
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
+  theadClass?: { label: string; value: string }[];
 }
 /*
 Must provide id field in the Data Array
@@ -48,7 +49,8 @@ function Table({
   checkboxData,
   deleteText,
   pageInfo,
-  onPageChange
+  onPageChange,
+  theadClass
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
   const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
@@ -137,15 +139,20 @@ function Table({
               if (title === "id") {
                 return;
               }
+              const finalClass = theadClass?.map((v) => {
+                if (v.label === title) {
+                  return v.value;
+                }
+              });
               return (
                 <th key={uuid()}>
-                  <span>{title}</span>
+                  <span className={finalClass && finalClass[0]}>{title}</span>
                 </th>
               );
             })}
             <th>
               {/* <span>{<FormattedMessage key="action" id="action" />}</span> */}
-              <span>操作</span>
+              <span className="handle">操作</span>
             </th>
           </tr>
         </thead>
@@ -187,7 +194,7 @@ function Table({
                     }
                     return (
                       <td key={item.id + key}>
-                        <div className="data-row">
+                        <div className={`${key} data-row`}>
                           <div>{item[key].label}</div>
                         </div>
                       </td>

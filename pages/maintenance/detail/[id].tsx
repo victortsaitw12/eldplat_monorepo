@@ -13,6 +13,7 @@ import MaintenanceDetail from "@contents/maintenance/MaintenanceDetail";
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
 import { updateMaintenance } from "@services/maintenance/updateMaintenance";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
+import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 const mainFilterArray = [{ id: 1, label: "維保資料", value: "1" }];
 //
 const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
@@ -23,6 +24,21 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [isFinished, setIsFinished] = useState<boolean>(false); // 維保任務是否結案的boolean
+  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
+
+  // 取得新增時的下拉式資料
+  useEffect(() => {
+    setLoading(true);
+    try {
+      getCreateDdl().then((data) => {
+        setMainCreateDdl(data.dataList[0]);
+      });
+    } catch (err) {
+      console.error("getDDL error: ", err);
+    }
+    setLoading(false);
+  }, []);
+
   useEffect(() => {
     updateMainFilter("1");
 
@@ -42,6 +58,11 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     console.log("⚽data", data);
     // setLoading(true);
 
+    const driver = mainCreateDdl?.driver_options?.filter((v) => {
+      return v.no === data.driver_no;
+    });
+    console.log("driver+++++++++", driver);
+
     const newData = {
       maintenance_no: data.maintenance_no,
       maintenance_type: data.maintenance_type,
@@ -49,7 +70,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
       service_end_date: data.service_end_date,
       meter: Number(data["meter"]),
       driver_no: data.driver_no,
-      driver_name: data.driver_name,
+      driver_name: driver[0].name,
       vendor_no: data.vendor_no,
       package_code: data.package_code,
       maintenanceDts: data.maintenanceDts,
@@ -62,8 +83,8 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     console.log("🉐edited data", newData);
 
     try {
-      const res = await updateMaintenance(newData, data["files"]);
-      console.log("儲存 res", res);
+      // const res = await updateMaintenance(newData, data["files"]);
+      // console.log("儲存 res", res);
       setIsEdit(false);
     } catch (e: any) {
       console.log(e);
@@ -100,6 +121,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
           submitRef={submitRef}
           asyncSubmitForm={asyncSubmitForm}
           maintenance_id={maintenance_id}
+          mainCreateDdl={mainCreateDdl}
         />
       </TableWrapper>
     </BodySTY>
