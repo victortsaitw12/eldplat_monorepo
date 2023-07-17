@@ -9,7 +9,6 @@ export const getCustomerById = async (customer_no: string) => {
     }
   });
   const data = await response.json();
-  console.log("data.dataList[0]", data.dataList[0]);
   return data.dataList[0];
 };
 

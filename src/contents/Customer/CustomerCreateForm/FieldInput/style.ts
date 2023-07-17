@@ -11,19 +11,18 @@ const ItemSTY = styled.label<I_StyInputProps>`
   gap: 12px;
   input {
     width: 100%;
-    padding:0 12px;
-    border: 1px solid #AFC3DA;
+    padding: 0 12px;
+    border: 1px solid #afc3da;
     border-radius: 4px;
     line-height: 32px;
-    color: #718BAA;
-  }
-  input: focus {
-    outline: none;
+    color: #718baa;
+    &:focus {
+      outline: none;
+    }
   }
   .field-title {
     display: flex;
     align-items: center;
-    font-size: 14px;
     .requier-icon {
       font-weight: 700;
       color: ${({ theme }) => theme.color.R400};
@@ -40,20 +39,19 @@ const ItemSTY = styled.label<I_StyInputProps>`
 const getHorizonStyles = (props: any) =>
   props.horizonLabel
     ? css`
-         flex-direction: row;
-         flex-wrap: wrap;
-         input{
-          display: block;
-          width: calc(60% - 12px);
-         }
-         .field-title {
-          width: 40%;
-         }
-         .error-message{
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 12px;
+        input {
+          flex: 1;
+        }
+        .field-title {
+          width: 68px;
+        }
+        .error-message {
           width: 100%;
-         }
+        }
       `
-    : css`
-        
-      `;
+    : css``;
 export { ItemSTY };

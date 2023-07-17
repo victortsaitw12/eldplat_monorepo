@@ -20,11 +20,6 @@ html {
 }
 
 html, body {
-  /* font-family: "Noto Sans",'Noto Sans TC', sans-serif; */
-  font-family: -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   font-weight: 400;
   color: ${({ theme }) => theme.primaryPalette.Neutral};
   /* Only works if there is nothing absolutely positioned in relation to body */

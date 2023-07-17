@@ -41,7 +41,7 @@ export const getAllCustomers = async (
 
 export const getCustomerTitle = () => {
   const DUMMY_TITLES = [
-    "客戶系統編號",
+    "客戶號碼",
     "名稱",
     "分類",
     "區域",
