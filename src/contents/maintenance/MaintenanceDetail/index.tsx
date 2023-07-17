@@ -19,7 +19,7 @@ interface I_Props {
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
   asyncSubmitForm: (data: any) => Promise<void>;
   maintenance_id: string;
-  mainCreateDdl: any;
+  mainCreateDdl?: any;
 }
 const MaintenanceDetail = ({
   isEdit,
