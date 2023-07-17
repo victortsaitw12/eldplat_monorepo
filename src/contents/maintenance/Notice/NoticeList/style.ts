@@ -8,6 +8,24 @@ export const BodySTY = styled.div`
   height: 100%;
   /* min-height: 100vh; */
 
+  table {
+    tbody {
+      td {
+        .mission {
+          justify-content: center;
+        }
+      }
+    }
+
+    thead {
+      tr {
+        .mission {
+          justify-content: center;
+        }
+      }
+    }
+  }
+
   .select {
     width: 100px;
     height: 32px;

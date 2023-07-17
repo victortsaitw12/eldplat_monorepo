@@ -34,7 +34,22 @@ const TableSTY = styled.table`
 
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
-    text-align: left;
+    th .invoice,
+    th .remark {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    th .file,
+    th .delete {
+      display: flex;
+      justify-content: center;
+    }
+
+    th .price {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 
   tbody {
@@ -47,6 +62,21 @@ const TableSTY = styled.table`
           width: 30px;
         }
       }
+    }
+
+    /* tr td :first-child(:not(.upload-frame && button)) {
+      display: flex;
+      justify-content: flex-start;
+    } */
+
+    tr td .receipt_number,
+    tr td .service_remark {
+      display: flex;
+      justify-content: flex-start;
+    }
+    tr td .price {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 

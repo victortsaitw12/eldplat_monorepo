@@ -23,7 +23,7 @@ import { CloseAssignment } from "@services/maintenance/updateMaintenance";
 import Link from "next/link";
 //
 const mainFilterArray = [
-  { id: 1, label: "通知", value: "1" },
+  { id: 1, label: "任務", value: "1" },
   { id: 2, label: "取消", value: "2" }
 ];
 //
@@ -58,7 +58,6 @@ const Page: NextPageWithLayout<never> = () => {
 
       // 由於table內不只有靜態資料顯示(有button功能)，所以客制加工一下 => 結案按鈕
       MainMissionData?.map((item) => {
-        console.log("maintainance item----", item);
         if (item["completion_time"].label === "---") {
           const active =
             item["all_assignment_no"].value.length > 30 ? false : true;
@@ -94,7 +93,6 @@ const Page: NextPageWithLayout<never> = () => {
         }
 
         const newString = item["all_assignment_no"].value.split(", ");
-        console.log("newString", newString);
         if (item["all_assignment_no"].value.length > 15) {
           return (item["all_assignment_no"].label = (
             <div className="assignment-link">

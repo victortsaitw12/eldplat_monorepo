@@ -1,10 +1,11 @@
-import { Pane, FileUploader, FileCard } from "evergreen-ui";
+import { Pane, Text, FileUploader, FileCard, UploadIcon } from "evergreen-ui";
 import React from "react";
 import {
   UseFormGetValues,
   UseFormRegister,
   UseFormSetValue
 } from "react-hook-form";
+import { BodySTY } from "./style";
 
 interface I_InvoiceFile {
   register: UseFormRegister<any>;
@@ -47,36 +48,49 @@ const InvoiceFile = ({
   }, []);
 
   return (
-    <Pane maxWidth={654}>
-      <FileUploader
-        key={keyName}
-        maxSizeInBytes={50 * 1024 ** 2}
-        maxFiles={1}
-        onChange={handleChange}
-        onRejected={handleRejected}
-        renderFile={(file) => {
-          const { name, size, type } = file;
-          const fileRejection = fileRejections.find(
-            (fileRejection) => fileRejection.file === file
-          );
-          const { message } = fileRejection || {};
-          return (
-            <FileCard
-              key={name}
-              isInvalid={fileRejection != null}
-              name={name}
-              onRemove={handleRemove}
-              sizeInBytes={size}
-              type={type}
-              validationMessage={message}
-            />
-          );
-        }}
-        values={files}
-        // values={files}
-        // {...register(`${arrayName}.${index}.files`)}
-      />
-    </Pane>
+    <BodySTY className="receipt_url">
+      <Pane className="upload-frame">
+        <FileUploader
+          className="old-file"
+          key={keyName}
+          browseOrDragText={() => {
+            return (
+              <Pane className="file">
+                <UploadIcon />
+                <Text>上傳</Text>
+              </Pane>
+            );
+          }}
+          maxSizeInBytes={50 * 1024 ** 2}
+          maxFiles={1}
+          onChange={handleChange}
+          onRejected={handleRejected}
+          background="transparent"
+          border="none"
+          renderFile={(file) => {
+            const { name, size, type } = file;
+            const fileRejection = fileRejections.find(
+              (fileRejection) => fileRejection.file === file
+            );
+            const { message } = fileRejection || {};
+            return (
+              <FileCard
+                key={name}
+                isInvalid={fileRejection != null}
+                name={name}
+                onRemove={handleRemove}
+                sizeInBytes={size}
+                type={type}
+                validationMessage={message}
+              />
+            );
+          }}
+          values={files}
+          // values={files}
+          // {...register(`${arrayName}.${index}.files`)}
+        />
+      </Pane>
+    </BodySTY>
   );
 };
 

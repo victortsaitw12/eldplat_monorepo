@@ -116,6 +116,11 @@ const TableSTY = styled.table`
     align-items: center;
     gap: 8px;
   }
+  .handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .dot {
     width: 6px;
     height: 6px;
