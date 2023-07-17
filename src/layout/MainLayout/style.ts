@@ -16,7 +16,7 @@ const ContainerSTY = styled.div`
   .content {
     flex-grow: 1;
     background-color: ${({ theme }) => theme.color.N300};
-    overflow: hidden;
+    overflow: auto;
   }
   overflow: auto;
   overflow: hidden;
