@@ -92,7 +92,9 @@ function HealthRecords({
       {healths.length !== 0 ? (
         <Table titles={table_title} data={orderedTableData} />
       ) : (
-        <div style={{ textAlign: "center" }}>無資料，請至員工設定頁面編輯</div>
+        <div style={{ textAlign: "center" }}>
+          目前無資料，請至員工設定頁面編輯
+        </div>
       )}
     </BodySTY>
   );

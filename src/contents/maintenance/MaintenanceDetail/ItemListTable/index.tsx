@@ -29,7 +29,7 @@ interface I_Data {
 }
 
 interface I_Table {
-  titles?: Array<string | number | React.ReactNode>;
+  titles?: { label: string; value: string }[];
   data?: I_Data[];
   control: Control<any>;
   register: UseFormRegister<any>;
@@ -91,13 +91,13 @@ function ItemListTable({
       <TableSTY>
         <thead>
           <tr>
-            {titles?.map((title, i) => {
-              if (title === "id") {
+            {titles?.map((title, idx) => {
+              if (title.value === "delete" && !isEdit) {
                 return;
               }
               return (
                 <th key={uuid()}>
-                  <span>{title}</span>
+                  <span className={`${title.value}`}>{title.label}</span>
                 </th>
               );
             })}
@@ -168,6 +168,7 @@ function ItemListTable({
                             <TextInput
                               // disabled={v.keyName === "receipt_url" && true}
                               // type={v.keyName === "receipt_url" && "file"}
+                              className={v.keyName}
                               key={`${arrayName}.${index}.${v.keyName}`}
                               {...register(
                                 `${arrayName}.${index}.${v.keyName}`
@@ -176,13 +177,14 @@ function ItemListTable({
                           )
                         ) : v.keyName === "receipt_url" ? (
                           <DocumentIcon
+                            className="receipt_url"
                             onClick={() => {
                               handleFiles(item);
                             }}
                             cursor="pointer"
                           ></DocumentIcon>
                         ) : (
-                          <Text>{v.value}</Text>
+                          <Text className={v.keyName}>{v.value}</Text>
                         )}
                       </td>
                     );

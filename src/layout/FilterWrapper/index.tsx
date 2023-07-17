@@ -37,6 +37,7 @@ function FilterWrapper({
   if (!filter) {
     return <div>loading...</div>;
   }
+  console.log("filter", filter);
 
   return (
     <BodySTY>

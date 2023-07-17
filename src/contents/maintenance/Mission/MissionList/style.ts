@@ -1,8 +1,26 @@
 import styled from "styled-components";
 
-export const BodySTY = styled.div`
+export const BodySTY = styled.div<{ inCenter?: boolean }>`
   padding: 1rem;
-  background-color: #fff;
   overflow-x: auto;
-  min-height: 100vh;
+  height: 100%;
+  /* min-height: 100vh; */
+
+  table {
+    tbody {
+      td {
+        .completion_time {
+          justify-content: center;
+        }
+      }
+    }
+
+    thead {
+      tr {
+        .completion_time {
+          justify-content: center;
+        }
+      }
+    }
+  }
 `;

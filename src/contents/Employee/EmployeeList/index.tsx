@@ -23,7 +23,7 @@ function EmployeeList({
       <TableWithEdit
         titles={employeeTitle}
         data={data}
-        tableName="員工列表"
+        tableName="員工"
         goToCreatePage={goToCreatePage}
         deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}

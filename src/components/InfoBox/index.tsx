@@ -59,6 +59,7 @@ function InfoBox({
     }
     return infoData.map((child: any, i: number) => {
       const { req, value, label, editEle, inputType } = child;
+      console.log("value/*/*/*", value);
       if (!value && !editEle) {
         return;
       }
