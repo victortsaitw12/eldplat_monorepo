@@ -19,7 +19,7 @@ interface I_Props {
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
   asyncSubmitForm: (data: any) => Promise<void>;
   maintenance_id: string;
-  mainCreateDdl: any;
+  mainCreateDdl?: any;
 }
 const MaintenanceDetail = ({
   isEdit,
@@ -46,8 +46,6 @@ const MaintenanceDetail = ({
       });
     }
   });
-
-  const [loading, setLoading] = useState(false);
 
   if (getValues("maintenance_no") === undefined) {
     return <div></div>;
@@ -78,7 +76,7 @@ const MaintenanceDetail = ({
     {
       req: false,
       label: "主要駕駛",
-      value: getValues("operator_no")
+      value: getValues("operator_name")
     },
     {
       req: false,

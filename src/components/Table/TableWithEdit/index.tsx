@@ -12,7 +12,8 @@ const dontShowList = [
   "維保任務",
   "維保紀錄",
   "駕駛列表",
-  "駕駛證照"
+  "駕駛證照",
+  "員工列表"
 ];
 interface I_Data {
   [key: string]: string | number | React.ReactNode | any;
@@ -166,7 +167,7 @@ function Table({
                 );
               })}
               <th>
-                <span style={{ justifySelf: "center" }}>操作</span>
+                <span style={{ justifyContent: "center" }}>操作</span>
               </th>
             </tr>
           </thead>
@@ -199,11 +200,17 @@ function Table({
                       if (key === "id") return;
                       if (!item[key].label) {
                         return (
+                          // 🟡NEW:
                           <td key={item.id + key}>
-                            <span className="no-data">
-                              <div />
-                            </span>
+                            <span>--</span>
                           </td>
+
+                          // 🟡OLD:
+                          // <td key={item.id + key}>
+                          //   <span className="no-data">
+                          //     <div />
+                          //   </span>
+                          // </td>
                         );
                       }
                       return (

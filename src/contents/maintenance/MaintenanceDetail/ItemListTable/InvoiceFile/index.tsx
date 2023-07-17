@@ -24,6 +24,16 @@ const InvoiceFile = ({
   getValues,
   keyName
 }: I_InvoiceFile) => {
+  // const [files, setFiles] = React.useState<any[]>([
+  //   {
+  //     lastModified: 1661148032441,
+  //     lastModifiedDate: "Mon Aug 22 2022 14:00:32 GMT+0800 (台北標準時間) {}",
+  //     name: "2461293.jpg",
+  //     size: 69773,
+  //     type: "image/jpeg",
+  //     webkitRelativePath: ""
+  //   }
+  // ]);
   const [files, setFiles] = React.useState<any[]>([]);
   const [fileRejections, setFileRejections] = React.useState<any[]>([]);
   //   const handleChange = React.useCallback(

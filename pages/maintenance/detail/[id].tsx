@@ -58,10 +58,9 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     console.log("⚽data", data);
     // setLoading(true);
 
-    const driver = mainCreateDdl?.driver_options?.filter((v) => {
+    const driver = mainCreateDdl?.driver_options?.filter((v: { no: any }) => {
       return v.no === data.driver_no;
     });
-    console.log("driver+++++++++", driver);
 
     const newData = {
       maintenance_no: data.maintenance_no,
@@ -83,14 +82,14 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     console.log("🉐edited data", newData);
 
     try {
-      // const res = await updateMaintenance(newData, data["files"]);
-      // console.log("儲存 res", res);
+      const res = await updateMaintenance(newData, data["files"]);
+      console.log("儲存 res", res);
       setIsEdit(false);
     } catch (e: any) {
       console.log(e);
     }
-    // router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
-    // router.reload();
+    router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
+    router.reload();
     setLoading(false);
     return;
   };
