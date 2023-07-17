@@ -35,6 +35,7 @@ interface I_Table {
   deleteText?: string;
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
+  theadClass?: { label: string; value: string }[];
   createBtnText?: string;
 }
 /*
@@ -58,6 +59,7 @@ function Table({
   deleteText,
   pageInfo,
   onPageChange,
+  theadClass,
   createBtnText
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
@@ -152,9 +154,14 @@ function Table({
                 if (title === "id") {
                   return;
                 }
+                const finalClass = theadClass?.map((v) => {
+                  if (v.label === title) {
+                    return v.value;
+                  }
+                });
                 return (
                   <th key={uuid()}>
-                    <span>{title}</span>
+                    <span className={finalClass && finalClass[0]}>{title}</span>
                   </th>
                 );
               })}

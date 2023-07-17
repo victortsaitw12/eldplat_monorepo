@@ -59,28 +59,20 @@ function MaintenanceNoticeList({
     setSelectCount(countArr.length);
   }, [checkboxData]);
 
+  const theadClass = [{ label: "新增任務", value: "mission" }];
+
   return (
     <BodySTY>
-      {selectCount !== 0 && (
+      {/* 🚫取消的方塊 (PM說先暫時不顯示 2023.7.14) */}
+      {/* {selectCount !== 0 && (
         <Pane className="select">
           <Pill display="inline-flex" margin={6}>
             {selectCount}
           </Pill>
           <button onClick={handleShown}>取消</button>
-          {/* <select
-            value={value}
-            onChange={(event) => {
-              setValue(event.target.value);
-              handleShown(event);
-            }}
-          >
-            <option value="">動作</option>
-            <option value="cancel" onClick={handleShown}>
-              取消
-            </option>
-          </select> */}
+         
         </Pane>
-      )}
+      )} */}
 
       <DeleteDialog
         isShown={isShown}
@@ -98,9 +90,25 @@ function MaintenanceNoticeList({
         handleSelectAll={handleSelectAll}
         handleDeselectAll={handleDeselectAll}
         checkboxData={checkboxData}
+        theadClass={theadClass}
       />
     </BodySTY>
   );
 }
 
 export default MaintenanceNoticeList;
+
+{
+  /* <select
+            value={value}
+            onChange={(event) => {
+              setValue(event.target.value);
+              handleShown(event);
+            }}
+          >
+            <option value="">動作</option>
+            <option value="cancel" onClick={handleShown}>
+              取消
+            </option>
+          </select> */
+}
