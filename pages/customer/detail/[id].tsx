@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef, ReactNode } from "react";
+import React, { useEffect, useState, useRef, ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 //@layout
@@ -12,16 +12,32 @@ import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { useCustomerStore } from "@contexts/filter/customerStore";
 const mainFilterArray = [{ id: 1, label: "客戶資料", value: "1" }];
+import { getCustomerById } from "@services/customer/getCustomerById";
+
+import LoadingSpinner from "@components/LoadingSpinner";
 //
 const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useCustomerStore();
   const router = useRouter();
+  const [customerDefaultData, setCustomerDefaultData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     updateMainFilter("1");
-  }, []);
+    setLoading(true);
+    getCustomerById(customerId)
+      .then((res) => {
+        console.log("res", res);
+        setCustomerDefaultData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [router]);
   //TableWrapper
   const changeMainFilterHandler = () => {
     console.log("changeMainFilterHandler");
@@ -29,23 +45,24 @@ const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
   //
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
-    console.log("edited data", data);
     try {
       await updateCustomer(data);
+      router.push({
+        pathname: "/customer/detail/" + customerId,
+        query: { editPage: "view" }
+      });
     } catch (e: any) {
       console.log(e);
     }
     setLoading(false);
-    router.push({
-      pathname: "/customer/detail/" + customerId,
-      query: { editPage: "view" }
-    });
   };
   //
   const onCancelHandler = () => {
     router.push("/customer");
   };
-
+  if (loading) {
+    return <LoadingSpinner />;
+  }
   return (
     <BodySTY>
       <TableWrapper
@@ -71,6 +88,7 @@ const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
           submitRef={submitRef}
           asyncSubmitForm={asyncSubmitForm}
           customerId={customerId}
+          customerDefaultData={customerDefaultData}
         />
       </TableWrapper>
     </BodySTY>

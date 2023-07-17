@@ -35,6 +35,7 @@ function ContactList({
     control,
     name: arrayName
   });
+  console.log("fields", fields);
   return (
     <BodySTY>
       {fields.map((item: any, index) => {
@@ -52,6 +53,7 @@ function ContactList({
                   required: "必填",
                   validate: textValidation
                 })}
+                style={{ flex: "1" }}
               />
             ]
           },
@@ -59,8 +61,10 @@ function ContactList({
             label: contactUserName + "電話",
             value: item.contact_tel ? (
               <>
-                <span style={{ marginRight: "1rem" }}>市話</span>{" "}
-                {item.contact_tel_code} {item.contact_tel}
+                <span style={{ marginRight: "1rem" }}>市話</span>
+                <span>
+                  +{item.contact_tel_code} {item.contact_tel}
+                </span>
               </>
             ) : (
               "市話 --"
@@ -71,6 +75,7 @@ function ContactList({
                 flexDirection="row"
                 gap={10}
                 key={`${arrayName}.${index}.contact_tel`}
+                alignItems="center"
               >
                 <Text>市話</Text>
                 <TextInput
@@ -78,7 +83,7 @@ function ContactList({
                   {...register(`${arrayName}.${index}.contact_tel_code`)}
                 />
                 <TextInput
-                  style={{ width: "48%" }}
+                  style={{ flex: "1", width: "auto" }}
                   {...register(`${arrayName}.${index}.contact_tel`)}
                 />
               </Pane>
@@ -88,8 +93,10 @@ function ContactList({
             label: " ",
             value: item.contact_phone ? (
               <>
-                <span style={{ marginRight: "1rem" }}>手機</span>{" "}
-                {item.contact_phone_code} {item.contact_phone}
+                <span style={{ marginRight: "1rem" }}>手機</span>
+                <span>
+                  +{item.contact_phone_code} {item.contact_phone}
+                </span>
               </>
             ) : (
               "手機 --"
@@ -100,6 +107,7 @@ function ContactList({
                 flexDirection="row"
                 gap={10}
                 key={`${arrayName}.${index}.contact_phone_code`}
+                alignItems="center"
               >
                 <Text>手機</Text>
                 <TextInput
@@ -107,7 +115,7 @@ function ContactList({
                   {...register(`${arrayName}.${index}.contact_phone_code`)}
                 />
                 <TextInput
-                  style={{ width: "48%" }}
+                  style={{ flex: "1", width: "auto" }}
                   {...register(`${arrayName}.${index}.contact_phone`)}
                 />
               </Pane>
@@ -120,6 +128,7 @@ function ContactList({
               <TextInput
                 key={`${arrayName}.${index}.contact_email`}
                 {...register(`${arrayName}.${index}.contact_email`)}
+                style={{ flex: "1" }}
               />
             ]
           }

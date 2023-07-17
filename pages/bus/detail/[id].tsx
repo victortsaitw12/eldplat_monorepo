@@ -54,7 +54,6 @@ const Page: NextPageWithLayout<
         setLoading(false);
       });
   }, [router]);
-  console.log("options", options);
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
   };
@@ -68,7 +67,7 @@ const Page: NextPageWithLayout<
       alert(e.message);
       console.log(e);
     }
-    router.push("/bus/detail/" + busId + "?editPage=view");
+    // router.push("/bus/detail/" + busId + "?editPage=view");
     setLoading(false);
   };
   const onCancelHandler = () => {

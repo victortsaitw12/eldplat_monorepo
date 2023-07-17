@@ -121,7 +121,10 @@ function Table({
               <th>
                 <Checkbox
                   onChange={(e) => handleCheckAll(e)}
-                  checked={checkedItems.length === data.length}
+                  checked={
+                    checkedItems.length !== 0 &&
+                    checkedItems.length === data.length
+                  }
                 />
               </th>
             )}
@@ -224,8 +227,10 @@ function Table({
               );
             })
           ) : (
-            <tr className="noDataShown">
-              <td>查無資料</td>
+            <tr>
+              <td colSpan={100} className="noDataShown">
+                目前無資料
+              </td>
             </tr>
           )}
         </tbody>

@@ -87,7 +87,6 @@ function InfoBox({
     if (isEdit) {
       return <Pane>{infoData[0].editEle}</Pane>;
     } else {
-      console.log("🎶🎶🎶🎶", infoData[0].value);
       if (
         infoData[0].value &&
         Array.isArray(infoData[0].value) &&

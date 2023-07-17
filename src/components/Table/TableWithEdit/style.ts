@@ -65,7 +65,6 @@ const TableSTY = styled.table`
 
   td,
   th {
-    padding: 8px 10px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
@@ -75,6 +74,9 @@ const TableSTY = styled.table`
       display: flex;
       justify-content: flex-start;
       align-items: center;
+    }
+    &:first-child {
+      padding-left: 8px;
     }
   }
   tr:last-child td {
@@ -112,8 +114,14 @@ const TableSTY = styled.table`
     background-color: green;
   }
   .noDataShown {
+    text-align: center;
+    padding: 15px 0;
+  }
+  /* .noDataShown {
     min-height: 32px;
-
+    display: flex;
+    justify-content: center;
+    column-span: all;
     div {
       width: 100%;
       height: 32px;
@@ -122,7 +130,7 @@ const TableSTY = styled.table`
       position: absolute;
       text-align: center;
     }
-  }
+  } */
 `;
 
 const StyledDot = styled.div<{ value: string }>`

@@ -34,6 +34,8 @@ function StyledSelect<
   onFormChange: (value: string) => void;
 }) {
   const id = useId();
+  console.log("formDefaultValue", formDefaultValue);
+  console.log("options", options);
   const defaultOption = options.find(
     (option: any) => option.value === formDefaultValue
   );
@@ -51,7 +53,7 @@ function StyledSelect<
       </div>
       {isDisabled ? (
         <div>
-          <StatusIcon status="01"></StatusIcon>
+          <StatusIcon status={formDefaultValue}></StatusIcon>
         </div>
       ) : (
         <Select
@@ -98,18 +100,21 @@ function ControlledSelect<
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value } }) => (
-        <StyledSelect
-          options={options}
-          isDisabled={isDisabled}
-          isRequire={isRequire}
-          label={label}
-          hint={hint}
-          onFormChange={onChange}
-          formDefaultValue={value}
-          vertical={vertical}
-        />
-      )}
+      render={({ field: { onChange, value } }) => {
+        console.log("value", value);
+        return (
+          <StyledSelect
+            options={options}
+            isDisabled={isDisabled}
+            isRequire={isRequire}
+            label={label}
+            hint={hint}
+            onFormChange={onChange}
+            formDefaultValue={value}
+            vertical={vertical}
+          />
+        );
+      }}
     />
   );
 }
