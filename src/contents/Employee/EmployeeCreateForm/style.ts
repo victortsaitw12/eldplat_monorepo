@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const FormSTY = styled.form`
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   display: flex;
   flex-direction: column;
   gap: 10px;

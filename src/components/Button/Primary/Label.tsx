@@ -17,7 +17,7 @@ function Button(props: Props) {
 const StyledButton = styled(Button)`
   cursor: pointer;
   /* width: 160px; */
-  padding: 4px 12px;
+  padding: 8px 16px;
   color: ${({ theme }) => theme.color.N0};
   font-weight: ${({ theme }) => theme.fontWeight.Heading400};
   border: none;

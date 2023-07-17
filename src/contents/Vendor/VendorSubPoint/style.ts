@@ -5,7 +5,7 @@ export const BodySTY = styled.div`
   padding: 20px;
   background: ${({ theme }) => theme.color.N0};
   display: block;
-  height: calc(100vh - 180px);
+
   .title {
     position: relative;
     display: flex;

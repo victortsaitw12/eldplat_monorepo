@@ -5,6 +5,7 @@ const TableContainerSTY = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 100%;
   .container-header {
     display: flex;
     justify-content: space-between;
@@ -42,6 +43,13 @@ const TableContainerSTY = styled.div`
         border: none;
         background: none;
       }
+    }
+  }
+  & > .container-table {
+    overflow-y: auto;
+    overflow-x: auto;
+    & > table {
+      width: 100%;
     }
   }
 `;

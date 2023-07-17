@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FormSTY = styled.form`
+export const DivSTY = styled.div`
   /* 全部input欄位寬度 */
   li > div > div {
     flex-grow: 10;
@@ -13,6 +13,27 @@ export const FormSTY = styled.form`
     input {
       width: 100%;
     }
+  }
+  /* 駕駛履歷標籤 <TagSelect/> */
+  .view-tags {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 12px;
+    gap: 8px;
+    div {
+      color: #1952a8;
+      background-color: ${({ theme }) => theme.color.B100};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4px 8px 4px 8px;
+      border-radius: 8px;
+    }
+  }
+  .option-tags {
+    position: absolute;
   }
 
   /* 駕駛證照上傳檔案 */

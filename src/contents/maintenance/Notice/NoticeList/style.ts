@@ -5,7 +5,8 @@ export const BodySTY = styled.div`
   background-color: #fff;
   overflow-x: auto;
   position: relative;
-  min-height: 100vh;
+  height: 100%;
+  /* min-height: 100vh; */
 
   table {
     tbody {
@@ -51,7 +52,7 @@ export const BodySTY = styled.div`
   }
   div {
     table {
-      margin-top: 40px;
+      /* margin-top: 40px; */
     }
   }
 

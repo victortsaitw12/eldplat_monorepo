@@ -4,6 +4,8 @@ import { useController, UseControllerProps } from "react-hook-form";
 // import { CreateVendorPayload } from "../index";
 
 export interface FiledInputProps {
+  disabled?: boolean;
+  req?: boolean;
   style?: React.CSSProperties;
   horizonLabel?: boolean;
   controlProps: UseControllerProps<any>;
@@ -12,6 +14,8 @@ export interface FiledInputProps {
 }
 
 const FiledInput = ({
+  disabled = false,
+  req = true,
   style,
   horizonLabel = false,
   label,
@@ -26,12 +30,12 @@ const FiledInput = ({
     <ItemSTY style={style} horizonLabel={horizonLabel}>
       {label && label !== "" && (
         <div className="field-title">
-          <span className="requier-icon">*</span>
+          {req && <span className="requier-icon">*</span>}
           <span>{label}</span>
           {!!hint && <HelpIcon />}
         </div>
       )}
-      <input {...field} />
+      <input disabled={disabled} {...field} />
       {error && (
         <div className="error-message">
           <ErrorIcon />

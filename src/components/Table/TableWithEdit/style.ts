@@ -2,6 +2,7 @@ import styled from "styled-components";
 // 包裹整個表格的容器
 const TableContainerSTY = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -50,6 +51,13 @@ const TableContainerSTY = styled.div`
       }
     }
   }
+  & > .container-table {
+    overflow-y: auto;
+    overflow-x: auto;
+    & > table {
+      width: 100%;
+    }
+  }
 `;
 
 // 表格本身
@@ -71,10 +79,13 @@ const TableSTY = styled.table`
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
     span,
-    div {
+    div:not(.table-action) {
       display: flex;
       justify-content: flex-start;
       align-items: center;
+    }
+    label > div:not(.table-action) {
+      justify-content: center;
     }
   }
   tr:last-child td {

@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   > button {
     > svg {
       color: ${({ theme }) => theme.color.N700};
@@ -11,7 +14,7 @@ export const BodySTY = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
     border-radius: 10px;
     overflow: hidden;

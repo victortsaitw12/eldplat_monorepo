@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FormSTY } from "./style";
+import { DivSTY } from "./style";
 
 import { UpdateDriverInfoPayload } from "../driver.type";
-import DriverInfo from "./DriverInfo";
+import DriverInfo from "@contents/Driver/Detail/DriverInfo";
 import LicensesList from "@contents/Driver/Detail/LicensesList";
-import HealthRecords from "./HealthRecords";
-
-import { formatDateFromAPI } from "@utils/formatDateFromAPI";
+import HealthRecords from "@contents/Driver/Detail/HealthRecords";
 
 interface Props {
   isEdit: boolean;
@@ -15,35 +13,19 @@ interface Props {
   asyncSubmitForm: (data: any) => Promise<void>;
   driverData: any;
   formType: string;
+  refetch: () => void;
+  driverNo: string;
 }
-
-const driverFormDefaultValues: UpdateDriverInfoPayload = {
-  driver_no: "",
-  license_no: "",
-  driver_country: "",
-  license_area: "",
-  license_lvl: "",
-  driver_seniority: "",
-  dsph_area: "",
-  dsph_city: "",
-  licn_typ: "",
-  licn_name: "",
-  licn_unit: "",
-  licn_issue: "",
-  licn_exp: "",
-  licn_examine_date: "",
-  licn_filename: "",
-  licn_link: ""
-};
 
 function DriverDetail({
   isEdit,
   submitRef,
   asyncSubmitForm,
   driverData,
-  formType
+  formType,
+  refetch,
+  driverNo
 }: Props) {
-  console.log("Driver data", driverData);
   const {
     register,
     formState: { errors },
@@ -58,15 +40,7 @@ function DriverDetail({
       license_lvl: driverData.info.license_lvl,
       driver_seniority: driverData.info.driver_seniority,
       dsph_area: driverData.info.dsph_area,
-      dsph_city: driverData.info.dsph_city,
-      licn_typ: driverData.info.licn_typ,
-      licn_name: driverData.info.licn_name,
-      licn_unit: driverData.info.licn_unit,
-      licn_issue: formatDateFromAPI(driverData.info.licn_issue),
-      licn_exp: formatDateFromAPI(driverData.info.licn_exp),
-      licn_examine_date: formatDateFromAPI(driverData.info.licn_examine_Date),
-      licn_filename: driverData.info.licn_filename,
-      licn_link: driverData.info.licn_link
+      dsph_city: driverData.info.dsph_city
     }
   });
 
@@ -78,34 +52,30 @@ function DriverDetail({
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
-
   return (
-    <FormSTY
-      onSubmit={handleSubmit((currentData) => {
-        console.log("currentData");
-        console.log(currentData);
-        asyncSubmitForm(currentData);
-      })}
-    >
-      <button ref={submitRef} type="submit" style={{ display: "none" }}>
-        儲存
-      </button>
-      <DriverInfo
-        selected={visibleForm === "1"}
-        register={register}
-        getValues={getValues}
-        isEdit={isEdit}
-        driverData={driverData}
-      />
-      {visibleForm === "2" && (
-        <LicensesList
-          selected={visibleForm === "2"}
+    <DivSTY>
+      <form
+        onSubmit={handleSubmit((currentData) => {
+          asyncSubmitForm(currentData);
+        })}
+      >
+        <button ref={submitRef} type="submit" style={{ display: "none" }}>
+          儲存
+        </button>
+        <DriverInfo
+          selected={visibleForm === "1"}
           register={register}
           getValues={getValues}
           isEdit={isEdit}
           driverData={driverData}
-          healths={driverData.healths}
+        />
+      </form>
+      {visibleForm === "2" && (
+        <LicensesList
+          licensesData={driverData.licenses}
           userName={driverData.info.user_name}
+          refetch={refetch}
+          driverNo={driverNo}
         />
       )}
       {visibleForm === "3" && (
@@ -114,7 +84,7 @@ function DriverDetail({
           userName={driverData.info.user_name}
         />
       )}
-    </FormSTY>
+    </DivSTY>
   );
 }
 
