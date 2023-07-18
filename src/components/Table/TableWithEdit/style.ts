@@ -2,6 +2,7 @@ import styled from "styled-components";
 // 包裹整個表格的容器
 const TableContainerSTY = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -50,6 +51,13 @@ const TableContainerSTY = styled.div`
       }
     }
   }
+  & > .container-table {
+    overflow-y: auto;
+    overflow-x: auto;
+    & > table {
+      width: 100%;
+    }
+  }
 `;
 
 // 表格本身
@@ -65,7 +73,6 @@ const TableSTY = styled.table`
 
   td,
   th {
-    padding: 8px 10px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
@@ -76,8 +83,8 @@ const TableSTY = styled.table`
       justify-content: flex-start;
       align-items: center;
     }
-    label > div:not(.table-action) {
-      justify-content: center;
+    &:first-child {
+      padding-left: 8px;
     }
   }
   tr:last-child td {
@@ -108,6 +115,11 @@ const TableSTY = styled.table`
     align-items: center;
     gap: 8px;
   }
+  .handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .dot {
     width: 6px;
     height: 6px;
@@ -115,8 +127,14 @@ const TableSTY = styled.table`
     background-color: green;
   }
   .noDataShown {
+    text-align: center;
+    padding: 15px 0;
+  }
+  /* .noDataShown {
     min-height: 32px;
-
+    display: flex;
+    justify-content: center;
+    column-span: all;
     div {
       width: 100%;
       height: 32px;
@@ -125,7 +143,7 @@ const TableSTY = styled.table`
       position: absolute;
       text-align: center;
     }
-  }
+  } */
 `;
 
 const StyledDot = styled.div<{ value: string }>`

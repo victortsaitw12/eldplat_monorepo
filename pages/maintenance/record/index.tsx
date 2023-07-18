@@ -1,26 +1,16 @@
-import React, { useState, useEffect, useCallback, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import CustomerList from "@contents/Customer/CustomerList";
-import {
-  getAllCustomers,
-  customerParser,
-  customerPattern
-} from "@services/customer/getAllCustomers";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { useCustomerStore } from "@contexts/filter/customerStore";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
-import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-import Drawer from "@components/Drawer";
 
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
-import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
 import {
   getAllMaintenanceRecords,
   maintenanceParser,
@@ -50,16 +40,6 @@ const Page: NextPageWithLayout<never> = () => {
     setDrawerOpen
   } = useMaintenanceStore();
   //
-
-  // useEffect(() => {
-  //   const dateString = "06/05/2023 11:38:34";
-  //   const date = new Date(dateString);
-  //   const year = date.getFullYear();
-  //   const month = String(date.getMonth() + 1).padStart(2, "0");
-  //   const day = String(date.getDate()).padStart(2, "0");
-  //   const formattedDate = `${year}/${month}/${day}`;
-  //   console.log("formattedDate", formattedDate);
-  // }, []);
 
   const fetchMaintenanceData = async (
     isCanceled: boolean,

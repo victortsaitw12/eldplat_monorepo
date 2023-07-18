@@ -1,6 +1,7 @@
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { BodySTY } from "./style";
 import { getMaintenanceMissionTitle } from "@services/maintenance/getMaintenanceMission";
+import { useEffect, useState } from "react";
 
 interface Props {
   clientData: any;
@@ -17,10 +18,17 @@ function MaintenanceMissionList({
   goToEditPageHandler,
   goToDetailPage
 }: Props) {
+  const [inCenter, setInCenter] = useState<boolean>(false);
   const clientTitle = getMaintenanceMissionTitle();
   console.log("clientData", clientData);
+  console.log("clientTitle", clientTitle);
+  useEffect(() => {
+    if (clientTitle.includes("結案")) setInCenter(true);
+  }, []);
+  const theadClass = [{ label: "結案", value: "completion_time" }];
+
   return (
-    <BodySTY>
+    <BodySTY inCenter={inCenter}>
       <TableWithEdit
         tableName="維保任務"
         titles={clientTitle}
@@ -29,6 +37,7 @@ function MaintenanceMissionList({
         deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}
         viewItem={goToDetailPage}
+        theadClass={theadClass}
       />
     </BodySTY>
   );

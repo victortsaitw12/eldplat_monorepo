@@ -19,12 +19,14 @@ interface I_Props {
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
   asyncSubmitForm: (data: any) => Promise<void>;
   maintenance_id: string;
+  mainCreateDdl?: any;
 }
 const MaintenanceDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
-  maintenance_id
+  maintenance_id,
+  mainCreateDdl
 }: I_Props) => {
   const {
     register,
@@ -44,22 +46,6 @@ const MaintenanceDetail = ({
       });
     }
   });
-
-  const [loading, setLoading] = useState(false);
-  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
-
-  // 取得新增時的下拉式資料
-  useEffect(() => {
-    setLoading(true);
-    try {
-      getCreateDdl().then((data) => {
-        setMainCreateDdl(data.dataList[0]);
-      });
-    } catch (err) {
-      console.error("getDDL error: ", err);
-    }
-    setLoading(false);
-  }, []);
 
   if (getValues("maintenance_no") === undefined) {
     return <div></div>;
@@ -90,7 +76,7 @@ const MaintenanceDetail = ({
     {
       req: false,
       label: "主要駕駛",
-      value: getValues("operator_no")
+      value: getValues("operator_name")
     },
     {
       req: false,
@@ -109,6 +95,9 @@ const MaintenanceDetail = ({
       )
     }
   ];
+
+  console.log("vehicle_info", vehicle_info);
+  console.log("mainCreateDdl", mainCreateDdl);
 
   // 檢查詳情
   const check_info = [
@@ -207,7 +196,13 @@ const MaintenanceDetail = ({
       editEle: (
         <ItemListTable
           key="item_List"
-          titles={["發票", "單據資料", "金額", "備註"]}
+          titles={[
+            { label: "發票", value: "invoice" },
+            { label: "單據資料", value: "file" },
+            { label: "金額", value: "price" },
+            { label: "備註", value: "remark" },
+            { label: "刪除", value: "delete" }
+          ]}
           control={control}
           register={register}
           setValue={setValue}

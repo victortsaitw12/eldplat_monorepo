@@ -59,6 +59,7 @@ function InfoBox({
     }
     return infoData.map((child: any, i: number) => {
       const { req, value, label, editEle, inputType } = child;
+      console.log("value/*/*/*", value);
       if (!value && !editEle) {
         return;
       }
@@ -87,7 +88,6 @@ function InfoBox({
     if (isEdit) {
       return <Pane>{infoData[0].editEle}</Pane>;
     } else {
-      console.log("🎶🎶🎶🎶", infoData[0].value);
       if (
         infoData[0].value &&
         Array.isArray(infoData[0].value) &&

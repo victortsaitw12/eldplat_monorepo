@@ -1,10 +1,11 @@
-import { Pane, FileUploader, FileCard } from "evergreen-ui";
+import { Pane, Text, FileUploader, FileCard, UploadIcon } from "evergreen-ui";
 import React from "react";
 import {
   UseFormGetValues,
   UseFormRegister,
   UseFormSetValue
 } from "react-hook-form";
+import { BodySTY } from "./style";
 
 interface I_InvoiceFile {
   register: UseFormRegister<any>;
@@ -23,6 +24,16 @@ const InvoiceFile = ({
   getValues,
   keyName
 }: I_InvoiceFile) => {
+  // const [files, setFiles] = React.useState<any[]>([
+  //   {
+  //     lastModified: 1661148032441,
+  //     lastModifiedDate: "Mon Aug 22 2022 14:00:32 GMT+0800 (台北標準時間) {}",
+  //     name: "2461293.jpg",
+  //     size: 69773,
+  //     type: "image/jpeg",
+  //     webkitRelativePath: ""
+  //   }
+  // ]);
   const [files, setFiles] = React.useState<any[]>([]);
   const [fileRejections, setFileRejections] = React.useState<any[]>([]);
   //   const handleChange = React.useCallback(
@@ -47,36 +58,49 @@ const InvoiceFile = ({
   }, []);
 
   return (
-    <Pane maxWidth={654}>
-      <FileUploader
-        key={keyName}
-        maxSizeInBytes={50 * 1024 ** 2}
-        maxFiles={1}
-        onChange={handleChange}
-        onRejected={handleRejected}
-        renderFile={(file) => {
-          const { name, size, type } = file;
-          const fileRejection = fileRejections.find(
-            (fileRejection) => fileRejection.file === file
-          );
-          const { message } = fileRejection || {};
-          return (
-            <FileCard
-              key={name}
-              isInvalid={fileRejection != null}
-              name={name}
-              onRemove={handleRemove}
-              sizeInBytes={size}
-              type={type}
-              validationMessage={message}
-            />
-          );
-        }}
-        values={files}
-        // values={files}
-        // {...register(`${arrayName}.${index}.files`)}
-      />
-    </Pane>
+    <BodySTY className="receipt_url">
+      <Pane className="upload-frame">
+        <FileUploader
+          className="old-file"
+          key={keyName}
+          browseOrDragText={() => {
+            return (
+              <Pane className="file">
+                <UploadIcon />
+                <Text>上傳</Text>
+              </Pane>
+            );
+          }}
+          maxSizeInBytes={50 * 1024 ** 2}
+          maxFiles={1}
+          onChange={handleChange}
+          onRejected={handleRejected}
+          background="transparent"
+          border="none"
+          renderFile={(file) => {
+            const { name, size, type } = file;
+            const fileRejection = fileRejections.find(
+              (fileRejection) => fileRejection.file === file
+            );
+            const { message } = fileRejection || {};
+            return (
+              <FileCard
+                key={name}
+                isInvalid={fileRejection != null}
+                name={name}
+                onRemove={handleRemove}
+                sizeInBytes={size}
+                type={type}
+                validationMessage={message}
+              />
+            );
+          }}
+          values={files}
+          // values={files}
+          // {...register(`${arrayName}.${index}.files`)}
+        />
+      </Pane>
+    </BodySTY>
   );
 };
 

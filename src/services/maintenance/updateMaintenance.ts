@@ -71,7 +71,7 @@ export const updateMaintenance = async (MaintenanceData: any, files?: any) => {
   // });
   // formData.append("files", JSON.stringify(newFiles));
   files?.forEach((file: any) => {
-    formData.append("files", file);
+    formData.append("files", file ? file : "");
   });
 
   // files.forEach((item: any, index: any) => {

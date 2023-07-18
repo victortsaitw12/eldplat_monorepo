@@ -37,7 +37,7 @@ const TagSelect: React.FC<Props> = ({
         return;
       } else {
         setSelectedOptions((prev) => [...prev, optArr[0]]);
-        handleCustomData((prev: any) => [...selectedOptions, optArr[0]]);
+        handleCustomData(() => [...selectedOptions, optArr[0]]);
       }
     });
   };
