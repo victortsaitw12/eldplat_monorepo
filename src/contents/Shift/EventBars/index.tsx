@@ -91,7 +91,7 @@ const EventBars = ({
       1000 * 60 * 60 * 24 - 1000 * 60
     )
       return (1000 * 60 * 60 * 24) / UI.timeframe;
-    // TODO 目前假設要滿格顯示，再問UI半格顯示畫面
+    // 假設要滿格顯示
     return Math.ceil(
       (new Date(item.schd_End_Time).valueOf() -
         new Date(item.schd_Start_Time).valueOf()) /
@@ -100,7 +100,7 @@ const EventBars = ({
   };
 
   const getEventStart = (item: MonthlyData): number => {
-    if (new Date(item.schd_Start_Time).valueOf() - cellTimestamp < 0) return 0;
+    if (new Date(item.schd_Start_Time).valueOf() - cellTimestamp <= 0) return 0;
     return Math.ceil(
       (new Date(item.schd_Start_Time).valueOf() -
         getDayStart(new Date(cellTimestamp)).valueOf()) /

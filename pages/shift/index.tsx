@@ -76,9 +76,6 @@ const ShiftPage: NextPageWithLayout<never> = () => {
     1
   );
 
-  // TODO 滑鼠左右滾的動作 目前用onWeel 放在 OverviewTable裡面 TableSTY上
-  // 跟雯雯確認萬一駕駛數量多到要下滾 左右滾的設定?
-
   return (
     <UIProvider>
       <ShiftSTY>

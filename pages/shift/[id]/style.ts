@@ -28,6 +28,9 @@ export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
       overflow: hidden;
       overflow-y: scroll;
       padding: 0px 20px 20px 20px;
+      &::-webkit-scrollbar {
+        /* display: none; */
+      }
     }
     .dailyContainer {
       width: 100%;
@@ -37,6 +40,9 @@ export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
       overflow: hidden;
       overflow-y: scroll;
       padding: 0px 20px 0px 20px;
+      &::-webkit-scrollbar {
+        /* display: none; */
+      }
     }
   }
 
@@ -50,23 +56,7 @@ export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
       border-radius: 10px;
       overflow-y: scroll;
       &::-webkit-scrollbar {
-        /* display:none; */
-        width: 7px;
-        position: fixed;
-      }
-      &::-webkit-scrollbar-button {
-        background: transparent;
-        border-radius: 4px;
-      }
-      &::-webkit-scrollbar-track-piece {
-        background: transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 4px;
-        background-color: ${({ theme }) => theme.color.N400};
-      }
-      &::-webkit-scrollbar-track {
-        box-shadow: transparent;
+        display: none;
       }
       .drawer__btn {
         height: 32px;
