@@ -281,7 +281,7 @@ function Details({
     {
       req: false,
       label: "建議零售價",
-      value: getValues("bus.mspr").toLocaleString(),
+      value: getValues("bus.mspr")?.toLocaleString(),
       editEle: <TextInput {...register("bus.mspr")} />
     }
   ];
