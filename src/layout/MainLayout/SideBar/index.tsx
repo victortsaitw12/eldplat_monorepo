@@ -28,14 +28,16 @@ interface Props {
 }
 //
 function SideBar({ menuData, personalData, isLoading }: Props) {
+  const personalPage = [];
   const [isPersonal, setIsPersonal] = React.useState(false);
   const router = useRouter();
+  console.log("📃📃📃📃📃📃📃📃", router);
   return (
     <BodySTY>
       <UserInfo
         onClick={() => {
           setIsPersonal(true);
-          router.push("/company");
+          router.push("/employee");
         }}
       />
 
