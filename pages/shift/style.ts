@@ -8,22 +8,32 @@ export const ShiftSTY = styled.div`
   height: calc(100vh - 56px);
   position: relative;
   padding: 10px;
-  overflow-x: hidden;
+  overflow: hidden;
   display: flex;
   flex-direction: row;
-  .wrap {
-    width: 100%;
-  }
   .pageContent {
-    height: calc(100% - 36px);
+    height: 100%;
     width: 100%;
-    border-radius: 10px;
     position: relative;
-    overflow: hidden;
     background: ${({ theme }) => theme.color.N0};
-    padding: 20px;
     .mainBookmarkFilteredContent {
       padding: 20px;
+    }
+    .tableTitle {
+      padding: 20px 20px 0px 20px;
+    }
+    .overviewContainer {
+      height: 100%;
+      overflow: hidden;
+      overflow-y: scroll;
+      padding: 0px 20px 20px 20px;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .overviewTable {
+      border: 1px solid ${({ theme }) => theme.color.N300};
+      border-radius: 10px;
     }
   }
   label {

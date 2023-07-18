@@ -64,12 +64,12 @@ const OverviewTable = ({
   ).getDate();
 
   //------ functions ------//
-  const handleScroll = (event: any) => {
-    event.preventDefault();
-    const container = containerRef.current;
-    if (!container) return;
-    container.scrollLeft += event.deltaY;
-  };
+  // const handleScroll = (event: any) => {
+  //   event.preventDefault();
+  //   const container = containerRef.current;
+  //   if (!container) return;
+  //   container.scrollLeft += event.deltaY;
+  // };
 
   const handleClickUser = (id: string) => {
     router.push(`/shift/${id}?cur=${curMonthFirst}`);
@@ -150,10 +150,10 @@ const OverviewTable = ({
   ));
   return (
     <TableSTY
-      className="table-viewport"
+      className="overviewTable"
       isExpand={isExpand}
       ref={containerRef}
-      onWheel={handleScroll}
+      // onWheel={handleScroll}
     >
       <Table className="eg-table">
         <Table.Head className="eg-head">

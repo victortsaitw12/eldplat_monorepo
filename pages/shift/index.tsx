@@ -8,7 +8,6 @@ import UIProvider from "@contexts/scheduleContext/UIProvider";
 import { useShiftStore } from "@contexts/filter/shiftStore";
 import { getAllDriverScheduleListFiltered } from "@services/schedule/getAllDriverScheduleListFiltered";
 import MonthPicker from "@contents/Shift/MonthPicker";
-import Tabs from "@components/Tabs";
 import TableTitle from "@components/Table/TableTitle";
 import OverviewTable from "@contents/Shift/OverviewTable";
 import ZoomBar from "@components/ZoomBar";
@@ -99,37 +98,33 @@ const ShiftPage: NextPageWithLayout<never> = () => {
             }}
             filter={subFilter}
           >
-            <Pane className="wrap">
-              <Pane className="pageContent">
-                <TableTitle
-                  tableName={[
-                    <MonthPicker
-                      key="monthpicker"
-                      initialMonthFirst={initialMonthFirst}
-                    />,
-                    <div
-                      key="tabelTitle-type"
-                      className="container-header-left"
-                    >
-                      <span>全部區域</span>
-                      <span>全部都市</span>
-                    </div>
-                  ]}
-                  control={[<ZoomBar key="zoombar" setState={handleZoombar} />]}
-                  sub={Array.from(EVENT_TYPE).map(([key, value]) => {
-                    if (key !== "00")
-                      return <EventTag key={key} value={value} />;
-                  })}
-                  page={true}
-                  //pageInfo={pageInfo}
-                  //onPageChange={onPageChange}
-                />
+            <Pane className="pageContent">
+              <TableTitle
+                tableName={[
+                  <MonthPicker
+                    key="monthpicker"
+                    initialMonthFirst={initialMonthFirst}
+                  />,
+                  <div key="tabelTitle-type" className="container-header-left">
+                    <span>全部區域</span>
+                    <span>全部都市</span>
+                  </div>
+                ]}
+                control={[<ZoomBar key="zoombar" setState={handleZoombar} />]}
+                sub={Array.from(EVENT_TYPE).map(([key, value]) => {
+                  if (key !== "00") return <EventTag key={key} value={value} />;
+                })}
+                page={true}
+                //pageInfo={pageInfo}
+                //onPageChange={onPageChange}
+              />
+              <div className="overviewContainer">
                 <OverviewTable
                   initialMonthFirst={initialMonthFirst}
                   isExpand={isExpand}
                 />
-              </Pane>
-            </Pane>{" "}
+              </div>
+            </Pane>
           </FilterWrapper>
         </TableWrapper>
       </ShiftSTY>
