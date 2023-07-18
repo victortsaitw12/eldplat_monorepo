@@ -12,7 +12,7 @@ import { HelpIcon, CaretDownIcon } from "evergreen-ui";
 import Tooltip from "@components/Tooltip";
 import StatusIcon from "@components/StatusIcon";
 
-function CustomDropdownIndicator(props: DropdownIndicatorProps) {
+function CustomDropdownIndicator(props: DropdownIndicatorProps<any>) {
   return (
     <components.DropdownIndicator {...props}>
       <div
