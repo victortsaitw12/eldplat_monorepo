@@ -5,7 +5,7 @@ const TableContainerSTY = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0.5rem;
   overflow-x: auto;
   .container-header {
     display: flex;
@@ -63,12 +63,22 @@ const TableContainerSTY = styled.div`
 // 表格本身
 const TableSTY = styled.table`
   border: 1px solid ${({ theme }) => theme.color.N300};
-  border-radius: 4px;
+  border-top: 0;
   border-spacing: 0px;
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+  }
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
     text-align: left;
     color: ${({ theme }) => theme.color.N700};
+    &:first-child {
+      & > th {
+        border-top: 1px solid ${({ theme }) => theme.color.N300};
+      }
+    }
   }
 
   td,

@@ -29,6 +29,11 @@ const StyledButton = styled.button`
     background-color: ${({ theme }) => theme.color.B100};
     color: ${({ theme }) => theme.color.B400};
   }
+  &.disable {
+    background-color: ${({ theme }) => theme.color.N700};
+    color: ${({ theme }) => theme.color.N600};
+    cursor: default;
+  }
 `;
 
 export { BodySTY, StyledButton };
