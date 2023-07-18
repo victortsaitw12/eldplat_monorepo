@@ -26,13 +26,12 @@ function Index({ menu }: Props) {
       .indexOf(router.asPath) >= 0;
   const [openList, setOpenList] = useState(default_open);
   const isActive = router.asPath === menu.url;
-
+  const isDisabled = menu.url === null && !menu.subList;
   return (
     <BodySTY>
       <StyledButton
-        className={cx({ active: isActive })}
+        className={cx({ active: isActive, disable: isDisabled })}
         onClick={() => {
-          console.log("select!");
           setOpenList((prev) => !prev);
           if (menu.url) {
             router.push(menu.url);

@@ -133,6 +133,7 @@ function Table({
               {tableName !== "維保通知" && (
                 <th>
                   <Checkbox
+                    style={{ margin: "8px 0" }}
                     onChange={(e) => handleCheckAll(e)}
                     checked={checkedItems.length === data.length}
                   />
@@ -177,6 +178,7 @@ function Table({
                     {tableName !== "維保通知" && (
                       <td>
                         <Checkbox
+                          style={{ margin: "8px 0" }}
                           checked={checkedItems.includes(item?.id?.value)}
                           onChange={(e) => handleCheck(e)}
                           id={item?.id?.value}
