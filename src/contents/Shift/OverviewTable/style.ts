@@ -7,12 +7,13 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
   ${({ isExpand }) => `
     --cellWidth: ${isExpand ? "140px" : "72px"};
   `}
-  width: 100%;
-  height: fit-content;
+  /* width: 100%;
+  height: fit-content; */
+  width: fit-content;
+  height: 100%;
   position: relative;
-
   overflow: hidden;
-  overflow-x: scroll;
+  overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
   }

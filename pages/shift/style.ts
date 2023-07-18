@@ -16,6 +16,8 @@ export const ShiftSTY = styled.div`
     width: 100%;
     position: relative;
     background: ${({ theme }) => theme.color.N0};
+    display: flex;
+    flex-direction: column;
     .mainBookmarkFilteredContent {
       padding: 20px;
     }
@@ -23,12 +25,13 @@ export const ShiftSTY = styled.div`
       padding: 20px 20px 0px 20px;
     }
     .overviewContainer {
-      height: 100%;
+      flex-grow: 10;
       overflow: hidden;
-      overflow-y: scroll;
-      padding: 0px 20px 20px 20px;
+      /* overflow-y: scroll; */
+      overflow-x: scroll;
+      padding: 0px 20px 0px 20px;
       &::-webkit-scrollbar {
-        display: none;
+        /* display: none; */
       }
     }
     .overviewTable {

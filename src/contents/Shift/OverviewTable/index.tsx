@@ -156,7 +156,7 @@ const OverviewTable = ({
       // onWheel={handleScroll}
     >
       <Table className="eg-table">
-        <Table.Head className="eg-head">
+        <Table.Head className="eg-head" style={{ paddingRight: "0px" }}>
           <Checkbox
             className="eg-th checkbox"
             key="selectAll"
