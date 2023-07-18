@@ -2,6 +2,7 @@ import Table from "@components/Table/TableWithEdit";
 import React from "react";
 import { getEmployeeTitle } from "@services/employee/getAllEmployee";
 import { BodySTY } from "./style";
+import TableWithEdit from "@components/Table/TableWithEdit";
 //
 interface I_EmployeeListType {
   [key: string]: any;
@@ -19,10 +20,10 @@ function EmployeeList({
   const employeeTitle = getEmployeeTitle();
   return (
     <BodySTY className="list-style">
-      <Table
+      <TableWithEdit
         titles={employeeTitle}
         data={data}
-        tableName="員工列表"
+        tableName="員工"
         goToCreatePage={goToCreatePage}
         deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}

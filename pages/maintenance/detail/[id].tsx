@@ -1,31 +1,53 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useRef, ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 //@layout
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 //@services
-import CustomerDetail from "@contents/Customer/CustomerDetail";
-import { updateCustomer } from "@services/customer/updateCustomer";
+
 //
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { useCustomerStore } from "@contexts/filter/customerStore";
 import MaintenanceDetail from "@contents/maintenance/MaintenanceDetail";
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
 import { updateMaintenance } from "@services/maintenance/updateMaintenance";
+import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
+import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 const mainFilterArray = [{ id: 1, label: "維保資料", value: "1" }];
 //
-const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
+const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useMaintenanceStore();
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [isFinished, setIsFinished] = useState<boolean>(false); // 維保任務是否結案的boolean
+  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
+
+  // 取得新增時的下拉式資料
+  useEffect(() => {
+    setLoading(true);
+    try {
+      getCreateDdl().then((data) => {
+        setMainCreateDdl(data.dataList[0]);
+      });
+    } catch (err) {
+      console.error("getDDL error: ", err);
+    }
+    setLoading(false);
+  }, []);
+
   useEffect(() => {
     updateMainFilter("1");
+
+    // 如果進到檢視頁會先判斷這筆維保單是否已經結案，已結案就不會有編輯按鈕出現
+    getMaintenanceById(maintenance_id).then((data) => {
+      if (data.maintenance_status === "3") {
+        setIsFinished(true);
+      }
+    });
   }, []);
   //TableWrapper
   const changeMainFilterHandler = () => {
@@ -34,7 +56,11 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
   //
   const asyncSubmitForm = async (data: any) => {
     console.log("⚽data", data);
-    setLoading(true);
+    // setLoading(true);
+
+    const driver = mainCreateDdl?.driver_options?.filter((v: { no: any }) => {
+      return v.no === data.driver_no;
+    });
 
     const newData = {
       maintenance_no: data.maintenance_no,
@@ -43,10 +69,11 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
       service_end_date: data.service_end_date,
       meter: Number(data["meter"]),
       driver_no: data.driver_no,
-      driver_name: data.driver_name,
+      driver_name: driver[0].name,
       vendor_no: data.vendor_no,
       package_code: data.package_code,
-      maintenanceDts: data.maintenanceDts
+      maintenanceDts: data.maintenanceDts,
+      files: data.files
     };
     data["maintenanceDts"]?.map((v: { price: string | number }) => {
       return (v.price = Number(v.price));
@@ -55,7 +82,8 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
     console.log("🉐edited data", newData);
 
     try {
-      const res = await updateMaintenance(newData);
+      const res = await updateMaintenance(newData, data["files"]);
+      console.log("儲存 res", res);
       setIsEdit(false);
     } catch (e: any) {
       console.log(e);
@@ -85,12 +113,14 @@ const Index: NextPageWithLayout<never> = ({ maintenance_id }) => {
         }}
         onClose={onCancelHandler}
         isEdit={isEdit}
+        viewOnly={isFinished}
       >
         <MaintenanceDetail
           isEdit={isEdit}
           submitRef={submitRef}
           asyncSubmitForm={asyncSubmitForm}
           maintenance_id={maintenance_id}
+          mainCreateDdl={mainCreateDdl}
         />
       </TableWrapper>
     </BodySTY>
@@ -109,5 +139,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     }
   };
 };
-Index.getLayout = getLayout;
-export default Index;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
+export default Page;

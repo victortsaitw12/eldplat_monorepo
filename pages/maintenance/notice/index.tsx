@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
-import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
@@ -22,12 +21,11 @@ import AddMissionBtn from "@contents/maintenance/Notice/NoticeList/AddMissionBtn
 import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
 //
 const mainFilterArray = [
-  { id: 1, label: "啟用", value: "1" },
-  { id: 2, label: "停用", value: "2" }
+  { id: 1, label: "通知", value: "1" },
+  { id: 2, label: "取消", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
-  const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [checkItems, setCheckItems] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
@@ -171,5 +169,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

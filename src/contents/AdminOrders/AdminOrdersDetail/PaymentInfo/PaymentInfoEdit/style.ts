@@ -28,11 +28,19 @@ const BodySTY = styled.div`
     & > label .radio_label {
       display: inline-block;
       color: ${({ theme }) => theme.color.N700};
-      font-family: "Noto Sans";
       font-style: normal;
       font-weight: 600;
       font-size: 16px;
       line-height: 22px;
+    }
+    & > div > .deposit_persent {
+      gap: 0.5rem;
+      max-width: 208px;
+      display: flex;
+      align-items: center;
+      & > input {
+        width: 50%;
+      }
     }
   }
   .final_payment_content {
@@ -54,6 +62,9 @@ const BodySTY = styled.div`
       max-width: 280px;
       gap: 12px;
     }
+  }
+  .input-error {
+    color: ${({ theme }) => theme.color.R400};
   }
 `;
 

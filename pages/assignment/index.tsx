@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -6,9 +6,8 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
-import { deleteCustomer } from "@services/customer/deleteCustomer";
-import TableWrapper from "@layout/TableWrapper";
-import FilterWrapper from "@layout/FilterWrapper";
+// import TableWrapper from "@layout/TableWrapper";
+// import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import AssignmentList from "@contents/Assignment/AssignmentList";
 import AutoAssignBtn from "@contents/Assignment/AssignmentList/AutoAssignBtn";
@@ -23,14 +22,12 @@ import {
   assignPattern,
   getAllAssignments
 } from "@services/assignment/getAllAssignment";
-import dayjs from "dayjs";
 
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
-import { I_ManualBus, I_ManualCreateType } from "@typings/assignment_type";
+import { I_ManualCreateType } from "@typings/assignment_type";
 import SecondCarAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondCarManualCreate";
 import SecondDriverAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondDriverManualCreate";
-import { dashDate, dashDate2 } from "@utils/convertDate";
-import { slashDate } from "@utils/convertDate";
+import { dashDate2 } from "@utils/convertDate";
 import CarEdit from "@contents/Assignment/AssignManualEdit/CarEdit";
 import {
   getBusAssignmentInfo,
@@ -38,7 +35,6 @@ import {
 } from "@services/assignment/getAssignmentEdit";
 import DriverEdit from "@contents/Assignment/AssignManualEdit/DriverEdit";
 import AssignAutoCreate from "@contents/Assignment/AssignAutoCreate";
-import PrimaryRadius from "@components/Button/PrimaryRadius";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -48,7 +44,6 @@ export const startTimeName = ["start_hours", "start_minutes", "start_type"];
 export const endTimeName = ["end_hours", "end_minutes", "end_type"];
 //
 const Page: NextPageWithLayout<never> = () => {
-  const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
@@ -561,7 +556,8 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;
 
 /*

@@ -18,27 +18,34 @@ import MenuList from "./MenuList";
 import Search from "./Search";
 import { MenuDataType } from "@mock-data/side-bar/data";
 import FooterItem from "./Footer/FooterItem";
+import LoadingSpinner from "@components/LoadingSpinner";
+import { useRouter } from "next/router";
 //
 interface Props {
   menuData: MenuDataType;
   personalData: MenuDataType;
+  isLoading?: boolean;
 }
 //
-function SideBar({ menuData, personalData }: Props) {
+function SideBar({ menuData, personalData, isLoading }: Props) {
   const [isPersonal, setIsPersonal] = React.useState(false);
+  const router = useRouter();
   return (
     <BodySTY>
       <UserInfo
         onClick={() => {
           setIsPersonal(true);
+          router.push("/company");
         }}
       />
+
       <div className="container">
         {isPersonal && (
           <span
             className="back_to"
             onClick={() => {
               setIsPersonal(false);
+              router.push("/");
             }}
           >
             <ArrowLeftIcon size={16} />
@@ -46,6 +53,7 @@ function SideBar({ menuData, personalData }: Props) {
           </span>
         )}
         {!isPersonal && <Search />}
+        {isLoading && <LoadingSpinner />}
         {menuData && (
           <MenuList menuData={!isPersonal ? menuData : personalData} />
         )}

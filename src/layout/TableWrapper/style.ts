@@ -2,9 +2,13 @@ import styled from "styled-components";
 
 const BodySTY = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: calc(100vh - 76px);
   /* border: 1px solid ${({ theme }) => theme.color.N100}; */
-  overflow-y: scroll;
+  /* overflow-y: auto; */
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
   .filter-header {
     display: flex;
     justify-content: space-between;
@@ -21,6 +25,11 @@ const BodySTY = styled.div`
   .tab-options {
     display: flex;
   }
+  & > .table-content {
+    border-radius: 10px 10px 0 0;
+    flex: 1;
+    overflow: auto;
+  }
 `;
 
 const FilterItemSTY = styled.div<{ isActive: boolean }>`
@@ -30,6 +39,9 @@ const FilterItemSTY = styled.div<{ isActive: boolean }>`
   padding: 8px 12px;
   border-radius: 10px 10px 0px 0px;
   background-color: ${({ isActive }) => (isActive ? "#fff" : "transparent")};
+  > .require {
+    color: ${({ theme }) => theme.color.R400};
+  }
   span {
     color: ${({ theme }) => theme.color.N700};
     font-size: 14px;

@@ -1,3 +1,4 @@
+import { TableTitle } from "@components/Table/TableTitle";
 import { translation } from "./../../../src/contexts/i18n/lan";
 import styled from "styled-components";
 import { ShiftSTY } from "../style";
@@ -10,12 +11,35 @@ export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
   .pageContent {
     display: flex;
     flex-direction: column;
+    padding: 0px;
+    .tableTitle {
+      padding: 20px 20px 0px 20px;
+    }
     .container-header-left {
       .red {
         color: ${({ theme }) => theme.color.R400};
       }
     }
+    .monthlyContainer {
+      width: 100%;
+      height: 100%;
+      padding-right: 20px;
+      flex-grow: 10;
+      overflow: hidden;
+      overflow-y: scroll;
+      padding: 0px 20px 20px 20px;
+    }
+    .dailyContainer {
+      width: 100%;
+      height: 100%;
+      padding-right: 20px;
+      flex-grow: 10;
+      overflow: hidden;
+      overflow-y: scroll;
+      padding: 0px 20px 0px 20px;
+    }
   }
+
   .drawer__container {
     height: calc(100vh - 60px - 10px * 2);
     position: sticky;

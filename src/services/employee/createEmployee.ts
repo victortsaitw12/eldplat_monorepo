@@ -1,4 +1,5 @@
 import API_Path from "./apiPath";
+
 // 新增員工資料
 export const createEmployee = async (employeeData: any) => {
   const filteredNullData: { [key: string]: string | null } = {};
@@ -15,7 +16,7 @@ export const createEmployee = async (employeeData: any) => {
     }
   }
   console.log("filteredNullData", filteredNullData);
-  const res = await fetch("https://localhost:7088/ATR/CreateAccount", {
+  const res = await fetch(API_Path["CreateEmployee"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -34,14 +35,14 @@ export const createBriefEmployee = async (
   user_phone: string
 ) => {
   const res = await fetch(
-    `${API_Path["CreateAccountInfo"]}?user_first_name=${user_first_name}&user_name=${user_name}&user_email=${user_email}&user_phone=${user_phone}`,
+    `${API_Path["CreateBriefEmployee"]}?user_first_name=${user_first_name}&user_name=${user_name}&user_email=${user_email}&user_phone=${user_phone}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-      },
-      body: JSON.stringify({})
+      }
+      // body: JSON.stringify({})
     }
   );
   return res.json();

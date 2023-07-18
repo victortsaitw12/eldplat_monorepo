@@ -38,7 +38,7 @@ export function RadioField({
         value={value}
         onChange={onChange}
       />
-      {hint && <p className="hint">{hint}</p>}
+      {hint && <p>{hint}</p>}
     </div>
   );
 }

@@ -157,7 +157,6 @@ const VendorDetail = ({
       editEle: (
         <TextInputField
           className="text-input-field w100"
-          key="address1"
           label="地址1"
           {...methods.register("address1", {
             validate: textValidation
@@ -173,9 +172,8 @@ const VendorDetail = ({
       editEle: (
         <TextInputField
           className="text-input-field w100"
-          key="address2"
           label="地址2"
-          {...methods.register("address1", {
+          {...methods.register("address2", {
             validate: textValidation
           })}
           marginBottom="0"
@@ -245,7 +243,7 @@ const VendorDetail = ({
     {
       req: true,
       label: "公司電話",
-      value: vendor_Tel ? vendor_Tel_Code + " " + vendor_Tel : "---",
+      value: vendor_Tel ? vendor_Tel_Code + " " + vendor_Tel : "--",
       editEle: [
         <TextInput
           key="vendor_Tel_Code"
@@ -265,7 +263,7 @@ const VendorDetail = ({
     {
       req: false,
       label: "公司傳真",
-      value: vendor_Fax ? vendor_Fax_Code + " " + vendor_Fax : "---",
+      value: vendor_Fax ? vendor_Fax_Code + " " + vendor_Fax : "--",
       editEle: [
         <TextInput
           key="vendor_Fax_Code"
@@ -275,9 +273,7 @@ const VendorDetail = ({
         />,
         <TextInput
           key="vendor_Fax"
-          {...methods.register("vendor_Fax", {
-            validate: numberValidation
-          })}
+          {...methods.register("vendor_Fax")}
           style={{ width: "58%" }}
         />
       ]
@@ -285,27 +281,17 @@ const VendorDetail = ({
     {
       req: false,
       label: "公司信箱",
-      value: vendor_Email || "---",
+      value: vendor_Email || "--",
       editEle: [
-        <TextInput
-          key="vendor_Email"
-          {...methods.register("vendor_Email", {
-            validate: emailValidation
-          })}
-        />
+        <TextInput key="vendor_Email" {...methods.register("vendor_Email")} />
       ]
     },
     {
       req: false,
       label: "公司網址",
-      value: vendor_Url || "---",
+      value: vendor_Url || "--",
       editEle: [
-        <TextInput
-          key="vendor_Url"
-          {...methods.register("vendor_Url", {
-            required: "必填"
-          })}
-        />
+        <TextInput key="vendor_Url" {...methods.register("vendor_Url")} />
       ]
     },
     {
@@ -365,7 +351,11 @@ const VendorDetail = ({
                   isEdit={isEdit}
                   infoData={category_info}
                   infoType="checkbox"
-                  infoTitle="分類"
+                  infoTitle={
+                    <span>
+                      <span style={{ color: "#D14343" }}>*</span>分類
+                    </span>
+                  }
                 />
                 <InfoBox
                   isEdit={isEdit}

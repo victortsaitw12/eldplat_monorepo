@@ -15,7 +15,6 @@ export const DivSTY = styled.div`
     overflow: hidden;
     background: ${({ theme }) => theme.color.N0};
     .collapse {
-      font-family: "Noto Sans";
       &__title {
         font-weight: 600;
         font-size: 24px;

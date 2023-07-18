@@ -45,7 +45,6 @@ const ScheduleList = ({
     control,
     name: `${fatherArrayName}.${dayIndex}.${arrayName}`
   });
-  console.log("🐴🐴🐴🐴🐴", errors);
 
   const r_stopover = (fields: any[]) => {
     return fields.map((child, i) => (
@@ -154,7 +153,7 @@ const ScheduleList = ({
                 />
               </>
             ) : (
-              pickup_location
+              pickup_location || "--"
             )}
           </Text>
           {isEdit && fields.length == 0 && (
@@ -205,7 +204,7 @@ const ScheduleList = ({
                 />
               </>
             ) : (
-              dropoff_location
+              dropoff_location || "--"
             )}
           </Text>
         </li>

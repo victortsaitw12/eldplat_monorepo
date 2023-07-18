@@ -34,7 +34,22 @@ const TableSTY = styled.table`
 
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
-    text-align: left;
+    th .invoice,
+    th .remark {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    th .file,
+    th .delete {
+      display: flex;
+      justify-content: center;
+    }
+
+    th .price {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 
   tbody {
@@ -48,12 +63,27 @@ const TableSTY = styled.table`
         }
       }
     }
+
+    /* tr td :first-child(:not(.upload-frame && button)) {
+      display: flex;
+      justify-content: flex-start;
+    } */
+
+    tr td .receipt_number,
+    tr td .service_remark {
+      display: flex;
+      justify-content: flex-start;
+    }
+    tr td .price {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 
   td,
   th {
     padding: 8px 10px;
-    text-align: left;
+    text-align: center;
     white-space: nowrap;
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
@@ -72,6 +102,9 @@ const TableSTY = styled.table`
       width: 20px;
       height: 1px;
       background: #e3e3e3;
+    }
+    .delete {
+      color: ${({ theme }) => theme.color.N600};
     }
   }
   button {

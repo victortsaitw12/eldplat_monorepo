@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, ReactNode } from "react";
 import { BodySTY } from "./style";
 import { NextPageWithLayout } from "next";
 //
@@ -22,8 +22,6 @@ import RegionProvider from "@contexts/regionContext/regionProvider";
 // };
 
 const Page: NextPageWithLayout<never> = () => {
-  const C_data = useContext<I_Company_Context>(CompanyContext);
-
   const [loading, setLoading] = useState<boolean>(false);
 
   return (
@@ -37,5 +35,6 @@ const Page: NextPageWithLayout<never> = () => {
     </CompanyProvider>
   );
 };
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

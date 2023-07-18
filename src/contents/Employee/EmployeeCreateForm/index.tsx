@@ -32,7 +32,6 @@ const EmployeeCreateForm = ({ createEmployee }: EmployeeCreateFormProps) => {
           rules: { required: "此欄位必填" }
         }}
         label="姓"
-        hint="員工姓氏的hint"
       />
       <FiledInput
         controlProps={{

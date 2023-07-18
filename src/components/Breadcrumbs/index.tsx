@@ -9,15 +9,23 @@ interface Route {
   url?: string | { pathname: string; query: any };
 }
 
-const Breadcrumbs = ({ routes, style }: { routes: Route[]; style?: any }) => {
+const Breadcrumbs = ({
+  className,
+  routes,
+  style,
+  splitEle = <ChevronRightIcon className="breadcrumbs__separation" />
+}: {
+  className?: string;
+  routes: Route[];
+  style?: any;
+  splitEle?: React.ReactNode;
+}) => {
   const STY = style || {};
   return (
-    <DivSTY className="breadcrumbs" style={STY}>
+    <DivSTY className={"breadcrumbs " + className} style={STY}>
       {routes.map((route, index) => (
         <div className="breadcrumbs-item" key={`route-${index}`}>
-          {index !== 0 && (
-            <ChevronRightIcon className="breadcrumbs__separation" />
-          )}
+          {index !== 0 && splitEle}
           {route.url ? (
             <Link className="breadcrumbs__route" href={route.url} replace>
               {route.label}

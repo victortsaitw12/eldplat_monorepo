@@ -12,11 +12,22 @@ interface Props {
   deleteItemHandler: (id: string) => void;
 }
 
-const ClientList = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPageHandler, deleteItemHandler }: Props) => {
+const VendorList = ({
+  vendorData,
+  goToDetailPage,
+  goToCreatePage,
+  goToEditPageHandler,
+  deleteItemHandler
+}: Props) => {
   // const vendorTitle = getVendorTitle();
   // multi languages for tabel title
   // console.log("💫💫vendorData", vendorData);
-  console.log("vendorData.map", vendorData?.map((c: any) => { return (c) }));
+  // console.log(
+  //   "vendorData.map",
+  //   vendorData?.map((c: any) => {
+  //     return c;
+  //   })
+  // );
   const vendorTitleArrI18 = [
     <FormattedMessage key="vendor_name" id="vendor_name" />,
     <FormattedMessage key="vendor_city" id="vendor_city" />,
@@ -24,7 +35,7 @@ const ClientList = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPageHa
     <FormattedMessage key="vendor_website" id="vendor_website" />,
     <FormattedMessage key="vendor_contact_name" id="vendor_contact_name" />,
     <FormattedMessage key="vendor_contact_email" id="vendor_contact_email" />,
-    <FormattedMessage key="categoryTitle" id="categoryTitle" />,
+    <FormattedMessage key="categoryTitle" id="categoryTitle" />
   ];
   const vendorTitleArr = [
     "供應商號碼",
@@ -56,6 +67,6 @@ const ClientList = ({ vendorData, goToDetailPage, goToCreatePage, goToEditPageHa
       />
     </BodySTY>
   );
-}
+};
 
-export default ClientList;
+export default VendorList;

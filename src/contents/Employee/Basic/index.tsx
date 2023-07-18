@@ -131,9 +131,9 @@ function Basic({
           />
         </Pane>
         <Pane className="input-line">
+          <Text>性別</Text>
           <RadioGroup
             className="gender-radio"
-            label="性別"
             value={insertData.user_sex}
             options={genderOption_DATA}
             onChange={handleChangeSex}

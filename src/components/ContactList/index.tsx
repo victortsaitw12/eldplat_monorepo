@@ -35,6 +35,7 @@ function ContactList({
     control,
     name: arrayName
   });
+  console.log("fields", fields);
   return (
     <BodySTY>
       {fields.map((item: any, index) => {
@@ -44,7 +45,7 @@ function ContactList({
           {
             req: index === 0 ? true : false,
             label: contactUserName,
-            value: item.contact_name || "---",
+            value: item.contact_name || "--",
             editEle: [
               <TextInput
                 key={`${arrayName}.${index}.contact_name`}
@@ -52,41 +53,61 @@ function ContactList({
                   required: "必填",
                   validate: textValidation
                 })}
+                style={{ flex: "1" }}
               />
             ]
           },
           {
             label: contactUserName + "電話",
-            value: item.contact_tel
-              ? item.contact_tel_code + " " + item.contact_tel
-              : "---",
+            value: item.contact_tel ? (
+              <>
+                <span style={{ marginRight: "1rem" }}>市話</span>
+                <span>
+                  +{item.contact_tel_code} {item.contact_tel}
+                </span>
+              </>
+            ) : (
+              "市話 --"
+            ),
             editEle: [
               <Pane
                 display="flex"
                 flexDirection="row"
                 gap={10}
                 key={`${arrayName}.${index}.contact_tel`}
+                alignItems="center"
               >
                 <Text>市話</Text>
                 <TextInput
                   style={{ width: "60px" }}
                   {...register(`${arrayName}.${index}.contact_tel_code`)}
                 />
-                <TextInput style={{ width: "48%" }} {...register(`${arrayName}.${index}.contact_tel`)} />
+                <TextInput
+                  style={{ flex: "1", width: "auto" }}
+                  {...register(`${arrayName}.${index}.contact_tel`)}
+                />
               </Pane>
             ]
           },
           {
-            label: contactUserName + "手機",
-            value: item.contact_phone
-              ? item.contact_phone_code + " " + item.contact_phone
-              : "---",
+            label: " ",
+            value: item.contact_phone ? (
+              <>
+                <span style={{ marginRight: "1rem" }}>手機</span>
+                <span>
+                  +{item.contact_phone_code} {item.contact_phone}
+                </span>
+              </>
+            ) : (
+              "手機 --"
+            ),
             editEle: [
               <Pane
                 display="flex"
                 flexDirection="row"
                 gap={10}
                 key={`${arrayName}.${index}.contact_phone_code`}
+                alignItems="center"
               >
                 <Text>手機</Text>
                 <TextInput
@@ -94,7 +115,7 @@ function ContactList({
                   {...register(`${arrayName}.${index}.contact_phone_code`)}
                 />
                 <TextInput
-                  style={{ width: "48%" }}
+                  style={{ flex: "1", width: "auto" }}
                   {...register(`${arrayName}.${index}.contact_phone`)}
                 />
               </Pane>
@@ -102,11 +123,12 @@ function ContactList({
           },
           {
             label: contactUserName + "信箱",
-            value: item.contact_email || "---",
+            value: item.contact_email || "--",
             editEle: [
               <TextInput
                 key={`${arrayName}.${index}.contact_email`}
                 {...register(`${arrayName}.${index}.contact_email`)}
+                style={{ flex: "1" }}
               />
             ]
           }

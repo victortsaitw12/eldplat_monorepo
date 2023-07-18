@@ -9,6 +9,9 @@ export const CellSTY = styled.div`
   &:nth-child(-n + 7) {
     border-top: none;
   }
+  .cell__createEventBtn {
+    flex-grow: 10;
+  }
   .cell__date {
     width: 100%;
     max-width: 100%;
@@ -20,8 +23,9 @@ export const CellSTY = styled.div`
     justify-content: space-between;
     align-items: center;
     text-align: right;
-    position: sticky;
+    /* position: absolute;
     bottom: 0;
+    left: 0; */
     .cell__date-info {
       flex-grow: 10;
       text-align: start;

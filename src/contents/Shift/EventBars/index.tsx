@@ -130,16 +130,13 @@ const EventBars = ({
         >
           {SCHD_TYPE.get(item.schd_Type)?.icon}
           <span>
-            {" "}
             {item.schd_Type === "04"
               ? CHECK_STATUS.get(item.check_Status)?.label
               : SCHD_TYPE.get(item.schd_Type)?.label}
           </span>
-          {item.leave_Code || item.check_Status ? <TagIcon /> : ""}
+          {(item.leave_Code || item.check_Status) && <TagIcon />}
           <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
-          <span className="text-wrapper">
-            <span>{item.schd_Type === "04" ? item.leave_Description : ""}</span>
-          </span>
+          {item.schd_Type === "04" && <span>{item.leave_Description}</span>}
         </button>
       </EventBarSTY>
     );

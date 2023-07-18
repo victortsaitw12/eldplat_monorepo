@@ -5,10 +5,12 @@ export const BtnSTY = styled.button<{ color: keyof ThemeType["color"] }>`
   /* define an index signature on theme object type to allow indexing with any string value*/
   background-color: ${({ theme, color }) => theme.color[color] || "unset"};
   color: ${({ theme }) => theme.color.N0};
-  padding: 4px 8px;
-  margin-right: 10px;
   border: none;
   border-radius: 5px;
+
+  padding: 4px 8px;
+  margin-right: 10px;
+
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

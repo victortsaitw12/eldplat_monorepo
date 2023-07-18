@@ -8,6 +8,7 @@ import { IconLeft } from "@components/Button/Primary";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import { createMaintenance } from "@services/maintenance/createMaintenance";
 import router from "next/router";
+import dayjs from "dayjs";
 
 //@components
 export interface CreateMaintenancePayload {
@@ -19,7 +20,7 @@ export interface CreateMaintenancePayload {
   vendor_no: string;
   package_code: string;
   service_start_date: string;
-  service_end_date: string;
+  service_end_date: string | any;
 }
 
 interface I_MaintenanceCreateFormProps {
@@ -31,6 +32,7 @@ function MaintenanceCreateForm({
   data,
   reloadData
 }: I_MaintenanceCreateFormProps) {
+  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
   // default value
   const defaultValues: CreateMaintenancePayload = {
     bus_no: "",
@@ -48,10 +50,6 @@ function MaintenanceCreateForm({
       defaultValues
     });
   const [loading, setLoading] = useState(false);
-  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
-
-  console.log("data for create", data);
-
   // 取得新增時的下拉式資料
   useEffect(() => {
     setLoading(true);
@@ -59,33 +57,37 @@ function MaintenanceCreateForm({
       getCreateDdl().then((data) => {
         console.log("DDL data", data);
         const newData = { ...data.dataList[0] };
-        newData["bus_options"].unshift({ no: "0", name: "請選擇" });
-        newData["driver_options"].unshift({ no: "0", name: "請選擇" });
-        newData["package_options"].unshift({ no: "0", name: "請選擇" });
-        newData["type_options"].unshift({ no: "0", name: "請選擇" });
-        newData["vendor_options"].unshift({ no: "0", name: "請選擇" });
+        // newData["bus_options"].unshift({ no: "0", name: "請選擇" });
+        // newData["driver_options"].unshift({ no: "0", name: "請選擇" });
+        // newData["package_options"].unshift({ no: "0", name: "請選擇" });
+        // newData["type_options"].unshift({ no: "0", name: "請選擇" });
+        // newData["vendor_options"].unshift({ no: "0", name: "請選擇" });
         setMainCreateDdl(newData);
       });
     } catch (err) {
       console.error("getDDL error: ", err);
     }
     setLoading(false);
-  }, []);
-
+  }, [loading]);
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     console.log("data for submitting", data);
     const newData = { ...data };
+    newData["bus_no"] = mainCreateDdl?.bus_options[0]?.no;
+    newData["driver_no"] = mainCreateDdl?.driver_options[0]?.no;
+    newData["maintenance_type"] = mainCreateDdl?.type_options[0]?.no;
+    newData["vendor_no"] = mainCreateDdl?.vendor_options[0]?.no;
+    newData["package_code"] = mainCreateDdl?.package_options[0]?.no;
     const selectedBus = mainCreateDdl.bus_options.filter((v: { no: any }) => {
-      return v.no === data.bus_no;
+      return v.no === newData.bus_no;
     });
-    newData["bus_name"] = selectedBus[0].name;
+    newData["bus_name"] = selectedBus[0]?.name;
     const selectedDriver = mainCreateDdl.driver_options.filter(
       (v: { no: any }) => {
-        return v.no === data.driver_no;
+        return v.no === newData.driver_no;
       }
     );
-    newData["driver_name"] = selectedDriver[0].name;
+    newData["driver_name"] = selectedDriver[0]?.name;
     console.log("💦newData", newData);
     try {
       const res = await createMaintenance(newData);
@@ -114,7 +116,7 @@ function MaintenanceCreateForm({
             <span style={{ color: "#D14343" }}>*</span>車輛名稱
           </div>
         }
-        {...register("bus_no", { required: "此欄位必填" })}
+        {...register("bus_no")}
       >
         {mainCreateDdl?.bus_options.map((item: any) => {
           return (
@@ -130,7 +132,7 @@ function MaintenanceCreateForm({
             <span style={{ color: "#D14343" }}>*</span>駕駛
           </div>
         }
-        {...register("driver_no", { required: "此欄位必填" })}
+        {...register("driver_no")}
       >
         {mainCreateDdl?.driver_options.map((item: any) => {
           return (
@@ -146,7 +148,7 @@ function MaintenanceCreateForm({
             <span style={{ color: "#D14343" }}>*</span>分類
           </div>
         }
-        {...register("maintenance_type", { required: "此欄位必填" })}
+        {...register("maintenance_type")}
       >
         {mainCreateDdl?.type_options.map((item: any) => {
           return (
@@ -162,7 +164,7 @@ function MaintenanceCreateForm({
             <span style={{ color: "#D14343" }}>*</span>維修廠
           </div>
         }
-        {...register("vendor_no", { required: "此欄位必填" })}
+        {...register("vendor_no")}
       >
         {mainCreateDdl?.vendor_options.map((item: any) => {
           return (
@@ -178,7 +180,7 @@ function MaintenanceCreateForm({
             <span style={{ color: "#D14343" }}>*</span>項目
           </div>
         }
-        {...register("package_code", { required: "此欄位必填" })}
+        {...register("package_code")}
       >
         {mainCreateDdl?.package_options.map((item: any) => {
           return (
@@ -189,20 +191,12 @@ function MaintenanceCreateForm({
         })}
       </SelectField>
       <TextInputField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>起始日期
-          </div>
-        }
+        label="起始日期"
         type="date"
         {...register("service_start_date")}
       />
       <TextInputField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>截止日期
-          </div>
-        }
+        label="截止日期"
         type="date"
         {...register("service_end_date")}
       />

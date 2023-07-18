@@ -3,27 +3,27 @@ const defaultContactInfo = [
   {
     name: "family_name",
     title: "姓",
-    value: "---"
+    value: "--"
   },
   {
     name: "name",
     title: "名",
-    value: "---"
+    value: "--"
   },
   {
     name: "contact_phone",
     title: "手機",
-    value: "---"
+    value: "--"
   },
   {
     name: "contact_tel",
     title: "電話",
-    value: "---"
+    value: "--"
   },
   {
     name: "contact_email",
     title: "信箱",
-    value: "---"
+    value: "--"
   },
   {
     name: "social_media",

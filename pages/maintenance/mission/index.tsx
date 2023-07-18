@@ -1,24 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { NextPageWithLayout } from "next";
-//
+import React, { useState, useEffect, ReactNode } from "react";
+import { NextPageWithLayout } from "next"; //
 import { getLayout } from "@layout/MainLayout";
-import CustomerList from "@contents/Customer/CustomerList";
-import {
-  getAllCustomers,
-  customerParser,
-  customerPattern
-} from "@services/customer/getAllCustomers";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { useCustomerStore } from "@contexts/filter/customerStore";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
-import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
-import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
-import MaintenanceNoticeList from "@contents/maintenance/Notice/NoticeList";
 import MaintenanceMissionList from "@contents/maintenance/Mission/MissionList";
 import {
   UpdateMaintenanceStatus,
@@ -31,16 +20,18 @@ import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
 import FinishBtn from "@contents/maintenance/Mission/MissionList/FinishBtn";
 import AssignBtn from "@contents/maintenance/Mission/MissionList/AssignBtn";
 import { CloseAssignment } from "@services/maintenance/updateMaintenance";
+import Link from "next/link";
 //
 const mainFilterArray = [
-  { id: 1, label: "啟用", value: "1" },
-  { id: 2, label: "停用", value: "2" }
+  { id: 1, label: "任務", value: "1" },
+  { id: 2, label: "取消", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [nowTab, setNowTab] = useState("1");
+  const [listStatus, setListStatus] = useState("1");
   const {
     initializeSubFilter,
     mainFilter,
@@ -67,7 +58,6 @@ const Page: NextPageWithLayout<never> = () => {
 
       // 由於table內不只有靜態資料顯示(有button功能)，所以客制加工一下 => 結案按鈕
       MainMissionData?.map((item) => {
-        console.log("maintainance item----", item);
         if (item["completion_time"].label === "---") {
           const active =
             item["all_assignment_no"].value.length > 30 ? false : true;
@@ -76,6 +66,7 @@ const Page: NextPageWithLayout<never> = () => {
             <FinishBtn
               id={item.maintenance_no["value"]}
               disabled={active}
+              setListStatus={setListStatus}
             ></FinishBtn>
           ));
         }
@@ -98,6 +89,21 @@ const Page: NextPageWithLayout<never> = () => {
               disabled={assignActive[idx]}
               assignmentData={res.contentList}
             ></AssignBtn>
+          ));
+        }
+
+        const newString = item["all_assignment_no"].value.split(", ");
+        if (item["all_assignment_no"].value.length > 15) {
+          return (item["all_assignment_no"].label = (
+            <div className="assignment-link">
+              {newString.map((v: string) => {
+                return (
+                  <Link href="/assignment" key={v}>
+                    {v}
+                  </Link>
+                );
+              })}
+            </div>
           ));
         }
       });
@@ -151,7 +157,7 @@ const Page: NextPageWithLayout<never> = () => {
     return () => {
       isCanceled = true;
     };
-  }, [nowTab]);
+  }, [nowTab, listStatus]);
   if (!data) {
     return <LoadingSpinner />;
   }
@@ -201,5 +207,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

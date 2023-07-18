@@ -1,4 +1,4 @@
-const convertMap: { [key: string]: { [key: string]: any } } = {
+export const convertMap: { [key: string]: { [key: string]: any } } = {
   customer_Typ: {
     "01": {
       ch: "公司",
@@ -373,6 +373,36 @@ const convertMap: { [key: string]: { [key: string]: any } } = {
     "03": {
       ch: "model-3",
       en: "model-3"
+    }
+  },
+  purpose: {
+    "01": {
+      ch: "學校/企業參訪",
+      en: "School/Company Visit"
+    },
+    "02": {
+      ch: "旅遊",
+      en: "Travel"
+    },
+    "03": {
+      ch: "戶外教學",
+      en: "Outdoor Teaching"
+    },
+    "04": {
+      ch: "企業教育訓練",
+      en: "Corporate Education Training"
+    },
+    "05": {
+      ch: "員工旅遊",
+      en: "Employee Travel"
+    },
+    "06": {
+      ch: "進香團",
+      en: "Pilgrimage"
+    },
+    "07": {
+      ch: "其他",
+      en: "Others"
     }
   }
 };

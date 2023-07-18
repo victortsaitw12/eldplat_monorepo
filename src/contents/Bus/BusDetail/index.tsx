@@ -7,30 +7,30 @@ import {
   Maintenance,
   Specifications
 } from "./SubFrom";
-//@components
-//@service
-//@utils
 import { BusDataTypes } from "../bus.type";
-import { getBusById } from "@services/bus/getBusById";
 interface I_Props {
   isEdit: boolean;
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
   asyncSubmitForm: (data: any) => Promise<void>;
   busId: string;
   formType: string;
+  busDefaultData: BusDataTypes;
+  busOptions: any;
 }
 const BusDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
-  busId,
-  formType
+  formType,
+  busDefaultData,
+  busOptions
 }: I_Props) => {
-  console.log("render bus detail component!");
   const [visibleForm, setVisibleForm] = useState("1");
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
+  //
+  console.log("busDefaultData", busDefaultData);
   //
   const {
     register,
@@ -39,57 +39,63 @@ const BusDetail = ({
     getValues,
     handleSubmit
   } = useForm<BusDataTypes>({
-    defaultValues: async () => getBusById(busId)
+    defaultValues: busDefaultData
   });
   //TODO 分類的選法
-  if (getValues("bus") === undefined) {
-    return <div></div>;
+  if (!busDefaultData) {
+    return <div>查無相關資料...</div>;
   }
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>
         儲存
       </button>
-      <Details
-        selected={visibleForm === "1"}
-        register={register}
-        errors={errors}
-        getValues={getValues}
-        control={control}
-        isEdit={isEdit}
-      />
-      <Maintenance
-        selected={visibleForm === "2"}
-        register={register}
-        errors={errors}
-        getValues={getValues}
-        control={control}
-        isEdit={isEdit}
-      />
-      <Lifecycle
-        selected={visibleForm === "3"}
-        register={register}
-        errors={errors}
-        getValues={getValues}
-        control={control}
-        isEdit={isEdit}
-      />
-      <Financial
-        selected={visibleForm === "4"}
-        register={register}
-        errors={errors}
-        getValues={getValues}
-        control={control}
-        isEdit={isEdit}
-      />
-      <Specifications
-        selected={visibleForm === "5"}
-        register={register}
-        errors={errors}
-        getValues={getValues}
-        control={control}
-        isEdit={isEdit}
-      />
+      {visibleForm === "1" && (
+        <Details
+          register={register}
+          errors={errors}
+          getValues={getValues}
+          control={control}
+          isEdit={isEdit}
+          busOptions={busOptions}
+        />
+      )}
+      {visibleForm === "2" && (
+        <Maintenance
+          register={register}
+          errors={errors}
+          getValues={getValues}
+          control={control}
+          isEdit={isEdit}
+        />
+      )}
+      {visibleForm === "3" && (
+        <Lifecycle
+          register={register}
+          errors={errors}
+          getValues={getValues}
+          control={control}
+          isEdit={isEdit}
+        />
+      )}
+      {visibleForm === "4" && (
+        <Financial
+          register={register}
+          errors={errors}
+          getValues={getValues}
+          control={control}
+          isEdit={isEdit}
+        />
+      )}
+      {visibleForm === "5" && (
+        <Specifications
+          register={register}
+          errors={errors}
+          getValues={getValues}
+          control={control}
+          isEdit={isEdit}
+        />
+      )}
     </form>
   );
 };

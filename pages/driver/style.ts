@@ -6,7 +6,6 @@ const BodySTY = styled.div<{ isOpenDrawer: boolean }>`
   position: relative;
   margin: 10px;
   /* fonts */
-  font-family: "Noto Sans";
   font-weight: ${({ theme }) => theme.fontWeight.Paragraph200};
   font-size: ${({ theme }) => theme.fontWeight.Paragraph200};
   line-height: 19px;
@@ -146,7 +145,6 @@ const UserSTY = styled.div`
   align-items: center;
   gap: 12px;
   /* fonts */
-  font-family: "Noto Sans";
   font-weight: ${({ theme }) => theme.fontWeight.Heading400};
   font-size: ${({ theme }) => theme.fontWeight.Heading400};
   line-height: 19px;
@@ -157,6 +155,10 @@ const UserSTY = styled.div`
   a {
     color: ${({ theme }) => theme.color.N900};
     text-decoration: inherit !important;
+  }
+  // initial in Avatar
+  div > span {
+    justify-content: center;
   }
 `;
 

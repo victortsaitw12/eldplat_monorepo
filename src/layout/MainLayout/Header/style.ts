@@ -2,13 +2,22 @@ import styled from "styled-components";
 
 const BodySTY = styled.div`
   display: flex;
-  background-color: #e2ecf7;
+  /* background-color: #e2ecf7; */
+  background: ${({ theme }) => theme.color.N500};
   justify-content: space-between;
   padding: 12px 20px;
   .tool-container {
     display: flex;
     align-items: center;
     gap: 10px;
+    & > .header-title {
+      color: ${({ theme }) => theme.color.N0};
+      /* Headline/H-500 */
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
   }
   .plan-info {
     display: flex;
@@ -21,6 +30,26 @@ const BodySTY = styled.div`
 
       option {
         border-radius: 32px;
+      }
+    }
+  }
+  .breadcrumbs.main-layout {
+    .breadcrumbs-item {
+      & > * {
+        color: ${({ theme }) => theme.color.N0};
+        opacity: 0.5;
+      }
+      .breadcrumbs__route {
+        color: ${({ theme }) => theme.color.N0};
+        &:hover {
+          opacity: 1;
+        }
+      }
+      &:last-child {
+        & > .breadcrumbs__route,
+        & > div {
+          opacity: 1;
+        }
       }
     }
   }

@@ -4,11 +4,10 @@ export const BodySTY = styled.div`
   width: 1240px;
   margin: 28px auto;
   > .body-container {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
     gap: 20px;
+    grid-template-columns: 2fr 1fr;
     > .content-container {
-      flex: 2 0 0;
       display: flex;
       flex-direction: column;
       gap: 50px;
@@ -18,7 +17,6 @@ export const BodySTY = styled.div`
       }
     }
     > .charge-container {
-      flex: 1 0 0;
       border-radius: 10px;
       overflow: hidden;
     }

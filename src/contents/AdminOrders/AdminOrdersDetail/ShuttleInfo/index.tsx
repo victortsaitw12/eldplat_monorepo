@@ -97,6 +97,9 @@ const ShuttleInfo = ({ isEdit }: I_Props) => {
           {!isCustomBus && <span>行程資訊</span>}
           {fields.length > 1 && (
             <TrashIcon
+              style={{
+                position: "absolute"
+              }}
               onClick={() => {
                 remove(i);
               }}
@@ -114,9 +117,11 @@ const ShuttleInfo = ({ isEdit }: I_Props) => {
         title={
           isCustomBus
             ? "第" +
-              child.day_number +
+              (child.day_number || "1") +
               "天  " +
-              dayjs(child.day_date).format("YYYY-MM-DD")
+              ((dayjs(child.day_date).isValid() &&
+                dayjs(child.day_date).format("YYYY-MM-DD")) ||
+                "")
             : "接送行程"
         }
         titleChildren={r_titleChildren(isEdit, child, i)}

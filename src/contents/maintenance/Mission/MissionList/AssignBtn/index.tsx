@@ -19,7 +19,16 @@ const AssignBtn = ({ id, disabled, assignmentData }: AssignBtn_Type) => {
         (v: { maintenance_no: string }) => v.maintenance_no === id
       );
       console.log("choseData", choseData);
+      // const newData = {
+      //   maintenance_no: choseData[0].maintenance_no,
+      //   bus_no: choseData[0].bus_no,
+      //   driver_no: choseData[0].driver_no,
+      //   service_start_date: choseData[0].service_start_date,
+      //   service_end_date: choseData[0].service_end_date
+      // };
+      // console.log("newData", newData);
       const res = await createMaintenanceAssignment(choseData[0]);
+      console.log("💛派單按鈕res", res);
       alert("新增派單完成!");
       router.reload();
     } catch (err) {

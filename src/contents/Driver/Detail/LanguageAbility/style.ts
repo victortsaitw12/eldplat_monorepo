@@ -2,15 +2,13 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   background: ${({ theme }) => theme.color.N0};
-  font-family: "Noto Sans";
   width: 100%;
-  min-height: 224px;
+  min-height: 100px;
   background: #ffffff;
   border-radius: 10px;
   overflow: auto;
   padding: 35px 20px;
   h4 {
-    font-family: "Noto Sans";
     font-style: normal;
     font-weight: 600;
     font-size: 16px;

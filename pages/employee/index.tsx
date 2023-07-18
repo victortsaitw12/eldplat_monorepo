@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, ReactNode } from "react";
 import { Pane } from "evergreen-ui";
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
@@ -75,7 +75,7 @@ const Page: NextPageWithLayout<never> = () => {
   }, []);
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "全部", value: "all" },
+      { id: 1, label: "啟用", value: "all" },
       { id: 2, label: "停用", value: "seal" }
     ],
     []
@@ -98,7 +98,15 @@ const Page: NextPageWithLayout<never> = () => {
           // user_No: item["user_No"],
           id: { label: item.user_No, value: item.user_No },
           user_Name: {
-            label: item.user_Name,
+            label: (
+              <Pane className="user_td">
+                <div className="user_icon">
+                  <span>{item.user_Name.charAt(0)}</span>
+                </div>
+                <div className="user_name">{item.user_Name}</div>
+              </Pane>
+            ),
+            // label: item.user_Name,
             value: item.user_name
           },
           user_Email: { label: item.user_Email, value: item.user_Email },
@@ -181,6 +189,7 @@ const Page: NextPageWithLayout<never> = () => {
           onChangeTab={changeMainFilterHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
+          viewOnly
         >
           <FilterWrapper
             updateFilter={updateSubFilter}
@@ -190,16 +199,14 @@ const Page: NextPageWithLayout<never> = () => {
             filter={filter}
           >
             {/* Put your component here */}
-            <Pane>
-              <EmployeeList
-                data={employeeListData}
-                goToCreatePage={() => {
-                  setDrawerOpen(true);
-                }}
-                deleteItemHandler={deleteItemHandler}
-                goToEditPageHandler={goToEditPageHandler}
-              />
-            </Pane>
+            <EmployeeList
+              data={employeeListData}
+              goToCreatePage={() => {
+                setDrawerOpen(true);
+              }}
+              deleteItemHandler={deleteItemHandler}
+              goToEditPageHandler={goToEditPageHandler}
+            />
           </FilterWrapper>
         </TableWrapper>
         {isDrawerOpen && (
@@ -217,5 +224,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

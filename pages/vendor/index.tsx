@@ -4,7 +4,7 @@ import {
 } from "@typings/vendors_type";
 import { Pane, GlobeIcon } from "evergreen-ui";
 import { GetServerSideProps, NextPageWithLayout } from "next";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, ReactNode } from "react";
 import { useRouter } from "next/router";
 import { FormattedMessage } from "react-intl";
 import { BodySTY } from "./style";
@@ -59,76 +59,107 @@ const Page: NextPageWithLayout<{
     getResult(nowTab);
   }, [router.query.codeType, setDrawerOpen]);
 
+  const returnTableItem = (vendors: Vendor) => {
+    return {
+      id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
+      vendor_no: {
+        label: vendors["vendor_No"],
+        value: vendors["vendor_No"]
+      },
+      vendor_data: {
+        label: (
+          <Pane
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center"
+            }}
+          >
+            無
+          </Pane>
+        ),
+        value: "無"
+      },
+      vendor_name: {
+        label: vendors["vendor_Name"],
+        value: vendors["vendor_Name"]
+      },
+      vendor_fullAddress: {
+        label: vendors["vendor_City"],
+        value: vendors["vendor_City"]
+      },
+      vendor_Tel: {
+        label:
+          vendors["vendor_Tel_Code"] && vendors["vendor_Tel"]
+            ? vendors["vendor_Tel_Code"] + " " + vendors["vendor_Tel"]
+            : "",
+        value:
+          vendors["vendor_Tel_Code"] && vendors["vendor_Tel"]
+            ? vendors["vendor_Tel_Code"] + " " + vendors["vendor_Tel"]
+            : ""
+      },
+      vendor_email: {
+        label: vendors["vendor_Email"],
+        value: vendors["vendor_Email"]
+      },
+      contact_Name: {
+        label: vendors["contact_Name"],
+        value: vendors["contact_Name"]
+      },
+      contact_Tel: {
+        label:
+          vendors["contact_Tel_Code"] && vendors["contact_Tel"]
+            ? vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"]
+            : "",
+        value:
+          vendors["contact_Tel_Code"] && vendors["contact_Tel"]
+            ? vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"]
+            : ""
+      },
+      vendor_website: {
+        label: (
+          <Pane
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center"
+            }}
+          >
+            <a
+              href={vendors["vendor_Website"]}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <GlobeIcon size={16} color="#718BAA" />
+            </a>
+          </Pane>
+        ),
+        value: vendors["vendor_Website"]
+      },
+      vendor_label: {
+        label: <LabelTag text="服務讚" />,
+        value: vendors["vendor_Label"]
+      }
+    };
+  };
+
   useEffect(() => {
     let isCanceled = false;
-    getAllVendors(subFilter, "1", router.query.codeType as string).then((data) => {
-      const vendorData = data.contentList.map((vendors: Vendor) => {
-        console.log("💫💫💫💫💫💫vendors的資料", vendors);
-        return {
-          id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
-          vendor_no: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
-          vendor_data: { label: "無", value: "無" },
-          vendor_name: {
-            label: vendors["vendor_Name"],
-            value: vendors["vendor_Name"]
-          },
-          vendor_fullAddress: {
-            label: vendors["vendor_City"],
-            value: vendors["vendor_City"]
-          },
-          vendor_Tel: {
-            label: vendors["vendor_Tel_Code"] && vendors["vendor_Tel"] ?
-              vendors["vendor_Tel_Code"] + " " + vendors["vendor_Tel"] : "",
-            value: vendors["vendor_Tel_Code"] && vendors["vendor_Tel"] ?
-              vendors["vendor_Tel_Code"] + " " + vendors["vendor_Tel"] : ""
-          },
-          vendor_email: {
-            label: vendors["vendor_Email"],
-            value: vendors["vendor_Email"]
-          },
-          contact_Name: {
-            label: vendors["contact_Name"],
-            value: vendors["contact_Name"],
-          },
-          contact_Tel: {
-            label: vendors["contact_Tel_Code"] && vendors["contact_Tel"] ?
-              vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"] : "",
-            value: vendors["contact_Tel_Code"] && vendors["contact_Tel"] ?
-              vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"] : "",
-          },
-          vendor_website: {
-            label: (
-              <a
-                href={vendors["vendor_Website"]}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <GlobeIcon size={16} color="#718BAA" />
-              </a>
-            ),
-            value: vendors["vendor_Website"]
-          },
-          vendor_label: {
-            label: (
-              <LabelTag text="服務讚" />
-            ),
-            value: vendors["vendor_Label"]
-          }
-        };
-      });
-      if (isCanceled) {
-        console.log("canceled");
-        return;
+    getAllVendors(subFilter, "1", router.query.codeType as string).then(
+      (data) => {
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "vendorInitFilter",
+            JSON.stringify(data.conditionList)
+          );
+          initializeSubFilter();
+        }
       }
-      if (!subFilter) {
-        localStorage.setItem(
-          "vendorInitFilter",
-          JSON.stringify(data.conditionList)
-        );
-        initializeSubFilter();
-      }
-      setData(vendorData);
-    });
+    );
     return () => {
       isCanceled = true;
     };
@@ -136,91 +167,51 @@ const Page: NextPageWithLayout<{
 
   const getResult = async (status: string) => {
     try {
-      const res = await getAllVendors(subFilter, status, router.query.codeType as string)
+      const res = await getAllVendors(
+        subFilter,
+        status,
+        router.query.codeType as string
+      );
       const vendorData = res.contentList.map((vendors: Vendor) => {
-        return {
-          id: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
-          vendor_no: { label: vendors["vendor_No"], value: vendors["vendor_No"] },
-          vendor_data: { label: "無", value: "無" },
-          vendor_name: {
-            label: vendors["vendor_Name"],
-            value: vendors["vendor_Name"]
-          },
-          vendor_fullAddress: {
-            label: vendors["vendor_City"],
-            value: vendors["vendor_City"]
-          },
-          vendor_phone: {
-            label: vendors["vendor_Phone"],
-            value: vendors["vendor_Phone"]
-          },
-          vendor_email: {
-            label: vendors["vendor_Email"],
-            value: vendors["vendor_Email"]
-          },
-          vendor_contact_name: {
-            label: vendors["vendor_Contact_Name"],
-            value: vendors["vendor_Contact_Name"],
-          },
-          vendor_contact_phone: {
-            label: vendors["vendor_Contact_Phone"],
-            value: vendors["vendor_Contact_Phone"],
-          },
-          vendor_website: {
-            label: (
-              <a
-                href={vendors["vendor_Website"]}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <GlobeIcon size={16} color="#718BAA" />
-              </a>
-            ),
-            value: vendors["vendor_Website"]
-          },
-          vendor_label: {
-            label: vendors["vendor_Label"],
-            value: vendors["vendor_Label"]
-          }
-        };
+        return returnTableItem(vendors);
       });
       setData(vendorData);
     } catch {
       //刷新列表失敗
     }
-  }
+  };
 
   const goToCreatePage = () => {
     // router.push("/vendor/create");
-    setDrawerOpen(true)
+    setDrawerOpen(true);
   };
   //進入供應商詳細頁
   const goToDetailPage = (id: string) => {
     router.push("/vendor/detail/" + id + "?editPage=view");
-  }
+  };
   //進入供應商編輯頁
   const goToEditPageHandler = (id: string) => {
     router.push("/vendor/detail/" + id + "?editPage=edit");
-  }
+  };
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {
     try {
       const res = await deleteVendor(id);
       console.log("response of vendor edit: ", res);
-      setData([])
+      setData([]);
       getResult("1");
     } catch (e: any) {
       console.log(e);
       alert("删除供應商失敗：" + e.message);
     }
     router.push("/vendor");
-  }
+  };
   //套用新版filter
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
     setData([]);
     getResult(value);
-  }
+  };
   //
   const mainFilterArray = useMemo(
     () => [
@@ -238,6 +229,7 @@ const Page: NextPageWithLayout<{
             onChangeTab={changeMainFilterHandler}
             mainFilter={nowTab}
             mainFilterArray={mainFilterArray}
+            viewOnly={true}
           >
             <FilterWrapper
               updateFilter={updateSubFilter}
@@ -247,13 +239,15 @@ const Page: NextPageWithLayout<{
               filter={subFilter}
             >
               {/* <FormattedMessage id="vendor_name" /> */}
-              <VendorList
-                vendorData={data}
-                goToDetailPage={goToDetailPage}
-                goToCreatePage={goToCreatePage}
-                goToEditPageHandler={goToEditPageHandler}
-                deleteItemHandler={deleteItemHandler}
-              ></VendorList>
+              {data && (
+                <VendorList
+                  vendorData={data}
+                  goToDetailPage={goToDetailPage}
+                  goToCreatePage={goToCreatePage}
+                  goToEditPageHandler={goToEditPageHandler}
+                  deleteItemHandler={deleteItemHandler}
+                ></VendorList>
+              )}
             </FilterWrapper>
           </TableWrapper>
           {isDrawerOpen && (
@@ -266,7 +260,7 @@ const Page: NextPageWithLayout<{
               <VendorCreateForm
                 reloadData={() => {
                   setDrawerOpen(false);
-                  setData([])
+                  setData([]);
                   getResult("1");
                 }}
               />
@@ -297,16 +291,16 @@ export const getServerSideProps: GetServerSideProps<Params> = async (
     return {
       redirect: {
         permanent: false,
-        destination: "/vendor?codeType=01",
+        destination: "/vendor?codeType=01"
       },
       props: {}
-    }
+    };
   } else {
     return {
       props: {}
     };
   }
-
 };
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

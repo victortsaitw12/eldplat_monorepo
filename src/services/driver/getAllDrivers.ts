@@ -1,9 +1,20 @@
 import API_Path from "./apiPath";
+import { I_PageInfo } from "@components/PaginationField";
+
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: null,
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
 
 // 取得所有駕駛資料 QueryDriverList
 export const getAllDriver = async (
   filter: { [key: string]: any } = {},
-  driverStatus = "1"
+  driverStatus = "1",
+  pageQuery = defaultPageInfo
 ) => {
   const driverFilter = [];
   for (const key in filter) {
@@ -26,12 +37,7 @@ export const getAllDriver = async (
     body: JSON.stringify({
       filters: driverFilter,
       filter_Needed: true,
-      pageInfo: {
-        page_Index: 1,
-        page_Size: 10,
-        orderby: "driver_no",
-        arrangement: "asc"
-      },
+      pageInfo: pageQuery,
       driver_status: driverStatus //1: 啟用 2:停用
     })
   });

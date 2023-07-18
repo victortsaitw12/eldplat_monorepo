@@ -1,27 +1,18 @@
 import React from "react";
 import { BodySTY } from "./style";
 import { Label } from "@components/Button/Primary";
+import { useRouter } from "next/router";
 
 interface AddMissionBtn_Type {
   id?: string;
   setDrawerOpen: (v: boolean) => void;
 }
 const AddMissionBtn = ({ setDrawerOpen }: AddMissionBtn_Type) => {
+  const router = useRouter();
   const AddNewMission = (e: any) => {
     e.preventDefault();
+    router.push("/maintenance/mission");
     setDrawerOpen(true);
-    // try {
-    //   UpdateMaintenanceStatus(id)
-    //     .then((res) => {
-    //       console.log("UpdateMaintenanceStatus res", res);
-    //       router.reload();
-    //     })
-    //     .catch((err) => {
-    //       console.log("err of update status ", err);
-    //     });
-    // } catch (err) {
-    //   console.log("err of click the finish button", err);
-    // }
   };
   return (
     <BodySTY>

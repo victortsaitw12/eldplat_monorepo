@@ -1,12 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import {
-  SmallTickIcon,
-  TimeIcon,
-  CalendarIcon,
-  TagIcon,
-  Textarea
-} from "evergreen-ui";
+import { TimeIcon, CalendarIcon, TagIcon, Textarea } from "evergreen-ui";
 import { FormSTY } from "./style";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
@@ -103,10 +97,7 @@ const CreateForm = ({
         />
       </section>
 
-      <button className="drawer__btn">
-        <SmallTickIcon />
-        確定
-      </button>
+      <button className="drawer__btn">確定</button>
     </FormSTY>
   );
 };

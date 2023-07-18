@@ -73,9 +73,6 @@ export const FormCardSTY = styled.div`
 export const FilePickBtnSTY = styled.div`
   .inputFileTitle {
     display: block;
-    font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 14px;
     color: #101840;
     font-weight: 500;

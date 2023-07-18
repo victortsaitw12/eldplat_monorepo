@@ -2,14 +2,15 @@ import styled from "styled-components";
 
 export const DrawerSTY = styled.div`
   min-width: 280px;
-  height: 100%;
+  /* height: 100%; */
+  height: calc(100vh - 76px);
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   margin-left: 10px;
-  &::-webkit-scrollbar {
+  /* &::-webkit-scrollbar {
     display: none;
-  }
+  } */
   .drawer__content {
     width: 100%;
     position: relative;
@@ -20,5 +21,10 @@ export const DrawerSTY = styled.div`
     flex-wrap: nowrap;
     gap: 10px;
     border-radius: 10px 10px 0 0;
+    height: 100%;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
