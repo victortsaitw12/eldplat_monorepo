@@ -73,7 +73,7 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
-      &:last-child {
+      &:nth-last-child(2) {
         border-radius: 0px 0px 5px 5px;
       }
       &-date {

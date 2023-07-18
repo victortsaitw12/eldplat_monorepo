@@ -40,7 +40,7 @@ const TableTitle = ({
   );
 
   return (
-    <TableTitleSTY>
+    <TableTitleSTY className="tableTitle">
       <div className="container-header">
         <div className="container-header-left">{headerLeft}</div>
         <div className="container-header-right">{headerControl}</div>

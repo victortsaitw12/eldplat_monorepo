@@ -9,15 +9,29 @@ import { LayoutControlSTY } from "./style";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const LayoutControl = ({
-  setState
+  setState,
+  isOpenDrawer,
+  setIsOpenDrawer
 }: {
   setState: (arg: "monthly" | "daily") => void;
+  isOpenDrawer: boolean;
+  setIsOpenDrawer: (v: boolean) => void;
 }) => {
   const UI = React.useContext(UIContext);
   const renderToggleView = (type: "monthly" | "daily") => {
-    setState(type);
-    UI.resetState();
-    UI.setTimeframe(1000 * 60 * 60 * 1);
+    const rendering = () => {
+      setState(type);
+      UI.resetState();
+      // UI.setTimeframe(1000 * 60 * 60 * 1);
+    };
+    if (isOpenDrawer) {
+      setIsOpenDrawer(false);
+      setTimeout(() => {
+        rendering();
+      }, 200);
+    } else {
+      rendering();
+    }
   };
   return (
     <LayoutControlSTY>

@@ -63,24 +63,22 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
             setIsOpenDrawer={setIsOpenDrawer}
             isOpenDrawer={isOpenDrawer}
           />
-          <Pane
-            className="pageContent"
-            style={{
-              padding: `20px ${
-                view === "monthly" ? "0px 20px" : "20px 0px"
-              } 20px`
-            }}
-          >
+          <Pane className="pageContent">
             <TableTitle
               tableName={tableName}
               control={[
-                <LayoutControl key="layoutControl" setState={handleLayout} />
+                <LayoutControl
+                  key="layoutControl"
+                  setState={handleLayout}
+                  isOpenDrawer={isOpenDrawer}
+                  setIsOpenDrawer={setIsOpenDrawer}
+                />
               ]}
               sub={[]}
               page={false}
             />
             {view === "monthly" ? (
-              <div className="monthlyContainer" style={{}}>
+              <div className="monthlyContainer">
                 <MonthlyView
                   monthlyData={monthlyData}
                   setMonthlyData={setMonthlyData}
@@ -91,13 +89,15 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 />
               </div>
             ) : (
-              <DailyView
-                monthlyData={monthlyData}
-                setMonthlyData={setMonthlyData}
-                initialMonthFirst={initialMonthFirst}
-                setIsOpenDrawer={setIsOpenDrawer}
-                view={view}
-              />
+              <div className="dailyContainer">
+                <DailyView
+                  monthlyData={monthlyData}
+                  setMonthlyData={setMonthlyData}
+                  initialMonthFirst={initialMonthFirst}
+                  setIsOpenDrawer={setIsOpenDrawer}
+                  view={view}
+                />
+              </div>
             )}
           </Pane>
         </Pane>

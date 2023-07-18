@@ -141,30 +141,20 @@ const DailyView = ({
                 if (i === 0 && index === 1) {
                 }
                 return (
-                  <TimeCell
-                    key={`canvas-${i}-${index}`}
-                    cellTimestamp={date.timestamp + index * UI.timeframe}
-                    view={view}
-                  />
+                  <>
+                    <TimeCell
+                      key={`canvas-${i}-${index}`}
+                      cellTimestamp={date.timestamp + index * UI.timeframe}
+                      view={view}
+                    />
+                  </>
                 );
               })}
             </div>
           </div>
         ))}
+        <div style={{ paddingBottom: "68px" }}> </div>
       </div>
-      {isLoading ? (
-        <Pane
-          className="coverAll"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height={400}
-        >
-          <Spinner className="spinner" />
-        </Pane>
-      ) : (
-        ""
-      )}
     </DailyViewSTY>
   );
 };
