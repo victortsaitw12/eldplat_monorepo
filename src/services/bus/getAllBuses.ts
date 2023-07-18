@@ -1,6 +1,9 @@
 import API_Path from "./apiPath";
 import { PatternType } from "@utils/mappingQueryData";
+import { PageInfoType } from "../type";
+
 export const getAllBuses = async (
+  pageInfo: PageInfoType,
   filter: { [key: string]: any } = {},
   bus_status = "1"
 ) => {
@@ -28,16 +31,10 @@ export const getAllBuses = async (
       bus_status,
       bus_Filter: busFilter,
       filter_Needed: true,
-      page_Info: {
-        page_index: 1,
-        page_size: 10,
-        orderby: "bus_No",
-        arrangement: "asc"
-      }
+      page_Info: pageInfo
     })
   });
   const data = await res.json();
-  console.log("getAllBuses", data);
   return data;
 };
 
