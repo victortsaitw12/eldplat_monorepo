@@ -63,7 +63,6 @@ const Page: NextPageWithLayout<never> = () => {
     },
     []
   );
-
   // ordered data pattern
   const driverPattern = {
     id: true,
