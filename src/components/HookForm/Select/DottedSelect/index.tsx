@@ -6,11 +6,32 @@ import {
   FieldValues,
   PathValue
 } from "react-hook-form";
-import Select from "react-select";
+import Select, { components, DropdownIndicatorProps } from "react-select";
 import { BodySYT, colourStyles } from "./style";
-import { HelpIcon } from "evergreen-ui";
+import { HelpIcon, CaretDownIcon } from "evergreen-ui";
 import Tooltip from "@components/Tooltip";
 import StatusIcon from "@components/StatusIcon";
+
+function CustomDropdownIndicator(props: DropdownIndicatorProps<any>) {
+  return (
+    <components.DropdownIndicator {...props}>
+      <div
+        style={{
+          width: "20px",
+          height: "20px",
+          borderRadius: "5px",
+          backgroundColor: "#F1F6FD",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <CaretDownIcon fill={"#696f8c"} />
+      </div>
+    </components.DropdownIndicator>
+  );
+}
+
 function StyledSelect<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -34,14 +55,12 @@ function StyledSelect<
   onFormChange: (value: string) => void;
 }) {
   const id = useId();
-  console.log("formDefaultValue", formDefaultValue);
-  console.log("options", options);
   const defaultOption = options.find(
     (option: any) => option.value === formDefaultValue
   );
   const placeholder = isDisabled ? "--" : "請選擇";
   return (
-    <BodySYT vertical={vertical}>
+    <BodySYT vertical={vertical} isDisabled={isDisabled}>
       <div className="title">
         {!!isRequire && <span className="required">*</span>}
         <span>{label}</span>
@@ -61,6 +80,8 @@ function StyledSelect<
           isMulti={false}
           options={options}
           placeholder={placeholder}
+          components={{ DropdownIndicator: CustomDropdownIndicator }}
+          menuPlacement="top"
           onChange={(e: any) => {
             if (e) {
               onFormChange(e.value);

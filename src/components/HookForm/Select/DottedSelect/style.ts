@@ -27,6 +27,10 @@ export const colourStyles: StylesConfig<ColourOption> = {
     boxShadow: isFocused ? "0 0 0 2px #D6E0FF" : "none",
     width: "auto"
   }),
+  valueContainer: (baseStyles) => ({
+    ...baseStyles,
+    padding: "0 8px"
+  }),
   indicatorsContainer: (baseStyles, { isDisabled }) => ({
     ...baseStyles,
     display: isDisabled ? "none" : "block"
@@ -37,7 +41,10 @@ export const colourStyles: StylesConfig<ColourOption> = {
       ...dot(data.color)
     };
   },
-  input: (baseStyles) => ({ ...baseStyles, ...dot() }),
+  input: (baseStyles) => ({
+    ...baseStyles,
+    ...dot()
+  }),
   singleValue: (baseStyles, { data, isDisabled }) => ({
     ...baseStyles,
     color: isDisabled ? "#567190" : "#718BAA",
@@ -45,10 +52,16 @@ export const colourStyles: StylesConfig<ColourOption> = {
   })
 };
 
-export const BodySYT = styled.div<{ vertical: boolean }>`
+export const BodySYT = styled.div<{ vertical: boolean; isDisabled: boolean }>`
   display: flex;
   flex-direction: ${({ vertical }) => (vertical ? "column" : "row")};
   align-items: ${({ vertical }) => (vertical ? "flex-start" : "center")};
+  gap: 8px;
+  > *:last-child {
+    * {
+      cursor: ${({ isDisabled }) => !isDisabled && "pointer"};
+    }
+  }
   > div {
     flex: 1 0 0;
   }

@@ -22,6 +22,7 @@ function ClientList({
     <BodySTY>
       <TableWithEdit
         tableName="客戶"
+        cleanTableName="客戶列表"
         titles={clientTitle}
         data={clientData}
         goToCreatePage={goToCreatePage}
