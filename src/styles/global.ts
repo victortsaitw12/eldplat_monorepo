@@ -30,7 +30,8 @@ html, body {
   /* Only works if there is nothing absolutely positioned in relation to body */
   overflow-x: hidden;
 }
-/* scrollbar */
+
+/* scrollbar style*/
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
