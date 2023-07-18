@@ -12,7 +12,7 @@ import { HelpIcon, CaretDownIcon } from "evergreen-ui";
 import Tooltip from "@components/Tooltip";
 import StatusIcon from "@components/StatusIcon";
 
-function DropdownIndicator(props: DropdownIndicatorProps) {
+function CustomDropdownIndicator(props: DropdownIndicatorProps) {
   return (
     <components.DropdownIndicator {...props}>
       <div
@@ -80,8 +80,8 @@ function StyledSelect<
           isMulti={false}
           options={options}
           placeholder={placeholder}
-          components={{ DropdownIndicator: DropdownIndicator }}
-          menuPlacement="auto"
+          components={{ DropdownIndicator: CustomDropdownIndicator }}
+          menuPlacement="top"
           onChange={(e: any) => {
             if (e) {
               onFormChange(e.value);
