@@ -25,6 +25,32 @@ html, body {
   /* Only works if there is nothing absolutely positioned in relation to body */
   overflow-x: hidden;
 }
+
+/* scrollbar style*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: hsla(0,0%,0%,0.25); 
+  border-radius:10px;
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px 1px inset;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); 
+}
+
+
 .react-datepicker-popper {
   z-index:99;
       .react-datepicker {
