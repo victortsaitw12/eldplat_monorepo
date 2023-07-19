@@ -18,18 +18,17 @@ export const ShiftSTY = styled.div`
     background: ${({ theme }) => theme.color.N0};
     display: flex;
     flex-direction: column;
+    padding: 20px 20px 0px 20px;
     .mainBookmarkFilteredContent {
       padding: 20px;
     }
     .tableTitle {
-      padding: 20px 20px 0px 20px;
+      /* no padding */
     }
     .overviewContainer {
       flex-grow: 10;
       overflow: hidden;
-      /* overflow-y: scroll; */
       overflow-x: scroll;
-      padding: 0px 20px 0px 20px;
       &::-webkit-scrollbar {
         /* display: none; */
       }
