@@ -8,17 +8,18 @@ import {
 } from "evergreen-ui";
 import { TabsSTY } from "./style";
 
+interface I_Tabs {
+  titles?: any[];
+  setIsOpenDrawer?: (arg: boolean) => void;
+  isOpenDrawer?: boolean;
+}
 const Tabs = ({
   titles,
   setIsOpenDrawer = () => {
     console.log("open drawer!");
   },
   isOpenDrawer
-}: {
-  titles?: string[];
-  setIsOpenDrawer?: (arg: boolean) => void;
-  isOpenDrawer?: boolean;
-}) => {
+}: I_Tabs) => {
   const DETAIL_TABS = titles || ["編輯"]; // 顯示頁籤名稱, 預設單一標籤:"編輯"
   const [currentTab, setCurrentTab] = useState(0); //預設選取第一個 tab
 

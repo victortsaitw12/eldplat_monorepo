@@ -67,6 +67,8 @@ html, body {
             .react-datepicker__week {
               .react-datepicker__day {
                 color: ${({ theme }) => theme.color.N700};
+                margin: 0.166rem 0;
+                width: 2.4rem;
               }
               .react-datepicker__day--in-range{
                 background: ${({ theme }) => theme.color.B100};

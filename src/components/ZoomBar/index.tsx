@@ -69,7 +69,9 @@ const ZoomBar = ({
   return (
     <ZoombarSTY className="zoomBar" scale={scale} onMouseDown={handleMouseDown}>
       <div className="zoom-bar"></div>
-      <div className="zoom-controler"></div>
+      <div className="zoom-controlerBox">
+        <div className="zoom-controler"></div>
+      </div>
     </ZoombarSTY>
   );
 };

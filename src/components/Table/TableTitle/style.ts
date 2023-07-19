@@ -57,20 +57,12 @@ export const TableTitleSTY = styled.div`
       }
     }
     .container-pagination {
-      max-width: calc(25%);
-      position: relative;
       display: flex;
-      flex-wrap: nowrap;
       justify-content: flex-end;
       align-items: center;
       padding: 0px;
       gap: 8px;
-      position: relative;
       span {
-        max-width: calc(100%);
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
         font-size: ${({ theme }) => theme.fontSize.Paragraph100};
         font-weight: ${({ theme }) => theme.fontWeight.Paragraph100};
       }

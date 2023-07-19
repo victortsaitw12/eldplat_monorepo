@@ -1,7 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
 import {
-  SmallTickIcon,
   TimeIcon,
   CalendarIcon,
   TagIcon,
@@ -143,10 +142,7 @@ const EditForm = ({
         ""
       )}
 
-      <button className="drawer__btn">
-        <SmallTickIcon />
-        確定
-      </button>
+      <button className="drawer__btn">確定</button>
     </FormSTY>
   );
 };
