@@ -98,14 +98,14 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
       }
 
       &:nth-child(-n + 2) {
-        position: sticky;
+        /* position: sticky; */
         left: ${checkboxWidth + "px"};
         min-width: ${freezeColWidth + "px"};
         background: inherit;
         z-index: 99;
       }
       &:nth-child(1) {
-        position: sticky;
+        /* position: sticky; */
         left: 0;
         max-width: ${checkboxWidth + "px"};
         min-width: ${checkboxWidth + "px"};
