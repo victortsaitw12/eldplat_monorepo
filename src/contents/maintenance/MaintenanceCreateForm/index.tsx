@@ -45,23 +45,20 @@ function MaintenanceCreateForm({
     service_start_date: "",
     service_end_date: ""
   };
-  const { register, handleSubmit, control, reset } =
+  const { register, handleSubmit, control, reset, setValue, getValues } =
     useForm<CreateMaintenancePayload>({
       defaultValues
     });
   const [loading, setLoading] = useState(false);
+
   // 取得新增時的下拉式資料
   useEffect(() => {
     setLoading(true);
     try {
-      getCreateDdl().then((data) => {
-        console.log("DDL data", data);
-        const newData = { ...data.dataList[0] };
-        // newData["bus_options"].unshift({ no: "0", name: "請選擇" });
-        // newData["driver_options"].unshift({ no: "0", name: "請選擇" });
-        // newData["package_options"].unshift({ no: "0", name: "請選擇" });
-        // newData["type_options"].unshift({ no: "0", name: "請選擇" });
-        // newData["vendor_options"].unshift({ no: "0", name: "請選擇" });
+      getCreateDdl().then((DDLdata) => {
+        console.log("DDL data", DDLdata);
+        console.log("維保通知打開側邊新增的data", data);
+        const newData = { ...DDLdata.dataList[0] };
         setMainCreateDdl(newData);
       });
     } catch (err) {
@@ -69,15 +66,53 @@ function MaintenanceCreateForm({
     }
     setLoading(false);
   }, [loading]);
+
+  // 選完車輛時，抓到該車輛的主要駕駛
+  const handleChangeDDL = (e: any) => {
+    getCreateDdl().then((data) => {
+      const newData = { ...data.dataList[0] };
+      const busChosen = newData.bus_options.filter((v: { no: any }) => {
+        return v.no === e.target.value;
+      });
+
+      const driverChosen = newData.driver_options.filter((v: { no: any }) => {
+        return v.no === busChosen[0].driver_no;
+      });
+
+      newData.driver_options.map((v: { no: any }, idx: any) => {
+        if (v.no === driverChosen[0]?.no) {
+          newData.driver_options.splice(idx, 1);
+          newData.driver_options.splice(0, 0, driverChosen[0]);
+        }
+      });
+      console.log("🆑newData", newData);
+      setMainCreateDdl(newData);
+      setValue("bus_no", busChosen[0]?.no);
+      setValue("driver_no", driverChosen[0]?.no);
+    });
+  };
+
+  // 送出表單:
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     console.log("data for submitting", data);
     const newData = { ...data };
-    newData["bus_no"] = mainCreateDdl?.bus_options[0]?.no;
-    newData["driver_no"] = mainCreateDdl?.driver_options[0]?.no;
-    newData["maintenance_type"] = mainCreateDdl?.type_options[0]?.no;
-    newData["vendor_no"] = mainCreateDdl?.vendor_options[0]?.no;
-    newData["package_code"] = mainCreateDdl?.package_options[0]?.no;
+    newData["bus_no"] = !newData["bus_no"]
+      ? mainCreateDdl?.bus_options[0]?.no
+      : getValues("bus_no");
+    newData["driver_no"] = !newData["driver_no"]
+      ? mainCreateDdl?.driver_options[0]?.no
+      : getValues("driver_no");
+    newData["maintenance_type"] = !newData["maintenance_type"]
+      ? mainCreateDdl?.type_options[0]?.no
+      : getValues("maintenance_type");
+    newData["vendor_no"] = !newData["vendor_no"]
+      ? mainCreateDdl?.vendor_options[0]?.no
+      : getValues("vendor_no");
+    newData["package_code"] = !newData["package_code"]
+      ? mainCreateDdl?.package_options[0]?.no
+      : getValues("package_code");
+
     const selectedBus = mainCreateDdl.bus_options.filter((v: { no: any }) => {
       return v.no === newData.bus_no;
     });
@@ -116,7 +151,12 @@ function MaintenanceCreateForm({
             <span style={{ color: "#D14343" }}>*</span>車輛名稱
           </div>
         }
-        {...register("bus_no")}
+        {...(register("bus_no"),
+        {
+          onChange: (e) => {
+            handleChangeDDL(e);
+          }
+        })}
       >
         {mainCreateDdl?.bus_options.map((item: any) => {
           return (
@@ -191,7 +231,11 @@ function MaintenanceCreateForm({
         })}
       </SelectField>
       <TextInputField
-        label="起始日期"
+        label={
+          <div>
+            <span style={{ color: "#D14343" }}>*</span>起始日期
+          </div>
+        }
         type="date"
         {...register("service_start_date")}
       />

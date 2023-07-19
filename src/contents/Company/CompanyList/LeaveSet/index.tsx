@@ -9,7 +9,7 @@ import {
 
 function CountrySet() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
-  const company_leave_data = companyData.company_leave;
+  const company_leave_data = companyData?.company_leave;
 
   return (
     <BodySTY>

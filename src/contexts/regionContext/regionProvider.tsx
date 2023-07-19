@@ -202,8 +202,8 @@ export const RegionProvider = ({ children }: any) => {
   };
 
   useEffect(() => {
-    const state_area_no = companyData.company_country2.substring(0, 4);
-    const city_area_no = companyData.company_area.substring(0, 7);
+    const state_area_no = companyData?.company_country2.substring(0, 4);
+    const city_area_no = companyData?.company_area.substring(0, 7);
     const state_level_num = "3";
     const city_level_num = "4";
     getAllRegions(state_area_no, state_level_num).then((data) => {
@@ -212,7 +212,7 @@ export const RegionProvider = ({ children }: any) => {
     getAllRegions(city_area_no, city_level_num).then((data) => {
       setGetCity(data.options);
     });
-  }, [companyData.company_area, companyData.company_country2]);
+  }, [companyData?.company_area, companyData?.company_country2]);
 
   console.log("⚽allStates", allStates);
   console.log("⚾allCities", allCities);
