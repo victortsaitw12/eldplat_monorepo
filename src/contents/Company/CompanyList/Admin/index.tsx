@@ -20,7 +20,7 @@ function CountrySet() {
             name="Alan Turing"
             size={40}
           />
-          <Text>{companyData.company_owner}(你)</Text>
+          <Text>{companyData?.company_owner}(你)</Text>
         </Pane>
       </form>
     </BodySTY>

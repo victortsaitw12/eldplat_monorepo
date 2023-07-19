@@ -1,9 +1,7 @@
 import { mock_company_data } from "@mock-data/company/mock_data";
 import { getSingleCompany } from "@services/company/getAllCompany";
 import { getDdlData } from "@services/ddl/getDdlData";
-import {
-  I_Company_Update_Type
-} from "@typings/company_type";
+import { I_Company_Update_Type } from "@typings/company_type";
 import {
   phoneValidation,
   numberValidation,
@@ -114,8 +112,8 @@ export const CompanyProvider = ({ children }: any) => {
     getSingleCompany().then((data) => {
       console.log("company data", data);
       setCompanyData(data.dataList[0]);
-      setLoading(false);
     });
+    setLoading(false);
   }, [countryNumInput]);
 
   // handle change input for Basic component
