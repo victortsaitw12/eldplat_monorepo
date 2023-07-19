@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { ThemeType } from "@styles/theme";
 
 export const FormSTY = styled.form`
-  overflow-y: auto;
+  /* overflow-y: auto; */
   &::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
   }
   label {
     font-style: normal;
@@ -46,7 +47,7 @@ export const FormSTY = styled.form`
   }
 `;
 
-export const ViewSTY = styled.div`
+export const ViewSTY = styled.div<{ color: keyof ThemeType["color"] }>`
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -77,11 +78,24 @@ export const ViewSTY = styled.div`
         color: ${({ theme }) => theme.color.N600};
       }
     }
+    &__schdType-left {
+      span {
+        font-size: ${({ theme }) => theme.fontSize.Heading400};
+        color: ${({ theme, color }) => theme.color[color]};
+      }
+
+      svg {
+        fill: ${({ theme, color }) => theme.color[color]};
+        opacity: 0.5;
+      }
+    }
     &__schdType-right {
       display: flex;
       flex-direction: row;
       gap: 8px;
       svg {
+        height: 12px;
+        width: 12px;
         cursor: pointer;
       }
     }

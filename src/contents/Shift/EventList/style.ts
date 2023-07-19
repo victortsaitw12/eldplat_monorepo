@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ThemeType } from "@styles/theme";
 
+// MonthyView 內單格 Events
 export const EventListSTY = styled.div<{
   maxEventCount?: number;
 }>`
@@ -16,6 +17,9 @@ export const EventListSTY = styled.div<{
     display: none;
   }
 `;
+
+// TODO 整合 EventBar(DailyView) vs EventBtn(MonthlyView)
+// MonthyView 個別 Event事件按鈕
 export const EventBtnSTY = styled.div<{
   duration: number;
   color?: keyof ThemeType["color"] | "N300";
@@ -28,24 +32,24 @@ export const EventBtnSTY = styled.div<{
       "calc(" + duration * 100 + "% + " + (duration - 1) * 17 + "px)"};
     background: ${({ theme, color }) =>
       color && theme.color[color] ? theme.color[color] : "unset"};
+    color: ${({ theme }) => theme.color.N0};
+    border: none;
+    border-radius: 4px;
+
     font-style: normal;
     font-weight: ${({ theme }) => theme.fontWeight.Heading200};
     font-size: ${({ theme }) => theme.fontSize.Heading200};
-    /* line-height: 16px; */
-    color: ${({ theme }) => theme.color.N0};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 4px 8px;
+
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: nowrap;
     gap: 4px;
-    border: none;
-    border-radius: 4px;
-    color: ${({ theme }) => theme.color.N0};
-    padding: 4px 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     cursor: pointer;
 
     svg {
@@ -53,6 +57,17 @@ export const EventBtnSTY = styled.div<{
       min-width: 12px;
       height: 12px;
       fill: ${({ theme }) => theme.color.N0};
+    }
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      /* max-width: calc(100% - 20px); */
+      /* padding: 0 4px; */
+      &:last-child {
+        flex: 2;
+        text-align: left;
+      }
     }
   }
   .reminder {

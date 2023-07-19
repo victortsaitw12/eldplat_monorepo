@@ -3,18 +3,16 @@ import styled from "styled-components";
 export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
   flex-grow: 10;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 20px);
   position: relative;
   overflow: hidden;
   overflow-x: scroll;
   overflow-y: hidden;
-
   &::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
   }
   display: flex;
   flex-direction: column;
-
   .headerCell__row {
     height: 32px;
     min-width: min-content;
@@ -73,7 +71,7 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
-      &:last-child {
+      &:nth-last-child(2) {
         border-radius: 0px 0px 5px 5px;
       }
       &-date {
@@ -106,7 +104,7 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
     min-width: 52px;
   }
   .time {
-    width: ${({ cellWidth }) => cellWidth + "%"};
+    width: ${({ cellWidth }) => cellWidth + "px"};
     min-width: 70px;
   }
 

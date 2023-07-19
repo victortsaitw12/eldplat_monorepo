@@ -3,46 +3,60 @@ import styled from "styled-components";
 import { ShiftSTY } from "../style";
 
 export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
+  position: relative;
   .wrapMain {
     width: ${(props) => (props.isOpenDrawer ? "calc(100% - 300px)" : "100%")};
     transition: width 0.2s ease-in-out;
   }
   .pageContent {
+    height: calc(100% - 32px);
     display: flex;
     flex-direction: column;
+    padding: 0px;
+    border-radius: 10px 10px 0px 0px;
+    .tableTitle {
+      padding: 20px 20px 0px 20px;
+    }
     .container-header-left {
       .red {
         color: ${({ theme }) => theme.color.R400};
       }
     }
+    .monthlyContainer {
+      width: 100%;
+      height: 100%;
+      padding-right: 20px;
+      flex-grow: 10;
+      overflow: hidden;
+      overflow-y: scroll;
+      padding: 0px 20px 20px 20px;
+      &::-webkit-scrollbar {
+        /* display: none; */
+      }
+    }
+    .dailyContainer {
+      width: 100%;
+      height: 100%;
+      padding-right: 20px;
+      flex-grow: 10;
+      overflow: hidden;
+      overflow-y: scroll;
+      padding: 0px 20px 0px 20px;
+      &::-webkit-scrollbar {
+        /* display: none; */
+      }
+    }
   }
+
   .drawer__container {
-    height: calc(100vh - 60px - 10px * 2);
     position: sticky;
     top: 0;
     .drawer__content {
       overflow: hidden;
       padding: 20px;
-      border-radius: 10px;
-      overflow-y: scroll;
+      overflow-y: auto;
       &::-webkit-scrollbar {
-        /* display:none; */
-        width: 7px;
-        position: fixed;
-      }
-      &::-webkit-scrollbar-button {
-        background: transparent;
-        border-radius: 4px;
-      }
-      &::-webkit-scrollbar-track-piece {
-        background: transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 4px;
-        background-color: ${({ theme }) => theme.color.N400};
-      }
-      &::-webkit-scrollbar-track {
-        box-shadow: transparent;
+        /* display: none; */
       }
       .drawer__btn {
         height: 32px;
