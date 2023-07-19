@@ -1,17 +1,19 @@
-import { TableTitle } from "@components/Table/TableTitle";
 import { translation } from "./../../../src/contexts/i18n/lan";
 import styled from "styled-components";
 import { ShiftSTY } from "../style";
 
 export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
+  position: relative;
   .wrapMain {
     width: ${(props) => (props.isOpenDrawer ? "calc(100% - 300px)" : "100%")};
     transition: width 0.2s ease-in-out;
   }
   .pageContent {
+    height: calc(100% - 32px);
     display: flex;
     flex-direction: column;
     padding: 0px;
+    border-radius: 10px 10px 0px 0px;
     .tableTitle {
       padding: 20px 20px 0px 20px;
     }
@@ -47,16 +49,14 @@ export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
   }
 
   .drawer__container {
-    height: calc(100vh - 60px - 10px * 2);
     position: sticky;
     top: 0;
     .drawer__content {
       overflow: hidden;
       padding: 20px;
-      border-radius: 10px;
-      overflow-y: scroll;
+      overflow-y: auto;
       &::-webkit-scrollbar {
-        display: none;
+        /* display: none; */
       }
       .drawer__btn {
         height: 32px;

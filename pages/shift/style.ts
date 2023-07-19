@@ -12,7 +12,9 @@ export const ShiftSTY = styled.div`
   display: flex;
   flex-direction: row;
   .pageContent {
+    border-radius: 10px 10px 0px 0px;
     height: 100%;
+
     width: 100%;
     position: relative;
     background: ${({ theme }) => theme.color.N0};
