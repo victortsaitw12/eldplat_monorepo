@@ -133,6 +133,7 @@ function Table({
               {tableName !== "維保通知" && (
                 <th>
                   <Checkbox
+                    style={{ margin: "8px 0" }}
                     onChange={(e) => handleCheckAll(e)}
                     checked={checkedItems.length === data.length}
                   />
@@ -166,9 +167,7 @@ function Table({
                   </th>
                 );
               })}
-              <th>
-                <span style={{ justifyContent: "center" }}>操作</span>
-              </th>
+              <th style={{ textAlign: "center" }}>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -179,6 +178,7 @@ function Table({
                     {tableName !== "維保通知" && (
                       <td>
                         <Checkbox
+                          style={{ margin: "8px 0" }}
                           checked={checkedItems.includes(item?.id?.value)}
                           onChange={(e) => handleCheck(e)}
                           id={item?.id?.value}
@@ -204,13 +204,6 @@ function Table({
                           <td key={item.id + key}>
                             <span>--</span>
                           </td>
-
-                          // 🟡OLD:
-                          // <td key={item.id + key}>
-                          //   <span className="no-data">
-                          //     <div />
-                          //   </span>
-                          // </td>
                         );
                       }
                       return (
@@ -248,8 +241,10 @@ function Table({
                 );
               })
             ) : (
-              <tr className="noDataShown">
-                <td>查無資料</td>
+              <tr>
+                <td colSpan={100} className="noDataShown">
+                  目前無資料
+                </td>
               </tr>
             )}
           </tbody>

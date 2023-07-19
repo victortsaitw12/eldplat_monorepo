@@ -6,11 +6,32 @@ import {
   FieldValues,
   PathValue
 } from "react-hook-form";
-import Select from "react-select";
+import Select, { components, DropdownIndicatorProps } from "react-select";
 import { BodySYT, colourStyles } from "./style";
-import { HelpIcon } from "evergreen-ui";
+import { HelpIcon, CaretDownIcon } from "evergreen-ui";
 import Tooltip from "@components/Tooltip";
 import StatusIcon from "@components/StatusIcon";
+
+function CustomDropdownIndicator(props: DropdownIndicatorProps<any>) {
+  return (
+    <components.DropdownIndicator {...props}>
+      <div
+        style={{
+          width: "20px",
+          height: "20px",
+          borderRadius: "5px",
+          backgroundColor: "#F1F6FD",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <CaretDownIcon fill={"#696f8c"} />
+      </div>
+    </components.DropdownIndicator>
+  );
+}
+
 function StyledSelect<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -39,7 +60,7 @@ function StyledSelect<
   );
   const placeholder = isDisabled ? "--" : "請選擇";
   return (
-    <BodySYT vertical={vertical}>
+    <BodySYT vertical={vertical} isDisabled={isDisabled}>
       <div className="title">
         {!!isRequire && <span className="required">*</span>}
         <span>{label}</span>
@@ -51,7 +72,7 @@ function StyledSelect<
       </div>
       {isDisabled ? (
         <div>
-          <StatusIcon status="01"></StatusIcon>
+          <StatusIcon status={formDefaultValue}></StatusIcon>
         </div>
       ) : (
         <Select
@@ -59,6 +80,8 @@ function StyledSelect<
           isMulti={false}
           options={options}
           placeholder={placeholder}
+          components={{ DropdownIndicator: CustomDropdownIndicator }}
+          menuPlacement="top"
           onChange={(e: any) => {
             if (e) {
               onFormChange(e.value);
@@ -98,18 +121,21 @@ function ControlledSelect<
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value } }) => (
-        <StyledSelect
-          options={options}
-          isDisabled={isDisabled}
-          isRequire={isRequire}
-          label={label}
-          hint={hint}
-          onFormChange={onChange}
-          formDefaultValue={value}
-          vertical={vertical}
-        />
-      )}
+      render={({ field: { onChange, value } }) => {
+        console.log("value", value);
+        return (
+          <StyledSelect
+            options={options}
+            isDisabled={isDisabled}
+            isRequire={isRequire}
+            label={label}
+            hint={hint}
+            onFormChange={onChange}
+            formDefaultValue={value}
+            vertical={vertical}
+          />
+        );
+      }}
     />
   );
 }

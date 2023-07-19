@@ -18,7 +18,7 @@ function mapping_menus(list: any, key: string) {
           ? ele.sidemenu_lv2.map((c: any) => {
               return {
                 name: c?.menu_name || "--",
-                url: c?.menu_url || "/",
+                url: c?.menu_url || null,
                 subList: null
               };
             })

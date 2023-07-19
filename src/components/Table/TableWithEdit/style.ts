@@ -5,7 +5,7 @@ const TableContainerSTY = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0.5rem;
   overflow-x: auto;
   .container-header {
     display: flex;
@@ -63,17 +63,26 @@ const TableContainerSTY = styled.div`
 // 表格本身
 const TableSTY = styled.table`
   border: 1px solid ${({ theme }) => theme.color.N300};
-  border-radius: 4px;
+  border-top: 0;
   border-spacing: 0px;
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+  }
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
     text-align: left;
     color: ${({ theme }) => theme.color.N700};
+    &:first-child {
+      & > th {
+        border-top: 1px solid ${({ theme }) => theme.color.N300};
+      }
+    }
   }
 
   td,
   th {
-    padding: 8px 10px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
@@ -84,8 +93,8 @@ const TableSTY = styled.table`
       justify-content: flex-start;
       align-items: center;
     }
-    label > div:not(.table-action) {
-      justify-content: center;
+    &:first-child {
+      padding-left: 8px;
     }
   }
   tr:last-child td {
@@ -128,8 +137,14 @@ const TableSTY = styled.table`
     background-color: green;
   }
   .noDataShown {
+    text-align: center;
+    padding: 15px 0;
+  }
+  /* .noDataShown {
     min-height: 32px;
-
+    display: flex;
+    justify-content: center;
+    column-span: all;
     div {
       width: 100%;
       height: 32px;
@@ -138,7 +153,7 @@ const TableSTY = styled.table`
       position: absolute;
       text-align: center;
     }
-  }
+  } */
 `;
 
 const StyledDot = styled.div<{ value: string }>`

@@ -54,7 +54,6 @@ const Page: NextPageWithLayout<
         setLoading(false);
       });
   }, [router]);
-  console.log("options", options);
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
   };
@@ -84,12 +83,9 @@ const Page: NextPageWithLayout<
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
         onSave={() => {
-          console.log("save");
-          console.log("submitRef", submitRef.current);
           submitRef.current?.click();
         }}
         onEdit={() => {
-          console.log("set is Edit to true");
           setIsEdit(true);
         }}
         onClose={onCancelHandler}

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const InfoBoxSTY = styled.div`
   width: 100%;
-  min-height: 224px;
+  /* min-height: 224px; */
   background: #ffffff;
   border-radius: 10px;
   overflow: auto;

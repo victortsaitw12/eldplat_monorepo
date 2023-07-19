@@ -32,7 +32,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
     } else {
       return (
         <Pane className="title_children">
-          <span>第{data.day_number}天</span>
+          <span>第{i + 1}天</span>
           <TextInput
             type="date"
             {...register(arrayName + "[" + i + "]" + ".day_date")}
@@ -52,10 +52,7 @@ const ShuttleInfo = ({ quote_no, isEdit, arrayName }: I_Props) => {
         opened={true}
         key={i}
         title={
-          "第" +
-          child.day_number +
-          "天  " +
-          dayjs(child.day_date).format("YYYY-MM-DD")
+          "第" + (i + 1) + "天  " + dayjs(child.day_date).format("YYYY-MM-DD")
         }
         titleChildren={r_titleChildren(isEdit, child, i)}
       >

@@ -52,13 +52,9 @@ function Details({
     {
       req: true,
       label: "車種",
-      value: getValues("bus.bus_type"),
+      value: getValues("bus.type"),
       editEle: (
-        <Select
-          key="bus.bus_type"
-          {...register("bus.bus_type")}
-          marginBottom="0"
-        >
+        <Select key="bus.type" {...register("bus.type")} marginBottom="0">
           <option value="01">沙灘車</option>
           <option value="02">船</option>
           <option value="03">巴士</option>
@@ -88,11 +84,7 @@ function Details({
       label: "品牌",
       value: getValues("bus.make"),
       editEle: [
-        <Select
-          key="bus.bus_type"
-          {...register("bus.bus_type")}
-          marginBottom="0"
-        >
+        <Select key="bus.type" {...register("bus.type")} marginBottom="0">
           <option value="01">Toyota</option>
           <option value="02">Mercedes-Benz</option>
           <option value="03">Volkswagen</option>
@@ -289,7 +281,7 @@ function Details({
     {
       req: false,
       label: "建議零售價",
-      value: getValues("bus.mspr"),
+      value: getValues("bus.mspr")?.toLocaleString(),
       editEle: <TextInput {...register("bus.mspr")} />
     }
   ];
