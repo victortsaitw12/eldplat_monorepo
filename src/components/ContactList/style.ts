@@ -28,7 +28,7 @@ export const ItemSTY = styled.li`
     cursor: pointer;
     position: absolute;
     right: 0;
-    top: 10px;
+    top: -15px;
     border: none;
     background: none;
   }
