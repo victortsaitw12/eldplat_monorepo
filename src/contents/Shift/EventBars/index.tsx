@@ -2,7 +2,7 @@ import React from "react";
 import { TagIcon } from "evergreen-ui";
 import { EventBarsSTY, EventBarSTY } from "./style";
 
-import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS } from "../shift.data";
+import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS, EVENT_TYPE } from "../shift.data";
 import { formatDate, getDayStart } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
@@ -128,7 +128,9 @@ const EventBars = ({
               : renderEventStatus.bind(null, item.drv_Schedule_No)
           }
         >
-          {SCHD_TYPE.get(item.schd_Type)?.icon}
+          {item.check_Status
+            ? EVENT_TYPE.get(item.schd_Type.concat(item.check_Status))?.icon
+            : SCHD_TYPE.get(item.schd_Type)?.icon}
           <span>
             {item.schd_Type === "04"
               ? CHECK_STATUS.get(item.check_Status)?.label
