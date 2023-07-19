@@ -28,7 +28,7 @@ const FinishBtn = ({ id, disabled, setListStatus }: FinishBtn_Type) => {
           });
           setListStatus(id);
 
-          // router.push("/maintenance/record ");
+          router.push("/maintenance/record ");
         })
         .catch((err) => {
           console.log("err of update status ", err);

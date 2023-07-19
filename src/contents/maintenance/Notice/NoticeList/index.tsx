@@ -59,7 +59,7 @@ function MaintenanceNoticeList({
     setSelectCount(countArr.length);
   }, [checkboxData]);
 
-  const theadClass = [{ label: "新增任務", value: "mission" }];
+  const customTableClass = [{ label: "新增任務", value: "mission" }];
 
   return (
     <BodySTY>
@@ -90,7 +90,7 @@ function MaintenanceNoticeList({
         handleSelectAll={handleSelectAll}
         handleDeselectAll={handleDeselectAll}
         checkboxData={checkboxData}
-        theadClass={theadClass}
+        customTableClass={customTableClass}
       />
     </BodySTY>
   );

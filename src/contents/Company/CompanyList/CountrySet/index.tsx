@@ -14,8 +14,8 @@ import {
 function CountrySet() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
   const { handleCountrySwitch } = useContext<I_Region_Context>(RegionContext);
-  const company_language_data = companyData.company_language;
-  const company_currency_data = companyData.company_currency;
+  const company_language_data = companyData?.company_language;
+  const company_currency_data = companyData?.company_currency;
 
   return (
     <BodySTY>
@@ -23,7 +23,7 @@ function CountrySet() {
       <form>
         <Pane className="input-line">
           <Text className="">國別</Text>
-          <Text>{handleCountrySwitch(companyData.company_country)}</Text>
+          <Text>{handleCountrySwitch(companyData?.company_country)}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">語系</Text>

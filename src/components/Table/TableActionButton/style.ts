@@ -5,6 +5,8 @@ export const BodySTY = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
+
   > button {
     > svg {
       color: ${({ theme }) => theme.color.N700};

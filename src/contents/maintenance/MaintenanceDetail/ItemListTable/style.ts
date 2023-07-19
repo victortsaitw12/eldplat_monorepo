@@ -64,11 +64,6 @@ const TableSTY = styled.table`
       }
     }
 
-    /* tr td :first-child(:not(.upload-frame && button)) {
-      display: flex;
-      justify-content: flex-start;
-    } */
-
     tr td .receipt_number,
     tr td .service_remark {
       display: flex;
@@ -77,6 +72,10 @@ const TableSTY = styled.table`
     tr td .price {
       display: flex;
       justify-content: flex-end;
+    }
+
+    tr td .receipt_url > div > div > div {
+      height: 50px;
     }
   }
 

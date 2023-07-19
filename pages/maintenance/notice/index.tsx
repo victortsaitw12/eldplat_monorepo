@@ -62,6 +62,7 @@ const Page: NextPageWithLayout<never> = () => {
       const newData = maintenanceData?.map((item, idx) => {
         console.log("😺item", item);
         return {
+          id: { label: item.id.label, value: item.id.value },
           bus_name: { label: item.bus_name.label, value: item.bus_name.value },
           driver_name: {
             label: item.driver_name.label,
