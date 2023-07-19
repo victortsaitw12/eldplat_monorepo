@@ -3,7 +3,7 @@ import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
 import { Pane } from "evergreen-ui";
-import RoleEditForm from "@contents/roles/RoleEditForm";
+import RoleEditForm from "@contents/Roles/RoleEditForm";
 import BusRoleEditForm from "@contents/Roles/BusRoleEditForm";
 import { BodySTY } from "./style";
 import TableWrapper from "@layout/TableWrapper";
