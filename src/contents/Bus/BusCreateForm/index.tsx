@@ -220,6 +220,10 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <option value="02">租來的</option>
         <option value="03">出租中</option>
         <option value="04">客戶的</option>
+        <option value="05">擁有的</option>
+        <option value="06">租來的</option>
+        <option value="07">出租中</option>
+        <option value="08">客戶的</option>
       </SelectField>
       <IconLeft text={"新增車輛"} type="submit">
         <PlusIcon size={14} />

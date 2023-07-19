@@ -16,6 +16,13 @@ const dot = (color = "transparent") => ({
   }
 });
 export const colourStyles: StylesConfig<ColourOption> = {
+  menu(baseStyles) {
+    return {
+      ...baseStyles,
+      border: "1px solid red",
+      position: "absolute"
+    };
+  },
   control: (baseStyles, { isDisabled, isFocused }) => ({
     ...baseStyles,
     border: isDisabled
