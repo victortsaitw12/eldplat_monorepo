@@ -7,6 +7,7 @@ import { mappingQueryData } from "@utils/mappingQueryData";
 import SearchEmployee from "@contents/Driver/SearchEmployee";
 import { getAllDriver, defaultPageInfo } from "@services/driver/getAllDrivers";
 import { deleteDriver } from "@services/driver/deleteDriver";
+import { updateDriverStatus } from "@services/driver/updateDriverStatus";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import { getLayout } from "@layout/MainLayout";
 import DriverList from "@contents/Driver/DriverList";
@@ -141,9 +142,12 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const handleDeleteDriver = (id: string) => {
-    deleteDriver(id).then(() => {
+    updateDriverStatus(id, "2").then(() => {
       fetchDriverData(false);
     });
+    // deleteDriver(id).then(() => {
+    //   fetchDriverData(false);
+    // });
   };
   const handlePageChange = React.useCallback(
     (pageQuery: I_PageInfo) => {
