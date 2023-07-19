@@ -74,7 +74,7 @@ const EventStatus = ({
   const eventsArray = UI.viewEventList?.map((event: any, i: number) => (
     <ViewSTY
       key={`eventStatus-${i}`}
-      color={SCHD_TYPE.get(event.schd_Type)?.color || "unset"}
+      color={SCHD_TYPE.get(event.schd_Type)?.color ?? "N300"}
     >
       <div className="eventStatus__tags">
         {" "}

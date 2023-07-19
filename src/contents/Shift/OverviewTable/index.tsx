@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Checkbox, Table } from "evergreen-ui";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import { getAllDriverScheduleList } from "@services/schedule/getAllDriverScheduleList";
+import { getAllDriverScheduleListFiltered } from "@services/schedule/getAllDriverScheduleListFiltered";
 import { TableSTY } from "./style";
 import { WKDAY_LABEL, EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
@@ -41,13 +41,16 @@ const OverviewTable = ({
       .toString()
       .padStart(2, "0")}`;
     const fetchData = async () => {
-      const result = await getAllDriverScheduleList(queryString);
-      const data = [...result.data];
-      const updatedData = data.map(
-        (item) => (item.scheduleInfo.id = item.scheduleInfo.driver_No)
-      );
+      const res = await getAllDriverScheduleListFiltered(queryString);
+      const data = [...res.contentList];
+      const updatedData = data.map((item) => ({
+        ...item,
+        id: item.driver_No
+      }));
+      console.log("🍅🍅🍅data", data);
+      console.log("🍅🍅🍅updatedData", updatedData);
       setAllData(data);
-      console.log("data:", result.data);
+      console.log("data:", res.data);
     };
     fetchData();
   }, [initialMonthFirst, UI.monthCount]);
@@ -108,12 +111,13 @@ const OverviewTable = ({
   const handleCheckAll = (e: any) => {
     checkedItems.length === allData.length
       ? setCheckedItems([])
-      : setCheckedItems(allData.map((item) => item.id?.value));
+      : setCheckedItems(allData.map((item) => item.driver_No));
     if (!handleSelectAll || !handleDeselectAll) return;
     e.target.checked ? handleSelectAll() : handleDeselectAll();
   };
 
   const handleCheck = (e: any) => {
+    console.log("🍅🍅🍅checkedItems:", checkedItems);
     if (checkedItems.includes(e.target.id)) {
       const updated = checkedItems.filter((item) => item !== e.target.id);
       setCheckedItems(updated);
@@ -176,23 +180,25 @@ const OverviewTable = ({
           {allData.map((item) => (
             <Table.Row
               className="eg-bodyRow"
-              key={item.driverLeaveInfo.driver_No}
+              key={item.driver_No}
               isSelectable
-              onSelect={handleClickUser.bind(
-                null,
-                item.driverLeaveInfo.driver_No
-              )}
+              onSelect={handleClickUser.bind(null, item.driver_No)}
             >
               <Checkbox
                 className="eg-td checkbox"
-                key={"check-" + item.driverLeaveInfo.driver_No}
-                label=""
+                key={"check-" + item.driver_No}
+                id={item?.driver_No}
+                checked={checkedItems.includes(item?.driver_No)}
+                onChange={(e) => handleCheck(e)}
+                onClick={(e: any) => {
+                  e.stopPropagation();
+                }}
               />
               <Table.TextCell className="eg-td">
-                {item.driverLeaveInfo.user_Name}
+                {item.user_Name}
               </Table.TextCell>
               <Table.TextCell className="eg-td">
-                {item.driverLeaveInfo.total_Leave_Days}
+                {item.total_Leave_Days}
               </Table.TextCell>
               {dateArr.map((date, i) => (
                 <Table.TextCell
@@ -202,7 +208,7 @@ const OverviewTable = ({
                   }`}
                 >
                   <div className="eventTag-container">
-                    {renderShifts(date, item.scheduleInfo)}
+                    {renderShifts(date, item.schedule_List)}
                   </div>
                 </Table.TextCell>
               ))}
