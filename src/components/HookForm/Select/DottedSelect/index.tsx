@@ -81,7 +81,7 @@ function StyledSelect<
           options={options}
           placeholder={placeholder}
           components={{ DropdownIndicator: CustomDropdownIndicator }}
-          menuPlacement="top"
+          menuPlacement="auto"
           onChange={(e: any) => {
             if (e) {
               onFormChange(e.value);
@@ -89,6 +89,7 @@ function StyledSelect<
           }}
           defaultValue={defaultOption}
           styles={colourStyles}
+          menuPosition="absolute"
         />
       )}
     </BodySYT>
