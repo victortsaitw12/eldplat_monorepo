@@ -10,12 +10,19 @@ function AvatarList({ userList }: { userList: string[] }) {
       {userList.reduce((acc: any, item: string, index) => {
         if (index < 4) {
           acc.push(
-            <Avatar key={uuid()} name={item} size={32} marginLeft={-12} />
+            <Avatar
+              className="avatar"
+              key={uuid()}
+              name={item}
+              size={32}
+              marginLeft={-12}
+            />
           );
         } else if (index === userList.length - 1) {
           const remainUserCount = userList.length - 3;
           acc[3] = (
             <Avatar
+              className="avatar"
               key={uuid()}
               name={`+ ${remainUserCount}`}
               size={32}
