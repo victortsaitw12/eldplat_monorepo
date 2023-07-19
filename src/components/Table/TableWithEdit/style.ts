@@ -87,6 +87,7 @@ const TableSTY = styled.table`
     white-space: nowrap;
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+    padding: 4px;
     span,
     div:not(.table-action) {
       display: flex;
@@ -94,7 +95,10 @@ const TableSTY = styled.table`
       align-items: center;
     }
     &:first-child {
-      padding-left: 8px;
+      padding-left: 24px;
+    }
+    &:last-child {
+      padding-right: 24px;
     }
   }
   tr:last-child td {

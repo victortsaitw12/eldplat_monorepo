@@ -1,5 +1,5 @@
 export const convertMap: { [key: string]: { [key: string]: any } } = {
-  customer_Typ: {
+  customer_typ: {
     "01": {
       ch: "公司",
       en: "Company"
@@ -7,6 +7,38 @@ export const convertMap: { [key: string]: { [key: string]: any } } = {
     "02": {
       ch: "個人",
       en: "Individual"
+    }
+  },
+  customer_city: {
+    LA: {
+      ch: "洛杉磯",
+      en: "Los Angeles"
+    },
+    TP: {
+      ch: "台北",
+      en: "Taipei"
+    },
+    TTP: {
+      ch: "新北",
+      en: "New Taipei"
+    },
+    TY: {
+      ch: "桃園",
+      en: "Taoyuan"
+    }
+  },
+  customer_country: {
+    TW: {
+      ch: "台灣",
+      en: "TTaiwan"
+    },
+    JP: {
+      ch: "日本",
+      en: "Japan"
+    },
+    US: {
+      ch: "美國",
+      en: "United States"
     }
   },
   type: {
@@ -223,6 +255,16 @@ export const convertMap: { [key: string]: { [key: string]: any } } = {
       ch: "液壓"
     }
   },
+  cam_type: {
+    "01": {
+      en: "凸輪軸",
+      ch: "凸輪軸"
+    },
+    "02": {
+      en: "蝸輪",
+      ch: "蝸輪"
+    }
+  },
   fuel_type: {
     "01": {
       en: "BioDiesel",
@@ -373,6 +415,60 @@ export const convertMap: { [key: string]: { [key: string]: any } } = {
     "03": {
       ch: "model-3",
       en: "model-3"
+    }
+  },
+  bus_group: {
+    "01": {
+      ch: "群組1",
+      en: "群組1"
+    },
+    "02": {
+      ch: "群組2",
+      en: "群組2"
+    },
+    "03": {
+      ch: "群組3",
+      en: "群組3"
+    },
+    "04": {
+      ch: "群組3",
+      en: "群組3"
+    }
+  },
+  vendorNo: {
+    "01": {
+      ch: "大大國際",
+      en: "大大國際"
+    },
+    "02": {
+      ch: "雄獅車隊",
+      en: "雄獅車隊"
+    },
+    "03": {
+      ch: "王牌出租",
+      en: "王牌出租"
+    },
+    "04": {
+      ch: "特級車行",
+      en: "特級車行"
+    }
+  },
+  vendorNoLoanLease: {
+    "01": {
+      ch: "大大國際",
+      en: "大大國際"
+    },
+    "02": {
+      ch: "雄獅車隊",
+      en: "雄獅車隊"
+    },
+    "03": {
+      ch: "王牌出租",
+      en: "王牌出租"
+    },
+    "04": {
+      ch: "特級車行",
+      en: "特級車行"
     }
   },
   purpose: {
