@@ -11,7 +11,6 @@ const AddMissionBtn = ({ setDrawerOpen }: AddMissionBtn_Type) => {
   const router = useRouter();
   const AddNewMission = (e: any) => {
     e.preventDefault();
-    router.push("/maintenance/mission");
     setDrawerOpen(true);
   };
   return (

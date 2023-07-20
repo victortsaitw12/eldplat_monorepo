@@ -9,7 +9,7 @@ import {
 
 function CompanyRule() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
-  const company_rule_data = companyData.company_working_hours;
+  const company_rule_data = companyData?.company_working_hours;
 
   return (
     <BodySTY>

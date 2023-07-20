@@ -9,32 +9,28 @@ interface I_routers {
 
 const routers: I_routers = {
   "/": [{ label: "入門", url: "/" }],
-  "/bus": [
-    { label: "入門", url: "/" },
-    { label: "汽車", url: "/bus" }
-  ],
   "/bus/detail/[id]": [
     { label: "入門", url: "/" },
     { label: "汽車", url: "/bus" }
   ],
   "/bus?type=1": [
-    { label: "入門", url: "/" },
+    { label: "汽車", url: "/" },
     { label: "車輛清單", url: "/bus?type=1" }
   ],
   "/bus?type=2": [
-    { label: "入門", url: "/" },
+    { label: "汽車", url: "/" },
     { label: "車輛分配", url: "/bus?type=2" }
   ],
   "/bus?type=3": [
-    { label: "入門", url: "/" },
+    { label: "汽車", url: "/" },
     { label: "儀表歷史", url: "/bus?type=3" }
   ],
   "/bus?type=4": [
-    { label: "入門", url: "/" },
+    { label: "汽車", url: "/" },
     { label: "費用歷史", url: "/bus?type=4" }
   ],
   "/bus?type=5": [
-    { label: "入門", url: "/" },
+    { label: "汽車", url: "/" },
     { label: "替代分析", url: "/bus?type=5" }
   ],
   "/shift": [
@@ -130,6 +126,11 @@ const routers: I_routers = {
     { label: "入門", url: "/" },
     { label: "群組設定", url: "/role" }
   ],
+  "/role/edit/[id]": [
+    { label: "入門", url: "/" },
+    { label: "群組設定", url: "/role" },
+    { label: "群組編輯", url: "/" }
+  ],
   "/employee": [
     { label: "入門", url: "/" },
     { label: "員工設定", url: "/employee" }
@@ -141,6 +142,8 @@ const routers: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
+  console.log("router.pathname", router.pathname);
+  console.log("router.asPath", router.asPath);
   const newRouters = routers[router.pathname] || routers[router.asPath] || [];
   return newRouters;
 };

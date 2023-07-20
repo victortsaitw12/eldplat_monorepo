@@ -31,8 +31,8 @@ export const getAllMaintenanceMissions = async (
       page_info: {
         page_index: 1,
         page_size: 20,
-        orderby: "maintenance_no",
-        arrangement: "asc"
+        orderby: "credate",
+        arrangement: "desc"
       }
     })
   });

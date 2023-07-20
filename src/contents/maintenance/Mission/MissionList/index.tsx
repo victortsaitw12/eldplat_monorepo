@@ -25,7 +25,7 @@ function MaintenanceMissionList({
   useEffect(() => {
     if (clientTitle.includes("結案")) setInCenter(true);
   }, []);
-  const theadClass = [{ label: "結案", value: "completion_time" }];
+  const customTableClass = [{ label: "結案", value: "completion_time" }];
 
   return (
     <BodySTY inCenter={inCenter}>
@@ -37,7 +37,7 @@ function MaintenanceMissionList({
         deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}
         viewItem={goToDetailPage}
-        theadClass={theadClass}
+        customTableClass={customTableClass}
       />
     </BodySTY>
   );

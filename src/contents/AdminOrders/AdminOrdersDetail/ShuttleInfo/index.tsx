@@ -117,7 +117,7 @@ const ShuttleInfo = ({ isEdit }: I_Props) => {
         title={
           isCustomBus
             ? "第" +
-              (child.day_number || "1") +
+              (i + 1 || "1") +
               "天  " +
               ((dayjs(child.day_date).isValid() &&
                 dayjs(child.day_date).format("YYYY-MM-DD")) ||
