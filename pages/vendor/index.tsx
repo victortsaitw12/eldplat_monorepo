@@ -28,8 +28,6 @@ import LabelTag from "@components/LabelTag";
 //@contexts
 import { useVendorStore } from "@contexts/filter/vendorStore";
 
-const isFullWidth = false;
-
 const Page: NextPageWithLayout<{
   locale: string;
   setPageType: (t: string) => void;
@@ -37,6 +35,7 @@ const Page: NextPageWithLayout<{
   const router = useRouter();
   const [data, setData] = useState<I_Select_Vendors_Type[] | I_Data[] | any>();
   const [nowTab, setNowTab] = useState("1");
+  const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const {
     initializeSubFilter,
     mainFilter,
@@ -223,8 +222,8 @@ const Page: NextPageWithLayout<{
 
   return (
     <BodySTY>
-      {!isFullWidth ? (
-        <>
+      <>
+        <Pane style={{ width: isDrawerFullWidth ? "0" : "100%" }}>
           <TableWrapper
             onChangeTab={changeMainFilterHandler}
             mainFilter={nowTab}
@@ -250,35 +249,31 @@ const Page: NextPageWithLayout<{
               )}
             </FilterWrapper>
           </TableWrapper>
-          {isDrawerOpen && (
-            <Drawer
-              tabName={["新增供應商"]}
-              closeDrawer={() => {
-                setDrawerOpen(false);
-              }}
-            >
-              <VendorCreateForm
-                reloadData={() => {
-                  setDrawerOpen(false);
-                  setData([]);
-                  getResult("1");
-                }}
-              />
-            </Drawer>
-          )}
+
           {/* <SideBookMark /> */}
-        </>
-      ) : (
-        <Pane
-          width="100%"
-          height="100%"
-          background="#fff"
-          borderRadius="10px"
-          overflow="auto"
-        >
-          {/* Put your component here */}
         </Pane>
-      )}
+        {isDrawerOpen && (
+          <Drawer
+            tabName={["新增供應商"]}
+            isFullScreen={isDrawerFullWidth}
+            closeDrawer={() => {
+              setDrawerOpen(false);
+              setIsDrawerFullWidth(false);
+            }}
+            toggleFullScreenDrawer={() => {
+              setIsDrawerFullWidth(!isDrawerFullWidth);
+            }}
+          >
+            <VendorCreateForm
+              reloadData={() => {
+                setDrawerOpen(false);
+                setData([]);
+                getResult("1");
+              }}
+            />
+          </Drawer>
+        )}
+      </>
     </BodySTY>
   );
 };

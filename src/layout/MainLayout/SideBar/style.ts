@@ -25,12 +25,18 @@ export const BodySTY = styled.div`
     }
     & > .back_to {
       cursor: pointer;
+      width: 100%;
       padding: 8px 12px;
       font-size: 0.875rem;
       font-weight: 400;
       display: flex;
       gap: 0.5rem;
       align-items: center;
+      border-radius: 10px;
+      &:hover {
+        background-color: #e2edff;
+        color: ${({ theme }) => theme.color.B400};
+      }
     }
   }
   .footer {
