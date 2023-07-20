@@ -1,9 +1,20 @@
 import { PatternType } from "@utils/mappingQueryData";
 import API_Path from "./apiPath";
+import { I_PageInfo } from "@components/PaginationField";
+
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: "reminders_no",
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
 // 取得維保通知資料
 export const getAllMaintenanceNotices = async (
   filter: { [key: string]: any } = {},
-  maintenance_status: string
+  maintenance_status: string,
+  pageQuery = defaultPageInfo
 ) => {
   const mainNoticeFilter = [];
   for (const key in filter) {
@@ -27,12 +38,7 @@ export const getAllMaintenanceNotices = async (
       maintenance_status,
       filter: mainNoticeFilter,
       filter_needed: true,
-      page_info: {
-        page_Index: 1,
-        page_Size: 20,
-        orderby: "reminders_no",
-        arrangement: "desc"
-      }
+      page_info: pageQuery
     })
   });
   console.log("notice res : ", res);
@@ -58,6 +64,7 @@ export const CancelMaintenanceById = async (reminder_no: string) => {
 export const maintenancePattern: PatternType = {
   id: true,
   reminders_no: true,
+  bus_no: true,
   bus_name: true,
   vendor_name: true,
   driver_name: true,
