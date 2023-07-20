@@ -35,10 +35,6 @@ export const ShiftSTY = styled.div`
         /* display: none; */
       }
     }
-    .overviewTable {
-      border: 1px solid ${({ theme }) => theme.color.N300};
-      border-radius: 10px;
-    }
   }
   label {
     margin: 0;

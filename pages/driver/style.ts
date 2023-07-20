@@ -20,7 +20,7 @@ const BodySTY = styled.div<{ isOpenDrawer: boolean }>`
   /* fonts */
   .wrapMain {
     /* width: ${(props) =>
-      props.isOpenDrawer ? "calc(100% - 300px)" : "100%"}; */
+      props.isOpenDrawer ? "calc(100% - 290px)" : "100%"}; */
     width: 100%;
     height: calc(100% - 51px - 32px);
     overflow-x: hidden;
