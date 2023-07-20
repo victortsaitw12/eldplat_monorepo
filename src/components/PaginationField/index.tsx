@@ -15,8 +15,8 @@ interface I_PaginationField {
   onClickPrevious?: () => void;
 }
 export interface I_PageInfo {
-  arrangement?: "desc" | "asc"; //"desc"
-  orderby?: string | null; //null
+  arrangement: "desc" | "asc"; //"desc"
+  orderby: string | null; //null
   page_Index: number; //1
   page_Size: number; //10
   total?: number; //5
