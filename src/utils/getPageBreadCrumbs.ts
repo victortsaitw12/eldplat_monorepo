@@ -9,7 +9,6 @@ interface I_routers {
 
 const routers: I_routers = {
   "/": [{ label: "入門", url: "/" }],
-
   "/bus/detail/[id]": [
     { label: "入門", url: "/" },
     { label: "汽車", url: "/bus" }
@@ -127,6 +126,11 @@ const routers: I_routers = {
     { label: "入門", url: "/" },
     { label: "群組設定", url: "/role" }
   ],
+  "/role/edit/[id]": [
+    { label: "入門", url: "/" },
+    { label: "群組設定", url: "/role" },
+    { label: "群組編輯", url: "/" }
+  ],
   "/employee": [
     { label: "入門", url: "/" },
     { label: "員工設定", url: "/employee" }
@@ -138,6 +142,8 @@ const routers: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
+  console.log("router.pathname", router.pathname);
+  console.log("router.asPath", router.asPath);
   const newRouters = routers[router.pathname] || routers[router.asPath] || [];
   return newRouters;
 };

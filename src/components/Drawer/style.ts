@@ -24,7 +24,7 @@ export const DrawerSTY = styled.div`
     height: 100%;
     overflow-y: auto;
     &::-webkit-scrollbar {
-      display: none;
+      /* display: none; */
     }
   }
 `;

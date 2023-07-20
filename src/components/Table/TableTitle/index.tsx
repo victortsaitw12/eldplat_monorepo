@@ -2,15 +2,25 @@ import React from "react";
 import { TableTitleSTY } from "./style";
 import { PlusIcon, ChevronLeftIcon, ChevronRightIcon } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
+import PaginationField, { I_PageInfo } from "@components/PaginationField";
 
-interface I_TITLE {
+interface I_TableTitle {
   tableName: Array<string | number | React.ReactNode> | string;
   control?: Array<string | number | React.ReactNode> | string;
   sub?: Array<string | number | React.ReactNode>;
   page: boolean;
+  pageInfo?: I_PageInfo;
+  onPageChange?: (pageQuery: I_PageInfo) => void;
 }
 
-const TableTitle = ({ tableName, control, sub, page = true }: I_TITLE) => {
+const TableTitle = ({
+  tableName,
+  control,
+  sub,
+  page = true,
+  pageInfo,
+  onPageChange
+}: I_TableTitle) => {
   const headerLeft = Array.isArray(tableName) ? (
     tableName.map((item, i) => <span key={i}>{item}</span>)
   ) : (
@@ -30,30 +40,20 @@ const TableTitle = ({ tableName, control, sub, page = true }: I_TITLE) => {
   );
 
   return (
-    <TableTitleSTY>
+    <TableTitleSTY className="tableTitle">
       <div className="container-header">
         <div className="container-header-left">{headerLeft}</div>
         <div className="container-header-right">{headerControl}</div>
       </div>
       <div className="container-sub">
         <div className="subTitle">{sub}</div>
-        {page ? (
-          <div className="container-pagination">
-            <span>
-              第{1}-{2}筆, 共{2}筆
-            </span>
-            <div className="actions">
-              <button>
-                <ChevronLeftIcon size={12} />
-              </button>
-              <button>
-                <ChevronRightIcon size={12} />
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="container-pagination">
+          {page ? (
+            <PaginationField pageInfo={pageInfo} onPageChange={onPageChange} />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </TableTitleSTY>
   );
