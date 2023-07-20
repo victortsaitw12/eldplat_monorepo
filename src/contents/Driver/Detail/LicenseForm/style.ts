@@ -78,8 +78,16 @@ export const FormSTY = styled.form`
     display: none;
   }
   li {
-    div:nth-child(2) {
+    .infoBox__value {
       min-width: 278px;
+    }
+    &:nth-last-child(1),
+    &:nth-last-child(3) {
+      /* 證照檔案, 失效備註 */
+      align-items: stretch !important;
+      .infoBox__label > span {
+        line-height: 20px;
+      }
     }
   }
 `;

@@ -91,7 +91,11 @@ const Page: NextPageWithLayout<never> = () => {
         label:
           (
             <UserSTY>
-              <Avatar name={data["user_Name"]} size={32} />
+              <Avatar
+                name={data["user_Name"]}
+                size={32}
+                style={{ padding: "8px", justifyContent: "center" }}
+              />
               <Link
                 href={{
                   pathname: "/driver/detail/[id]",
