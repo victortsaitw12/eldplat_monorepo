@@ -28,7 +28,8 @@ interface I_Table {
   goToCreatePage?: () => void;
   goToEditPage?: (id: string, item: any) => void;
   viewItem?: (id: string, item: any) => void;
-  deleteItem?: (item: any) => void;
+  deleteItem?: (id: any) => void;
+  recoverItem?: (id: any) => void;
   handleCheckboxChange?: (item: any) => void;
   handleSelectAll?: () => void;
   handleDeselectAll?: () => void;
@@ -51,6 +52,7 @@ function Table({
   viewItem,
   goToEditPage,
   deleteItem,
+  recoverItem,
   handleCheckboxChange = (item) => {
     console.log(item);
   },
@@ -223,6 +225,9 @@ function Table({
                         }
                         onDelete={
                           deleteItem && deleteItem.bind(null, item.id?.value)
+                        }
+                        onRecover={
+                          recoverItem && recoverItem.bind(null, item.id?.value)
                         }
                         deleteText={deleteText}
                         isOpen={currentTab === idx}

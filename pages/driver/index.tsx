@@ -143,11 +143,13 @@ const Page: NextPageWithLayout<never> = () => {
 
   const handleDeleteDriver = (id: string) => {
     updateDriverStatus(id, "2").then(() => {
-      fetchDriverData(false);
+      fetchDriverData(false, nowTab);
     });
-    // deleteDriver(id).then(() => {
-    //   fetchDriverData(false);
-    // });
+  };
+  const handleRecoverDriver = (id: string) => {
+    updateDriverStatus(id, "1").then(() => {
+      fetchDriverData(false, nowTab);
+    });
   };
   const handlePageChange = React.useCallback(
     (pageQuery: I_PageInfo) => {
@@ -172,10 +174,12 @@ const Page: NextPageWithLayout<never> = () => {
           filter={subFilter}
         >
           <DriverList
+            listType={nowTab}
             driverData={data}
             pageInfo={pageInfo}
             goToCreatePage={handleOpenSearch}
             handleDeleteDriver={handleDeleteDriver}
+            handleRecoverDriver={handleRecoverDriver}
             handlePageChange={handlePageChange}
           />
         </FilterWrapper>
