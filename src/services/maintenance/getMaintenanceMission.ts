@@ -1,11 +1,21 @@
 import { PatternType } from "@utils/mappingQueryData";
 import { createElement } from "react";
 import API_Path from "./apiPath";
+import { I_PageInfo } from "@components/PaginationField";
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: "maintenance_no",
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
 
 // 取得維保任務資料
 export const getAllMaintenanceMissions = async (
   filter: { [key: string]: any } = {},
-  maintenance_status = "1"
+  maintenance_status = "1",
+  pageQuery = defaultPageInfo
 ) => {
   const mainMissionFilter = [];
   for (const key in filter) {
@@ -28,12 +38,7 @@ export const getAllMaintenanceMissions = async (
       maintenance_status,
       maintenance_filter: mainMissionFilter,
       filter_Needed: true,
-      page_info: {
-        page_index: 1,
-        page_size: 20,
-        orderby: "credate",
-        arrangement: "desc"
-      }
+      page_info: pageQuery
     })
   });
   console.log("mission res : ", res);

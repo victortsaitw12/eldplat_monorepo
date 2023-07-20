@@ -26,11 +26,13 @@ export interface CreateMaintenancePayload {
 interface I_MaintenanceCreateFormProps {
   data?: any;
   reloadData?: () => void;
+  busNo?: string;
 }
 
 function MaintenanceCreateForm({
   data,
-  reloadData
+  reloadData,
+  busNo
 }: I_MaintenanceCreateFormProps) {
   const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
   // default value
@@ -59,6 +61,13 @@ function MaintenanceCreateForm({
         console.log("DDL data", DDLdata);
         console.log("維保通知打開側邊新增的data", data);
         const newData = { ...DDLdata.dataList[0] };
+        newData.bus_options.map((v: { no: any }, idx: any) => {
+          if (v.no === busNo) {
+            newData.bus_options.splice(idx, 1);
+            newData.bus_options.splice(0, 0, v);
+            setValue("bus_no", v.no);
+          }
+        });
         setMainCreateDdl(newData);
       });
     } catch (err) {
@@ -80,15 +89,16 @@ function MaintenanceCreateForm({
       });
 
       newData.driver_options.map((v: { no: any }, idx: any) => {
-        if (v.no === driverChosen[0]?.no) {
+        if (v.no === driverChosen[0]?.no && driverChosen.length > 0) {
           newData.driver_options.splice(idx, 1);
           newData.driver_options.splice(0, 0, driverChosen[0]);
+          setValue("driver_no", driverChosen[0]?.no);
         }
       });
       console.log("🆑newData", newData);
       setMainCreateDdl(newData);
       setValue("bus_no", busChosen[0]?.no);
-      setValue("driver_no", driverChosen[0]?.no);
+      console.log("driverChosen", driverChosen);
     });
   };
 
@@ -231,11 +241,7 @@ function MaintenanceCreateForm({
         })}
       </SelectField>
       <TextInputField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>起始日期
-          </div>
-        }
+        label="起始日期"
         type="date"
         {...register("service_start_date")}
       />
