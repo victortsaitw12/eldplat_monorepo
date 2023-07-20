@@ -10,7 +10,13 @@ import {
 import { formatYYYYMM } from "@contents/Shift/shift.util";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
-const MonthPicker = ({ initialMonthFirst }: { initialMonthFirst: Date }) => {
+const MonthPicker = ({
+  initialMonthFirst,
+  onMonthChange
+}: {
+  initialMonthFirst: Date;
+  onMonthChange?: (v: number) => void;
+}) => {
   const UI = React.useContext(UIContext);
 
   const curMonthFirst: Date = new Date(
@@ -22,10 +28,17 @@ const MonthPicker = ({ initialMonthFirst }: { initialMonthFirst: Date }) => {
   const handlePrev = () => {
     const updatedMonthCount = UI.monthCount - 1;
     UI.setMonthCount(updatedMonthCount);
+    if (!onMonthChange) return;
+    onMonthChange(updatedMonthCount);
   };
   const handleNext = () => {
     const updatedMonthCount = UI.monthCount + 1;
     UI.setMonthCount(updatedMonthCount);
+    updateMonthCount(updatedMonthCount);
+  };
+  const updateMonthCount = (v: number) => {
+    if (!onMonthChange) return;
+    onMonthChange(v);
   };
   return (
     <Group className="monthPciker">

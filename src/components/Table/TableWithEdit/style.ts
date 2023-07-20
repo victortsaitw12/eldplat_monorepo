@@ -94,6 +94,11 @@ const TableSTY = styled.table`
       justify-content: flex-start;
       align-items: center;
     }
+    label > div:not(:first-child) {
+      /* <Checkbox/> from evergreen-ui*/
+      /* add"div:not(:first-child) " only for css selector specificity */
+      justify-content: center;
+    }
     &:first-child {
       padding-left: 24px;
     }

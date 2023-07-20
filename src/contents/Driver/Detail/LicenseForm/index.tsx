@@ -118,7 +118,7 @@ function LicenseForm({
     },
     {
       req: true,
-      label: "證照檔案",
+      label: "證照檔案", //    line-height: 20px;align-items: stretch;
       editEle: getValues("licn_filename") ? (
         <Pane>
           <Text>{getValues("licn_filename")}</Text>

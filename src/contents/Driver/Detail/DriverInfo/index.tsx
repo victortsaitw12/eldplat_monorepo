@@ -42,17 +42,25 @@ function DriverInfo({
     {
       readonly: true,
       label: "姓名",
-      value: info["user_name"] || "目前無資料"
+      value: info["user_name"] || "--"
     },
     {
       readonly: true,
       label: "E-Mail",
-      value: info["user_email"] || "目前無資料"
+      value: info["user_email"] || "--"
     },
     {
       readonly: true,
       label: "手機",
-      value: info["user_phone"] || "目前無資料"
+      value: info["user_phone"] || "--"
+    }
+  ];
+  // 排班設定
+  const schdInfo = [
+    {
+      readonly: true,
+      label: "",
+      value: "info['API欄位']"
     }
   ];
   // 駕駛履歷
@@ -60,18 +68,18 @@ function DriverInfo({
     {
       readonly: true,
       label: "使用者編號",
-      value: info["user_no"] || "目前無資料"
+      value: info["user_no"] || "--"
     },
     {
       req: false,
       label: "駕照編號",
-      value: getValues("license_no") || "目前無資料",
+      value: getValues("license_no") || "--",
       editEle: <TextInput {...register("license_no")} />
     },
     {
       req: false,
       label: "駕駛國家",
-      value: getValues("driver_country") || "目前無資料",
+      value: getValues("driver_country") || "--",
       editEle: (
         <Select
           key="driver_country"
@@ -89,7 +97,7 @@ function DriverInfo({
     {
       req: false,
       label: "執照州/省/地區",
-      value: getValues("license_area") || "目前無資料",
+      value: getValues("license_area") || "--",
       editEle: (
         <Select
           key="license_area"
@@ -107,19 +115,19 @@ function DriverInfo({
     {
       req: false,
       label: "牌照等級",
-      value: getValues("license_lvl") || "目前無資料",
+      value: getValues("license_lvl") || "--",
       editEle: <TextInput {...register("license_lvl")} />
     },
     {
       req: false,
       label: "駕駛資歷(年)",
-      value: getValues("driver_seniority") || "目前無資料",
+      value: getValues("driver_seniority") || "--",
       editEle: <TextInput {...register("driver_seniority")} />
     },
     {
       req: false,
-      label: "派遣區域",
-      value: getValues("dsph_area") || "目前無資料",
+      label: "派遣車隊",
+      value: getValues("dsph_area") || "--",
       editEle: (
         <Select key="dsph_area" {...register("dsph_area")} marginBottom="0">
           {Object.keys(DSPH_AREA).map((key) => (
@@ -133,7 +141,7 @@ function DriverInfo({
     {
       req: false,
       label: "派遣都市",
-      value: getValues("dsph_city") || "目前無資料",
+      value: getValues("dsph_city") || "--",
       editEle: (
         <Select key="dsph_city" {...register("dsph_city")} marginBottom="0">
           {Object.keys(DSPH_CITY).map((key) => (
@@ -158,7 +166,7 @@ function DriverInfo({
     {
       req: false,
       label: "黑名單備註",
-      value: "目前無資料",
+      value: "--",
       editEle: <Textarea name="remark" placeholder="備註限制50字元" />
     },
     {
@@ -218,6 +226,11 @@ function DriverInfo({
           }
         />
         <LanguageAbility currentUserInfo={driverData} />
+        <InfoBox
+          isEdit={false}
+          infoData={schdInfo}
+          infoTitle={<span style={{ marginRight: "8px" }}>排班設定</span>}
+        />
       </FlexWrapper>
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={isEdit} infoData={resumeInfo} infoTitle="駕駛履歷" />
