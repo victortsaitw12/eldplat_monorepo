@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode, useCallback } from "react";
 import { NextPageWithLayout } from "next"; //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
@@ -11,6 +11,7 @@ import Drawer from "@components/Drawer";
 import MaintenanceMissionList from "@contents/maintenance/Mission/MissionList";
 import {
   UpdateMaintenanceStatus,
+  defaultPageInfo,
   getAllMaintenanceMissions,
   maintenanceParser,
   maintenancePattern
@@ -21,6 +22,7 @@ import FinishBtn from "@contents/maintenance/Mission/MissionList/FinishBtn";
 import AssignBtn from "@contents/maintenance/Mission/MissionList/AssignBtn";
 import { CloseAssignment } from "@services/maintenance/updateMaintenance";
 import Link from "next/link";
+import { I_PageInfo } from "@components/PaginationField";
 //
 const mainFilterArray = [
   { id: 1, label: "任務", value: "1" },
@@ -30,6 +32,7 @@ const mainFilterArray = [
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState("1");
   const [listStatus, setListStatus] = useState("1");
   const {
@@ -45,9 +48,10 @@ const Page: NextPageWithLayout<never> = () => {
 
   const fetchMaintenanceData = async (
     isCanceled: boolean,
-    mainFilter = "1"
+    mainFilter = "1",
+    pageQuery = defaultPageInfo
   ) => {
-    getAllMaintenanceMissions(subFilter, mainFilter).then((res) => {
+    getAllMaintenanceMissions(subFilter, mainFilter, pageQuery).then((res) => {
       console.log("1️⃣res for mission", res);
 
       const MainMissionData = mappingQueryData(
@@ -55,6 +59,11 @@ const Page: NextPageWithLayout<never> = () => {
         maintenancePattern,
         maintenanceParser
       );
+
+      // 處理分頁
+      const getPageInfo = { ...res.pageInfo };
+      getPageInfo["orderby"] = "maintenance_no";
+      setPageInfo(getPageInfo);
 
       // 由於table內不只有靜態資料顯示(有button功能)，所以客制加工一下 => 結案按鈕
       MainMissionData?.map((item) => {
@@ -153,7 +162,7 @@ const Page: NextPageWithLayout<never> = () => {
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchMaintenanceData(isCanceled, nowTab);
+    fetchMaintenanceData(isCanceled, nowTab, pageInfo);
     return () => {
       isCanceled = true;
     };
@@ -161,6 +170,10 @@ const Page: NextPageWithLayout<never> = () => {
   if (!data) {
     return <LoadingSpinner />;
   }
+
+  const handlePageChange = (pageQuery: I_PageInfo) => {
+    fetchMaintenanceData(false, nowTab, pageQuery);
+  };
 
   return (
     <BodySTY>
@@ -185,6 +198,8 @@ const Page: NextPageWithLayout<never> = () => {
             deleteItemHandler={deleteItemHandler}
             goToEditPageHandler={goToEditPageHandler}
             goToDetailPage={goToDetailPageHandler}
+            pageInfo={pageInfo}
+            handlePageChange={handlePageChange}
           />
         </FilterWrapper>
       </TableWrapper>
