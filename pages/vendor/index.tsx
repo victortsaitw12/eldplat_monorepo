@@ -223,7 +223,15 @@ const Page: NextPageWithLayout<{
   return (
     <BodySTY>
       <>
-        <Pane style={{ width: isDrawerFullWidth ? "0" : "100%" }}>
+        <Pane
+          style={{
+            width: isDrawerFullWidth
+              ? "0"
+              : isDrawerOpen
+              ? "calc(100% - 280px)"
+              : "100%"
+          }}
+        >
           <TableWrapper
             onChangeTab={changeMainFilterHandler}
             mainFilter={nowTab}
