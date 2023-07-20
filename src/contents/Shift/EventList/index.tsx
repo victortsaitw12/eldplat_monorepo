@@ -141,7 +141,13 @@ const EventList = ({
             ? CHECK_STATUS.get(item.check_Status)?.label
             : SCHD_TYPE.get(item.schd_Type)?.label}
         </span>
-        {item.leave_Code || item.check_Status ? <TagIcon /> : ""}
+        {item.leave_Code ||
+        (item.check_Status && item.leave_Description) ||
+        item.leave_Code ? (
+          <TagIcon />
+        ) : (
+          ""
+        )}
         <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
         <span>{item.schd_Type === "04" ? item.leave_Description : ""}</span>
       </button>

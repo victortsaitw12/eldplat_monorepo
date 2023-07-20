@@ -2,6 +2,7 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 import { getBusTitle } from "@services/bus/getAllBuses";
 import { BodySTY } from "./style";
 import StatusIcon from "@components/StatusIcon";
+import { PageInfoType } from "@services/type";
 interface Props {
   busData: any;
   goToCreatePage: () => void;
@@ -14,6 +15,8 @@ interface Props {
     id: string,
     item: { [key: string]: { value: any; label: any } }
   ) => void;
+  upDatePageHandler?: (pageInfo: PageInfoType) => void;
+  pageInfo: PageInfoType;
 }
 
 function BusList({
@@ -21,7 +24,9 @@ function BusList({
   goToCreatePage,
   deleteItemHandler,
   goToEditPageHandler,
-  goToDetailPage
+  goToDetailPage,
+  upDatePageHandler,
+  pageInfo
 }: Props) {
   const busTitle = getBusTitle();
   busData.forEach((data: any) => {
@@ -30,7 +35,6 @@ function BusList({
       value: data.status.value
     };
   });
-  console.log("busData", busData);
   return (
     <BodySTY>
       <TableWithEdit
@@ -41,6 +45,8 @@ function BusList({
         deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}
         viewItem={goToDetailPage}
+        pageInfo={pageInfo}
+        onPageChange={upDatePageHandler}
       />
     </BodySTY>
   );

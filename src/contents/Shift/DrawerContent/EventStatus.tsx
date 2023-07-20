@@ -74,7 +74,7 @@ const EventStatus = ({
   const eventsArray = UI.viewEventList?.map((event: any, i: number) => (
     <ViewSTY
       key={`eventStatus-${i}`}
-      color={SCHD_TYPE.get(event.schd_Type)?.color || "unset"}
+      color={SCHD_TYPE.get(event.schd_Type)?.color ?? "N300"}
     >
       <div className="eventStatus__tags">
         {" "}
@@ -91,7 +91,6 @@ const EventStatus = ({
       <div className="eventStatus__schdType">
         <span className="eventStatus__schdType-left">
           <span style={{ color: SCHD_TYPE.get(event.schd_Type)?.color }}>
-            {" "}
             {SCHD_TYPE.get(event.schd_Type)?.icon}
           </span>
           <span> {SCHD_TYPE.get(event.schd_Type)?.label}</span>
@@ -101,9 +100,11 @@ const EventStatus = ({
           <TrashIcon onClick={handleDeleteSchdule.bind(null, event)} />
         </span>
       </div>
-      <div className="eventStatus__leaveCode">
-        <span> {LEAVE_CODE.get(event.leave_Code)?.label}</span>
-      </div>
+      {event.leave_Code && (
+        <div className="eventStatus__leaveCode">
+          <span> {LEAVE_CODE.get(event.leave_Code)?.label}</span>
+        </div>
+      )}
       <div className="eventStatus__description">
         <span> {event.leave_Description}</span>
       </div>

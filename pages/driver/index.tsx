@@ -48,7 +48,10 @@ const Page: NextPageWithLayout<never> = () => {
           driverPattern,
           driverParser
         );
-        const getPageInfo = res.pageInfo;
+        const getPageInfo = { ...res.pageInfo };
+        console.log("res:", res);
+        console.log("res.contentList: ", res.contentList);
+        console.log("driverData: ", driverData);
         setPageInfo(getPageInfo);
         if (isCanceled) return;
 
@@ -64,7 +67,6 @@ const Page: NextPageWithLayout<never> = () => {
     },
     []
   );
-
   // ordered data pattern
   const driverPattern = {
     id: true,

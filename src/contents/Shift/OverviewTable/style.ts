@@ -7,17 +7,8 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
   ${({ isExpand }) => `
     --cellWidth: ${isExpand ? "140px" : "72px"};
   `}
-
-  width: 100%;
-  height: fit-content;
-  position: relative;
-  border: 1px solid ${({ theme }) => theme.color.N300};
-  border-radius: 10px;
-  overflow: hidden;
-  overflow-x: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  height: 100%;
+  width: fit-content;
   .reminder {
     animation: 200ms ease-out 200ms infinite alternate reminder;
     /* animation-delay: 200ms;
@@ -26,11 +17,13 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
   }
   .eg-table {
     width: fit-content;
-    height: fit-content;
+    /* height: fit-content; */
+    height: calc(100% - 32px);
     position: relative;
     text-align: center;
     white-space: nowrap;
     border: none;
+    /* overflow-x: auto; */
     .eg-head {
       width: fit-content;
       .eg-th {
@@ -45,8 +38,12 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
       }
     }
     .eg-body {
-      height: fit-content;
-      overflow: visible;
+      /* overflow-y: auto; evergreen-ui已預設*/
+      /* overwite evergreen-ui h=240px */
+      height: 100%;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       .eg-bodyRow {
         &:hover {
           .eg-td {
@@ -56,17 +53,21 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
         .eg-td {
           background: ${({ theme }) => theme.color.N0};
           flex: unset !important;
-          .eventTag-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            flex-grow: 1;
-
-            button {
-              margin-right: 2px;
-            }
-            svg {
-              min-width: 16px;
+          span {
+            .eventTag-container {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              flex-wrap: nowrap;
+              flex-grow: 1;
+              button {
+                width: 100%;
+                margin-right: 2px;
+                padding: 4px 0px;
+              }
+              svg {
+                min-width: 16px;
+              }
             }
           }
         }
@@ -97,14 +98,14 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
       }
 
       &:nth-child(-n + 2) {
-        position: sticky;
+        /* position: sticky; */
         left: ${checkboxWidth + "px"};
         min-width: ${freezeColWidth + "px"};
         background: inherit;
         z-index: 99;
       }
       &:nth-child(1) {
-        position: sticky;
+        /* position: sticky; */
         left: 0;
         max-width: ${checkboxWidth + "px"};
         min-width: ${checkboxWidth + "px"};

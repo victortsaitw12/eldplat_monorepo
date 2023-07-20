@@ -21,7 +21,7 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "服務日期",
-      value: getValues("bus_lifecycle.in_service_date"),
+      value: getValues("bus_lifecycle.in_service_date") || "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.in_service_date"}
@@ -33,7 +33,9 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "服務里程數",
-      value: getValues("bus_lifecycle.in_service_odometer")?.toLocaleString(),
+      value:
+        getValues("bus_lifecycle.in_service_odometer")?.toLocaleString() ||
+        "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.in_service_odometer"}
@@ -47,7 +49,7 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "估計使用壽命(月)",
-      value: getValues("bus_lifecycle.estimated_service_months"),
+      value: getValues("bus_lifecycle.estimated_service_months") || "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.estimated_service_months"}
@@ -58,9 +60,9 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "估計使用壽命(里程)",
-      value: getValues(
-        "bus_lifecycle.estimated_service_meter"
-      )?.toLocaleString(),
+      value:
+        getValues("bus_lifecycle.estimated_service_meter")?.toLocaleString() ||
+        "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.estimated_service_meter"}
@@ -71,7 +73,7 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "估計轉售價值",
-      value: getValues("bus_lifecycle.estimated_resale"),
+      value: getValues("bus_lifecycle.estimated_resale") || "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.estimated_resale"}
@@ -85,7 +87,7 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "停用日期",
-      value: getValues("bus_lifecycle.out_service_date"),
+      value: getValues("bus_lifecycle.out_service_date") || "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.out_service_date"}
@@ -97,7 +99,9 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "停用里程表數值",
-      value: getValues("bus_lifecycle.out_service_odometer")?.toLocaleString(),
+      value:
+        getValues("bus_lifecycle.out_service_odometer")?.toLocaleString() ||
+        "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.out_service_odometer"}

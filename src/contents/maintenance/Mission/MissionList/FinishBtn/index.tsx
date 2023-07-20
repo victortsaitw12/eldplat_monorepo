@@ -27,7 +27,6 @@ const FinishBtn = ({ id, disabled, setListStatus }: FinishBtn_Type) => {
             duration: 3
           });
           setListStatus(id);
-
           // router.push("/maintenance/record ");
         })
         .catch((err) => {

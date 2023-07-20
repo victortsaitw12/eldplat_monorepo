@@ -59,7 +59,6 @@ function InfoBox({
     }
     return infoData.map((child: any, i: number) => {
       const { req, value, label, editEle, inputType } = child;
-      console.log("value/*/*/*", value);
       if (!value && !editEle) {
         return;
       }
@@ -69,11 +68,18 @@ function InfoBox({
       return (
         <ListItem key={infoBoxId + "_text_" + i}>
           {label && (
+            // <Pane>
+            //   {req && label !== "" && <span className="req">*</span>}
+            //   {label}
+            // </Pane>
             <Pane>
-              {req && label !== "" && <span className="req">*</span>}
-              {label}
+              <span>
+                {req && label !== "" && <span className="req">*</span>}
+                {label}
+              </span>
             </Pane>
           )}
+          {/* <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane> */}
           <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane>
         </ListItem>
       );
