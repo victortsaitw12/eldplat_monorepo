@@ -1,11 +1,22 @@
 import { PatternType } from "@utils/mappingQueryData";
 import { createElement } from "react";
 import API_Path from "./apiPath";
+import { I_PageInfo } from "@components/PaginationField";
+
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: null,
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
 
 // 取得維保任務資料
 export const getAllMaintenanceRecords = async (
   filter: { [key: string]: any } = {},
-  maintenance_status = "3"
+  maintenance_status = "3",
+  pageQuery = defaultPageInfo
 ) => {
   const mainRecordFilter = [];
   for (const key in filter) {
@@ -28,10 +39,7 @@ export const getAllMaintenanceRecords = async (
       maintenance_status,
       maintenance_filter: mainRecordFilter,
       filter_Needed: true,
-      page_info: {
-        page_index: 1,
-        page_size: 20
-      }
+      page_info: pageQuery
     })
   });
   console.log("record res : ", res);
@@ -53,7 +61,6 @@ export const maintenancePattern: PatternType = {
 };
 
 export const maintenanceParser = (data: any, key: string) => {
-  console.log("data----*", data);
   if (key === "id") {
     return {
       label: data["maintenance_no"] || null,

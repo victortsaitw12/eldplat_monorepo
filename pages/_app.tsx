@@ -5,7 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { I18Provider, LOCALES } from "@contexts/i18n";
 import theme from "@styles/theme";
 import { GlobalStyles } from "@styles/global";
-import { getVendorsLang } from "@services/vendor/getAllVendors";
+// import { getVendorsLang } from "@services/vendor/getAllVendors";
 import { useRouter, Router } from "next/router";
 import { Noto_Sans } from "next/font/google";
 import LoadingModal from "@components/LoadingModal";
@@ -74,14 +74,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   // 存放從後端打API取回的多國語系JSON資料
   const [langJSONData, setLangJSONData] = useState<any>(null);
 
-  useEffect(() => {
-    getVendorsLang(locale, pageType)
-      .then((data) => {
-        const newData = JSON.parse(data.resultString);
-        setLangJSONData(newData);
-      })
-      .catch((err) => console.error("多國語系error : ", err));
-  }, [locale]);
+  // ⭐多國語系: 為了避免network錯誤，先註解掉
+  // useEffect(() => {
+  //   getVendorsLang(locale, pageType)
+  //     .then((data) => {
+  //       const newData = JSON.parse(data.resultString);
+  //       setLangJSONData(newData);
+  //     })
+  //     .catch((err) => console.error("多國語系error : ", err));
+  // }, [locale]);
 
   // 因為多國語系是抓message資料，所以一進來一定要先抓取api取到的JSON檔
   useEffect(() => {
