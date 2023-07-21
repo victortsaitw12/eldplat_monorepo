@@ -19,6 +19,7 @@ const Page: NextPageWithLayout<never> = () => {
     setLoading(true);
     try {
       const res = await updateCompany(data);
+      console.log("按下更新公司的res", res);
       router.push("/company");
     } catch (e: any) {
       console.error("update company error: ", e);

@@ -64,11 +64,11 @@ function CompanyUpdate({ submitForm, onCancel }: I_UpdateCompany_Props) {
         <Pane className="left-blocks">
           <Basic />
           <CountrySet />
-          <CompanyRule />
         </Pane>
         <Pane className="right-blocks">
           <Admin />
           <Contact />
+          <CompanyRule />
           <LeaveSet />
         </Pane>
       </Pane>

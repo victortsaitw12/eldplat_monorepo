@@ -66,9 +66,13 @@ export const CompanyProvider = ({ children }: any) => {
   const [ddlLanguage, setDdlLanguage] = useState<I_DDL_Type[]>([
     { label: "請選擇", value: "no" }
   ]);
+
   const [companyData, setCompanyData] = useState<I_Company_Update_Type | any>(
     mock_company_data
   );
+  // const [companyData, setCompanyData] = useState<I_Company_Update_Type | any>(
+  //   null
+  // );
 
   const [countryNumInput, setCountryNumInput] = useState<I_CountryNum>({
     contactTel: "",
@@ -103,8 +107,6 @@ export const CompanyProvider = ({ children }: any) => {
     }
     setLoading(false);
   }, []);
-
-  console.log("ddlLanguage", ddlLanguage);
 
   // 取得登入公司的資料
   useEffect(() => {
@@ -195,7 +197,8 @@ export const CompanyProvider = ({ children }: any) => {
     setCountryNumInput,
     handleCompanyBasicChange,
     handleCompanyContactChange,
-    handleCompanyCountrySetChange
+    handleCompanyCountrySetChange,
+    loading
   };
 
   console.log("🏆🏆🏆companyData", companyData);

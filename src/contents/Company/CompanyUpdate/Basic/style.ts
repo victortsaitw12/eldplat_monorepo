@@ -22,5 +22,17 @@ export const BodySTY = styled.div`
         margin-right: 4px;
       }
     }
+
+    .upload-file-frame {
+      display: flex;
+      justify-content: center;
+      .upload-file {
+        width: 200px;
+        height: 200px;
+        p {
+          /* color: ${({ theme }) => theme.color.N700} !important; */
+        }
+      }
+    }
   }
 `;
