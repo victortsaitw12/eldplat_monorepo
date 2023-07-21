@@ -68,7 +68,7 @@ const TableSTY = styled.table`
   thead {
     position: sticky;
     top: 0;
-    z-index: 9;
+    z-index: 13;
   }
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};

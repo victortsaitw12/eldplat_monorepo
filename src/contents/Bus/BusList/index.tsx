@@ -4,9 +4,11 @@ import { BodySTY } from "./style";
 import StatusIcon from "@components/StatusIcon";
 import { PageInfoType } from "@services/type";
 interface Props {
+  listType: string;
   busData: any;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
+  recoverItemHandler?: (id: string) => void;
   goToEditPageHandler: (
     id: string,
     item: { [key: string]: { value: any; label: any } }
@@ -15,14 +17,17 @@ interface Props {
     id: string,
     item: { [key: string]: { value: any; label: any } }
   ) => void;
+
   upDatePageHandler?: (pageInfo: PageInfoType) => void;
   pageInfo: PageInfoType;
 }
 
 function BusList({
+  listType,
   busData,
   goToCreatePage,
   deleteItemHandler,
+  recoverItemHandler,
   goToEditPageHandler,
   goToDetailPage,
   upDatePageHandler,
@@ -42,11 +47,24 @@ function BusList({
         titles={busTitle}
         data={busData}
         goToCreatePage={goToCreatePage}
-        deleteItem={deleteItemHandler}
-        goToEditPage={goToEditPageHandler}
+        // deleteItem={deleteItemHandler}
+        // goToEditPage={goToEditPageHandler}
         viewItem={goToDetailPage}
         pageInfo={pageInfo}
         onPageChange={upDatePageHandler}
+        {...(listType == "1" && {
+          goToEditPage: (id, item) => {
+            goToEditPageHandler(id, item);
+          },
+          deleteItem: (id) => {
+            deleteItemHandler(id);
+          }
+        })}
+        {...(listType == "2" && {
+          recoverItem: (id) => {
+            recoverItemHandler && recoverItemHandler(id);
+          }
+        })}
       />
     </BodySTY>
   );
