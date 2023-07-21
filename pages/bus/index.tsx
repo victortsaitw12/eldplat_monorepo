@@ -112,6 +112,9 @@ const Page: NextPageWithLayout<never> = () => {
       fetchBusData(false, nowTab, pageInfo);
     });
   };
+  const recoverItemHandler = async (id: string) => {
+    console.log("上一動");
+  };
   if (!data) {
     return <LoadingSpinner />;
   }
@@ -131,10 +134,12 @@ const Page: NextPageWithLayout<never> = () => {
           filter={subFilter}
         >
           <BusList
+            listType={nowTab}
             busData={data}
             goToCreatePage={() => {
               setDrawerOpen(true);
             }}
+            recoverItemHandler={recoverItemHandler}
             deleteItemHandler={deleteItemHandler}
             goToEditPageHandler={goToEditPageHandler}
             goToDetailPage={goToDetailPageHandler}

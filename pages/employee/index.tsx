@@ -71,15 +71,22 @@ const Page: NextPageWithLayout<never> = () => {
     setDrawerOpen
   } = useEmployeeFilterStore();
   useEffect(() => {
-    updateMainFilter("all");
+    updateMainFilter("1");
   }, []);
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "啟用", value: "all" },
-      { id: 2, label: "停用", value: "seal" }
+      { id: 1, label: "啟用", value: "1" },
+      { id: 2, label: "停用", value: "2" }
     ],
     []
   );
+  const [nowTab, setNowTab] = useState("1");
+
+  const changeMainFilterHandler = (value: string) => {
+    setNowTab(value);
+    // alert(value);
+    updateMainFilter(value);
+  };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [employeeListData, setEmployeeListData] = useState<any>(null);
@@ -153,13 +160,11 @@ const Page: NextPageWithLayout<never> = () => {
       router.reload();
     });
   };
-
+  const recoverItemHandler = async (id: string) => {
+    console.log("上一動");
+  };
   const goToEditPageHandler = (id: string) => {
     router.push(`/employee/edit/${id}`);
-  };
-  const changeMainFilterHandler = (value: string) => {
-    alert(value);
-    updateMainFilter(value);
   };
 
   const createEmployeeHandler = async (employeeData: any) => {
@@ -200,12 +205,14 @@ const Page: NextPageWithLayout<never> = () => {
           >
             {/* Put your component here */}
             <EmployeeList
+              listType={nowTab}
               data={employeeListData}
               goToCreatePage={() => {
                 setDrawerOpen(true);
               }}
               deleteItemHandler={deleteItemHandler}
               goToEditPageHandler={goToEditPageHandler}
+              recoverItemHandler={recoverItemHandler}
             />
           </FilterWrapper>
         </TableWrapper>
