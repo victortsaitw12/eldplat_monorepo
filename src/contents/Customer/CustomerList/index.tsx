@@ -16,7 +16,7 @@ interface Props {
   pageInfo: PageInfoType;
 }
 
-function ClientList({
+function CustomerList({
   listType,
   clientData,
   customerData,
