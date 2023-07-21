@@ -9,7 +9,7 @@ const BodySTY = styled.li`
     font-size: 14px;
     font-weight: 400px;
     &:first-child {
-      max-width: 115px;
+      max-width: 110px;
     }
   }
 `;

@@ -4,8 +4,6 @@ import { TextInput } from "evergreen-ui";
 import { useForm } from "react-hook-form";
 import { forwardRef, useState, useEffect } from "react";
 import Collapse from "@components/Collapse";
-import { formatDateToString } from "@utils/calculateDate";
-import Breadcrumbs from "@components/Breadcrumbs";
 type FormValues = {
   flightDate: string;
   flightNo: string;
@@ -53,7 +51,7 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
     reset
   } = useForm<FormValues>({
     defaultValues: {
-      flightDate: formatDateToString(new Date()),
+      flightDate: "",
       flightNo: "",
       airport: "",
       terminal: "",
