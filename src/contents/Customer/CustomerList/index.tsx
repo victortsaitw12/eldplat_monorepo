@@ -4,7 +4,7 @@ import { BodySTY } from "./style";
 import { PageInfoType } from "@services/type";
 
 interface Props {
-  clientData: any;
+  customerData: any;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
   goToEditPageHandler: (id: string) => void;
@@ -13,8 +13,8 @@ interface Props {
   pageInfo: PageInfoType;
 }
 
-function ClientList({
-  clientData,
+function CustomerList({
+  customerData,
   goToCreatePage,
   deleteItemHandler,
   goToEditPageHandler,
@@ -29,7 +29,7 @@ function ClientList({
         tableName="客戶"
         cleanTableName="客戶列表"
         titles={clientTitle}
-        data={clientData}
+        data={customerData}
         goToCreatePage={goToCreatePage}
         deleteItem={deleteItemHandler}
         goToEditPage={goToEditPageHandler}
@@ -41,4 +41,4 @@ function ClientList({
   );
 }
 
-export default ClientList;
+export default CustomerList;
