@@ -44,7 +44,7 @@ const defaultValues: CreateCustomerPayload = {
   customer_area: "",
   customer_district_code: "",
   customer_country: "",
-  customer_tel_code: "",
+  customer_tel_code: "886",
   customer_tel: "",
   contact_name: "",
   contact_phone_code: "886",
@@ -203,6 +203,7 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
         <div style={{ width: "60px" }}>
           <FiledInput
             label=""
+            disabled={true}
             controlProps={{
               name: "customer_tel_code",
               control

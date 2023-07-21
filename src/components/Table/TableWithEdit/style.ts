@@ -68,7 +68,7 @@ const TableSTY = styled.table`
   thead {
     position: sticky;
     top: 0;
-    z-index: 9;
+    z-index: 13;
   }
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
@@ -93,6 +93,11 @@ const TableSTY = styled.table`
       display: flex;
       justify-content: flex-start;
       align-items: center;
+    }
+    label > div:not(:first-child) {
+      /* <Checkbox/> from evergreen-ui*/
+      /* add"div:not(:first-child) " only for css selector specificity */
+      justify-content: center;
     }
     &:first-child {
       padding-left: 24px;

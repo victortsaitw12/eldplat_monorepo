@@ -58,7 +58,7 @@ export const EventBarSTY = styled.div<{
       fill: ${({ theme }) => theme.color.N0};
     }
     span {
-      overflow: hidden;
+      /* overflow: hidden; */
       white-space: nowrap;
       text-overflow: ellipsis;
       /* max-width: calc(100% - 20px); */

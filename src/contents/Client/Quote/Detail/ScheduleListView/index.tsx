@@ -16,8 +16,6 @@ const ScheduleListView = ({
   dropoff_location,
   listArray
 }: I_Props) => {
-  console.log("pickup_location", pickup_location);
-  console.log("dropoff_location", dropoff_location);
   const r_stopover = (listArray: any[]) => {
     const filterArray = listArray.filter(
       (item) => item.stopover_address.trim() !== ""

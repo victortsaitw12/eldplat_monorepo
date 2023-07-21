@@ -152,8 +152,14 @@ const CustomerDetail = ({
       editEle: [
         <SelectField
           key="customer_city"
-          label="城市"
-          {...register("customer_city")}
+          label={
+            <label>
+              <span style={{ color: "red" }}>*</span>城市
+            </label>
+          }
+          {...register("customer_city", {
+            required: "必填"
+          })}
           marginBottom="0"
         >
           <option value="LA">洛杉磯</option>
@@ -192,8 +198,12 @@ const CustomerDetail = ({
         />,
         <SelectField
           key="customer_country"
-          label="國家"
-          {...register("customer_country")}
+          label={
+            <label>
+              <span style={{ color: "red" }}>*</span>國家
+            </label>
+          }
+          {...register("customer_country", { required: "必填" })}
           marginBottom="0"
         >
           <option value="TW">台灣</option>
@@ -220,6 +230,7 @@ const CustomerDetail = ({
           <TextInput
             {...register("customer_tel_code")}
             style={{ width: "60px" }}
+            disabled
           />
           <TextInput
             {...register("customer_tel", { required: "必填！" })}
@@ -247,6 +258,7 @@ const CustomerDetail = ({
             key="customer_fax_code"
             style={{ width: "60px" }}
             {...register("customer_fax_code")}
+            disabled
           />
           <TextInput
             key="customer_fax"

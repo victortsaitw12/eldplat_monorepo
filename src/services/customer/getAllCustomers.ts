@@ -100,7 +100,13 @@ export const customerParser = (data: any, key: string) => {
   if (key === "contact_phone_and_tel") {
     const lebelElement = createElement(
       "div",
-      { style: { display: "flex", flexDirection: "column" } },
+      {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start"
+        }
+      },
       [
         createElement(
           "div",
@@ -119,7 +125,6 @@ export const customerParser = (data: any, key: string) => {
       ]
     );
     return {
-      // label: lebelElement,
       label: lebelElement,
       value:
         `${data["contact_tel_code"] + data["contact_tel"]}, ${

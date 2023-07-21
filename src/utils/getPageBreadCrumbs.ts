@@ -135,6 +135,11 @@ const routers: I_routers = {
     { label: "入門", url: "/" },
     { label: "員工設定", url: "/employee" }
   ],
+  "/driver/detail/[id]": [
+    { label: "入門", url: "/" },
+    { label: "駕駛設定", url: "/driver" },
+    { label: "詳情", url: "/" }
+  ],
   "/driver": [
     { label: "入門", url: "/" },
     { label: "駕駛設定", url: "/driver" }
