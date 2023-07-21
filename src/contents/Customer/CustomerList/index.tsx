@@ -4,25 +4,32 @@ import { BodySTY } from "./style";
 import { PageInfoType } from "@services/type";
 
 interface Props {
+  listType: string;
+  clientData: any;
   customerData: any;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
+  recoverItemHandler: (id: string) => void;
   goToEditPageHandler: (id: string) => void;
   goToDetailPage: (id: string) => void;
   upDatePageHandler?: (pageInfo: PageInfoType) => void;
   pageInfo: PageInfoType;
 }
 
-function CustomerList({
+function ClientList({
+  listType,
+  clientData,
   customerData,
   goToCreatePage,
   deleteItemHandler,
+  recoverItemHandler,
   goToEditPageHandler,
   goToDetailPage,
   upDatePageHandler,
   pageInfo
 }: Props) {
   const clientTitle = getCustomerTitle();
+
   return (
     <BodySTY>
       <TableWithEdit
@@ -31,11 +38,22 @@ function CustomerList({
         titles={clientTitle}
         data={customerData}
         goToCreatePage={goToCreatePage}
-        deleteItem={deleteItemHandler}
-        goToEditPage={goToEditPageHandler}
         viewItem={goToDetailPage}
         pageInfo={pageInfo}
         onPageChange={upDatePageHandler}
+        {...(listType == "1" && {
+          goToEditPage: (id) => {
+            goToEditPageHandler(id);
+          },
+          deleteItem: (id) => {
+            deleteItemHandler(id);
+          }
+        })}
+        {...(listType == "2" && {
+          recoverItem: (id) => {
+            recoverItemHandler && recoverItemHandler(id);
+          }
+        })}
       />
     </BodySTY>
   );
