@@ -42,6 +42,15 @@ function Basic() {
           <Text className="">負責人</Text>
           <Text>{companyData?.company_owner}</Text>
         </Pane>
+
+        {/* 圖片區域 */}
+        <Pane className="company-logo">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://cizoo.com/upload/pad/1597127572112_Lion_02.jpg"
+            alt=""
+          />
+        </Pane>
       </form>
     </BodySTY>
   );

@@ -14,6 +14,7 @@ export const BodySTY = styled.div`
 
       .phone-input {
         display: flex;
+        margin: 6px 0;
         .country-number {
           width: 20%;
           margin-right: 10px;

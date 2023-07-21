@@ -81,7 +81,7 @@ function CompanyRule() {
 
   return (
     <BodySTY>
-      <Heading is="h4">公司制度</Heading>
+      <Heading is="h4">排班設定</Heading>
       <form>
         <Pane className="input-line">
           <Text marginTop="16px">工時設定</Text>
