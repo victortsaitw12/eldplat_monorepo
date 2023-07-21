@@ -30,7 +30,6 @@ import { getBusType } from "@services/client/getBusType";
 import LoadingSpinner from "@components/LoadingSpinner";
 import LoadingModal from "@components/LoadingModal";
 import OrdersDetail from "@contents/Client/Quote/Detail";
-import { sleep } from "@utils/sleep";
 //
 const DummyNavigationListData = [
   {
