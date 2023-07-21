@@ -223,43 +223,33 @@ const Page: NextPageWithLayout<{
   return (
     <BodySTY>
       <>
-        <Pane
-          style={{
-            width: isDrawerFullWidth
-              ? "0"
-              : isDrawerOpen
-              ? "calc(100% - 280px)"
-              : "100%"
-          }}
+        <TableWrapper
+          isHide={isDrawerFullWidth}
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={nowTab}
+          mainFilterArray={mainFilterArray}
+          viewOnly={true}
         >
-          <TableWrapper
-            onChangeTab={changeMainFilterHandler}
-            mainFilter={nowTab}
-            mainFilterArray={mainFilterArray}
-            viewOnly={true}
+          <FilterWrapper
+            updateFilter={updateSubFilter}
+            resetFilter={() => {
+              initializeSubFilter();
+            }}
+            filter={subFilter}
           >
-            <FilterWrapper
-              updateFilter={updateSubFilter}
-              resetFilter={() => {
-                initializeSubFilter();
-              }}
-              filter={subFilter}
-            >
-              {/* <FormattedMessage id="vendor_name" /> */}
-              {data && (
-                <VendorList
-                  vendorData={data}
-                  goToDetailPage={goToDetailPage}
-                  goToCreatePage={goToCreatePage}
-                  goToEditPageHandler={goToEditPageHandler}
-                  deleteItemHandler={deleteItemHandler}
-                ></VendorList>
-              )}
-            </FilterWrapper>
-          </TableWrapper>
-
-          {/* <SideBookMark /> */}
-        </Pane>
+            {/* <FormattedMessage id="vendor_name" /> */}
+            {data && (
+              <VendorList
+                vendorData={data}
+                goToDetailPage={goToDetailPage}
+                goToCreatePage={goToCreatePage}
+                goToEditPageHandler={goToEditPageHandler}
+                deleteItemHandler={deleteItemHandler}
+              ></VendorList>
+            )}
+          </FilterWrapper>
+        </TableWrapper>
+        {/* <SideBookMark /> */}
         {isDrawerOpen && (
           <Drawer
             tabName={["新增供應商"]}

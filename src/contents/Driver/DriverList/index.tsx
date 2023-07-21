@@ -49,7 +49,7 @@ function DriverList({
         })}
         {...(listType == "2" && {
           recoverItem: (id) => {
-            handleDeleteDriver(id);
+            handleRecoverDriver && handleRecoverDriver(id);
           }
         })}
       />

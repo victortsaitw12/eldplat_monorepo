@@ -25,6 +25,7 @@ interface Props {
   onEdit?: () => void;
   onClose?: () => void;
   onFullscreen?: () => void;
+  isHide?: boolean;
 }
 
 function TableWrapper({
@@ -40,10 +41,11 @@ function TableWrapper({
   onSave,
   onEdit,
   onClose,
-  onFullscreen
+  onFullscreen,
+  isHide
 }: Props) {
   return (
-    <BodySTY>
+    <BodySTY isHide={isHide}>
       <div className="filter-header">
         <div className="tab-container">
           {mainFilterArray.map((item) => {
