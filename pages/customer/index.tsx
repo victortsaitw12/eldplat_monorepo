@@ -124,7 +124,7 @@ const Page: NextPageWithLayout<never> = () => {
           filter={subFilter}
         >
           <CustomerList
-            clientData={data}
+            customerData={data}
             goToCreatePage={() => {
               setDrawerOpen(true);
             }}
