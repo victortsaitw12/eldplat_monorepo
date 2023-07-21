@@ -12,23 +12,25 @@ export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
-    const { css: evergreenCss, hydrationScript } = extractStyles();
+
     try {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
             sheet.collectStyles(<App {...props} />)
         });
-
       const initialProps = await Document.getInitialProps(ctx);
+      const page = await ctx.renderPage();
+      const { css, hydrationScript } = extractStyles();
       return {
+        ...page,
         ...initialProps,
         styles: (
           <>
             {initialProps.styles}
             <style
               id="evergreen-css"
-              dangerouslySetInnerHTML={{ __html: evergreenCss }}
+              dangerouslySetInnerHTML={{ __html: css }}
             />
             {sheet.getStyleElement()}
           </>

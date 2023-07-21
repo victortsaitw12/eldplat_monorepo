@@ -2,6 +2,7 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 import { BodySTY } from "./style";
 import { getMaintenanceMissionTitle } from "@services/maintenance/getMaintenanceMission";
 import { useEffect, useState } from "react";
+import { I_PageInfo } from "@components/PaginationField";
 
 interface Props {
   clientData: any;
@@ -9,6 +10,8 @@ interface Props {
   deleteItemHandler: (id: string) => void;
   goToEditPageHandler: (id: string) => void;
   goToDetailPage: (id: string) => void;
+  pageInfo: I_PageInfo;
+  handlePageChange?: (pageQuery: I_PageInfo) => void;
 }
 
 function MaintenanceMissionList({
@@ -16,7 +19,9 @@ function MaintenanceMissionList({
   goToCreatePage,
   deleteItemHandler,
   goToEditPageHandler,
-  goToDetailPage
+  goToDetailPage,
+  pageInfo,
+  handlePageChange
 }: Props) {
   const [inCenter, setInCenter] = useState<boolean>(false);
   const clientTitle = getMaintenanceMissionTitle();
@@ -38,6 +43,8 @@ function MaintenanceMissionList({
         goToEditPage={goToEditPageHandler}
         viewItem={goToDetailPage}
         customTableClass={customTableClass}
+        pageInfo={pageInfo}
+        onPageChange={handlePageChange}
       />
     </BodySTY>
   );

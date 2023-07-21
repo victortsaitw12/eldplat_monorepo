@@ -11,6 +11,9 @@ export const DrawerSTY = styled.div`
   /* &::-webkit-scrollbar {
     display: none;
   } */
+  &.fullscreen {
+    width: 100%;
+  }
   .drawer__content {
     width: 100%;
     position: relative;

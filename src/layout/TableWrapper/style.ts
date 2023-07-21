@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-const BodySTY = styled.div`
-  width: 100%;
+const BodySTY = styled.div<{ isHide: any }>`
+  width: ${({ isHide }) => (isHide ? "0" : "100%")};
   /* height: 100%; */
   height: calc(100vh - 76px);
   /* border: 1px solid ${({ theme }) => theme.color.N100}; */
   /* overflow-y: auto; */
   overflow-y: hidden;
-  display: flex;
+  display: ${({ isHide }) => (isHide ? "flex" : "flex")};
   flex-direction: column;
   .filter-header {
     display: flex;
