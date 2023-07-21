@@ -207,21 +207,6 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <option value="04">在維修廠</option>
         <option value="05">閒置中</option>
       </SelectField>
-      {/* <DottedSelect
-        control={control}
-        name="status"
-        label="狀態"
-        isRequire={true}
-        isDisabled={false}
-        vertical={true}
-        options={[
-          { label: "活躍中", value: "01", color: "#52BD94" },
-          { label: "已售出", value: "02", color: "#8EA8C7" },
-          { label: "終止服務", value: "03", color: "#D14343" },
-          { label: "在維修廠", value: "04", color: "#FFB020" },
-          { label: "閒置中", value: "05", color: "#3670C9" }
-        ]}
-      /> */}
       <SelectField
         label={
           <div>

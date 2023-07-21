@@ -195,7 +195,7 @@ const Page: NextPageWithLayout<{
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {
     try {
-      const res = await deleteVendor(id);
+      const res = await deleteVendor(id, "2");
       console.log("response of vendor edit: ", res);
       setData([]);
       getResult("1");
@@ -203,7 +203,18 @@ const Page: NextPageWithLayout<{
       console.log(e);
       alert("删除供應商失敗：" + e.message);
     }
-    router.push("/vendor");
+  };
+
+  const recoverItem = async (id: string) => {
+    try {
+      const res = await deleteVendor(id, "1");
+      console.log("response of vendor edit: ", res);
+      setData([]);
+      getResult("2");
+    } catch (e: any) {
+      console.log(e);
+      alert("删除供應商失敗：" + e.message);
+    }
   };
   //套用新版filter
   const changeMainFilterHandler = (value: string) => {
@@ -240,11 +251,13 @@ const Page: NextPageWithLayout<{
             {/* <FormattedMessage id="vendor_name" /> */}
             {data && (
               <VendorList
+                listType={nowTab}
                 vendorData={data}
                 goToDetailPage={goToDetailPage}
                 goToCreatePage={goToCreatePage}
                 goToEditPageHandler={goToEditPageHandler}
                 deleteItemHandler={deleteItemHandler}
+                recoverItem={recoverItem}
               ></VendorList>
             )}
           </FilterWrapper>
