@@ -68,7 +68,7 @@ const EditForm = ({
   return (
     <FormSTY onSubmit={handleSubmit}>
       <section className="form__startTime">
-        <label>
+        <label className="form__label">
           <TimeIcon />
           <span>開始時間</span>
         </label>
@@ -80,7 +80,7 @@ const EditForm = ({
         />
       </section>
       <section className="form__endTime">
-        <label>
+        <label className="form__label">
           <TimeIcon />
           <span>結束時間</span>
         </label>
@@ -92,14 +92,14 @@ const EditForm = ({
         />
       </section>
       <section className="form__leaveCode">
-        <label>
+        <label className="form__label">
           <CalendarIcon />
           <span>假別</span>
         </label>
         <LeaveTypePicker />
       </section>
       <section className="form__description">
-        <label>
+        <label className="form__label">
           <TagIcon />
           <span>說明</span>
         </label>
@@ -111,7 +111,7 @@ const EditForm = ({
       </section>
       {UI.drawerType.title === "簽核" ? (
         <section className="form_signOff">
-          <label>
+          <label className="form__label">
             <AnnotationIcon />
             <span>簽核</span>
           </label>
