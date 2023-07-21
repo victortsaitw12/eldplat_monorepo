@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Heading, Pane, Text } from "evergreen-ui";
+import { Checkbox, Heading, Pane, Text } from "evergreen-ui";
 
 import { BodySTY } from "./style";
 import {
@@ -13,16 +13,25 @@ function CompanyRule() {
 
   return (
     <BodySTY>
-      <Heading is="h4">公司制度</Heading>
+      <Heading is="h4">排班設定</Heading>
       <form>
         <Pane className="input-line">
-          <Text className="">工時設定</Text>
-          <Pane>
+          {/* <Text className="">工時設定</Text> */}
+          <Pane className="hours-checkbox">
             {company_rule_data?.map((item) => {
               return (
-                <Text key={item.working_hours_code}>
-                  {item.working_hours_name}、
-                </Text>
+                <>
+                  <Checkbox
+                    label={item.working_hours_name}
+                    checked={true}
+                    marginY={0}
+                    // onChange={e => setChecked(e.target.checked)}
+                    disabled
+                  />
+                </>
+                // <Text key={item.working_hours_code}>
+                //   {item.working_hours_name}、
+                // </Text>
               );
             })}
           </Pane>
