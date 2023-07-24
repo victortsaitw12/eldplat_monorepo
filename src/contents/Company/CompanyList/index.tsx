@@ -44,12 +44,12 @@ const ComapnyList = () => {
         <Pane className="left-blocks">
           <Basic />
           <CountrySet />
-          <CompanyRule />
         </Pane>
         <Pane className="right-blocks">
           <Admin />
           <Contact />
           <LeaveSet />
+          <CompanyRule />
         </Pane>
       </Pane>
     </BodySTY>

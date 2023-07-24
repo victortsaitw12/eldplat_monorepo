@@ -4,7 +4,7 @@ import {
   NextPageWithLayout
 } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { getLayout } from "@layout/ClientLayout";
 import StatusCard from "@components/StatusCard";
 import { BodySTY } from "./style";
@@ -218,7 +218,9 @@ const Page: NextPageWithLayout<
       return result as QuotationCreatePayload;
     }
   });
+
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
+    console.log("submit");
     try {
       const result = await createQuotation(data);
       const { quote_no } = result;
@@ -369,25 +371,29 @@ const Page: NextPageWithLayout<
                   flex: "1",
                   border: "none"
                 }}
-                onClick={methods.handleSubmit(() => {
+                disabled={methods.formState.isSubmitting}
+                onClick={() => {
                   let isValid = true;
-                  if (currentTab === 1 || currentTab === 2) {
-                    isValid = validationList[currentTab].valid;
-                    if (!isValid) {
-                      toaster.danger("無法前往下一頁", {
-                        description: validationList[currentTab].errorMessage,
-                        id: "validation-error"
-                      });
+                  if (currentTab < 5) {
+                    if (currentTab === 1 || currentTab === 2) {
+                      isValid = validationList[currentTab].valid;
+                      if (!isValid) {
+                        toaster.danger("無法前往下一頁", {
+                          description: validationList[currentTab].errorMessage,
+                          id: "validation-error"
+                        });
+                        return;
+                      }
                     }
-                  }
-                  if (isValid) {
-                    if (currentTab === 5) {
-                      methods.handleSubmit(asyncSubmitFormHandler)();
-                    } else {
+                    methods.handleSubmit(() => {
+                      console.log("valid from");
                       setCurrentTab((prev) => prev + 1);
-                    }
+                    })();
+                  } else {
+                    console.log("submit");
+                    methods.handleSubmit(asyncSubmitFormHandler)();
                   }
-                })}
+                }}
               >
                 {currentTab === 5 ? "送出詢價單" : "下一步"}
               </Button>

@@ -101,6 +101,9 @@ const Page: NextPageWithLayout<never> = () => {
       fetchCustomerData(false, nowTab, pageInfo);
     });
   };
+  const recoverItemHandler = async (id: string) => {
+    console.log("上一動");
+  };
   //
 
   if (!data) {
@@ -124,11 +127,14 @@ const Page: NextPageWithLayout<never> = () => {
           filter={subFilter}
         >
           <CustomerList
+            listType={nowTab}
             clientData={data}
+            customerData={data}
             goToCreatePage={() => {
               setDrawerOpen(true);
             }}
             deleteItemHandler={deleteItemHandler}
+            recoverItemHandler={recoverItemHandler}
             goToEditPageHandler={goToEditPageHandler}
             goToDetailPage={goToDetailPageHandler}
             upDatePageHandler={upDatePageHandler}

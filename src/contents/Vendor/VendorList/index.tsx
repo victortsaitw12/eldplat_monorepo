@@ -2,22 +2,26 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 import { getVendorTitle } from "@services/vendor/getAllVendors";
 import { FormattedMessage } from "react-intl";
 import { BodySTY } from "./style";
-import { Checkbox, HelpIcon } from "evergreen-ui";
+import { Checkbox, HelpIcon, Pane } from "evergreen-ui";
 import Tooltip from "@components/Tooltip";
 interface Props {
+  listType?: string;
   vendorData: any;
   goToCreatePage: () => void;
   goToDetailPage: (id: string) => void;
   goToEditPageHandler: (id: string) => void;
   deleteItemHandler: (id: string) => void;
+  recoverItem?: (id: string) => void;
 }
 
 const VendorList = ({
+  listType = "1",
   vendorData,
   goToDetailPage,
   goToCreatePage,
   goToEditPageHandler,
-  deleteItemHandler
+  deleteItemHandler,
+  recoverItem
 }: Props) => {
   // const vendorTitle = getVendorTitle();
   // multi languages for tabel title
@@ -39,19 +43,35 @@ const VendorList = ({
   ];
   const vendorTitleArr = [
     "供應商號碼",
-    <span key="vendor-data">
+    <Pane
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center"
+      }}
+      key="vendor-data"
+    >
       資料串接
       <Tooltip text={"testing"}>
         <HelpIcon />
       </Tooltip>
-    </span>,
+    </Pane>,
     "名稱",
     "區域",
     "公司電話",
     "公司郵箱",
     "主要聯絡人",
     "主要聯絡人電話",
-    "網址",
+    <Pane
+      key="vendor-website"
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center"
+      }}
+    >
+      網址
+    </Pane>,
     "標籤"
   ];
   return (
@@ -61,9 +81,20 @@ const VendorList = ({
         titles={vendorTitleArr}
         data={vendorData}
         goToCreatePage={goToCreatePage}
-        goToEditPage={goToEditPageHandler}
-        deleteItem={deleteItemHandler}
         viewItem={goToDetailPage}
+        {...(listType == "1" && {
+          goToEditPage: (id) => {
+            goToEditPageHandler(id);
+          },
+          deleteItem: (id) => {
+            deleteItemHandler(id);
+          }
+        })}
+        {...(listType == "2" && {
+          recoverItem: (id) => {
+            recoverItem && recoverItem(id);
+          }
+        })}
       />
     </BodySTY>
   );

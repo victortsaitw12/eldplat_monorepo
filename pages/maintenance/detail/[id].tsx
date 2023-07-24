@@ -85,11 +85,11 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
       const res = await updateMaintenance(newData, data["files"]);
       console.log("儲存 res", res);
       setIsEdit(false);
+      router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
+      // router.reload();
     } catch (e: any) {
       console.log(e);
     }
-    router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
-    router.reload();
     setLoading(false);
     return;
   };

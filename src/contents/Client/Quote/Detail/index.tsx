@@ -43,7 +43,7 @@ const OrdersDetail = () => {
                     ? "接機"
                     : orderData["quote_type"]! === "3"
                     ? "送機"
-                    : convertMap["purpose"][orderData["purpose"]!]?.ch
+                    : convertMap["purpose"][orderData["purpose"]!]?.ch || "--"
               }
             ]}
           />
