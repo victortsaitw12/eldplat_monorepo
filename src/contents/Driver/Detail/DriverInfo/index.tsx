@@ -160,6 +160,7 @@ function DriverInfo({
         <Checkbox
           checked={checked}
           onChange={(e) => setChecked(e.target.checked)}
+          style={{ margin: "0" }}
         />
       )
     },

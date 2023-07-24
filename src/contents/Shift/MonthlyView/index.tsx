@@ -48,7 +48,6 @@ const MonthlyView = ({
   const gapH = 4;
   const cellPd = 8;
   const minCellH = eventH * 3 + gapH * 2 + cellPd;
-  console.log("🍅🍅🍅 minCellH", minCellH);
 
   //------ functions ------//
   const renderCreateForm = () => {
