@@ -2,9 +2,11 @@ import styled from "styled-components";
 // 包裹整個表格的容器
 const TableContainerSTY = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0.5rem;
+  overflow-x: auto;
   .container-header {
     display: flex;
     justify-content: space-between;
@@ -12,12 +14,17 @@ const TableContainerSTY = styled.div`
     padding: 0px;
     gap: 4px;
     width: 100%;
+    color: ${({ theme }) => theme.color.N700};
     .container-header-left {
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: ${({ theme }) => theme.fontSize.Heading500};
-      font-weight: ${({ theme }) => theme.fontWeight.Heading500};
+      font-size: 16px;
+      font-weight: 600;
+    }
+    button {
+      background-color: ${({ theme }) => theme.color.B400};
+      padding: 8px 16px;
     }
   }
   .container-pagination {
@@ -44,35 +51,66 @@ const TableContainerSTY = styled.div`
       }
     }
   }
+  & > .container-table {
+    overflow-y: auto;
+    overflow-x: auto;
+    & > table {
+      width: 100%;
+    }
+  }
 `;
 
 // 表格本身
 const TableSTY = styled.table`
-  /* min-width: 100%; */
   border: 1px solid ${({ theme }) => theme.color.N300};
-  /* border-collapse: collapse; */
-  border-radius: 4px;
+  border-top: 0;
   border-spacing: 0px;
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 13;
+  }
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
     text-align: left;
+    color: ${({ theme }) => theme.color.N700};
+    &:first-child {
+      & > th {
+        border-top: 1px solid ${({ theme }) => theme.color.N300};
+      }
+    }
   }
+
   td,
   th {
-    padding: 8px 10px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+    padding: 4px;
     span,
-    div {
+    div:not(.table-action) {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
+    }
+    label > div:not(:first-child) {
+      /* <Checkbox/> from evergreen-ui*/
+      /* add"div:not(:first-child) " only for css selector specificity */
+      justify-content: center;
+    }
+    &:first-child {
+      padding-left: 24px;
+    }
+    &:last-child {
+      padding-right: 24px;
     }
   }
   tr:last-child td {
     border-bottom: none;
+  }
+  tr:hover {
+    background-color: #f9fafc;
   }
   td {
     a {
@@ -92,9 +130,14 @@ const TableSTY = styled.table`
   }
   .data-row {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 8px;
+  }
+  .handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .dot {
     width: 6px;
@@ -103,7 +146,14 @@ const TableSTY = styled.table`
     background-color: green;
   }
   .noDataShown {
+    text-align: center;
+    padding: 15px 0;
+  }
+  /* .noDataShown {
     min-height: 32px;
+    display: flex;
+    justify-content: center;
+    column-span: all;
     div {
       width: 100%;
       height: 32px;
@@ -112,7 +162,7 @@ const TableSTY = styled.table`
       position: absolute;
       text-align: center;
     }
-  }
+  } */
 `;
 
 const StyledDot = styled.div<{ value: string }>`

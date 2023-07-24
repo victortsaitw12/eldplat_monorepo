@@ -16,6 +16,13 @@ const dot = (color = "transparent") => ({
   }
 });
 export const colourStyles: StylesConfig<ColourOption> = {
+  menu(baseStyles) {
+    return {
+      ...baseStyles,
+      border: "1px solid red",
+      position: "absolute"
+    };
+  },
   control: (baseStyles, { isDisabled, isFocused }) => ({
     ...baseStyles,
     border: isDisabled
@@ -25,7 +32,11 @@ export const colourStyles: StylesConfig<ColourOption> = {
       : "1px solid #AFC3DA",
     backgroundColor: isDisabled ? "transparent" : "white",
     boxShadow: isFocused ? "0 0 0 2px #D6E0FF" : "none",
-    width: "120px"
+    width: "auto"
+  }),
+  valueContainer: (baseStyles) => ({
+    ...baseStyles,
+    padding: "0 8px"
   }),
   indicatorsContainer: (baseStyles, { isDisabled }) => ({
     ...baseStyles,
@@ -37,7 +48,10 @@ export const colourStyles: StylesConfig<ColourOption> = {
       ...dot(data.color)
     };
   },
-  input: (baseStyles) => ({ ...baseStyles, ...dot() }),
+  input: (baseStyles) => ({
+    ...baseStyles,
+    ...dot()
+  }),
   singleValue: (baseStyles, { data, isDisabled }) => ({
     ...baseStyles,
     color: isDisabled ? "#567190" : "#718BAA",
@@ -45,17 +59,26 @@ export const colourStyles: StylesConfig<ColourOption> = {
   })
 };
 
-export const BodySYT = styled.div`
+export const BodySYT = styled.div<{ vertical: boolean; isDisabled: boolean }>`
   display: flex;
-  align-items: center;
-  gap: 20px;
-  .title {
+  flex-direction: ${({ vertical }) => (vertical ? "column" : "row")};
+  align-items: ${({ vertical }) => (vertical ? "flex-start" : "center")};
+  gap: 8px;
+  > *:last-child {
+    * {
+      cursor: ${({ isDisabled }) => !isDisabled && "pointer"};
+    }
+  }
+  > div {
+    flex: 1 0 0;
+  }
+  > .title {
     display: flex;
     align-items: center;
     font-weight: 400;
     font-size: 14px;
     width: 160px;
-    gap: 4px;
+    gap: 10px;
     color: ${({ theme }) => theme.color.N800};
     .required {
       color: ${({ theme }) => theme.color.R400};

@@ -19,7 +19,7 @@ function StyledSelect<
 }) {
   const id = useId();
   // const [value, setValue] = useState(formValue);
-  const placeholder = isDisabled ? "---" : "請選擇";
+  const placeholder = isDisabled ? "--" : "請選擇";
   const selectedOptions = options.filter((option) =>
     formValue.includes(option.value)
   );

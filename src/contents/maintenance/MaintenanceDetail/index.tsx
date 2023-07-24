@@ -8,9 +8,6 @@ import FlexWrapper from "@layout/FlexWrapper";
 //@service
 //@utils
 //
-import ContactList from "@components/ContactList";
-import { CustomerDataTypes } from "@contents/Customer/customer.type";
-import { getCustomerById } from "@services/customer/getCustomerById";
 import { I_Maintenance_Type } from "@typings/maintenance_type";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
@@ -22,22 +19,26 @@ interface I_Props {
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
   asyncSubmitForm: (data: any) => Promise<void>;
   maintenance_id: string;
+  mainCreateDdl?: any;
 }
-const CustomerDetail = ({
+const MaintenanceDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
-  maintenance_id
+  maintenance_id,
+  mainCreateDdl
 }: I_Props) => {
   const {
     register,
     control,
     formState: { errors },
+    setValue,
     getValues,
     handleSubmit
   } = useForm<I_Maintenance_Type>({
     defaultValues: async () => {
       return getMaintenanceById(maintenance_id).then((data) => {
+        console.log("data for single one", data);
         const newData = { ...data };
         newData["service_start_date"] = dashDate(data.service_start_date);
         newData["service_end_date"] = dashDate(data.service_end_date);
@@ -45,22 +46,6 @@ const CustomerDetail = ({
       });
     }
   });
-
-  const [loading, setLoading] = useState(false);
-  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
-
-  // 取得新增時的下拉式資料
-  useEffect(() => {
-    setLoading(true);
-    try {
-      getCreateDdl().then((data) => {
-        setMainCreateDdl(data.dataList[0]);
-      });
-    } catch (err) {
-      console.error("getDDL error: ", err);
-    }
-    setLoading(false);
-  }, []);
 
   if (getValues("maintenance_no") === undefined) {
     return <div></div>;
@@ -91,7 +76,7 @@ const CustomerDetail = ({
     {
       req: false,
       label: "主要駕駛",
-      value: getValues("operator_no")
+      value: getValues("operator_name")
     },
     {
       req: false,
@@ -110,6 +95,9 @@ const CustomerDetail = ({
       )
     }
   ];
+
+  console.log("vehicle_info", vehicle_info);
+  console.log("mainCreateDdl", mainCreateDdl);
 
   // 檢查詳情
   const check_info = [
@@ -153,7 +141,7 @@ const CustomerDetail = ({
     {
       req: false,
       label: "里程數",
-      value: getValues("meter"),
+      value: getValues("meter")?.toLocaleString(),
       editEle: (
         <TextInput
           {...register("meter", {
@@ -208,9 +196,17 @@ const CustomerDetail = ({
       editEle: (
         <ItemListTable
           key="item_List"
-          titles={["發票", "金額", "備註"]}
+          titles={[
+            { label: "發票", value: "invoice" },
+            { label: "單據資料", value: "file" },
+            { label: "金額", value: "price" },
+            { label: "備註", value: "remark" },
+            { label: "刪除", value: "delete" }
+          ]}
           control={control}
           register={register}
+          setValue={setValue}
+          getValues={getValues}
           isEdit={isEdit}
           arrayName="maintenanceDts"
         ></ItemListTable>
@@ -229,6 +225,7 @@ const CustomerDetail = ({
     }
   ];
 
+  console.log("register", register("meter"));
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>
@@ -246,4 +243,4 @@ const CustomerDetail = ({
   );
 };
 
-export default CustomerDetail;
+export default MaintenanceDetail;

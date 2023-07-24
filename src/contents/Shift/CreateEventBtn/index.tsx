@@ -35,7 +35,7 @@ const CreateEventBtn = ({
         startDate={UI.startDate}
         value={cellTimestamp}
         onMouseDown={handleSelectStardDate.bind(null, cellTimestamp)}
-        className={`${selectType}`}
+        className={`${selectType} cell__createEventBtn`}
       >
         <AddIcon style={{ color: "#D5E2F1" }} />
       </CreateEventBtnSTY>

@@ -1,15 +1,17 @@
 import React from "react";
 import { BoxComponent, Checkbox, CheckboxOwnProps } from "evergreen-ui";
-
+import { BodySTY } from "./style";
 interface Props extends CheckboxOwnProps {
+  style?: React.CSSProperties;
   label: string;
   name?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  disabled?: boolean
-  defaultChecked?: boolean
+  disabled?: boolean;
+  defaultChecked?: boolean;
 }
 const StyledCheckBox: BoxComponent<Props, "input"> = ({
+  style,
   label,
   name,
   value,
@@ -19,17 +21,19 @@ const StyledCheckBox: BoxComponent<Props, "input"> = ({
 }: Props) => {
   const [checked, setChecked] = React.useState(defaultChecked);
   return (
-    <Checkbox
-      label={label}
-      checked={checked}
-      name={name}
-      value={value}
-      onChange={(e) => {
-        setChecked(e.target.checked);
-        onChange && onChange(e);
-      }}
-      disabled={disabled}
-    />
+    <BodySTY style={style}>
+      <div className="checkbox-title">{label}</div>
+      <Checkbox
+        checked={checked}
+        name={name}
+        value={value}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          onChange && onChange(e);
+        }}
+        disabled={disabled}
+      />
+    </BodySTY>
   );
 };
 

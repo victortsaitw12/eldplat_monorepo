@@ -1,5 +1,4 @@
-import { DriverInfo } from "@contents/Driver/driver.type";
-import { I_Content_Props, I_Health_TYPE } from "@typings/employee_type";
+import { I_Health_TYPE } from "@typings/employee_type";
 import Table from "@components/Table/Table";
 import PaginationField from "@components/PaginationField/";
 import { Heading, Pane, DocumentIcon, CogIcon, Tooltip } from "evergreen-ui";
@@ -90,7 +89,13 @@ function HealthRecords({
         <PaginationField />
         <CogIcon color="#718BAA" size={11} />
       </Pane>
-      <Table titles={table_title} data={orderedTableData} />
+      {healths.length !== 0 ? (
+        <Table titles={table_title} data={orderedTableData} />
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          目前無資料，請至員工設定頁面編輯
+        </div>
+      )}
     </BodySTY>
   );
 }

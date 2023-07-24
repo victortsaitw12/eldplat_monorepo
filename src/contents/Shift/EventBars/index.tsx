@@ -2,7 +2,7 @@ import React from "react";
 import { TagIcon } from "evergreen-ui";
 import { EventBarsSTY, EventBarSTY } from "./style";
 
-import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS } from "../shift.data";
+import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS, EVENT_TYPE } from "../shift.data";
 import { formatDate, getDayStart } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
@@ -40,6 +40,7 @@ const EventBars = ({
   }, [monthlyData, UI.monthCount, UI.flag]);
 
   //------ functions ------//
+  // TODO 考慮讓 EditForm 共用這個function
   const renderEventStatus = async (drv_Schedule_No: string) => {
     // 1) UI render drawer
     UI.resetState();
@@ -91,7 +92,7 @@ const EventBars = ({
       1000 * 60 * 60 * 24 - 1000 * 60
     )
       return (1000 * 60 * 60 * 24) / UI.timeframe;
-    // TODO 目前假設要滿格顯示，再問UI半格顯示畫面
+    // 假設要滿格顯示
     return Math.ceil(
       (new Date(item.schd_End_Time).valueOf() -
         new Date(item.schd_Start_Time).valueOf()) /
@@ -100,7 +101,7 @@ const EventBars = ({
   };
 
   const getEventStart = (item: MonthlyData): number => {
-    if (new Date(item.schd_Start_Time).valueOf() - cellTimestamp < 0) return 0;
+    if (new Date(item.schd_Start_Time).valueOf() - cellTimestamp <= 0) return 0;
     return Math.ceil(
       (new Date(item.schd_Start_Time).valueOf() -
         getDayStart(new Date(cellTimestamp)).valueOf()) /
@@ -111,7 +112,7 @@ const EventBars = ({
     return (
       <EventBarSTY
         key={`event-${cellTimestamp}-${i}`}
-        color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
+        color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
         duration={getEventDuration(item)}
         cellWidth={cellWidth}
         left={getEventStart(item)}
@@ -128,18 +129,17 @@ const EventBars = ({
               : renderEventStatus.bind(null, item.drv_Schedule_No)
           }
         >
-          {SCHD_TYPE.get(item.schd_Type)?.icon}
+          {item.check_Status
+            ? EVENT_TYPE.get(item.schd_Type.concat(item.check_Status))?.icon
+            : SCHD_TYPE.get(item.schd_Type)?.icon}
           <span>
-            {" "}
             {item.schd_Type === "04"
               ? CHECK_STATUS.get(item.check_Status)?.label
               : SCHD_TYPE.get(item.schd_Type)?.label}
           </span>
-          {item.leave_Code || item.check_Status ? <TagIcon /> : ""}
+          {(item.leave_Code || item.check_Status) && <TagIcon />}
           <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
-          <span className="text-wrapper">
-            <span>{item.schd_Type === "04" ? item.leave_Description : ""}</span>
-          </span>
+          {item.schd_Type === "04" && <span>{item.leave_Description}</span>}
         </button>
       </EventBarSTY>
     );

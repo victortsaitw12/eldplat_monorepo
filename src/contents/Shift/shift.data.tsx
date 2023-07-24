@@ -5,8 +5,17 @@ import {
   ClipboardIcon,
   TagIcon
 } from "evergreen-ui";
+import { ThemeType } from "@styles/theme";
 
-export const SCHD_TYPE = new Map([
+type I_SCHD_TYPE = Map<
+  string,
+  {
+    label: string;
+    color: keyof ThemeType["color"];
+    icon: any;
+  }
+>;
+export const SCHD_TYPE: I_SCHD_TYPE = new Map([
   ["01", { label: "排班", color: "ChartGreen", icon: <ClipboardIcon /> }],
   ["02", { label: "例假", color: "R300", icon: <TimelineEventsIcon /> }],
   ["03", { label: "排休", color: "R200", icon: <TimelineEventsIcon /> }],
@@ -27,16 +36,17 @@ export const CHECK_STATUS = new Map([
 
 // data for EVENT_TYPE  = SCHD_TYPE (+ CHECK_CODE)
 export const EVENT_TYPE = new Map([
-  ["00", { label: "排班", color: "ChartAqua", icon: <ClipboardIcon /> }], //"01"排班 應該不會出現的
+  ["00", { label: "排班", color: "ChartAqua", icon: <ClipboardIcon /> }],
+  //"01"排班 應該不會出現的
   ["02", { label: "例假", color: "R300", icon: <TimelineEventsIcon /> }], //"02"
   ["03", { label: "排休", color: "R200", icon: <TimelineEventsIcon /> }], //"03"
   ["040", { label: "需簽核", color: "ChartYellow", icon: <WarningSignIcon /> }], //"04+0"
   ["041", { label: "已簽核", color: "ChartYellow", icon: <TickCircleIcon /> }], //"04+1"
-  ["042", { label: "退回", color: "N300", icon: <WarningSignIcon /> }], //"04+2???"
-  ["05", { label: "派訂單", color: "ChartGreen", icon: <ClipboardIcon /> }], //01?
-  ["06", { label: "派工單(車)", color: "T300", icon: <ClipboardIcon /> }], //01?
-  ["01", { label: "派工單(駕)", color: "ChartAqua", icon: <ClipboardIcon /> }], //01?
-  ["08", { label: "派單完成", color: "N300", icon: <ClipboardIcon /> }] //01?
+  ["042", { label: "退回", color: "N300", icon: <WarningSignIcon /> }] //"04+2???"
+  // ["05", { label: "派訂單", color: "ChartGreen", icon: <ClipboardIcon /> }], //01?
+  // ["06", { label: "派工單(車)", color: "T300", icon: <ClipboardIcon /> }], //01?
+  // ["01", { label: "派工單(駕)", color: "ChartAqua", icon: <ClipboardIcon /> }], //01?
+  // ["08", { label: "派單完成", color: "N300", icon: <ClipboardIcon /> }] //01?
 ]);
 
 // index to 周幾

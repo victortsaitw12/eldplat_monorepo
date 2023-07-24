@@ -1,19 +1,15 @@
 import styled from "styled-components";
 
-export const MonthlySTY = styled.div<{ rows: number }>`
-  flex-grow: 10;
-  border: 1px solid ${({ theme }) => theme.color.N300};
+export const MonthlySTY = styled.div<{ rows: number; minCellH: number }>`
+  /* flex-grow: 10; */
   border-radius: 5px;
   width: 100%;
   height: 100%;
   position: relative;
-  overflow: hidden;
-  overflow-x: scroll;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+
   .headerCells {
+    border: 1px solid ${({ theme }) => theme.color.N300};
+    border-radius: 5px 5px 0px 0px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -39,13 +35,17 @@ export const MonthlySTY = styled.div<{ rows: number }>`
   }
   .dateCells {
     width: 100%;
+    /* height: calc(100% - 32px); */
+    min-height: 100px;
+    border: 1px solid ${({ theme }) => theme.color.N300};
+    border-top: none;
+    border-radius: 0px 0px 5px 5px;
     position: relative;
-    height: calc(100% - 32px);
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
-    /* align-items: stretch; */
+
     .dateCell__row {
       height: 100%;
       width: 100%;
@@ -53,6 +53,9 @@ export const MonthlySTY = styled.div<{ rows: number }>`
       display: flex;
       flex-direction: row;
       border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+      &:last-child {
+        border-bottom: none;
+      }
       .dateCell__canvas,
       .dateCell__content {
         height: 100%;
@@ -66,6 +69,7 @@ export const MonthlySTY = styled.div<{ rows: number }>`
         pointer-events: none;
       }
       .cell {
+        min-height: ${({ minCellH }) => `${minCellH}px`};
         padding: 8px;
         z-index: 10;
       }
@@ -103,26 +107,6 @@ export const MonthlySTY = styled.div<{ rows: number }>`
     pointer-events: none;
     * {
       pointer-events: auto;
-    }
-  }
-
-  .coverAll {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: ${({ theme }) => theme.color.N0};
-    opacity: 0.5;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0.5;
-    z-index: 999;
-    .spinner {
-      opacity: 1;
     }
   }
 `;

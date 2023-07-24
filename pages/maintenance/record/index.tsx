@@ -1,41 +1,37 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
+
 //
 import { getLayout } from "@layout/MainLayout";
-import CustomerList from "@contents/Customer/CustomerList";
-import {
-  getAllCustomers,
-  customerParser,
-  customerPattern
-} from "@services/customer/getAllCustomers";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { useCustomerStore } from "@contexts/filter/customerStore";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
-import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-import Drawer from "@components/Drawer";
 
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
-import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
 import {
+  defaultPageInfo,
   getAllMaintenanceRecords,
   maintenanceParser,
   maintenancePattern
 } from "@services/maintenance/getMaintenanceRecord";
 import MaintenanceRecordList from "@contents/maintenance/Record/RecordList";
 import { slashDate } from "@utils/convertDate";
+import getPageTilte from "@utils/getPageBreadCrumbs";
+import { I_PageInfo } from "@components/PaginationField";
+
 //
 const mainFilterArray = [
-  { id: 1, label: "啟用", value: "1" },
-  { id: 2, label: "停用", value: "2" }
+  { id: 1, label: "全部", value: "1" }
+  // { id: 2, label: "取消", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState("1");
   const {
     initializeSubFilter,
@@ -48,47 +44,45 @@ const Page: NextPageWithLayout<never> = () => {
   } = useMaintenanceStore();
   //
 
-  // useEffect(() => {
-  //   const dateString = "06/05/2023 11:38:34";
-  //   const date = new Date(dateString);
-  //   const year = date.getFullYear();
-  //   const month = String(date.getMonth() + 1).padStart(2, "0");
-  //   const day = String(date.getDate()).padStart(2, "0");
-  //   const formattedDate = `${year}/${month}/${day}`;
-  //   console.log("formattedDate", formattedDate);
-  // }, []);
-
   const fetchMaintenanceData = async (
     isCanceled: boolean,
-    mainStatus = "3"
+    mainStatus = "3",
+    pageQuery = defaultPageInfo
   ) => {
-    getAllMaintenanceRecords(subFilter, (mainStatus = "3")).then((res) => {
-      console.log("1️⃣res for record", res);
-      const copyResList = [...res.contentList];
-      const newResList = copyResList?.map((v: any) => {
-        v["completion_time"] = slashDate(v?.completion_time);
-        return v;
-      });
+    getAllMaintenanceRecords(subFilter, (mainStatus = "3"), pageQuery).then(
+      (res) => {
+        console.log("1️⃣res for record", res);
+        // const copyResList = [...res.contentList];
+        // const newResList = copyResList?.map((v: any) => {
+        //   v["completion_time"] = slashDate(v?.completion_time);
+        //   return v;
+        // });
 
-      const MainRecordData = mappingQueryData(
-        res.contentList,
-        maintenancePattern,
-        maintenanceParser
-      );
-      if (isCanceled) {
-        console.log("canceled");
-        return;
-      }
-      if (!subFilter) {
-        localStorage.setItem(
-          "maintenanceInitFilter",
-          JSON.stringify(res.conditionList)
+        const MainRecordData = mappingQueryData(
+          res.contentList,
+          maintenancePattern,
+          maintenanceParser
         );
-        initializeSubFilter();
+
+        // 處理分頁
+        const getPageInfo = { ...res.pageInfo };
+        setPageInfo(getPageInfo);
+
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "maintenanceInitFilter",
+            JSON.stringify(res.conditionList)
+          );
+          initializeSubFilter();
+        }
+        console.log("MainRecordData", MainRecordData);
+        setData(MainRecordData);
       }
-      console.log("MainRecordData", MainRecordData);
-      setData(MainRecordData);
-    });
+    );
   };
   //
   // const deleteItemHandler = async (id: string) => {
@@ -118,6 +112,10 @@ const Page: NextPageWithLayout<never> = () => {
     return <LoadingSpinner />;
   }
 
+  const handlePageChange = (pageQuery: I_PageInfo) => {
+    fetchMaintenanceData(false, nowTab, pageQuery);
+  };
+
   return (
     <BodySTY>
       <TableWrapper
@@ -136,6 +134,8 @@ const Page: NextPageWithLayout<never> = () => {
           <MaintenanceRecordList
             clientData={data}
             goToDetailPage={goToDetailPageHandler}
+            pageInfo={pageInfo}
+            handlePageChange={handlePageChange}
           />
         </FilterWrapper>
       </TableWrapper>
@@ -157,6 +157,6 @@ const Page: NextPageWithLayout<never> = () => {
     </BodySTY>
   );
 };
-
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

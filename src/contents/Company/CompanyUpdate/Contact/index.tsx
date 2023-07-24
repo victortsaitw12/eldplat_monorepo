@@ -37,7 +37,8 @@ function Contact() {
     handleStateSwitch,
     handleCountryCode
   } = useContext<I_Region_Context>(RegionContext);
-  const [loading, setLoading] = useState<boolean>(true);
+  console.log("聯絡區塊看companyData", companyData);
+
   const [contactArr, setContactArr] = useState<I_Company_Contact_Type[] | any>([
     {
       contact_name: "",
@@ -49,6 +50,12 @@ function Contact() {
       contact_sort: "1"
     }
   ]);
+
+  // 一進畫面的時候還沒有companyData，所以抓不到contact的資料，先用useEffect抓
+  useEffect(() => {
+    setContactArr([...companyData["company_contact"]]);
+  }, [companyData["company_contact"]]);
+
   // const [allStates, setAllStates] = useState<I_AllRegions_Type[]>([
   //   { regionName: "請選擇", areaNo: "0" }
   // ]);
@@ -103,7 +110,8 @@ function Contact() {
     // 找到聯絡人姓名一樣的把他篩掉
     const filterContact = contactArr.filter(
       (v: { contact_name: string }, i: any) => {
-        return val.contact_name !== v.contact_name;
+        // return val.contact_name !== v.contact_name;
+        return idx !== i;
       }
     );
     copyData["company_contact"] = filterContact;
@@ -285,7 +293,8 @@ function Contact() {
           </Pane>
         </Pane>
 
-        {contactArr.map((value: I_Company_Contact_Type, idx: number) => {
+        {contactArr?.map((value: I_Company_Contact_Type, idx: number) => {
+          console.log("聯絡資訊value", value);
           return (
             <>
               <Pane className="input-line">
@@ -370,9 +379,9 @@ function Contact() {
                       }}
                       required
                     />
-                    {errMsg["errField"] === "contact_phone" && (
+                    {/* {errMsg["errField"] === "contact_phone" && (
                       <Text color="red !important">{errMsg["errText"]}</Text>
-                    )}
+                    )} */}
                   </Pane>
                 </Pane>
               </Pane>
@@ -388,8 +397,6 @@ function Contact() {
                   }}
                 />
               </Pane>
-
-              <Pane height={1} width={100} backgroundColor="#AFC3DA"></Pane>
             </>
           );
         })}

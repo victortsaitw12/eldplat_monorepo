@@ -6,11 +6,13 @@ interface I_Item {
   value?: React.ReactNode | string;
 }
 interface I_Props {
+  style?: React.CSSProperties;
   title?: string;
   items?: I_Item[];
 }
 
 const VerticalDetail = ({
+  style,
   title = "乘客數量",
   items = [
     { label: "成人", value: "2" },
@@ -19,7 +21,7 @@ const VerticalDetail = ({
   ]
 }: I_Props) => {
   return (
-    <BodySTY className="v_detail">
+    <BodySTY style={style} className="v_detail">
       {title && <div className="v_detail_title">{title}</div>}
       <ul className="v_detail_list">
         {items && items.length > 0 ? (

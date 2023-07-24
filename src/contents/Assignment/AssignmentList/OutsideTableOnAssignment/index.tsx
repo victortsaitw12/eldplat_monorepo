@@ -72,45 +72,47 @@ function OutsideTableOnAssignment({
           </button>
         </div>
       </div>
-      <TableSTY>
-        <thead>
-          <tr>
-            {titles.map((title: any) => {
-              if (title === "id") {
-                return;
-              }
-              return (
-                <th key={uuid()}>
-                  <span>{title}</span>
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {data.length !== 0 ? (
-            data.map((item: any, idx) => {
-              return (
-                <TableRow
-                  key={uuid()}
-                  idx={idx}
-                  item={item}
-                  data={data}
-                  subAssignData={subAssignData}
-                  goToCreatePage={goToCreatePage}
-                  deleteItem={deleteItem}
-                  goToEditPage={goToEditPage}
-                  viewItem={viewItem}
-                />
-              );
-            })
-          ) : (
-            <tr className="noDataShown">
-              <td>查無資料</td>
+      <div className="container-table">
+        <TableSTY>
+          <thead>
+            <tr>
+              {titles.map((title: any) => {
+                if (title === "id") {
+                  return;
+                }
+                return (
+                  <th key={uuid()}>
+                    <span>{title}</span>
+                  </th>
+                );
+              })}
             </tr>
-          )}
-        </tbody>
-      </TableSTY>
+          </thead>
+          <tbody>
+            {data.length !== 0 ? (
+              data.map((item: any, idx) => {
+                return (
+                  <TableRow
+                    key={uuid()}
+                    idx={idx}
+                    item={item}
+                    data={data}
+                    subAssignData={subAssignData}
+                    goToCreatePage={goToCreatePage}
+                    deleteItem={deleteItem}
+                    goToEditPage={goToEditPage}
+                    viewItem={viewItem}
+                  />
+                );
+              })
+            ) : (
+              <tr className="noDataShown">
+                <td>查無資料</td>
+              </tr>
+            )}
+          </tbody>
+        </TableSTY>
+      </div>
     </TableContainerSTY>
   );
 }

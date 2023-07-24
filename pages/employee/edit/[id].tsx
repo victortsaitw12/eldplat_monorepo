@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -14,7 +14,6 @@ import AddEmployee from "@contents/Employee";
 import { getEmployeeById } from "@services/employee/getEmployeeById";
 import { I_Get_Employees_Type } from "@typings/employee_type";
 import { updateEmployee } from "@services/employee/updateEmployee";
-import LoadingSpinner from "@components/LoadingSpinner";
 import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 const Page: NextPageWithLayout<
@@ -141,5 +140,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   };
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

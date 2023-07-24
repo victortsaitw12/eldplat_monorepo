@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const InfoBoxSTY = styled.div`
   width: 100%;
-  min-height: 224px;
+  /* min-height: 224px; */
   background: #ffffff;
   border-radius: 10px;
   overflow: auto;
@@ -22,7 +22,7 @@ export const InfoBoxSTY = styled.div`
     > li {
       display: flex;
       font-size: 14px;
-      margin-bottom: 33px;
+      margin-bottom: 20px;
       align-items: center;
       .req {
         color: #d14343;

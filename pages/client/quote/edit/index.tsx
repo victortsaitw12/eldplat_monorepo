@@ -4,7 +4,7 @@ import {
   NextPageWithLayout
 } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { getLayout } from "@layout/ClientLayout";
 import StatusCard from "@components/StatusCard";
 import { BodySTY } from "./style";
@@ -124,7 +124,6 @@ const Page: NextPageWithLayout<
   airline
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const submitRef = useRef<HTMLButtonElement | null>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const [remainTime, setRemainTime] = useState(5);
   useEffect(() => {
@@ -219,7 +218,9 @@ const Page: NextPageWithLayout<
       return result as QuotationCreatePayload;
     }
   });
+
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
+    console.log("submit");
     try {
       const result = await createQuotation(data);
       const { quote_no } = result;
@@ -293,10 +294,9 @@ const Page: NextPageWithLayout<
             className="content-container"
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
               e.preventDefault();
-              methods.handleSubmit(asyncSubmitFormHandler)(e);
             }}
           >
-            <button type="submit" style={{ display: "none" }} ref={submitRef}>
+            <button type="submit" style={{ display: "none" }}>
               submit
             </button>
             {currentTab === 1 && type !== "custom" && (
@@ -371,27 +371,29 @@ const Page: NextPageWithLayout<
                   flex: "1",
                   border: "none"
                 }}
-                onClick={methods.handleSubmit(() => {
+                disabled={methods.formState.isSubmitting}
+                onClick={() => {
                   let isValid = true;
-                  if (currentTab === 1 || currentTab === 2) {
-                    isValid = validationList[currentTab].valid;
-                    if (!isValid) {
-                      toaster.danger("無法前往下一頁", {
-                        description: validationList[currentTab].errorMessage,
-                        id: "validation-error"
-                      });
+                  if (currentTab < 5) {
+                    if (currentTab === 1 || currentTab === 2) {
+                      isValid = validationList[currentTab].valid;
+                      if (!isValid) {
+                        toaster.danger("無法前往下一頁", {
+                          description: validationList[currentTab].errorMessage,
+                          id: "validation-error"
+                        });
+                        return;
+                      }
                     }
-                  }
-                  console.log("isValid", isValid);
-                  if (isValid) {
-                    if (currentTab === 5) {
-                      submitRef.current?.click();
-                      return;
-                    } else {
+                    methods.handleSubmit(() => {
+                      console.log("valid from");
                       setCurrentTab((prev) => prev + 1);
-                    }
+                    })();
+                  } else {
+                    console.log("submit");
+                    methods.handleSubmit(asyncSubmitFormHandler)();
                   }
-                })}
+                }}
               >
                 {currentTab === 5 ? "送出詢價單" : "下一步"}
               </Button>

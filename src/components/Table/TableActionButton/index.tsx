@@ -1,8 +1,16 @@
 import React from "react";
-import { MoreIcon, EditIcon, DisableIcon, EyeOpenIcon } from "evergreen-ui";
+import {
+  MoreIcon,
+  EditIcon,
+  DisableIcon,
+  EyeOpenIcon,
+  DeleteIcon,
+  UndoIcon
+} from "evergreen-ui";
 //
 import { BodySTY } from "./style";
 interface Props {
+  onRecover?: () => void;
   onDelete?: () => void;
   onEdit?: () => void;
   onView?: () => void;
@@ -10,24 +18,26 @@ interface Props {
   closeOption?: () => void;
   deleteText?: string;
   isOpen?: boolean;
+  tableName?: string;
 }
 //
 function Index({
+  onRecover,
   onDelete,
   onEdit,
   onView,
   openOption,
   closeOption,
+  tableName,
   deleteText = "停用",
   isOpen = false
 }: Props) {
   return (
-    <BodySTY>
+    <BodySTY className="table-action handle">
       <button
-        onClick={() => {
-          if (isOpen) {
-            closeOption && closeOption();
-          } else {
+        onClick={(event) => {
+          if (!isOpen) {
+            event.stopPropagation();
             openOption && openOption();
           }
         }}
@@ -68,8 +78,32 @@ function Index({
                 closeOption && closeOption();
               }}
             >
-              <DisableIcon size={14} />
-              <div>{deleteText}</div>
+              {tableName === "維保通知" ? (
+                <>
+                  <DeleteIcon size={14} color="#8EA8C7" />
+                  <div>取消</div>
+                </>
+              ) : (
+                <>
+                  <DisableIcon size={14} />
+                  <div>{deleteText}</div>
+                </>
+              )}
+            </button>
+          )}
+
+          {onRecover && (
+            <button
+              className="option-item"
+              onClick={() => {
+                onRecover();
+                closeOption && closeOption();
+              }}
+            >
+              <>
+                <UndoIcon size={14} />
+                <div>恢復</div>
+              </>
             </button>
           )}
         </div>

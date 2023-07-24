@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, ReactNode } from "react";
 import { Pane } from "evergreen-ui";
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
@@ -71,15 +71,22 @@ const Page: NextPageWithLayout<never> = () => {
     setDrawerOpen
   } = useEmployeeFilterStore();
   useEffect(() => {
-    updateMainFilter("all");
+    updateMainFilter("1");
   }, []);
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "全部", value: "all" },
-      { id: 2, label: "停用", value: "seal" }
+      { id: 1, label: "啟用", value: "1" },
+      { id: 2, label: "停用", value: "2" }
     ],
     []
   );
+  const [nowTab, setNowTab] = useState("1");
+
+  const changeMainFilterHandler = (value: string) => {
+    setNowTab(value);
+    // alert(value);
+    updateMainFilter(value);
+  };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [employeeListData, setEmployeeListData] = useState<any>(null);
@@ -98,7 +105,15 @@ const Page: NextPageWithLayout<never> = () => {
           // user_No: item["user_No"],
           id: { label: item.user_No, value: item.user_No },
           user_Name: {
-            label: item.user_Name,
+            label: (
+              <Pane className="user_td">
+                <div className="user_icon">
+                  <span>{item.user_Name.charAt(0)}</span>
+                </div>
+                <div className="user_name">{item.user_Name}</div>
+              </Pane>
+            ),
+            // label: item.user_Name,
             value: item.user_name
           },
           user_Email: { label: item.user_Email, value: item.user_Email },
@@ -145,13 +160,11 @@ const Page: NextPageWithLayout<never> = () => {
       router.reload();
     });
   };
-
+  const recoverItemHandler = async (id: string) => {
+    console.log("上一動");
+  };
   const goToEditPageHandler = (id: string) => {
     router.push(`/employee/edit/${id}`);
-  };
-  const changeMainFilterHandler = (value: string) => {
-    alert(value);
-    updateMainFilter(value);
   };
 
   const createEmployeeHandler = async (employeeData: any) => {
@@ -181,6 +194,7 @@ const Page: NextPageWithLayout<never> = () => {
           onChangeTab={changeMainFilterHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
+          viewOnly
         >
           <FilterWrapper
             updateFilter={updateSubFilter}
@@ -190,16 +204,16 @@ const Page: NextPageWithLayout<never> = () => {
             filter={filter}
           >
             {/* Put your component here */}
-            <Pane>
-              <EmployeeList
-                data={employeeListData}
-                goToCreatePage={() => {
-                  setDrawerOpen(true);
-                }}
-                deleteItemHandler={deleteItemHandler}
-                goToEditPageHandler={goToEditPageHandler}
-              />
-            </Pane>
+            <EmployeeList
+              listType={nowTab}
+              data={employeeListData}
+              goToCreatePage={() => {
+                setDrawerOpen(true);
+              }}
+              deleteItemHandler={deleteItemHandler}
+              goToEditPageHandler={goToEditPageHandler}
+              recoverItemHandler={recoverItemHandler}
+            />
           </FilterWrapper>
         </TableWrapper>
         {isDrawerOpen && (
@@ -217,5 +231,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

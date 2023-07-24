@@ -5,7 +5,7 @@ export interface BusDataTypes {
     bus_name: string;
     vin: string;
     license_plate: string;
-    bus_type: string;
+    type: string;
     year: number;
     make: string;
     model: string;
@@ -14,7 +14,7 @@ export interface BusDataTypes {
     registration_province: string;
     status: string;
     bus_group: string;
-    operator: string;
+    operator_no: string;
     ownership: string;
     color: string;
     bus_seat: number;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { Text, UnorderedList, ListItem, Pane } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
@@ -16,7 +16,7 @@ export interface I_infoData {
 export interface I_InfoBoxProps {
   style?: React.CSSProperties;
   isEdit: boolean;
-  infoTitle?: string;
+  infoTitle?: string | React.ReactNode;
   infoData?: I_infoData[];
   infoType?: string;
 }
@@ -28,6 +28,7 @@ function InfoBox({
   infoData,
   infoType
 }: I_InfoBoxProps) {
+  const infoBoxId = useId();
   const r_switch_info = (type?: string) => {
     switch (type) {
       case "label":
@@ -64,16 +65,24 @@ function InfoBox({
       if (inputType === "custom") {
         return editEle;
       }
-
       return (
-        <ListItem key={value + i}>
+        <ListItem key={infoBoxId + "_text_" + i} className="infoBox">
           {label && (
-            <Pane>
-              {req && label !== "" && <span className="req">*</span>}
-              {label}
+            // <Pane>
+            //   {req && label !== "" && <span className="req">*</span>}
+            //   {label}
+            // </Pane>
+            <Pane className="infoBox__label">
+              <span>
+                {req && label !== "" && <span className="req">*</span>}
+                {label}
+              </span>
             </Pane>
           )}
-          <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane>
+          {/* <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane> */}
+          <Pane className="infoBox__value">
+            {isEdit && editEle ? editEle : <Text>{value}</Text>}
+          </Pane>
         </ListItem>
       );
     });
@@ -87,7 +96,6 @@ function InfoBox({
     if (isEdit) {
       return <Pane>{infoData[0].editEle}</Pane>;
     } else {
-      console.log("🎶🎶🎶🎶", infoData[0].value);
       if (
         infoData[0].value &&
         Array.isArray(infoData[0].value) &&
@@ -95,7 +103,7 @@ function InfoBox({
       ) {
         return infoData[0].value.map((child: any, i: number) => {
           return (
-            <ListItem key={child + i}>
+            <ListItem key={infoBoxId + "_label_" + i}>
               <Text>{child}</Text>
             </ListItem>
           );
@@ -111,8 +119,9 @@ function InfoBox({
     }
     return infoData.map((child: any, i: number) => {
       return (
-        <ListItem key={child.value + i}>
+        <ListItem key={infoBoxId + "_checkBox_" + i}>
           <Checkbox
+            style={{ gap: "10px" }}
             disabled={isEdit ? false : true}
             name={child.value}
             label={child.label}

@@ -83,7 +83,7 @@ const Page: NextPageWithLayout<
         </div>
       </TermOfUse>
       <Label
-        text={type === "custom" ? "前往訂車" : "下一步"}
+        text="前往訂車"
         onClick={() => {
           formButtonRef.current?.click();
         }}

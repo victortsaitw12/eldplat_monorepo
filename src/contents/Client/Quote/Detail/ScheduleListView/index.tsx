@@ -42,7 +42,7 @@ const ScheduleListView = ({
             </Text>
             上車地點
           </Text>
-          <Text>{pickup_location}</Text>
+          <Text>{pickup_location || "--"}</Text>
         </li>
         {r_stopover(listArray)}
         <li className="schedule-list-item">
@@ -52,7 +52,7 @@ const ScheduleListView = ({
             </Text>
             下車地點
           </Text>
-          <Text>{dropoff_location}</Text>
+          <Text>{dropoff_location || "--"}</Text>
         </li>
       </ul>
     </BodySTY>

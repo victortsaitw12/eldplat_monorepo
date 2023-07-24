@@ -1,18 +1,43 @@
 import styled from "styled-components";
 
-export const FormSTY = styled.form`
+export const DivSTY = styled.div`
   /* 全部input欄位寬度 */
-  li > div > div {
-    flex-grow: 10;
-  }
-  li > div:first-child {
-    flex: 1 !important;
-  }
-  li > div:last-child {
-    flex: 2 !important;
-    input {
-      width: 100%;
+  .infoBox {
+    .infoBox__label {
+      flex: 1 !important;
     }
+    .infoBox__value {
+      flex: 2 !important;
+      input {
+        width: 100%;
+      }
+      span > label {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  /* 駕駛履歷標籤 <TagSelect/> */
+  .view-tags {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 12px;
+    gap: 8px;
+    div {
+      color: #1952a8;
+      background-color: ${({ theme }) => theme.color.B100};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4px 8px 4px 8px;
+      border-radius: 8px;
+    }
+  }
+  .option-tags {
+    position: absolute;
   }
 
   /* 駕駛證照上傳檔案 */

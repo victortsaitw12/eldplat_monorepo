@@ -30,13 +30,14 @@ export const BodySTY = styled.div`
     .right-function {
       color: #718baa;
       button {
+        color: ${({ theme }) => theme.color.N700};
         background-color: transparent;
         border: none;
       }
 
       .save {
         &:hover {
-          background-color: #ffffff;
+          background-color: transparent;
         }
       }
     }

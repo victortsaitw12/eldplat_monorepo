@@ -61,11 +61,17 @@ const PriceInfoView = () => {
     const checkedObj = order_status_list.filter(
       (child: any) => child.name == "接受報價"
     )[0];
-    return checkedObj.status === "ok";
+    return checkedObj?.status === "ok";
   };
   const isPaid = () => {
     const paidObj = order_status_list.filter(
       (child: any) => child.name == "已付全額" || child.name == "已付尾款"
+    )[0];
+    return !!paidObj?.status && paidObj?.status === "ok";
+  };
+  const isAssign = () => {
+    const paidObj = order_status_list.filter(
+      (child: any) => child.name == "預約完成" || child.name == "結案"
     )[0];
     return !!paidObj?.status && paidObj?.status === "ok";
   };
@@ -94,7 +100,6 @@ const PriceInfoView = () => {
     try {
       const res = await updateFEStatusLog(quote_no, status_code);
       console.log(res);
-      // router.push("/admin_orders/");
     } catch (err: any) {
       console.log(err);
     }
@@ -102,50 +107,69 @@ const PriceInfoView = () => {
   return (
     <BodySTY>
       <Pane>
-        <Pane className="btn_list">
-          <LabelSecondaryButton
-            style={{
-              fontWeight: "600",
-              fontSize: "12px"
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              setIsCancelOpen(true);
-            }}
-            className="cancel_btn"
-            text="取消報價"
-          />
-          {!isCheckedStatus() && (
-            <LabelButton
+        {!isAssign() && (
+          <Pane className="btn_list">
+            <LabelSecondaryButton
               style={{
                 fontWeight: "600",
                 fontSize: "12px"
               }}
               onClick={(e) => {
                 e.preventDefault();
-                setIsConfirmOpen(true);
+                setIsCancelOpen(true);
               }}
-              className="submit_btn"
-              text="送出報價"
+              className="cancel_btn"
+              text="取消報價"
             />
-          )}
-          {isCheckedStatus() && (
-            <LabelButton
-              style={{
-                fontWeight: "600",
-                fontSize: "12px"
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                update_FE_status(quote_no, "12");
-                update_BE_status(quote_no, "13");
-              }}
-              disabled={!isPaid()}
-              className="submit_btn"
-              text="預約派車"
-            />
-          )}
-        </Pane>
+            {!isCheckedStatus() && (
+              <LabelButton
+                style={{
+                  fontWeight: "600",
+                  fontSize: "12px"
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsConfirmOpen(true);
+                }}
+                className="submit_btn"
+                text="送出報價"
+              />
+            )}
+            {isCheckedStatus() && (
+              <LabelButton
+                style={{
+                  fontWeight: "600",
+                  fontSize: "12px"
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  update_FE_status(quote_no, "12");
+                  update_BE_status(quote_no, "13");
+                  router.push("/admin_orders/");
+                }}
+                disabled={!isPaid()}
+                className="submit_btn"
+                text="預約派車"
+              />
+            )}
+          </Pane>
+        )}
+        {((!isDeposit && !isFullPayment) || isFullPayment) && (
+          <>
+            <Pane className="price_content">
+              <Text>總金額</Text>
+              <Text>NT${quote_total_amount?.toLocaleString() || "0"}</Text>
+            </Pane>
+            <Text>
+              {dayjs(full_payment_period).isValid()
+                ? dayjs(full_payment_period).format("YYYY-MM-DD") + " "
+                : "--"}
+              前繳款
+            </Text>
+            <hr />
+          </>
+        )}
+
         {isDeposit && (
           <>
             <Pane className="price_content">
@@ -159,18 +183,6 @@ const PriceInfoView = () => {
               <Text>NT${balance_amount?.toLocaleString() || "0"}</Text>
             </Pane>
             <Text>{dayjs(balance_period).format("YYYY-MM-DD")} 前繳款</Text>
-            <hr />
-          </>
-        )}
-        {isFullPayment && (
-          <>
-            <Pane className="price_content">
-              <Text>總金額</Text>
-              <Text>NT${quote_total_amount?.toLocaleString() || "0"}</Text>
-            </Pane>
-            <Text>
-              {dayjs(full_payment_period).format("YYYY-MM-DD")} 前繳款
-            </Text>
             <hr />
           </>
         )}
@@ -285,8 +297,9 @@ const PriceInfoView = () => {
               e.preventDefault();
               const formData = getValues();
               console.log("當點擊送出報價後的表單資料:", formData);
-              // update_BE_status(quote_no, "3");
-              // update_FE_status(quote_no, "4");
+              update_BE_status(quote_no, "3");
+              update_FE_status(quote_no, "4");
+              router.push("/admin_orders/");
             }}
             text="送出報價"
           />

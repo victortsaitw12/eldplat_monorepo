@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -19,6 +19,7 @@ const Page: NextPageWithLayout<never> = () => {
     setLoading(true);
     try {
       const res = await updateCompany(data);
+      console.log("按下更新公司的res", res);
       router.push("/company");
     } catch (e: any) {
       console.error("update company error: ", e);
@@ -47,5 +48,6 @@ const Page: NextPageWithLayout<never> = () => {
     </CompanyProvider>
   );
 };
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

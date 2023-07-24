@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TickIcon } from "evergreen-ui";
+import cx from "classnames";
 //
 import { MenuDataType } from "src/mock-data/side-bar/data";
 import { useRouter } from "next/router";
@@ -12,15 +13,23 @@ interface Props {
 }
 //
 function Index({ data }: Props) {
-  const [isSelect, setIsSelect] = useState(false);
   const router = useRouter();
+  const defaultSelect =
+    data.name !== "入門" && data.url !== "/" && data.url === router.asPath;
+  const [isSelect, setIsSelect] = useState(defaultSelect);
+  const isDisabled = data.url === null && !data.subList;
   return (
     <BodySTY
       onClick={() => {
         setIsSelect((prev) => !prev);
-        router.push(data.url);
+        if (data.url) {
+          router.push(data.url);
+        }
       }}
-      active={isSelect}
+      className={cx({
+        active: isSelect,
+        disable: isDisabled
+      })}
     >
       <p>{data.name}</p>
       {isSelect && <TickIcon color="#567190" size={14} />}

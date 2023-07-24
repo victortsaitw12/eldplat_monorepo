@@ -119,9 +119,10 @@ const EventList = ({
   const eventBtns = items?.map((item, i) => (
     <EventBtnSTY
       key={`event-${cellTimestamp}-${i}`}
-      color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
+      color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
       duration={getEventDurationLeft(item)}
-      className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}`}
+      className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}
+      `}
     >
       <button
         value={item.drv_Schedule_No}
@@ -140,7 +141,13 @@ const EventList = ({
             ? CHECK_STATUS.get(item.check_Status)?.label
             : SCHD_TYPE.get(item.schd_Type)?.label}
         </span>
-        {item.leave_Code || item.check_Status ? <TagIcon /> : ""}
+        {item.leave_Code ||
+        (item.check_Status && item.leave_Description) ||
+        item.leave_Code ? (
+          <TagIcon />
+        ) : (
+          ""
+        )}
         <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
         <span>{item.schd_Type === "04" ? item.leave_Description : ""}</span>
       </button>
@@ -151,7 +158,7 @@ const EventList = ({
     new Date(cellTimestamp).getDay() === 0 ? (
       <EventBtnSTY
         key={`event-${cellTimestamp}-${i}`}
-        color={SCHD_TYPE.get(item.schd_Type)?.color || "inherit"}
+        color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
         duration={getEventDurationLeft(item)}
         className={`${
           placeholders.length + i + 1 > maxEventCount ? "hide" : ""
@@ -183,7 +190,6 @@ const EventList = ({
       <EventBtnSTY
         aria-hidden="true"
         key={`placeholder-${cellTimestamp}-${i}`}
-        color="inherit"
         duration={1}
         className="placeholder"
         style={{

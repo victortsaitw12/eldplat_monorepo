@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -13,10 +13,8 @@ import MonthlyView from "@contents/Shift/MonthlyView";
 import DrawerContent from "@contents/Shift/DrawerContent";
 import Tabs from "@components/Tabs";
 import TableTitle from "@components/Table/TableTitle";
-import ZoomBar from "@components/ZoomBar";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
-import AlertBox from "@components/AlertBox";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -33,9 +31,6 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   );
 
   //------ functions ------//
-  const handleZoombar = (value: boolean) => {
-    setIsExpand(value);
-  };
   const handleLayout = (type: "monthly" | "daily") => {
     setView(type);
     setIsOpenDrawer(false);
@@ -46,15 +41,10 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const tableName = [
     <MonthPicker key="monthpicker" initialMonthFirst={initialMonthFirst} />,
     <div key="tabelTitle-type" className="container-header-left">
-      {monthlyData ? (
-        <>
-          <span>{monthlyData[0]?.user_Name}</span>
-          <span className="red">
-            休假天數 {monthlyData[0]?.total_Leave_Days} 天
-          </span>
-        </>
-      ) : (
-        ""
+      {monthlyData && (
+        <span className="red">
+          休假天數 {monthlyData[0]?.total_Leave_Days} 天
+        </span>
       )}
     </div>
   ];
@@ -69,7 +59,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
         </Head>
         <Pane className="wrapMain">
           <Tabs
-            titles={["全部"]}
+            titles={[monthlyData && monthlyData[0]?.user_Name]}
             setIsOpenDrawer={setIsOpenDrawer}
             isOpenDrawer={isOpenDrawer}
           />
@@ -77,34 +67,37 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
             <TableTitle
               tableName={tableName}
               control={[
-                <ZoomBar
-                  key="zoombar"
-                  initScale={isExpand ? 100 : 0}
-                  setState={handleZoombar}
-                />,
-                <LayoutControl key="layoutControl" setState={handleLayout} />
+                <LayoutControl
+                  key="layoutControl"
+                  setState={handleLayout}
+                  isOpenDrawer={isOpenDrawer}
+                  setIsOpenDrawer={setIsOpenDrawer}
+                />
               ]}
               sub={[]}
               page={false}
             />
             {view === "monthly" ? (
-              <MonthlyView
-                monthlyData={monthlyData}
-                setMonthlyData={setMonthlyData}
-                initialMonthFirst={initialMonthFirst}
-                setIsOpenDrawer={setIsOpenDrawer}
-                view={view}
-                isExpand={isExpand}
-              />
+              <div className="monthlyContainer">
+                <MonthlyView
+                  monthlyData={monthlyData}
+                  setMonthlyData={setMonthlyData}
+                  initialMonthFirst={initialMonthFirst}
+                  setIsOpenDrawer={setIsOpenDrawer}
+                  view={view}
+                  isExpand={isExpand}
+                />
+              </div>
             ) : (
-              <DailyView
-                monthlyData={monthlyData}
-                setMonthlyData={setMonthlyData}
-                initialMonthFirst={initialMonthFirst}
-                setIsOpenDrawer={setIsOpenDrawer}
-                view={view}
-                isExpand={isExpand}
-              />
+              <div className="dailyContainer">
+                <DailyView
+                  monthlyData={monthlyData}
+                  setMonthlyData={setMonthlyData}
+                  initialMonthFirst={initialMonthFirst}
+                  setIsOpenDrawer={setIsOpenDrawer}
+                  view={view}
+                />
+              </div>
             )}
           </Pane>
         </Pane>
@@ -114,15 +107,11 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
           view={view}
         />
       </ViewIdSTY>
-      {/* <AlertBox
-        type="none"
-        title="提示"
-        description="點擊員工列，檢視個別排班資訊。。"
-        isRemoveable={true}
-      /> */}
     </UIProvider>
   );
 };
 
-DriverScheduleView.getLayout = getLayout;
+DriverScheduleView.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
+
 export default DriverScheduleView;

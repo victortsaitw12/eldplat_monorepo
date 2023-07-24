@@ -5,11 +5,16 @@ import { ThemeProvider } from "styled-components";
 import { I18Provider, LOCALES } from "@contexts/i18n";
 import theme from "@styles/theme";
 import { GlobalStyles } from "@styles/global";
-import { getVendorsLang } from "@services/vendor/getAllVendors";
-import { useRouter } from "next/router";
+// import { getVendorsLang } from "@services/vendor/getAllVendors";
+import { useRouter, Router } from "next/router";
 import { Noto_Sans } from "next/font/google";
 import LoadingModal from "@components/LoadingModal";
 import LoadingSpinner from "@components/LoadingSpinner";
+import dynamic from "next/dynamic";
+import getPageBreadCrumbs from "@utils/getPageBreadCrumbs";
+const DynamicBreadcrumbs = dynamic(() => import("@components/Breadcrumbs"), {
+  ssr: false
+});
 const notoSans = Noto_Sans({
   subsets: ["latin", "latin-ext", "vietnamese"],
   weight: ["400", "600", "700", "800"]
@@ -37,15 +42,9 @@ function Loader() {
   const router = useRouter();
   useEffect(() => {
     const handleStart = (url: string) => {
-      console.log("handleStart");
-      console.log("current url", url);
-      console.log("router.asPath", router.asPath);
       setLoading(true);
     };
     const handleComplete = (url: string) => {
-      console.log("handleComplete");
-      console.log("current url", url);
-      console.log("router.asPath", router.asPath);
       setLoading(false);
     };
     router.events.on("routeChangeStart", handleStart);
@@ -75,14 +74,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   // 存放從後端打API取回的多國語系JSON資料
   const [langJSONData, setLangJSONData] = useState<any>(null);
 
-  useEffect(() => {
-    getVendorsLang(locale, pageType)
-      .then((data) => {
-        const newData = JSON.parse(data.resultString);
-        setLangJSONData(newData);
-      })
-      .catch((err) => console.error("多國語系error : ", err));
-  }, [locale]);
+  // ⭐多國語系: 為了避免network錯誤，先註解掉
+  // useEffect(() => {
+  //   getVendorsLang(locale, pageType)
+  //     .then((data) => {
+  //       const newData = JSON.parse(data.resultString);
+  //       setLangJSONData(newData);
+  //     })
+  //     .catch((err) => console.error("多國語系error : ", err));
+  // }, [locale]);
 
   // 因為多國語系是抓message資料，所以一進來一定要先抓取api取到的JSON檔
   useEffect(() => {
@@ -113,7 +113,18 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
               setLocale={setLocale}
               setPageType={setPageType}
             />,
-            { ...pageProps, locale: locale, setLocale: setLocale }
+            {
+              ...pageProps,
+              locale: locale,
+              setLocale: setLocale,
+              breadcrumbs: (
+                <DynamicBreadcrumbs
+                  className="main-layout"
+                  splitEle={<span style={{ margin: "0 0.5rem" }}>/</span>}
+                  routes={getPageBreadCrumbs(router)}
+                />
+              )
+            }
           )}
         </ThemeProvider>
       </I18Provider>

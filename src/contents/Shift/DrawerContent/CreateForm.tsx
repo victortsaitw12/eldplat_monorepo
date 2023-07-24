@@ -1,11 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
 import {
-  SmallTickIcon,
   TimeIcon,
   CalendarIcon,
   TagIcon,
-  Textarea
+  Textarea,
+  toaster
 } from "evergreen-ui";
 import { FormSTY } from "./style";
 
@@ -26,7 +26,6 @@ const CreateForm = ({
   const UI = React.useContext(UIContext);
   const router = useRouter();
   const { id } = router.query;
-
   //------ functions ------//
   const handleDescription = React.useCallback(
     (e: any) => {
@@ -46,12 +45,23 @@ const CreateForm = ({
       updatedData.schd_Start_Time = formatToDB(UI.startDate);
       updatedData.schd_End_Time = formatToDB(UI.endDate);
       try {
-        await createSchedule(updatedData);
-        UI.resetState();
-        UI.setFlag(!UI.flag);
-        setIsOpenDrawer(false);
+        const res = await createSchedule(updatedData);
+        if (res.statusCode === "200") {
+          // await refetch();
+          toaster.success("新增成功", {
+            duration: 1.5
+          });
+          console.log("res:", res);
+          UI.resetState();
+          UI.setFlag(!UI.flag);
+          setIsOpenDrawer(false);
+        } else {
+          throw Error(res.message);
+        }
       } catch (e: any) {
-        alert(e.message);
+        toaster.warning(e.message, {
+          duration: 1.5
+        });
       }
     },
     [UI.insertData, UI.startDate, UI.endDate]
@@ -60,7 +70,7 @@ const CreateForm = ({
   return (
     <FormSTY onSubmit={handleSubmit}>
       <section className="form__startTime">
-        <label>
+        <label className="form__label">
           <TimeIcon />
           <span>開始時間</span>
         </label>
@@ -72,7 +82,7 @@ const CreateForm = ({
         />
       </section>
       <section className="form__endTime">
-        <label>
+        <label className="form__label">
           <TimeIcon />
           <span>結束時間</span>
         </label>
@@ -85,28 +95,24 @@ const CreateForm = ({
         />
       </section>
       <section className="form__leaveCode">
-        <label>
+        <label className="form__label">
           <CalendarIcon />
           <span>假別</span>
         </label>
         <LeaveTypePicker />
       </section>
       <section className="form__description">
-        <label>
+        <label className="form__label">
           <TagIcon />
           <span>說明</span>
         </label>
         <Textarea
           onChange={handleDescription}
           value={UI.insertData.leave_Description}
-          // {...register("leave_Description", {})}
         />
       </section>
 
-      <button className="drawer__btn">
-        <SmallTickIcon />
-        確定
-      </button>
+      <button className="drawer__btn">確定</button>
     </FormSTY>
   );
 };

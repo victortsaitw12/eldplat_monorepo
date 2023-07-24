@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane } from "evergreen-ui";
+import { Pane, IssueIcon } from "evergreen-ui";
 import { useFormContext, useWatch } from "react-hook-form";
 //@component
 import LabelTag from "@components/LabelTag";
@@ -34,9 +34,11 @@ const CustomBus = ({ isEdit, busListData }: I_Props) => {
     control,
     formState: { errors }
   } = useFormContext();
-  const { quote_no, order_status_list } = useWatch({
-    control
-  });
+  const { quote_no, order_status_list, full_payment_check, deposit_check } =
+    useWatch({
+      control
+    });
+  const is_payment_selected = full_payment_check == "1" || deposit_check == "1";
   return (
     <>
       <Collapse opened={true} title={quote_no}>
@@ -44,7 +46,24 @@ const CustomBus = ({ isEdit, busListData }: I_Props) => {
           <ProgressList dataLists={mappingProgressInfo(order_status_list)} />
         </Pane>
       </Collapse>
-      <Collapse opened={true} title="付款方式">
+      <Collapse
+        opened={true}
+        title={
+          is_payment_selected ? (
+            "收款方式"
+          ) : (
+            <>
+              收款方式
+              <IssueIcon
+                style={{
+                  marginLeft: "0.5rem"
+                }}
+                color="#D14343"
+              />
+            </>
+          )
+        }
+      >
         {isEdit ? <PaymentInfoEdit /> : <PaymentInfoView />}
       </Collapse>
       <Collapse opened={true} title="客製包車">

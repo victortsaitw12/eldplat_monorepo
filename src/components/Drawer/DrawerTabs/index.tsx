@@ -5,15 +5,25 @@ import {
   IconButton,
   FullscreenIcon,
   SmallCrossIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
+  MaximizeIcon,
+  MinimizeIcon
 } from "evergreen-ui";
+
 import { BodySTY, TabSTY } from "./style";
 interface TabsProps {
+  isFullScreen?: boolean;
   titles?: string[];
-  closeDrawer: () => void;
+  closeDrawer?: () => void;
+  toggleFullScreenDrawer?: () => void;
 }
 
-const DrawerTabs = ({ titles, closeDrawer }: TabsProps) => {
+const DrawerTabs = ({
+  isFullScreen = false,
+  titles,
+  closeDrawer,
+  toggleFullScreenDrawer
+}: TabsProps) => {
   const DETAIL_TABS = titles || ["編輯"]; // 顯示頁籤名稱, 預設單一標籤:"編輯"
   const [currentTab, setCurrentTab] = useState(0); //預設選取第一個 tab
 
@@ -37,13 +47,23 @@ const DrawerTabs = ({ titles, closeDrawer }: TabsProps) => {
         })}
       </div>
       <Pane className="icons">
-        <IconButton icon={FullscreenIcon} />
-        <IconButton
-          icon={SmallCrossIcon}
-          onClick={() => {
-            closeDrawer();
-          }}
-        />
+        {toggleFullScreenDrawer && (
+          <IconButton
+            icon={isFullScreen ? MinimizeIcon : MaximizeIcon}
+            onClick={() => {
+              toggleFullScreenDrawer();
+            }}
+          />
+        )}
+
+        {closeDrawer && (
+          <IconButton
+            icon={SmallCrossIcon}
+            onClick={() => {
+              closeDrawer();
+            }}
+          />
+        )}
       </Pane>
     </BodySTY>
   );

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import { Select, Button, FilePicker, TextInput } from "evergreen-ui";
-import DottedSelect from "@components/HookForm/Select/DottedSelect";
+import { Select } from "evergreen-ui";
 import InfoBox from "@components/InfoBox";
-import { FilePickBtnSTY } from "@components/FormCard/style";
+import ImageUploader from "@components/ImageUploader";
 import {
   UseFormRegister,
   FieldErrors,
@@ -12,21 +10,24 @@ import {
 } from "react-hook-form";
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
+import TextInput from "@components/CustomTextInput";
+import StatusIcon from "@components/StatusIcon";
+import { convertMap } from "@utils/convertValueToText";
 interface Props {
-  selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
+  busOptions: any;
   isEdit: boolean;
 }
 function Details({
-  selected,
   register,
   errors,
   getValues,
   control,
-  isEdit
+  isEdit,
+  busOptions
 }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 身分識別
@@ -51,13 +52,9 @@ function Details({
     {
       req: true,
       label: "車種",
-      value: getValues("bus.bus_type"),
+      value: convertMap["type"][getValues("bus.type")]["ch"],
       editEle: (
-        <Select
-          key="bus.bus_type"
-          {...register("bus.bus_type")}
-          marginBottom="0"
-        >
+        <Select key="bus.type" {...register("bus.type")} marginBottom="0">
           <option value="01">沙灘車</option>
           <option value="02">船</option>
           <option value="03">巴士</option>
@@ -85,13 +82,11 @@ function Details({
     {
       req: true,
       label: "品牌",
-      value: getValues("bus.make"),
+      value: getValues("bus.make")
+        ? convertMap["make"][getValues("bus.make")]["ch"]
+        : "--",
       editEle: [
-        <Select
-          key="bus.bus_type"
-          {...register("bus.bus_type")}
-          marginBottom="0"
-        >
+        <Select key="bus.make" {...register("bus.make")} marginBottom="0">
           <option value="01">Toyota</option>
           <option value="02">Mercedes-Benz</option>
           <option value="03">Volkswagen</option>
@@ -103,7 +98,9 @@ function Details({
     {
       req: false,
       label: "車型",
-      value: getValues("bus.model"),
+      value: getValues("bus.model")
+        ? convertMap["model"][getValues("bus.model")]["ch"]
+        : "--",
       editEle: [
         <Select key="bus.model" {...register("bus.model")} marginBottom="0">
           <option value="01">model-1</option>
@@ -116,7 +113,6 @@ function Details({
       req: true,
       label: "車牌",
       value: getValues("bus.license_plate"),
-
       editEle: [
         <TextInput key="bus.license_plate" {...register("bus.license_plate")} />
       ]
@@ -126,23 +122,22 @@ function Details({
       req: true,
       label: "出廠年份",
       value: getValues("bus.year"),
-
       editEle: [<TextInput key="bus.year" {...register("bus.year")} />]
     },
     {
       readonly: true,
       label: "車齡",
-      value: getValues("bus.age")
+      value: getValues("bus.age") + "年"
     },
     {
-      req: true,
+      req: false,
       label: "配置",
       value: getValues("bus.trim"),
 
       editEle: [<TextInput key="bus.trim" {...register("bus.trim")} />]
     },
     {
-      req: true,
+      req: false,
       label: "註冊州/省",
       value: getValues("bus.registration_province"),
       editEle: [
@@ -151,14 +146,28 @@ function Details({
           {...register("bus.registration_province")}
         />
       ]
+    },
+    {
+      req: false,
+      inputType: "custom",
+      editEle: [
+        <div
+          key="bus.bus_picture"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <ImageUploader isEdit={isEdit} />
+        </div>
+      ]
     }
   ];
   // 分類
   const categoryInfo = [
     {
       req: true,
-      label: "車輛群組",
-      value: getValues("bus.bus_group"),
+      label: "車隊",
+      value: getValues("bus.bus_group")
+        ? convertMap["bus_group"][getValues("bus.bus_group")]["ch"]
+        : "--",
       editEle: (
         <Select
           key="bus.bus_group"
@@ -175,46 +184,43 @@ function Details({
     {
       req: true,
       label: "主要駕駛",
-      value: getValues("bus.operator"),
+      value: busOptions?.operator_options.find(
+        (option: any) => option.no === getValues("bus.operator_no")
+      )?.name,
       editEle: (
         <Select
           key="bus.operator"
-          {...register("bus.operator")}
+          {...register("bus.operator_no")}
           marginBottom="0"
         >
-          <option value="簡忠華(007415)">簡忠華(007415)</option>
-          <option value="陳正烽(00F470)">陳正烽(00F470)</option>
-          <option value="吳啟元(00A371)">吳啟元(00A371)</option>
-          <option value="施純鈞(200120)">施純鈞(200120)</option>
-          <option value="王百華(230014)">王百華(230014)</option>
+          {busOptions?.operator_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
         </Select>
       )
     },
     {
-      req: false,
-      inputType: "custom",
+      req: true,
+      label: "狀態",
+      value: <StatusIcon status={getValues("bus.status")}></StatusIcon>,
       editEle: (
-        <DottedSelect
-          control={control}
-          key={"bus.status"}
-          name="bus.status"
-          label="狀態"
-          isRequire={true}
-          isDisabled={!isEdit}
-          options={[
-            { label: "活躍中", value: "01", color: "#52BD94" },
-            { label: "已售出", value: "02", color: "#8EA8C7" },
-            { label: "終止服務", value: "03", color: "#D14343" },
-            { label: "在維修廠", value: "04", color: "#FFB020" },
-            { label: "閒置中", value: "05", color: "#3670C9" }
-          ]}
-        />
+        <Select key="bus.status" {...register("bus.status")} marginBottom="0">
+          <option value="01">活躍中</option>
+          <option value="02">已售出</option>
+          <option value="03">終止服務</option>
+          <option value="04">在維修廠</option>
+          <option value="05">閒置中</option>
+        </Select>
       )
     },
     {
       req: true,
       label: "所有權",
-      value: getValues("bus.ownership"),
+      value: getValues("bus.ownership")
+        ? convertMap["ownership"][getValues("bus.ownership")]["ch"]
+        : "--",
       editEle: (
         <Select
           key="bus.ownership"
@@ -234,13 +240,15 @@ function Details({
     {
       req: false,
       label: "顏色",
-      value: getValues("bus.color"),
+      value: getValues("bus.color") || "--",
       editEle: <TextInput {...register("bus.color")} />
     },
     {
       req: false,
       label: "車身類型",
-      value: getValues("bus.body_type"),
+      value: getValues("bus.body_type")
+        ? convertMap["body_type"][getValues("bus.body_type")]["ch"]
+        : "--",
       editEle: (
         <Select
           key="bus.body_type"
@@ -258,7 +266,9 @@ function Details({
     {
       req: false,
       label: "車身子類型",
-      value: getValues("bus.body_subtype"),
+      value: getValues("bus.body_subtype")
+        ? convertMap["body_subtype"][getValues("bus.body_subtype")]["ch"]
+        : "--",
       editEle: (
         <Select
           key="bus.body_subtype"
@@ -274,16 +284,20 @@ function Details({
     {
       req: false,
       label: "建議零售價",
-      value: getValues("bus.mspr"),
+      value: getValues("bus.mspr")?.toLocaleString() || "--",
       editEle: <TextInput {...register("bus.mspr")} />
+    }
+  ];
+
+  const label_info = [
+    {
+      label: "",
+      value: ""
     }
   ];
   // 標籤
   return (
-    <FlexWrapper
-      padding="0"
-      style={{ display: `${selected ? "flex" : "none"}` }}
-    >
+    <FlexWrapper padding="0">
       <InfoBox
         isEdit={isEdit}
         infoData={identityInfo}
@@ -296,6 +310,12 @@ function Details({
           isEdit={isEdit}
           infoData={otherDetailInfo}
           infoTitle="其他細項"
+        />
+        <InfoBox
+          isEdit={isEdit}
+          infoData={label_info}
+          infoType="label"
+          infoTitle="標籤"
         />
       </FlexWrapper>
     </FlexWrapper>

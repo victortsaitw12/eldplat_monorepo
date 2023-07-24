@@ -8,6 +8,7 @@ export interface FiledInputProps {
   controlProps: UseControllerProps<CreateCustomerPayload>;
   required?: boolean;
   label: string | React.ReactNode;
+  disabled?: boolean;
   hint?: string;
 }
 
@@ -16,7 +17,8 @@ const FiledInput = ({
   label,
   controlProps,
   hint,
-  required
+  required,
+  disabled
 }: FiledInputProps) => {
   const {
     field,
@@ -31,7 +33,7 @@ const FiledInput = ({
           {!!hint && <HelpIcon />}
         </div>
       )}
-      <input type="string" {...field} />
+      <input type="string" disabled={disabled} {...field} />
       {error && (
         <div className="error-message">
           <ErrorIcon />

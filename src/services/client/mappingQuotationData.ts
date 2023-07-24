@@ -3,27 +3,27 @@ const defaultContactInfo = [
   {
     name: "family_name",
     title: "姓",
-    value: "---"
+    value: "--"
   },
   {
     name: "name",
     title: "名",
-    value: "---"
+    value: "--"
   },
   {
     name: "contact_phone",
     title: "手機",
-    value: "---"
+    value: "--"
   },
   {
     name: "contact_tel",
     title: "電話",
-    value: "---"
+    value: "--"
   },
   {
     name: "contact_email",
     title: "信箱",
-    value: "---"
+    value: "--"
   },
   {
     name: "social_media",
@@ -213,6 +213,6 @@ export function mappingProgressInfo(list: any[]) {
   return list.map((item) => ({
     label: item.name,
     status: item.status,
-    date: item.date ? dayjs(item.date).format("MM/DD HH:MM") : ""
+    date: item.date ? dayjs(item.date).format("MM/DD HH:mm") : ""
   }));
 }

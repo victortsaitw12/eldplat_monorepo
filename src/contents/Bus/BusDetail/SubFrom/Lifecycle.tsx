@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { TextInput } from "evergreen-ui";
+import React from "react";
+import TextInput from "@components/CustomTextInput";
 import InfoBox from "@components/InfoBox";
 import {
   UseFormRegister,
@@ -10,28 +10,18 @@ import {
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 interface Props {
-  selected?: boolean;
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
 }
-function Lifecycle({
-  selected,
-  register,
-  errors,
-  getValues,
-  control,
-  isEdit
-}: Props) {
-  console.log("Lifecycle", getValues("bus_lifecycle"));
-  // 服務中
+function Lifecycle({ register, getValues, isEdit }: Props) {
   const serviceInfo = [
     {
       req: false,
       label: "服務日期",
-      value: getValues("bus_lifecycle.in_service_date"),
+      value: getValues("bus_lifecycle.in_service_date") || "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.in_service_date"}
@@ -43,7 +33,9 @@ function Lifecycle({
     {
       req: false,
       label: "服務里程數",
-      value: getValues("bus_lifecycle.in_service_odometer"),
+      value:
+        getValues("bus_lifecycle.in_service_odometer")?.toLocaleString() ||
+        "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.in_service_odometer"}
@@ -57,7 +49,7 @@ function Lifecycle({
     {
       req: false,
       label: "估計使用壽命(月)",
-      value: getValues("bus_lifecycle.estimated_service_months"),
+      value: getValues("bus_lifecycle.estimated_service_months") || "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.estimated_service_months"}
@@ -68,7 +60,9 @@ function Lifecycle({
     {
       req: false,
       label: "估計使用壽命(里程)",
-      value: getValues("bus_lifecycle.estimated_service_meter"),
+      value:
+        getValues("bus_lifecycle.estimated_service_meter")?.toLocaleString() ||
+        "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.estimated_service_meter"}
@@ -79,11 +73,11 @@ function Lifecycle({
     {
       req: false,
       label: "估計轉售價值",
-      value: getValues("bus_lifecycle.out_service_date"),
+      value: getValues("bus_lifecycle.estimated_resale") || "--",
       editEle: (
         <TextInput
-          key={"bus_lifecycle.out_service_date"}
-          {...register("bus_lifecycle.out_service_date")}
+          key={"bus_lifecycle.estimated_resale"}
+          {...register("bus_lifecycle.estimated_resale")}
         />
       )
     }
@@ -93,7 +87,7 @@ function Lifecycle({
     {
       req: false,
       label: "停用日期",
-      value: getValues("bus_lifecycle.out_service_date"),
+      value: getValues("bus_lifecycle.out_service_date") || "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.out_service_date"}
@@ -105,7 +99,9 @@ function Lifecycle({
     {
       req: false,
       label: "停用里程表數值",
-      value: getValues("bus_lifecycle.out_service_odometer"),
+      value:
+        getValues("bus_lifecycle.out_service_odometer")?.toLocaleString() ||
+        "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.out_service_odometer"}
@@ -115,10 +111,7 @@ function Lifecycle({
     }
   ];
   return (
-    <FlexWrapper
-      padding="0"
-      style={{ display: `${selected ? "flex" : "none"}` }}
-    >
+    <FlexWrapper padding="0">
       <FlexWrapper flexDirection="column" style={{ flex: "1" }}>
         <InfoBox isEdit={isEdit} infoData={serviceInfo} infoTitle="服務中" />
         <InfoBox

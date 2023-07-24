@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { ThemeType } from "@styles/theme";
 
-export const LeaveTypePickerSTY = styled.div<{ color: string }>`
+export const LeaveTypePickerSTY = styled.div<{
+  color: keyof ThemeType["color"];
+}>`
   .leaveReminder {
     padding-inline-start: 5px;
     display: flex;
@@ -8,7 +11,7 @@ export const LeaveTypePickerSTY = styled.div<{ color: string }>`
     align-items: center;
     gap: 4px;
     svg {
-      fill: ${({ theme, color }) => color};
+      fill: ${({ theme, color }) => theme.color[color] || "unset"};
     }
   }
   .selectPlaceholder {

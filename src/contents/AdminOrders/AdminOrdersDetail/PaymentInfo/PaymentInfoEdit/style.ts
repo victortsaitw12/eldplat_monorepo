@@ -33,6 +33,15 @@ const BodySTY = styled.div`
       font-size: 16px;
       line-height: 22px;
     }
+    & > div > .deposit_persent {
+      gap: 0.5rem;
+      max-width: 208px;
+      display: flex;
+      align-items: center;
+      & > input {
+        width: 50%;
+      }
+    }
   }
   .final_payment_content {
     display: flex;
@@ -53,6 +62,9 @@ const BodySTY = styled.div`
       max-width: 280px;
       gap: 12px;
     }
+  }
+  .input-error {
+    color: ${({ theme }) => theme.color.R400};
   }
 `;
 

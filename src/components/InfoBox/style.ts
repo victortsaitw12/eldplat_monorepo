@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const InfoBoxSTY = styled.div`
   width: 100%;
-  min-height: 224px;
+  /* min-height: 224px; */
   background: #ffffff;
   border-radius: 10px;
   overflow: auto;
@@ -25,12 +25,9 @@ export const InfoBoxSTY = styled.div`
   & > ul.info_content.type_text {
     > li {
       display: flex;
+      align-items: center;
       font-size: 14px;
-      margin-bottom: 33px;
-      align-items: baseline;
-      /* input{
-        width: unset;
-      } */
+      margin-bottom: 20px;
       .req {
         color: #d14343;
       }
@@ -66,7 +63,6 @@ export const InfoBoxSTY = styled.div`
     display: flex;
     flex-wrap: wrap;
     > li {
-      /* flex: 1; */
       width: 50%;
       margin: 6px 0;
       > label {

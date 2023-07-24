@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.form`
+  background: ${({ theme }) => theme.color.N0};
   display: flex;
   flex-direction: column;
   align-items: flex-start;

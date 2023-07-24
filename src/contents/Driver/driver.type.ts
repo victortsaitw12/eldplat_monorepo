@@ -1,6 +1,7 @@
 // single driver info
 export interface DriverInfo {
   info: {
+    user_no: string;
     user_name: string | null;
     user_email: string | null;
     user_phone: string | null;
@@ -11,6 +12,8 @@ export interface DriverInfo {
     driver_seniority: string | null;
     dsph_area: string | null;
     dsph_city: string | null;
+  };
+  licenses: Array<{
     licn_typ: string | null;
     licn_name: string | null;
     licn_unit: string | null;
@@ -19,7 +22,7 @@ export interface DriverInfo {
     licn_examine_Date: string | null; //"2023-05-18T08:00:32.426Z"
     licn_link: string | null;
     licn_filename: string | null;
-  };
+  }>;
   languages: Array<{
     user_no: string;
     language: string;
@@ -44,6 +47,7 @@ export interface DriverInfo {
 
 // Update driver info payload
 export interface UpdateDriverInfoPayload {
+  user_no: string;
   driver_no: string;
   license_no: string;
   driver_country: string;
@@ -52,12 +56,18 @@ export interface UpdateDriverInfoPayload {
   driver_seniority: string;
   dsph_area: string;
   dsph_city: string;
-  licn_typ: string;
-  licn_name: string;
-  licn_unit: string;
-  licn_issue: string;
-  licn_exp: string;
-  licn_examine_date: string;
-  licn_filename: string;
-  licn_link: string;
+}
+
+// Update driver license payload
+export interface UpdateLicensePayload {
+  no?: string | null;
+  driver_no: string;
+  licn_typ: string | null;
+  licn_name: string | null;
+  licn_unit: string | null;
+  licn_issue: string | null; //"2023-05-18T08:00:32.426Z"
+  licn_exp: string | null; //"2023-05-18T08:00:32.426Z"
+  licn_examine_date: string | null; //"2023-05-18T08:00:32.426Z"
+  licn_link: string | null;
+  licn_filename: string | null;
 }

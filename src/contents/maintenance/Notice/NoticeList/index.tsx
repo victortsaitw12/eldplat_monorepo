@@ -4,6 +4,7 @@ import { getMaintenanceNoticeTitle } from "@services/maintenance/getMaintenanceN
 import { Checkbox, Pane, Pill, Select } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import DeleteDialog from "./MissionCheckbox/DeleteModal";
+import { I_PageInfo } from "@components/PaginationField";
 
 interface Props {
   clientData: any;
@@ -11,6 +12,8 @@ interface Props {
   setCheckboxData: (t: any) => void;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
+  pageInfo: I_PageInfo;
+  handlePageChange?: (pageQuery: I_PageInfo) => void;
 }
 
 function MaintenanceNoticeList({
@@ -18,10 +21,12 @@ function MaintenanceNoticeList({
   checkboxData,
   setCheckboxData,
   goToCreatePage,
-  deleteItemHandler
+  deleteItemHandler,
+  pageInfo,
+  handlePageChange
 }: Props) {
   const clientTitle = getMaintenanceNoticeTitle();
-  const [value, setValue] = useState("動作");
+  const [value, setValue] = useState("cancel");
   const [selectCount, setSelectCount] = useState<number>(0);
   const [isShown, setIsShown] = useState<boolean>(false);
 
@@ -59,23 +64,20 @@ function MaintenanceNoticeList({
     setSelectCount(countArr.length);
   }, [checkboxData]);
 
+  const customTableClass = [{ label: "新增任務", value: "mission" }];
+
   return (
     <BodySTY>
-      <Pane className="select">
-        <Pill display="inline-flex" margin={6}>
-          {selectCount}
-        </Pill>
-        <select
-          value={value}
-          onChange={(event) => {
-            setValue(event.target.value);
-            handleShown();
-          }}
-        >
-          <option value="">動作</option>
-          <option value="">取消</option>
-        </select>
-      </Pane>
+      {/* 🚫取消的方塊 (PM說先暫時不顯示 2023.7.14) */}
+      {/* {selectCount !== 0 && (
+        <Pane className="select">
+          <Pill display="inline-flex" margin={6}>
+            {selectCount}
+          </Pill>
+          <button onClick={handleShown}>取消</button>
+         
+        </Pane>
+      )} */}
 
       <DeleteDialog
         isShown={isShown}
@@ -93,9 +95,27 @@ function MaintenanceNoticeList({
         handleSelectAll={handleSelectAll}
         handleDeselectAll={handleDeselectAll}
         checkboxData={checkboxData}
+        customTableClass={customTableClass}
+        pageInfo={pageInfo}
+        onPageChange={handlePageChange}
       />
     </BodySTY>
   );
 }
 
 export default MaintenanceNoticeList;
+
+{
+  /* <select
+            value={value}
+            onChange={(event) => {
+              setValue(event.target.value);
+              handleShown(event);
+            }}
+          >
+            <option value="">動作</option>
+            <option value="cancel" onClick={handleShown}>
+              取消
+            </option>
+          </select> */
+}

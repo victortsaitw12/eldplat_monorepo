@@ -33,6 +33,14 @@ const phoneValidation = (phone: string) => {
   return true;
 };
 
+const tellValidation = (phone: string) => {
+  const globalRegex = new RegExp(/^0?[1-9]\d{7}$/, "g");
+  if (!globalRegex.test(phone)) {
+    return "格式不符。";
+  }
+  return true;
+};
+
 const passwordValidation = (password: string) => {
   const globalRegex = new RegExp(
     /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
@@ -60,6 +68,7 @@ export {
   numberValidation,
   emailValidation,
   phoneValidation,
+  tellValidation,
   passwordValidation,
   dateFormatValidation
 };

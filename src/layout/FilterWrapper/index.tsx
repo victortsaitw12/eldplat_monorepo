@@ -37,6 +37,7 @@ function FilterWrapper({
   if (!filter) {
     return <div>loading...</div>;
   }
+  console.log("filter", filter);
 
   return (
     <BodySTY>
@@ -96,7 +97,7 @@ function FilterWrapper({
           </button>
         )}
       </div>
-      {children}
+      <div className="children-container">{children}</div>
     </BodySTY>
   );
 }

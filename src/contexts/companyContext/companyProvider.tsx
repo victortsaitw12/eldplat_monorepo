@@ -1,9 +1,7 @@
 import { mock_company_data } from "@mock-data/company/mock_data";
 import { getSingleCompany } from "@services/company/getAllCompany";
 import { getDdlData } from "@services/ddl/getDdlData";
-import {
-  I_Company_Update_Type
-} from "@typings/company_type";
+import { I_Company_Update_Type } from "@typings/company_type";
 import {
   phoneValidation,
   numberValidation,
@@ -68,9 +66,13 @@ export const CompanyProvider = ({ children }: any) => {
   const [ddlLanguage, setDdlLanguage] = useState<I_DDL_Type[]>([
     { label: "請選擇", value: "no" }
   ]);
+
   const [companyData, setCompanyData] = useState<I_Company_Update_Type | any>(
     mock_company_data
   );
+  // const [companyData, setCompanyData] = useState<I_Company_Update_Type | any>(
+  //   null
+  // );
 
   const [countryNumInput, setCountryNumInput] = useState<I_CountryNum>({
     contactTel: "",
@@ -106,16 +108,14 @@ export const CompanyProvider = ({ children }: any) => {
     setLoading(false);
   }, []);
 
-  console.log("ddlLanguage", ddlLanguage);
-
   // 取得登入公司的資料
   useEffect(() => {
     setLoading(true);
     getSingleCompany().then((data) => {
       console.log("company data", data);
       setCompanyData(data.dataList[0]);
-      setLoading(false);
     });
+    setLoading(false);
   }, [countryNumInput]);
 
   // handle change input for Basic component
@@ -197,7 +197,8 @@ export const CompanyProvider = ({ children }: any) => {
     setCountryNumInput,
     handleCompanyBasicChange,
     handleCompanyContactChange,
-    handleCompanyCountrySetChange
+    handleCompanyCountrySetChange,
+    loading
   };
 
   console.log("🏆🏆🏆companyData", companyData);

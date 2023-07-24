@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Spinner, Pane } from "evergreen-ui";
 import { MonthlySTY, MouseMenuBtnSTY } from "./style";
 import { getTotalDays, debounce } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
@@ -30,20 +29,25 @@ const MonthlyView = ({
   UI.setId(router.query.id);
   const { cur } = router.query;
   const dateCellRef = React.useRef<HTMLDivElement>(null);
-  // const initMaxEventCountRef = React.useRef(null);
+  // 初始頁面、resize 的顯示事件數: initMaxEventCount
   const [initMaxEventCount, setInitMaxEventCount] = React.useState<
     number | null
   >(null);
+  // 配合zoombar展開收合 的顯示事件數: maxEventCount
   const [maxEventCount, setMaxEventCount] = React.useState<number | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  //------ variables ------//
+  //------ variables & constants ------//
   const wkDays = ["日", "一", "二", "三", "四", "五", "六"];
   const curMonthFirst: Date = new Date(
     initialMonthFirst.getFullYear(),
     initialMonthFirst.getMonth() + UI.monthCount,
     1
   );
+  const eventH = 24; // (Icon)16px + 4px * 2  > (font)0.86rem + 4px * 2
+  const gapH = 4;
+  const cellPd = 8;
+  const minCellH = eventH * 3 + gapH * 2 + cellPd;
 
   //------ functions ------//
   const renderCreateForm = () => {
@@ -55,41 +59,42 @@ const MonthlyView = ({
     setIsOpenDrawer(true);
   };
 
-  const handleEventCount = React.useCallback(() => {
-    const eventH = 20;
-    const gapH = 4;
-    const cellH = dateCellRef.current?.offsetHeight || 16;
-    const cellPd = 8;
+  const eventCount = React.useCallback(() => {
+    const cellH =
+      dateCellRef.current?.offsetHeight || eventH * 2 + gapH + cellPd; //保證至少eventCount=1
     const updateMaxEventCount = Math.floor(
       (cellH - cellPd * 2 - eventH) / (eventH + gapH)
     );
-    console.log("dateCellRef:", dateCellRef);
+    return updateMaxEventCount <= 1 ? 1 : updateMaxEventCount;
+  }, [dateCellRef]);
+  const handleEventCount = React.useCallback(() => {
+    const updateMaxEventCount = eventCount();
     setMaxEventCount(updateMaxEventCount);
-    // if (initMaxEventCountRef.current === null) {
-    //   initMaxEventCountRef.current = updateMaxEventCount;
-    // }
-    if (initMaxEventCount === null) {
-      setInitMaxEventCount(updateMaxEventCount);
-    }
-  }, []);
+    if (!initMaxEventCount) setInitMaxEventCount(updateMaxEventCount);
+  }, [initMaxEventCount]);
 
   // ------- useEffect ------- //
   // monitor window for eventCount shown
   React.useEffect(() => {
     handleEventCount();
-  }, []);
+  }, [UI.monthCount]);
+
+  // TODO feat: resize
+  // React.useEffect(() => {
+  //   const handleResize = () => {
+  //     const updateMaxEventCount = eventCount();
+  //     setMaxEventCount(updateMaxEventCount);
+  //     setInitMaxEventCount(updateMaxEventCount);
+  //   };
+  //   window.addEventListener("resize", debounce(handleResize, 250));
+  //   return () => {
+  //     window.removeEventListener("resize", debounce(handleResize, 250));
+  //   };
+  // }, []);
 
   React.useEffect(() => {
-    window.addEventListener("resize", debounce(handleEventCount, 250));
-    return () => {
-      window.removeEventListener("resize", debounce(handleEventCount, 250));
-    };
-  }, [handleEventCount]);
-
-  React.useEffect(() => {
-    console.log(isExpand);
     isExpand ? setMaxEventCount(99) : setMaxEventCount(initMaxEventCount);
-  }, [isExpand]);
+  }, [isExpand, initMaxEventCount]);
 
   // fetch data from db
   React.useEffect(() => {
@@ -169,7 +174,7 @@ const MonthlyView = ({
           setIsOpenDrawer={setIsOpenDrawer}
           monthlyData={monthlyData}
           view={view}
-          maxEventCount={maxEventCount || 0}
+          maxEventCount={maxEventCount || 1}
           dateCellRef={dateCellRef}
         />
       );
@@ -199,7 +204,7 @@ const MonthlyView = ({
   };
 
   return (
-    <MonthlySTY rows={dateArr.length / 7}>
+    <MonthlySTY rows={dateArr.length / 7} minCellH={minCellH}>
       <div className="headerCells">
         {wkDays.map((item, i) => (
           <div
@@ -211,20 +216,7 @@ const MonthlyView = ({
         ))}
       </div>
       <div className="dateCells">{renderRow()}</div>
-
-      {isLoading ? (
-        <Pane
-          className="coverAll"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height={400}
-        >
-          <Spinner className="spinner" />
-        </Pane>
-      ) : (
-        ""
-      )}
+      <div style={{ paddingBottom: "68px" }}> </div>
       {UI.isMouseMenuBtn && (
         <MouseMenuBtnSTY
           style={{ top: UI.mousePosition.y, left: UI.mousePosition.x }}

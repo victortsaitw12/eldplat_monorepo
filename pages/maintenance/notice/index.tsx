@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
-import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
@@ -13,6 +12,7 @@ import Drawer from "@components/Drawer";
 import MaintenanceNoticeList from "@contents/maintenance/Notice/NoticeList";
 
 import {
+  defaultPageInfo,
   getAllMaintenanceNotices,
   maintenanceParser,
   maintenancePattern
@@ -20,17 +20,19 @@ import {
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
 import AddMissionBtn from "@contents/maintenance/Notice/NoticeList/AddMissionBtn";
 import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
+import { I_PageInfo } from "@components/PaginationField";
 //
 const mainFilterArray = [
-  { id: 1, label: "啟用", value: "1" },
-  { id: 2, label: "停用", value: "2" }
+  { id: 1, label: "通知", value: "1" },
+  { id: 2, label: "取消", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
-  const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [checkItems, setCheckItems] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
+  const [busNo, setBusNo] = useState<string>("");
   const {
     initializeSubFilter,
     mainFilter,
@@ -44,7 +46,8 @@ const Page: NextPageWithLayout<never> = () => {
 
   const fetchMaintenanceNoticeData = async (
     isCanceled: boolean,
-    mainFilter = "1"
+    mainFilter = "1",
+    pageQuery = defaultPageInfo
   ) => {
     getAllMaintenanceNotices(subFilter, mainFilter).then((res) => {
       console.log("res in notice", res);
@@ -53,6 +56,11 @@ const Page: NextPageWithLayout<never> = () => {
         maintenancePattern,
         maintenanceParser
       );
+
+      // 處理分頁
+      const getPageInfo = { ...res.pageInfo };
+      getPageInfo["orderby"] = "reminders_no";
+      setPageInfo(getPageInfo);
 
       res.contentList.map((v: { reminders_no: { label: any } }) => {
         setCheckItems((prev) => [
@@ -64,6 +72,7 @@ const Page: NextPageWithLayout<never> = () => {
       const newData = maintenanceData?.map((item, idx) => {
         console.log("😺item", item);
         return {
+          id: { label: item.id.label, value: item.id.value },
           bus_name: { label: item.bus_name.label, value: item.bus_name.value },
           driver_name: {
             label: item.driver_name.label,
@@ -80,7 +89,11 @@ const Page: NextPageWithLayout<never> = () => {
           },
           mission: {
             label: (
-              <AddMissionBtn setDrawerOpen={setDrawerOpen}></AddMissionBtn>
+              <AddMissionBtn
+                item={item}
+                setDrawerOpen={setDrawerOpen}
+                setBusNo={setBusNo}
+              ></AddMissionBtn>
             ),
             value: item.reminders_no.label
           }
@@ -125,6 +138,10 @@ const Page: NextPageWithLayout<never> = () => {
     return <LoadingSpinner />;
   }
 
+  const handlePageChange = (pageQuery: I_PageInfo) => {
+    fetchMaintenanceNoticeData(false, nowTab, pageQuery);
+  };
+
   return (
     <BodySTY>
       <TableWrapper
@@ -148,6 +165,8 @@ const Page: NextPageWithLayout<never> = () => {
               setDrawerOpen(true);
             }}
             deleteItemHandler={deleteItemHandler}
+            pageInfo={pageInfo}
+            handlePageChange={handlePageChange}
           />
         </FilterWrapper>
       </TableWrapper>
@@ -164,6 +183,7 @@ const Page: NextPageWithLayout<never> = () => {
               fetchMaintenanceNoticeData(false);
               setDrawerOpen(false);
             }}
+            busNo={busNo}
           />
         </Drawer>
       )}
@@ -171,5 +191,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -18,6 +18,7 @@ import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
+import { PageInfoType } from "@services/type";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -28,6 +29,13 @@ const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [nowTab, setNowTab] = useState("1");
+  const [pageInfo, setPageInfo] = useState<PageInfoType>({
+    arrangement: "desc",
+    orderby: null,
+    page_Index: 1,
+    page_Size: 10,
+    last_Page: 10
+  });
   const {
     initializeSubFilter,
     mainFilter,
@@ -38,9 +46,13 @@ const Page: NextPageWithLayout<never> = () => {
     setDrawerOpen
   } = useCustomerStore();
   //
-  const fetchCustomerData = async (isCanceled: boolean, mainFilter = "1") => {
+  const fetchCustomerData = async (
+    isCanceled: boolean,
+    mainFilter = "1",
+    pageInfo: PageInfoType
+  ) => {
     console.log("mainFilter", mainFilter);
-    getAllCustomers(subFilter, mainFilter).then((res) => {
+    getAllCustomers(pageInfo, subFilter, mainFilter).then((res) => {
       console.log("res", res);
       const customerData = mappingQueryData(
         res.contentList,
@@ -59,16 +71,22 @@ const Page: NextPageWithLayout<never> = () => {
         initializeSubFilter();
       }
       setData(customerData);
+      setPageInfo(res.pageInfo);
     });
   };
   //
-  const deleteItemHandler = async (id: string) => {
-    deleteCustomer(id).then((res) => {
-      console.log("res", res);
-      fetchCustomerData(false);
-    });
-  };
+  useEffect(() => {
+    let isCanceled = false;
+    fetchCustomerData(isCanceled, nowTab, pageInfo);
+    return () => {
+      isCanceled = true;
+    };
+  }, [nowTab]);
   //進入供應商編輯頁
+  const upDatePageHandler = (newPageInfo: PageInfoType) => {
+    fetchCustomerData(false, nowTab, newPageInfo);
+  };
+  //
   const goToEditPageHandler = (id: string) => {
     router.push("/customer/detail/" + id + "?editPage=edit");
   };
@@ -78,14 +96,16 @@ const Page: NextPageWithLayout<never> = () => {
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
   };
+  const deleteItemHandler = async (id: string) => {
+    deleteCustomer(id).then((res) => {
+      fetchCustomerData(false, nowTab, pageInfo);
+    });
+  };
+  const recoverItemHandler = async (id: string) => {
+    console.log("上一動");
+  };
   //
-  useEffect(() => {
-    let isCanceled = false;
-    fetchCustomerData(isCanceled, nowTab);
-    return () => {
-      isCanceled = true;
-    };
-  }, [nowTab]);
+
   if (!data) {
     return <LoadingSpinner />;
   }
@@ -107,13 +127,18 @@ const Page: NextPageWithLayout<never> = () => {
           filter={subFilter}
         >
           <CustomerList
+            listType={nowTab}
             clientData={data}
+            customerData={data}
             goToCreatePage={() => {
               setDrawerOpen(true);
             }}
             deleteItemHandler={deleteItemHandler}
+            recoverItemHandler={recoverItemHandler}
             goToEditPageHandler={goToEditPageHandler}
             goToDetailPage={goToDetailPageHandler}
+            upDatePageHandler={upDatePageHandler}
+            pageInfo={pageInfo}
           />
         </FilterWrapper>
       </TableWrapper>
@@ -126,7 +151,7 @@ const Page: NextPageWithLayout<never> = () => {
         >
           <CustomerCreateForm
             reloadData={() => {
-              fetchCustomerData(false);
+              fetchCustomerData(false, nowTab, pageInfo);
               setDrawerOpen(false);
             }}
           />
@@ -136,5 +161,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = getLayout;
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 export default Page;

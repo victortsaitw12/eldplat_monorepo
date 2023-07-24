@@ -44,12 +44,12 @@ const defaultValues: CreateCustomerPayload = {
   customer_area: "",
   customer_district_code: "",
   customer_country: "",
-  customer_tel_code: "",
+  customer_tel_code: "886",
   customer_tel: "",
   contact_name: "",
-  contact_phone_code: "",
+  contact_phone_code: "886",
   contact_phone: "",
-  contact_tel_code: "",
+  contact_tel_code: "886",
   contact_tel: "",
   customer_typ: ""
 };
@@ -104,19 +104,15 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
         }}
         required
       />
-      <SelectField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>負責人
-          </div>
-        }
-        {...register("customer_owner", { required: "此欄位必填" })}
-      >
-        <option value="負責人1">負責人1</option>
-        <option value="負責人2">負責人2</option>
-        <option value="負責人3">負責人3</option>
-        <option value="負責人4">負責人4</option>
-      </SelectField>
+      <FiledInput
+        label="負責人"
+        controlProps={{
+          name: "customer_owner",
+          control,
+          rules: { required: "此欄位必填" }
+        }}
+        required
+      />
       <Text>
         <span style={{ color: "#D14343" }}>*</span>公司地址
       </Text>
@@ -139,10 +135,11 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
       <FlexWrapper
         padding="0"
         style={{
-          alignItems: "center"
+          alignItems: "center",
+          gap: "8px"
         }}
       >
-        <label htmlFor="">
+        <label style={{ width: "68px", fontSize: "12px" }}>
           <span style={{ color: "#D14343" }}>*</span>
           城市
         </label>
@@ -160,10 +157,11 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
       <FlexWrapper
         padding="0"
         style={{
-          alignItems: "center"
+          alignItems: "center",
+          gap: "8px"
         }}
       >
-        <label htmlFor="">州/省/區域</label>
+        <label style={{ width: "68px", fontSize: "12px" }}>州/省/區域</label>
         <Select {...register("customer_area")}>
           <option value="01">基隆市</option>
           <option value="02">台北市</option>
@@ -185,7 +183,7 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
           alignItems: "center"
         }}
       >
-        <label htmlFor="">
+        <label style={{ width: "68px", fontSize: "12px" }}>
           <span style={{ color: "#D14343" }}>*</span>
           國家
         </label>
@@ -202,14 +200,16 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
         公司電話
       </Text>
       <FlexWrapper padding="0">
-        {/*公司電話國碼*/}
-        <FiledInput
-          label=""
-          controlProps={{
-            name: "customer_tel_code",
-            control
-          }}
-        />
+        <div style={{ width: "60px" }}>
+          <FiledInput
+            label=""
+            disabled={true}
+            controlProps={{
+              name: "customer_tel_code",
+              control
+            }}
+          />
+        </div>
         <FiledInput
           label=""
           controlProps={{
@@ -235,46 +235,59 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
       <FlexWrapper
         padding="0"
         style={{
-          alignItems: "center"
+          alignItems: "center",
+          gap: "8px"
         }}
       >
-        <span style={{ flex: "unset" }}>市話</span>
-        <FiledInput
-          controlProps={{
-            name: "contact_tel_code",
-            control
-          }}
-          label=""
-        />
-        <FiledInput
-          controlProps={{
-            name: "contact_tel",
-            control
-          }}
-          label=""
-        />
+        <span style={{ width: "26px", fontSize: "12px" }}>市話</span>
+        <div style={{ width: "60px" }}>
+          <FiledInput
+            controlProps={{
+              name: "contact_tel_code",
+              control
+            }}
+            label=""
+            disabled
+          />
+        </div>
+        <div style={{ flex: "1 0 0" }}>
+          <FiledInput
+            controlProps={{
+              name: "contact_tel",
+              control
+            }}
+            label=""
+          />
+        </div>
       </FlexWrapper>
       <FlexWrapper
         padding="0"
         style={{
-          alignItems: "center"
+          alignItems: "center",
+          gap: "8px"
         }}
       >
-        <span>手機</span>
-        <FiledInput
-          controlProps={{
-            name: "contact_phone_code",
-            control
-          }}
-          label=""
-        />
-        <FiledInput
-          controlProps={{
-            name: "contact_phone",
-            control
-          }}
-          label=""
-        />
+        <span style={{ width: "26px", fontSize: "12px" }}>手機</span>
+        <div style={{ width: "60px" }}>
+          <FiledInput
+            controlProps={{
+              name: "contact_phone_code",
+              control
+            }}
+            label=""
+            disabled
+          />
+        </div>
+
+        <div style={{ flex: "1 0 0" }}>
+          <FiledInput
+            controlProps={{
+              name: "contact_phone",
+              control
+            }}
+            label=""
+          />
+        </div>
       </FlexWrapper>
       <Text>
         <span style={{ color: "#D14343" }}>* </span>
@@ -292,7 +305,7 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
           <option value="03">旅行社</option>
         </Select>
       </FlexWrapper>
-      <IconLeft text={"新增顧客"} type="submit">
+      <IconLeft text={"新增客戶"} type="submit">
         <PlusIcon size={14} />
       </IconLeft>
     </FormSTY>
