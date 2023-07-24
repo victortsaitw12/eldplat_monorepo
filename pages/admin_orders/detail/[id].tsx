@@ -28,6 +28,7 @@ import { getBusType } from "@services/client/getBusType";
 //@mock_data
 
 const Index: NextPageWithLayout<never> = ({
+  viewonly,
   p_quote_type,
   p_order_no,
   editPage
@@ -106,6 +107,7 @@ const Index: NextPageWithLayout<never> = ({
         <>
           <Pane>
             <TableWrapper
+              viewOnly={viewonly}
               isEdit={editPage}
               onChangeTab={(value) => changeMainFilterHandler(value)}
               mainFilter={nowTab}
@@ -195,6 +197,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     return {
       props: {
         editPage: query.editPage == "edit",
+        viewonly: query.viewonly == "1",
         p_quote_type: query.type,
         p_order_no: params ? params.id : ""
       }
