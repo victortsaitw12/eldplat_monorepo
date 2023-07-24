@@ -87,7 +87,6 @@ const OverviewTable = ({
   };
 
   const handleCheck = (e: any) => {
-    console.log("🍅🍅🍅checkedItems:", checkedItems);
     if (checkedItems.includes(e.target.id)) {
       const updated = checkedItems.filter((item) => item !== e.target.id);
       setCheckedItems(updated);

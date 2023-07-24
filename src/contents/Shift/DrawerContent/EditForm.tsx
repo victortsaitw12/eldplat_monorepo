@@ -13,8 +13,14 @@ import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import Timepicker from "@components/Timepicker";
 import LeaveTypePicker from "@contents/Shift/LeaveTypePicker";
 import { updateSchedule } from "@services/schedule/updateSchedule";
+import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 import { updateScheduleSign } from "@services/schedule/updateScheduleSign";
-import { formatToDB, getDayStart, formatToDBDate } from "../shift.util";
+import {
+  formatToDB,
+  getDayStart,
+  formatToDBDate,
+  formatDate
+} from "../shift.util";
 
 const EditForm = ({
   setIsOpenDrawer
@@ -57,7 +63,24 @@ const EditForm = ({
           : await updateSchedule(updatedData);
         UI.resetState();
         UI.setFlag(!UI.flag);
-        setIsOpenDrawer(false);
+        // setIsOpenDrawer(false);
+        // render EventStatus
+        // fetch API
+        const result = await getScheduleUpdateList(
+          UI.insertData.drv_Schedule_No
+        );
+        const updateViewEventList = [result.data];
+        // update UI
+        UI.setViewEventList(updateViewEventList);
+
+        const cellTimestamp = getDayStart(
+          new Date(updatedData.schd_Date)
+        ).valueOf();
+        UI.setDrawerType({
+          type: "view",
+          title: formatDate(new Date(cellTimestamp)),
+          timestamp: cellTimestamp
+        });
       } catch (e: any) {
         alert(e.message);
       }
@@ -68,7 +91,7 @@ const EditForm = ({
   return (
     <FormSTY onSubmit={handleSubmit}>
       <section className="form__startTime">
-        <label>
+        <label className="form__label">
           <TimeIcon />
           <span>開始時間</span>
         </label>
@@ -80,7 +103,7 @@ const EditForm = ({
         />
       </section>
       <section className="form__endTime">
-        <label>
+        <label className="form__label">
           <TimeIcon />
           <span>結束時間</span>
         </label>
@@ -92,14 +115,14 @@ const EditForm = ({
         />
       </section>
       <section className="form__leaveCode">
-        <label>
+        <label className="form__label">
           <CalendarIcon />
           <span>假別</span>
         </label>
         <LeaveTypePicker />
       </section>
       <section className="form__description">
-        <label>
+        <label className="form__label">
           <TagIcon />
           <span>說明</span>
         </label>
@@ -111,7 +134,7 @@ const EditForm = ({
       </section>
       {UI.drawerType.title === "簽核" ? (
         <section className="form_signOff">
-          <label>
+          <label className="form__label">
             <AnnotationIcon />
             <span>簽核</span>
           </label>

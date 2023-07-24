@@ -47,6 +47,7 @@ export const BodySTY = styled.div`
 
   // 下方所有新增區塊
   .add-blocks {
+    color: red;
     display: grid;
     grid-template-columns: 4fr 5fr;
     gap: 6px;

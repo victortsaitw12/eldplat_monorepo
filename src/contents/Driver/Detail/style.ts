@@ -2,18 +2,22 @@ import styled from "styled-components";
 
 export const DivSTY = styled.div`
   /* 全部input欄位寬度 */
-  li > div > div {
-    flex-grow: 10;
-  }
-  li > div:first-child {
-    flex: 1 !important;
-  }
-  li > div:last-child {
-    flex: 2 !important;
-    input {
-      width: 100%;
+  .infoBox {
+    .infoBox__label {
+      flex: 1 !important;
+    }
+    .infoBox__value {
+      flex: 2 !important;
+      input {
+        width: 100%;
+      }
+      span > label {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
     }
   }
+
   /* 駕駛履歷標籤 <TagSelect/> */
   .view-tags {
     display: flex;

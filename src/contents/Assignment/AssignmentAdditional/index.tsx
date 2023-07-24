@@ -49,7 +49,6 @@ const AssignmentAdditional = ({
   // ----- function ----- //
   // refetch function (待抽出:等page/assignment 裡面的fetchAssignData拆開)
   const refetch = async (resDataListZero: I_OtherAssignment) => {
-    console.log("🍅🍅🍅resDataListZero:", resDataListZero);
     // refetch 更新子列表
     getAllAssignments()
       .then((data) => {
