@@ -56,6 +56,8 @@ export interface UpdateDriverInfoPayload {
   driver_seniority: string;
   dsph_area: string;
   dsph_city: string;
+  working_hours_code: string;
+  working_hours_name: string;
 }
 
 // Update driver license payload
