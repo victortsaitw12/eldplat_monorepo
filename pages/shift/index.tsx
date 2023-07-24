@@ -56,8 +56,6 @@ const ShiftPage: NextPageWithLayout<never> = () => {
         }));
         setData(data);
         setPageInfo(res.pageInfo);
-        console.log("🍅🍅🍅res", res);
-        console.log("🍅🍅🍅subFilter", subFilter);
 
         if (!subFilter) {
           localStorage.setItem(

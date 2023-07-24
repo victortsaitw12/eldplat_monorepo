@@ -28,7 +28,6 @@ const EventStatus = ({
     } else {
       result = (
         <>
-          {" "}
           <span> {formatTime(new Date(event.schd_Start_Time))}</span>
           <span> - </span>
           <span> {formatTime(new Date(event.schd_End_Time))}</span>

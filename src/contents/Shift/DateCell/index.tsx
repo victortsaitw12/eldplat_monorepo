@@ -32,7 +32,6 @@ const DateCell = React.forwardRef(function DateCell({
     null
   );
   React.useEffect(() => {
-    console.log("🍅🍅🍅 called");
     setSingleRowExpand(null);
   }, [UI.monthCount]);
 

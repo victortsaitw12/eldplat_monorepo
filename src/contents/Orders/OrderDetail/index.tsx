@@ -51,9 +51,9 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                 </span>
                 <span className="collapse__subTitle">
                   {orderData.quote_type === "2"
-                    ? "| 送機"
-                    : orderData.quote_type === "3"
                     ? "| 接機"
+                    : orderData.quote_type === "3"
+                    ? "| 送機"
                     : orderData.purpose
                     ? `| ${PURPOSE[orderData.purpose]?.label}`
                     : "| --"}
@@ -66,7 +66,11 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
             <Pane style={{ background: "#fff" }}>
               <DetailItem
                 title="乘車日期"
-                value={dayjs(orderData.departure_date).format("YYYY/MM/DD")}
+                value={
+                  orderData.departure_date
+                    ? dayjs(orderData.departure_date).format("YYYY/MM/DD")
+                    : "--"
+                }
               />
               <DetailItem title="詢價編號" value={orderData.quote_no} />
               <Pane>
