@@ -78,7 +78,7 @@ const MonthlyView = ({
   // monitor window for eventCount shown
   React.useEffect(() => {
     handleEventCount();
-  }, [initialMonthFirst]);
+  }, [UI.monthCount]);
 
   // TODO feat: resize
   // React.useEffect(() => {
@@ -175,7 +175,7 @@ const MonthlyView = ({
           setIsOpenDrawer={setIsOpenDrawer}
           monthlyData={monthlyData}
           view={view}
-          maxEventCount={maxEventCount || 0}
+          maxEventCount={maxEventCount || 1}
           dateCellRef={dateCellRef}
         />
       );

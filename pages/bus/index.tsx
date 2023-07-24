@@ -15,6 +15,7 @@ import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
+import { PageInfoType } from "@services/type";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -26,6 +27,14 @@ const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = useState<any>(null);
   const [nowTab, setNowTab] = useState("1");
   const [options, setOptions] = useState<any>(null);
+  const [pageInfo, setPageInfo] = useState<PageInfoType>({
+    arrangement: "desc",
+    orderby: null,
+    page_Index: 1,
+    page_Size: 10,
+    last_Page: 10
+  });
+
   const {
     initializeSubFilter,
     updateMainFilter,
@@ -35,34 +44,34 @@ const Page: NextPageWithLayout<never> = () => {
     setDrawerOpen
   } = useBusStore();
   //
-  const fetchBusData = useCallback(
-    async (isCanceled: boolean, mainFilter = "1") => {
-      getAllBuses(subFilter, mainFilter).then((res) => {
-        // console.log("res.contentList", res.contentList);
-        const busesData = mappingQueryData(
-          res.contentList,
-          busPattern,
-          busParser
+  const fetchBusData = async (
+    isCanceled: boolean,
+    mainFilter = "1",
+    pageInfo: PageInfoType
+  ) => {
+    getAllBuses(pageInfo, subFilter, mainFilter).then((res) => {
+      const busesData = mappingQueryData(
+        res.contentList,
+        busPattern,
+        busParser
+      );
+      if (isCanceled) {
+        console.log("canceled");
+        return;
+      }
+      if (!subFilter) {
+        localStorage.setItem(
+          "busInitFilter",
+          JSON.stringify(res.conditionList)
         );
-        if (isCanceled) {
-          console.log("canceled");
-          return;
-        }
-        if (!subFilter) {
-          localStorage.setItem(
-            "busInitFilter",
-            JSON.stringify(res.conditionList)
-          );
-          initializeSubFilter();
-        }
-        setData(busesData);
-      });
-    },
-    [initializeSubFilter, subFilter]
-  );
+        initializeSubFilter();
+      }
+      setData(busesData);
+      setPageInfo(res.pageInfo);
+    });
+  };
   //
   useEffect(() => {
-    console.log("update mainFilter to 1");
     updateMainFilter("1");
     getCreateBusOptions().then((res) => {
       setOptions(res.dataList[0]);
@@ -71,20 +80,24 @@ const Page: NextPageWithLayout<never> = () => {
   //
   useEffect(() => {
     let isCanceled = false;
-    fetchBusData(isCanceled, nowTab);
+    fetchBusData(isCanceled, nowTab, pageInfo);
     return () => {
       isCanceled = true;
     };
   }, [nowTab]);
+  //
+  const upDatePageHandler = (newPageInfo: PageInfoType) => {
+    fetchBusData(false, nowTab, newPageInfo);
+  };
+  // const changePageSizeHandler = (size: number) => {};
+  //
   const goToEditPageHandler = (id: string, item: any) => {
-    // console.log("item", item);
     const license_plate = item?.license_plate?.value;
     router.push(
       "/bus/detail/" + id + "?editPage=edit&license_plate=" + license_plate
     );
   };
   const goToDetailPageHandler = (id: string, item: any) => {
-    // console.log("item", item);
     const license_plate = item?.license_plate?.value;
     router.push(
       `/bus/detail/${id}?editPage=view&license_plate=${license_plate}`
@@ -96,9 +109,11 @@ const Page: NextPageWithLayout<never> = () => {
   //
   const deleteItemHandler = async (id: string) => {
     deleteBus(id).then((res) => {
-      console.log("res", res);
-      fetchBusData(false);
+      fetchBusData(false, nowTab, pageInfo);
     });
+  };
+  const recoverItemHandler = async (id: string) => {
+    console.log("上一動");
   };
   if (!data) {
     return <LoadingSpinner />;
@@ -119,13 +134,17 @@ const Page: NextPageWithLayout<never> = () => {
           filter={subFilter}
         >
           <BusList
+            listType={nowTab}
             busData={data}
             goToCreatePage={() => {
               setDrawerOpen(true);
             }}
+            recoverItemHandler={recoverItemHandler}
             deleteItemHandler={deleteItemHandler}
             goToEditPageHandler={goToEditPageHandler}
             goToDetailPage={goToDetailPageHandler}
+            upDatePageHandler={upDatePageHandler}
+            pageInfo={pageInfo}
           />
         </FilterWrapper>
       </TableWrapper>
@@ -138,7 +157,7 @@ const Page: NextPageWithLayout<never> = () => {
         >
           <BusCreateForm
             reloadData={() => {
-              fetchBusData(false);
+              fetchBusData(false, nowTab, pageInfo);
               setDrawerOpen(false);
             }}
             options={options}

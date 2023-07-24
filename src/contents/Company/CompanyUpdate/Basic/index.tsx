@@ -1,5 +1,12 @@
-import React, { useContext } from "react";
-import { Heading, Pane, Text, TextInput } from "evergreen-ui";
+import React, { useCallback, useContext, useState } from "react";
+import {
+  FileCard,
+  FileUploader,
+  Heading,
+  Pane,
+  Text,
+  TextInput
+} from "evergreen-ui";
 
 import { BodySTY } from "./style";
 import {
@@ -10,6 +17,25 @@ import {
 function Basic({}) {
   const { companyData, handleCompanyBasicChange, errMsg } =
     useContext<I_Company_Context>(CompanyContext);
+
+  // 上傳照片 ------
+  const [files, setFiles] = useState<any[]>([]);
+  const [fileRejections, setFileRejections] = useState<any[]>([]);
+  const handleChangeFile = (files: any[]) => {
+    setFiles([files[0]]);
+    // const newFile = { ...insertData };
+    // newFile.user_photo_link = files[0].name;
+    // setInsertData(newFile);
+  };
+  const handleRejected = useCallback(
+    (fileRejections: any[]) => setFileRejections([fileRejections[0]]),
+    []
+  );
+  const handleRemove = useCallback(() => {
+    setFiles([]);
+    setFileRejections([]);
+  }, []);
+  // 上傳照片 end ------
 
   return (
     <BodySTY>
@@ -51,9 +77,46 @@ function Basic({}) {
         <Pane className="input-line">
           <Text className="">負責人</Text>
           <TextInput
-            name="owner"
+            name="company_owner"
             value={companyData.company_owner}
             onChange={handleCompanyBasicChange}
+          />
+        </Pane>
+
+        {/* 上傳照片 */}
+        <Pane maxWidth={654} className="upload-file-frame">
+          <FileUploader
+            className="upload-file"
+            maxSizeInBytes={50 * 1024 ** 2} // 50MB上限
+            maxFiles={1}
+            onChange={handleChangeFile}
+            onRejected={handleRejected}
+            browseOrDragText={() => {
+              return (
+                <Text color="#567190" marginTop={10} fontWeight={400}>
+                  添加公司 LOGO
+                </Text>
+              );
+            }}
+            renderFile={(file) => {
+              const { name, size, type } = file;
+              const fileRejection = fileRejections.find(
+                (fileRejection) => fileRejection.file === file
+              );
+              const { message } = fileRejection || {};
+              return (
+                <FileCard
+                  key={name}
+                  isInvalid={fileRejection != null}
+                  name={name}
+                  onRemove={handleRemove}
+                  sizeInBytes={size}
+                  type={type}
+                  validationMessage={message}
+                />
+              );
+            }}
+            values={files}
           />
         </Pane>
       </form>

@@ -1,10 +1,9 @@
 import React, { forwardRef, useState, useEffect } from "react";
 import { StyledForm, StyledCard } from "./style";
 import { useRouter } from "next/router";
-import { TextInput, Select } from "evergreen-ui";
+import { TextInput, Select, toaster } from "evergreen-ui";
 import { useForm, Controller } from "react-hook-form";
 import Collapse from "@components/Collapse";
-import { formatDateToString } from "@utils/calculateDate";
 type FormValues = {
   departureDate: string;
   returnDate: string;
@@ -30,7 +29,7 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
     formState: { errors }
   } = useForm<FormValues>({
     defaultValues: {
-      departureDate: formatDateToString(new Date()),
+      departureDate: "",
       returnDate: "",
       purpose: ""
     }
@@ -49,9 +48,7 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
     if (returnDate) setValue("returnDate", returnDate);
     if (purpose) setValue("purpose", purpose);
   }, []);
-  const [minDate, setMinDate] = useState<string>(
-    formatDateToString(new Date())
-  );
+  const [minDate, setMinDate] = useState<string>("");
   const submitFormHandler = (data: FormValues) => {
     const { departureDate, purpose, returnDate } = data;
     router.push({
@@ -98,6 +95,14 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
             <TextInput
               type="date"
               {...register("returnDate", { required: "不可空白！" })}
+              readOnly={!minDate}
+              onClick={() => {
+                if (!minDate) {
+                  toaster.warning("請先選擇出發日期", {
+                    id: "departureDate"
+                  });
+                }
+              }}
               min={minDate}
               isInvalid={!!errors.returnDate}
             />

@@ -189,21 +189,24 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
           </option>
         ))}
       </SelectField>
-      <DottedSelect
-        control={control}
-        name="status"
-        label="狀態"
-        isRequire={true}
-        isDisabled={false}
-        vertical={true}
-        options={[
-          { label: "活躍中", value: "01", color: "#52BD94" },
-          { label: "已售出", value: "02", color: "#8EA8C7" },
-          { label: "終止服務", value: "03", color: "#D14343" },
-          { label: "在維修廠", value: "04", color: "#FFB020" },
-          { label: "閒置中", value: "05", color: "#3670C9" }
-        ]}
-      />
+      <SelectField
+        label={
+          <div>
+            <span style={{ color: "#D14343" }}>*</span>狀態
+          </div>
+        }
+        {...register("status", { required: "此欄位必填" })}
+        defaultValue=""
+      >
+        <option value="" disabled hidden>
+          請選擇
+        </option>
+        <option value="01">活躍中</option>
+        <option value="02">已售出</option>
+        <option value="03">終止服務</option>
+        <option value="04">在維修廠</option>
+        <option value="05">閒置中</option>
+      </SelectField>
       <SelectField
         label={
           <div>
@@ -220,6 +223,10 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <option value="02">租來的</option>
         <option value="03">出租中</option>
         <option value="04">客戶的</option>
+        <option value="05">擁有的</option>
+        <option value="06">租來的</option>
+        <option value="07">出租中</option>
+        <option value="08">客戶的</option>
       </SelectField>
       <IconLeft text={"新增車輛"} type="submit">
         <PlusIcon size={14} />

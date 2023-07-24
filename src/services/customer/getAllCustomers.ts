@@ -1,7 +1,9 @@
 import { PatternType } from "@utils/mappingQueryData";
 import { createElement } from "react";
 import API_Path from "./apiPath";
+import { PageInfoType } from "@services/type";
 export const getAllCustomers = async (
+  pageInfo: PageInfoType,
   filter: { [key: string]: any } = {},
   customer_status = "1"
 ) => {
@@ -27,12 +29,7 @@ export const getAllCustomers = async (
       customer_status,
       customer_Filter: customerFilter,
       filter_Needed: true,
-      pageInfo: {
-        page_index: 1,
-        page_size: 10,
-        orderby: "customer_no",
-        arrangement: "asc"
-      }
+      pageInfo
     })
   });
   console.log("res", res);
@@ -103,7 +100,13 @@ export const customerParser = (data: any, key: string) => {
   if (key === "contact_phone_and_tel") {
     const lebelElement = createElement(
       "div",
-      { style: { display: "flex", flexDirection: "column" } },
+      {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start"
+        }
+      },
       [
         createElement(
           "div",
@@ -122,7 +125,6 @@ export const customerParser = (data: any, key: string) => {
       ]
     );
     return {
-      // label: lebelElement,
       label: lebelElement,
       value:
         `${data["contact_tel_code"] + data["contact_tel"]}, ${

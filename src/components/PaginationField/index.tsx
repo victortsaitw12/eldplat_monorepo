@@ -35,6 +35,7 @@ function PaginationField(props: I_PaginationField) {
 
   const pageSizeOption = [10, 20, 30, 40, 50]; // 設計給定值 預設10
   const totalItems = pageInfo?.total || 0;
+
   const startItem =
     ((pageInfo?.page_Index || 1) - 1) * (pageInfo?.page_Size || 0) + 1;
   const endItem =
@@ -58,19 +59,25 @@ function PaginationField(props: I_PaginationField) {
     if (!e.target.value) return;
     setPageSize(e.target.value);
   };
-  const handleUpdatePage = React.useCallback(() => {
-    if (!onPageChange || !pageInfo) return;
-    const updatedPageInfo = { ...pageInfo };
-    updatedPageInfo.page_Index = pageIndex;
-    updatedPageInfo.page_Size = pageSize;
-    console.log("🍅 updatedPageInfo:", updatedPageInfo);
-    onPageChange(updatedPageInfo);
-  }, [pageIndex, pageSize, pageInfo, onPageChange]);
+  const handleUpdatePage = React.useCallback(
+    (type: "index" | "size") => {
+      if (!onPageChange || !pageInfo) return;
+      const updatedPageInfo = { ...pageInfo };
+      updatedPageInfo.page_Index = type === "index" ? pageIndex : 1;
+      updatedPageInfo.page_Size = pageSize;
+      onPageChange(updatedPageInfo);
+      console.log(pageInfo);
+    },
+    [pageIndex, pageSize, pageInfo, onPageChange]
+  );
 
   // ----- useEffect ----- //
   React.useEffect(() => {
-    handleUpdatePage();
-  }, [pageIndex, pageSize]);
+    handleUpdatePage.call(null, "index");
+  }, [pageIndex]);
+  React.useEffect(() => {
+    handleUpdatePage.call(null, "size");
+  }, [pageSize]);
 
   return (
     <BodySTY>

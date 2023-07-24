@@ -7,6 +7,7 @@ import { mappingQueryData } from "@utils/mappingQueryData";
 import SearchEmployee from "@contents/Driver/SearchEmployee";
 import { getAllDriver, defaultPageInfo } from "@services/driver/getAllDrivers";
 import { deleteDriver } from "@services/driver/deleteDriver";
+import { updateDriverStatus } from "@services/driver/updateDriverStatus";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import { getLayout } from "@layout/MainLayout";
 import DriverList from "@contents/Driver/DriverList";
@@ -47,7 +48,10 @@ const Page: NextPageWithLayout<never> = () => {
           driverPattern,
           driverParser
         );
-        const getPageInfo = res.pageInfo;
+        const getPageInfo = { ...res.pageInfo };
+        console.log("res:", res);
+        console.log("res.contentList: ", res.contentList);
+        console.log("driverData: ", driverData);
         setPageInfo(getPageInfo);
         if (isCanceled) return;
 
@@ -63,7 +67,6 @@ const Page: NextPageWithLayout<never> = () => {
     },
     []
   );
-
   // ordered data pattern
   const driverPattern = {
     id: true,
@@ -89,7 +92,11 @@ const Page: NextPageWithLayout<never> = () => {
         label:
           (
             <UserSTY>
-              <Avatar name={data["user_Name"]} size={32} />
+              <Avatar
+                name={data["user_Name"]}
+                size={32}
+                style={{ padding: "8px", justifyContent: "center" }}
+              />
               <Link
                 href={{
                   pathname: "/driver/detail/[id]",
@@ -141,8 +148,13 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const handleDeleteDriver = (id: string) => {
-    deleteDriver(id).then(() => {
-      fetchDriverData(false);
+    updateDriverStatus(id, "2").then(() => {
+      fetchDriverData(false, nowTab);
+    });
+  };
+  const handleRecoverDriver = (id: string) => {
+    updateDriverStatus(id, "1").then(() => {
+      fetchDriverData(false, nowTab);
     });
   };
   const handlePageChange = React.useCallback(
@@ -168,10 +180,12 @@ const Page: NextPageWithLayout<never> = () => {
           filter={subFilter}
         >
           <DriverList
+            listType={nowTab}
             driverData={data}
             pageInfo={pageInfo}
             goToCreatePage={handleOpenSearch}
             handleDeleteDriver={handleDeleteDriver}
+            handleRecoverDriver={handleRecoverDriver}
             handlePageChange={handlePageChange}
           />
         </FilterWrapper>

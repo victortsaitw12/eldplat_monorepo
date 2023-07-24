@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { Checkbox, Table } from "evergreen-ui";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import { getAllDriverScheduleList } from "@services/schedule/getAllDriverScheduleList";
 import { TableSTY } from "./style";
 import { WKDAY_LABEL, EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
@@ -11,6 +10,7 @@ import { getDayStart } from "../shift.util";
 import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
 
 interface I_OverviewTable {
+  data: DriverData[];
   initialMonthFirst: Date;
   isExpand: boolean;
   handleCheckboxChange?: (item: any) => void;
@@ -18,6 +18,7 @@ interface I_OverviewTable {
   handleDeselectAll?: () => void;
 }
 const OverviewTable = ({
+  data,
   initialMonthFirst,
   isExpand,
   handleCheckboxChange = (item) => {
@@ -29,28 +30,7 @@ const OverviewTable = ({
   const UI = React.useContext(UIContext);
   const router = useRouter();
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const [allData, setAllData] = React.useState<DriverData[]>([]);
   const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
-
-  React.useEffect(() => {
-    const queryString = `${initialMonthFirst.getFullYear()}-${(
-      initialMonthFirst.getMonth() +
-      1 +
-      UI.monthCount
-    )
-      .toString()
-      .padStart(2, "0")}`;
-    const fetchData = async () => {
-      const result = await getAllDriverScheduleList(queryString);
-      const data = [...result.data];
-      const updatedData = data.map(
-        (item) => (item.scheduleInfo.id = item.scheduleInfo.driver_No)
-      );
-      setAllData(data);
-      console.log("data:", result.data);
-    };
-    fetchData();
-  }, [initialMonthFirst, UI.monthCount]);
 
   const curMonthFirst: Date = new Date(
     initialMonthFirst.getFullYear(),
@@ -64,13 +44,6 @@ const OverviewTable = ({
   ).getDate();
 
   //------ functions ------//
-  const handleScroll = (event: any) => {
-    event.preventDefault();
-    const container = containerRef.current;
-    if (!container) return;
-    container.scrollLeft += event.deltaY;
-  };
-
   const handleClickUser = (id: string) => {
     router.push(`/shift/${id}?cur=${curMonthFirst}`);
   };
@@ -106,14 +79,15 @@ const OverviewTable = ({
 
   // checkbox +++
   const handleCheckAll = (e: any) => {
-    checkedItems.length === allData.length
+    checkedItems.length === data.length
       ? setCheckedItems([])
-      : setCheckedItems(allData.map((item) => item.id?.value));
+      : setCheckedItems(data.map((item) => item.driver_No));
     if (!handleSelectAll || !handleDeselectAll) return;
     e.target.checked ? handleSelectAll() : handleDeselectAll();
   };
 
   const handleCheck = (e: any) => {
+    console.log("🍅🍅🍅checkedItems:", checkedItems);
     if (checkedItems.includes(e.target.id)) {
       const updated = checkedItems.filter((item) => item !== e.target.id);
       setCheckedItems(updated);
@@ -150,19 +124,19 @@ const OverviewTable = ({
   ));
   return (
     <TableSTY
-      className="table-viewport"
+      className="overviewTable"
       isExpand={isExpand}
       ref={containerRef}
-      onWheel={handleScroll}
+      // onWheel={handleScroll}
     >
       <Table className="eg-table">
-        <Table.Head className="eg-head">
+        <Table.Head className="eg-head" style={{ paddingRight: "0px" }}>
           <Checkbox
             className="eg-th checkbox"
             key="selectAll"
             label=""
             onChange={(e) => handleCheckAll(e)}
-            checked={checkedItems.length === allData.length}
+            checked={checkedItems.length === data.length}
           />
           <Table.TextHeaderCell className="eg-th">
             駕駛姓名
@@ -173,26 +147,28 @@ const OverviewTable = ({
           {dateCells}
         </Table.Head>
         <Table.Body className="eg-body" height={240}>
-          {allData.map((item) => (
+          {data.map((item) => (
             <Table.Row
               className="eg-bodyRow"
-              key={item.driverLeaveInfo.driver_No}
+              key={item.driver_No}
               isSelectable
-              onSelect={handleClickUser.bind(
-                null,
-                item.driverLeaveInfo.driver_No
-              )}
+              onSelect={handleClickUser.bind(null, item.driver_No)}
             >
               <Checkbox
                 className="eg-td checkbox"
-                key={"check-" + item.driverLeaveInfo.driver_No}
-                label=""
+                key={"check-" + item.driver_No}
+                id={item?.driver_No}
+                checked={checkedItems.includes(item?.driver_No)}
+                onChange={(e) => handleCheck(e)}
+                onClick={(e: any) => {
+                  e.stopPropagation();
+                }}
               />
               <Table.TextCell className="eg-td">
-                {item.driverLeaveInfo.user_Name}
+                {item.user_Name}
               </Table.TextCell>
               <Table.TextCell className="eg-td">
-                {item.driverLeaveInfo.total_Leave_Days}
+                {item.total_Leave_Days}
               </Table.TextCell>
               {dateArr.map((date, i) => (
                 <Table.TextCell
@@ -202,7 +178,7 @@ const OverviewTable = ({
                   }`}
                 >
                   <div className="eventTag-container">
-                    {renderShifts(date, item.scheduleInfo)}
+                    {renderShifts(date, item.schedule_List)}
                   </div>
                 </Table.TextCell>
               ))}
@@ -210,7 +186,7 @@ const OverviewTable = ({
           ))}
         </Table.Body>
       </Table>
-      {allData.length === 0 ? (
+      {data.length === 0 ? (
         <div className="noResultMsg">
           {"搜尋條件 (日期/地區/姓名) 無可顯示資料。"}
         </div>

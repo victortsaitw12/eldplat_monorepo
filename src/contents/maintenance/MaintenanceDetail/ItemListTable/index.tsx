@@ -8,7 +8,8 @@ import {
   FileCard,
   FileUploader,
   Icon,
-  DocumentIcon
+  DocumentIcon,
+  Checkbox
 } from "evergreen-ui";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
@@ -55,6 +56,7 @@ function ItemListTable({
     control,
     name: arrayName
   });
+  const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
 
   const handleFiles = (item: any) => {
     // const url = item.receipt_url.replace(/\/{2,}/g, "/");
@@ -64,6 +66,24 @@ function ItemListTable({
 
   console.log("fields", fields);
   console.log("arrayName", arrayName);
+
+  // checkbox +++
+  const handleCheckAll = (e: any) => {
+    checkedItems.length === fields.length
+      ? setCheckedItems([])
+      : setCheckedItems(fields.map((item) => item.id));
+  };
+
+  const handleCheck = (e: any) => {
+    if (checkedItems.includes(e.target.id)) {
+      const updated = checkedItems.filter((item) => item !== e.target.id);
+      setCheckedItems(updated);
+    } else {
+      const updated = [...checkedItems, e.target.id];
+      setCheckedItems(updated);
+    }
+  };
+
   return (
     <TableContainerSTY className="TableContainerSTY">
       {/* 新增按鈕 */}
@@ -91,6 +111,15 @@ function ItemListTable({
       <TableSTY>
         <thead>
           <tr>
+            <th>
+              <Checkbox
+                style={{ margin: "8px 0" }}
+                onChange={(e) => handleCheckAll(e)}
+                checked={
+                  fields.length !== 0 && checkedItems.length === fields.length
+                }
+              />
+            </th>
             {titles?.map((title, idx) => {
               if (title.value === "delete" && !isEdit) {
                 return;
@@ -151,6 +180,15 @@ function ItemListTable({
               ];
               return (
                 <tr key={uuid()} className="invoice">
+                  <td>
+                    <Checkbox
+                      style={{ margin: "8px 0" }}
+                      checked={checkedItems.includes(item?.id)}
+                      // onChange={(e) => console.log("e**********", e)}
+                      onChange={(e) => handleCheck(e)}
+                      id={item?.id}
+                    />
+                  </td>
                   {invoiceItem.map((v) => {
                     return (
                       <td key={uuid()}>

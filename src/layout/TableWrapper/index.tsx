@@ -24,6 +24,8 @@ interface Props {
   onSave?: () => void;
   onEdit?: () => void;
   onClose?: () => void;
+  onFullscreen?: () => void;
+  isHide?: boolean;
 }
 
 function TableWrapper({
@@ -38,10 +40,12 @@ function TableWrapper({
   viewOnly,
   onSave,
   onEdit,
-  onClose
+  onClose,
+  onFullscreen,
+  isHide
 }: Props) {
   return (
-    <BodySTY>
+    <BodySTY isHide={isHide}>
       <div className="filter-header">
         <div className="tab-container">
           {mainFilterArray.map((item) => {
@@ -89,25 +93,33 @@ function TableWrapper({
               <div>{isEdit ? "全部儲存" : "編輯"}</div>
             </div>
           )}
-          <Icon
-            icon={FullscreenIcon}
-            style={{ cursor: "pointer" }}
-            size={16}
-            marginY="auto"
-            marginX="10px"
-            color="#91A9C5"
-          />
-          <Icon
-            icon={CrossIcon}
-            style={{ cursor: "pointer" }}
-            size={18}
-            marginY="auto"
-            marginX="10px"
-            color="#91A9C5"
-            onClick={() => {
-              onClose && onClose();
-            }}
-          />
+          {onFullscreen && (
+            <Icon
+              icon={FullscreenIcon}
+              style={{ cursor: "pointer" }}
+              size={16}
+              marginY="auto"
+              marginX="10px"
+              color="#91A9C5"
+              onClick={() => {
+                onFullscreen && onFullscreen();
+              }}
+            />
+          )}
+
+          {onClose && (
+            <Icon
+              icon={CrossIcon}
+              style={{ cursor: "pointer" }}
+              size={18}
+              marginY="auto"
+              marginX="10px"
+              color="#91A9C5"
+              onClick={() => {
+                onClose && onClose();
+              }}
+            />
+          )}
         </div>
       </div>
       <div className="table-content">{children}</div>

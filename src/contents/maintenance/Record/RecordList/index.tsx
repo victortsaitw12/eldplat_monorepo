@@ -1,13 +1,21 @@
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { BodySTY } from "./style";
 import { getMaintenanceRecordTitle } from "@services/maintenance/getMaintenanceRecord";
+import { I_PageInfo } from "@components/PaginationField";
 
 interface Props {
   clientData: any;
   goToDetailPage: (id: string) => void;
+  pageInfo: I_PageInfo;
+  handlePageChange?: (pageQuery: I_PageInfo) => void;
 }
 
-function MaintenanceRecordList({ clientData, goToDetailPage }: Props) {
+function MaintenanceRecordList({
+  clientData,
+  goToDetailPage,
+  pageInfo,
+  handlePageChange
+}: Props) {
   const clientTitle = getMaintenanceRecordTitle();
   return (
     <BodySTY>
@@ -19,6 +27,8 @@ function MaintenanceRecordList({ clientData, goToDetailPage }: Props) {
         // deleteItem={deleteItemHandler}
         // goToEditPage={goToEditPageHandler}
         viewItem={goToDetailPage}
+        pageInfo={pageInfo}
+        onPageChange={handlePageChange}
       />
     </BodySTY>
   );

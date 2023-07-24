@@ -47,7 +47,6 @@ export const MonthlySTY = styled.div<{ rows: number; minCellH: number }>`
     align-items: stretch;
 
     .dateCell__row {
-      min-height: ${({ minCellH }) => `${minCellH}px`};
       height: 100%;
       width: 100%;
       position: relative;
@@ -70,6 +69,7 @@ export const MonthlySTY = styled.div<{ rows: number; minCellH: number }>`
         pointer-events: none;
       }
       .cell {
+        min-height: ${({ minCellH }) => `${minCellH}px`};
         padding: 8px;
         z-index: 10;
       }

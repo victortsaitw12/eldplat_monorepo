@@ -5,7 +5,7 @@ const TableContainerSTY = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0.5rem;
   overflow-x: auto;
   .container-header {
     display: flex;
@@ -63,12 +63,22 @@ const TableContainerSTY = styled.div`
 // 表格本身
 const TableSTY = styled.table`
   border: 1px solid ${({ theme }) => theme.color.N300};
-  border-radius: 4px;
+  border-top: 0;
   border-spacing: 0px;
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 13;
+  }
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
     text-align: left;
     color: ${({ theme }) => theme.color.N700};
+    &:first-child {
+      & > th {
+        border-top: 1px solid ${({ theme }) => theme.color.N300};
+      }
+    }
   }
 
   td,
@@ -77,14 +87,23 @@ const TableSTY = styled.table`
     white-space: nowrap;
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+    padding: 4px;
     span,
     div:not(.table-action) {
       display: flex;
       justify-content: flex-start;
       align-items: center;
     }
+    label > div:not(:first-child) {
+      /* <Checkbox/> from evergreen-ui*/
+      /* add"div:not(:first-child) " only for css selector specificity */
+      justify-content: center;
+    }
     &:first-child {
-      padding-left: 8px;
+      padding-left: 24px;
+    }
+    &:last-child {
+      padding-right: 24px;
     }
   }
   tr:last-child td {

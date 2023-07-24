@@ -1,10 +1,29 @@
 import API_Path from "./apiPath";
+import { I_PageInfo } from "@components/PaginationField";
+
 // 檢視所有駕駛當月排休
+
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: "driver_no", // 準備刪除
+  arrangement: "asc", // 準備刪除
+  total: 0, // 準備刪除
+  last_Page: 0 // 準備刪除
+};
 export const getAllDriverScheduleListFiltered = async (
   dateStr: string,
-  filter: { [key: string]: any } = {}
+  filter: { [key: string]: any } = {},
+  pageInfo = defaultPageInfo
 ) => {
-  const shiftFilter = [];
+  const shiftFilter = [
+    {
+      field_Name: "Short_Schd_Date",
+      arrayConditions: "equal",
+      value: dateStr,
+      dataType: "string"
+    }
+  ];
   for (const key in filter) {
     if (filter[key].value !== "") {
       shiftFilter.push({
@@ -15,7 +34,7 @@ export const getAllDriverScheduleListFiltered = async (
       });
     }
   }
-  const res = await fetch(`${API_Path["getAllDriverScheduleListFiltered"]}`, {
+  const res = await fetch(`${API_Path["getAllDriverScheduleList"]}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -23,24 +42,10 @@ export const getAllDriverScheduleListFiltered = async (
     },
     // body: JSON.stringify(data),
     body: JSON.stringify({
-      schedule_Filter: [
-        {
-          field_Name: "Short_Schd_Date",
-          arrayConditions: "equal",
-          value: dateStr,
-          dataType: "string"
-        }
-      ],
-      filter_Needed: true,
-      pageInfo: {
-        page_Index: 1,
-        page_Size: 10,
-        orderby: "driver_no",
-        arrangement: "asc",
-        total: 0,
-        last_page: 0
-      },
-      default_Needed: true
+      schedule_Filter: shiftFilter,
+      filter_Needed: true, // 準備刪除
+      pageInfo: pageInfo,
+      default_Needed: true // 準備刪除
     })
   });
   return await res.json();

@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  CogIcon,
-  SearchIcon,
-  TextInput
-} from "evergreen-ui";
+import { CogIcon, SearchIcon, TextInput } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
 //

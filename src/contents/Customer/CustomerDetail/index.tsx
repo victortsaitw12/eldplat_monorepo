@@ -7,6 +7,7 @@ import InfoBox from "@components/InfoBox";
 import FlexWrapper from "@layout/FlexWrapper";
 import ContactList from "@components/ContactList";
 import { CustomerDataTypes } from "../customer.type";
+import { convertMap } from "@utils/convertValueToText";
 interface I_Props {
   isEdit: boolean;
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
@@ -43,12 +44,12 @@ const CustomerDetail = ({
     {
       readonly: true,
       label: "客戶號碼",
-      value: getValues("customer_no")
+      value: getValues("customer_no") || "--"
     },
     {
       req: true,
       label: "名稱",
-      value: getValues("customer_name"),
+      value: getValues("customer_name") || "--",
       editEle: (
         <TextInput
           {...register("customer_name", {
@@ -60,7 +61,7 @@ const CustomerDetail = ({
     {
       req: true,
       label: "統一編號",
-      value: getValues("customer_gui_no"),
+      value: getValues("customer_gui_no") || "--",
       editEle: (
         <TextInput
           {...register("customer_gui_no", {
@@ -72,7 +73,7 @@ const CustomerDetail = ({
     {
       req: true,
       label: "負責人",
-      value: getValues("customer_owner"),
+      value: getValues("customer_owner") || "--",
       editEle: (
         <TextInput
           {...register("customer_owner", {
@@ -82,13 +83,14 @@ const CustomerDetail = ({
       )
     }
   ];
-  console.log("basic_info", basic_info);
   //分類 vendor_Code_List
   const category_info = [
     {
       req: true,
       label: "",
-      value: getValues("customer_typ") ? getValues("customer_typ") : "--",
+      value: getValues("customer_typ")
+        ? convertMap["customer_typ"][getValues("customer_typ")]["ch"]
+        : "--",
       editEle: (
         <SelectField
           key="customer_typ"
@@ -114,7 +116,7 @@ const CustomerDetail = ({
     {
       req: true,
       label: "公司地址",
-      value: getValues("address1"),
+      value: getValues("address1") || "--",
       editEle: (
         <TextInputField
           label="地址1"
@@ -129,7 +131,7 @@ const CustomerDetail = ({
     {
       req: false,
       label: " ",
-      value: getValues("address2"),
+      value: getValues("address2") || "--",
       editEle: (
         <TextInputField
           label="地址2"
@@ -141,12 +143,23 @@ const CustomerDetail = ({
     {
       req: false,
       label: " ",
-      value: [getValues("customer_city"), getValues("customer_area")],
+      value: [
+        getValues("customer_city")
+          ? convertMap["customer_city"][getValues("customer_city")]["ch"]
+          : "--",
+        getValues("customer_area") || "--"
+      ],
       editEle: [
         <SelectField
           key="customer_city"
-          label="城市"
-          {...register("customer_city")}
+          label={
+            <label>
+              <span style={{ color: "red" }}>*</span>城市
+            </label>
+          }
+          {...register("customer_city", {
+            required: "必填"
+          })}
           marginBottom="0"
         >
           <option value="LA">洛杉磯</option>
@@ -171,8 +184,10 @@ const CustomerDetail = ({
       req: false,
       label: " ",
       value: [
-        getValues("customer_district_code"),
+        getValues("customer_district_code") || "--",
         getValues("customer_country")
+          ? convertMap["customer_country"][getValues("customer_country")]["ch"]
+          : "--"
       ],
       editEle: [
         <TextInputField
@@ -183,8 +198,12 @@ const CustomerDetail = ({
         />,
         <SelectField
           key="customer_country"
-          label="國家"
-          {...register("customer_country")}
+          label={
+            <label>
+              <span style={{ color: "red" }}>*</span>國家
+            </label>
+          }
+          {...register("customer_country", { required: "必填" })}
           marginBottom="0"
         >
           <option value="TW">台灣</option>
@@ -211,6 +230,7 @@ const CustomerDetail = ({
           <TextInput
             {...register("customer_tel_code")}
             style={{ width: "60px" }}
+            disabled
           />
           <TextInput
             {...register("customer_tel", { required: "必填！" })}
@@ -238,6 +258,7 @@ const CustomerDetail = ({
             key="customer_fax_code"
             style={{ width: "60px" }}
             {...register("customer_fax_code")}
+            disabled
           />
           <TextInput
             key="customer_fax"

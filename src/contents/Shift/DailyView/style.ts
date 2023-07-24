@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
   flex-grow: 10;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 20px);
   position: relative;
   overflow: hidden;
   overflow-x: scroll;
@@ -13,8 +13,6 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
   }
   display: flex;
   flex-direction: column;
-  padding-right: 20px;
-
   .headerCell__row {
     height: 32px;
     min-width: min-content;

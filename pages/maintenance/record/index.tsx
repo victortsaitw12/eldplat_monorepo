@@ -12,6 +12,7 @@ import FilterWrapper from "@layout/FilterWrapper";
 
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
 import {
+  defaultPageInfo,
   getAllMaintenanceRecords,
   maintenanceParser,
   maintenancePattern
@@ -19,16 +20,18 @@ import {
 import MaintenanceRecordList from "@contents/maintenance/Record/RecordList";
 import { slashDate } from "@utils/convertDate";
 import getPageTilte from "@utils/getPageBreadCrumbs";
+import { I_PageInfo } from "@components/PaginationField";
 
 //
 const mainFilterArray = [
-  { id: 1, label: "通知", value: "1" },
-  { id: 2, label: "取消", value: "2" }
+  { id: 1, label: "全部", value: "1" }
+  // { id: 2, label: "取消", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState("1");
   const {
     initializeSubFilter,
@@ -43,35 +46,43 @@ const Page: NextPageWithLayout<never> = () => {
 
   const fetchMaintenanceData = async (
     isCanceled: boolean,
-    mainStatus = "3"
+    mainStatus = "3",
+    pageQuery = defaultPageInfo
   ) => {
-    getAllMaintenanceRecords(subFilter, (mainStatus = "3")).then((res) => {
-      console.log("1️⃣res for record", res);
-      const copyResList = [...res.contentList];
-      const newResList = copyResList?.map((v: any) => {
-        v["completion_time"] = slashDate(v?.completion_time);
-        return v;
-      });
+    getAllMaintenanceRecords(subFilter, (mainStatus = "3"), pageQuery).then(
+      (res) => {
+        console.log("1️⃣res for record", res);
+        // const copyResList = [...res.contentList];
+        // const newResList = copyResList?.map((v: any) => {
+        //   v["completion_time"] = slashDate(v?.completion_time);
+        //   return v;
+        // });
 
-      const MainRecordData = mappingQueryData(
-        res.contentList,
-        maintenancePattern,
-        maintenanceParser
-      );
-      if (isCanceled) {
-        console.log("canceled");
-        return;
-      }
-      if (!subFilter) {
-        localStorage.setItem(
-          "maintenanceInitFilter",
-          JSON.stringify(res.conditionList)
+        const MainRecordData = mappingQueryData(
+          res.contentList,
+          maintenancePattern,
+          maintenanceParser
         );
-        initializeSubFilter();
+
+        // 處理分頁
+        const getPageInfo = { ...res.pageInfo };
+        setPageInfo(getPageInfo);
+
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "maintenanceInitFilter",
+            JSON.stringify(res.conditionList)
+          );
+          initializeSubFilter();
+        }
+        console.log("MainRecordData", MainRecordData);
+        setData(MainRecordData);
       }
-      console.log("MainRecordData", MainRecordData);
-      setData(MainRecordData);
-    });
+    );
   };
   //
   // const deleteItemHandler = async (id: string) => {
@@ -101,6 +112,10 @@ const Page: NextPageWithLayout<never> = () => {
     return <LoadingSpinner />;
   }
 
+  const handlePageChange = (pageQuery: I_PageInfo) => {
+    fetchMaintenanceData(false, nowTab, pageQuery);
+  };
+
   return (
     <BodySTY>
       <TableWrapper
@@ -119,6 +134,8 @@ const Page: NextPageWithLayout<never> = () => {
           <MaintenanceRecordList
             clientData={data}
             goToDetailPage={goToDetailPageHandler}
+            pageInfo={pageInfo}
+            handlePageChange={handlePageChange}
           />
         </FilterWrapper>
       </TableWrapper>

@@ -3,7 +3,7 @@ import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
 import { Pane } from "evergreen-ui";
-import RoleEditForm from "@features/roles/RoleEditForm";
+// import RoleEditForm from "@features/roles/RoleEditForm";
 import { BodySTY } from "./style";
 //
 const isFullWidth = true;
@@ -24,7 +24,7 @@ const Page: NextPageWithLayout<never> = () => {
         overflow="auto"
       >
         {/* Put your component here */}
-        <RoleEditForm submitForm={asyncSubmitForm} />
+        {/* <RoleEditForm submitForm={asyncSubmitForm} /> */}
       </Pane>
     </BodySTY>
   );

@@ -10,7 +10,9 @@ interface Props {
   pageInfo: I_PageInfo;
   goToCreatePage: () => void;
   handleDeleteDriver: (id: string) => void;
+  handleRecoverDriver?: (id: string) => void;
   handlePageChange?: (pageQuery: I_PageInfo) => void;
+  listType: string;
 }
 
 function DriverList({
@@ -18,11 +20,13 @@ function DriverList({
   pageInfo,
   goToCreatePage,
   handleDeleteDriver,
-  handlePageChange
+  handleRecoverDriver,
+  handlePageChange,
+  listType
 }: Props) {
   const driverTitle = getDriverTitle();
   const router = useRouter();
-
+  console.log("listType", listType);
   return (
     <DriverListSTY>
       <TableWithEdit
@@ -33,14 +37,21 @@ function DriverList({
         viewItem={(id) => {
           router.push(`/driver/detail/${id}?editPage=view`);
         }}
-        goToEditPage={(id) => {
-          router.push(`/driver/detail/${id}?editPage=edit`);
-        }}
-        deleteItem={(id) => {
-          handleDeleteDriver(id);
-        }}
         pageInfo={pageInfo}
         onPageChange={handlePageChange}
+        {...(listType == "1" && {
+          goToEditPage: (id) => {
+            router.push(`/driver/detail/${id}?editPage=edit`);
+          },
+          deleteItem: (id) => {
+            handleDeleteDriver(id);
+          }
+        })}
+        {...(listType == "2" && {
+          recoverItem: (id) => {
+            handleRecoverDriver && handleRecoverDriver(id);
+          }
+        })}
       />
     </DriverListSTY>
   );

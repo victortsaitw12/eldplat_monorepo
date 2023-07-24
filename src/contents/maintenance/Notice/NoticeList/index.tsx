@@ -4,6 +4,7 @@ import { getMaintenanceNoticeTitle } from "@services/maintenance/getMaintenanceN
 import { Checkbox, Pane, Pill, Select } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import DeleteDialog from "./MissionCheckbox/DeleteModal";
+import { I_PageInfo } from "@components/PaginationField";
 
 interface Props {
   clientData: any;
@@ -11,6 +12,8 @@ interface Props {
   setCheckboxData: (t: any) => void;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
+  pageInfo: I_PageInfo;
+  handlePageChange?: (pageQuery: I_PageInfo) => void;
 }
 
 function MaintenanceNoticeList({
@@ -18,7 +21,9 @@ function MaintenanceNoticeList({
   checkboxData,
   setCheckboxData,
   goToCreatePage,
-  deleteItemHandler
+  deleteItemHandler,
+  pageInfo,
+  handlePageChange
 }: Props) {
   const clientTitle = getMaintenanceNoticeTitle();
   const [value, setValue] = useState("cancel");
@@ -59,7 +64,7 @@ function MaintenanceNoticeList({
     setSelectCount(countArr.length);
   }, [checkboxData]);
 
-  const theadClass = [{ label: "新增任務", value: "mission" }];
+  const customTableClass = [{ label: "新增任務", value: "mission" }];
 
   return (
     <BodySTY>
@@ -90,7 +95,9 @@ function MaintenanceNoticeList({
         handleSelectAll={handleSelectAll}
         handleDeselectAll={handleDeselectAll}
         checkboxData={checkboxData}
-        theadClass={theadClass}
+        customTableClass={customTableClass}
+        pageInfo={pageInfo}
+        onPageChange={handlePageChange}
       />
     </BodySTY>
   );

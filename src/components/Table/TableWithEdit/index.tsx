@@ -28,7 +28,8 @@ interface I_Table {
   goToCreatePage?: () => void;
   goToEditPage?: (id: string, item: any) => void;
   viewItem?: (id: string, item: any) => void;
-  deleteItem?: (item: any) => void;
+  deleteItem?: (id: any) => void;
+  recoverItem?: (id: any) => void;
   handleCheckboxChange?: (item: any) => void;
   handleSelectAll?: () => void;
   handleDeselectAll?: () => void;
@@ -36,7 +37,7 @@ interface I_Table {
   deleteText?: string;
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
-  theadClass?: { label: string; value: string }[];
+  customTableClass?: { label: string; value: string }[];
   createBtnText?: string;
 }
 /*
@@ -51,6 +52,7 @@ function Table({
   viewItem,
   goToEditPage,
   deleteItem,
+  recoverItem,
   handleCheckboxChange = (item) => {
     console.log(item);
   },
@@ -60,7 +62,7 @@ function Table({
   deleteText,
   pageInfo,
   onPageChange,
-  theadClass,
+  customTableClass,
   createBtnText
 }: I_Table) {
   const [currentTab, setCurrentTab] = React.useState<number | null>(null);
@@ -130,15 +132,15 @@ function Table({
         <TableSTY>
           <thead>
             <tr>
-              {tableName !== "維保通知" && (
-                <th>
-                  <Checkbox
-                    onChange={(e) => handleCheckAll(e)}
-                    checked={checkedItems.length === data.length}
-                  />
-                </th>
-              )}
-              {tableName === "維保通知" && (
+              <th>
+                <Checkbox
+                  style={{ margin: "8px 0" }}
+                  onChange={(e) => handleCheckAll(e)}
+                  checked={checkedItems.length === data.length}
+                />
+              </th>
+
+              {/* {tableName === "維保通知" && (
                 <th>
                   <input
                     type="checkbox"
@@ -150,12 +152,12 @@ function Table({
                     }
                   />
                 </th>
-              )}
+              )} */}
               {titles.map((title: any) => {
                 if (title === "id") {
                   return;
                 }
-                const finalClass = theadClass?.map((v) => {
+                const finalClass = customTableClass?.map((v) => {
                   if (v.label === title) {
                     return v.value;
                   }
@@ -174,16 +176,16 @@ function Table({
               data.map((item: any, idx) => {
                 return (
                   <tr key={uuid()}>
-                    {tableName !== "維保通知" && (
-                      <td>
-                        <Checkbox
-                          checked={checkedItems.includes(item?.id?.value)}
-                          onChange={(e) => handleCheck(e)}
-                          id={item?.id?.value}
-                        />
-                      </td>
-                    )}
-                    {tableName === "維保通知" && (
+                    <td>
+                      <Checkbox
+                        style={{ margin: "8px 0" }}
+                        checked={checkedItems.includes(item?.id?.value)}
+                        onChange={(e) => handleCheck(e)}
+                        id={item?.id?.value}
+                      />
+                    </td>
+
+                    {/* {tableName === "維保通知" && (
                       <td>
                         <input
                           type="checkbox"
@@ -193,8 +195,14 @@ function Table({
                           }}
                         />
                       </td>
-                    )}
+                    )} */}
                     {Object.keys(item).map((key) => {
+                      const finalClass = customTableClass?.map((v) => {
+                        if (v.value === key) {
+                          return v.value;
+                        }
+                      });
+
                       if (key === "id") return;
                       if (!item[key].label) {
                         return (
@@ -206,7 +214,13 @@ function Table({
                       }
                       return (
                         <td key={item.id + key}>
-                          <div className="data-row">{item[key].label}</div>
+                          <div
+                            className={`${
+                              finalClass && finalClass[0]
+                            } data-row`}
+                          >
+                            {item[key].label}
+                          </div>
                         </td>
                       );
                     })}
@@ -221,6 +235,9 @@ function Table({
                         }
                         onDelete={
                           deleteItem && deleteItem.bind(null, item.id?.value)
+                        }
+                        onRecover={
+                          recoverItem && recoverItem.bind(null, item.id?.value)
                         }
                         deleteText={deleteText}
                         isOpen={currentTab === idx}

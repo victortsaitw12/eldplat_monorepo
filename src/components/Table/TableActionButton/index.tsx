@@ -4,11 +4,13 @@ import {
   EditIcon,
   DisableIcon,
   EyeOpenIcon,
-  DeleteIcon
+  DeleteIcon,
+  UndoIcon
 } from "evergreen-ui";
 //
 import { BodySTY } from "./style";
 interface Props {
+  onRecover?: () => void;
   onDelete?: () => void;
   onEdit?: () => void;
   onView?: () => void;
@@ -20,6 +22,7 @@ interface Props {
 }
 //
 function Index({
+  onRecover,
   onDelete,
   onEdit,
   onView,
@@ -86,6 +89,21 @@ function Index({
                   <div>{deleteText}</div>
                 </>
               )}
+            </button>
+          )}
+
+          {onRecover && (
+            <button
+              className="option-item"
+              onClick={() => {
+                onRecover();
+                closeOption && closeOption();
+              }}
+            >
+              <>
+                <UndoIcon size={14} />
+                <div>恢復</div>
+              </>
             </button>
           )}
         </div>

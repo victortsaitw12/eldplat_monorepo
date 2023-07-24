@@ -28,8 +28,6 @@ import LabelTag from "@components/LabelTag";
 //@contexts
 import { useVendorStore } from "@contexts/filter/vendorStore";
 
-const isFullWidth = false;
-
 const Page: NextPageWithLayout<{
   locale: string;
   setPageType: (t: string) => void;
@@ -37,6 +35,7 @@ const Page: NextPageWithLayout<{
   const router = useRouter();
   const [data, setData] = useState<I_Select_Vendors_Type[] | I_Data[] | any>();
   const [nowTab, setNowTab] = useState("1");
+  const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const {
     initializeSubFilter,
     mainFilter,
@@ -196,7 +195,7 @@ const Page: NextPageWithLayout<{
   //刪除該筆供應商
   const deleteItemHandler = async (id: string) => {
     try {
-      const res = await deleteVendor(id);
+      const res = await deleteVendor(id, "2");
       console.log("response of vendor edit: ", res);
       setData([]);
       getResult("1");
@@ -204,7 +203,18 @@ const Page: NextPageWithLayout<{
       console.log(e);
       alert("删除供應商失敗：" + e.message);
     }
-    router.push("/vendor");
+  };
+
+  const recoverItem = async (id: string) => {
+    try {
+      const res = await deleteVendor(id, "1");
+      console.log("response of vendor edit: ", res);
+      setData([]);
+      getResult("2");
+    } catch (e: any) {
+      console.log(e);
+      alert("删除供應商失敗：" + e.message);
+    }
   };
   //套用新版filter
   const changeMainFilterHandler = (value: string) => {
@@ -223,62 +233,58 @@ const Page: NextPageWithLayout<{
 
   return (
     <BodySTY>
-      {!isFullWidth ? (
-        <>
-          <TableWrapper
-            onChangeTab={changeMainFilterHandler}
-            mainFilter={nowTab}
-            mainFilterArray={mainFilterArray}
-            viewOnly={true}
-          >
-            <FilterWrapper
-              updateFilter={updateSubFilter}
-              resetFilter={() => {
-                initializeSubFilter();
-              }}
-              filter={subFilter}
-            >
-              {/* <FormattedMessage id="vendor_name" /> */}
-              {data && (
-                <VendorList
-                  vendorData={data}
-                  goToDetailPage={goToDetailPage}
-                  goToCreatePage={goToCreatePage}
-                  goToEditPageHandler={goToEditPageHandler}
-                  deleteItemHandler={deleteItemHandler}
-                ></VendorList>
-              )}
-            </FilterWrapper>
-          </TableWrapper>
-          {isDrawerOpen && (
-            <Drawer
-              tabName={["新增供應商"]}
-              closeDrawer={() => {
-                setDrawerOpen(false);
-              }}
-            >
-              <VendorCreateForm
-                reloadData={() => {
-                  setDrawerOpen(false);
-                  setData([]);
-                  getResult("1");
-                }}
-              />
-            </Drawer>
-          )}
-          {/* <SideBookMark /> */}
-        </>
-      ) : (
-        <Pane
-          width="100%"
-          height="100%"
-          background="#fff"
-          borderRadius="10px"
-          overflow="auto"
+      <>
+        <TableWrapper
+          isHide={isDrawerFullWidth}
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={nowTab}
+          mainFilterArray={mainFilterArray}
+          viewOnly={true}
         >
-          {/* Put your component here */}
-        </Pane>
-      )}
+          <FilterWrapper
+            updateFilter={updateSubFilter}
+            resetFilter={() => {
+              initializeSubFilter();
+            }}
+            filter={subFilter}
+          >
+            {/* <FormattedMessage id="vendor_name" /> */}
+            {data && (
+              <VendorList
+                listType={nowTab}
+                vendorData={data}
+                goToDetailPage={goToDetailPage}
+                goToCreatePage={goToCreatePage}
+                goToEditPageHandler={goToEditPageHandler}
+                deleteItemHandler={deleteItemHandler}
+                recoverItem={recoverItem}
+              ></VendorList>
+            )}
+          </FilterWrapper>
+        </TableWrapper>
+        {/* <SideBookMark /> */}
+        {isDrawerOpen && (
+          <Drawer
+            tabName={["新增供應商"]}
+            isFullScreen={isDrawerFullWidth}
+            closeDrawer={() => {
+              setDrawerOpen(false);
+              setIsDrawerFullWidth(false);
+            }}
+            toggleFullScreenDrawer={() => {
+              setIsDrawerFullWidth(!isDrawerFullWidth);
+            }}
+          >
+            <VendorCreateForm
+              reloadData={() => {
+                setDrawerOpen(false);
+                setData([]);
+                getResult("1");
+              }}
+            />
+          </Drawer>
+        )}
+      </>
     </BodySTY>
   );
 };
