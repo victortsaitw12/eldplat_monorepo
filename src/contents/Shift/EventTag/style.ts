@@ -19,7 +19,7 @@ export const BtnSTY = styled.button<{ color: keyof ThemeType["color"] }>`
   gap: 4px;
 
   span {
-    overflow: hidden;
+    /* overflow: hidden; */
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: calc(100% - 20px);
