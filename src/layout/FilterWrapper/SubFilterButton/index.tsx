@@ -37,7 +37,8 @@ function SubFilterButton({
         <span>{label}</span>
         <ChevronDownIcon />
       </button>
-      {active && (
+      {/* 230724雯雯：分類搜尋器點選後出現的卡片請先隱藏，只保留hover狀態 */}
+      {/* {active && (
         <div className="filter-modal">
           <input
             className="modal-input"
@@ -62,7 +63,7 @@ function SubFilterButton({
             />
           </div>
         </div>
-      )}
+      )} */}
     </BodySTY>
   );
 }
