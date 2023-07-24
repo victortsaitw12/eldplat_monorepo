@@ -1,6 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { TimeIcon, CalendarIcon, TagIcon, Textarea } from "evergreen-ui";
+import {
+  TimeIcon,
+  CalendarIcon,
+  TagIcon,
+  Textarea,
+  toaster
+} from "evergreen-ui";
 import { FormSTY } from "./style";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
@@ -39,12 +45,23 @@ const CreateForm = ({
       updatedData.schd_Start_Time = formatToDB(UI.startDate);
       updatedData.schd_End_Time = formatToDB(UI.endDate);
       try {
-        await createSchedule(updatedData);
-        UI.resetState();
-        UI.setFlag(!UI.flag);
-        setIsOpenDrawer(false);
+        const res = await createSchedule(updatedData);
+        if (res.statusCode === "200") {
+          // await refetch();
+          toaster.success("新增成功", {
+            duration: 1.5
+          });
+          console.log("res:", res);
+          UI.resetState();
+          UI.setFlag(!UI.flag);
+          setIsOpenDrawer(false);
+        } else {
+          throw Error(res.message);
+        }
       } catch (e: any) {
-        alert(e.message);
+        toaster.warning(e.message, {
+          duration: 1.5
+        });
       }
     },
     [UI.insertData, UI.startDate, UI.endDate]

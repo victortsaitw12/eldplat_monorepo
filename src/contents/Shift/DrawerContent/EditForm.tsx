@@ -13,8 +13,14 @@ import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import Timepicker from "@components/Timepicker";
 import LeaveTypePicker from "@contents/Shift/LeaveTypePicker";
 import { updateSchedule } from "@services/schedule/updateSchedule";
+import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 import { updateScheduleSign } from "@services/schedule/updateScheduleSign";
-import { formatToDB, getDayStart, formatToDBDate } from "../shift.util";
+import {
+  formatToDB,
+  getDayStart,
+  formatToDBDate,
+  formatDate
+} from "../shift.util";
 
 const EditForm = ({
   setIsOpenDrawer
@@ -57,7 +63,24 @@ const EditForm = ({
           : await updateSchedule(updatedData);
         UI.resetState();
         UI.setFlag(!UI.flag);
-        setIsOpenDrawer(false);
+        // setIsOpenDrawer(false);
+        // render EventStatus
+        // fetch API
+        const result = await getScheduleUpdateList(
+          UI.insertData.drv_Schedule_No
+        );
+        const updateViewEventList = [result.data];
+        // update UI
+        UI.setViewEventList(updateViewEventList);
+
+        const cellTimestamp = getDayStart(
+          new Date(updatedData.schd_Date)
+        ).valueOf();
+        UI.setDrawerType({
+          type: "view",
+          title: formatDate(new Date(cellTimestamp)),
+          timestamp: cellTimestamp
+        });
       } catch (e: any) {
         alert(e.message);
       }
