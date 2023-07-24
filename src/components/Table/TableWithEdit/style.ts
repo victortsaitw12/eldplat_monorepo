@@ -52,6 +52,7 @@ const TableContainerSTY = styled.div`
     }
   }
   & > .container-table {
+    height: 100%;
     overflow-y: auto;
     overflow-x: auto;
     & > table {

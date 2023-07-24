@@ -21,6 +21,7 @@ export const BodySTY = styled.div`
     border-radius: 10px;
     overflow: hidden;
     transform: translate(-50%, 20%);
+    /* transform: translate(-50%, -80%); */
     background-color: ${({ theme }) => theme.color.N0};
     border: 1px solid ${({ theme }) => theme.color.N300};
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
