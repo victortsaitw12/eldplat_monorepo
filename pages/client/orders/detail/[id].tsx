@@ -51,10 +51,7 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
             { label: "訂單管理", url: "/client/orders" },
             {
               label: `訂單編號${data.quote_no}`,
-              url: {
-                pathname: "/orders",
-                query: { order: data.quote_no }
-              }
+              url: `/client/orders/detail/${data.quote_no}`
             }
           ]}
           style={{ marginBottom: "24px" }}
@@ -76,6 +73,7 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
               data.status_list[3].status === "pending" && (
                 <PaymentBtn data={data} setData={setData} />
               )}
+
             <Quote data={data} setData={setData} />
             {data.status_list[1].status === "ok" && (
               <PaymentMethod data={data} />

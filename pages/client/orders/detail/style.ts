@@ -39,4 +39,9 @@ export const BodySTY = styled.div`
       }
     }
   }
+  .paymentBtns {
+    flex-direction: row;
+    display: flex;
+    gap: 20px;
+  }
 `;
