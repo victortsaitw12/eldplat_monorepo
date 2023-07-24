@@ -66,13 +66,13 @@ function InfoBox({
         return editEle;
       }
       return (
-        <ListItem key={infoBoxId + "_text_" + i}>
+        <ListItem key={infoBoxId + "_text_" + i} className="infoBox">
           {label && (
             // <Pane>
             //   {req && label !== "" && <span className="req">*</span>}
             //   {label}
             // </Pane>
-            <Pane>
+            <Pane className="infoBox__label">
               <span>
                 {req && label !== "" && <span className="req">*</span>}
                 {label}
@@ -80,7 +80,9 @@ function InfoBox({
             </Pane>
           )}
           {/* <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane> */}
-          <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane>
+          <Pane className="infoBox__value">
+            {isEdit && editEle ? editEle : <Text>{value}</Text>}
+          </Pane>
         </ListItem>
       );
     });

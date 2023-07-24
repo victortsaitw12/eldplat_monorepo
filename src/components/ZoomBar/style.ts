@@ -23,7 +23,7 @@ export const ZoombarSTY = styled.div<{ scale: number }>`
     left: ${(props) =>
       props.scale === 100
         ? "calc(" + props.scale + "% - 16px)"
-        : "calc(" + props.scale + "% - 16px)"};
+        : "calc(" + props.scale + "% - 8px)"};
     padding: 8px;
     cursor: pointer;
     .zoom-controler {

@@ -6,6 +6,7 @@ import { PageInfoType } from "@services/type";
 interface Props {
   listType: string;
   clientData: any;
+  customerData: any;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
   recoverItemHandler: (id: string) => void;
@@ -18,6 +19,7 @@ interface Props {
 function CustomerList({
   listType,
   clientData,
+  customerData,
   goToCreatePage,
   deleteItemHandler,
   recoverItemHandler,
@@ -34,7 +36,7 @@ function CustomerList({
         tableName="客戶"
         cleanTableName="客戶列表"
         titles={clientTitle}
-        data={clientData}
+        data={customerData}
         goToCreatePage={goToCreatePage}
         viewItem={goToDetailPage}
         pageInfo={pageInfo}
@@ -57,4 +59,4 @@ function CustomerList({
   );
 }
 
-export default ClientList;
+export default CustomerList;

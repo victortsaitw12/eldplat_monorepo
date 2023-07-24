@@ -12,12 +12,15 @@ export const BodySTY = styled.div`
         color: #567190;
         display: flex;
         align-items: center;
+        width: max-content;
       }
       button {
         width: 76px;
         height: 32px;
         color: #fff;
-        background: #3670c9;
+        /* background: #3670c9; */
+        background-color: ${({ theme }) =>
+          theme.color.B200}; /* disabled color */
         border-radius: 32px;
         margin-left: 32px;
         &:hover {

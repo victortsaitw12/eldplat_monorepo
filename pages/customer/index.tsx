@@ -129,6 +129,7 @@ const Page: NextPageWithLayout<never> = () => {
           <CustomerList
             listType={nowTab}
             clientData={data}
+            customerData={data}
             goToCreatePage={() => {
               setDrawerOpen(true);
             }}

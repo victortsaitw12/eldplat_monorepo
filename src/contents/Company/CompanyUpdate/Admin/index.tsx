@@ -27,6 +27,7 @@ function CountrySet() {
             onClick={(e: any) => {
               e.preventDefault();
             }}
+            disabled
           >
             變更
           </Button>

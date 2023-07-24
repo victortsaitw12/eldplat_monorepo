@@ -6,7 +6,10 @@ import { ShiftSTY } from "./style";
 import { getLayout } from "@layout/MainLayout";
 import UIProvider from "@contexts/scheduleContext/UIProvider";
 import { useShiftStore } from "@contexts/filter/shiftStore";
-import { getAllDriverScheduleListFiltered } from "@services/schedule/getAllDriverScheduleListFiltered";
+import {
+  getAllDriverScheduleListFiltered,
+  defaultPageInfo
+} from "@services/schedule/getAllDriverScheduleListFiltered";
 import MonthPicker from "@contents/Shift/MonthPicker";
 import TableTitle from "@components/Table/TableTitle";
 import OverviewTable from "@contents/Shift/OverviewTable";
@@ -15,8 +18,11 @@ import { EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
+import { I_PageInfo } from "@components/PaginationField";
 
 const mainFilterArray = [{ id: 1, label: "啟用", value: "1" }];
+
+// 3) 接Pagination
 
 const ShiftPage: NextPageWithLayout<never> = () => {
   const {
@@ -28,25 +34,29 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   } = useShiftStore();
   const [isExpand, setIsExpand] = React.useState(false);
   const [nowTab, setNowTab] = React.useState("1");
+  const [data, setData] = React.useState<any>([]);
+  const [pageInfo, setPageInfo] = React.useState<I_PageInfo>(defaultPageInfo);
+  const [monthCount, setMonthCount] = React.useState(0);
 
-  React.useEffect(() => {
-    updateMainFilter("active");
-  }, []);
-
-  React.useEffect(() => {
-    let isCanceled = false;
+  //------ functions ------//
+  const fetchData = async (subFilter: any, pageInfo: I_PageInfo) => {
     const dateStr = `${initialMonthFirst.getFullYear()}-${(
       initialMonthFirst.getMonth() +
       1 +
-      0
+      monthCount
     )
-      // UI.monthCount
       .toString()
       .padStart(2, "0")}`;
-    const fetchFilterData = async (isCanceled: boolean) => {
-      getAllDriverScheduleListFiltered(dateStr, subFilter).then((res) => {
-        // const resultData = res.contentList ? [...res.contentList] : [];
-        if (isCanceled) return;
+    getAllDriverScheduleListFiltered(dateStr, subFilter, pageInfo).then(
+      (res) => {
+        const data = [...res.contentList];
+        const updatedData = data.map((item) => ({
+          ...item,
+          id: item.driver_No
+        }));
+        setData(data);
+        setPageInfo(res.pageInfo);
+
         if (!subFilter) {
           localStorage.setItem(
             "shiftInitFilter",
@@ -54,19 +64,23 @@ const ShiftPage: NextPageWithLayout<never> = () => {
           );
           initializeSubFilter();
         }
-      });
-    };
-    fetchFilterData(isCanceled);
-    return () => {
-      isCanceled = true;
-    };
-  }, [nowTab, mainFilter, subFilter, initializeSubFilter]);
+      }
+    );
+  };
+  const handleChangeMonth = (v: number) => {
+    setMonthCount(v);
+  };
 
-  //------ functions ------//
-  const changeMainFilterHandler = (value: string) => setNowTab(value);
   const handleZoombar = (value: boolean) => {
     setIsExpand(value);
   };
+
+  const handlePageChange = React.useCallback((pageQuery: I_PageInfo) => {
+    fetchData(subFilter, pageInfo);
+  }, []);
+
+  // 排班列表頁其實僅顯示"啟用"
+  const changeMainFilterHandler = (value: string) => setNowTab(value);
 
   //------ get current month from user ------//
   const TODAY = new Date();
@@ -75,6 +89,14 @@ const ShiftPage: NextPageWithLayout<never> = () => {
     TODAY.getMonth(),
     1
   );
+  //------ useEffect ------//
+  React.useEffect(() => {
+    updateMainFilter("active");
+  }, []);
+
+  React.useEffect(() => {
+    fetchData(subFilter, pageInfo);
+  }, [mainFilter, subFilter, initializeSubFilter, monthCount]);
 
   return (
     <UIProvider>
@@ -101,6 +123,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
                   <MonthPicker
                     key="monthpicker"
                     initialMonthFirst={initialMonthFirst}
+                    onMonthChange={handleChangeMonth}
                   />,
                   <div key="tabelTitle-type" className="container-header-left">
                     <span>全部區域</span>
@@ -112,11 +135,12 @@ const ShiftPage: NextPageWithLayout<never> = () => {
                   if (key !== "00") return <EventTag key={key} value={value} />;
                 })}
                 page={true}
-                //pageInfo={pageInfo}
-                //onPageChange={onPageChange}
+                pageInfo={pageInfo}
+                onPageChange={handlePageChange}
               />
               <div className="overviewContainer">
                 <OverviewTable
+                  data={data}
                   initialMonthFirst={initialMonthFirst}
                   isExpand={isExpand}
                 />

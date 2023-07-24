@@ -5,7 +5,7 @@ import { ShiftSTY } from "../style";
 export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
   position: relative;
   .wrapMain {
-    width: ${(props) => (props.isOpenDrawer ? "calc(100% - 300px)" : "100%")};
+    width: ${(props) => (props.isOpenDrawer ? "calc(100% - 290px)" : "100%")};
     transition: width 0.2s ease-in-out;
   }
   .pageContent {

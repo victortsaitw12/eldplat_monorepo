@@ -17,42 +17,54 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
   }
   .eg-table {
     width: fit-content;
-    /* height: fit-content; */
     height: calc(100% - 32px);
     position: relative;
     text-align: center;
     white-space: nowrap;
-    border: none;
-    /* overflow-x: auto; */
+    border: none; //overwrite evergreen-ui default
     .eg-head {
       width: fit-content;
+      border: 1px solid ${({ theme }) => theme.color.N300};
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
       .eg-th {
-        background: ${({ theme }) => theme.color.N100};
+        border-left: 1px solid ${({ theme }) => theme.color.N300};
+        &:first-child {
+          border-left: none;
+          border-top-left-radius: 10px;
+        }
         span {
           padding: 0px 4px;
         }
       }
       .weekend {
         color: ${({ theme }) => theme.color.R300};
-        background: ${({ theme }) => theme.color.R50};
+        background-color: ${({ theme }) => theme.color.R50};
       }
     }
     .eg-body {
-      /* overflow-y: auto; evergreen-ui已預設*/
-      /* overwite evergreen-ui h=240px */
       height: 100%;
       &::-webkit-scrollbar {
         display: none;
       }
       .eg-bodyRow {
+        border: 1px solid ${({ theme }) => theme.color.N300};
+        border-top: none;
+        background-color: transparent; //overwrite evergreen-ui
+        &:last-child {
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+        }
         &:hover {
-          .eg-td {
-            background: ${({ theme }) => theme.color.N100};
-          }
+          background-color: ${({ theme }) => theme.color.N100};
         }
         .eg-td {
-          background: ${({ theme }) => theme.color.N0};
           flex: unset !important;
+          border-left: 1px solid ${({ theme }) => theme.color.N300};
+          &:first-child {
+            border-left: none;
+            border-bottom-left-radius: 10px;
+          }
           span {
             .eventTag-container {
               display: flex;
@@ -87,7 +99,6 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
     .eg-th {
       width: var(--cellWidth);
       min-width: var(--cellWidth);
-      border-right: 1px solid ${({ theme }) => theme.color.N300};
       padding: 4px;
       display: flex;
       flex-direction: row;
