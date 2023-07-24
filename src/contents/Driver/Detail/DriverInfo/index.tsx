@@ -35,7 +35,7 @@ function DriverInfo({
   isEdit,
   driverData
 }: Props) {
-  const { info } = driverData;
+  const { info, workinghours } = driverData;
   const [checked, setChecked] = React.useState(false);
   // 基本資料
   const basicInfo = [
@@ -56,11 +56,30 @@ function DriverInfo({
     }
   ];
   // 排班設定
+  console.log("🍅🍅🍅driverData", driverData);
   const schdInfo = [
     {
       readonly: true,
-      label: "",
-      value: "info['API欄位']"
+      label: "使用者編號",
+      value: info["user_no"] || "--"
+    },
+    {
+      req: true,
+      label: "休假設定",
+      value: info["working_hours_name"] || "--",
+      editEle: (
+        <Select
+          key="working_hours_code"
+          {...register("working_hours_code")}
+          marginBottom="0"
+        >
+          {workinghours.map((item: any, i: number) => (
+            <option key={`working_hours-${i}`} value={item.working_hours_code}>
+              {item.working_hours_name || "--"}
+            </option>
+          ))}
+        </Select>
+      )
     }
   ];
   // 駕駛履歷
@@ -227,7 +246,7 @@ function DriverInfo({
         />
         <LanguageAbility currentUserInfo={driverData} />
         <InfoBox
-          isEdit={false}
+          isEdit={isEdit}
           infoData={schdInfo}
           infoTitle={<span style={{ marginRight: "8px" }}>排班設定</span>}
         />
