@@ -20,7 +20,6 @@ const CreateForm = ({
   const UI = React.useContext(UIContext);
   const router = useRouter();
   const { id } = router.query;
-
   //------ functions ------//
   const handleDescription = React.useCallback(
     (e: any) => {
@@ -93,7 +92,6 @@ const CreateForm = ({
         <Textarea
           onChange={handleDescription}
           value={UI.insertData.leave_Description}
-          // {...register("leave_Description", {})}
         />
       </section>
 
