@@ -77,8 +77,8 @@ function Basic({}) {
         <Pane className="input-line">
           <Text className="">負責人</Text>
           <TextInput
-            name="company_owner"
-            value={companyData.company_owner}
+            name="administrator"
+            value={companyData.administrator}
             onChange={handleCompanyBasicChange}
           />
         </Pane>

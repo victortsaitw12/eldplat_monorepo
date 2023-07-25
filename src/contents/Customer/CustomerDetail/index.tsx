@@ -144,8 +144,13 @@ const CustomerDetail = ({
       req: false,
       label: " ",
       value: [
+        // getValues("customer_city")
+        //   ? convertMap["customer_city"][getValues("customer_city")]["ch"]
+        //   : "--",
+        // getValues("customer_area") || "--"
+
         getValues("customer_city")
-          ? convertMap["customer_city"][getValues("customer_city")]["ch"]
+          ? convertMap["customer_city"][getValues("customer_city")]
           : "--",
         getValues("customer_area") || "--"
       ],

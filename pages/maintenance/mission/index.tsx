@@ -82,7 +82,7 @@ const Page: NextPageWithLayout<never> = () => {
       });
 
       // 派單按鈕邏輯加工
-      const assignActive = res.contentList.map(
+      const assignActive = res?.contentList?.map(
         (item: { [x: string]: null }) => {
           return item["service_start_date"] !== null &&
             item["service_end_date"] !== null

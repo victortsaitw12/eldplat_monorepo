@@ -15,6 +15,8 @@ function Contact() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
   const { handleCountrySwitch, handleStateSwitch, handleCitySwitch } =
     useContext<I_Region_Context>(RegionContext);
+
+  console.log("🈶companyData", companyData);
   return (
     <BodySTY>
       <Heading is="h4">公司聯絡資訊</Heading>
@@ -47,7 +49,7 @@ function Contact() {
           <Text className="">公司E-Mail</Text>
           <Text>{companyData?.company_email}</Text>
         </Pane>
-        {companyData?.company_contact?.map((v) => {
+        {companyData?.company_contact?.map((v, idx) => {
           if (v.contact_sort === "1") {
             return (
               <>
@@ -64,6 +66,26 @@ function Contact() {
                 </Pane>
                 <Pane className="input-line">
                   <Text className="">主要聯絡人信箱</Text>
+                  <Text>{v.contact_email}</Text>
+                </Pane>
+              </>
+            );
+          } else {
+            return (
+              <>
+                <Pane key={v.contact_name} className="input-line">
+                  <Text className="">聯絡人{`${idx + 1}`}</Text>
+                  <Text>{v.contact_name}</Text>
+                </Pane>
+                <Pane className="input-line">
+                  <Text className="">聯絡人{`${idx + 1}`}電話</Text>
+                  <Pane className="contact-phone-detail">
+                    <Text>市話 {v.contact_tel}</Text>
+                    <Text>手機 {v.contact_phone}</Text>
+                  </Pane>
+                </Pane>
+                <Pane className="input-line">
+                  <Text className="">聯絡人{`${idx + 1}`}信箱</Text>
                   <Text>{v.contact_email}</Text>
                 </Pane>
               </>
