@@ -75,6 +75,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
     setIsExpand(value);
   };
 
+  // TODO: 一進入畫面時不跑
   const handlePageChange = React.useCallback((pageQuery: I_PageInfo) => {
     fetchData(subFilter, pageInfo);
   }, []);
