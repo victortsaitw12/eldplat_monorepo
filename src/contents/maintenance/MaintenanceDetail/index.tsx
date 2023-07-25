@@ -20,13 +20,15 @@ interface I_Props {
   asyncSubmitForm: (data: any) => Promise<void>;
   maintenance_id: string;
   mainCreateDdl?: any;
+  setMainCreateDdl: (t: any) => void;
 }
 const MaintenanceDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
   maintenance_id,
-  mainCreateDdl
+  mainCreateDdl,
+  setMainCreateDdl
 }: I_Props) => {
   const {
     register,
@@ -50,6 +52,16 @@ const MaintenanceDetail = ({
   if (getValues("maintenance_no") === undefined) {
     return <div></div>;
   }
+
+  // 選維修廠之後分類會變
+  const handleChangeVendorDDL = (e: any) => {
+    getCreateDdl(e.target.value).then((data) => {
+      const newData = { ...data.dataList[0] };
+      console.log("㊗newData", newData);
+      setValue("vendor_no", e.target.value);
+      setMainCreateDdl(newData);
+    });
+  };
 
   //車輛資料
   const vehicle_info = [
@@ -149,7 +161,16 @@ const MaintenanceDetail = ({
       label: "維修廠",
       value: getValues("vendor_name"),
       editEle: (
-        <Select key="vendor_no" {...register("vendor_no")} marginBottom="0">
+        <Select
+          key="vendor_no"
+          {...(register("vendor_no"),
+          {
+            onChange: (e) => {
+              handleChangeVendorDDL(e);
+            }
+          })}
+          marginBottom="0"
+        >
           {mainCreateDdl?.vendor_options.map((item: any) => {
             return (
               <option key={item.no} value={item.no}>
