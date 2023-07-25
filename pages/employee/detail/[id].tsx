@@ -57,12 +57,12 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
         onClose={onCancelHandler}
         isEdit={isEdit}
       >
-        <MaintenanceDetail
+        {/* <MaintenanceDetail
           isEdit={isEdit}
           submitRef={submitRef}
           asyncSubmitForm={asyncSubmitForm}
           maintenance_id={maintenance_id}
-        />
+        /> */}
       </TableWrapper>
     </BodySTY>
   );
