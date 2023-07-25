@@ -29,7 +29,8 @@ const AdminOrdersList = ({
   return (
     <BodySTY>
       <TableWithEdit
-        tableName="詢價"
+        tableName="訂單列表"
+        createBtnText="新增訂單"
         titles={tableTitleArr}
         data={listData}
         goToCreatePage={goToCreatePage}

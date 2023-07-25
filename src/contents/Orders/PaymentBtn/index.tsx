@@ -117,7 +117,7 @@ const PaymentBtn = ({
           支付全額
         </PrimaryRadiusBtn>
       ) : (
-        <div>
+        <div className="paymentBtns">
           <SecondaryRadiusBtn
             appearance="secondary"
             onClick={handlePayment.bind(null, "7")}
@@ -140,41 +140,43 @@ const PaymentBtn = ({
       {
         <DivSTY className="paymentBtn" onClick={(e: any) => e.preventDefault()}>
           {renderBtn(data.status_list)}
-          {isLightBoxOpen && (
-            <Pane>
-              <Dialog
-                isShown={isLightBoxOpen}
-                title="確認接受此報價嗎?"
-                onConfirm={handleTakeQuote}
-                onCloseComplete={() => setIsLightBoxOpen(false)}
-                cancelLabel="取消"
-                confirmLabel="確認"
-              >
-                {({}) => (
-                  <Pane>
-                    <Paragraph style={{ lineHeight: "32px" }}>
-                      接受報價後，此筆訂單即可繳款。
-                      <br />
-                      報價詳情：
-                    </Paragraph>
-
-                    <Table
-                      titles={["訂單編號", "總金額"]}
-                      data={[
-                        {
-                          id: data.quote_no,
-                          quote_no: data.quote_no,
-                          quote_total_amount: data.quote_total_amount
-                        }
-                      ]}
-                    />
-                  </Pane>
-                )}
-              </Dialog>
-            </Pane>
-          )}
         </DivSTY>
       }
+      {isLightBoxOpen && (
+        <Pane>
+          <Dialog
+            isShown={isLightBoxOpen}
+            title="確認接受此報價嗎?"
+            onConfirm={handleTakeQuote}
+            onCloseComplete={() => setIsLightBoxOpen(false)}
+            cancelLabel="取消"
+            confirmLabel="確認"
+          >
+            {({}) => (
+              <Pane>
+                <Paragraph style={{ lineHeight: "32px" }}>
+                  接受報價後，此筆訂單即可繳款。
+                  <br />
+                  報價詳情：
+                </Paragraph>
+
+                <Table
+                  titles={["訂單編號", "總金額"]}
+                  data={[
+                    {
+                      id: data.quote_no,
+                      quote_no: data.quote_no,
+                      quote_total_amount: `NT$${Number(
+                        data.quote_total_amount
+                      ).toLocaleString()}`
+                    }
+                  ]}
+                />
+              </Pane>
+            )}
+          </Dialog>
+        </Pane>
+      )}
     </>
   );
 };

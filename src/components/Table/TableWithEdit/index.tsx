@@ -13,7 +13,9 @@ const dontShowList = [
   "維保紀錄",
   "駕駛列表",
   "駕駛證照",
-  "員工列表"
+  "員工列表",
+  "訂單列表",
+  "外部車隊"
 ];
 interface I_Data {
   [key: string]: string | number | React.ReactNode | any;

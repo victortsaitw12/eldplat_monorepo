@@ -3,8 +3,6 @@ import {
   ThemeProvider,
   mergeTheme,
   defaultTheme,
-  Select,
-  Group,
   Checkbox,
   ChevronLeftIcon,
   ChevronRightIcon
@@ -15,6 +13,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { TimepickerSTY } from "./style";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getDayEnd, getDayStart } from "@contents/Shift/shift.util";
+import TimeInput from "@components/Timepicker/TimeInput";
+import dayjs from "dayjs";
 
 const customTheme = mergeTheme(defaultTheme, {
   components: {
@@ -38,99 +38,31 @@ const Timepicker = ({
   minDate
 }: {
   type: "start" | "end";
-  date: Date;
+  date: Date; // UI.startDate or UI.endDate
   setDate: (date: Date) => void;
   fullDay: boolean;
   minDate?: Date;
 }) => {
   const UI = React.useContext(UIContext);
-  const [selectDate, setSelectDate] = React.useState(date);
+  const dateBase = getDayStart(date); // 僅存在 <Timepicker/>裡面做為計算基準
   const [isFullDay, setIsFullDay] = React.useState(fullDay);
-  const [hour, setHour] = React.useState<number | null>(null);
-  const [minute, setMinute] = React.useState<number | null>(null);
-  const [timeslot, setTimeslot] = React.useState<number | null>(null);
-
-  React.useEffect(() => {
-    setSelectDate(date);
-    if (!selectDate) return;
-    if (!hour || !minute || !timeslot) return;
-    const updateDate = new Date(
-      selectDate.getFullYear(),
-      selectDate.getMonth(),
-      selectDate.getDate(),
-      (hour + timeslot) % 24,
-      minute
-    );
-    setDate(updateDate);
-  }, [hour, minute, timeslot, date]);
 
   //------ functions ------//
-  const handleDateChange = (date: Date) => {
-    setSelectDate(date);
-    if (UI.startDate === getDayStart(UI.endDate)) {
-      UI.setStartDate(date);
-      UI.setEndDate(getDayEnd(date));
-    } else {
-      type == "start" ? UI.setStartDate(date) : UI.setEndDate(date);
-      if (type == "start" && date > UI.endDate) UI.setEndDate(getDayEnd(date));
-    }
-    setDate(date);
+  const handleDateChange = (v: Date) => {
+    // case: 使用者把開始時間選在結束時間後 => 把結束時間設成開始日的23:59
+    if (type == "start" && v > UI.endDate) UI.setEndDate(getDayEnd(v));
+    setDate(v);
   };
-  const handleHourChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setHour(parseInt(e.target.value));
-  };
-  const handleMinuteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMinute(parseInt(e.target.value));
-  };
-  const handleTimeslotChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTimeslot(parseInt(e.target.value));
-  };
-  const hourOptions = () => {
-    const options = [];
-    let i = 0;
-    while (i <= 12) {
-      const option = { value: i, label: i.toString().padStart(2, "0") };
-      options.push(option);
-      i++;
-    }
-    const optionArr = options.map((item, i) =>
-      i === 0 ? (
-        <option key={`hour-${item.value}`} value={item.value} disabled selected>
-          {item.label}
-        </option>
-      ) : (
-        <option key={`hour-${item.value}`} value={item.value}>
-          {item.label}
-        </option>
-      )
-    );
-    return optionArr;
-  };
-  const minOptions = () => {
-    const arr = [];
-    let i = 0;
-    while (i < 60) {
-      i === 0
-        ? arr.push(<option selected>{i.toString().padStart(2, "0")}</option>)
-        : arr.push(<option>{i.toString().padStart(2, "0")}</option>);
-      i += 15;
-    }
-    arr.push(<option>59</option>);
-    return arr;
-  };
-  const timeslotOptions = () => {
-    const options = [
-      { value: 0, label: "AM" },
-      { value: 12, label: "PM" }
-    ];
-    const arr = options.map((option) => (
-      <option key={`timeslot-${option.label}`} value={option.value}>
-        {option.label}
-      </option>
-    ));
 
-    return arr;
+  const handleTimeinputChange = (v: string) => {
+    // TODO currently called when anything changed(insertData), description, schd_type, etc.
+    if (v === dayjs(date).format("YYYY-MM-DD HH:mm")) return;
+    setDate(dayjs(v).toDate());
   };
+
+  //------ useEffect ------//
+
+  //------ customize datepicker ------//
   const renderCustomHeader = ({
     monthDate,
     customHeaderCount,
@@ -180,7 +112,7 @@ const Timepicker = ({
     <ThemeProvider value={customTheme}>
       <TimepickerSTY>
         <DatePicker
-          selected={selectDate}
+          selected={type === "start" ? UI.startDate : UI.endDate}
           onChange={handleDateChange}
           minDate={minDate}
           dateFormat={"yyyy / MM / dd, hh:mm aa"}
@@ -190,42 +122,19 @@ const Timepicker = ({
           startDate={UI.startDate}
           endDate={UI.endDate}
         />
-        <Group className="startRow__time">
-          {" "}
-          <Select
-            className="timepicker-time"
-            value={hour || 0}
-            onChange={handleHourChange}
-            disabled={isFullDay}
-          >
-            {hourOptions()}
-          </Select>
-          <span>:</span>
-          <Select
-            className="timepicker-time"
-            value={minute || 0}
-            onChange={handleMinuteChange}
-            disabled={isFullDay}
-          >
-            {minOptions()}
-          </Select>
-          <Select
-            className="timepicker-time"
-            value={timeslot || 0}
-            onChange={handleTimeslotChange}
-            disabled={isFullDay}
-          >
-            {timeslotOptions()}
-          </Select>
-        </Group>
+        <TimeInput
+          date={dayjs(date).format("YYYY-MM-DD HH:mm")}
+          setDate={handleTimeinputChange}
+          disabled={isFullDay}
+        />
         <Checkbox
           label="整天"
           checked={isFullDay}
           onChange={(e) => {
             if (e.target.checked) {
-              type === "start" ? setHour(0) : setHour(11);
-              type === "start" ? setMinute(0) : setMinute(59);
-              type === "start" ? setTimeslot(0) : setTimeslot(12);
+              type === "start"
+                ? setDate(getDayStart(dateBase))
+                : setDate(getDayEnd(dateBase));
               setIsFullDay(true);
             } else {
               setIsFullDay(false);

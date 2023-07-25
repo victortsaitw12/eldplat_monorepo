@@ -26,6 +26,7 @@ const PaymentInfoView = () => {
     actual_deposit_date, //實際付款日期
     balance_amount, //尾款支付金額
     balance_period, //尾款支付_付款期限
+    balance_tax,
     balance_history //尾款付款紀錄
   } = useWatch({
     control
@@ -67,10 +68,8 @@ const PaymentInfoView = () => {
                 title={"預付訂金"}
                 items={[
                   {
-                    label: "付款方式"
-                  },
-                  {
-                    label: "付款時間"
+                    label:
+                      dayjs(deposit_period).format("YYYY-MM-DD") + " 前繳款"
                   }
                 ]}
               />
@@ -87,10 +86,7 @@ const PaymentInfoView = () => {
                 }
                 items={[
                   {
-                    label: "--"
-                  },
-                  {
-                    label: "--"
+                    label: ""
                   }
                 ]}
               />
@@ -109,6 +105,23 @@ const PaymentInfoView = () => {
                   {
                     label:
                       dayjs(balance_period).format("YYYY-MM-DD") + " 前繳款"
+                  }
+                ]}
+              />
+              <VerticalDetail
+                style={{
+                  textAlign: "right"
+                }}
+                title={
+                  balance_amount
+                    ? "NT$" +
+                      balance_amount.toLocaleString() +
+                      (balance_tax ? " 含稅" : "")
+                    : "--"
+                }
+                items={[
+                  {
+                    label: ""
                   }
                 ]}
               />

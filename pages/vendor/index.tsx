@@ -251,6 +251,7 @@ const Page: NextPageWithLayout<{
             {/* <FormattedMessage id="vendor_name" /> */}
             {data && (
               <VendorList
+                vendor_code={router.query.codeType as string}
                 listType={nowTab}
                 vendorData={data}
                 goToDetailPage={goToDetailPage}

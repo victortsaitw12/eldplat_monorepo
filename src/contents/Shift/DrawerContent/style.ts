@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { ThemeType } from "@styles/theme";
 
 export const FormSTY = styled.form`
-  /* overflow-y: auto; */
   &::-webkit-scrollbar {
     /* display: none; */
   }
@@ -13,6 +12,11 @@ export const FormSTY = styled.form`
     line-height: 19px;
     display: flex;
     align-items: center;
+  }
+  .form__label {
+    svg {
+      opacity: 0.4;
+    }
   }
 
   .form_signOff {

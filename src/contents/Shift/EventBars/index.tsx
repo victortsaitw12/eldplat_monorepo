@@ -40,6 +40,7 @@ const EventBars = ({
   }, [monthlyData, UI.monthCount, UI.flag]);
 
   //------ functions ------//
+  // TODO 考慮讓 EditForm 共用這個function
   const renderEventStatus = async (drv_Schedule_No: string) => {
     // 1) UI render drawer
     UI.resetState();

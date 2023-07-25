@@ -60,7 +60,7 @@ const LeaveTypePicker = () => {
     <>
       <LeaveTypePickerSTY
         className="typeRows"
-        color={SCHD_TYPE.get(UI.insertData.schd_Type)?.color || "unset"}
+        color={SCHD_TYPE.get(UI.insertData.schd_Type)?.color || "N300"}
       >
         <Select value={UI.insertData.schd_Type} onChange={handleLeaveType}>
           {scheduleTypes}
@@ -84,7 +84,7 @@ const LeaveTypePicker = () => {
         {schdType === "04" ? (
           <div className="leaveReminder">
             <WarningSignIcon className="leaveIcon" />
-            {CHECK_STATUS.get("0")?.label}, 後續請確認主管簽核
+            {CHECK_STATUS.get("0")?.label}, 後續需確認主管簽核
           </div>
         ) : (
           ""
