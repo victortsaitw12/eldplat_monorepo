@@ -73,7 +73,7 @@ const EventList = ({
     setIsOpenDrawer(true);
     try {
       // 2) fetch API
-      const result = await getScheduleUpdateList(drv_Schedule_No);
+      const result = await getScheduleUpdateList(drv_Schedule_No, UI.id);
       const updateViewEventList = [result.data];
       // 3) update UI
       UI.setViewEventList(updateViewEventList);
@@ -94,7 +94,7 @@ const EventList = ({
     setIsOpenDrawer(true);
     try {
       // 2) fetch API
-      const result = await getScheduleUpdateList(drv_Schedule_No);
+      const result = await getScheduleUpdateList(drv_Schedule_No, UI.id);
       const updateInsertData = result.data;
       // 3) update UI
       UI.setInsertData(updateInsertData);
