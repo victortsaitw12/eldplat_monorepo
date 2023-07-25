@@ -10,6 +10,7 @@ let defultUI: any;
 export const UIContext = React.createContext(defultUI);
 
 export const initData: InsertData = {
+  //TODO: check 大小寫必要
   driver_No: "",
   schd_Date: "",
   schd_Type: "03", //預設排休

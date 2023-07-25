@@ -78,7 +78,7 @@ export const ViewSTY = styled.div<{ color: keyof ThemeType["color"] }>`
         flex-direction: row;
         flex-wrap: nowrap;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
         color: ${({ theme }) => theme.color.N600};
       }
     }
@@ -104,10 +104,10 @@ export const ViewSTY = styled.div<{ color: keyof ThemeType["color"] }>`
       }
     }
     &__leaveCode {
-      padding-left: 20px;
+      padding-left: calc(16px + 8px);
     }
     &__description {
-      padding-left: 20px;
+      padding-left: calc(16px + 8px);
     }
     &__divider {
       height: 0;
