@@ -118,7 +118,13 @@ function Table({
         </div>
         {!noButtonData.includes(tableName) && (
           <IconLeft
-            text={createBtnText ? createBtnText : `新增${tableName}`}
+            text={
+              createBtnText
+                ? createBtnText
+                : dontShowList.includes(tableName)
+                ? `新增${tableName.substring(0, 2)}`
+                : `新增${tableName}`
+            }
             onClick={goToCreatePage}
           >
             <PlusIcon size={14} />
@@ -208,7 +214,9 @@ function Table({
                         return (
                           // 🟡NEW:
                           <td key={item.id + key}>
-                            <span>--</span>
+                            <span className={`${finalClass && finalClass[0]}`}>
+                              --
+                            </span>
                           </td>
                         );
                       }

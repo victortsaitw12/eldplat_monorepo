@@ -15,6 +15,7 @@ export const BodySTY = styled.div`
             .user_td {
               display: flex;
               gap: 12px;
+              padding: 8px;
               .user_icon {
                 width: 32px;
                 height: 32px;
