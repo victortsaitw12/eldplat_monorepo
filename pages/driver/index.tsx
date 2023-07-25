@@ -24,6 +24,7 @@ const mainFilterArray = [
 
 const Page: NextPageWithLayout<never> = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
+  const [isDrawerFullWidth, setIsDrawerFullWidth] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState("1");
@@ -167,6 +168,7 @@ const Page: NextPageWithLayout<never> = () => {
   return (
     <BodySTY isOpenDrawer={isOpenDrawer}>
       <TableWrapper
+        isHide={isDrawerFullWidth}
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
@@ -193,7 +195,14 @@ const Page: NextPageWithLayout<never> = () => {
       {isOpenDrawer && (
         <Drawer
           tabName={["新增駕駛"]}
-          closeDrawer={setIsOpenDrawer.bind(null, false)}
+          closeDrawer={() => {
+            setIsOpenDrawer(false);
+            setIsDrawerFullWidth(false);
+          }}
+          isFullScreen={isDrawerFullWidth}
+          toggleFullScreenDrawer={() => {
+            setIsDrawerFullWidth(!isDrawerFullWidth);
+          }}
         >
           <SearchEmployee
             closeSearch={setIsOpenDrawer.bind(null, false)}

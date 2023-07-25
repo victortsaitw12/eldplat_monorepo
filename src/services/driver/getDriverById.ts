@@ -16,10 +16,11 @@ export const getDriverById = async (driver_no: string) => {
   const result = await response.json();
   const data = result.data;
   const info = deepCloneWithDateFormat(data.info);
+  const workinghours = data.workinghours;
   const languages = data.languages;
   const licenses = data.licenses;
   const healths = data.healths.map((healthItem: any) => {
     return deepCloneWithDateFormat(healthItem);
   });
-  return { info, languages, licenses, healths };
+  return { info, workinghours, languages, licenses, healths };
 };
