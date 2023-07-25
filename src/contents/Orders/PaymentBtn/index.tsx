@@ -166,7 +166,9 @@ const PaymentBtn = ({
                     {
                       id: data.quote_no,
                       quote_no: data.quote_no,
-                      quote_total_amount: `NT$${data.quote_total_amount.toLocaleString()}`
+                      quote_total_amount: `NT$${Number(
+                        data.quote_total_amount
+                      ).toLocaleString()}`
                     }
                   ]}
                 />
