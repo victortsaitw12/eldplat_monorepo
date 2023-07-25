@@ -1,12 +1,12 @@
 import React from "react";
-import { TagIcon } from "evergreen-ui";
 import { EventBarsSTY, EventBarSTY } from "./style";
 
-import { SCHD_TYPE, LEAVE_CODE, CHECK_STATUS, EVENT_TYPE } from "../shift.data";
+import { EVENT_TYPE, SCHD_TYPE } from "../shift.data";
 import { formatDate, getDayStart } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
+import EventBtn from "@contents/Shift/EventBtn";
 
 const EventBars = ({
   cellTimestamp,
@@ -116,31 +116,17 @@ const EventBars = ({
         duration={getEventDuration(item)}
         cellWidth={cellWidth}
         left={getEventStart(item)}
-        className="test"
       >
-        <button
-          value={item.drv_Schedule_No}
-          className={`eventBtn event-${cellTimestamp}-${i} ${
-            item.check_Status === "0" ? "reminder" : ""
-          }`}
-          onClick={
+        <EventBtn
+          item={item}
+          i={i}
+          cellTimestamp={cellTimestamp}
+          onClickEvent={
             item.check_Status === "0"
               ? renderSignOffEditForm.bind(null, item.drv_Schedule_No)
               : renderEventStatus.bind(null, item.drv_Schedule_No)
           }
-        >
-          {item.check_Status
-            ? EVENT_TYPE.get(item.schd_Type.concat(item.check_Status))?.icon
-            : SCHD_TYPE.get(item.schd_Type)?.icon}
-          <span>
-            {item.schd_Type === "04"
-              ? CHECK_STATUS.get(item.check_Status)?.label
-              : SCHD_TYPE.get(item.schd_Type)?.label}
-          </span>
-          {(item.leave_Code || item.check_Status) && <TagIcon />}
-          <span>{LEAVE_CODE.get(item.leave_Code)?.label}</span>
-          {item.schd_Type === "04" && <span>{item.leave_Description}</span>}
-        </button>
+        />
       </EventBarSTY>
     );
   });
