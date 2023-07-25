@@ -29,6 +29,7 @@ const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [nowTab, setNowTab] = useState("1");
+  const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     arrangement: "desc",
     orderby: null,
@@ -114,6 +115,7 @@ const Page: NextPageWithLayout<never> = () => {
   return (
     <BodySTY>
       <TableWrapper
+        isHide={isDrawerFullWidth}
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
@@ -147,6 +149,11 @@ const Page: NextPageWithLayout<never> = () => {
           tabName={["新增客戶"]}
           closeDrawer={() => {
             setDrawerOpen(false);
+            setIsDrawerFullWidth(false);
+          }}
+          isFullScreen={isDrawerFullWidth}
+          toggleFullScreenDrawer={() => {
+            setIsDrawerFullWidth(!isDrawerFullWidth);
           }}
         >
           <CustomerCreateForm

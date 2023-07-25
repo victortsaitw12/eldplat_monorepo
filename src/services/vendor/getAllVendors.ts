@@ -37,6 +37,7 @@ export const getAllVendors = async (
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
     body: JSON.stringify({
+      vendor_code: codeType,
       vendor_main_type: codeTypeValue,
       vendor_Status: status,
       vendor_Filter: vendorFilter,

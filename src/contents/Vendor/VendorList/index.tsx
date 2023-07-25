@@ -5,6 +5,7 @@ import { BodySTY } from "./style";
 import { Checkbox, HelpIcon, Pane } from "evergreen-ui";
 import Tooltip from "@components/Tooltip";
 interface Props {
+  vendor_code: string;
   listType?: string;
   vendorData: any;
   goToCreatePage: () => void;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const VendorList = ({
+  vendor_code,
   listType = "1",
   vendorData,
   goToDetailPage,
@@ -41,6 +43,7 @@ const VendorList = ({
     <FormattedMessage key="vendor_contact_email" id="vendor_contact_email" />,
     <FormattedMessage key="categoryTitle" id="categoryTitle" />
   ];
+
   const vendorTitleArr = [
     "供應商號碼",
     <Pane
@@ -74,10 +77,14 @@ const VendorList = ({
     </Pane>,
     "標籤"
   ];
+
+  const TableTitle: { [key: string]: string } = {
+    "01": "外部車隊"
+  };
   return (
     <BodySTY>
       <TableWithEdit
-        tableName="供應商"
+        tableName={TableTitle[vendor_code] || "供應商"}
         titles={vendorTitleArr}
         data={vendorData}
         goToCreatePage={goToCreatePage}
