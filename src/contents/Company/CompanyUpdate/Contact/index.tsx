@@ -349,9 +349,11 @@ function Contact() {
                       }}
                       required
                     />
-                    {errMsg["errField"] === "contact_tel" && (
+
+                    {/* 錯誤訊息 */}
+                    {/* {errMsg["errField"] === "contact_tel" && (
                       <Text color="red !important">{errMsg["errText"]}</Text>
-                    )}
+                    )} */}
                   </Pane>
                   <Pane className="phone-input">
                     <Paragraph size={200}>手機</Paragraph>
