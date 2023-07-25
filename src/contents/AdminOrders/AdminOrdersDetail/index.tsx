@@ -69,7 +69,9 @@ const AdminOrdersDetal = ({
     newData["deposit_period"] =
       orderData["deposit_period"] &&
       dayjs(orderData["deposit_period"]).format("YYYY-MM-DD");
-
+    newData["balance_period"] =
+      orderData["balance_period"] &&
+      dayjs(orderData["balance_period"]).format("YYYY-MM-DD");
     newData["flight_date"] =
       orderData["flight_date"] &&
       dayjs(orderData["flight_date"]).format("YYYY-MM-DD");
