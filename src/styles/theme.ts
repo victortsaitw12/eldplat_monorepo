@@ -94,7 +94,8 @@ const fontSize = {
   Paragraph100: "0.86rem",
   Paragraph200: "1rem",
   Paragraph300: "1.14rem",
-  Heading100: "1rem",
+  Heading100: "0.71rem",
+  // 0.71rem = 10px 實際畫面字體最小顯示為 11px
   Heading200: "0.86rem",
   Heading300: "0.86rem",
   Heading400: "1rem",

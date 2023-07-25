@@ -17,8 +17,9 @@ export const BodySTY = styled.div`
     color: ${({ theme }) => theme.color.B400};
   }
   &.disable {
-    background-color: ${({ theme }) => theme.color.N700};
+    background: ${({ theme }) => theme.color.N700};
     color: ${({ theme }) => theme.color.N600};
+    opacity: 50%;
     cursor: default;
   }
 `;

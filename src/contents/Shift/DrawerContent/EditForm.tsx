@@ -67,7 +67,8 @@ const EditForm = ({
         // render EventStatus
         // fetch API
         const result = await getScheduleUpdateList(
-          UI.insertData.drv_Schedule_No
+          UI.insertData.drv_Schedule_No,
+          UI.insertData.driver_No
         );
         const updateViewEventList = [result.data];
         // update UI
