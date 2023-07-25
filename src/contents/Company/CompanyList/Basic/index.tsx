@@ -40,7 +40,7 @@ function Basic() {
         </Pane>
         <Pane className="input-line">
           <Text className="">負責人</Text>
-          <Text>{companyData?.company_owner}</Text>
+          <Text>{companyData?.administrator}</Text>
         </Pane>
 
         {/* 圖片區域 */}
