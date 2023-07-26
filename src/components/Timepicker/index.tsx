@@ -55,7 +55,7 @@ const Timepicker = ({
   };
 
   const handleTimeinputChange = (v: string) => {
-    // TODO currently called when anything changed(insertData), description, schd_type, etc.
+    // TODO 目前有在不必要的時間被呼叫到
     if (v === dayjs(date).format("YYYY-MM-DD HH:mm")) return;
     setDate(dayjs(v).toDate());
   };
