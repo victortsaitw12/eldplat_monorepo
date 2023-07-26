@@ -67,6 +67,7 @@ const Page: NextPageWithLayout<never> = () => {
 
       // 由於table內不只有靜態資料顯示(有button功能)，所以客制加工一下 => 結案按鈕
       MainMissionData?.map((item) => {
+        console.log("item**************", item);
         if (item["completion_time"].label === "---") {
           const active =
             item["all_assignment_no"].value.length > 30 ? false : true;
@@ -82,7 +83,7 @@ const Page: NextPageWithLayout<never> = () => {
       });
 
       // 派單按鈕邏輯加工
-      const assignActive = res.contentList.map(
+      const assignActive = res?.contentList?.map(
         (item: { [x: string]: null }) => {
           return item["service_start_date"] !== null &&
             item["service_end_date"] !== null

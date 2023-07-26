@@ -1,3 +1,4 @@
+import { translation } from "./../../../contexts/i18n/lan";
 import styled from "styled-components";
 
 export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
@@ -40,11 +41,14 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
         justify-content: center;
         border-left: 1px solid ${({ theme }) => theme.color.N300};
         &-hhmm {
+          font-size: ${({ theme }) => theme.fontSize.Heading200}; //  12px;
+          font-weight: ${({ theme }) => theme.fontWeight.Heading200}; //600;
+          line-height: 16.34px;
         }
         &-aa {
-          font-size: 10px;
-          position: relative;
-          top: -5px;
+          font-size: ${({ theme }) => theme.fontSize.Heading100}; //10px;
+          font-weight: ${({ theme }) => theme.fontWeight.Heading100}; //500;
+          line-height: 13.62px;
         }
       }
     }

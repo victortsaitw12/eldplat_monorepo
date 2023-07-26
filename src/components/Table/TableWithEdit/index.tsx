@@ -13,7 +13,9 @@ const dontShowList = [
   "維保紀錄",
   "駕駛列表",
   "駕駛證照",
-  "員工列表"
+  "員工列表",
+  "訂單列表",
+  "外部車隊"
 ];
 interface I_Data {
   [key: string]: string | number | React.ReactNode | any;
@@ -118,7 +120,13 @@ function Table({
         </div>
         {!noButtonData.includes(tableName) && (
           <IconLeft
-            text={createBtnText ? createBtnText : `新增${tableName}`}
+            text={
+              createBtnText
+                ? createBtnText
+                : dontShowList.includes(tableName)
+                ? `新增${tableName.substring(0, 2)}`
+                : `新增${tableName}`
+            }
             onClick={goToCreatePage}
           >
             <PlusIcon size={14} />
@@ -208,7 +216,9 @@ function Table({
                         return (
                           // 🟡NEW:
                           <td key={item.id + key}>
-                            <span>--</span>
+                            <span className={`${finalClass && finalClass[0]}`}>
+                              --
+                            </span>
                           </td>
                         );
                       }

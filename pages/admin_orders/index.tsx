@@ -40,6 +40,7 @@ const Page: NextPageWithLayout<{
   const router = useRouter();
   const [data, setData] = useState<I_Data[] | any>();
   const [nowTab, setNowTab] = useState("1");
+  const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const {
     initializeSubFilter,
     mainFilter,
@@ -95,12 +96,22 @@ const Page: NextPageWithLayout<{
   };
   //進入詢價檢視頁
   const goToDetailPage = (id: string, item: any) => {
-    router.push(
-      "/admin_orders/detail/" +
-        id +
-        "?type=" +
-        (item.quote_type.value || item.quote_type)
-    );
+    if (nowTab == "6") {
+      router.push(
+        "/admin_orders/detail/" +
+          id +
+          "?type=" +
+          (item.quote_type.value || item.quote_type) +
+          "&viewonly=1"
+      );
+    } else {
+      router.push(
+        "/admin_orders/detail/" +
+          id +
+          "?type=" +
+          (item.quote_type.value || item.quote_type)
+      );
+    }
   };
   //進入詢價編輯頁
   const goToEditPageHandler = (id: string, item: any) => {
@@ -175,8 +186,8 @@ const Page: NextPageWithLayout<{
         },
         //接單下階段才會做
         person_name: {
-          label: "-",
-          value: "-"
+          label: "--",
+          value: "--"
         },
         order_label: {
           label: order["label_list"].map(
@@ -224,6 +235,8 @@ const Page: NextPageWithLayout<{
       {!isFullWidth ? (
         <>
           <TableWrapper
+            viewOnly={true}
+            isHide={isDrawerFullWidth}
             onChangeTab={changeMainFilterHandler}
             mainFilter={nowTab}
             mainFilterArray={mainFilterArray}
@@ -248,8 +261,13 @@ const Page: NextPageWithLayout<{
           {isDrawerOpen && (
             <Drawer
               tabName={["新增詢價單"]}
+              isFullScreen={isDrawerFullWidth}
               closeDrawer={() => {
                 setDrawerOpen(false);
+                setIsDrawerFullWidth(false);
+              }}
+              toggleFullScreenDrawer={() => {
+                setIsDrawerFullWidth(!isDrawerFullWidth);
               }}
             >
               <AdminOrderCreateForm

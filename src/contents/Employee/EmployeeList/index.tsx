@@ -21,13 +21,17 @@ function EmployeeList({
   goToEditPageHandler
 }: I_EmployeeListType) {
   const employeeTitle = getEmployeeTitle();
-  console.log(listType);
+  const customTableClass = [
+    { label: "登入次數", value: "login_Times" },
+    { label: "加入狀態", value: "invt_Status" }
+  ];
+
   return (
     <BodySTY className="list-style">
       <TableWithEdit
         titles={employeeTitle}
         data={data}
-        tableName="員工"
+        tableName="員工列表"
         goToCreatePage={goToCreatePage}
         // deleteItem={deleteItemHandler}
         // goToEditPage={goToEditPageHandler}
@@ -44,6 +48,7 @@ function EmployeeList({
             recoverItemHandler && recoverItemHandler(id);
           }
         })}
+        customTableClass={customTableClass}
       />
     </BodySTY>
   );

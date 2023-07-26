@@ -198,8 +198,9 @@ const ShuttleInfo = ({ isEdit }: I_Props) => {
       {r_list(fields)}
       {isEdit && isCustomBus && (
         <Pane className="add_day_container">
-          <Button
+          <span
             onClick={(e: any) => {
+              e.stop;
               e.preventDefault();
               const lastDate = getValues(
                 `order_itinerary_list.${fields.length - 1}.day_date`
@@ -213,17 +214,17 @@ const ShuttleInfo = ({ isEdit }: I_Props) => {
                 dropoff_location: "",
                 pickup_location: "",
                 stopover_address_list: [
-                  {
-                    stopover_sort: "1",
-                    stopover_address: ""
-                  }
+                  // {
+                  //   stopover_sort: "1",
+                  //   stopover_address: ""
+                  // }
                 ]
               });
             }}
           >
             <SmallPlusIcon color="#718BAA" />
             新增其他天
-          </Button>
+          </span>
         </Pane>
       )}
     </BodySTY>

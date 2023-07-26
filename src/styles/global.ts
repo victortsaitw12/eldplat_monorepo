@@ -91,5 +91,23 @@ html, body {
           }
         }
       }
-    }
+}
+input[type="time"],input[type="date"]{
+  position: relative;
+}
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  /* background: transparent; */
+  background-position: 99% 50%;
+  background-size: 1rem;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  position: absolute;
+  height: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: auto;
+}
 `;
