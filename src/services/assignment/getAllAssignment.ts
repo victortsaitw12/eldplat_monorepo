@@ -1,18 +1,25 @@
 import API_Path from "./apiPath";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { PatternType } from "@utils/mappingQueryData";
+import { I_PageInfo } from "@components/PaginationField";
 
-export const getAllAssignments = async () => {
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: null,
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
+
+export const getAllAssignments = async (pageInfo = defaultPageInfo) => {
   const res = await fetch(API_Path["GetAllAssignments"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
-    body: JSON.stringify({
-      page_Index: 1,
-      page_Size: 30
-    })
+    body: JSON.stringify(pageInfo)
   });
   console.log("res for getting the list of assignment : ", res);
   return res.json();

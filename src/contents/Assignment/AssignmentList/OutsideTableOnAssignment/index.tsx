@@ -8,6 +8,8 @@ import {
 import { v4 as uuid } from "uuid";
 import { TableSTY, TableContainerSTY, StyledDot } from "./style";
 import TableRow from "./TableRow";
+import PaginationField, { I_PageInfo } from "@components/PaginationField";
+
 //
 export interface I_Data {
   [key: string]: string | number | React.ReactNode;
@@ -24,6 +26,8 @@ interface I_Table {
   viewItem?: (id: any, item: any) => void;
   // editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
+  pageInfo?: I_PageInfo;
+  onPageChange?: (pageQuery: I_PageInfo) => void;
 }
 
 export interface I_OpenTable {
@@ -47,7 +51,9 @@ function OutsideTableOnAssignment({
   },
   deleteItem = (item) => {
     console.log(item);
-  }
+  },
+  pageInfo,
+  onPageChange
 }: I_Table) {
   console.log("data in outside table", data);
   if (!data) return <p>Loading</p>;
@@ -60,17 +66,7 @@ function OutsideTableOnAssignment({
         </div>
       </div>
       <div className="container-pagination">
-        <span>
-          第{1}-{5}筆, 共{5}筆
-        </span>
-        <div className="actions">
-          <button>
-            <ChevronLeftIcon size={12} />
-          </button>
-          <button>
-            <ChevronRightIcon size={12} />
-          </button>
-        </div>
+        <PaginationField pageInfo={pageInfo} onPageChange={onPageChange} />
       </div>
       <div className="container-table">
         <TableSTY>

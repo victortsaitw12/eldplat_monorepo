@@ -6,8 +6,8 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
-// import TableWrapper from "@layout/TableWrapper";
-// import FilterWrapper from "@layout/FilterWrapper";
+import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import AssignmentList from "@contents/Assignment/AssignmentList";
 import AutoAssignBtn from "@contents/Assignment/AssignmentList/AutoAssignBtn";
@@ -20,7 +20,8 @@ import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 import {
   assignParser,
   assignPattern,
-  getAllAssignments
+  getAllAssignments,
+  defaultPageInfo
 } from "@services/assignment/getAllAssignment";
 
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
@@ -35,11 +36,9 @@ import {
 } from "@services/assignment/getAssignmentEdit";
 import DriverEdit from "@contents/Assignment/AssignManualEdit/DriverEdit";
 import AssignAutoCreate from "@contents/Assignment/AssignAutoCreate";
+import { I_PageInfo } from "@components/PaginationField";
 //
-const mainFilterArray = [
-  { id: 1, label: "啟用", value: "1" },
-  { id: 2, label: "停用", value: "2" }
-];
+const mainFilterArray = [{ id: 1, label: "全部", value: "1" }];
 export const startTimeName = ["start_hours", "start_minutes", "start_type"];
 export const endTimeName = ["end_hours", "end_minutes", "end_type"];
 //
@@ -74,6 +73,7 @@ const Page: NextPageWithLayout<never> = () => {
     end_minutes: "00",
     end_type: ""
   });
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
 
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
@@ -93,14 +93,18 @@ const Page: NextPageWithLayout<never> = () => {
     updateSubFilter,
     isDrawerOpen,
     setDrawerOpen,
-    drawerType,
-    setDrawerType
+    drawerType
   } = useAssignmentStore();
   //
 
-  const fetchAssignData = async () => {
+  const fetchAssignData = async (
+    isCanceled: boolean,
+    mainFilter = "1",
+    subFilter = null,
+    pageInfo: I_PageInfo
+  ) => {
     //---------------------------------------------------------------
-    getAllAssignments()
+    getAllAssignments(pageInfo)
       .then((data) => {
         // ✅設定子列表的狀態
         const newSubData = data.contentList.map(
@@ -108,8 +112,19 @@ const Page: NextPageWithLayout<never> = () => {
             return item.assignments;
           }
         );
-
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "busInitFilter",
+            JSON.stringify(data.conditionList)
+          );
+          initializeSubFilter();
+        }
         setSubAssignData(newSubData);
+        setPageInfo(data.pageInfo);
 
         // ✅設定外層列表狀態
         const assignData = mappingQueryData(
@@ -176,7 +191,15 @@ const Page: NextPageWithLayout<never> = () => {
         console.error("error in assignment list", err);
       });
   };
-  //
+  // 處理mainFilter
+  const changeMainFilterHandler = (value: string) => {
+    setNowTab(value);
+  };
+
+  // 處理切換頁面
+  const upDatePageHandler = (newPageInfo: I_PageInfo) => {
+    fetchAssignData(false, nowTab, null, newPageInfo);
+  };
 
   // 打開派單編輯頁
   const goToEditPageHandler = async (item: any) => {
@@ -419,7 +442,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      {/* <TableWrapper
+      <TableWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
@@ -431,17 +454,19 @@ const Page: NextPageWithLayout<never> = () => {
             initializeSubFilter();
           }}
           filter={subFilter}
-        > */}
-      <AssignmentList
-        assignData={data}
-        subAssignData={subAssignData}
-        goToCreatePage={() => {
-          setDrawerOpen(true);
-        }}
-        goToEditPageHandler={goToEditPageHandler}
-      />
-      {/* </FilterWrapper>
-      </TableWrapper> */}
+        >
+          <AssignmentList
+            assignData={data}
+            subAssignData={subAssignData}
+            goToCreatePage={() => {
+              setDrawerOpen(true);
+            }}
+            goToEditPageHandler={goToEditPageHandler}
+            pageInfo={pageInfo}
+            onPageChange={upDatePageHandler}
+          />
+        </FilterWrapper>
+      </TableWrapper>
       {isDrawerOpen && (
         <Drawer
           tabName={[drawerType === "add" ? "編輯派車" : "手動派單"]}
