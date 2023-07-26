@@ -6,7 +6,7 @@ import {
 } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
-import { Pane } from "evergreen-ui";
+import { Pane, Spinner } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { ParsedUrlQuery } from "querystring";
@@ -30,7 +30,7 @@ const Page: NextPageWithLayout<
   useEffect(() => {
     setLoading(true);
     getEmployeeById(userId).then((data) => {
-      console.log("single user data-----", data);
+      // console.log("single user data-----", data);
       const newData = { ...data.data };
       const result = {
         user_name: newData.basicInfo["user_name"],
@@ -38,7 +38,7 @@ const Page: NextPageWithLayout<
         user_english_name: newData.basicInfo["user_english_name"],
         user_identity: newData.basicInfo["user_identity"],
         user_country: newData.basicInfo["user_country"],
-        user_birthday: newData.basicInfo["user_birthday"].substring(0, 10),
+        user_birthday: newData.basicInfo["user_birthday"]?.substring(0, 10),
         user_sex: newData.basicInfo["user_sex"],
         user_photo_link: newData.basicInfo["user_photo_link"],
         user_email: newData.basicInfo["user_email"],
@@ -60,7 +60,7 @@ const Page: NextPageWithLayout<
         company_name: newData.basicInfo["company_name"],
         department: newData.basicInfo["department"],
         group: newData.basicInfo["group"],
-        arrive_date: newData.basicInfo["arrive_date"].substring(0, 10),
+        arrive_date: newData.basicInfo["arrive_date"]?.substring(0, 10),
         leave_date: newData.basicInfo["leave_date"]?.substring(0, 10),
         leave_check: newData.basicInfo["leave_check"],
         license_name: newData["licenses"].map(
@@ -110,11 +110,23 @@ const Page: NextPageWithLayout<
               editData={editData}
             />
           )} */}
-            <AddEmployee
-              submitForm={asyncSubmitForm}
-              onCancel={cancelFormHandler}
-              editData={editData}
-            />
+            {(!loading && editData && (
+              <AddEmployee
+                submitForm={asyncSubmitForm}
+                onCancel={cancelFormHandler}
+                editData={editData}
+              />
+            )) || (
+              <Pane
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                height={"calc(100vh - 56px)"}
+                style={{ padding: 5 }}
+              >
+                <Spinner />
+              </Pane>
+            )}
           </Pane>
         }
       </BodySTY>
