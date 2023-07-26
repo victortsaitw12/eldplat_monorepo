@@ -166,7 +166,9 @@ const Page: NextPageWithLayout<never> = () => {
   const goToEditPageHandler = (id: string) => {
     router.push(`/employee/edit/${id}`);
   };
-
+  const goToDetailPageHandler = (id: string) => {
+    router.push(`/employee/detail/${id}`);
+  };
   const createEmployeeHandler = async (employeeData: any) => {
     console.log("1️⃣employeeData", employeeData);
     const { user_first_name, user_name, user_email, user_phone } = employeeData;
@@ -211,6 +213,7 @@ const Page: NextPageWithLayout<never> = () => {
                 setDrawerOpen(true);
               }}
               deleteItemHandler={deleteItemHandler}
+              goToDetailPageHandler={goToDetailPageHandler}
               goToEditPageHandler={goToEditPageHandler}
               recoverItemHandler={recoverItemHandler}
             />

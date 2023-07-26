@@ -195,6 +195,7 @@ export const RegionProvider = ({ children }: any) => {
 
   // 判斷國別來決定要顯示的國碼
   const handleCountryCode = (country: string) => {
+    console.log("💕💕💕💕💕", country);
     const showCountryCode = allCountries?.filter((v) => {
       return v.areaNo === country;
     });

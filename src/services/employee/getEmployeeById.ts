@@ -1,19 +1,28 @@
 import API_Path from "./apiPath";
 
 export const getEmployeeById = async (user_no: string) => {
-  const response = await fetch(
-    `${API_Path["GetEmployeeById"]}?user_no=${user_no}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-      }
-    }
-  );
-  const data = await response.json();
-  // console.log(mappingData(data.contentList[0], employeePattern));
-  return data;
+  const res = await fetch("/api/getEmployeeById", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ user_no: user_no })
+  });
+  return res.json();
+  // const response = await fetch(
+  //   `${API_Path["GetEmployeeById"]}?user_no=${user_no}`,
+
+  //   {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+  //     }
+  //   }
+  // );
+  // const data = await response.json();
+  // // console.log(mappingData(data.contentList[0], employeePattern));
+  // return data;
 };
 
 type PatternType = { [key: string]: string };

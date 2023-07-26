@@ -81,7 +81,7 @@ function InfoBox({
           )}
           {/* <Pane>{isEdit && editEle ? editEle : <Text>{value}</Text>}</Pane> */}
           <Pane className="infoBox__value">
-            {isEdit && editEle ? editEle : <Text>{value}</Text>}
+            {isEdit && editEle ? editEle : value}
           </Pane>
         </ListItem>
       );
@@ -97,6 +97,7 @@ function InfoBox({
       return <Pane>{infoData[0].editEle}</Pane>;
     } else {
       if (
+        infoData[0] &&
         infoData[0].value &&
         Array.isArray(infoData[0].value) &&
         infoData[0].value.length > 0
