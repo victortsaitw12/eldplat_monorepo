@@ -59,13 +59,8 @@ function DriverInfo({
   console.log("🍅🍅🍅driverData", driverData);
   const schdInfo = [
     {
-      readonly: true,
-      label: "使用者編號",
-      value: info["user_no"] || "--"
-    },
-    {
       req: true,
-      label: "休假設定",
+      label: "工時設定",
       value: info["working_hours_name"] || "--",
       editEle: (
         <Select
