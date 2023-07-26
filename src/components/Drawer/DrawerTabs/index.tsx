@@ -14,6 +14,7 @@ import { BodySTY, TabSTY } from "./style";
 interface TabsProps {
   isFullScreen?: boolean;
   titles?: string[];
+  isTabShown?: boolean;
   closeDrawer?: () => void;
   toggleFullScreenDrawer?: () => void;
 }
@@ -21,6 +22,7 @@ interface TabsProps {
 const DrawerTabs = ({
   isFullScreen = false,
   titles,
+  isTabShown = true,
   closeDrawer,
   toggleFullScreenDrawer
 }: TabsProps) => {
@@ -33,6 +35,7 @@ const DrawerTabs = ({
         {DETAIL_TABS.map((item, index) => {
           return (
             <TabSTY
+              className={isTabShown ? "" : "hiddenTab"}
               key={"tab-" + index}
               onClick={() => {
                 const updateCurrent = index;

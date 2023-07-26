@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ErrorIcon,
-  Pane
-} from "evergreen-ui";
+import { ErrorIcon } from "evergreen-ui";
 import { v4 as uuid } from "uuid";
 import { TableSTY, TableContainerSTY, StyledDot } from "./style";
 import TableRow from "./TableRow";
@@ -62,7 +57,6 @@ function OutsideTableOnAssignment({
       <div className="container-header">
         <div className="container-header-left">
           <span>{tableName}列表</span>
-          <ErrorIcon color="#8EA8C7" />
         </div>
       </div>
       <div className="container-pagination">

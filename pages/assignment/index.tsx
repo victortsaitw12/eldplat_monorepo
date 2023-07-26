@@ -101,7 +101,7 @@ const Page: NextPageWithLayout<never> = () => {
     isCanceled: boolean,
     mainFilter = "1",
     subFilter = null,
-    pageInfo: I_PageInfo
+    pageInfo = defaultPageInfo
   ) => {
     //---------------------------------------------------------------
     getAllAssignments(pageInfo)
@@ -421,7 +421,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   useEffect(() => {
     let isCanceled = false;
-    fetchAssignData();
+    fetchAssignData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
@@ -477,7 +477,7 @@ const Page: NextPageWithLayout<never> = () => {
           <AssignManualCreate
             assignData={data}
             reloadData={() => {
-              fetchAssignData();
+              fetchAssignData(false, nowTab);
               setDrawerOpen(false);
             }}
             secondDrawerOpen={secondDrawerOpen}
@@ -493,6 +493,7 @@ const Page: NextPageWithLayout<never> = () => {
       )}
       {secondDrawerOpen === "派車" && (
         <Drawer
+          isTabShown={false}
           closeDrawer={() => {
             setSecondDrawerOpen("");
           }}

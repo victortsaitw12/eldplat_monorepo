@@ -77,9 +77,12 @@ function InsideTableOnAssignment({
                 </th>
               );
             })}
-            <th>
-              <span>操作</span>
-            </th>
+            {data[idx].maintenance_quote_no?.label.substring(0, 3) !==
+              "MTC" && (
+              <th>
+                <span>操作</span>
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -137,9 +140,12 @@ function InsideTableOnAssignment({
                     <td>
                       <div>{endTime}</div>
                     </td>
-                    <td>
-                      <EditBtn item={item} goToEditPage={goToEditPage} />
-                    </td>
+                    {data[idx].maintenance_quote_no?.label.substring(0, 3) !==
+                      "MTC" && (
+                      <td>
+                        <EditBtn item={item} goToEditPage={goToEditPage} />
+                      </td>
+                    )}
                   </tr>
                 </>
               );
