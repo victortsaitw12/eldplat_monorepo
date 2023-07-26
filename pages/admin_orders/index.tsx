@@ -186,8 +186,8 @@ const Page: NextPageWithLayout<{
         },
         //接單下階段才會做
         person_name: {
-          label: "-",
-          value: "-"
+          label: "--",
+          value: "--"
         },
         order_label: {
           label: order["label_list"].map(

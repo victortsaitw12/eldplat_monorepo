@@ -30,7 +30,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   useEffect(() => {
     setLoading(true);
     try {
-      getCreateDdl().then((data) => {
+      getCreateDdl("").then((data) => {
         setMainCreateDdl(data.dataList[0]);
       });
     } catch (err) {
@@ -130,6 +130,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
           asyncSubmitForm={asyncSubmitForm}
           maintenance_id={maintenance_id}
           mainCreateDdl={mainCreateDdl}
+          setMainCreateDdl={setMainCreateDdl}
         />
       </TableWrapper>
     </BodySTY>

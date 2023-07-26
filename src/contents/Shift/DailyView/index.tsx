@@ -113,7 +113,7 @@ const DailyView = ({
           {times.map((item, i) => (
             <div key={`header-${i}`} className="headerCell time">
               <span className="headerCell-hhmm">{`${item.hh}:${item.mm}`}</span>
-              <span className="headerCell-aa">{`${item.aa}`}</span>
+              <sup className="headerCell-aa">{`${item.aa}`}</sup>
             </div>
           ))}
         </div>

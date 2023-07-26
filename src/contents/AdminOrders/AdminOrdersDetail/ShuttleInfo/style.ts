@@ -34,7 +34,10 @@ const BodySTY = styled.div`
   .add_day_container {
     color: ${({ theme }) => theme.color.N700};
     padding: 17.5px;
-    button {
+    span {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
       width: 100%;
       border: none;
       background: transparent;
