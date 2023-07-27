@@ -1,4 +1,11 @@
-import React, { useCallback, useEffect, useState, ReactNode } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  ReactNode,
+  useMemo,
+  useRef
+} from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -15,10 +22,22 @@ import { getEmployeeById } from "@services/employee/getEmployeeById";
 import { I_Get_Employees_Type } from "@typings/employee_type";
 import { updateEmployee } from "@services/employee/updateEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
+import TableWrapper from "@layout/TableWrapper";
+import HealthInfo from "@contents/Employee/HealthInfo";
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ userId }) => {
+  const [nowTab, setNowTab] = useState("1");
+  const submitRef = useRef<HTMLButtonElement | null>(null);
+  //
+  const mainFilterArray = useMemo(
+    () => [
+      { id: 1, label: "員工資料", value: "1" },
+      { id: 2, label: "健康記錄", value: "2" }
+    ],
+    []
+  );
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [editData, setEditData] = useState<I_Get_Employees_Type | any>();
@@ -95,6 +114,13 @@ const Page: NextPageWithLayout<
   };
 
   console.log("1️⃣editData in edit page:", editData);
+
+  //TableWrapper
+  const changeMainFilterHandler = (value: string) => {
+    console.log("changeMainFilterHandler", value);
+    setNowTab(value);
+  };
+
   return (
     <RegionProvider>
       <BodySTY>
@@ -111,11 +137,31 @@ const Page: NextPageWithLayout<
             />
           )} */}
             {(!loading && editData && (
-              <AddEmployee
-                submitForm={asyncSubmitForm}
-                onCancel={cancelFormHandler}
-                editData={editData}
-              />
+              <TableWrapper
+                isEdit={true}
+                onChangeTab={(value) => changeMainFilterHandler(value)}
+                mainFilter={nowTab}
+                mainFilterArray={mainFilterArray}
+                onSave={() => {
+                  submitRef.current && submitRef.current.click();
+                }}
+                onEdit={() => {
+                  console.log("TableWrapper onEdit");
+                }}
+                onClose={() => {
+                  router.push("/employee");
+                }}
+              >
+                {nowTab === "1" && (
+                  <AddEmployee
+                    submitRef={submitRef}
+                    submitForm={asyncSubmitForm}
+                    onCancel={cancelFormHandler}
+                    editData={editData}
+                  />
+                )}
+                {nowTab === "2" && <HealthInfo isEdit={true} data={editData} />}
+              </TableWrapper>
             )) || (
               <Pane
                 display="flex"
