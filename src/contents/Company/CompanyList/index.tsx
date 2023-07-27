@@ -18,6 +18,7 @@ import CompanyRule from "./CompanyRule";
 import Admin from "./Admin";
 import Contact from "./Contact";
 import LeaveSet from "./LeaveSet";
+import DateTime from "./DateTime";
 
 const ComapnyList = () => {
   return (
@@ -44,6 +45,7 @@ const ComapnyList = () => {
         <Pane className="left-blocks">
           <Basic />
           <CountrySet />
+          {/* <DateTime /> */}
         </Pane>
         <Pane className="right-blocks">
           <Admin />

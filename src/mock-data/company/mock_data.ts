@@ -1,7 +1,8 @@
 export const mock_company_data = {
   address1: "",
   address2: "",
-  administrator: "",
+  administrator_no: "",
+  administrator_name: "",
   agent_no: "",
   company_area: "",
   company_city: "",
