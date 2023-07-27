@@ -22,6 +22,8 @@ interface I_Data {
 }
 
 interface I_Table {
+  needAction?: boolean;
+  needCreateBtn?: boolean;
   tableName: string | any;
   cleanTableName?: string | React.ReactNode;
   titles: Array<string | number | React.ReactNode> | any;
@@ -46,6 +48,8 @@ interface I_Table {
 Must provide id field in the Data Array
 */
 function Table({
+  needAction = true,
+  needCreateBtn = true,
   tableName,
   cleanTableName,
   titles,
@@ -118,7 +122,7 @@ function Table({
             </>
           )}
         </div>
-        {!noButtonData.includes(tableName) && (
+        {needCreateBtn && !noButtonData.includes(tableName) && (
           <IconLeft
             text={
               createBtnText
@@ -176,7 +180,7 @@ function Table({
                   </th>
                 );
               })}
-              <th style={{ textAlign: "center" }}>操作</th>
+              {needAction && <th style={{ textAlign: "center" }}>操作</th>}
             </tr>
           </thead>
           <tbody>
@@ -234,34 +238,38 @@ function Table({
                         </td>
                       );
                     })}
-                    <td>
-                      <TableActionButton
-                        onView={
-                          viewItem && viewItem.bind(null, item.id?.value, item)
-                        }
-                        onEdit={
-                          goToEditPage &&
-                          goToEditPage.bind(null, item.id?.value, item)
-                        }
-                        onDelete={
-                          deleteItem && deleteItem.bind(null, item.id?.value)
-                        }
-                        onRecover={
-                          recoverItem && recoverItem.bind(null, item.id?.value)
-                        }
-                        deleteText={deleteText}
-                        isOpen={currentTab === idx}
-                        openOption={() => {
-                          console.log("openOption");
-                          setCurrentTab(idx);
-                        }}
-                        closeOption={() => {
-                          console.log("closeOption");
-                          setCurrentTab(null);
-                        }}
-                        tableName={tableName}
-                      />
-                    </td>
+                    {needAction && (
+                      <td>
+                        <TableActionButton
+                          onView={
+                            viewItem &&
+                            viewItem.bind(null, item.id?.value, item)
+                          }
+                          onEdit={
+                            goToEditPage &&
+                            goToEditPage.bind(null, item.id?.value, item)
+                          }
+                          onDelete={
+                            deleteItem && deleteItem.bind(null, item.id?.value)
+                          }
+                          onRecover={
+                            recoverItem &&
+                            recoverItem.bind(null, item.id?.value)
+                          }
+                          deleteText={deleteText}
+                          isOpen={currentTab === idx}
+                          openOption={() => {
+                            console.log("openOption");
+                            setCurrentTab(idx);
+                          }}
+                          closeOption={() => {
+                            console.log("closeOption");
+                            setCurrentTab(null);
+                          }}
+                          tableName={tableName}
+                        />
+                      </td>
+                    )}
                   </tr>
                 );
               })
