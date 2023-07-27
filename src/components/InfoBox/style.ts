@@ -5,7 +5,7 @@ export const InfoBoxSTY = styled.div`
   /* min-height: 224px; */
   background: #ffffff;
   border-radius: 10px;
-  overflow: auto;
+  /* overflow: auto; */
   padding: 35px 20px;
 
   & > .info-title {
