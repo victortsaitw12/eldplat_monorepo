@@ -16,6 +16,7 @@ const Page: NextPageWithLayout<never> = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const asyncSubmitForm = async (data: any) => {
+    console.log("要送出公司修改的data", data);
     setLoading(true);
     try {
       const res = await updateCompany(data);
