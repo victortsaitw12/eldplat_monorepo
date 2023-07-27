@@ -32,7 +32,20 @@ import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
 // import { mock_GetQuotationByFilterList } from "@mock-data/adminOrders/mockData";
 
 const isFullWidth = false;
-
+const ORDER_STATUS_TEXT: { [key: string]: { label: string; value: string } } = {
+  "2": { label: "收到詢價", value: "2" },
+  "3": { label: "送出報價", value: "3" },
+  "5": { label: "接受報價", value: "5" },
+  "6": { label: "已付全額", value: "6" },
+  "7": { label: "已付訂金", value: "7" },
+  "8": { label: "已付尾款", value: "8" },
+  "9": { label: "訂金逾期", value: "9" },
+  "10": { label: "尾款逾期", value: "10" },
+  "11": { label: "繳款逾期", value: "11" },
+  "13": { label: "預約派車", value: "13" },
+  "14": { label: "預約完成", value: "14" },
+  "15": { label: "結案", value: "15" }
+};
 const Page: NextPageWithLayout<{
   locale: string;
   setPageType: (t: string) => void;
@@ -180,9 +193,11 @@ const Page: NextPageWithLayout<{
           label: order["contact_email"],
           value: order["contact_email"]
         },
-        order_status: {
-          label: order["order_status"],
-          value: order["order_status"]
+        status_code: {
+          label:
+            ORDER_STATUS_TEXT[order["status_code"]]?.label ||
+            "窩不知道狀態文字對應是啥",
+          value: ORDER_STATUS_TEXT[order["status_code"]]?.value || "99"
         },
         //接單下階段才會做
         person_name: {
