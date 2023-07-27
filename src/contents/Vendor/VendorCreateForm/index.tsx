@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
 import { useRouter } from "next/router";
+import { ThemeContext } from "styled-components";
 //@sevices
 import { createVendor } from "@services/vendor/createVendor";
 import FiledInput from "./FieldInput";
@@ -62,6 +63,7 @@ interface I_VendorCreateFormProps {
 }
 
 function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
+  const themeContext = useContext(ThemeContext);
   const router = useRouter();
   //供應商的分類
   const { codeType = "01" } = router.query;
@@ -304,7 +306,11 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
         分類
       </Text>
       <CheckboxField
-        label={vedor_code_text[codeType as string]}
+        label={
+          <Text style={{ fontSize: themeContext.fontSize.Paragraph200 }}>
+            {vedor_code_text[codeType as string]}
+          </Text>
+        }
         item={{ value: codeType }}
         checked={fuelValue == codeType}
         toggleFuelValue={() => {

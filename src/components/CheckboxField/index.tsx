@@ -3,7 +3,7 @@ import { Checkbox } from "evergreen-ui";
 import { CheckboxFieldSTY } from "./style";
 
 interface I_CheckboxField {
-  label?: string;
+  label?: string | React.ReactNode;
   hint?: string;
   item?: any;
   toggleFuelValue: (value: string) => void;
