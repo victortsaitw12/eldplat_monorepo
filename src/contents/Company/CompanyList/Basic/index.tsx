@@ -36,11 +36,11 @@ function Basic() {
         </Pane>
         <Pane className="input-line">
           <Text className="">公司類型</Text>
-          <Text>{companyData?.company_typ === "1" && "運輸業"}</Text>
+          <Text>{companyData?.company_typ === "01" && "運輸業"}</Text>
         </Pane>
         <Pane className="input-line">
           <Text className="">負責人</Text>
-          <Text>{companyData?.administrator}</Text>
+          <Text>{companyData?.company_owner}</Text>
         </Pane>
 
         {/* 圖片區域 */}

@@ -33,6 +33,8 @@ const Page: NextPageWithLayout<never> = () => {
   const [checkItems, setCheckItems] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
   const [busNo, setBusNo] = useState<string>("");
+  const [reminderNo, setReminderNo] = useState<string>("");
+
   const {
     initializeSubFilter,
     mainFilter,
@@ -93,6 +95,7 @@ const Page: NextPageWithLayout<never> = () => {
                 item={item}
                 setDrawerOpen={setDrawerOpen}
                 setBusNo={setBusNo}
+                setReminderNo={setReminderNo}
               ></AddMissionBtn>
             ),
             value: item.reminders_no.label
@@ -178,12 +181,13 @@ const Page: NextPageWithLayout<never> = () => {
           }}
         >
           <MaintenanceCreateForm
-            data={data}
+            noticeData={data}
             reloadData={() => {
               fetchMaintenanceNoticeData(false);
               setDrawerOpen(false);
             }}
             busNo={busNo}
+            reminderNo={reminderNo}
           />
         </Drawer>
       )}

@@ -61,9 +61,9 @@ function Basic({}) {
               value={companyData.company_name}
               onChange={handleCompanyBasicChange}
             />
-            {errMsg["errField"] === "company_name" && (
+            {/* {errMsg["errField"] === "company_name" && (
               <Text color="red !important">{errMsg["errText"]}</Text>
-            )}
+            )} */}
           </Pane>
         </Pane>
         <Pane className="input-line">
@@ -77,8 +77,8 @@ function Basic({}) {
         <Pane className="input-line">
           <Text className="">負責人</Text>
           <TextInput
-            name="administrator"
-            value={companyData.administrator}
+            name="company_owner"
+            value={companyData.company_owner}
             onChange={handleCompanyBasicChange}
           />
         </Pane>

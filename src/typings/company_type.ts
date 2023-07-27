@@ -21,7 +21,8 @@ export interface I_Company_Leave_Type {
 export interface I_Company_Update_Type {
   address1: string;
   address2: string;
-  administrator: string;
+  administrator_no: string;
+  administrator_name: string;
   agent_no: string;
   company_area: string;
   company_city: string;
