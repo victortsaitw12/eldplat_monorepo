@@ -38,6 +38,10 @@ const ManualAssignBtn = ({
   return (
     <BodySTY>
       <Label
+        style={{
+          width: "unset",
+          fontSize: "12px"
+        }}
         text="手動派單"
         value={id}
         onClick={(e) => {

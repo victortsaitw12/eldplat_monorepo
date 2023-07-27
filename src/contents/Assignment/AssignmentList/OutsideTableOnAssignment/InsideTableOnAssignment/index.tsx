@@ -77,7 +77,7 @@ function InsideTableOnAssignment({
                 </th>
               );
             })}
-            {data[idx].maintenance_quote_no?.label.substring(0, 3) !==
+            {data[idx].maintenance_quote_no?.value.substring(0, 3) !==
               "MTC" && (
               <th>
                 <span>操作</span>
@@ -140,7 +140,7 @@ function InsideTableOnAssignment({
                     <td>
                       <div>{endTime}</div>
                     </td>
-                    {data[idx].maintenance_quote_no?.label.substring(0, 3) !==
+                    {data[idx].maintenance_quote_no?.value.substring(0, 3) !==
                       "MTC" && (
                       <td>
                         <EditBtn item={item} goToEditPage={goToEditPage} />

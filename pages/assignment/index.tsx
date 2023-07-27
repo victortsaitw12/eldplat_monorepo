@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
+import { Text } from "evergreen-ui";
 //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
+import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import TableWrapper from "@layout/TableWrapper";
@@ -18,7 +20,7 @@ import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
 import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 
 import {
-  assignParser,
+  // assignParser, 移進/assignment 因為渲染畫面元件跟function
   assignPattern,
   getAllAssignments,
   defaultPageInfo
@@ -46,12 +48,23 @@ const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
+
+  const [firstDrawerType, setFirstDrawerType] = useState<
+    | "autoCreate"
+    | "manualCreate"
+    | "editCar"
+    | "editDriver"
+    | "additionalCar"
+    | "additionalDriver"
+    | string
+  >("");
   const [secondDrawerOpen, setSecondDrawerOpen] = useState<string>("");
   const [EditDrawerOpen, setEditDrawerOpen] = useState<string>("");
   const [creatDrawerOpen, setCreatDrawerOpen] = useState<"car" | "driver" | "">(
     ""
   );
   const [autoDrawerOpen, setAutoDrawerOpen] = useState<boolean>(false);
+
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
   const [showSecondTitle, setShowSecondTitle] = useState<any>();
@@ -63,6 +76,7 @@ const Page: NextPageWithLayout<never> = () => {
     manual_bus: []
   });
   const timeRef = useRef(null);
+  const router = useRouter();
   const [startTime, setStartTime] = useState<any>({
     start_hours: "00",
     start_minutes: "00",
@@ -74,6 +88,9 @@ const Page: NextPageWithLayout<never> = () => {
     end_type: ""
   });
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
+  const [disabledAutoAssign, setDisabledAutoAssign] = useState<string[]>([]);
+
+  console.log("🍅🍅🍅disabledAutoAssign:", disabledAutoAssign);
 
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
@@ -103,6 +120,67 @@ const Page: NextPageWithLayout<never> = () => {
     subFilter = null,
     pageInfo = defaultPageInfo
   ) => {
+    const assignParser = (data: any, key: string) => {
+      // if (key === "id") {
+      //   return {
+      //     label: data["customer_no"] || null,
+      //     value: data["customer_no"] || null
+      //   };
+      // }
+      if (key === "maintenance_quote_no") {
+        return {
+          label: (
+            <Text
+              style={{
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                data.maintenance_quote_no.substring(0, 3) === "MTC"
+                  ? router.push(
+                      `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
+                    )
+                  : router.push(
+                      `/client/orders/detail/${data.maintenance_quote_no}`
+                    );
+                console.log("goToPageDetail");
+              }}
+            >
+              {data.maintenance_quote_no || "--"}
+            </Text>
+          ),
+          value: data.maintenance_quote_no || null
+        };
+      }
+      if (key === "task_start_time") {
+        return {
+          label:
+            data.task_start_time !== null
+              ? convertDateAndTimeFormat(data.task_start_time)
+              : "--",
+          value:
+            data.task_start_time !== null
+              ? convertDateAndTimeFormat(data.task_start_time)
+              : "--"
+        };
+      }
+      if (key === "task_end_time") {
+        return {
+          label:
+            data.task_end_time !== null
+              ? convertDateAndTimeFormat(data.task_end_time)
+              : "--",
+          value:
+            data.task_end_time !== null
+              ? convertDateAndTimeFormat(data.task_end_time)
+              : "--"
+        };
+      }
+
+      return {
+        label: data[key] || "--",
+        value: data[key] || null
+      };
+    };
     //---------------------------------------------------------------
     getAllAssignments(pageInfo)
       .then((data) => {
@@ -136,7 +214,7 @@ const Page: NextPageWithLayout<never> = () => {
         newData.map((v, idx) => {
           const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
           v["no"] = { label: item_no, value: item_no };
-          if (v.maintenance_quote_no.label.substring(0, 3) === "MTC") {
+          if (v.maintenance_quote_no.value.substring(0, 3) === "MTC") {
             // 維保單無按鈕
             v["auto_assign"] = {
               label: " ",
@@ -148,17 +226,21 @@ const Page: NextPageWithLayout<never> = () => {
             };
           } else {
             // 全新訂單排程按鈕 or 已排程訂單修改按鈕
+            // TODO 🍅🍅🍅 這裡的 disabledAutoAssign 不會計入 virtual dom 更新state @@
             v["auto_assign"] = {
               label:
                 newSubData[idx].length === 0 ? (
                   <AutoAssignBtn
                     setAutoDrawerOpen={setAutoDrawerOpen}
-                    id={v.maintenance_quote_no.label}
+                    id={v.maintenance_quote_no.value}
                     setOrderInfo={setOrderInfo}
+                    disabled={disabledAutoAssign.includes(
+                      v.maintenance_quote_no.value
+                    )}
                   />
                 ) : (
                   <AdditionalVehicleBtn
-                    id={v.maintenance_quote_no.label}
+                    id={v.maintenance_quote_no.value}
                     setOrderInfo={setOrderInfo}
                     setCreatDrawerOpen={setCreatDrawerOpen}
                   />
@@ -169,14 +251,14 @@ const Page: NextPageWithLayout<never> = () => {
               label:
                 newSubData[idx].length === 0 ? (
                   <ManualAssignBtn
-                    id={v.maintenance_quote_no.label}
+                    id={v.maintenance_quote_no.value}
                     isDrawerOpen={isDrawerOpen}
                     setDrawerOpen={setDrawerOpen}
                     setOrderInfo={setOrderInfo}
                   />
                 ) : (
                   <AdditionalDriverBtn
-                    id={v.maintenance_quote_no.label}
+                    id={v.maintenance_quote_no.value}
                     setOrderInfo={setOrderInfo}
                     setCreatDrawerOpen={setCreatDrawerOpen}
                   />
@@ -455,6 +537,8 @@ const Page: NextPageWithLayout<never> = () => {
           }}
           filter={subFilter}
         >
+          {" "}
+          <div style={{ color: "red", fontSize: "36px" }}></div>
           <AssignmentList
             assignData={data}
             subAssignData={subAssignData}
@@ -571,11 +655,15 @@ const Page: NextPageWithLayout<never> = () => {
       )}
       {autoDrawerOpen && (
         <Drawer
+          tabName={["設定排程"]}
           closeDrawer={() => {
             setAutoDrawerOpen(false);
           }}
         >
-          <AssignAutoCreate orderInfo={orderInfo} />
+          <AssignAutoCreate
+            orderInfo={orderInfo}
+            setDisabledAutoAssign={setDisabledAutoAssign}
+          />
         </Drawer>
       )}
     </BodySTY>

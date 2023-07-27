@@ -36,9 +36,13 @@ const AdditionalVehicleBtn = ({
   return (
     <BodySTY>
       <Label
+        style={{
+          width: "unset",
+          fontSize: "12px"
+        }}
         text={
           <span>
-            <PlusIcon />
+            <PlusIcon style={{ height: "12px", width: "12px" }} />
             派車
           </span>
         }

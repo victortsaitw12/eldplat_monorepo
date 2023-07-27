@@ -68,7 +68,7 @@ const TableRow = ({
           {isOpen ? (
             <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pointer" />
           ) : (
-            (item.maintenance_quote_no.label.substring(0, 3) === "MTC" ||
+            (item.maintenance_quote_no.value.substring(0, 3) === "MTC" ||
               subAssignData[idx].length !== 0) && (
               <ChevronDownIcon
                 onClick={handleInsideTableOpen}
