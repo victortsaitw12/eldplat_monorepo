@@ -31,7 +31,7 @@ interface I_AssignmentAdditionalVehicleProps {
   orderInfo: I_ManualAssignType[];
   createAssignData: I_ManualCreateType;
   setSubAssignData: (v: any) => void;
-  setCreatDrawerOpen: (v: "car" | "driver" | "") => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
 
 const AssignmentAdditional = ({
@@ -39,7 +39,7 @@ const AssignmentAdditional = ({
   orderInfo,
   createAssignData,
   setSubAssignData,
-  setCreatDrawerOpen
+  setFirstDrawerOpen
 }: I_AssignmentAdditionalVehicleProps) => {
   const [loading, setLoading] = React.useState(false);
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
@@ -70,7 +70,7 @@ const AssignmentAdditional = ({
       }, 2000);
     } else {
       //關抽屜;
-      setCreatDrawerOpen("");
+      setFirstDrawerOpen("");
     }
   };
   const handleCheckDates = (e: any) => {
@@ -108,7 +108,7 @@ const AssignmentAdditional = ({
       });
     } finally {
       //關抽屜;
-      setCreatDrawerOpen("");
+      setFirstDrawerOpen("");
     }
   }, [busRestShifts]);
 

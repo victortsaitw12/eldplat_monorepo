@@ -10,13 +10,13 @@ interface AdditionalVehicleBtn_Type {
   id: string;
   disabled?: boolean;
   setOrderInfo: (t: any) => void;
-  setCreatDrawerOpen: (v: "car" | "driver" | "") => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
 const AdditionalVehicleBtn = ({
   id,
   disabled,
   setOrderInfo,
-  setCreatDrawerOpen
+  setFirstDrawerOpen
 }: AdditionalVehicleBtn_Type) => {
   const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -27,7 +27,7 @@ const AdditionalVehicleBtn = ({
         console.log("data", data);
         setOrderInfo(data.dataList);
       });
-      setCreatDrawerOpen("car");
+      setFirstDrawerOpen("additionalCar");
     } catch (err) {
       console.log("err of click the finish button", err);
     }

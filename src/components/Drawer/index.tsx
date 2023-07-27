@@ -8,7 +8,7 @@ interface DrawerProps {
   tabName?: string[];
   isTabShown?: boolean;
   children: React.ReactNode;
-  closeDrawer?: () => void;
+  closeDrawer?: () => void | undefined;
   toggleFullScreenDrawer?: () => void;
 }
 

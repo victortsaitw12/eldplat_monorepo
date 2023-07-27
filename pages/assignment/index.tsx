@@ -49,21 +49,9 @@ const Page: NextPageWithLayout<never> = () => {
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
 
-  const [firstDrawerType, setFirstDrawerType] = useState<
-    | "autoCreate"
-    | "manualCreate"
-    | "editCar"
-    | "editDriver"
-    | "additionalCar"
-    | "additionalDriver"
-    | string
-  >("");
+  const [firstDrawerOpen, setFirstDrawerOpen] = useState<string>("");
+  // "autoAssign"|"manualAssign"| "editCar"| "editDriver"| "additionalCar" | "additionalDriver" | ""
   const [secondDrawerOpen, setSecondDrawerOpen] = useState<string>("");
-  const [EditDrawerOpen, setEditDrawerOpen] = useState<string>("");
-  const [creatDrawerOpen, setCreatDrawerOpen] = useState<"car" | "driver" | "">(
-    ""
-  );
-  const [autoDrawerOpen, setAutoDrawerOpen] = useState<boolean>(false);
 
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
@@ -107,10 +95,10 @@ const Page: NextPageWithLayout<never> = () => {
     mainFilter,
     updateMainFilter,
     subFilter,
-    updateSubFilter,
-    isDrawerOpen,
-    setDrawerOpen,
-    drawerType
+    updateSubFilter
+    // isDrawerOpen,
+    // setDrawerOpen,
+    // drawerType
   } = useAssignmentStore();
   //
 
@@ -231,7 +219,7 @@ const Page: NextPageWithLayout<never> = () => {
               label:
                 newSubData[idx].length === 0 ? (
                   <AutoAssignBtn
-                    setAutoDrawerOpen={setAutoDrawerOpen}
+                    setFirstDrawerOpen={() => setFirstDrawerOpen("autoAssign")}
                     id={v.maintenance_quote_no.value}
                     setOrderInfo={setOrderInfo}
                     disabled={disabledAutoAssign.includes(
@@ -242,7 +230,9 @@ const Page: NextPageWithLayout<never> = () => {
                   <AdditionalVehicleBtn
                     id={v.maintenance_quote_no.value}
                     setOrderInfo={setOrderInfo}
-                    setCreatDrawerOpen={setCreatDrawerOpen}
+                    setFirstDrawerOpen={() =>
+                      setFirstDrawerOpen("additionalCar")
+                    }
                   />
                 ),
               value: null
@@ -252,15 +242,18 @@ const Page: NextPageWithLayout<never> = () => {
                 newSubData[idx].length === 0 ? (
                   <ManualAssignBtn
                     id={v.maintenance_quote_no.value}
-                    isDrawerOpen={isDrawerOpen}
-                    setDrawerOpen={setDrawerOpen}
+                    setFirstDrawerOpen={() =>
+                      setFirstDrawerOpen("manualAssign")
+                    }
                     setOrderInfo={setOrderInfo}
                   />
                 ) : (
                   <AdditionalDriverBtn
                     id={v.maintenance_quote_no.value}
                     setOrderInfo={setOrderInfo}
-                    setCreatDrawerOpen={setCreatDrawerOpen}
+                    setFirstDrawerOpen={() =>
+                      setFirstDrawerOpen("additionalDriver")
+                    }
                   />
                 ),
               value: null
@@ -289,7 +282,7 @@ const Page: NextPageWithLayout<never> = () => {
     if (item.assignment_no.substring(0, 3) === "BAM") {
       const result = await getBusAssignmentInfo(item.assignment_no);
       console.log("result for bus single assignment", result);
-      setEditDrawerOpen("car");
+      setFirstDrawerOpen("editCar");
       const newResult = { ...result.dataList[0] };
       newResult["plate"] = item.license_plate;
       newResult["car_no"] = item.bus_day_number;
@@ -299,7 +292,7 @@ const Page: NextPageWithLayout<never> = () => {
     } else {
       const result = await getDriverAssignmentInfo(item.assignment_no);
       console.log("result for driver single assignment", result);
-      setEditDrawerOpen("driver");
+      setFirstDrawerOpen("editDriver");
       const newResult = { ...result.dataList[0] };
       newResult["car_no"] = item.bus_day_number;
       newResult["assign_type"] = "派工";
@@ -519,7 +512,7 @@ const Page: NextPageWithLayout<never> = () => {
   console.log("5️⃣createAssignData", createAssignData);
   console.log("6️⃣subAssignData", subAssignData);
   console.log("7️⃣orderIndex", orderIndex);
-  console.log("8️⃣EditDrawerOpen", EditDrawerOpen);
+  console.log("8️⃣firstDrawerOpen", firstDrawerOpen);
   console.log("9️⃣editData", editData);
 
   return (
@@ -543,7 +536,7 @@ const Page: NextPageWithLayout<never> = () => {
             assignData={data}
             subAssignData={subAssignData}
             goToCreatePage={() => {
-              setDrawerOpen(true);
+              setFirstDrawerOpen("manualAssign");
             }}
             goToEditPageHandler={goToEditPageHandler}
             pageInfo={pageInfo}
@@ -551,18 +544,18 @@ const Page: NextPageWithLayout<never> = () => {
           />
         </FilterWrapper>
       </TableWrapper>
-      {isDrawerOpen && (
+      {firstDrawerOpen === "manualAssign" && (
         <Drawer
-          tabName={[drawerType === "add" ? "編輯派車" : "手動派單"]}
-          closeDrawer={() => {
-            setDrawerOpen(false);
-          }}
+          tabName={["手動派單"]}
+          closeDrawer={
+            !secondDrawerOpen ? () => setFirstDrawerOpen("") : undefined
+          }
         >
           <AssignManualCreate
             assignData={data}
             reloadData={() => {
               fetchAssignData(false, nowTab);
-              setDrawerOpen(false);
+              setFirstDrawerOpen("");
             }}
             secondDrawerOpen={secondDrawerOpen}
             setSecondDrawerOpen={setSecondDrawerOpen}
@@ -603,62 +596,48 @@ const Page: NextPageWithLayout<never> = () => {
           ></SecondDriverAssignManualCreate>
         </Drawer>
       )}
-      {creatDrawerOpen === "car" && (
+      {firstDrawerOpen === "additionalCar" && (
         <Drawer
           tabName={["新增派車"]}
-          closeDrawer={() => {
-            setCreatDrawerOpen("");
-          }}
+          closeDrawer={() => setFirstDrawerOpen("")}
         >
           <AssignmentAdditional
             type="car"
             orderInfo={orderInfo}
             createAssignData={createAssignData}
             setSubAssignData={setSubAssignData}
-            setCreatDrawerOpen={setCreatDrawerOpen}
+            setFirstDrawerOpen={setFirstDrawerOpen}
           />
         </Drawer>
       )}
-      {creatDrawerOpen === "driver" && (
+      {firstDrawerOpen === "additionalDriver" && (
         <Drawer
           tabName={["新增派工"]}
-          closeDrawer={() => {
-            setCreatDrawerOpen("");
-          }}
+          closeDrawer={() => setFirstDrawerOpen("")}
         >
           <AssignmentAdditional
             type="driver"
             orderInfo={orderInfo}
             createAssignData={createAssignData}
             setSubAssignData={setSubAssignData}
-            setCreatDrawerOpen={setCreatDrawerOpen}
+            setFirstDrawerOpen={setFirstDrawerOpen}
           />
         </Drawer>
       )}
-      {EditDrawerOpen === "car" && (
-        <Drawer
-          closeDrawer={() => {
-            setEditDrawerOpen("");
-          }}
-        >
+      {firstDrawerOpen === "editCar" && (
+        <Drawer closeDrawer={() => setFirstDrawerOpen("")}>
           <CarEdit editData={editData} />
         </Drawer>
       )}
-      {EditDrawerOpen === "driver" && (
-        <Drawer
-          closeDrawer={() => {
-            setEditDrawerOpen("");
-          }}
-        >
+      {firstDrawerOpen === "editDriver" && (
+        <Drawer closeDrawer={() => setFirstDrawerOpen("")}>
           <DriverEdit editData={editData} />
         </Drawer>
       )}
-      {autoDrawerOpen && (
+      {firstDrawerOpen === "autoAssign" && (
         <Drawer
           tabName={["設定排程"]}
-          closeDrawer={() => {
-            setAutoDrawerOpen(false);
-          }}
+          closeDrawer={() => setFirstDrawerOpen("")}
         >
           <AssignAutoCreate
             orderInfo={orderInfo}

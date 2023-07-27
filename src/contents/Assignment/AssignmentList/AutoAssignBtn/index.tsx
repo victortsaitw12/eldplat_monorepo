@@ -8,20 +8,20 @@ import { getOrderInfo } from "@services/assignment/getOrderInfo";
 interface AutoAssignBtn_Type {
   id: string;
   disabled?: boolean;
-  setAutoDrawerOpen: (t: boolean) => void;
+  setFirstDrawerOpen: (v: string) => void;
   setOrderInfo: (t: any) => void;
   // disabledAutoAssign: any[];
 }
 const AutoAssignBtn = ({
   id,
   disabled,
-  setAutoDrawerOpen,
+  setFirstDrawerOpen,
   setOrderInfo
 }: // disabledAutoAssign
 AutoAssignBtn_Type) => {
   const handleAutoAssign = () => {
     try {
-      setAutoDrawerOpen(true);
+      setFirstDrawerOpen("autoAssign");
       getOrderInfo(id).then((data) => {
         console.log("AUTO data", data);
         setOrderInfo(data?.dataList);
