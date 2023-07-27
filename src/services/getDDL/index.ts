@@ -144,3 +144,10 @@ export const DSPH_CITY: any = {
   "04": { label: "台中", value: "01" },
   "05": { label: "台南", value: "02" }
 };
+//體檢分類
+export const HEAL_TYP: any = {
+  "01": { label: "一般體格檢查", value: "01" },
+  "02": { label: "特殊健檢", value: "02" },
+  "03": { label: "特殊粉塵健檢", value: "03" },
+  "04": { label: "特殊噪音健檢", value: "04" }
+};

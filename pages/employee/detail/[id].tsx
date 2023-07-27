@@ -6,11 +6,9 @@ import { Pane, Spinner } from "evergreen-ui";
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 
-import AddEmployee from "@contents/Employee";
-
 //@services
 
-//
+//@content
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
@@ -18,6 +16,7 @@ import { useEmployeeFilterStore } from "@contexts/filter/employeeFilterStore";
 import { getEmployeeById } from "@services/employee/getEmployeeById";
 import RegionProvider from "@contexts/regionContext/regionProvider";
 import EmployeeDetail from "@contents/Employee/EmployeeDetail";
+import HealthInfo from "@contents/Employee/HealthInfo";
 
 const mainFilterArray = [
   { id: 1, label: "員工資料", value: "1" },
@@ -128,8 +127,7 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
           />
         );
       case "2":
-        return <Pane>健康記錄</Pane>;
-
+        return <HealthInfo isEdit={false} data={data} />;
       default:
         break;
     }
@@ -138,6 +136,7 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
     <RegionProvider>
       <BodySTY>
         <TableWrapper
+          viewOnly={true}
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}

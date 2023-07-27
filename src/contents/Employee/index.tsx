@@ -24,12 +24,13 @@ import { BodySTY } from "./style";
 import LoadingSpinner from "@components/LoadingSpinner";
 
 interface I_AddEmployee_Props {
+  submitRef: React.RefObject<HTMLButtonElement>;
   submitForm: (data: any) => void;
   onCancel: () => void;
   editData?: any | I_Get_Employees_Type;
 }
 
-function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
+function AddEmployee({ submitRef, submitForm, editData }: I_AddEmployee_Props) {
   const [insertData, setInsertData] = useState<I_Add_Employees_Type>({
     user_name: "",
     user_first_name: "",
@@ -122,27 +123,14 @@ function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
 
   return (
     <BodySTY>
-      <Pane display="flex" justifyContent="space-between" className="title-bar">
-        <Text className="title-label">編輯員工資料</Text>
-        <Pane className="right-function">
-          <Button
-            iconBefore={FloppyDiskIcon}
-            className="save"
-            onClick={handleSaveAll}
-          >
-            全部儲存
-          </Button>
-          <IconButton icon={FullscreenIcon} />
-          <IconButton
-            icon={SmallCrossIcon}
-            marginRight={majorScale(1)}
-            onClick={() => {
-              Router.push("/employee");
-            }}
-          />
-        </Pane>
-      </Pane>
-
+      <Button
+        style={{ display: "none" }}
+        ref={submitRef}
+        className="save"
+        onClick={handleSaveAll}
+      >
+        全部儲存
+      </Button>
       {/* 新增表格區塊們 */}
       <Pane className="add-blocks">
         <Pane className="left-blocks">
@@ -162,7 +150,6 @@ function AddEmployee({ submitForm, editData }: I_AddEmployee_Props) {
             insertData={insertData}
             setInsertData={setInsertData}
           />
-          {/* <HealthSecond /> */}
         </Pane>
         <Pane className="right-blocks">
           <Contact
