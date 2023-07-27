@@ -17,7 +17,6 @@ interface Dialog_Type {
 }
 
 function DeleteDialog({ isShown, setIsShown, data }: Dialog_Type) {
-  console.log("data", data);
   const handleDelete = () => {
     data?.map((item) => {
       if (item.checked)
