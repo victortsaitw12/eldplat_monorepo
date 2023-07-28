@@ -29,7 +29,6 @@ import CheckBox from "@components/CheckBox";
 interface I_AssignmentAdditionalVehicleProps {
   type: "car" | "driver";
   orderInfo: I_ManualAssignType[];
-  createAssignData: I_ManualCreateType;
   setSubAssignData: (v: any) => void;
   setFirstDrawerOpen: (v: string) => void;
 }
@@ -37,7 +36,6 @@ interface I_AssignmentAdditionalVehicleProps {
 const AssignmentAdditional = ({
   type,
   orderInfo,
-  createAssignData,
   setSubAssignData,
   setFirstDrawerOpen
 }: I_AssignmentAdditionalVehicleProps) => {
