@@ -86,7 +86,6 @@ export const RegionProvider = ({ children }: any) => {
     // const level_num = "2";
     getAllRegions("", "2")
       .then((data) => {
-        console.log("region data from api : ", data);
         data.options.map(
           (v: {
             [x: string]: string | undefined;
@@ -118,7 +117,6 @@ export const RegionProvider = ({ children }: any) => {
       getAllRegions(area_no, level_num).then((data) => {
         setAllStates([]);
         setAllCities([]);
-        console.log("data for states", data);
         data?.options?.map((v: { area_Name_Tw: string; area_No: string }) => {
           if (v.area_Name_Tw !== "")
             return setAllStates((prev: I_AllRegions_Type[]) => [
@@ -149,7 +147,6 @@ export const RegionProvider = ({ children }: any) => {
     const level_num = "4";
     getAllRegions(area_no, level_num).then((data) => {
       setAllCities([]);
-      console.log("data for cities", data);
       data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
         if (v.area_Name_Tw !== "")
           return setAllCities((prev: any) => [
@@ -195,7 +192,6 @@ export const RegionProvider = ({ children }: any) => {
 
   // 判斷國別來決定要顯示的國碼
   const handleCountryCode = (country: string) => {
-    console.log("💕💕💕💕💕", country);
     const showCountryCode = allCountries?.filter((v) => {
       return v.areaNo === country;
     });
@@ -214,9 +210,6 @@ export const RegionProvider = ({ children }: any) => {
       setGetCity(data.options);
     });
   }, [companyData?.company_area, companyData?.company_country2]);
-
-  console.log("⚽allStates", allStates);
-  console.log("⚾allCities", allCities);
 
   ///////////////////////////////////////////////////////
   const allContextValues = {

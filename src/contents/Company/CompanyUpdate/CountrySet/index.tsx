@@ -28,12 +28,8 @@ const currencyOptions = [
 ];
 
 function CountrySet() {
-  const {
-    companyData,
-    setCompanyData,
-    ddlLanguage,
-    handleCompanyCountrySetChange
-  } = useContext<I_Company_Context>(CompanyContext);
+  const { companyData, setCompanyData, ddlLanguage, handleCompanyDDLChange } =
+    useContext<I_Company_Context>(CompanyContext);
   const { allCountries, setAllCountries } =
     useContext<I_Region_Context>(RegionContext);
   const company_language_data = companyData?.company_language;
@@ -100,7 +96,7 @@ function CountrySet() {
             name="company_country"
             value={companyData.company_country}
             onChange={(e: any) => {
-              handleCompanyCountrySetChange(e);
+              handleCompanyDDLChange(e);
             }}
           >
             {allCountries?.map((item) => (
@@ -115,7 +111,7 @@ function CountrySet() {
             name="company_country"
             value={companyData.company_country}
             onChange={(e: any) => {
-              handleCompanyCountrySetChange(e);
+              handleCompanyDDLChange(e);
             }}
           >
             <option value="TW">台灣</option>
