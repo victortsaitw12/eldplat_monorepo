@@ -10,6 +10,7 @@ interface I_EmployeeListType {
   recoverItemHandler: (id: string) => void;
   goToCreatePage: () => void;
   goToEditPageHandler: (id: string) => void;
+  goToDetailPageHandler: (id: string) => void;
 }
 
 function EmployeeList({
@@ -18,7 +19,8 @@ function EmployeeList({
   goToCreatePage,
   deleteItemHandler,
   recoverItemHandler,
-  goToEditPageHandler
+  goToEditPageHandler,
+  goToDetailPageHandler
 }: I_EmployeeListType) {
   const employeeTitle = getEmployeeTitle();
   const customTableClass = [
@@ -36,6 +38,9 @@ function EmployeeList({
         // deleteItem={deleteItemHandler}
         // goToEditPage={goToEditPageHandler}
         {...(listType == "1" && {
+          viewItem: (id) => {
+            goToDetailPageHandler(id);
+          },
           goToEditPage: (id) => {
             goToEditPageHandler(id);
           },

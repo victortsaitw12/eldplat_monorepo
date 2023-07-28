@@ -28,7 +28,7 @@ function Index(props: any) {
             height={44}
           /> */}
           <div className="desp">
-            <h4>{companyData?.company_owner}</h4>
+            <h4>{companyData?.administrator_name}</h4>
             <p>最高管理員</p>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import { createMaintenance } from "@services/maintenance/createMaintenance";
 import router from "next/router";
 import dayjs from "dayjs";
+import { CancelMaintenanceById } from "@services/maintenance/getMaintenanceNotice";
 
 //@components
 export interface CreateMaintenancePayload {
@@ -24,15 +25,17 @@ export interface CreateMaintenancePayload {
 }
 
 interface I_MaintenanceCreateFormProps {
-  data?: any;
+  noticeData?: any;
   reloadData?: () => void;
   busNo?: string;
+  reminderNo?: string;
 }
 
 function MaintenanceCreateForm({
-  data,
+  noticeData,
   reloadData,
-  busNo
+  busNo,
+  reminderNo
 }: I_MaintenanceCreateFormProps) {
   const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
   // default value
@@ -52,13 +55,14 @@ function MaintenanceCreateForm({
       defaultValues
     });
   const [loading, setLoading] = useState(false);
+
   // 取得新增時的下拉式資料
   useEffect(() => {
     setLoading(true);
     try {
       getCreateDdl("").then((DDLdata) => {
         console.log("DDL data", DDLdata);
-        console.log("維保通知打開側邊新增的data", data);
+        console.log("維保通知打開側邊新增的data", noticeData);
         const newData = { ...DDLdata.dataList[0] };
         newData.bus_options.map((v: { no: any }, idx: any) => {
           if (v.no === busNo) {
@@ -94,7 +98,6 @@ function MaintenanceCreateForm({
           setValue("driver_no", driverChosen[0]?.no);
         }
       });
-      console.log("🆑newData", newData);
       setMainCreateDdl(newData);
       setValue("bus_no", busChosen[0]?.no);
     });
@@ -144,8 +147,15 @@ function MaintenanceCreateForm({
     console.log("AFTER: 💦newData", newData);
     try {
       const res = await createMaintenance(newData);
-      router.push("/maintenance/mission");
       console.log("res (success to insert a new maintenance data):", res);
+      if (noticeData && reminderNo !== undefined) {
+        CancelMaintenanceById(reminderNo)
+          .then((res) => {
+            console.log("移除維保通知:", res);
+          })
+          .catch((err) => console.log("移除維保通知失敗", err));
+      }
+      router.push("/maintenance/mission");
     } catch (e: any) {
       console.log(e);
       alert(e.message);
@@ -255,12 +265,12 @@ function MaintenanceCreateForm({
       </SelectField>
       <TextInputField
         label="起始日期"
-        type="date"
+        type="datetime-local"
         {...register("service_start_date")}
       />
       <TextInputField
         label="截止日期"
-        type="date"
+        type="datetime-local"
         {...register("service_end_date")}
       />
 

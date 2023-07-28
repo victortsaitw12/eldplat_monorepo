@@ -9,6 +9,8 @@ import CompanyUpdate from "@contents/Company/CompanyUpdate";
 import CompanyProvider from "@contexts/companyContext/companyProvider";
 import { updateCompany } from "@services/company/getAllCompany";
 import RegionProvider from "@contexts/regionContext/regionProvider";
+import { keysToDelete } from "@mock-data/company/mock_data";
+import { replaceKeysInArray } from "@utils/replaceKeyinObject";
 //
 
 const Page: NextPageWithLayout<never> = () => {
@@ -16,6 +18,23 @@ const Page: NextPageWithLayout<never> = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const asyncSubmitForm = async (data: any) => {
+    console.log("要送出公司修改的data", data);
+
+    keysToDelete.forEach((key) => {
+      delete data[key];
+    });
+
+    const keyReplacements = [
+      { oldKey: "option_code", newKey: "working_hours_code" },
+      { oldKey: "option_name", newKey: "working_hours_name" }
+    ];
+
+    const updatedArray = replaceKeysInArray(
+      data["company_working_hours"],
+      keyReplacements
+    );
+    data["company_working_hours"] = updatedArray;
+
     setLoading(true);
     try {
       const res = await updateCompany(data);

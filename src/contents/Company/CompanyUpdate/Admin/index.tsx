@@ -19,7 +19,7 @@ function CountrySet() {
             name="Alan Turing"
             size={40}
           />
-          <Text>{companyData.company_owner}(你)</Text>
+          <Text>{companyData.administrator_name}(你)</Text>
           <Button
             marginY={8}
             marginRight={12}

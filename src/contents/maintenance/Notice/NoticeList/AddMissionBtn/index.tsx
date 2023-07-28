@@ -7,16 +7,19 @@ interface AddMissionBtn_Type {
   item: any;
   setDrawerOpen: (v: boolean) => void;
   setBusNo: (v: string) => void;
+  setReminderNo: (v: string) => void;
 }
 const AddMissionBtn = ({
   item,
   setDrawerOpen,
-  setBusNo
+  setBusNo,
+  setReminderNo
 }: AddMissionBtn_Type) => {
   const router = useRouter();
   const AddNewMission = (e: any) => {
     e.preventDefault();
     setBusNo(item.bus_no.value);
+    setReminderNo(item.reminders_no.value);
     setDrawerOpen(true);
   };
   return (

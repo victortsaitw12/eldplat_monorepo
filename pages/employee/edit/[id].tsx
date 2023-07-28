@@ -1,4 +1,11 @@
-import React, { useCallback, useEffect, useState, ReactNode } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  ReactNode,
+  useMemo,
+  useRef
+} from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -6,7 +13,7 @@ import {
 } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
-import { Pane } from "evergreen-ui";
+import { Pane, Spinner } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { ParsedUrlQuery } from "querystring";
@@ -15,10 +22,22 @@ import { getEmployeeById } from "@services/employee/getEmployeeById";
 import { I_Get_Employees_Type } from "@typings/employee_type";
 import { updateEmployee } from "@services/employee/updateEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
+import TableWrapper from "@layout/TableWrapper";
+import HealthInfo from "@contents/Employee/HealthInfo";
 //
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ userId }) => {
+  const [nowTab, setNowTab] = useState("1");
+  const submitRef = useRef<HTMLButtonElement | null>(null);
+  //
+  const mainFilterArray = useMemo(
+    () => [
+      { id: 1, label: "員工資料", value: "1" },
+      { id: 2, label: "健康記錄", value: "2" }
+    ],
+    []
+  );
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [editData, setEditData] = useState<I_Get_Employees_Type | any>();
@@ -30,7 +49,7 @@ const Page: NextPageWithLayout<
   useEffect(() => {
     setLoading(true);
     getEmployeeById(userId).then((data) => {
-      console.log("single user data-----", data);
+      // console.log("single user data-----", data);
       const newData = { ...data.data };
       const result = {
         user_name: newData.basicInfo["user_name"],
@@ -38,7 +57,7 @@ const Page: NextPageWithLayout<
         user_english_name: newData.basicInfo["user_english_name"],
         user_identity: newData.basicInfo["user_identity"],
         user_country: newData.basicInfo["user_country"],
-        user_birthday: newData.basicInfo["user_birthday"].substring(0, 10),
+        user_birthday: newData.basicInfo["user_birthday"]?.substring(0, 10),
         user_sex: newData.basicInfo["user_sex"],
         user_photo_link: newData.basicInfo["user_photo_link"],
         user_email: newData.basicInfo["user_email"],
@@ -60,7 +79,7 @@ const Page: NextPageWithLayout<
         company_name: newData.basicInfo["company_name"],
         department: newData.basicInfo["department"],
         group: newData.basicInfo["group"],
-        arrive_date: newData.basicInfo["arrive_date"].substring(0, 10),
+        arrive_date: newData.basicInfo["arrive_date"]?.substring(0, 10),
         leave_date: newData.basicInfo["leave_date"]?.substring(0, 10),
         leave_check: newData.basicInfo["leave_check"],
         license_name: newData["licenses"].map(
@@ -95,6 +114,13 @@ const Page: NextPageWithLayout<
   };
 
   console.log("1️⃣editData in edit page:", editData);
+
+  //TableWrapper
+  const changeMainFilterHandler = (value: string) => {
+    console.log("changeMainFilterHandler", value);
+    setNowTab(value);
+  };
+
   return (
     <RegionProvider>
       <BodySTY>
@@ -110,11 +136,43 @@ const Page: NextPageWithLayout<
               editData={editData}
             />
           )} */}
-            <AddEmployee
-              submitForm={asyncSubmitForm}
-              onCancel={cancelFormHandler}
-              editData={editData}
-            />
+            {(!loading && editData && (
+              <TableWrapper
+                isEdit={true}
+                onChangeTab={(value) => changeMainFilterHandler(value)}
+                mainFilter={nowTab}
+                mainFilterArray={mainFilterArray}
+                onSave={() => {
+                  submitRef.current && submitRef.current.click();
+                }}
+                onEdit={() => {
+                  console.log("TableWrapper onEdit");
+                }}
+                onClose={() => {
+                  router.push("/employee");
+                }}
+              >
+                {nowTab === "1" && (
+                  <AddEmployee
+                    submitRef={submitRef}
+                    submitForm={asyncSubmitForm}
+                    onCancel={cancelFormHandler}
+                    editData={editData}
+                  />
+                )}
+                {nowTab === "2" && <HealthInfo isEdit={true} data={editData} />}
+              </TableWrapper>
+            )) || (
+              <Pane
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                height={"calc(100vh - 56px)"}
+                style={{ padding: 5 }}
+              >
+                <Spinner />
+              </Pane>
+            )}
           </Pane>
         }
       </BodySTY>

@@ -85,6 +85,7 @@ const VendorList = ({
     <BodySTY>
       <TableWithEdit
         tableName={TableTitle[vendor_code] || "供應商"}
+        createBtnText="新增供應商"
         titles={vendorTitleArr}
         data={vendorData}
         goToCreatePage={goToCreatePage}
