@@ -24,7 +24,6 @@ const AdditionalVehicleBtn = ({
     setLoading(true);
     try {
       getOrderInfo(id).then((data) => {
-        console.log("data", data);
         setOrderInfo(data.dataList);
       });
       setFirstDrawerOpen("additionalCar");

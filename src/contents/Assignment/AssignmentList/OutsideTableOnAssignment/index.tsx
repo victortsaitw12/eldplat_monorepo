@@ -6,8 +6,13 @@ import TableRow from "./TableRow";
 import PaginationField, { I_PageInfo } from "@components/PaginationField";
 
 //
+export interface I_labelValue {
+  label: string | React.ReactNode;
+  value: string;
+}
 export interface I_Data {
-  [key: string]: string | number | React.ReactNode;
+  [key: string]: string | number | React.ReactNode | I_labelValue;
+  maintenance_quote_no: I_labelValue;
 }
 
 interface I_Table {
@@ -23,6 +28,8 @@ interface I_Table {
   deleteItem?: (item: any) => void;
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
+  setOrderInfo: (t: any) => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
 
 export interface I_OpenTable {
@@ -48,7 +55,9 @@ function OutsideTableOnAssignment({
     console.log(item);
   },
   pageInfo,
-  onPageChange
+  onPageChange,
+  setOrderInfo,
+  setFirstDrawerOpen
 }: I_Table) {
   console.log("data in outside table", data);
   if (!data) return <p>Loading</p>;
@@ -92,6 +101,8 @@ function OutsideTableOnAssignment({
                     deleteItem={deleteItem}
                     goToEditPage={goToEditPage}
                     viewItem={viewItem}
+                    setOrderInfo={setOrderInfo}
+                    setFirstDrawerOpen={setFirstDrawerOpen}
                   />
                 );
               })

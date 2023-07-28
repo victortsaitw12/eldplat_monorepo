@@ -14,8 +14,6 @@ import Drawer from "@components/Drawer";
 import AssignmentList from "@contents/Assignment/AssignmentList";
 import AutoAssignBtn from "@contents/Assignment/AssignmentList/AutoAssignBtn";
 import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn";
-import AdditionalVehicleBtn from "@contents/Assignment/AssignmentList/AdditionalVehicleBtn";
-import AdditionalDriverBtn from "@contents/Assignment/AssignmentList/AdditionalDriverBtn";
 import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
 import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 
@@ -96,9 +94,6 @@ const Page: NextPageWithLayout<never> = () => {
     updateMainFilter,
     subFilter,
     updateSubFilter
-    // isDrawerOpen,
-    // setDrawerOpen,
-    // drawerType
   } = useAssignmentStore();
   //
 
@@ -216,46 +211,26 @@ const Page: NextPageWithLayout<never> = () => {
             // 全新訂單排程按鈕 or 已排程訂單修改按鈕
             // TODO 🍅🍅🍅 這裡的 disabledAutoAssign 不會計入 virtual dom 更新state @@
             v["auto_assign"] = {
-              label:
-                newSubData[idx].length === 0 ? (
-                  <AutoAssignBtn
-                    setFirstDrawerOpen={() => setFirstDrawerOpen("autoAssign")}
-                    id={v.maintenance_quote_no.value}
-                    setOrderInfo={setOrderInfo}
-                    disabled={disabledAutoAssign.includes(
-                      v.maintenance_quote_no.value
-                    )}
-                  />
-                ) : (
-                  <AdditionalVehicleBtn
-                    id={v.maintenance_quote_no.value}
-                    setOrderInfo={setOrderInfo}
-                    setFirstDrawerOpen={() =>
-                      setFirstDrawerOpen("additionalCar")
-                    }
-                  />
-                ),
+              label: newSubData[idx].length === 0 && (
+                <AutoAssignBtn
+                  setFirstDrawerOpen={() => setFirstDrawerOpen("autoAssign")}
+                  id={v.maintenance_quote_no.value}
+                  setOrderInfo={setOrderInfo}
+                  disabled={disabledAutoAssign.includes(
+                    v.maintenance_quote_no.value
+                  )}
+                />
+              ),
               value: null
             };
             v["manual_assign"] = {
-              label:
-                newSubData[idx].length === 0 ? (
-                  <ManualAssignBtn
-                    id={v.maintenance_quote_no.value}
-                    setFirstDrawerOpen={() =>
-                      setFirstDrawerOpen("manualAssign")
-                    }
-                    setOrderInfo={setOrderInfo}
-                  />
-                ) : (
-                  <AdditionalDriverBtn
-                    id={v.maintenance_quote_no.value}
-                    setOrderInfo={setOrderInfo}
-                    setFirstDrawerOpen={() =>
-                      setFirstDrawerOpen("additionalDriver")
-                    }
-                  />
-                ),
+              label: newSubData[idx].length === 0 && (
+                <ManualAssignBtn
+                  id={v.maintenance_quote_no.value}
+                  setFirstDrawerOpen={() => setFirstDrawerOpen("manualAssign")}
+                  setOrderInfo={setOrderInfo}
+                />
+              ),
               value: null
             };
           }
@@ -541,6 +516,8 @@ const Page: NextPageWithLayout<never> = () => {
             goToEditPageHandler={goToEditPageHandler}
             pageInfo={pageInfo}
             onPageChange={upDatePageHandler}
+            setOrderInfo={setOrderInfo}
+            setFirstDrawerOpen={setFirstDrawerOpen}
           />
         </FilterWrapper>
       </TableWrapper>

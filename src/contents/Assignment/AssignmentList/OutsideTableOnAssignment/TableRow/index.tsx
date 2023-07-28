@@ -1,9 +1,12 @@
-import { ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
 import React, { useState } from "react";
+import { Pane, ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
+
 import InsideTableOnAssignment from "../InsideTableOnAssignment";
 import { I_Data } from "..";
 import { getSubAssignmentTitle } from "@services/assignment/getAllAssignment";
-
+import AdditionalVehicleBtn from "@contents/Assignment/AssignmentAdditional/AdditionalVehicleBtn";
+import AdditionalDriverBtn from "@contents/Assignment/AssignmentAdditional/AdditionalDriverBtn";
+import { StyledTr } from "./style";
 interface I_TableRow {
   idx: number;
   item: any;
@@ -14,6 +17,8 @@ interface I_TableRow {
   goToEditPage?: (item: any) => void;
   viewItem?: (id: any, item: any) => void;
   deleteItem?: (item: any) => void;
+  setOrderInfo: (t: any) => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
 
 const TableRow = ({
@@ -30,10 +35,12 @@ const TableRow = ({
   },
   deleteItem = (item) => {
     console.log(item);
-  }
+  },
+  setOrderInfo,
+  setFirstDrawerOpen
 }: I_TableRow) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const id = data[idx].maintenance_quote_no.value;
   const titles = getSubAssignmentTitle();
 
   const handleInsideTableOpen = () => {
@@ -66,7 +73,7 @@ const TableRow = ({
         })}
         <td>
           {isOpen ? (
-            <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pointer" />
+            <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pcointer" />
           ) : (
             (item.maintenance_quote_no.value.substring(0, 3) === "MTC" ||
               subAssignData[idx].length !== 0) && (
@@ -79,8 +86,24 @@ const TableRow = ({
         </td>
       </tr>
       {isOpen && (
-        <tr>
-          <td colSpan={7}>
+        <StyledTr>
+          <td className="detailTable" colSpan={8}>
+            <Pane className="additionalBtns">
+              <AdditionalVehicleBtn
+                // id={v.maintenance_quote_no.value}
+                id={id}
+                setOrderInfo={setOrderInfo}
+                setFirstDrawerOpen={() => setFirstDrawerOpen("additionalCar")}
+              />
+              <AdditionalDriverBtn
+                // id={v.maintenance_quote_no.value}
+                id={id}
+                setOrderInfo={setOrderInfo}
+                setFirstDrawerOpen={() =>
+                  setFirstDrawerOpen("additionalDriver")
+                }
+              />
+            </Pane>
             <InsideTableOnAssignment
               tableName="派單"
               idx={idx}
@@ -93,7 +116,7 @@ const TableRow = ({
               viewItem={viewItem}
             />
           </td>
-        </tr>
+        </StyledTr>
       )}
     </>
   );

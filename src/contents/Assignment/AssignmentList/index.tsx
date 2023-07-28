@@ -10,6 +10,8 @@ interface Props {
   goToEditPageHandler: (item: any) => void;
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
+  setOrderInfo: (t: any) => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
 
 function AssignmentList({
@@ -18,7 +20,9 @@ function AssignmentList({
   goToCreatePage,
   goToEditPageHandler,
   pageInfo,
-  onPageChange
+  onPageChange,
+  setOrderInfo,
+  setFirstDrawerOpen
 }: Props) {
   const assignmentTitle = getAssignmentTitle();
   return (
@@ -32,6 +36,8 @@ function AssignmentList({
         goToEditPage={goToEditPageHandler}
         pageInfo={pageInfo}
         onPageChange={onPageChange}
+        setOrderInfo={setOrderInfo}
+        setFirstDrawerOpen={setFirstDrawerOpen}
       />
     </BodySTY>
   );

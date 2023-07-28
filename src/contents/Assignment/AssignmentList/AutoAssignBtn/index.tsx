@@ -1,7 +1,6 @@
 import React from "react";
 import { BodySTY } from "./style";
 import { Label } from "@components/Button/Primary";
-import { UpdateMaintenanceStatus } from "@services/maintenance/getMaintenanceMission";
 import router from "next/router";
 import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
@@ -32,7 +31,7 @@ AutoAssignBtn_Type) => {
   };
 
   // console.log("🍅🍅🍅disabledAutoAssign:", disabledAutoAssign);
-  console.log("🍅🍅🍅disabled:", disabled);
+  // console.log("🍅🍅🍅disabled:", disabled);
 
   return (
     <BodySTY>
