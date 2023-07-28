@@ -1,29 +1,12 @@
 import React, { useState } from "react";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  EditIcon,
-  ErrorIcon,
-  MoreIcon,
-  Pane,
-  PlusIcon
-} from "evergreen-ui";
-import TableActionButton from "@components/Table/TableActionButton";
-// import { useRouter } from "next/router";
 import { v4 as uuid } from "uuid";
-import { IconLeft } from "@components/Button/Primary";
-import { FormattedMessage } from "react-intl";
-import { TableSTY, TableContainerSTY, StyledDot } from "./style";
-import FinishBtn from "@contents/maintenance/Mission/MissionList/FinishBtn";
-import { noButtonData } from "@components/Table/noButtonData";
-import Collapse from "@components/Collapse";
-import ProgressList from "@components/ProgressList";
-import { mock_progressdata } from "@mock-data/adminOrders/mockData";
+import { TableSTY, TableContainerSTY } from "./style";
 import { I_OpenTable } from "..";
 import { I_SubAssignData } from "@typings/assignment_type";
 import dayjs from "dayjs";
 import { dateDiff, slashDate, timeWithAPM } from "@utils/convertDate";
 import EditBtn from "./EditBtn";
+
 //
 interface I_Data {
   [key: string]: string | number | React.ReactNode | any;
@@ -77,9 +60,12 @@ function InsideTableOnAssignment({
                 </th>
               );
             })}
-            <th>
-              <span>操作</span>
-            </th>
+            {data[idx].maintenance_quote_no?.value.substring(0, 3) !==
+              "MTC" && (
+              <th>
+                <span>操作</span>
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -137,9 +123,12 @@ function InsideTableOnAssignment({
                     <td>
                       <div>{endTime}</div>
                     </td>
-                    <td>
-                      <EditBtn item={item} goToEditPage={goToEditPage} />
-                    </td>
+                    {data[idx].maintenance_quote_no?.value.substring(0, 3) !==
+                      "MTC" && (
+                      <td>
+                        <EditBtn item={item} goToEditPage={goToEditPage} />
+                      </td>
+                    )}
                   </tr>
                 </>
               );
