@@ -93,7 +93,6 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchAssignData = async (
     isCanceled: boolean,
     mainFilter = "1",
-    subFilter = null,
     pageInfo = defaultPageInfo
   ) => {
     const assignParser = (data: any, key: string) => {
@@ -171,10 +170,24 @@ const Page: NextPageWithLayout<never> = () => {
           return;
         }
         if (!subFilter) {
-          localStorage.setItem(
-            "busInitFilter",
-            JSON.stringify(data.conditionList)
-          );
+          const DUMMY_FILTER = [
+            {
+              field_Name: "User_Name",
+              arrayConditions: ["like", "equal"],
+              displayType: "search",
+              dataType: "string",
+              label: "使用者姓名"
+            }
+          ];
+          data.conditionList
+            ? localStorage.setItem(
+                "assignmentInitFilter",
+                JSON.stringify(data.conditionList)
+              )
+            : localStorage.setItem(
+                "assignmentInitFilter",
+                JSON.stringify(DUMMY_FILTER)
+              );
           initializeSubFilter();
         }
         setSubAssignData(newSubData);
@@ -241,7 +254,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   // 處理切換頁面
   const upDatePageHandler = (newPageInfo: I_PageInfo) => {
-    fetchAssignData(false, nowTab, null, newPageInfo);
+    fetchAssignData(false, nowTab, newPageInfo);
   };
 
   // 打開派單編輯頁
