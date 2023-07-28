@@ -40,7 +40,11 @@ const OrderListItem = ({
       <div className="info-content">
         <div className="content_item">
           <h4>乘車日期</h4>
-          <div>{dayjs(itemData.date?.split(" ")[0]).format("YYYY/MM/DD")}</div>
+          <div>
+            {itemData.date
+              ? dayjs(itemData.date?.split(" ")[0]).format("YYYY/MM/DD")
+              : "--"}
+          </div>
         </div>
         <div className="content_item">
           <h4>詢價編號</h4>
