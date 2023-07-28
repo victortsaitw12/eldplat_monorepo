@@ -14,6 +14,19 @@ export const getSingleCompany = async () => {
   return res.json();
 };
 
+// 公司下拉式選單DDL
+export const getCompanyOptions = async () => {
+  const res = await fetch(API_Path["GetCompanyOptions"], {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    }
+  });
+
+  return res.json();
+};
+
 // 更新公司資料
 export const updateCompany = async (
   companyData: I_Company_Update_Type

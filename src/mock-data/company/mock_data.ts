@@ -3,9 +3,12 @@ export const mock_company_data = {
   address2: "",
   administrator_no: "",
   administrator_name: "",
+  administrator_photo_link: "",
   agent_no: "",
   company_area: "",
+  area_name: "",
   company_city: "",
+  city_name: "",
   company_contact: [
     {
       contact_name: "",
@@ -18,18 +21,32 @@ export const mock_company_data = {
     }
   ],
   company_country: "",
+  country_name: "",
   company_country2: "",
+  country2_name: "",
+  company_district_code: "",
+  company_email: "",
+  company_fax: "",
+  company_fax_code: "",
+  company_gui_no: "",
+  date_format: "",
+  time_zone: "",
+  time_format: "",
+  milage: "",
+  fuel_unit: "",
+  measurement_units: "",
+  date_format_name: "",
+  time_format_name: "",
+  milage_name: "",
+  fuel_unit_name: "",
+  measurement_units_name: "",
+
   company_currency: [
     {
       currency_code: "",
       currency_name: ""
     }
   ],
-  company_district_code: "",
-  company_email: "",
-  company_fax: "",
-  company_fax_code: "",
-  company_gui_no: "",
   company_language: [
     {
       language_code: "",
@@ -44,10 +61,26 @@ export const mock_company_data = {
   company_tel: "",
   company_tel_code: "",
   company_typ: "",
-  company_working_hours: [{ working_hours_code: "", working_hours_name: "" }],
+  // company_working_hours: [{ working_hours_code: "", working_hours_name: "" }],
+  company_working_hours: [],
   no: 1,
   user_name: ""
 };
+
+// 檢視的某些值在更新資料時不需要打入API，因此移除
+export const keysToDelete = [
+  "administrator_photo_link",
+  "administrator_name",
+  "administrator_first_name",
+  "city_name",
+  "country_name",
+  "country2_name",
+  "date_format_name",
+  "time_format_name",
+  "milage_name",
+  "fuel_unit_name",
+  "measurement_units_name"
+];
 
 ////////////////////
 
