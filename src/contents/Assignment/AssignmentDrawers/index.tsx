@@ -1,0 +1,171 @@
+import React from "react";
+import { Spinner } from "evergreen-ui";
+
+import {
+  I_ManualAssignType,
+  I_ManualCreateType
+} from "@typings/assignment_type";
+import Drawer from "@components/Drawer";
+import AssignAutoCreate from "@contents/Assignment/AssignAutoCreate";
+import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
+import CarEdit from "@contents/Assignment/AssignManualEdit/CarEdit";
+import DriverEdit from "@contents/Assignment/AssignManualEdit/DriverEdit";
+import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
+import SecondCarAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondCarManualCreate";
+import SecondDriverAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondDriverManualCreate";
+
+interface Props {
+  firstDrawerOpen: string;
+  // "autoAssign"|"manualAssign"| "editCar"| "editDriver"| "additionalCar" | "additionalDriver" | ""
+  setFirstDrawerOpen: (v: string) => void;
+  secondDrawerOpen: string;
+  setSecondDrawerOpen: (v: string) => void;
+  orderInfo: I_ManualAssignType[];
+  data: any;
+  reloadData: any;
+  setDisabledAutoAssign: any;
+  showSecondTitle: any;
+  setShowSecondTitle: (t: any) => void;
+  setPosition: (dayNum: number, carNum: number) => void;
+  createAssignData: I_ManualCreateType;
+  orderIndex?: number;
+  editData: any;
+  setSubAssignData: (v: any) => void;
+  handleAssignmentCarChange: (e: any) => void;
+  timeRef: any;
+  handleAssignmentDriverChange: (e: any) => void;
+}
+
+function AssignmentDrawers({
+  firstDrawerOpen,
+  setFirstDrawerOpen,
+  secondDrawerOpen,
+  setSecondDrawerOpen,
+  orderInfo,
+  data,
+  reloadData,
+  setDisabledAutoAssign,
+  showSecondTitle,
+  setShowSecondTitle,
+  setPosition,
+  createAssignData,
+  orderIndex,
+  editData,
+  setSubAssignData,
+  handleAssignmentCarChange,
+  timeRef,
+  handleAssignmentDriverChange
+}: Props) {
+  const firstDrawerList = new Map([
+    [
+      "autoAssign",
+      {
+        tabName: "設定排程",
+        conponent: (
+          <AssignAutoCreate
+            orderInfo={orderInfo}
+            setDisabledAutoAssign={setDisabledAutoAssign}
+          />
+        )
+      }
+    ],
+    [
+      "manualAssign",
+      {
+        tabName: "手動派單",
+        conponent: (
+          <AssignManualCreate
+            assignData={data}
+            reloadData={reloadData}
+            secondDrawerOpen={secondDrawerOpen}
+            setSecondDrawerOpen={setSecondDrawerOpen}
+            orderInfo={orderInfo}
+            showSecondTitle={showSecondTitle}
+            setShowSecondTitle={setShowSecondTitle}
+            setPosition={setPosition}
+            createAssignData={createAssignData}
+            orderIndex={orderIndex}
+          />
+        )
+      }
+    ],
+    [
+      "editCar",
+      { tabName: "編輯派車", content: <CarEdit editData={editData} /> }
+    ],
+    [
+      "editDriver",
+      { tabName: "編輯派工", content: <DriverEdit editData={editData} /> }
+    ],
+    [
+      "additionalCar",
+      {
+        tabName: "新增派車",
+        conponent: (
+          <AssignmentAdditional
+            type="car"
+            orderInfo={orderInfo}
+            setSubAssignData={setSubAssignData}
+            setFirstDrawerOpen={setFirstDrawerOpen}
+          />
+        )
+      }
+    ],
+    [
+      "additionalDriver",
+      {
+        tabName: "新增派工",
+        conponent: (
+          <AssignmentAdditional
+            type="driver"
+            orderInfo={orderInfo}
+            setSubAssignData={setSubAssignData}
+            setFirstDrawerOpen={setFirstDrawerOpen}
+          />
+        )
+      }
+    ]
+  ]);
+  return (
+    <>
+      <Drawer
+        tabName={[firstDrawerList.get(firstDrawerOpen)?.tabName || "--"]}
+        closeDrawer={
+          !secondDrawerOpen ? () => setFirstDrawerOpen("") : undefined
+        }
+      >
+        {firstDrawerList.get(firstDrawerOpen)?.conponent || <Spinner />}
+      </Drawer>
+      {secondDrawerOpen === "派車" && (
+        <Drawer
+          isTabShown={false}
+          closeDrawer={() => {
+            setSecondDrawerOpen("");
+          }}
+        >
+          <SecondCarAssignManualCreate
+            createAssignData={createAssignData}
+            showSecondTitle={showSecondTitle}
+            handleAssignmentCarChange={handleAssignmentCarChange}
+            timeRef={timeRef}
+          ></SecondCarAssignManualCreate>
+        </Drawer>
+      )}
+      {secondDrawerOpen === "派工" && (
+        <Drawer
+          closeDrawer={() => {
+            setSecondDrawerOpen("");
+          }}
+        >
+          <SecondDriverAssignManualCreate
+            createAssignData={createAssignData}
+            showSecondTitle={showSecondTitle}
+            handleAssignmentDriverChange={handleAssignmentDriverChange}
+          ></SecondDriverAssignManualCreate>
+        </Drawer>
+      )}
+    </>
+  );
+}
+
+export default AssignmentDrawers;
