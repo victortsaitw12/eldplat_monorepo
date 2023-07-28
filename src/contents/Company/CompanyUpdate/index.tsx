@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BodySTY } from "./style";
 import {
   Pane,
@@ -23,6 +23,9 @@ import {
   I_Company_Context
 } from "@contexts/companyContext/companyProvider";
 import { numberValidation, phoneValidation } from "@utils/inputValidation";
+import DateTime from "./DateTime";
+import Unit from "./Unit";
+import { replaceKeysInArray } from "@utils/replaceKeyinObject";
 
 interface I_UpdateCompany_Props {
   submitForm: (data: any) => void;
@@ -64,6 +67,8 @@ function CompanyUpdate({ submitForm, onCancel }: I_UpdateCompany_Props) {
         <Pane className="left-blocks">
           <Basic />
           <CountrySet />
+          <DateTime />
+          <Unit />
         </Pane>
         <Pane className="right-blocks">
           <Admin />

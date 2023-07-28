@@ -37,7 +37,6 @@ function Contact() {
     handleStateSwitch,
     handleCountryCode
   } = useContext<I_Region_Context>(RegionContext);
-  console.log("聯絡區塊看companyData", companyData);
 
   const [contactArr, setContactArr] = useState<I_Company_Contact_Type[] | any>([
     {

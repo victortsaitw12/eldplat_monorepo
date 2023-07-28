@@ -7,28 +7,28 @@ import {
   CompanyContext
 } from "@contexts/companyContext/companyProvider";
 
-function DateTime() {
+function Unit() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
 
   return (
     <BodySTY>
-      <Heading is="h4">日期 / 時區設定</Heading>
+      <Heading is="h4">單位設定</Heading>
       <form>
         <Pane className="input-line">
-          <Text className="">日期格式</Text>
-          <Text>{companyData?.date_format_name}</Text>
+          <Text className="">里程</Text>
+          <Text>{companyData?.milage_name}</Text>
         </Pane>
         <Pane className="input-line">
-          <Text className="">時區</Text>
-          <Text>(GMT+08:00) 北京</Text>
+          <Text className="">燃料容量</Text>
+          <Text>{companyData?.fuel_unit_name}</Text>
         </Pane>
         <Pane className="input-line">
-          <Text className="">時間格式</Text>
-          <Text>24小時制</Text>
+          <Text className="">測量系統 </Text>
+          <Text>{companyData?.measurement_units_name}</Text>
         </Pane>
       </form>
     </BodySTY>
   );
 }
 
-export default DateTime;
+export default Unit;

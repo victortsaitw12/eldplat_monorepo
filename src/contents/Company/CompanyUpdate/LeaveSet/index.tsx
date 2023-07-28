@@ -25,21 +25,26 @@ function LeaveSet() {
   const [leaveArr, setLeaveArr] = useState<I_Company_Leave_Type[]>(
     leaveData ? leaveData : [{ leave_code: "01", leave_name: "" }]
   );
-  console.log("leaveData", leaveData);
   useEffect(() => {
     leaveData && setLeaveArr(leaveData);
   }, [leaveData]);
 
   // 加一欄假別
   const handleInputAdd = () => {
-    const idx = leaveArr.length;
+    let idx: number;
+    if (leaveArr) {
+      idx = leaveArr.length;
+    } else {
+      idx = 1;
+    }
+
     setLeaveArr((prev) => [
       ...prev,
       {
         leave_code:
           idx >= 9
-            ? (prev[idx - 1].leave_code * 1 + 1).toString()
-            : `0${(prev[idx - 1].leave_code * 1 + 1).toString()}`,
+            ? (prev[idx - 1]?.leave_code * 1 + 1).toString()
+            : `0${(prev[idx - 1]?.leave_code * 1 + 1).toString()}`,
         leave_name: ""
       }
     ]);
@@ -76,8 +81,6 @@ function LeaveSet() {
     newData["company_leave"] = leaveArr;
     setCompanyData(newData);
   };
-
-  console.log("leaveArr", leaveArr);
 
   return (
     <BodySTY>
