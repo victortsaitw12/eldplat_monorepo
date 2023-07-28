@@ -1,26 +1,27 @@
 import React, { useState, useEffect, useRef, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
+import { Text } from "evergreen-ui";
 //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
+import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
-// import TableWrapper from "@layout/TableWrapper";
-// import FilterWrapper from "@layout/FilterWrapper";
+import TableWrapper from "@layout/TableWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import AssignmentList from "@contents/Assignment/AssignmentList";
 import AutoAssignBtn from "@contents/Assignment/AssignmentList/AutoAssignBtn";
 import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn";
-import AdditionalVehicleBtn from "@contents/Assignment/AssignmentList/AdditionalVehicleBtn";
-import AdditionalDriverBtn from "@contents/Assignment/AssignmentList/AdditionalDriverBtn";
 import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
 import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 
 import {
-  assignParser,
+  // assignParser, 移進/assignment 因為渲染畫面元件跟function
   assignPattern,
-  getAllAssignments
+  getAllAssignments,
+  defaultPageInfo
 } from "@services/assignment/getAllAssignment";
 
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
@@ -35,11 +36,9 @@ import {
 } from "@services/assignment/getAssignmentEdit";
 import DriverEdit from "@contents/Assignment/AssignManualEdit/DriverEdit";
 import AssignAutoCreate from "@contents/Assignment/AssignAutoCreate";
+import { I_PageInfo } from "@components/PaginationField";
 //
-const mainFilterArray = [
-  { id: 1, label: "啟用", value: "1" },
-  { id: 2, label: "停用", value: "2" }
-];
+const mainFilterArray = [{ id: 1, label: "全部", value: "1" }];
 export const startTimeName = ["start_hours", "start_minutes", "start_type"];
 export const endTimeName = ["end_hours", "end_minutes", "end_type"];
 //
@@ -47,12 +46,11 @@ const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
+
+  const [firstDrawerOpen, setFirstDrawerOpen] = useState<string>("");
+  // "autoAssign"|"manualAssign"| "editCar"| "editDriver"| "additionalCar" | "additionalDriver" | ""
   const [secondDrawerOpen, setSecondDrawerOpen] = useState<string>("");
-  const [EditDrawerOpen, setEditDrawerOpen] = useState<string>("");
-  const [creatDrawerOpen, setCreatDrawerOpen] = useState<"car" | "driver" | "">(
-    ""
-  );
-  const [autoDrawerOpen, setAutoDrawerOpen] = useState<boolean>(false);
+
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
   const [showSecondTitle, setShowSecondTitle] = useState<any>();
@@ -64,6 +62,7 @@ const Page: NextPageWithLayout<never> = () => {
     manual_bus: []
   });
   const timeRef = useRef(null);
+  const router = useRouter();
   const [startTime, setStartTime] = useState<any>({
     start_hours: "00",
     start_minutes: "00",
@@ -74,6 +73,10 @@ const Page: NextPageWithLayout<never> = () => {
     end_minutes: "00",
     end_type: ""
   });
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
+  const [disabledAutoAssign, setDisabledAutoAssign] = useState<string[]>([]);
+
+  console.log("🍅🍅🍅disabledAutoAssign:", disabledAutoAssign);
 
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
@@ -90,17 +93,79 @@ const Page: NextPageWithLayout<never> = () => {
     mainFilter,
     updateMainFilter,
     subFilter,
-    updateSubFilter,
-    isDrawerOpen,
-    setDrawerOpen,
-    drawerType,
-    setDrawerType
+    updateSubFilter
   } = useAssignmentStore();
   //
 
-  const fetchAssignData = async () => {
+  const fetchAssignData = async (
+    isCanceled: boolean,
+    mainFilter = "1",
+    subFilter = null,
+    pageInfo = defaultPageInfo
+  ) => {
+    const assignParser = (data: any, key: string) => {
+      // if (key === "id") {
+      //   return {
+      //     label: data["customer_no"] || null,
+      //     value: data["customer_no"] || null
+      //   };
+      // }
+      if (key === "maintenance_quote_no") {
+        return {
+          label: (
+            <Text
+              style={{
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                data.maintenance_quote_no.substring(0, 3) === "MTC"
+                  ? router.push(
+                      `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
+                    )
+                  : router.push(
+                      `/client/orders/detail/${data.maintenance_quote_no}`
+                    );
+                console.log("goToPageDetail");
+              }}
+            >
+              {data.maintenance_quote_no || "--"}
+            </Text>
+          ),
+          value: data.maintenance_quote_no || null
+        };
+      }
+      if (key === "task_start_time") {
+        return {
+          label:
+            data.task_start_time !== null
+              ? convertDateAndTimeFormat(data.task_start_time)
+              : "--",
+          value:
+            data.task_start_time !== null
+              ? convertDateAndTimeFormat(data.task_start_time)
+              : "--"
+        };
+      }
+      if (key === "task_end_time") {
+        return {
+          label:
+            data.task_end_time !== null
+              ? convertDateAndTimeFormat(data.task_end_time)
+              : "--",
+          value:
+            data.task_end_time !== null
+              ? convertDateAndTimeFormat(data.task_end_time)
+              : "--"
+        };
+      }
+
+      return {
+        label: data[key] || "--",
+        value: data[key] || null
+      };
+    };
     //---------------------------------------------------------------
-    getAllAssignments()
+    getAllAssignments(pageInfo)
       .then((data) => {
         // ✅設定子列表的狀態
         const newSubData = data.contentList.map(
@@ -108,8 +173,19 @@ const Page: NextPageWithLayout<never> = () => {
             return item.assignments;
           }
         );
-
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "busInitFilter",
+            JSON.stringify(data.conditionList)
+          );
+          initializeSubFilter();
+        }
         setSubAssignData(newSubData);
+        setPageInfo(data.pageInfo);
 
         // ✅設定外層列表狀態
         const assignData = mappingQueryData(
@@ -121,7 +197,7 @@ const Page: NextPageWithLayout<never> = () => {
         newData.map((v, idx) => {
           const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
           v["no"] = { label: item_no, value: item_no };
-          if (v.maintenance_quote_no.label.substring(0, 3) === "MTC") {
+          if (v.maintenance_quote_no.value.substring(0, 3) === "MTC") {
             // 維保單無按鈕
             v["auto_assign"] = {
               label: " ",
@@ -133,39 +209,28 @@ const Page: NextPageWithLayout<never> = () => {
             };
           } else {
             // 全新訂單排程按鈕 or 已排程訂單修改按鈕
+            // TODO 🍅🍅🍅 這裡的 disabledAutoAssign 不會計入 virtual dom 更新state @@
             v["auto_assign"] = {
-              label:
-                newSubData[idx].length === 0 ? (
-                  <AutoAssignBtn
-                    setAutoDrawerOpen={setAutoDrawerOpen}
-                    id={v.maintenance_quote_no.label}
-                    setOrderInfo={setOrderInfo}
-                  />
-                ) : (
-                  <AdditionalVehicleBtn
-                    id={v.maintenance_quote_no.label}
-                    setOrderInfo={setOrderInfo}
-                    setCreatDrawerOpen={setCreatDrawerOpen}
-                  />
-                ),
+              label: newSubData[idx].length === 0 && (
+                <AutoAssignBtn
+                  setFirstDrawerOpen={() => setFirstDrawerOpen("autoAssign")}
+                  id={v.maintenance_quote_no.value}
+                  setOrderInfo={setOrderInfo}
+                  disabled={disabledAutoAssign.includes(
+                    v.maintenance_quote_no.value
+                  )}
+                />
+              ),
               value: null
             };
             v["manual_assign"] = {
-              label:
-                newSubData[idx].length === 0 ? (
-                  <ManualAssignBtn
-                    id={v.maintenance_quote_no.label}
-                    isDrawerOpen={isDrawerOpen}
-                    setDrawerOpen={setDrawerOpen}
-                    setOrderInfo={setOrderInfo}
-                  />
-                ) : (
-                  <AdditionalDriverBtn
-                    id={v.maintenance_quote_no.label}
-                    setOrderInfo={setOrderInfo}
-                    setCreatDrawerOpen={setCreatDrawerOpen}
-                  />
-                ),
+              label: newSubData[idx].length === 0 && (
+                <ManualAssignBtn
+                  id={v.maintenance_quote_no.value}
+                  setFirstDrawerOpen={() => setFirstDrawerOpen("manualAssign")}
+                  setOrderInfo={setOrderInfo}
+                />
+              ),
               value: null
             };
           }
@@ -176,7 +241,15 @@ const Page: NextPageWithLayout<never> = () => {
         console.error("error in assignment list", err);
       });
   };
-  //
+  // 處理mainFilter
+  const changeMainFilterHandler = (value: string) => {
+    setNowTab(value);
+  };
+
+  // 處理切換頁面
+  const upDatePageHandler = (newPageInfo: I_PageInfo) => {
+    fetchAssignData(false, nowTab, null, newPageInfo);
+  };
 
   // 打開派單編輯頁
   const goToEditPageHandler = async (item: any) => {
@@ -184,7 +257,7 @@ const Page: NextPageWithLayout<never> = () => {
     if (item.assignment_no.substring(0, 3) === "BAM") {
       const result = await getBusAssignmentInfo(item.assignment_no);
       console.log("result for bus single assignment", result);
-      setEditDrawerOpen("car");
+      setFirstDrawerOpen("editCar");
       const newResult = { ...result.dataList[0] };
       newResult["plate"] = item.license_plate;
       newResult["car_no"] = item.bus_day_number;
@@ -194,7 +267,7 @@ const Page: NextPageWithLayout<never> = () => {
     } else {
       const result = await getDriverAssignmentInfo(item.assignment_no);
       console.log("result for driver single assignment", result);
-      setEditDrawerOpen("driver");
+      setFirstDrawerOpen("editDriver");
       const newResult = { ...result.dataList[0] };
       newResult["car_no"] = item.bus_day_number;
       newResult["assign_type"] = "派工";
@@ -398,7 +471,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   useEffect(() => {
     let isCanceled = false;
-    fetchAssignData();
+    fetchAssignData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
@@ -414,12 +487,12 @@ const Page: NextPageWithLayout<never> = () => {
   console.log("5️⃣createAssignData", createAssignData);
   console.log("6️⃣subAssignData", subAssignData);
   console.log("7️⃣orderIndex", orderIndex);
-  console.log("8️⃣EditDrawerOpen", EditDrawerOpen);
+  console.log("8️⃣firstDrawerOpen", firstDrawerOpen);
   console.log("9️⃣editData", editData);
 
   return (
     <BodySTY>
-      {/* <TableWrapper
+      <TableWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
@@ -431,29 +504,35 @@ const Page: NextPageWithLayout<never> = () => {
             initializeSubFilter();
           }}
           filter={subFilter}
-        > */}
-      <AssignmentList
-        assignData={data}
-        subAssignData={subAssignData}
-        goToCreatePage={() => {
-          setDrawerOpen(true);
-        }}
-        goToEditPageHandler={goToEditPageHandler}
-      />
-      {/* </FilterWrapper>
-      </TableWrapper> */}
-      {isDrawerOpen && (
+        >
+          {" "}
+          <div style={{ color: "red", fontSize: "36px" }}></div>
+          <AssignmentList
+            assignData={data}
+            subAssignData={subAssignData}
+            goToCreatePage={() => {
+              setFirstDrawerOpen("manualAssign");
+            }}
+            goToEditPageHandler={goToEditPageHandler}
+            pageInfo={pageInfo}
+            onPageChange={upDatePageHandler}
+            setOrderInfo={setOrderInfo}
+            setFirstDrawerOpen={setFirstDrawerOpen}
+          />
+        </FilterWrapper>
+      </TableWrapper>
+      {firstDrawerOpen === "manualAssign" && (
         <Drawer
-          tabName={[drawerType === "add" ? "編輯派車" : "手動派單"]}
-          closeDrawer={() => {
-            setDrawerOpen(false);
-          }}
+          tabName={["手動派單"]}
+          closeDrawer={
+            !secondDrawerOpen ? () => setFirstDrawerOpen("") : undefined
+          }
         >
           <AssignManualCreate
             assignData={data}
             reloadData={() => {
-              fetchAssignData();
-              setDrawerOpen(false);
+              fetchAssignData(false, nowTab);
+              setFirstDrawerOpen("");
             }}
             secondDrawerOpen={secondDrawerOpen}
             setSecondDrawerOpen={setSecondDrawerOpen}
@@ -468,6 +547,7 @@ const Page: NextPageWithLayout<never> = () => {
       )}
       {secondDrawerOpen === "派車" && (
         <Drawer
+          isTabShown={false}
           closeDrawer={() => {
             setSecondDrawerOpen("");
           }}
@@ -493,63 +573,53 @@ const Page: NextPageWithLayout<never> = () => {
           ></SecondDriverAssignManualCreate>
         </Drawer>
       )}
-      {creatDrawerOpen === "car" && (
+      {firstDrawerOpen === "additionalCar" && (
         <Drawer
           tabName={["新增派車"]}
-          closeDrawer={() => {
-            setCreatDrawerOpen("");
-          }}
+          closeDrawer={() => setFirstDrawerOpen("")}
         >
           <AssignmentAdditional
             type="car"
             orderInfo={orderInfo}
             createAssignData={createAssignData}
             setSubAssignData={setSubAssignData}
-            setCreatDrawerOpen={setCreatDrawerOpen}
+            setFirstDrawerOpen={setFirstDrawerOpen}
           />
         </Drawer>
       )}
-      {creatDrawerOpen === "driver" && (
+      {firstDrawerOpen === "additionalDriver" && (
         <Drawer
           tabName={["新增派工"]}
-          closeDrawer={() => {
-            setCreatDrawerOpen("");
-          }}
+          closeDrawer={() => setFirstDrawerOpen("")}
         >
           <AssignmentAdditional
             type="driver"
             orderInfo={orderInfo}
             createAssignData={createAssignData}
             setSubAssignData={setSubAssignData}
-            setCreatDrawerOpen={setCreatDrawerOpen}
+            setFirstDrawerOpen={setFirstDrawerOpen}
           />
         </Drawer>
       )}
-      {EditDrawerOpen === "car" && (
-        <Drawer
-          closeDrawer={() => {
-            setEditDrawerOpen("");
-          }}
-        >
+      {firstDrawerOpen === "editCar" && (
+        <Drawer closeDrawer={() => setFirstDrawerOpen("")}>
           <CarEdit editData={editData} />
         </Drawer>
       )}
-      {EditDrawerOpen === "driver" && (
-        <Drawer
-          closeDrawer={() => {
-            setEditDrawerOpen("");
-          }}
-        >
+      {firstDrawerOpen === "editDriver" && (
+        <Drawer closeDrawer={() => setFirstDrawerOpen("")}>
           <DriverEdit editData={editData} />
         </Drawer>
       )}
-      {autoDrawerOpen && (
+      {firstDrawerOpen === "autoAssign" && (
         <Drawer
-          closeDrawer={() => {
-            setAutoDrawerOpen(false);
-          }}
+          tabName={["設定排程"]}
+          closeDrawer={() => setFirstDrawerOpen("")}
         >
-          <AssignAutoCreate orderInfo={orderInfo} />
+          <AssignAutoCreate
+            orderInfo={orderInfo}
+            setDisabledAutoAssign={setDisabledAutoAssign}
+          />
         </Drawer>
       )}
     </BodySTY>

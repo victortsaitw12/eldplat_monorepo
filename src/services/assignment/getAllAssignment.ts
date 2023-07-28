@@ -1,18 +1,25 @@
 import API_Path from "./apiPath";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { PatternType } from "@utils/mappingQueryData";
+import { I_PageInfo } from "@components/PaginationField";
 
-export const getAllAssignments = async () => {
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: null,
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
+
+export const getAllAssignments = async (pageInfo = defaultPageInfo) => {
   const res = await fetch(API_Path["GetAllAssignments"], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
-    body: JSON.stringify({
-      page_Index: 1,
-      page_Size: 30
-    })
+    body: JSON.stringify(pageInfo)
   });
   console.log("res for getting the list of assignment : ", res);
   return res.json();
@@ -47,40 +54,41 @@ export const assignPattern: PatternType = {
   manual_assign: true
 };
 
-export const assignParser = (data: any, key: string) => {
-  // if (key === "id") {
-  //   return {
-  //     label: data["customer_no"] || null,
-  //     value: data["customer_no"] || null
-  //   };
-  // }
-  if (key === "task_start_time") {
-    return {
-      label:
-        data.task_start_time !== null
-          ? convertDateAndTimeFormat(data.task_start_time)
-          : "--",
-      value:
-        data.task_start_time !== null
-          ? convertDateAndTimeFormat(data.task_start_time)
-          : "--"
-    };
-  }
-  if (key === "task_end_time") {
-    return {
-      label:
-        data.task_end_time !== null
-          ? convertDateAndTimeFormat(data.task_end_time)
-          : "--",
-      value:
-        data.task_end_time !== null
-          ? convertDateAndTimeFormat(data.task_end_time)
-          : "--"
-    };
-  }
+// 移進 /assignment 頁面 因為label裡面要裝有style跟onClick
+// export const assignParser = (data: any, key: string) => {
+//   // if (key === "id") {
+//   //   return {
+//   //     label: data["customer_no"] || null,
+//   //     value: data["customer_no"] || null
+//   //   };
+//   // }
+//   if (key === "task_start_time") {
+//     return {
+//       label:
+//         data.task_start_time !== null
+//           ? convertDateAndTimeFormat(data.task_start_time)
+//           : "--",
+//       value:
+//         data.task_start_time !== null
+//           ? convertDateAndTimeFormat(data.task_start_time)
+//           : "--"
+//     };
+//   }
+//   if (key === "task_end_time") {
+//     return {
+//       label:
+//         data.task_end_time !== null
+//           ? convertDateAndTimeFormat(data.task_end_time)
+//           : "--",
+//       value:
+//         data.task_end_time !== null
+//           ? convertDateAndTimeFormat(data.task_end_time)
+//           : "--"
+//     };
+//   }
 
-  return {
-    label: data[key] || "--",
-    value: data[key] || null
-  };
-};
+//   return {
+//     label: data[key] || "--",
+//     value: data[key] || null
+//   };
+// };

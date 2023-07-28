@@ -9,14 +9,12 @@ import LoadingSpinner from "@components/LoadingSpinner";
 
 interface ManualAssignBtn_Type {
   id: string;
-  isDrawerOpen?: boolean;
-  setDrawerOpen: (isDrawerOpen: boolean) => void;
+  setFirstDrawerOpen: (v: string) => void;
   setOrderInfo: (t: any) => void;
 }
 const ManualAssignBtn = ({
   id,
-  isDrawerOpen,
-  setDrawerOpen,
+  setFirstDrawerOpen,
   setOrderInfo
 }: ManualAssignBtn_Type) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -30,7 +28,7 @@ const ManualAssignBtn = ({
     } catch (err) {
       console.log("err of click the finish button", err);
     }
-    setDrawerOpen(!isDrawerOpen);
+    setFirstDrawerOpen("");
     setLoading(false);
   };
   // console.log("id", id);
@@ -38,6 +36,10 @@ const ManualAssignBtn = ({
   return (
     <BodySTY>
       <Label
+        style={{
+          width: "unset",
+          fontSize: "12px"
+        }}
         text="手動派單"
         value={id}
         onClick={(e) => {
