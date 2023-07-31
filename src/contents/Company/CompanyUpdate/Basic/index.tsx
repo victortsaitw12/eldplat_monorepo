@@ -55,20 +55,22 @@ function Basic({}) {
         </Pane>
         <Pane className="input-line">
           <Text className="">公司名稱</Text>
-          <Pane>
-            <TextInput
-              name="company_name"
-              value={companyData.company_name}
-              onChange={handleCompanyBasicChange}
-            />
-            {/* {errMsg["errField"] === "company_name" && (
+          <TextInput
+            name="company_name"
+            value={companyData.company_name}
+            onChange={handleCompanyBasicChange}
+          />
+          {/* {errMsg["errField"] === "company_name" && (
               <Text color="red !important">{errMsg["errText"]}</Text>
             )} */}
-          </Pane>
         </Pane>
         <Pane className="input-line">
           <Text className="">統一編號</Text>
-          <Text>{companyData.company_gui_no}</Text>
+          <TextInput
+            name="company_gui_no"
+            value={companyData.company_gui_no}
+            onChange={handleCompanyBasicChange}
+          />
         </Pane>
         <Pane className="input-line">
           <Text className="">公司類型</Text>

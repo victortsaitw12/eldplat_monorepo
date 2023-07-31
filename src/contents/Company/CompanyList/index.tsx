@@ -36,8 +36,8 @@ const ComapnyList = () => {
           >
             編輯
           </Button>
-          <IconButton icon={FullscreenIcon} />
-          <IconButton icon={SmallCrossIcon} marginRight={majorScale(1)} />
+          {/* <IconButton icon={FullscreenIcon} />
+          <IconButton icon={SmallCrossIcon} marginRight={majorScale(1)} /> */}
         </Pane>
       </Pane>
 
@@ -52,8 +52,8 @@ const ComapnyList = () => {
         <Pane className="right-blocks">
           <Admin />
           <Contact />
-          <LeaveSet />
           <CompanyRule />
+          <LeaveSet />
         </Pane>
       </Pane>
     </BodySTY>
