@@ -18,7 +18,7 @@ export interface I_Data {
 interface I_Table {
   tableName: string | any;
   titles: Array<string | number | React.ReactNode> | any;
-  data: I_Data[];
+  assignData: I_Data[];
   subAssignData: any;
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
@@ -42,7 +42,7 @@ Must provide id field in the Data Array
 function OutsideTableOnAssignment({
   tableName,
   titles,
-  data,
+  assignData,
   subAssignData,
   goToCreatePage,
   viewItem = (id, item) => {
@@ -59,8 +59,8 @@ function OutsideTableOnAssignment({
   setOrderInfo,
   setFirstDrawerOpen
 }: I_Table) {
-  console.log("data in outside table", data);
-  if (!data) return <p>Loading</p>;
+  console.log("assignData in outside table", assignData);
+  if (!assignData) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
@@ -88,14 +88,14 @@ function OutsideTableOnAssignment({
             </tr>
           </thead>
           <tbody>
-            {data.length !== 0 ? (
-              data.map((item: any, idx) => {
+            {assignData.length !== 0 ? (
+              assignData.map((item: any, idx) => {
                 return (
                   <TableRow
                     key={uuid()}
                     idx={idx}
                     item={item}
-                    data={data}
+                    assignData={assignData}
                     subAssignData={subAssignData}
                     goToCreatePage={goToCreatePage}
                     deleteItem={deleteItem}

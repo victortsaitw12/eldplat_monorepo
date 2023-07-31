@@ -26,10 +26,10 @@ import { useRouter } from "next/router";
 
 interface I_AssignManualCreateProps {
   editData: any;
+  refetch?: () => void;
 }
 
-function CarEdit({ editData }: I_AssignManualCreateProps) {
-  const router = useRouter();
+function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
   const [loading, setLoading] = useState(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
@@ -209,7 +209,7 @@ function CarEdit({ editData }: I_AssignManualCreateProps) {
     } catch (e: any) {
       console.log("error for update assignment: ", e);
     }
-    router.reload();
+    refetch && refetch();
     console.log("newUpdateData", newUpdateData);
   };
   console.log("🅰updateData", updateData);

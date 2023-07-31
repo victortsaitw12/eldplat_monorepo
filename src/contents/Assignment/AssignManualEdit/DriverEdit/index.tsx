@@ -27,10 +27,10 @@ import { v4 as uuid } from "uuid";
 
 interface I_AssignManualCreateProps {
   editData: any;
+  refetch?: () => void;
 }
 
-function DriverEdit({ editData }: I_AssignManualCreateProps) {
-  const router = useRouter();
+function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
   const [loading, setLoading] = useState(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
@@ -190,7 +190,7 @@ function DriverEdit({ editData }: I_AssignManualCreateProps) {
     } catch (e: any) {
       console.log("error for update assignment: ", e);
     }
-    router.reload();
+    refetch && refetch();
     console.log("newUpdateData", newUpdateData);
   };
 
