@@ -431,8 +431,8 @@ export const convertMap: { [key: string]: { [key: string]: any } } = {
       en: "群組3"
     },
     "04": {
-      ch: "群組3",
-      en: "群組3"
+      ch: "群組4",
+      en: "群組4"
     }
   },
   vendorNo: {

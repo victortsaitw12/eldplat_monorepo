@@ -73,7 +73,7 @@ const TableRow = ({
         })}
         <td>
           {isOpen ? (
-            <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pcointer" />
+            <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pointer" />
           ) : (
             (item.maintenance_quote_no.value.substring(0, 3) === "MTC" ||
               subAssignData[idx].length !== 0) && (
@@ -88,22 +88,22 @@ const TableRow = ({
       {isOpen && (
         <StyledTr>
           <td className="detailTable" colSpan={8}>
-            <Pane className="additionalBtns">
-              <AdditionalVehicleBtn
-                // id={v.maintenance_quote_no.value}
-                id={id}
-                setOrderInfo={setOrderInfo}
-                setFirstDrawerOpen={() => setFirstDrawerOpen("additionalCar")}
-              />
-              <AdditionalDriverBtn
-                // id={v.maintenance_quote_no.value}
-                id={id}
-                setOrderInfo={setOrderInfo}
-                setFirstDrawerOpen={() =>
-                  setFirstDrawerOpen("additionalDriver")
-                }
-              />
-            </Pane>
+            {item.maintenance_quote_no.value.substring(0, 3) === "ORD" && (
+              <Pane className="additionalBtns">
+                <AdditionalVehicleBtn
+                  id={id}
+                  setOrderInfo={setOrderInfo}
+                  setFirstDrawerOpen={() => setFirstDrawerOpen("additionalCar")}
+                />
+                <AdditionalDriverBtn
+                  id={id}
+                  setOrderInfo={setOrderInfo}
+                  setFirstDrawerOpen={() =>
+                    setFirstDrawerOpen("additionalDriver")
+                  }
+                />
+              </Pane>
+            )}
             <InsideTableOnAssignment
               tableName="派單"
               idx={idx}

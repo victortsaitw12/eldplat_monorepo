@@ -1,4 +1,5 @@
 import { I_Add_Employees_Type } from "@typings/employee_type";
+import dayjs from "dayjs";
 import {
   Button,
   Checkbox,
@@ -10,31 +11,43 @@ import {
   TextInput,
   UploadIcon
 } from "evergreen-ui";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { healthCate_DATA, healthResult_DATA } from "./data";
 import { BodySTY } from "./style";
 
 interface I_AddHealthProps {
+  dataIndex?: number;
+  defaultData: any;
   setShowHealthModal: (t: any) => void;
   handleEmployeeChange?: (e: any) => void;
-  // insertData: I_Add_Employees_Type;
-  insertData: any;
+  insertData: I_Add_Employees_Type;
   setInsertData: (insertData: I_Add_Employees_Type) => void;
-  healthData: any;
-  setHealthData: (healthData: any) => void;
-  handleHealthChange?: (e: any) => void;
-  healthListArr: any[];
-  setHealthListArr: (t: any) => void;
 }
 
-function AddHealth({
+function EditHealth({
+  dataIndex,
+  defaultData,
   setShowHealthModal,
   insertData,
-  healthData,
-  setHealthData,
-  handleHealthChange,
-  setHealthListArr
+  setInsertData
 }: I_AddHealthProps) {
+  const [healthData, setHealthData] = useState({
+    heal_typ: "01",
+    heal_agency: "",
+    heal_status: "01",
+    heal_filename: "",
+    invalid: "N",
+    invalid_remark: "",
+    ...defaultData,
+    heal_date:
+      (dayjs(defaultData?.heal_date || null).isValid() &&
+        dayjs(defaultData?.heal_date || null).format("YYYY/MM/DD")) ||
+      "",
+    heal_examine_date:
+      (dayjs(defaultData?.heal_examine_date || null).isValid() &&
+        dayjs(defaultData?.heal_examine_date || null).format("YYYY/MM/DD")) ||
+      ""
+  });
   // const [healthCateSelected, setHealthCateSelected] = useState<any>(null); // 分類下拉選單
   // const [healthResultSelected, setHealthResultSelected] = useState<any>(null); // 結果下拉選單
   const [reportChecked, setReportChecked] = useState<boolean>(false); // 報告失效勾選
@@ -60,23 +73,42 @@ function AddHealth({
     setHealthData(newData);
   };
 
+  const handleHealthChange = (e: any) => {
+    const newData: any = { ...healthData };
+    newData[e.target.name] = e.target.value;
+    setHealthData(newData);
+  };
+
   // 按下確定健檢報告後
   const handleSubmitHealth = (e: any) => {
     const newData = { ...healthData };
-    newData[e.target.name] = e.target.value;
-    setHealthListArr((prev: any) => [...prev, newData]);
-    setHealthData(newData);
+    const newInsertData = { ...insertData };
 
-    // const allData = { ...insertData };
+    if (dataIndex === null) {
+      //新增
+      newInsertData["healths"] = newInsertData["healths"].concat([newData]);
+    } else if (dataIndex !== null && dataIndex !== undefined) {
+      //編輯已經有的
+      newInsertData["healths"][dataIndex] = newData;
+    }
+
+    // newData[e.target.name] = e.target.value;
+    // setHealthData(newData);
+
+    // const allData = { ...newInsertData };
     // Object.keys(allData).map((item) => {
     //   Object.keys(newData).map((value) => {
     //     if (item === value) allData[item] = newData[item];
     //   });
     // });
-    // setInsertData(allData);
-    setShowHealthModal((prev: any) => !prev);
+    setInsertData(newInsertData);
+    setShowHealthModal(null);
   };
 
+  //when healthData change
+  useEffect(() => {
+    console.log("💕💕💕💕💕", healthData);
+  }, [healthData]);
   return (
     <BodySTY>
       <Heading style={{ margin: "1.25rem 0" }}>{insertData.user_name}</Heading>
@@ -106,9 +138,15 @@ function AddHealth({
               value={healthData.heal_typ}
               onChange={handleHealthChange}
             >
+              <option value="01">一般體格檢查</option>
+              <option value="02">特殊健檢</option>
+              <option value="03">特殊粉塵健檢</option>
+              <option value="04">特殊粉塵健檢</option>
+              {/* 
               <option value="01">職業汽車駕照體檢</option>
               <option value="02">職業駕駛審驗體檢</option>
-              <option value="03">一般勞工體檢</option>
+              <option value="03">一般勞工體檢</option> 
+              */}
             </SelectField>
           </Pane>
         </Pane>
@@ -136,9 +174,13 @@ function AddHealth({
               value={healthData.heal_status}
               onChange={handleHealthChange}
             >
+              <option value="01">正常</option>
+              <option value="02">異常</option>
+              {/* 
               <option value="01">合格</option>
               <option value="02">需複檢</option>
-              <option value="03">未通過</option>
+              <option value="03">未通過</option> 
+              */}
             </SelectField>
           </Pane>
         </Pane>
@@ -188,7 +230,6 @@ function AddHealth({
             />
           </Pane>
         </Pane>
-
         {/* 分隔線在此 */}
         <Pane borderTop="0.0625rem solid #D5E2F1" />
         <Pane className="buttons" onClick={(e: any) => e.preventDefault()}>
@@ -197,7 +238,7 @@ function AddHealth({
             marginRight={16}
             appearance="minimal"
             onClick={() => {
-              setShowHealthModal((prev: any) => !prev);
+              setShowHealthModal(null);
             }}
           >
             取消
@@ -206,7 +247,10 @@ function AddHealth({
             className="confirm"
             marginRight={16}
             appearance="minimal"
-            // onClick={handleSubmitHealth}
+            onClick={(e: any) => {
+              console.log("確定");
+              handleSubmitHealth(e);
+            }}
           >
             確定
           </Button>
@@ -216,4 +260,4 @@ function AddHealth({
   );
 }
 
-export default AddHealth;
+export default EditHealth;

@@ -17,7 +17,7 @@ export const useAssignmentStore = create<StateTypes>((set) => ({
   selectedForm: "",
   initializeSubFilter: () => {
     const filter: any = {};
-    const initFilter = localStorage.getItem("customerInitFilter");
+    const initFilter = localStorage.getItem("assignmentInitFilter");
     if (!initFilter) return;
     for (const item of JSON.parse(initFilter)) {
       filter[item.field_Name] = item;

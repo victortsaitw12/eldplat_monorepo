@@ -14,8 +14,6 @@ import Drawer from "@components/Drawer";
 import AssignmentList from "@contents/Assignment/AssignmentList";
 import AutoAssignBtn from "@contents/Assignment/AssignmentList/AutoAssignBtn";
 import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn";
-import AssignManualCreate from "@contents/Assignment/AssignManualCreate";
-import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 
 import {
   // assignParser, 移進/assignment 因為渲染畫面元件跟function
@@ -26,17 +24,16 @@ import {
 
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import { I_ManualCreateType } from "@typings/assignment_type";
-import SecondCarAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondCarManualCreate";
-import SecondDriverAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondDriverManualCreate";
+
 import { dashDate2 } from "@utils/convertDate";
-import CarEdit from "@contents/Assignment/AssignManualEdit/CarEdit";
+
 import {
   getBusAssignmentInfo,
   getDriverAssignmentInfo
 } from "@services/assignment/getAssignmentEdit";
-import DriverEdit from "@contents/Assignment/AssignManualEdit/DriverEdit";
-import AssignAutoCreate from "@contents/Assignment/AssignAutoCreate";
+
 import { I_PageInfo } from "@components/PaginationField";
+import AssignmentDrawers from "@contents/Assignment/AssignmentDrawers";
 //
 const mainFilterArray = [{ id: 1, label: "全部", value: "1" }];
 export const startTimeName = ["start_hours", "start_minutes", "start_type"];
@@ -46,11 +43,9 @@ const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
-
   const [firstDrawerOpen, setFirstDrawerOpen] = useState<string>("");
   // "autoAssign"|"manualAssign"| "editCar"| "editDriver"| "additionalCar" | "additionalDriver" | ""
   const [secondDrawerOpen, setSecondDrawerOpen] = useState<string>("");
-
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
   const [showSecondTitle, setShowSecondTitle] = useState<any>();
@@ -76,8 +71,6 @@ const Page: NextPageWithLayout<never> = () => {
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [disabledAutoAssign, setDisabledAutoAssign] = useState<string[]>([]);
 
-  console.log("🍅🍅🍅disabledAutoAssign:", disabledAutoAssign);
-
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
   function setPosition(dayNum: number, carNum: number) {
@@ -100,7 +93,6 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchAssignData = async (
     isCanceled: boolean,
     mainFilter = "1",
-    subFilter = null,
     pageInfo = defaultPageInfo
   ) => {
     const assignParser = (data: any, key: string) => {
@@ -178,10 +170,24 @@ const Page: NextPageWithLayout<never> = () => {
           return;
         }
         if (!subFilter) {
-          localStorage.setItem(
-            "busInitFilter",
-            JSON.stringify(data.conditionList)
-          );
+          const DUMMY_FILTER = [
+            {
+              field_Name: "User_Name",
+              arrayConditions: ["like", "equal"],
+              displayType: "search",
+              dataType: "string",
+              label: "使用者姓名"
+            }
+          ];
+          data.conditionList
+            ? localStorage.setItem(
+                "assignmentInitFilter",
+                JSON.stringify(data.conditionList)
+              )
+            : localStorage.setItem(
+                "assignmentInitFilter",
+                JSON.stringify(DUMMY_FILTER)
+              );
           initializeSubFilter();
         }
         setSubAssignData(newSubData);
@@ -248,7 +254,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   // 處理切換頁面
   const upDatePageHandler = (newPageInfo: I_PageInfo) => {
-    fetchAssignData(false, nowTab, null, newPageInfo);
+    fetchAssignData(false, nowTab, newPageInfo);
   };
 
   // 打開派單編輯頁
@@ -521,7 +527,71 @@ const Page: NextPageWithLayout<never> = () => {
           />
         </FilterWrapper>
       </TableWrapper>
-      {firstDrawerOpen === "manualAssign" && (
+      {firstDrawerOpen !== "" && (
+        <AssignmentDrawers
+          firstDrawerOpen={firstDrawerOpen}
+          setFirstDrawerOpen={setFirstDrawerOpen}
+          secondDrawerOpen={secondDrawerOpen}
+          setSecondDrawerOpen={setSecondDrawerOpen}
+          orderInfo={orderInfo}
+          data={data}
+          reloadData={() => {
+            fetchAssignData(false, nowTab);
+            setFirstDrawerOpen("");
+          }}
+          setDisabledAutoAssign={setDisabledAutoAssign}
+          showSecondTitle={showSecondTitle}
+          setShowSecondTitle={setShowSecondTitle}
+          setPosition={setPosition}
+          createAssignData={createAssignData}
+          orderIndex={orderIndex}
+          editData={editData}
+          setSubAssignData={setSubAssignData}
+          handleAssignmentCarChange={handleAssignmentCarChange}
+          timeRef={timeRef}
+          handleAssignmentDriverChange={handleAssignmentDriverChange}
+        />
+      )}
+    </BodySTY>
+  );
+};
+
+Page.getLayout = (page: ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
+export default Page;
+
+/*
+    // 計算car陣列總共會有幾個物件
+    const arrCount =
+      (dayjs(orderInfo[0]?.return_date).diff(
+        dashDate(orderInfo[0]?.departure_date),
+        "day"
+      ) +
+        1) *
+      orderInfo[0].order_quantity;
+    console.log("arrCount", arrCount);
+    [...new Array(arrCount)].map((v) => {}); */
+
+/*
+    const targetName = e.target.name as keyof I_ManualBus;
+    const targetValue = e.target.value as any;
+    if (!carArr?.map((v) => v.id).includes(showSecondTitle.id)) {
+      setCarArr((prev) => [
+        ...prev,
+        {
+          id: showSecondTitle.id,
+          bus_no: targetName === "bus_no" && targetValue,
+          bus_day_number: showSecondTitle.car,
+          bus_group: targetName === "bus_group" && targetValue,
+          task_start_time: showSecondTitle.date,
+          task_end_time: showSecondTitle.date,
+          remark: ""
+        }
+      ]);
+    }
+    */
+/* 抽出 所有drawers to <AssignmentDrawers/> 
+       {firstDrawerOpen === "manualAssign" && (
         <Drawer
           tabName={["手動派單"]}
           closeDrawer={
@@ -536,7 +606,7 @@ const Page: NextPageWithLayout<never> = () => {
             }}
             secondDrawerOpen={secondDrawerOpen}
             setSecondDrawerOpen={setSecondDrawerOpen}
-            orderInfo={orderInfo}
+            orderInfo={orderInfo}e
             showSecondTitle={showSecondTitle}
             setShowSecondTitle={setShowSecondTitle}
             setPosition={setPosition}
@@ -544,36 +614,8 @@ const Page: NextPageWithLayout<never> = () => {
             orderIndex={orderIndex}
           />
         </Drawer>
-      )}
-      {secondDrawerOpen === "派車" && (
-        <Drawer
-          isTabShown={false}
-          closeDrawer={() => {
-            setSecondDrawerOpen("");
-          }}
-        >
-          <SecondCarAssignManualCreate
-            createAssignData={createAssignData}
-            showSecondTitle={showSecondTitle}
-            handleAssignmentCarChange={handleAssignmentCarChange}
-            timeRef={timeRef}
-          ></SecondCarAssignManualCreate>
-        </Drawer>
-      )}
-      {secondDrawerOpen === "派工" && (
-        <Drawer
-          closeDrawer={() => {
-            setSecondDrawerOpen("");
-          }}
-        >
-          <SecondDriverAssignManualCreate
-            createAssignData={createAssignData}
-            showSecondTitle={showSecondTitle}
-            handleAssignmentDriverChange={handleAssignmentDriverChange}
-          ></SecondDriverAssignManualCreate>
-        </Drawer>
-      )}
-      {firstDrawerOpen === "additionalCar" && (
+      )} 
+       {firstDrawerOpen === "additionalCar" && (
         <Drawer
           tabName={["新增派車"]}
           closeDrawer={() => setFirstDrawerOpen("")}
@@ -621,42 +663,32 @@ const Page: NextPageWithLayout<never> = () => {
             setDisabledAutoAssign={setDisabledAutoAssign}
           />
         </Drawer>
+      )} 
+       {secondDrawerOpen === "派車" && (
+        <Drawer
+          isTabShown={false}
+          closeDrawer={() => {
+            setSecondDrawerOpen("");
+          }}
+        >
+          <SecondCarAssignManualCreate
+            createAssignData={createAssignData}
+            showSecondTitle={showSecondTitle}
+            handleAssignmentCarChange={handleAssignmentCarChange}
+            timeRef={timeRef}
+          ></SecondCarAssignManualCreate>
+        </Drawer>
       )}
-    </BodySTY>
-  );
-};
-
-Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps });
-export default Page;
-
-/*
-    // 計算car陣列總共會有幾個物件
-    const arrCount =
-      (dayjs(orderInfo[0]?.return_date).diff(
-        dashDate(orderInfo[0]?.departure_date),
-        "day"
-      ) +
-        1) *
-      orderInfo[0].order_quantity;
-    console.log("arrCount", arrCount);
-    [...new Array(arrCount)].map((v) => {}); */
-
-/*
-    const targetName = e.target.name as keyof I_ManualBus;
-    const targetValue = e.target.value as any;
-    if (!carArr?.map((v) => v.id).includes(showSecondTitle.id)) {
-      setCarArr((prev) => [
-        ...prev,
-        {
-          id: showSecondTitle.id,
-          bus_no: targetName === "bus_no" && targetValue,
-          bus_day_number: showSecondTitle.car,
-          bus_group: targetName === "bus_group" && targetValue,
-          task_start_time: showSecondTitle.date,
-          task_end_time: showSecondTitle.date,
-          remark: ""
-        }
-      ]);
-    }
-    */
+      {secondDrawerOpen === "派工" && (
+        <Drawer
+          closeDrawer={() => {
+            setSecondDrawerOpen("");
+          }}
+        >
+          <SecondDriverAssignManualCreate
+            createAssignData={createAssignData}
+            showSecondTitle={showSecondTitle}
+            handleAssignmentDriverChange={handleAssignmentDriverChange}
+          ></SecondDriverAssignManualCreate>
+        </Drawer>
+      )} */
