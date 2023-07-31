@@ -30,7 +30,7 @@ function AssignmentList({
       <OutsideTableOnAssignment
         tableName="派單"
         titles={assignmentTitle}
-        data={assignData}
+        assignData={assignData}
         subAssignData={subAssignData}
         goToCreatePage={goToCreatePage}
         goToEditPage={goToEditPageHandler}

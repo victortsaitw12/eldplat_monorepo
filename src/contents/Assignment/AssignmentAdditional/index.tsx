@@ -48,6 +48,7 @@ I_AssignmentAdditionalVehicleProps) => {
     React.useState<I_creatOtherAssignment | null>(null);
 
   // ----- function ----- //
+  // TODO 待測試確認沒問題後刪除
   // refetch function (待抽出:等page/assignment 裡面的fetchAssignData拆開)
   // const refetch = async (resDataListZero: I_OtherAssignment) => {
   //   // refetch 更新子列表

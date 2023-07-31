@@ -21,7 +21,7 @@ interface Props {
   secondDrawerOpen: string;
   setSecondDrawerOpen: (v: string) => void;
   orderInfo: I_ManualAssignType[];
-  data: any;
+  assignData: any;
   refetch: any;
   setDisabledAutoAssign: any;
   showSecondTitle: any;
@@ -30,7 +30,6 @@ interface Props {
   createAssignData: I_ManualCreateType;
   orderIndex?: number;
   editData: any;
-  setSubAssignData: (v: any) => void;
   handleAssignmentCarChange: (e: any) => void;
   timeRef: any;
   handleAssignmentDriverChange: (e: any) => void;
@@ -42,7 +41,7 @@ function AssignmentDrawers({
   secondDrawerOpen,
   setSecondDrawerOpen,
   orderInfo,
-  data,
+  assignData,
   refetch,
   setDisabledAutoAssign,
   showSecondTitle,
@@ -51,7 +50,6 @@ function AssignmentDrawers({
   createAssignData,
   orderIndex,
   editData,
-  setSubAssignData,
   handleAssignmentCarChange,
   timeRef,
   handleAssignmentDriverChange
@@ -75,7 +73,7 @@ function AssignmentDrawers({
         tabName: "手動派單",
         conponent: (
           <AssignManualCreate
-            assignData={data}
+            assignData={assignData}
             refetch={refetch}
             secondDrawerOpen={secondDrawerOpen}
             setSecondDrawerOpen={setSecondDrawerOpen}
@@ -112,8 +110,6 @@ function AssignmentDrawers({
             type="car"
             orderInfo={orderInfo}
             refetch={refetch}
-            // setSubAssignData={setSubAssignData}
-            // setFirstDrawerOpen={setFirstDrawerOpen}
           />
         )
       }
@@ -127,8 +123,6 @@ function AssignmentDrawers({
             type="driver"
             orderInfo={orderInfo}
             refetch={refetch}
-            // setSubAssignData={setSubAssignData}
-            // setFirstDrawerOpen={setFirstDrawerOpen}
           />
         )
       }

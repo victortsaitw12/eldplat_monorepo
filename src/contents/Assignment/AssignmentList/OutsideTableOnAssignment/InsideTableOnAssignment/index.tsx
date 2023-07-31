@@ -16,7 +16,7 @@ interface I_Table {
   tableName: string | any;
   idx: number;
   titles: Array<string | number | React.ReactNode> | any;
-  data: I_Data[];
+  assignData: I_Data[];
   subAssignData: I_SubAssignData[];
   isOpen?: I_OpenTable[];
   onCheck?: (items: any) => void;
@@ -32,7 +32,7 @@ Must provide id field in the Data Array
 function InsideTableOnAssignment({
   idx,
   titles,
-  data,
+  assignData,
   subAssignData,
 
   goToEditPage = (item: any) => {
@@ -40,11 +40,11 @@ function InsideTableOnAssignment({
   }
 }: I_Table) {
   console.log("🅰subAssignData", subAssignData);
-  console.log("🅱data", data);
+  console.log("🅱assignData", assignData);
   console.log("🅾idx", idx);
   // const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
 
-  if (!data) return <p>Loading</p>;
+  if (!assignData) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
       <TableSTY>
@@ -60,7 +60,7 @@ function InsideTableOnAssignment({
                 </th>
               );
             })}
-            {data[idx].maintenance_quote_no?.value.substring(0, 3) !==
+            {assignData[idx].maintenance_quote_no?.value.substring(0, 3) !==
               "MTC" && (
               <th>
                 <span>操作</span>
@@ -77,8 +77,8 @@ function InsideTableOnAssignment({
 
               const dayCount =
                 dateDiff(
-                  data[idx]?.task_start_time?.label,
-                  data[idx]?.task_end_time?.label
+                  assignData[idx]?.task_start_time?.label,
+                  assignData[idx]?.task_end_time?.label
                 ) + 1;
 
               arr.sort((a, b) => {
@@ -87,18 +87,54 @@ function InsideTableOnAssignment({
 
                 return dateA - dateB || a.bus_day_number - b.bus_day_number;
               });
+              console.log("🍅🍅item:", item);
+              console.log(
+                "🍅🍅arr filtered:",
+                arr.filter(
+                  (arrItem) =>
+                    arrItem.bus_day_number === item.bus_day_number &&
+                    dayjs(arrItem.task_start_time).date() ===
+                      dayjs(item.task_start_time).date()
+                ).length
+              );
 
               return (
                 <>
                   <tr key={uuid()}>
-                    {i % Math.ceil(arr.length / dayCount) === 0 && (
-                      <td rowSpan={arr.length / dayCount}>
+                    {/* // TODO 暫以原<tr>修改bug, 可以改成用grid方式處理或請後端調整response結構 */}
+                    {/* {i % Math.ceil(arr.length / dayCount) === 0 && ( */}
+                    {(i === 0 ||
+                      dayjs(item.task_start_time).date() !==
+                        dayjs(arr[i - 1].task_start_time).date()) && (
+                      <td
+                        rowSpan={
+                          arr.filter(
+                            (arrItem) =>
+                              dayjs(arrItem.task_start_time).date() ===
+                              dayjs(item.task_start_time).date()
+                          ).length
+                        }
+                      >
                         {/* <td rowSpan={Math.ceil(arr.length / dayCount)}> */}
                         <div>{startDate}</div>
                       </td>
                     )}
-                    {(i + 1) % 2 !== 0 && (
-                      <td rowSpan={2}>
+                    {/* {(i + 1) % 2 !== 0 && ( */}
+                    {(i === 0 ||
+                      dayjs(item.task_start_time).date() !==
+                        dayjs(arr[i - 1].task_start_time).date() ||
+                      item.bus_day_number !== arr[i - 1].bus_day_number) && (
+                      // <td rowSpan={2}>
+                      <td
+                        rowSpan={
+                          arr.filter(
+                            (arrItem) =>
+                              arrItem.bus_day_number === item.bus_day_number &&
+                              dayjs(arrItem.task_start_time).date() ===
+                                dayjs(item.task_start_time).date()
+                          ).length
+                        }
+                      >
                         <div>第{item.bus_day_number}車</div>
                       </td>
                     )}
@@ -123,8 +159,10 @@ function InsideTableOnAssignment({
                     <td>
                       <div>{endTime}</div>
                     </td>
-                    {data[idx].maintenance_quote_no?.value.substring(0, 3) !==
-                      "MTC" && (
+                    {assignData[idx].maintenance_quote_no?.value.substring(
+                      0,
+                      3
+                    ) !== "MTC" && (
                       <td>
                         <EditBtn item={item} goToEditPage={goToEditPage} />
                       </td>

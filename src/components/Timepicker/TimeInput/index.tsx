@@ -41,7 +41,6 @@ const TimeInput = ({
   const dateBase = dayjs(date).startOf("day");
 
   React.useEffect(() => {
-    console.log("🍅dateBase", dateBase);
     const updatedDate = dayjs(dateBase)
       .add(((hour % 12) + timeslot) % 24, "hour")
       .add(minute, "minute")

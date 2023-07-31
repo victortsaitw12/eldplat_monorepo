@@ -157,12 +157,6 @@ const Page: NextPageWithLayout<never> = () => {
     //---------------------------------------------------------------
     getAllAssignments(pageInfo)
       .then((data) => {
-        // ✅設定子列表的狀態
-        const newSubData = data.contentList.map(
-          (item: { assignments: any }) => {
-            return item.assignments;
-          }
-        );
         if (isCanceled) {
           console.log("canceled");
           return;
@@ -188,6 +182,12 @@ const Page: NextPageWithLayout<never> = () => {
               );
           initializeSubFilter();
         }
+        // ✅設定子列表的狀態
+        const newSubData = data.contentList.map(
+          (item: { assignments: any }) => {
+            return item.assignments;
+          }
+        );
         setSubAssignData(newSubData);
         setPageInfo(data.pageInfo);
 
@@ -484,6 +484,10 @@ const Page: NextPageWithLayout<never> = () => {
   if (!data) {
     return <LoadingSpinner />;
   }
+
+  // TODO naming assignData => data
+  // TODO naming subAssignData => subData
+  console.log("0️⃣assignData", data);
   console.log("1️⃣orderInfo", orderInfo);
   console.log("2️⃣showSecondTitle", showSecondTitle);
   console.log("3️⃣carArr", carArr);
@@ -531,12 +535,12 @@ const Page: NextPageWithLayout<never> = () => {
           setFirstDrawerOpen={setFirstDrawerOpen}
           secondDrawerOpen={secondDrawerOpen}
           setSecondDrawerOpen={setSecondDrawerOpen}
-          orderInfo={orderInfo}
-          data={data}
+          assignData={data}
           refetch={() => {
             fetchAssignData(false, nowTab);
             setFirstDrawerOpen("");
           }}
+          orderInfo={orderInfo}
           setDisabledAutoAssign={setDisabledAutoAssign}
           showSecondTitle={showSecondTitle}
           setShowSecondTitle={setShowSecondTitle}
@@ -544,7 +548,6 @@ const Page: NextPageWithLayout<never> = () => {
           createAssignData={createAssignData}
           orderIndex={orderIndex}
           editData={editData}
-          setSubAssignData={setSubAssignData}
           handleAssignmentCarChange={handleAssignmentCarChange}
           timeRef={timeRef}
           handleAssignmentDriverChange={handleAssignmentDriverChange}
