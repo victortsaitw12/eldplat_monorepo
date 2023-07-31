@@ -22,7 +22,7 @@ interface Props {
   setSecondDrawerOpen: (v: string) => void;
   orderInfo: I_ManualAssignType[];
   data: any;
-  reloadData: any;
+  refetch: any;
   setDisabledAutoAssign: any;
   showSecondTitle: any;
   setShowSecondTitle: (t: any) => void;
@@ -43,7 +43,7 @@ function AssignmentDrawers({
   setSecondDrawerOpen,
   orderInfo,
   data,
-  reloadData,
+  refetch,
   setDisabledAutoAssign,
   showSecondTitle,
   setShowSecondTitle,
@@ -76,7 +76,7 @@ function AssignmentDrawers({
         conponent: (
           <AssignManualCreate
             assignData={data}
-            reloadData={reloadData}
+            refetch={refetch}
             secondDrawerOpen={secondDrawerOpen}
             setSecondDrawerOpen={setSecondDrawerOpen}
             orderInfo={orderInfo}
@@ -91,11 +91,17 @@ function AssignmentDrawers({
     ],
     [
       "editCar",
-      { tabName: "編輯派車", conponent: <CarEdit editData={editData} /> }
+      {
+        tabName: "編輯派車",
+        conponent: <CarEdit editData={editData} refetch={refetch} />
+      }
     ],
     [
       "editDriver",
-      { tabName: "編輯派工", conponent: <DriverEdit editData={editData} /> }
+      {
+        tabName: "編輯派工",
+        conponent: <DriverEdit editData={editData} refetch={refetch} />
+      }
     ],
     [
       "additionalCar",
@@ -105,8 +111,9 @@ function AssignmentDrawers({
           <AssignmentAdditional
             type="car"
             orderInfo={orderInfo}
-            setSubAssignData={setSubAssignData}
-            setFirstDrawerOpen={setFirstDrawerOpen}
+            refetch={refetch}
+            // setSubAssignData={setSubAssignData}
+            // setFirstDrawerOpen={setFirstDrawerOpen}
           />
         )
       }
@@ -119,8 +126,9 @@ function AssignmentDrawers({
           <AssignmentAdditional
             type="driver"
             orderInfo={orderInfo}
-            setSubAssignData={setSubAssignData}
-            setFirstDrawerOpen={setFirstDrawerOpen}
+            refetch={refetch}
+            // setSubAssignData={setSubAssignData}
+            // setFirstDrawerOpen={setFirstDrawerOpen}
           />
         )
       }

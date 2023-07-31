@@ -533,7 +533,7 @@ const Page: NextPageWithLayout<never> = () => {
           setSecondDrawerOpen={setSecondDrawerOpen}
           orderInfo={orderInfo}
           data={data}
-          reloadData={() => {
+          refetch={() => {
             fetchAssignData(false, nowTab);
             setFirstDrawerOpen("");
           }}

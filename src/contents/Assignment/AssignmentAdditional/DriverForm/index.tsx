@@ -29,10 +29,16 @@ import TimeInput from "@components/Timepicker/TimeInput";
 interface I_DriverFormProps {
   orderInfo: I_ManualAssignType[];
   setLoading: (v: boolean) => void;
-  refetch: (v: I_creatOtherAssignment) => void;
+  refetch: () => void;
+  checkOtherAssignment: (v: I_creatOtherAssignment) => void;
 }
 
-function DriverForm({ orderInfo, setLoading, refetch }: I_DriverFormProps) {
+function DriverForm({
+  orderInfo,
+  setLoading,
+  refetch,
+  checkOtherAssignment
+}: I_DriverFormProps) {
   const defaultValues = {
     quote_no: "",
     bus_driver_no: "",
@@ -105,7 +111,8 @@ function DriverForm({ orderInfo, setLoading, refetch }: I_DriverFormProps) {
         hasCloseButton: true
       });
       // refetch, close drawer, ask update the rest shift?
-      refetch(res.dataList[0]);
+      refetch && refetch();
+      checkOtherAssignment(res.dataList[0]);
     } catch (e: any) {
       toaster.success("新增失敗", {
         description: `${e.message || ""}`,
