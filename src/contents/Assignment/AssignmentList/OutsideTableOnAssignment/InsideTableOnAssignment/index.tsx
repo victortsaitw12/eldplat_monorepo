@@ -134,6 +134,7 @@ function InsideTableOnAssignment({
                                 dayjs(item.task_start_time).date()
                           ).length
                         }
+                        className="busDayCol"
                       >
                         <div>第{item.bus_day_number}車</div>
                       </td>

@@ -148,6 +148,10 @@ const TableSTY = styled.table`
       text-align: center;
     }
   }
+  .busDayCol {
+    border-right: 1px solid ${({ theme }) => theme.color.N300};
+    border-left: 1px solid ${({ theme }) => theme.color.N300};
+  }
 `;
 
 export { TableContainerSTY, TableSTY };
