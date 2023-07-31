@@ -17,6 +17,7 @@ function DateTime() {
   const dateFormatDDL = companyDDL?.date_format_options;
   // TODO: 時區的部份等彥廷哥抓回
   const timeZoneDDL = [{ option_code: "01", option_name: "(GMT+08:00) 北京" }];
+  const timeFormatDDL = [{ option_code: "01", option_name: "24小時制" }];
 
   return (
     <BodySTY>
@@ -66,7 +67,24 @@ function DateTime() {
         </Pane>
         <Pane className="input-line">
           <Text>時間格式</Text>
-          <Text className="time-format">24小時制</Text>
+          <SelectField
+            className="time-format"
+            label=""
+            name="time_zone"
+            value={companyData?.time_zone}
+            onChange={(e: any) => {
+              handleCompanyDDLChange(e);
+            }}
+            disabled
+          >
+            {timeFormatDDL?.map(
+              (item: { option_code: string; option_name: string }) => (
+                <option key={item.option_code} value={item.option_code}>
+                  {item.option_name}
+                </option>
+              )
+            )}
+          </SelectField>
         </Pane>
       </form>
     </BodySTY>

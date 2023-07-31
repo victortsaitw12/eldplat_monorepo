@@ -53,12 +53,12 @@ function CompanyUpdate({ submitForm, onCancel }: I_UpdateCompany_Props) {
           >
             全部儲存
           </Button>
-          <IconButton icon={FullscreenIcon} />
+          {/* <IconButton icon={FullscreenIcon} />
           <IconButton
             icon={SmallCrossIcon}
             marginRight={majorScale(1)}
             onClick={onCancel}
-          />
+          /> */}
         </Pane>
       </Pane>
 

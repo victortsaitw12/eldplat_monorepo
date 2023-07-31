@@ -27,8 +27,10 @@ const AssignBtn = ({ id, disabled, assignmentData }: AssignBtn_Type) => {
       //   service_end_date: choseData[0].service_end_date
       // };
       // console.log("newData", newData);
-      const res = await createMaintenanceAssignment(choseData[0]);
-      console.log("💛派單按鈕res", res);
+      const createRes = await createMaintenanceAssignment(choseData[0]);
+      const updateStatusRes = await UpdateMaintenanceStatus(id, "4");
+      console.log("💛派單按鈕-派單", createRes);
+      console.log("🧡派單按鈕-改狀態", updateStatusRes);
       alert("新增派單完成!");
       router.reload();
     } catch (err) {
