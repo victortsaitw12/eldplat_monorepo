@@ -244,7 +244,9 @@ function DriverForm({
         <Paragraph>起始時間</Paragraph>
         <TimeInput
           date={dateBase}
-          setDate={(v) => setValue("task_start_time", v)}
+          setDate={(v) =>
+            setValue("task_start_time", dayjs(v).format("YYYY-MM-DDTHH:mm"))
+          }
           {...register("task_start_time", {
             required: "必填"
           })}
@@ -255,7 +257,9 @@ function DriverForm({
         <Paragraph>截止時間</Paragraph>
         <TimeInput
           date={dateBase}
-          setDate={(v) => setValue("task_end_time", v)}
+          setDate={(v) =>
+            setValue("task_end_time", dayjs(v).format("YYYY-MM-DDTHH:mm"))
+          }
           {...register("task_end_time", {
             required: "必填"
           })}
