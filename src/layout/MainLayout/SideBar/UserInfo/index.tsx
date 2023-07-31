@@ -13,7 +13,7 @@ function Index(props: any) {
 
   return (
     <BodySTY {...props}>
-      <div className="title">雄獅通運公司</div>
+      <div className="title">{companyData?.company_name}</div>
       <div className="user-container">
         <div className="user-info">
           <Avatar
