@@ -22,6 +22,7 @@ interface I_Data {
 }
 
 interface I_Table {
+  needCheckBox?: boolean;
   needAction?: boolean;
   needCreateBtn?: boolean;
   tableName: string | any;
@@ -48,6 +49,7 @@ interface I_Table {
 Must provide id field in the Data Array
 */
 function Table({
+  needCheckBox = true,
   needAction = true,
   needCreateBtn = true,
   tableName,
@@ -144,14 +146,15 @@ function Table({
         <TableSTY>
           <thead>
             <tr>
-              <th>
-                <Checkbox
-                  style={{ margin: "8px 0" }}
-                  onChange={(e) => handleCheckAll(e)}
-                  checked={checkedItems.length === data.length}
-                />
-              </th>
-
+              {needCheckBox && (
+                <th>
+                  <Checkbox
+                    style={{ margin: "8px 0" }}
+                    onChange={(e) => handleCheckAll(e)}
+                    checked={checkedItems.length === data.length}
+                  />
+                </th>
+              )}
               {/* {tableName === "維保通知" && (
                 <th>
                   <input
@@ -188,15 +191,16 @@ function Table({
               data.map((item: any, idx) => {
                 return (
                   <tr key={uuid()}>
-                    <td>
-                      <Checkbox
-                        style={{ margin: "8px 0" }}
-                        checked={checkedItems.includes(item?.id?.value)}
-                        onChange={(e) => handleCheck(e)}
-                        id={item?.id?.value}
-                      />
-                    </td>
-
+                    {needCheckBox && (
+                      <td>
+                        <Checkbox
+                          style={{ margin: "8px 0" }}
+                          checked={checkedItems.includes(item?.id?.value)}
+                          onChange={(e) => handleCheck(e)}
+                          id={item?.id?.value}
+                        />
+                      </td>
+                    )}
                     {/* {tableName === "維保通知" && (
                       <td>
                         <input

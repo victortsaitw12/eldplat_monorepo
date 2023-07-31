@@ -91,6 +91,7 @@ const TableSTY = styled.table`
     padding: 4px;
     span,
     div:not(.table-action) {
+      margin: 0.5rem;
       display: flex;
       justify-content: flex-start;
       align-items: center;
