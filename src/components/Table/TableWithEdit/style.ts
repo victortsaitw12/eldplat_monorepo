@@ -89,9 +89,12 @@ const TableSTY = styled.table`
     vertical-align: middle;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
     padding: 4px;
+    & > span,
+    & > div {
+      margin: 0.5rem 0;
+    }
     span,
     div:not(.table-action) {
-      margin: 0.5rem;
       display: flex;
       justify-content: flex-start;
       align-items: center;
