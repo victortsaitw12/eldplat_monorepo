@@ -19,6 +19,7 @@ export const BodySTY = styled.div`
     > .charge-container {
       border-radius: 10px;
       overflow: hidden;
+      height: fit-content;
     }
   }
   > .redirect-body {

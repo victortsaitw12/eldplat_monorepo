@@ -375,7 +375,8 @@ const Page: NextPageWithLayout<
                 onClick={() => {
                   let isValid = true;
                   if (currentTab < 5) {
-                    if (currentTab === 1 || currentTab === 2) {
+                    if (currentTab === 2) {
+                      // if (currentTab === 1 || currentTab === 2) {
                       isValid = validationList[currentTab].valid;
                       if (!isValid) {
                         toaster.danger("無法前往下一頁", {
