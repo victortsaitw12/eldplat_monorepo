@@ -87,16 +87,6 @@ function InsideTableOnAssignment({
 
                 return dateA - dateB || a.bus_day_number - b.bus_day_number;
               });
-              console.log("🍅🍅item:", item);
-              console.log(
-                "🍅🍅arr filtered:",
-                arr.filter(
-                  (arrItem) =>
-                    arrItem.bus_day_number === item.bus_day_number &&
-                    dayjs(arrItem.task_start_time).date() ===
-                      dayjs(item.task_start_time).date()
-                ).length
-              );
 
               return (
                 <>

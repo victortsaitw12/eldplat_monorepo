@@ -59,7 +59,6 @@ function OutsideTableOnAssignment({
   setOrderInfo,
   setFirstDrawerOpen
 }: I_Table) {
-  console.log("assignData in outside table", assignData);
   if (!assignData) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">

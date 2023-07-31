@@ -14,7 +14,6 @@ const OrderListItem = ({
   setData: (v: any) => void;
 }) => {
   const progressInfo = mappingProgressInfo(itemData.status_list);
-  console.log("🍅🍅itemData", itemData);
   const handlePaymentClick = (e: any) => {
     const fetchData = async () => {
       try {
