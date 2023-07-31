@@ -10,6 +10,8 @@ export const BodySTY = styled.div`
         font-size: 14px;
         font-weight: 600;
         color: #567190;
+        display: flex;
+        align-items: flex-start;
       }
     }
     .required {
