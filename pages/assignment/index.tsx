@@ -10,13 +10,12 @@ import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-import Drawer from "@components/Drawer";
 import AssignmentList from "@contents/Assignment/AssignmentList";
 import AutoAssignBtn from "@contents/Assignment/AssignmentList/AutoAssignBtn";
 import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn";
 
 import {
-  // assignParser, 移進/assignment 因為渲染畫面元件跟function
+  // assignParser, 因為渲染畫面元件跟function移進/assignment
   assignPattern,
   getAllAssignments,
   defaultPageInfo
@@ -26,7 +25,6 @@ import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import { I_ManualCreateType } from "@typings/assignment_type";
 
 import { dashDate2 } from "@utils/convertDate";
-
 import {
   getBusAssignmentInfo,
   getDriverAssignmentInfo

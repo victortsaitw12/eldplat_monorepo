@@ -91,11 +91,11 @@ function AssignmentDrawers({
     ],
     [
       "editCar",
-      { tabName: "編輯派車", content: <CarEdit editData={editData} /> }
+      { tabName: "編輯派車", conponent: <CarEdit editData={editData} /> }
     ],
     [
       "editDriver",
-      { tabName: "編輯派工", content: <DriverEdit editData={editData} /> }
+      { tabName: "編輯派工", conponent: <DriverEdit editData={editData} /> }
     ],
     [
       "additionalCar",
@@ -153,6 +153,7 @@ function AssignmentDrawers({
       )}
       {secondDrawerOpen === "派工" && (
         <Drawer
+          isTabShown={false}
           closeDrawer={() => {
             setSecondDrawerOpen("");
           }}

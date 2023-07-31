@@ -89,7 +89,7 @@ const TableSTY = styled.table`
       right: 0;
       border-radius: 10px;
       overflow: hidden;
-      transform: translate(90%, 20%);
+      transform: translateX(-50%);
       background-color: ${({ theme }) => theme.color.N0};
       border: 1px solid ${({ theme }) => theme.color.N300};
       box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
