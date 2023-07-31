@@ -157,8 +157,8 @@ const routers: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
-  console.log("router.pathname", router.pathname);
-  console.log("router.asPath", router.asPath);
+  // console.log("router.pathname", router.pathname);
+  // console.log("router.asPath", router.asPath);
   const newRouters = routers[router.pathname] || routers[router.asPath] || [];
   return newRouters;
 };
