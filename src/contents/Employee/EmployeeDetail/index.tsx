@@ -25,6 +25,8 @@ import {
   textValidation
 } from "@utils/inputValidation";
 
+//@content
+import { CharactorCard } from "@contents/Employee/Charactor/";
 interface I_Props {
   submitRef: React.RefObject<HTMLButtonElement>;
   isEdit: boolean;
@@ -37,7 +39,6 @@ interface I_Props {
 }
 
 const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
-  console.log("🐴🐴🐴🐴🐴員工資料", data);
   const methods = useForm({ defaultValues: data });
   const {} = { ...data };
   const sex: { [key: string]: string } = {
@@ -104,7 +105,26 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     }
   ];
   //指定群組
-  const group_info: I_infoData[] | undefined = [];
+  const group_info: I_infoData[] | undefined =
+    data?.groups.length > 0
+      ? [
+          {
+            value: (
+              <>
+                <Pane>
+                  {data?.groups.map((child: any, i: number) => {
+                    return <CharactorCard key={i} item={child} />;
+                  })}
+                </Pane>
+              </>
+            )
+          }
+        ]
+      : [
+          {
+            value: "--"
+          }
+        ];
   //排班設定
   const shift_info: I_infoData[] | undefined = [];
   //聯絡資訊
@@ -238,6 +258,7 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
                 isEdit={isEdit}
                 infoData={basic_info}
               />
+
               <InfoBox
                 infoTitle="指定群組"
                 isEdit={isEdit}

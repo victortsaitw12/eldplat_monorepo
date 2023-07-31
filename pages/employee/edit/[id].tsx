@@ -42,10 +42,6 @@ const Page: NextPageWithLayout<
   const [loading, setLoading] = useState<boolean>(false);
   const [editData, setEditData] = useState<I_Get_Employees_Type | any>();
 
-  const cancelFormHandler = useCallback(() => {
-    router.push("/employee");
-  }, [router]);
-
   useEffect(() => {
     setLoading(true);
     getEmployeeById(userId).then((data) => {
@@ -106,7 +102,7 @@ const Page: NextPageWithLayout<
     try {
       const res = await updateEmployee(userId, data);
       console.log("res in edit", res);
-      router.push("/employee");
+      router.push("/employee/detail/" + userId);
     } catch (e: any) {
       console.log(e);
     }
@@ -117,8 +113,11 @@ const Page: NextPageWithLayout<
 
   //TableWrapper
   const changeMainFilterHandler = (value: string) => {
-    console.log("changeMainFilterHandler", value);
     setNowTab(value);
+  };
+
+  const handleSaveAll = () => {
+    asyncSubmitForm(editData);
   };
 
   return (
@@ -143,7 +142,9 @@ const Page: NextPageWithLayout<
                 mainFilter={nowTab}
                 mainFilterArray={mainFilterArray}
                 onSave={() => {
-                  submitRef.current && submitRef.current.click();
+                  console.log("點擊全部儲存");
+                  handleSaveAll();
+                  // submitRef.current && submitRef.current.click();
                 }}
                 onEdit={() => {
                   console.log("TableWrapper onEdit");
@@ -154,13 +155,18 @@ const Page: NextPageWithLayout<
               >
                 {nowTab === "1" && (
                   <AddEmployee
-                    submitRef={submitRef}
-                    submitForm={asyncSubmitForm}
-                    onCancel={cancelFormHandler}
                     editData={editData}
+                    insertData={editData}
+                    setInsertData={setEditData}
                   />
                 )}
-                {nowTab === "2" && <HealthInfo isEdit={true} data={editData} />}
+                {nowTab === "2" && (
+                  <HealthInfo
+                    isEdit={true}
+                    insertData={editData}
+                    setInsertData={setEditData}
+                  />
+                )}
               </TableWrapper>
             )) || (
               <Pane

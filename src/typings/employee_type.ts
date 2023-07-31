@@ -110,9 +110,9 @@ export interface I_Get_Employees_Type {
 
 export interface I_Content_Props {
   handleEmployeeChange: (e: any | React.ChangeEvent<HTMLInputElement>) => void;
-  insertData: I_Add_Employees_Type;
+  insertData: I_Get_Employees_Type;
   setInsertData: (insertData: I_Add_Employees_Type) => void;
-  editData?: I_Get_Employees_Type;
+  // editData?: I_Get_Employees_Type;
 }
 
 export interface I_Health_TYPE {
