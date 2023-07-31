@@ -29,7 +29,7 @@ import TimeInput from "@components/Timepicker/TimeInput";
 interface I_DriverFormProps {
   orderInfo: I_ManualAssignType[];
   setLoading: (v: boolean) => void;
-  refetch: () => void;
+  refetch?: () => void;
   checkOtherAssignment: (v: I_creatOtherAssignment) => void;
 }
 

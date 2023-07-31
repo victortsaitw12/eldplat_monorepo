@@ -28,11 +28,9 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
 
   const { mainFilter, updateMainFilter } = useEmployeeFilterStore();
   const router = useRouter();
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(null);
-  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
 
   const [nowTab, setNowTab] = useState("1");
 
@@ -127,7 +125,7 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
           />
         );
       case "2":
-        return <HealthInfo isEdit={false} data={data} />;
+        return <HealthInfo isEdit={false} insertData={data} />;
       default:
         break;
     }
@@ -136,7 +134,8 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
     <RegionProvider>
       <BodySTY>
         <TableWrapper
-          viewOnly={true}
+          isEdit={false}
+          // viewOnly={true}
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
@@ -144,10 +143,9 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
             submitRef.current?.click();
           }}
           onEdit={() => {
-            console.log("點擊編輯按鈕");
+            router.push("/employee/edit/" + userId);
           }}
           onClose={onCancelHandler}
-          isEdit={isEdit}
         >
           {(!loading && data && r_content()) || (
             <Pane

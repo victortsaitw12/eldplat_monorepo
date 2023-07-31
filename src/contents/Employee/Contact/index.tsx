@@ -40,7 +40,7 @@ function Contact({
           <Text className="required">E-Mail</Text>
           <TextInput
             name="user_email"
-            value={insertData.user_email}
+            value={insertData.user_email || ""}
             onChange={handleEmployeeChange}
             required
           />
@@ -50,8 +50,8 @@ function Contact({
           <Pane className="phone-input">
             <TextInput
               className="country-number"
-              name=""
-              value={handleCountryCode(insertData?.user_country)}
+              name="user_phone_code"
+              value={handleCountryCode(insertData?.user_country) || ""}
               onChange={handleEmployeeChange}
               required
               disabled
@@ -59,7 +59,7 @@ function Contact({
             <TextInput
               className="phone-number"
               name="user_phone"
-              value={insertData.user_phone}
+              value={insertData.user_phone || ""}
               onChange={handleEmployeeChange}
               required
             />
@@ -75,7 +75,7 @@ function Contact({
               <TextInput
                 name="user_address1"
                 placeholder="例如:街道地址、郵政信箱等"
-                value={insertData.user_address1}
+                value={insertData.user_address1 || ""}
                 onChange={handleEmployeeChange}
               />
             </Pane>
@@ -86,7 +86,7 @@ function Contact({
               <TextInput
                 name="user_address2"
                 placeholder="例如:套房、建築、大樓、樓層等"
-                value={insertData.user_address2}
+                value={insertData.user_address2 || ""}
                 onChange={handleEmployeeChange}
               />
             </Pane>
@@ -95,8 +95,9 @@ function Contact({
                 <Paragraph>城市</Paragraph>
                 <SelectField
                   className="city"
+                  label=""
                   name="city"
-                  value={insertData.city}
+                  value={insertData.city || ""}
                   onChange={(e: any) => {
                     handleEmployeeChange(e);
                   }}
@@ -114,7 +115,7 @@ function Contact({
                   className="district"
                   label=""
                   name="district"
-                  value={insertData.district}
+                  value={insertData.district || ""}
                   onChange={(e: any) => {
                     handleEmployeeChange(e);
                     handleCityChange(e);
@@ -134,7 +135,7 @@ function Contact({
                 <TextInput
                   className="zip-code"
                   name="zip_code"
-                  value={insertData.zip_code}
+                  value={insertData.zip_code || ""}
                   onChange={handleEmployeeChange}
                 />
               </Pane>
@@ -144,7 +145,7 @@ function Contact({
                   className="country"
                   label=""
                   name="dt_country"
-                  value={insertData.dt_country}
+                  value={insertData.dt_country || ""}
                   onChange={(e: any) => {
                     handleEmployeeChange(e);
                     handleStateChange(e);
@@ -165,7 +166,7 @@ function Contact({
           <Text>緊急聯絡人</Text>
           <TextInput
             name="emgc_contact"
-            value={insertData.emgc_contact}
+            value={insertData.emgc_contact || ""}
             onChange={handleEmployeeChange}
           />
         </Pane>
@@ -176,7 +177,7 @@ function Contact({
               className="country-number"
               name="emgc_phone_code"
               placeholder="ex:+886"
-              value={insertData.emgc_phone_code}
+              value={insertData.emgc_phone_code || ""}
               onChange={(e: any) => {
                 handleEmployeeChange(e);
               }}
@@ -184,7 +185,7 @@ function Contact({
             />
             <TextInput
               name="emgc_phone"
-              value={insertData.emgc_phone}
+              value={insertData.emgc_phone || ""}
               onChange={handleEmployeeChange}
             />
           </Pane>

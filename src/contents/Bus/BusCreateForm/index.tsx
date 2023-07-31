@@ -5,7 +5,6 @@ import { IconLeft } from "@components/Button/Primary";
 import FiledInput from "./FieldInput";
 import { useState } from "react";
 import { createBus } from "@services/bus/createBus";
-import DottedSelect from "@components/HookForm/Select/DottedSelect";
 interface I_BusCreateFormProps {
   data?: any;
   reloadData?: () => void;
@@ -41,7 +40,6 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
   const { register, handleSubmit, control, reset } = useForm<CreateBusPayload>({
     defaultValues
   });
-  console.log("options", options);
   const [loading, setLoading] = useState(false);
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
@@ -93,21 +91,11 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <option value="" disabled hidden>
           請選擇
         </option>
-        <option value="01">沙灘車</option>
-        <option value="02">船</option>
-        <option value="03">巴士</option>
-        <option value="04">車</option>
-        <option value="05">堆高機</option>
-        <option value="06">發電機</option>
-        <option value="07">裝載機</option>
-        <option value="08">機車</option>
-        <option value="09">割草機</option>
-        <option value="10">其他</option>
-        <option value="11">皮卡車</option>
-        <option value="12">半卡車</option>
-        <option value="13">越野車</option>
-        <option value="14">聯結車</option>
-        <option value="15">貨車</option>
+        {options?.type_options.map((item: any) => (
+          <option key={item.no} value={item.no}>
+            {item.name}
+          </option>
+        ))}
       </SelectField>
       <FiledInput
         controlProps={{
