@@ -29,48 +29,62 @@ import CheckBox from "@components/CheckBox";
 interface I_AssignmentAdditionalVehicleProps {
   type: "car" | "driver";
   orderInfo: I_ManualAssignType[];
-  setSubAssignData: (v: any) => void;
-  setFirstDrawerOpen: (v: string) => void;
+  refetch?: () => void;
+  // setSubAssignData: (v: any) => void;
+  // setFirstDrawerOpen: (v: string) => void;
 }
 
 const AssignmentAdditional = ({
   type,
   orderInfo,
-  setSubAssignData,
-  setFirstDrawerOpen
-}: I_AssignmentAdditionalVehicleProps) => {
+  refetch
+}: // setSubAssignData,
+// setFirstDrawerOpen
+
+I_AssignmentAdditionalVehicleProps) => {
   const [loading, setLoading] = React.useState(false);
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
   const [busRestShifts, setBusRestShifts] =
     React.useState<I_creatOtherAssignment | null>(null);
 
   // ----- function ----- //
+  // TODO 待測試確認沒問題後刪除
   // refetch function (待抽出:等page/assignment 裡面的fetchAssignData拆開)
-  const refetch = async (resDataListZero: I_OtherAssignment) => {
-    // refetch 更新子列表
-    getAllAssignments()
-      .then((data) => {
-        const newSubData = data.contentList.map(
-          (item: { assignments: any }) => {
-            return item.assignments;
-          }
-        );
-        setSubAssignData(newSubData);
-      })
-      .catch((err) => {
-        console.error("error in assignment list", err);
-      });
-    // 檢查原本那台(車/駕駛)於該筆訂單後面還有單 => refetch一併更新的彈窗
+  // const refetch = async (resDataListZero: I_OtherAssignment) => {
+  //   // refetch 更新子列表
+  //   getAllAssignments()
+  //     .then((data) => {
+  //       const newSubData = data.contentList.map(
+  //         (item: { assignments: any }) => {
+  //           return item.assignments;
+  //         }
+  //       );
+  //       setSubAssignData(newSubData);
+  //     })
+  //     .catch((err) => {
+  //       console.error("error in assignment list", err);
+  //     });
+  //   // 檢查原本那台(車/駕駛)於該筆訂單後面還有單 => refetch一併更新的彈窗
+  //   if (resDataListZero && resDataListZero.time_list.length !== 0) {
+  //     setBusRestShifts(resDataListZero);
+  //     setTimeout(() => {
+  //       setIsLightBoxOpen(true);
+  //     }, 2000);
+  //   } else {
+  //     //關抽屜;
+  //     setFirstDrawerOpen("");
+  //   }
+  // };
+  const checkOtherAssignment = (resDataListZero: I_creatOtherAssignment) => {
+    // 檢查原本那台(車/駕駛)於該筆訂單後面還有單 => render一併更新的彈窗
     if (resDataListZero && resDataListZero.time_list.length !== 0) {
       setBusRestShifts(resDataListZero);
       setTimeout(() => {
         setIsLightBoxOpen(true);
       }, 2000);
-    } else {
-      //關抽屜;
-      setFirstDrawerOpen("");
     }
   };
+
   const handleCheckDates = (e: any) => {
     if (!e.checked && busRestShifts && busRestShifts.time_list) {
       const updatedTimeList = busRestShifts.time_list.filter(
@@ -105,8 +119,7 @@ const AssignmentAdditional = ({
         hasCloseButton: true
       });
     } finally {
-      //關抽屜;
-      setFirstDrawerOpen("");
+      refetch && refetch();
     }
   }, [busRestShifts]);
 
@@ -136,12 +149,14 @@ const AssignmentAdditional = ({
           orderInfo={orderInfo}
           setLoading={setLoading}
           refetch={refetch}
+          checkOtherAssignment={checkOtherAssignment}
         />
       ) : (
         <DriverForm
           orderInfo={orderInfo}
           setLoading={setLoading}
           refetch={refetch}
+          checkOtherAssignment={checkOtherAssignment}
         />
       )}
       {isLightBoxOpen && (

@@ -11,7 +11,7 @@ interface I_TableRow {
   idx: number;
   item: any;
   //   titles: Array<string | number | React.ReactNode> | any;
-  data: I_Data[];
+  assignData: I_Data[];
   subAssignData: any;
   goToCreatePage?: () => void;
   goToEditPage?: (item: any) => void;
@@ -24,7 +24,7 @@ interface I_TableRow {
 const TableRow = ({
   idx,
   item,
-  data,
+  assignData,
   subAssignData,
   goToCreatePage,
   viewItem = (id, item) => {
@@ -40,7 +40,7 @@ const TableRow = ({
   setFirstDrawerOpen
 }: I_TableRow) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const id = data[idx].maintenance_quote_no.value;
+  const id = assignData[idx].maintenance_quote_no.value;
   const titles = getSubAssignmentTitle();
 
   const handleInsideTableOpen = () => {
@@ -108,7 +108,7 @@ const TableRow = ({
               tableName="派單"
               idx={idx}
               titles={titles}
-              data={data}
+              assignData={assignData}
               subAssignData={subAssignData}
               goToCreatePage={goToCreatePage}
               deleteItem={deleteItem}

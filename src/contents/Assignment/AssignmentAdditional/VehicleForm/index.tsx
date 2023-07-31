@@ -29,10 +29,16 @@ import TimeInput from "@components/Timepicker/TimeInput";
 interface I_VehicleFormProps {
   orderInfo: I_ManualAssignType[];
   setLoading: (v: boolean) => void;
-  refetch: (v: I_creatOtherAssignment) => void;
+  refetch?: () => void;
+  checkOtherAssignment: (v: I_creatOtherAssignment) => void;
 }
 
-function VehicleForm({ orderInfo, setLoading, refetch }: I_VehicleFormProps) {
+function VehicleForm({
+  orderInfo,
+  setLoading,
+  refetch,
+  checkOtherAssignment
+}: I_VehicleFormProps) {
   const defaultValues = {
     quote_no: "",
     bus_driver_no: "",
@@ -107,7 +113,8 @@ function VehicleForm({ orderInfo, setLoading, refetch }: I_VehicleFormProps) {
         hasCloseButton: true
       });
       // refetch, close drawer, ask update the rest shift?
-      refetch(res.dataList[0]);
+      refetch && refetch();
+      checkOtherAssignment(res.dataList[0]);
     } catch (e: any) {
       toaster.success("新增失敗", {
         description: `${e.message || ""}`,
@@ -261,7 +268,9 @@ function VehicleForm({ orderInfo, setLoading, refetch }: I_VehicleFormProps) {
         <Paragraph>起始時間</Paragraph>
         <TimeInput
           date={dateBase}
-          setDate={(v) => setValue("task_start_time", v)}
+          setDate={(v) => {
+            setValue("task_start_time", dayjs(v).format("YYYY-MM-DDTHH:mm"));
+          }}
           {...register("task_start_time", {
             required: "必填"
           })}
@@ -272,7 +281,9 @@ function VehicleForm({ orderInfo, setLoading, refetch }: I_VehicleFormProps) {
         <Paragraph>截止時間</Paragraph>
         <TimeInput
           date={dateBase}
-          setDate={(v) => setValue("task_end_time", v)}
+          setDate={(v) => {
+            setValue("task_end_time", dayjs(v).format("YYYY-MM-DDTHH:mm"));
+          }}
           {...register("task_end_time", {
             required: "必填"
           })}

@@ -10,13 +10,12 @@ import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-import Drawer from "@components/Drawer";
 import AssignmentList from "@contents/Assignment/AssignmentList";
 import AutoAssignBtn from "@contents/Assignment/AssignmentList/AutoAssignBtn";
 import ManualAssignBtn from "@contents/Assignment/AssignmentList/ManualAssignBtn";
 
 import {
-  // assignParser, 移進/assignment 因為渲染畫面元件跟function
+  // assignParser, 因為渲染畫面元件跟function移進/assignment
   assignPattern,
   getAllAssignments,
   defaultPageInfo
@@ -26,7 +25,6 @@ import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import { I_ManualCreateType } from "@typings/assignment_type";
 
 import { dashDate2 } from "@utils/convertDate";
-
 import {
   getBusAssignmentInfo,
   getDriverAssignmentInfo
@@ -159,12 +157,6 @@ const Page: NextPageWithLayout<never> = () => {
     //---------------------------------------------------------------
     getAllAssignments(pageInfo)
       .then((data) => {
-        // ✅設定子列表的狀態
-        const newSubData = data.contentList.map(
-          (item: { assignments: any }) => {
-            return item.assignments;
-          }
-        );
         if (isCanceled) {
           console.log("canceled");
           return;
@@ -190,6 +182,12 @@ const Page: NextPageWithLayout<never> = () => {
               );
           initializeSubFilter();
         }
+        // ✅設定子列表的狀態
+        const newSubData = data.contentList.map(
+          (item: { assignments: any }) => {
+            return item.assignments;
+          }
+        );
         setSubAssignData(newSubData);
         setPageInfo(data.pageInfo);
 
@@ -486,6 +484,10 @@ const Page: NextPageWithLayout<never> = () => {
   if (!data) {
     return <LoadingSpinner />;
   }
+
+  // TODO naming assignData => data
+  // TODO naming subAssignData => subData
+  console.log("0️⃣assignData", data);
   console.log("1️⃣orderInfo", orderInfo);
   console.log("2️⃣showSecondTitle", showSecondTitle);
   console.log("3️⃣carArr", carArr);
@@ -533,12 +535,12 @@ const Page: NextPageWithLayout<never> = () => {
           setFirstDrawerOpen={setFirstDrawerOpen}
           secondDrawerOpen={secondDrawerOpen}
           setSecondDrawerOpen={setSecondDrawerOpen}
-          orderInfo={orderInfo}
-          data={data}
-          reloadData={() => {
+          assignData={data}
+          refetch={() => {
             fetchAssignData(false, nowTab);
             setFirstDrawerOpen("");
           }}
+          orderInfo={orderInfo}
           setDisabledAutoAssign={setDisabledAutoAssign}
           showSecondTitle={showSecondTitle}
           setShowSecondTitle={setShowSecondTitle}
@@ -546,7 +548,6 @@ const Page: NextPageWithLayout<never> = () => {
           createAssignData={createAssignData}
           orderIndex={orderIndex}
           editData={editData}
-          setSubAssignData={setSubAssignData}
           handleAssignmentCarChange={handleAssignmentCarChange}
           timeRef={timeRef}
           handleAssignmentDriverChange={handleAssignmentDriverChange}
