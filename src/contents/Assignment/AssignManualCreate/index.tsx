@@ -27,7 +27,7 @@ import { getOrderDates } from "@services/assignment/getOrderDates";
 
 interface I_AssignManualCreateProps {
   assignData?: any;
-  reloadData?: () => void;
+  refetch?: () => void;
   secondDrawerOpen: string;
   setSecondDrawerOpen: (secondDrawerOpen: string) => void;
   orderInfo: I_ManualAssignType[];
@@ -40,7 +40,7 @@ interface I_AssignManualCreateProps {
 
 function AssignManualCreate({
   assignData,
-  reloadData,
+  refetch,
   setSecondDrawerOpen,
   orderInfo,
   showSecondTitle,
@@ -103,7 +103,7 @@ function AssignManualCreate({
       alert(e.message);
     }
     setLoading(false);
-    reloadData && reloadData();
+    refetch && refetch();
   };
 
   const handleClick = async (

@@ -21,8 +21,8 @@ interface Props {
   secondDrawerOpen: string;
   setSecondDrawerOpen: (v: string) => void;
   orderInfo: I_ManualAssignType[];
-  data: any;
-  reloadData: any;
+  assignData: any;
+  refetch: any;
   setDisabledAutoAssign: any;
   showSecondTitle: any;
   setShowSecondTitle: (t: any) => void;
@@ -30,7 +30,6 @@ interface Props {
   createAssignData: I_ManualCreateType;
   orderIndex?: number;
   editData: any;
-  setSubAssignData: (v: any) => void;
   handleAssignmentCarChange: (e: any) => void;
   timeRef: any;
   handleAssignmentDriverChange: (e: any) => void;
@@ -42,8 +41,8 @@ function AssignmentDrawers({
   secondDrawerOpen,
   setSecondDrawerOpen,
   orderInfo,
-  data,
-  reloadData,
+  assignData,
+  refetch,
   setDisabledAutoAssign,
   showSecondTitle,
   setShowSecondTitle,
@@ -51,7 +50,6 @@ function AssignmentDrawers({
   createAssignData,
   orderIndex,
   editData,
-  setSubAssignData,
   handleAssignmentCarChange,
   timeRef,
   handleAssignmentDriverChange
@@ -75,8 +73,8 @@ function AssignmentDrawers({
         tabName: "手動派單",
         conponent: (
           <AssignManualCreate
-            assignData={data}
-            reloadData={reloadData}
+            assignData={assignData}
+            refetch={refetch}
             secondDrawerOpen={secondDrawerOpen}
             setSecondDrawerOpen={setSecondDrawerOpen}
             orderInfo={orderInfo}
@@ -91,11 +89,17 @@ function AssignmentDrawers({
     ],
     [
       "editCar",
-      { tabName: "編輯派車", content: <CarEdit editData={editData} /> }
+      {
+        tabName: "編輯派車",
+        conponent: <CarEdit editData={editData} refetch={refetch} />
+      }
     ],
     [
       "editDriver",
-      { tabName: "編輯派工", content: <DriverEdit editData={editData} /> }
+      {
+        tabName: "編輯派工",
+        conponent: <DriverEdit editData={editData} refetch={refetch} />
+      }
     ],
     [
       "additionalCar",
@@ -105,8 +109,7 @@ function AssignmentDrawers({
           <AssignmentAdditional
             type="car"
             orderInfo={orderInfo}
-            setSubAssignData={setSubAssignData}
-            setFirstDrawerOpen={setFirstDrawerOpen}
+            refetch={refetch}
           />
         )
       }
@@ -119,8 +122,7 @@ function AssignmentDrawers({
           <AssignmentAdditional
             type="driver"
             orderInfo={orderInfo}
-            setSubAssignData={setSubAssignData}
-            setFirstDrawerOpen={setFirstDrawerOpen}
+            refetch={refetch}
           />
         )
       }
@@ -153,6 +155,7 @@ function AssignmentDrawers({
       )}
       {secondDrawerOpen === "派工" && (
         <Drawer
+          isTabShown={false}
           closeDrawer={() => {
             setSecondDrawerOpen("");
           }}
