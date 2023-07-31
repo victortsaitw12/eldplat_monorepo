@@ -11,7 +11,7 @@ import {
 } from "evergreen-ui";
 import React, { useState, useEffect } from "react";
 import { charactor_DATA, charactor_Card } from "./data";
-import { BodySTY } from "./style";
+import { BodySTY, CharactorCardSTY } from "./style";
 import { getGroupsList } from "@services/group/getGroupsList";
 
 export interface I_Charactor {
@@ -23,28 +23,25 @@ export interface I_Charactor {
   // description: string;
 }
 
-function Charactor({ insertData, setInsertData, editData }: I_Content_Props) {
+function Charactor({ insertData, setInsertData }: I_Content_Props) {
   const [charactorSelected, setCharactorSelected] = useState<any>(null);
   const [charactorArr, setCharactorArr] = useState<I_Charactor[] | any[]>([]);
   const [charactorValue, setCharactorValue] = useState<any[]>([]);
   const [groupList, setGroupList] = useState<any[]>([]);
 
-  // 一進來先抓資料庫原本就有的角色資料
-  useEffect(() => {
-    editData && setCharactorArr(editData["groups"]);
-    editData && setCharactorValue(editData?.groups.map((v) => v.group_no));
-    // editData && setCharactorArr(editData?.group_no);
-    // editData && setCharactorValue(editData?.group_no.map((v) => v.id));
-  }, [editData]);
-
   useEffect(() => {
     getGroupsList().then((data) => {
-      console.log("3️⃣data for groups", data);
+      // console.log("3️⃣data for groups", data);
       setGroupList(data.data);
     });
+
+    // 一進來先抓資料庫原本就有的角色資料
+    insertData && setCharactorArr(insertData["groups"]);
+    insertData &&
+      setCharactorValue(insertData?.groups?.map((v: any) => v.group_no));
   }, []);
 
-  const newData = { ...insertData };
+  const newData: any = { ...insertData };
   // 選了哪個角色類型
   const handleSelect = (newItem: any) => {
     let hasRepeat = false;
@@ -81,10 +78,14 @@ function Charactor({ insertData, setInsertData, editData }: I_Content_Props) {
 
   // 把角色物件設回最大物件
   useEffect(() => {
-    // newData.group_no = charactorValue;
     newData["group_no"] = charactorValue;
     setInsertData(newData);
   }, [charactorValue]);
+
+  useEffect(() => {
+    newData["groups"] = charactorArr;
+    setInsertData(newData);
+  }, [charactorArr]);
 
   // 按下卡牌x
   const handleRemove = (newItem: any) => {
@@ -109,13 +110,13 @@ function Charactor({ insertData, setInsertData, editData }: I_Content_Props) {
       })
     );
     // newData.group_no = charactorValue;
-    newData["group_no"] = charactorValue;
-    setInsertData(newData);
+    // newData["group_no"] = charactorValue;
+    // setInsertData(newData);
   };
 
-  console.log("🅰charactorArr", charactorArr);
-  console.log("🅱charactorValue", charactorValue);
-  console.log("🆎groupList", groupList);
+  // console.log("🅰charactorArr", charactorArr);
+  // console.log("🅱charactorValue", charactorValue);
+  // console.log("🆎groupList", groupList);
 
   return (
     <BodySTY>
@@ -143,23 +144,41 @@ function Charactor({ insertData, setInsertData, editData }: I_Content_Props) {
       {charactorArr.map((item: any, idx: number) => {
         return (
           // <Pane key={item.title} className="charactor-card">
-          <Pane key={item.group_name} className="charactor-card">
-            <Pane className="card-title">
-              {/* <Text>{item.title}</Text> */}
-              <Text>{item.group_name}</Text>
-              <IconButton
-                icon={SmallCrossIcon}
-                onClick={() => {
-                  handleRemove(item);
-                }}
-              />
-            </Pane>
-            <Paragraph>{item.description}</Paragraph>
-          </Pane>
+          <CharactorCard
+            key={item.group_name}
+            item={item}
+            handleRemove={(item) => handleRemove(item)}
+          />
         );
       })}
     </BodySTY>
   );
 }
+const CharactorCard = ({
+  item,
+  handleRemove
+}: {
+  item: any;
+  handleRemove?: (item: any) => void;
+}) => {
+  return (
+    <CharactorCardSTY key={item.group_name}>
+      <Pane className="card-title">
+        <Text>{item.group_name}</Text>
+        {handleRemove && (
+          <IconButton
+            size="small"
+            icon={SmallCrossIcon}
+            onClick={() => {
+              handleRemove(item);
+            }}
+          />
+        )}
+      </Pane>
+      <Paragraph>{item.description}</Paragraph>
+    </CharactorCardSTY>
+  );
+};
 
 export default Charactor;
+export { CharactorCard };
