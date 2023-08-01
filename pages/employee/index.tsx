@@ -203,7 +203,7 @@ const Page: NextPageWithLayout<never> = () => {
       mainFilter = "1",
       pageQuery = defaultPageInfo
     ) => {
-      console.log("fetchEmployeeData");
+      // console.log("fetchEmployeeData");
       getAllEmployees(filter, pageQuery).then((data) => {
         console.log("💡get employees data from api :", data);
         const newData = data.contentList.map((item: any, index: any) => {
@@ -251,7 +251,7 @@ const Page: NextPageWithLayout<never> = () => {
         if (!filter) {
           localStorage.setItem(
             "employeeInitFilter",
-            JSON.stringify(data.contentList)
+            JSON.stringify(data.conditionList || [])
           );
           initializeSubFilter();
         }
@@ -270,6 +270,7 @@ const Page: NextPageWithLayout<never> = () => {
     },
     [fetchEmployeeData, nowTab]
   );
+
   React.useEffect(() => {
     let isCanceled = false;
     fetchEmployeeData(isCanceled, nowTab, pageInfo);
@@ -277,6 +278,7 @@ const Page: NextPageWithLayout<never> = () => {
       isCanceled = true;
     };
   }, [nowTab]);
+
   return (
     <RegionProvider>
       <BodySTY>
