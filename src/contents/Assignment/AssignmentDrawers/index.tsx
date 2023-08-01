@@ -23,7 +23,7 @@ interface Props {
   orderInfo: I_ManualAssignType[];
   assignData: any;
   refetch: any;
-  setDisabledAutoAssign: any;
+  setDisabledAutoList: any;
   showSecondTitle: any;
   setShowSecondTitle: (t: any) => void;
   setPosition: (dayNum: number, carNum: number) => void;
@@ -40,10 +40,10 @@ function AssignmentDrawers({
   setFirstDrawerOpen,
   secondDrawerOpen,
   setSecondDrawerOpen,
-  orderInfo,
   assignData,
   refetch,
-  setDisabledAutoAssign,
+  orderInfo,
+  setDisabledAutoList,
   showSecondTitle,
   setShowSecondTitle,
   setPosition,
@@ -62,7 +62,7 @@ function AssignmentDrawers({
         conponent: (
           <AssignAutoCreate
             orderInfo={orderInfo}
-            setDisabledAutoAssign={setDisabledAutoAssign}
+            setDisabledAutoList={setDisabledAutoList}
           />
         )
       }

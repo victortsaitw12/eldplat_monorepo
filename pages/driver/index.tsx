@@ -164,7 +164,6 @@ const Page: NextPageWithLayout<never> = () => {
     },
     [fetchDriverData, nowTab]
   );
-
   return (
     <BodySTY isOpenDrawer={isOpenDrawer}>
       <TableWrapper

@@ -91,7 +91,8 @@ function OutsideTableOnAssignment({
               assignData.map((item: any, idx) => {
                 return (
                   <TableRow
-                    key={uuid()}
+                    // key={uuid()}
+                    key={`outsideRow-${item.maintenance_quote_no.value}`}
                     idx={idx}
                     item={item}
                     assignData={assignData}
