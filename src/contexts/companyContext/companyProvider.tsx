@@ -219,7 +219,7 @@ export const CompanyProvider = ({ children }: any) => {
     loading
   };
 
-  console.log("🏆🏆🏆companyData", companyData);
+  // console.log("🏆🏆🏆companyData", companyData);
 
   return (
     <CompanyContext.Provider value={allContextValues}>

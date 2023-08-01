@@ -30,8 +30,12 @@ function PaginationField(props: I_PaginationField) {
     // onClickNext,
     // onClickPrevious
   } = props;
-  const [pageIndex, setPageIndex] = React.useState<number>(1);
-  const [pageSize, setPageSize] = React.useState<number>(10);
+  const [pageIndex, setPageIndex] = React.useState<number>(
+    pageInfo?.page_Index || 1
+  );
+  const [pageSize, setPageSize] = React.useState<number>(
+    pageInfo?.page_Size || 10
+  );
 
   const pageSizeOption = [10, 20, 30, 40, 50]; // 設計給定值 預設10
   const totalItems = pageInfo?.total || 0;
@@ -66,7 +70,6 @@ function PaginationField(props: I_PaginationField) {
       updatedPageInfo.page_Index = type === "index" ? pageIndex : 1;
       updatedPageInfo.page_Size = pageSize;
       onPageChange(updatedPageInfo);
-      console.log(pageInfo);
     },
     [pageIndex, pageSize, pageInfo, onPageChange]
   );
