@@ -52,7 +52,10 @@ const Page: NextPageWithLayout<{
 }> = ({ locale, setPageType }) => {
   const router = useRouter();
   const [data, setData] = useState<I_Data[] | any>();
-  const [nowTab, setNowTab] = useState("1");
+  const [nowTab, setNowTab] = useState(
+    (router?.query?.status as string) || "1"
+  );
+  console.log("💕💕💕💕nowTab", nowTab);
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const {
     initializeSubFilter,
@@ -73,7 +76,7 @@ const Page: NextPageWithLayout<{
   }, [router.query.codeType, setDrawerOpen]);
 
   useEffect(() => {
-    getDataByTab("1");
+    getDataByTab(nowTab);
     let isCanceled = false;
     //串接API中
     getQuotationByFilter(subFilter)
@@ -231,6 +234,10 @@ const Page: NextPageWithLayout<{
     setData([]);
     // updateSubFilter("status_code", value);
     getDataByTab(value);
+    router.push({
+      pathname: "/admin_orders/",
+      query: { status: value }
+    });
   };
   //
   const mainFilterArray = useMemo(

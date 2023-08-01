@@ -6,14 +6,13 @@ export const getQuotationByFilter = async (
   const orderFilter = [];
   const filteredNullData: { [key: string]: any } = {};
   for (const key in filter) {
-    console.log("key", key);
     if (filter[key].data !== 0) {
       filteredNullData[key] = filter[key];
     } else if (filter[key] !== null && filter[key].trim() !== "") {
       filteredNullData[key] = filter[key];
     }
   }
-  console.log("filteredNullData", filteredNullData);
+
   for (const key in filteredNullData) {
     if (filteredNullData[key].value !== "") {
       orderFilter.push({
@@ -24,7 +23,7 @@ export const getQuotationByFilter = async (
       });
     }
   }
-  console.log("🕯️🕯️🕯️🕯️🕯️orderFilter", orderFilter);
+
   //
   const res = await fetch(API_Path["GetQuotationByFilter"], {
     method: "POST",

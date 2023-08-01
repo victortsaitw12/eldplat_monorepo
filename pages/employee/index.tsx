@@ -85,12 +85,18 @@ const Page: NextPageWithLayout<never> = () => {
     ],
     []
   );
-  const [nowTab, setNowTab] = useState("1");
+  const [nowTab, setNowTab] = useState(
+    (router?.query?.status as string) || "1"
+  );
 
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
     // alert(value);
     updateMainFilter(value);
+    router.push({
+      pathname: "/employee/",
+      query: { ...router?.query, status: value }
+    });
   };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
