@@ -4,7 +4,10 @@ import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
 import { useEmployeeFilterStore } from "@contexts/filter/employeeFilterStore";
 import { useRouter } from "next/router";
-import { getAllEmployees } from "@services/employee/getAllEmployee";
+import {
+  getAllEmployees,
+  defaultPageInfo
+} from "@services/employee/getAllEmployee";
 import EmployeeList from "@contents/Employee/EmployeeList";
 import { BodySTY } from "./style";
 import Drawer from "@components/Drawer";
@@ -14,6 +17,7 @@ import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
 import { createBriefEmployee } from "@services/employee/createEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
+import { I_PageInfo } from "@components/PaginationField";
 
 //
 const fakeData = [
@@ -61,6 +65,7 @@ const fakeData = [
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const {
     initializeSubFilter,
     mainFilter,
@@ -96,62 +101,65 @@ const Page: NextPageWithLayout<never> = () => {
   // const updateFilter = useFilterStore((state) => state.updateFilter);
   const filter = useEmployeeFilterStore((state) => state.filter);
 
-  useEffect(() => {
-    const isCanceled = false;
-    getAllEmployees(filter).then((data) => {
-      console.log("💡get employees data from api :", data);
-      const newData = data.contentList.map((item: any, index: any) => {
-        return {
-          // user_No: item["user_No"],
-          id: { label: item.user_No, value: item.user_No },
-          user_Name: {
-            label: (
-              <Pane className="user_td">
-                <div className="user_icon">
-                  <span>{item.user_Name.charAt(0)}</span>
-                </div>
-                <div className="user_name">{item.user_Name}</div>
-              </Pane>
-            ),
-            // label: item.user_Name,
-            value: item.user_name
-          },
-          user_Email: { label: item.user_Email, value: item.user_Email },
-          group_Name: { label: item.group_Name, value: item.group_Name },
-          login_Times: {
-            label:
-              index < fakeData.length
-                ? fakeData[index].login_Times
-                : item.login_Times,
-            value: item.login_Times
-          },
-          first_Login: {
-            label:
-              index < fakeData.length
-                ? fakeData[index].first_Login
-                : item.first_Login,
-            value: item.first_Login
-          },
-          invt_Status: {
-            label: item.invt_Status,
-            value: item.invt_Status
-          }
-        };
-      });
-      if (isCanceled) {
-        console.log("canceled");
-        return;
-      }
-      if (!filter) {
-        localStorage.setItem(
-          "employeeInitFilter",
-          JSON.stringify(data.contentList)
-        );
-        initializeSubFilter();
-      }
-      setEmployeeListData(newData);
-    });
-  }, [filter, initializeSubFilter]);
+  // useEffect(() => {
+  //   const isCanceled = false;
+  //   // fetchEmployeeData(false, nowTab, pageInfo);
+  //   getAllEmployees(filter).then((data) => {
+  //     console.log("💡get employees data from api :", data);
+  //     const newData = data.contentList.map((item: any, index: any) => {
+  //       return {
+  //         // user_No: item["user_No"],
+  //         id: { label: item.user_No, value: item.user_No },
+  //         user_Name: {
+  //           label: (
+  //             <Pane className="user_td">
+  //               <div className="user_icon">
+  //                 <span>{item.user_Name.charAt(0)}</span>
+  //               </div>
+  //               <div className="user_name">{item.user_Name}</div>
+  //             </Pane>
+  //           ),
+  //           // label: item.user_Name,
+  //           value: item.user_name
+  //         },
+  //         user_Email: { label: item.user_Email, value: item.user_Email },
+  //         group_Name: { label: item.group_Name, value: item.group_Name },
+  //         login_Times: {
+  //           label:
+  //             index < fakeData.length
+  //               ? fakeData[index].login_Times
+  //               : item.login_Times,
+  //           value: item.login_Times
+  //         },
+  //         first_Login: {
+  //           label:
+  //             index < fakeData.length
+  //               ? fakeData[index].first_Login
+  //               : item.first_Login,
+  //           value: item.first_Login
+  //         },
+  //         invt_Status: {
+  //           label: item.invt_Status,
+  //           value: item.invt_Status
+  //         }
+  //       };
+  //     });
+  //     if (isCanceled) {
+  //       console.log("canceled");
+  //       return;
+  //     }
+  //     if (!filter) {
+  //       localStorage.setItem(
+  //         "employeeInitFilter",
+  //         JSON.stringify(data.contentList)
+  //       );
+  //       initializeSubFilter();
+  //     }
+  //     const getPageInfo = { ...data.pageInfo };
+  //     setPageInfo(getPageInfo);
+  //     setEmployeeListData(newData);
+  //   });
+  // }, [filter, initializeSubFilter]);
 
   // Delete Employee
   const deleteItemHandler = async (id: string) => {
@@ -189,6 +197,88 @@ const Page: NextPageWithLayout<never> = () => {
     }
     setLoading(false);
   };
+  const fetchEmployeeData = React.useCallback(
+    async (
+      isCanceled: boolean,
+      mainFilter = "1",
+      pageQuery = defaultPageInfo
+    ) => {
+      // console.log("fetchEmployeeData");
+      getAllEmployees(filter, pageQuery).then((data) => {
+        console.log("💡get employees data from api :", data);
+        const newData = data.contentList.map((item: any, index: any) => {
+          return {
+            // user_No: item["user_No"],
+            id: { label: item.user_No, value: item.user_No },
+            user_Name: {
+              label: (
+                <Pane className="user_td">
+                  <div className="user_icon">
+                    <span>{item.user_Name.charAt(0)}</span>
+                  </div>
+                  <div className="user_name">{item.user_Name}</div>
+                </Pane>
+              ),
+              // label: item.user_Name,
+              value: item.user_name
+            },
+            user_Email: { label: item.user_Email, value: item.user_Email },
+            group_Name: { label: item.group_Name, value: item.group_Name },
+            login_Times: {
+              label:
+                index < fakeData.length
+                  ? fakeData[index].login_Times
+                  : item.login_Times,
+              value: item.login_Times
+            },
+            first_Login: {
+              label:
+                index < fakeData.length
+                  ? fakeData[index].first_Login
+                  : item.first_Login,
+              value: item.first_Login
+            },
+            invt_Status: {
+              label: item.invt_Status,
+              value: item.invt_Status
+            }
+          };
+        });
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!filter) {
+          localStorage.setItem(
+            "employeeInitFilter",
+            JSON.stringify(data.conditionList || [])
+          );
+          initializeSubFilter();
+        }
+        const getPageInfo = { ...data.pageInfo };
+        setPageInfo(getPageInfo);
+        setEmployeeListData(newData);
+      });
+    },
+    []
+  );
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      console.log("handlePageChange!!!!!!");
+      console.log(pageQuery);
+      fetchEmployeeData(false, nowTab, pageQuery);
+    },
+    [fetchEmployeeData, nowTab]
+  );
+
+  React.useEffect(() => {
+    let isCanceled = false;
+    fetchEmployeeData(isCanceled, nowTab, pageInfo);
+    return () => {
+      isCanceled = true;
+    };
+  }, [nowTab]);
+
   return (
     <RegionProvider>
       <BodySTY>
@@ -216,6 +306,8 @@ const Page: NextPageWithLayout<never> = () => {
               goToDetailPageHandler={goToDetailPageHandler}
               goToEditPageHandler={goToEditPageHandler}
               recoverItemHandler={recoverItemHandler}
+              pageInfo={pageInfo}
+              handlePageChange={handlePageChange}
             />
           </FilterWrapper>
         </TableWrapper>
