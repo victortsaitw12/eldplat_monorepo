@@ -37,7 +37,9 @@ const Page: NextPageWithLayout<{
   const router = useRouter();
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [data, setData] = useState<I_Select_Vendors_Type[] | I_Data[] | any>();
-  const [nowTab, setNowTab] = useState("1");
+  const [nowTab, setNowTab] = useState(
+    (router?.query?.status as string) || "1"
+  );
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const {
     initializeSubFilter,
@@ -269,6 +271,10 @@ const Page: NextPageWithLayout<{
     console.log("changeMainFilterHandler");
     setNowTab(value);
     setData([]);
+    router.push({
+      pathname: "/vendor/",
+      query: { ...router?.query, status: value }
+    });
     fetchVendorsData(false, value, pageInfo);
   };
   //

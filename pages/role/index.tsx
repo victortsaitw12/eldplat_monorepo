@@ -7,11 +7,13 @@ import FilterWrapper from "@layout/FilterWrapper";
 import { Pane } from "evergreen-ui";
 import RoleList from "@contents/Roles/RoleList";
 import { BodySTY } from "./style";
+import { useRouter } from "next/router";
 
 //@contexts
 import { useRoleStore } from "@contexts/filter/roleStore";
 
 const Page: NextPageWithLayout<never> = () => {
+  const router = useRouter();
   //
   const mainFilterArray = useMemo(
     () => [
@@ -20,9 +22,15 @@ const Page: NextPageWithLayout<never> = () => {
     ],
     []
   );
-  const [nowTab, setNowTab] = useState("1");
+  const [nowTab, setNowTab] = useState(
+    (router?.query?.status as string) || "1"
+  );
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
+    router.push({
+      pathname: "/role/",
+      query: { ...router?.query, status: value }
+    });
   };
   const {
     initializeSubFilter,
