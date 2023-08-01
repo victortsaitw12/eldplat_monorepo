@@ -164,9 +164,9 @@ const busListBreadcrumbs: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
-  console.log("router.pathname", router.pathname);
-  console.log("router.asPath", router.asPath);
-  console.log("router.query", router.query);
+  // console.log("router.pathname", router.pathname);
+  // console.log("router.asPath", router.asPath);
+  // console.log("router.query", router.query);
   const newBreadcrumbs =
     breadcrumbs[router.pathname] ||
     breadcrumbs[router.asPath] ||
