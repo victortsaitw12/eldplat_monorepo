@@ -20,11 +20,13 @@ import VendorCreateForm from "@contents/Vendor/VendorCreateForm";
 // import Vendor from "@contents/Vendor";
 //@services
 import { deleteVendor } from "@services/vendor/deleteVendor";
-import { getAllVendors } from "@services/vendor/getAllVendors";
+import { getAllVendors, defaultPageInfo } from "@services/vendor/getAllVendors";
+
 //@components
 import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
 import LabelTag from "@components/LabelTag";
+import { I_PageInfo } from "@components/PaginationField";
 //@contexts
 import { useVendorStore } from "@contexts/filter/vendorStore";
 
@@ -33,6 +35,7 @@ const Page: NextPageWithLayout<{
   setPageType: (t: string) => void;
 }> = ({ locale, setPageType }) => {
   const router = useRouter();
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [data, setData] = useState<I_Select_Vendors_Type[] | I_Data[] | any>();
   const [nowTab, setNowTab] = useState("1");
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
@@ -53,10 +56,10 @@ const Page: NextPageWithLayout<{
     if (router.pathname.includes("vendor")) setPageType("vendor");
   }, [router, setPageType]);
 
-  useEffect(() => {
-    setDrawerOpen(false);
-    getResult(nowTab);
-  }, [router.query.codeType, setDrawerOpen]);
+  // useEffect(() => {
+  //   setDrawerOpen(false);
+  //   getResult(nowTab);
+  // }, [router.query.codeType, setDrawerOpen]);
 
   const returnTableItem = (vendors: Vendor) => {
     return {
@@ -142,14 +145,49 @@ const Page: NextPageWithLayout<{
     };
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   let isCanceled = false;
+  //   getAllVendors(subFilter, "1", router.query.codeType as string).then(
+  //     (data) => {
+  //       if (isCanceled) {
+  //         console.log("canceled");
+  //         return;
+  //       }
+  //       if (!subFilter) {
+  //         localStorage.setItem(
+  //           "vendorInitFilter",
+  //           JSON.stringify(data.conditionList)
+  //         );
+  //         initializeSubFilter();
+  //       }
+  //     }
+  //   );
+  //   return () => {
+  //     isCanceled = true;
+  //   };
+  // }, [subFilter]);
+
+  React.useEffect(() => {
     let isCanceled = false;
-    getAllVendors(subFilter, "1", router.query.codeType as string).then(
-      (data) => {
-        if (isCanceled) {
-          console.log("canceled");
-          return;
-        }
+    fetchVendorsData(isCanceled, nowTab, pageInfo);
+    return () => {
+      isCanceled = true;
+    };
+  }, [nowTab]);
+
+  const fetchVendorsData: any = React.useCallback(
+    async (
+      isCanceled: boolean,
+      mainFilter = "1",
+      pageQuery = defaultPageInfo
+    ) => {
+      // console.log("fetchEmployeeData");
+      getAllVendors(
+        subFilter,
+        mainFilter,
+        router.query.codeType as string,
+        pageQuery
+      ).then((data) => {
         if (!subFilter) {
           localStorage.setItem(
             "vendorInitFilter",
@@ -157,29 +195,39 @@ const Page: NextPageWithLayout<{
           );
           initializeSubFilter();
         }
-      }
-    );
-    return () => {
-      isCanceled = true;
-    };
-  }, [subFilter]);
-
-  const getResult = async (status: string) => {
-    try {
-      const res = await getAllVendors(
-        subFilter,
-        status,
-        router.query.codeType as string
-      );
-      const vendorData = res.contentList.map((vendors: Vendor) => {
-        return returnTableItem(vendors);
+        const vendorData = data.contentList.map((vendors: Vendor) => {
+          return returnTableItem(vendors);
+        });
+        setData(vendorData);
+        const getPageInfo = { ...data.pageInfo };
+        setPageInfo(getPageInfo);
       });
-      setData(vendorData);
-    } catch {
-      //刷新列表失敗
-    }
-  };
+    },
+    []
+  );
 
+  // const getResult = async (status: string) => {
+  //   try {
+  //     const res = await getAllVendors(
+  //       subFilter,
+  //       status,
+  //       router.query.codeType as string
+  //     );
+  //     const vendorData = res.contentList.map((vendors: Vendor) => {
+  //       return returnTableItem(vendors);
+  //     });
+  //     setData(vendorData);
+  //   } catch {
+  //     //刷新列表失敗
+  //   }
+  // };
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      fetchVendorsData(false, nowTab, pageQuery);
+      setPageInfo(pageQuery);
+    },
+    [fetchVendorsData, nowTab]
+  );
   const goToCreatePage = () => {
     // router.push("/vendor/create");
     setDrawerOpen(true);
@@ -198,7 +246,7 @@ const Page: NextPageWithLayout<{
       const res = await deleteVendor(id, "2");
       console.log("response of vendor edit: ", res);
       setData([]);
-      getResult("1");
+      fetchVendorsData(false, "1", pageInfo);
     } catch (e: any) {
       console.log(e);
       alert("删除供應商失敗：" + e.message);
@@ -210,7 +258,7 @@ const Page: NextPageWithLayout<{
       const res = await deleteVendor(id, "1");
       console.log("response of vendor edit: ", res);
       setData([]);
-      getResult("2");
+      fetchVendorsData(false, "2", pageInfo);
     } catch (e: any) {
       console.log(e);
       alert("删除供應商失敗：" + e.message);
@@ -218,9 +266,10 @@ const Page: NextPageWithLayout<{
   };
   //套用新版filter
   const changeMainFilterHandler = (value: string) => {
+    console.log("changeMainFilterHandler");
     setNowTab(value);
     setData([]);
-    getResult(value);
+    fetchVendorsData(false, value, pageInfo);
   };
   //
   const mainFilterArray = useMemo(
@@ -259,6 +308,8 @@ const Page: NextPageWithLayout<{
                 goToEditPageHandler={goToEditPageHandler}
                 deleteItemHandler={deleteItemHandler}
                 recoverItem={recoverItem}
+                pageInfo={pageInfo}
+                handlePageChange={handlePageChange}
               ></VendorList>
             )}
           </FilterWrapper>
@@ -280,7 +331,7 @@ const Page: NextPageWithLayout<{
               reloadData={() => {
                 setDrawerOpen(false);
                 setData([]);
-                getResult("1");
+                fetchVendorsData(false, "1", pageInfo);
               }}
             />
           </Drawer>

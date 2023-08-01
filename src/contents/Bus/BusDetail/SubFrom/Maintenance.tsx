@@ -59,6 +59,7 @@ function Maintenance({ register, errors, getValues, control, isEdit }: Props) {
       <BodySTY>
         <TableWithEdit
           tableName="維保計劃"
+          cleanTableName="維保計劃"
           titles={maintenanceTitle}
           data={[]}
           goToCreatePage={() => {

@@ -47,8 +47,6 @@ function BusList({
         titles={busTitle}
         data={busData}
         goToCreatePage={goToCreatePage}
-        // deleteItem={deleteItemHandler}
-        // goToEditPage={goToEditPageHandler}
         viewItem={goToDetailPage}
         pageInfo={pageInfo}
         onPageChange={upDatePageHandler}

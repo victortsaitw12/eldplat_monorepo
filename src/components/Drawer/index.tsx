@@ -6,14 +6,16 @@ import cx from "classnames";
 interface DrawerProps {
   isFullScreen?: boolean;
   tabName?: string[];
+  isTabShown?: boolean;
   children: React.ReactNode;
-  closeDrawer?: () => void;
+  closeDrawer?: () => void | undefined;
   toggleFullScreenDrawer?: () => void;
 }
 
 const Drawer = ({
   isFullScreen = false,
   tabName,
+  isTabShown,
   children,
   closeDrawer,
   toggleFullScreenDrawer
@@ -27,6 +29,7 @@ const Drawer = ({
       <DrawerTabs
         isFullScreen={isFullScreen}
         titles={titles}
+        isTabShown={isTabShown}
         closeDrawer={closeDrawer}
         toggleFullScreenDrawer={toggleFullScreenDrawer}
       />

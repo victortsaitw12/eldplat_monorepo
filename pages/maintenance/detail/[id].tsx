@@ -30,7 +30,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   useEffect(() => {
     setLoading(true);
     try {
-      getCreateDdl().then((data) => {
+      getCreateDdl("").then((data) => {
         setMainCreateDdl(data.dataList[0]);
       });
     } catch (err) {
@@ -54,9 +54,11 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     console.log("changeMainFilterHandler");
   };
   //
+
+  console.log("router", router);
   const asyncSubmitForm = async (data: any) => {
     console.log("⚽data", data);
-    // setLoading(true);
+    setLoading(true);
 
     const driver = mainCreateDdl?.driver_options?.filter((v: { no: any }) => {
       return v.no === data.driver_no;
@@ -84,9 +86,16 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     try {
       const res = await updateMaintenance(newData, data["files"]);
       console.log("儲存 res", res);
-      setIsEdit(false);
-      router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
-      // router.reload();
+      if (isEdit) {
+        setIsEdit(false);
+        window.location.replace(
+          `/maintenance/detail/${maintenance_id}?editPage=view`
+        );
+        // router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
+      } else {
+        setIsEdit(false);
+        router.reload();
+      }
     } catch (e: any) {
       console.log(e);
     }
@@ -121,6 +130,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
           asyncSubmitForm={asyncSubmitForm}
           maintenance_id={maintenance_id}
           mainCreateDdl={mainCreateDdl}
+          setMainCreateDdl={setMainCreateDdl}
         />
       </TableWrapper>
     </BodySTY>

@@ -56,7 +56,7 @@ const TableSTY = styled.table`
   border-spacing: 0px;
   thead {
     tr {
-      background-color: ${({ theme }) => theme.color.N300};
+      background: ${({ theme }) => theme.color.N100};
       text-align: left;
     }
   }
@@ -89,7 +89,7 @@ const TableSTY = styled.table`
       right: 0;
       border-radius: 10px;
       overflow: hidden;
-      transform: translate(90%, 20%);
+      transform: translateX(-50%);
       background-color: ${({ theme }) => theme.color.N0};
       border: 1px solid ${({ theme }) => theme.color.N300};
       box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
@@ -148,32 +148,10 @@ const TableSTY = styled.table`
       text-align: center;
     }
   }
+  .busDayCol {
+    border-right: 1px solid ${({ theme }) => theme.color.N300};
+    border-left: 1px solid ${({ theme }) => theme.color.N300};
+  }
 `;
 
-const StyledDot = styled.div<{ value: string }>`
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: ${({ value, theme }) => {
-    if (value === "01") {
-      // 活躍中
-      return theme.color.G400;
-    }
-    if (value === "02") {
-      // 閒置中
-      return theme.color.B400;
-    }
-    if (value === "03") {
-      // 在維修廠
-      return theme.color.Y400;
-    }
-    if (value === "04") {
-      // 已售出
-      return theme.color.N500;
-    }
-    // 終止服務
-    return theme.color.R400;
-  }};
-`;
-
-export { TableContainerSTY, TableSTY, StyledDot };
+export { TableContainerSTY, TableSTY };

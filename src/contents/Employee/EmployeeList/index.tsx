@@ -3,6 +3,7 @@ import React from "react";
 import { getEmployeeTitle } from "@services/employee/getAllEmployee";
 import { BodySTY } from "./style";
 import TableWithEdit from "@components/Table/TableWithEdit";
+import { I_PageInfo } from "@components/PaginationField";
 //
 interface I_EmployeeListType {
   [key: string]: any;
@@ -10,6 +11,8 @@ interface I_EmployeeListType {
   recoverItemHandler: (id: string) => void;
   goToCreatePage: () => void;
   goToEditPageHandler: (id: string) => void;
+  goToDetailPageHandler: (id: string) => void;
+  handlePageChange: (pageQuery: I_PageInfo) => void;
 }
 
 function EmployeeList({
@@ -18,20 +21,32 @@ function EmployeeList({
   goToCreatePage,
   deleteItemHandler,
   recoverItemHandler,
-  goToEditPageHandler
+  goToEditPageHandler,
+  goToDetailPageHandler,
+  pageInfo,
+  handlePageChange
 }: I_EmployeeListType) {
   const employeeTitle = getEmployeeTitle();
-  console.log(listType);
+  const customTableClass = [
+    { label: "登入次數", value: "login_Times" },
+    { label: "加入狀態", value: "invt_Status" }
+  ];
+
   return (
     <BodySTY className="list-style">
       <TableWithEdit
         titles={employeeTitle}
         data={data}
-        tableName="員工"
+        tableName="員工列表"
         goToCreatePage={goToCreatePage}
+        pageInfo={pageInfo}
+        onPageChange={handlePageChange}
         // deleteItem={deleteItemHandler}
         // goToEditPage={goToEditPageHandler}
         {...(listType == "1" && {
+          viewItem: (id) => {
+            goToDetailPageHandler(id);
+          },
           goToEditPage: (id) => {
             goToEditPageHandler(id);
           },
@@ -44,6 +59,7 @@ function EmployeeList({
             recoverItemHandler && recoverItemHandler(id);
           }
         })}
+        customTableClass={customTableClass}
       />
     </BodySTY>
   );

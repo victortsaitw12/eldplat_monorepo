@@ -32,7 +32,6 @@ function SideBar({ menuData, personalData, isLoading }: Props) {
   const personalPage = [];
   const [isPersonal, setIsPersonal] = React.useState(false);
   const router = useRouter();
-
   // console.log("📃📃📃📃📃📃📃📃", router);
   return (
     <CompanyProvider>

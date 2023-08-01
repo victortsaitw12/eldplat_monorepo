@@ -135,6 +135,16 @@ const routers: I_routers = {
     { label: "入門", url: "/" },
     { label: "員工設定", url: "/employee" }
   ],
+  "/employee/detail/[id]": [
+    { label: "入門", url: "/" },
+    { label: "員工設定", url: "/employee" },
+    { label: "詳情", url: "/" }
+  ],
+  "/employee/edit/[id]": [
+    { label: "入門", url: "/" },
+    { label: "員工設定", url: "/employee" },
+    { label: "詳情", url: "/" }
+  ],
   "/driver/detail/[id]": [
     { label: "入門", url: "/" },
     { label: "駕駛設定", url: "/driver" },
@@ -147,8 +157,8 @@ const routers: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
-  console.log("router.pathname", router.pathname);
-  console.log("router.asPath", router.asPath);
+  // console.log("router.pathname", router.pathname);
+  // console.log("router.asPath", router.asPath);
   const newRouters = routers[router.pathname] || routers[router.asPath] || [];
   return newRouters;
 };

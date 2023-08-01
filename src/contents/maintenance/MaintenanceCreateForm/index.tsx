@@ -9,6 +9,7 @@ import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import { createMaintenance } from "@services/maintenance/createMaintenance";
 import router from "next/router";
 import dayjs from "dayjs";
+import { CancelMaintenanceById } from "@services/maintenance/getMaintenanceNotice";
 
 //@components
 export interface CreateMaintenancePayload {
@@ -24,15 +25,17 @@ export interface CreateMaintenancePayload {
 }
 
 interface I_MaintenanceCreateFormProps {
-  data?: any;
+  noticeData?: any;
   reloadData?: () => void;
   busNo?: string;
+  reminderNo?: string;
 }
 
 function MaintenanceCreateForm({
-  data,
+  noticeData,
   reloadData,
-  busNo
+  busNo,
+  reminderNo
 }: I_MaintenanceCreateFormProps) {
   const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
   // default value
@@ -57,9 +60,9 @@ function MaintenanceCreateForm({
   useEffect(() => {
     setLoading(true);
     try {
-      getCreateDdl().then((DDLdata) => {
+      getCreateDdl("").then((DDLdata) => {
         console.log("DDL data", DDLdata);
-        console.log("維保通知打開側邊新增的data", data);
+        console.log("維保通知打開側邊新增的data", noticeData);
         const newData = { ...DDLdata.dataList[0] };
         newData.bus_options.map((v: { no: any }, idx: any) => {
           if (v.no === busNo) {
@@ -77,8 +80,8 @@ function MaintenanceCreateForm({
   }, [loading]);
 
   // 選完車輛時，抓到該車輛的主要駕駛
-  const handleChangeDDL = (e: any) => {
-    getCreateDdl().then((data) => {
+  const handleChangeBusDDL = (e: any) => {
+    getCreateDdl("").then((data) => {
       const newData = { ...data.dataList[0] };
       const busChosen = newData.bus_options.filter((v: { no: any }) => {
         return v.no === e.target.value;
@@ -95,17 +98,25 @@ function MaintenanceCreateForm({
           setValue("driver_no", driverChosen[0]?.no);
         }
       });
-      console.log("🆑newData", newData);
       setMainCreateDdl(newData);
       setValue("bus_no", busChosen[0]?.no);
-      console.log("driverChosen", driverChosen);
+    });
+  };
+
+  // 選維修廠之後分類會變
+  const handleChangeVendorDDL = (e: any) => {
+    getCreateDdl(e.target.value).then((data) => {
+      const newData = { ...data.dataList[0] };
+      console.log("㊗newData", newData);
+      setValue("vendor_no", e.target.value);
+      setMainCreateDdl(newData);
     });
   };
 
   // 送出表單:
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
-    console.log("data for submitting", data);
+    console.log("BEFORE:data for submitting", data);
     const newData = { ...data };
     newData["bus_no"] = !newData["bus_no"]
       ? mainCreateDdl?.bus_options[0]?.no
@@ -120,7 +131,7 @@ function MaintenanceCreateForm({
       ? mainCreateDdl?.vendor_options[0]?.no
       : getValues("vendor_no");
     newData["package_code"] = !newData["package_code"]
-      ? mainCreateDdl?.package_options[0]?.no
+      ? mainCreateDdl?.package_options[0]?.no || ""
       : getValues("package_code");
 
     const selectedBus = mainCreateDdl.bus_options.filter((v: { no: any }) => {
@@ -133,11 +144,18 @@ function MaintenanceCreateForm({
       }
     );
     newData["driver_name"] = selectedDriver[0]?.name;
-    console.log("💦newData", newData);
+    console.log("AFTER: 💦newData", newData);
     try {
       const res = await createMaintenance(newData);
-      router.push("/maintenance/mission");
       console.log("res (success to insert a new maintenance data):", res);
+      if (noticeData && reminderNo !== undefined) {
+        CancelMaintenanceById(reminderNo)
+          .then((res) => {
+            console.log("移除維保通知:", res);
+          })
+          .catch((err) => console.log("移除維保通知失敗", err));
+      }
+      router.push("/maintenance/mission");
     } catch (e: any) {
       console.log(e);
       alert(e.message);
@@ -164,7 +182,7 @@ function MaintenanceCreateForm({
         {...(register("bus_no"),
         {
           onChange: (e) => {
-            handleChangeDDL(e);
+            handleChangeBusDDL(e);
           }
         })}
       >
@@ -214,7 +232,12 @@ function MaintenanceCreateForm({
             <span style={{ color: "#D14343" }}>*</span>維修廠
           </div>
         }
-        {...register("vendor_no")}
+        {...(register("vendor_no"),
+        {
+          onChange: (e) => {
+            handleChangeVendorDDL(e);
+          }
+        })}
       >
         {mainCreateDdl?.vendor_options.map((item: any) => {
           return (
@@ -242,12 +265,12 @@ function MaintenanceCreateForm({
       </SelectField>
       <TextInputField
         label="起始日期"
-        type="date"
+        type="datetime-local"
         {...register("service_start_date")}
       />
       <TextInputField
         label="截止日期"
-        type="date"
+        type="datetime-local"
         {...register("service_end_date")}
       />
 

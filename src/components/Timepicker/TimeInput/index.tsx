@@ -34,7 +34,7 @@ const TimeInput = ({
   disabled?: boolean;
 }) => {
   const [hour, setHour] = React.useState<number>(dayjs(date).hour() % 12);
-  const [minute, setMinute] = React.useState<number>(dayjs(date).minute());
+  const [minute, setMinute] = React.useState<number>(dayjs(date).minute() || 0);
   const [timeslot, setTimeslot] = React.useState<number>(
     dayjs(date).hour() >= 12 ? 12 : 0
   );
@@ -119,7 +119,7 @@ const TimeInput = ({
           className="timepicker-time"
           value={hour}
           onChange={handleHourChange}
-          disabled={disabled}
+          disabled={!date || disabled}
         >
           {hourOptions()}
         </Select>
@@ -128,7 +128,7 @@ const TimeInput = ({
           className="timepicker-time"
           value={minute}
           onChange={handleMinuteChange}
-          disabled={disabled}
+          disabled={!date || disabled}
         >
           {minOptions()}
         </Select>
@@ -136,7 +136,7 @@ const TimeInput = ({
           className="timepicker-time"
           value={timeslot}
           onChange={handleTimeslotChange}
-          disabled={disabled}
+          disabled={!date || disabled}
         >
           {timeslotOptions()}
         </Select>

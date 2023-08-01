@@ -1,25 +1,30 @@
-import { ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
 import React, { useState } from "react";
+import { Pane, ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
+
 import InsideTableOnAssignment from "../InsideTableOnAssignment";
 import { I_Data } from "..";
 import { getSubAssignmentTitle } from "@services/assignment/getAllAssignment";
-
+import AdditionalVehicleBtn from "@contents/Assignment/AssignmentAdditional/AdditionalVehicleBtn";
+import AdditionalDriverBtn from "@contents/Assignment/AssignmentAdditional/AdditionalDriverBtn";
+import { StyledTr } from "./style";
 interface I_TableRow {
   idx: number;
   item: any;
   //   titles: Array<string | number | React.ReactNode> | any;
-  data: I_Data[];
+  assignData: I_Data[];
   subAssignData: any;
   goToCreatePage?: () => void;
   goToEditPage?: (item: any) => void;
   viewItem?: (id: any, item: any) => void;
   deleteItem?: (item: any) => void;
+  setOrderInfo: (t: any) => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
 
 const TableRow = ({
   idx,
   item,
-  data,
+  assignData,
   subAssignData,
   goToCreatePage,
   viewItem = (id, item) => {
@@ -30,10 +35,12 @@ const TableRow = ({
   },
   deleteItem = (item) => {
     console.log(item);
-  }
+  },
+  setOrderInfo,
+  setFirstDrawerOpen
 }: I_TableRow) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const id = assignData[idx].maintenance_quote_no.value;
   const titles = getSubAssignmentTitle();
 
   const handleInsideTableOpen = () => {
@@ -68,7 +75,7 @@ const TableRow = ({
           {isOpen ? (
             <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pointer" />
           ) : (
-            (item.maintenance_quote_no.label.substring(0, 3) === "MTC" ||
+            (item.maintenance_quote_no.value.substring(0, 3) === "MTC" ||
               subAssignData[idx].length !== 0) && (
               <ChevronDownIcon
                 onClick={handleInsideTableOpen}
@@ -79,13 +86,29 @@ const TableRow = ({
         </td>
       </tr>
       {isOpen && (
-        <tr>
-          <td colSpan={7}>
+        <StyledTr>
+          <td className="detailTable" colSpan={8}>
+            {item.maintenance_quote_no.value.substring(0, 3) === "ORD" && (
+              <Pane className="additionalBtns">
+                <AdditionalVehicleBtn
+                  id={id}
+                  setOrderInfo={setOrderInfo}
+                  setFirstDrawerOpen={() => setFirstDrawerOpen("additionalCar")}
+                />
+                <AdditionalDriverBtn
+                  id={id}
+                  setOrderInfo={setOrderInfo}
+                  setFirstDrawerOpen={() =>
+                    setFirstDrawerOpen("additionalDriver")
+                  }
+                />
+              </Pane>
+            )}
             <InsideTableOnAssignment
               tableName="派單"
               idx={idx}
               titles={titles}
-              data={data}
+              assignData={assignData}
               subAssignData={subAssignData}
               goToCreatePage={goToCreatePage}
               deleteItem={deleteItem}
@@ -93,7 +116,7 @@ const TableRow = ({
               viewItem={viewItem}
             />
           </td>
-        </tr>
+        </StyledTr>
       )}
     </>
   );

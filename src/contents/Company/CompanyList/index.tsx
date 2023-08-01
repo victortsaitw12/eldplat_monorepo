@@ -18,6 +18,8 @@ import CompanyRule from "./CompanyRule";
 import Admin from "./Admin";
 import Contact from "./Contact";
 import LeaveSet from "./LeaveSet";
+import DateTime from "./DateTime";
+import Unit from "./Unit";
 
 const ComapnyList = () => {
   return (
@@ -34,8 +36,8 @@ const ComapnyList = () => {
           >
             編輯
           </Button>
-          <IconButton icon={FullscreenIcon} />
-          <IconButton icon={SmallCrossIcon} marginRight={majorScale(1)} />
+          {/* <IconButton icon={FullscreenIcon} />
+          <IconButton icon={SmallCrossIcon} marginRight={majorScale(1)} /> */}
         </Pane>
       </Pane>
 
@@ -44,12 +46,14 @@ const ComapnyList = () => {
         <Pane className="left-blocks">
           <Basic />
           <CountrySet />
+          <DateTime />
+          <Unit />
         </Pane>
         <Pane className="right-blocks">
           <Admin />
           <Contact />
-          <LeaveSet />
           <CompanyRule />
+          <LeaveSet />
         </Pane>
       </Pane>
     </BodySTY>

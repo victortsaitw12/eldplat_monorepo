@@ -31,6 +31,7 @@ const TableSTY = styled.table`
   /* border-collapse: collapse; */
   border-radius: 4px;
   border-spacing: 0px;
+  min-height: 100px;
 
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
@@ -53,6 +54,8 @@ const TableSTY = styled.table`
   }
 
   tbody {
+    position: relative;
+
     // 僅為維保編輯發票部分
     .invoice {
       .delete {
@@ -124,15 +127,11 @@ const TableSTY = styled.table`
     background-color: green;
   }
   .noDataShown {
-    min-height: 32px;
-    div {
-      width: 100%;
-      height: 32px;
-      vertical-align: middle;
-      line-height: 32px;
-      position: absolute;
-      text-align: center;
-    }
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    text-align: center;
   }
 `;
 

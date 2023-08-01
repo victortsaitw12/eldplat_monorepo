@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { BodySTY } from "./style";
 import { Checkbox, HelpIcon, Pane } from "evergreen-ui";
 import Tooltip from "@components/Tooltip";
+import { I_PageInfo } from "@components/PaginationField";
 interface Props {
   vendor_code: string;
   listType?: string;
@@ -13,6 +14,8 @@ interface Props {
   goToEditPageHandler: (id: string) => void;
   deleteItemHandler: (id: string) => void;
   recoverItem?: (id: string) => void;
+  pageInfo: any;
+  handlePageChange: (pageQuery: I_PageInfo) => void;
 }
 
 const VendorList = ({
@@ -23,7 +26,9 @@ const VendorList = ({
   goToCreatePage,
   goToEditPageHandler,
   deleteItemHandler,
-  recoverItem
+  recoverItem,
+  pageInfo,
+  handlePageChange
 }: Props) => {
   // const vendorTitle = getVendorTitle();
   // multi languages for tabel title
@@ -85,6 +90,7 @@ const VendorList = ({
     <BodySTY>
       <TableWithEdit
         tableName={TableTitle[vendor_code] || "供應商"}
+        createBtnText="新增供應商"
         titles={vendorTitleArr}
         data={vendorData}
         goToCreatePage={goToCreatePage}
@@ -102,6 +108,8 @@ const VendorList = ({
             recoverItem && recoverItem(id);
           }
         })}
+        pageInfo={pageInfo}
+        onPageChange={handlePageChange}
       />
     </BodySTY>
   );

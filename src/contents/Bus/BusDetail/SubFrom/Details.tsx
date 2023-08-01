@@ -52,24 +52,16 @@ function Details({
     {
       req: true,
       label: "車種",
-      value: convertMap["type"][getValues("bus.type")]["ch"],
+      value: busOptions?.type_options.find(
+        (option: any) => option.no === getValues("bus.type")
+      )?.name,
       editEle: (
         <Select key="bus.type" {...register("bus.type")} marginBottom="0">
-          <option value="01">沙灘車</option>
-          <option value="02">船</option>
-          <option value="03">巴士</option>
-          <option value="04">車</option>
-          <option value="05">堆高機</option>
-          <option value="06">發電機</option>
-          <option value="07">裝載機</option>
-          <option value="08">機車</option>
-          <option value="09">割草機</option>
-          <option value="10">其他</option>
-          <option value="11">皮卡車</option>
-          <option value="12">半卡車</option>
-          <option value="13">越野車</option>
-          <option value="14">聯結車</option>
-          <option value="15">貨車</option>
+          {busOptions?.type_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
         </Select>
       )
     },

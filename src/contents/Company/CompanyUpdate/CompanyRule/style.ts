@@ -4,7 +4,7 @@ export const BodySTY = styled.div`
   form {
     .input-line {
       display: grid;
-      grid-template-columns: 1fr 2fr;
+      /* grid-template-columns: 1fr 2fr; */
       margin: 16px auto;
       span {
         font-size: 14px;
@@ -21,6 +21,16 @@ export const BodySTY = styled.div`
         color: #fff;
         background: #3670c9;
         border-radius: 32px;
+      }
+
+      .hours-checkbox {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 10px;
+
+        label {
+          margin: 8px 0;
+        }
       }
     }
   }

@@ -19,6 +19,10 @@ const BodySTY = styled.div`
       }
     }
   }
+  .hiddenTab {
+    opacity: 0;
+    pointer-events: none;
+  }
 `;
 
 const TabSTY = styled.div<{ isActive: boolean }>`

@@ -3,31 +3,30 @@ import { BodySTY } from "./style";
 import { PlusIcon } from "evergreen-ui";
 
 import { Label } from "@components/Button/Primary";
+import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
-interface AdditionalDriverBtn_Type {
+interface AdditionalVehicleBtn_Type {
   id: string;
   disabled?: boolean;
   setOrderInfo: (t: any) => void;
-  setCreatDrawerOpen: (v: "car" | "driver" | "") => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
-const AdditionalDriverBtn = ({
+const AdditionalVehicleBtn = ({
   id,
   disabled,
   setOrderInfo,
-  setCreatDrawerOpen
-}: AdditionalDriverBtn_Type) => {
+  setFirstDrawerOpen
+}: AdditionalVehicleBtn_Type) => {
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const renderAddDriver = () => {
+  const renderAddVehicle = () => {
     setLoading(true);
-
     try {
       getOrderInfo(id).then((data) => {
-        console.log("data", data);
         setOrderInfo(data.dataList);
       });
-      setCreatDrawerOpen("driver");
+      setFirstDrawerOpen("additionalCar");
     } catch (err) {
       console.log("err of click the finish button", err);
     }
@@ -36,17 +35,21 @@ const AdditionalDriverBtn = ({
   return (
     <BodySTY>
       <Label
+        style={{
+          width: "unset",
+          fontSize: "12px"
+        }}
         text={
           <span>
-            <PlusIcon />
-            派工
+            <PlusIcon style={{ height: "12px", width: "12px" }} />
+            派車
           </span>
         }
-        onClick={renderAddDriver}
+        onClick={renderAddVehicle}
         disabled={disabled}
       ></Label>
     </BodySTY>
   );
 };
 
-export default AdditionalDriverBtn;
+export default AdditionalVehicleBtn;

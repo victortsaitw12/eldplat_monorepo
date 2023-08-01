@@ -1,5 +1,8 @@
 import { mock_company_data } from "@mock-data/company/mock_data";
-import { getSingleCompany } from "@services/company/getAllCompany";
+import {
+  getCompanyOptions,
+  getSingleCompany
+} from "@services/company/getAllCompany";
 import { getDdlData } from "@services/ddl/getDdlData";
 import { I_Company_Update_Type } from "@typings/company_type";
 import {
@@ -27,15 +30,14 @@ interface I_ErrMsg {
 export interface I_Company_Context {
   companyData: I_Company_Update_Type;
   setCompanyData: (companyData: I_Company_Update_Type) => void;
+  companyDDL: any;
   ddlLanguage: I_DDL_Type[];
   errMsg: I_ErrMsg[] | boolean | any;
   countryNumInput: any | I_CountryNum;
   setCountryNumInput: (countryNumInput: I_CountryNum) => void;
   handleCompanyBasicChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCompanyContactChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleCompanyCountrySetChange: (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => void;
+  handleCompanyDDLChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // make a context for those components
@@ -44,6 +46,7 @@ export const CompanyContext = createContext<I_Company_Context>({
   setCompanyData: function (): void {
     throw new Error("Function not implemented.");
   },
+  companyDDL: {},
   ddlLanguage: [{ label: "請選擇", value: "no" }],
   errMsg: { errField: "", errText: "" } || false,
   countryNumInput: { contactTel: "", contactPhone: "" },
@@ -56,13 +59,14 @@ export const CompanyContext = createContext<I_Company_Context>({
   handleCompanyContactChange: function (): void {
     throw new Error("Function not implemented.");
   },
-  handleCompanyCountrySetChange: function (): void {
+  handleCompanyDDLChange: function (): void {
     throw new Error("Function not implemented.");
   }
 });
 
 // function component start
 export const CompanyProvider = ({ children }: any) => {
+  const [companyDDL, setCompanyDDL] = useState<any>(null);
   const [ddlLanguage, setDdlLanguage] = useState<I_DDL_Type[]>([
     { label: "請選擇", value: "no" }
   ]);
@@ -70,9 +74,6 @@ export const CompanyProvider = ({ children }: any) => {
   const [companyData, setCompanyData] = useState<I_Company_Update_Type | any>(
     mock_company_data
   );
-  // const [companyData, setCompanyData] = useState<I_Company_Update_Type | any>(
-  //   null
-  // );
 
   const [countryNumInput, setCountryNumInput] = useState<I_CountryNum>({
     contactTel: "",
@@ -85,7 +86,22 @@ export const CompanyProvider = ({ children }: any) => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  // 取得下拉式選單的資料
+  // 取得公司所有下拉式資料
+  useEffect(() => {
+    setLoading(true);
+    try {
+      getCompanyOptions().then((item) => {
+        console.log("公司所有下拉item", item);
+        setCompanyDDL(item.dataList[0]);
+      });
+    } catch (e: any) {
+      console.log("Error: 取得公司下拉式錯誤", e);
+    }
+
+    setLoading(false);
+  }, []);
+
+  // 取得語系下拉式選單的資料
   useEffect(() => {
     setLoading(true);
     const languageObj = { ddl_column: "company_language", ddl_type: "company" };
@@ -112,7 +128,6 @@ export const CompanyProvider = ({ children }: any) => {
   useEffect(() => {
     setLoading(true);
     getSingleCompany().then((data) => {
-      console.log("company data", data);
       setCompanyData(data.dataList[0]);
     });
     setLoading(false);
@@ -179,30 +194,32 @@ export const CompanyProvider = ({ children }: any) => {
   };
 
   // handle change input for Country/Language/Currency component
-  const handleCompanyCountrySetChange = (
+  const handleCompanyDDLChange = (
     e: React.ChangeEvent<HTMLInputElement> | any
   ) => {
+    console.log("e::::::::::", e);
     const newData = { ...companyData };
     newData[e.target.name] = e.target.value;
     // newData.company_Dt[e.target.name] = e.target.value;
+    console.log("✴newData", newData);
     setCompanyData(newData);
   };
 
   const allContextValues = {
     companyData,
     setCompanyData,
+    companyDDL,
     ddlLanguage,
     errMsg,
     countryNumInput,
     setCountryNumInput,
     handleCompanyBasicChange,
     handleCompanyContactChange,
-    handleCompanyCountrySetChange,
+    handleCompanyDDLChange,
     loading
   };
 
-  console.log("🏆🏆🏆companyData", companyData);
-  console.log("💥errMsg", errMsg);
+  // console.log("🏆🏆🏆companyData", companyData);
 
   return (
     <CompanyContext.Provider value={allContextValues}>
