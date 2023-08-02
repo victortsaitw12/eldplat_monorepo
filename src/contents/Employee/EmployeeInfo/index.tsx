@@ -7,7 +7,8 @@ import {
   PlusIcon,
   SelectField,
   Text,
-  TextInput
+  TextInput,
+  Paragraph
 } from "evergreen-ui";
 import React, { useState, useEffect } from "react";
 import { class_DATA, department_DATA, formatDate } from "./data";
@@ -23,6 +24,13 @@ function EmployeeInfo({
   insertData,
   setInsertData
 }: I_Content_Props) {
+  //iniviteHistory
+  const inivite_history = [
+    { date: "2023/02/01" },
+    { date: "2023/02/02" },
+    { date: "2023/02/03" },
+    { date: "2023/02/04" }
+  ];
   // 是否在職
   const [untilnowChecked, setUntilnowChecked] = useState<boolean>(
     insertData["leave_check"] === "1" ? true : false
@@ -107,6 +115,7 @@ function EmployeeInfo({
         <Pane className="input-line">
           <Text>員工編號</Text>
           <TextInput
+            width="100%"
             name="staff_no"
             value={insertData.staff_no || ""}
             onChange={handleEmployeeChange}
@@ -114,7 +123,8 @@ function EmployeeInfo({
         </Pane>
         <Pane className="input-line">
           <Text>職務名稱</Text>
-          <SelectField
+
+          {/* <SelectField
             label=""
             name="job_title"
             value={insertData.job_title || ""}
@@ -125,12 +135,13 @@ function EmployeeInfo({
             <option value="02">後端工程師</option>
             <option value="03">日本線業務</option>
             <option value="04">歐洲線線控</option>
-          </SelectField>
-          {/* <TextInput
+          </SelectField> */}
+          <TextInput
+            width={"100%"}
             name="job_title"
-            value={insertData.job_title}
+            value={insertData.job_title || ""}
             onChange={handleEmployeeChange}
-          /> */}
+          />
         </Pane>
         <Pane className="input-line">
           <Text>公司名稱</Text>
@@ -193,6 +204,26 @@ function EmployeeInfo({
             />
           </Pane>
         </Pane>
+        {inivite_history.length > 0 && (
+          <Pane
+            style={{
+              alignItems: "baseline"
+            }}
+            className="input-line"
+          >
+            <Text>邀請時間與次數</Text>
+            <Pane>
+              {inivite_history.map((child, i) => {
+                return (
+                  <Paragraph key={i}>
+                    {child.date}，邀請第 {i + 1} 次
+                  </Paragraph>
+                );
+              })}
+            </Pane>
+          </Pane>
+        )}
+
         <Pane className="input-line">
           <Text>員工狀態</Text>
           <Text color="#52BD94 !important">• 已加入</Text>
@@ -207,7 +238,7 @@ function EmployeeInfo({
                     name="certification"
                     marginTop={10}
                     placeholder="新增證照"
-                    value={item.value}
+                    value={item.value || ""}
                     onChange={(e: any) => {
                       handleValue(e, item.id);
                       handleChangeLicense(e);

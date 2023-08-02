@@ -76,11 +76,12 @@ function DriverDetail({
           userName={driverData.info.user_name}
           refetch={refetch}
           driverNo={driverNo}
+          isEdit={isEdit}
         />
       )}
       {visibleForm === "3" && (
         <HealthRecords
-          healths={driverData.healths}
+          userNo={driverData.info.user_no}
           userName={driverData.info.user_name}
         />
       )}

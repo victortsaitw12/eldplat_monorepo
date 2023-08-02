@@ -59,13 +59,8 @@ function DriverInfo({
   console.log("🍅🍅🍅driverData", driverData);
   const schdInfo = [
     {
-      readonly: true,
-      label: "使用者編號",
-      value: info["user_no"] || "--"
-    },
-    {
       req: true,
-      label: "休假設定",
+      label: "工時設定",
       value: info["working_hours_name"] || "--",
       editEle: (
         <Select
@@ -143,15 +138,16 @@ function DriverInfo({
       value: getValues("driver_seniority") || "--",
       editEle: <TextInput {...register("driver_seniority")} />
     },
+
     {
       req: false,
-      label: "派遣車隊",
-      value: getValues("dsph_area") || "--",
+      label: "派駐地待欄位",
+      value: getValues("dsph_city") || "--",
       editEle: (
-        <Select key="dsph_area" {...register("dsph_area")} marginBottom="0">
-          {Object.keys(DSPH_AREA).map((key) => (
+        <Select key="dsph_city" {...register("dsph_city")} marginBottom="0">
+          {Object.keys(DSPH_CITY).map((key) => (
             <option key={key} value={key}>
-              {DSPH_AREA[key].label}
+              {DSPH_CITY[key].label}
             </option>
           ))}
         </Select>
@@ -159,13 +155,13 @@ function DriverInfo({
     },
     {
       req: false,
-      label: "派遣都市",
-      value: getValues("dsph_city") || "--",
+      label: "車隊待欄位",
+      value: getValues("dsph_area") || "--",
       editEle: (
-        <Select key="dsph_city" {...register("dsph_city")} marginBottom="0">
-          {Object.keys(DSPH_CITY).map((key) => (
+        <Select key="dsph_area" {...register("dsph_area")} marginBottom="0">
+          {Object.keys(DSPH_AREA).map((key) => (
             <option key={key} value={key}>
-              {DSPH_CITY[key].label}
+              {DSPH_AREA[key].label}
             </option>
           ))}
         </Select>
@@ -193,7 +189,7 @@ function DriverInfo({
       req: false,
       label: "標籤",
       value: (
-        <div className="view-tags">
+        <div className="view-tags" style={{ justifyContent: "flex-start" }}>
           <div>特優</div> <div>優良</div>
         </div>
       ),

@@ -9,6 +9,7 @@ import { mappingQueryData } from "@utils/mappingQueryData";
 import LicenseForm from "@contents/Driver/Detail/LicenseForm";
 import { LICN_TYP } from "@services/getDDL";
 import { updateDriverLicense } from "@services/driver/updateDriverLicense";
+import { useRouter } from "next/router";
 
 const table_title = [
   "證照種類",
@@ -20,13 +21,20 @@ const table_title = [
   "證照檔案"
 ];
 interface Props {
+  isEdit: boolean;
   licensesData: any;
   userName: string;
   refetch: () => void;
   driverNo: string;
 }
 
-function LicensesList({ licensesData, userName, refetch, driverNo }: Props) {
+function LicensesList({
+  isEdit,
+  licensesData,
+  userName,
+  refetch,
+  driverNo
+}: Props) {
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
   const [editNo, setEditNo] = React.useState<number | null>(null);
   const btnRef = React.useRef<any>(null);
@@ -75,7 +83,7 @@ function LicensesList({ licensesData, userName, refetch, driverNo }: Props) {
     if (key === "licn_link") {
       return (
         {
-          label: (
+          label: data["licn_link"] ? (
             <Tooltip content={`下載${data["licn_filename"] || ""}`}>
               <DocumentIcon
                 className="documentIcon"
@@ -86,6 +94,8 @@ function LicensesList({ licensesData, userName, refetch, driverNo }: Props) {
                 }}
               />
             </Tooltip>
+          ) : (
+            <div>--</div>
           ),
           value: data[key]
         } || <div>--</div>
@@ -165,6 +175,7 @@ function LicensesList({ licensesData, userName, refetch, driverNo }: Props) {
           goToEditPage={handleEdit}
           deleteItem={handleDelete}
           createBtnText="新增駕駛證照"
+          needCreateBtn={isEdit}
         />
       )}
 

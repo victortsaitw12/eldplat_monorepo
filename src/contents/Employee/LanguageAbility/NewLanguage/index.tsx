@@ -18,6 +18,7 @@ interface I_languageType {
 }
 
 interface I_newLanguage_props {
+  idx: number;
   handleSave: (lang: any) => void;
   defaultData: I_languageType;
   handleRemoveLang: (lang: any, e?: any) => void;
@@ -26,17 +27,19 @@ interface I_newLanguage_props {
 }
 
 function NewLanguage({
+  idx,
   handleSave,
   defaultData,
   handleRemoveLang,
+  LangForApi,
   setLangForApi
 }: I_newLanguage_props) {
   const [languageValue, setLanguageValue] = useState<any>({
-    language: "",
-    listen: "",
-    speak: "",
-    read: "",
-    write: ""
+    language: LangForApi[idx]?.language || "",
+    listen: LangForApi[idx]?.listen || "",
+    speak: LangForApi[idx]?.speak || "",
+    read: LangForApi[idx]?.read || "",
+    write: LangForApi[idx]?.write || ""
   }); // 代碼物件
   const [languageLabel, setLanguageLabel] =
     useState<I_languageType>(defaultData); // 文字物件
@@ -55,7 +58,12 @@ function NewLanguage({
   // 按下打勾時
   const handleAdd = () => {
     handleSave(languageLabel);
-    setLangForApi((prev: any) => [...prev, languageValue]); // 存代碼形式進陣列物件
+    setLangForApi((prev: any) => {
+      const newarray = [...prev];
+      newarray[idx] = languageValue;
+      return newarray;
+      // 存代碼形式進陣列物件
+    });
   };
 
   return (
