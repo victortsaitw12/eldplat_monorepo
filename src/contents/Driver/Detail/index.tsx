@@ -80,7 +80,7 @@ function DriverDetail({
       )}
       {visibleForm === "3" && (
         <HealthRecords
-          healths={driverData.healths}
+          userNo={driverData.info.user_no}
           userName={driverData.info.user_name}
         />
       )}

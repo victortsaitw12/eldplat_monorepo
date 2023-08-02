@@ -1,7 +1,8 @@
 import API_Path from "./apiPath";
+import { deepCloneWithDateFormat } from "@utils/formatDateFromAPI";
 
 // 取得單一駕駛資料
-import { deepCloneWithDateFormat } from "@utils/formatDateFromAPI";
+
 export const getDriverById = async (driver_no: string) => {
   const response = await fetch(
     `${API_Path["getDriverById"]}?driver_no=${driver_no}`,
@@ -18,9 +19,9 @@ export const getDriverById = async (driver_no: string) => {
   const info = deepCloneWithDateFormat(data.info);
   const workinghours = data.workinghours;
   const languages = data.languages;
-  const licenses = data.licenses;
-  const healths = data.healths.map((healthItem: any) => {
-    return deepCloneWithDateFormat(healthItem);
-  });
-  return { info, workinghours, languages, licenses, healths };
+  // const licenses = data.licenses;
+  // const healths = data.healths.map((healthItem: any) => {
+  //   return deepCloneWithDateFormat(healthItem);
+  // });
+  return { info, workinghours, languages };
 };
