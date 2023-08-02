@@ -61,21 +61,21 @@ const TagSelect: React.FC<Props> = ({
         marginBottom="6px"
       >
         {options?.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+          <option key={option?.value} value={option?.value}>
+            {option?.label}
           </option>
         ))}
       </SelectField>
       <Pane className="option-tags">
         {selectedOptions.map((option) => (
           <div
-            key={option.value}
+            key={option?.value}
             className="tags"
             onClick={(e: any) => {
               handleRemoveTags(e, option);
             }}
           >
-            <Text>{option.label}</Text>
+            <Text>{option?.label}</Text>
             <IconButton icon={CrossIcon} />
           </div>
         ))}

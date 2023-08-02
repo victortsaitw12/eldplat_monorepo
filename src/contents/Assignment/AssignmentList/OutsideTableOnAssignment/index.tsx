@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ErrorIcon,
-  Pane
-} from "evergreen-ui";
+import { ErrorIcon } from "evergreen-ui";
 import { v4 as uuid } from "uuid";
 import { TableSTY, TableContainerSTY, StyledDot } from "./style";
 import TableRow from "./TableRow";
+import PaginationField, { I_PageInfo } from "@components/PaginationField";
+
 //
+export interface I_labelValue {
+  label: string | React.ReactNode;
+  value: string;
+}
 export interface I_Data {
-  [key: string]: string | number | React.ReactNode;
+  [key: string]: string | number | React.ReactNode | I_labelValue;
+  maintenance_quote_no: I_labelValue;
 }
 
 interface I_Table {
   tableName: string | any;
   titles: Array<string | number | React.ReactNode> | any;
-  data: I_Data[];
+  assignData: I_Data[];
   subAssignData: any;
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
@@ -24,6 +26,10 @@ interface I_Table {
   viewItem?: (id: any, item: any) => void;
   // editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
+  pageInfo?: I_PageInfo;
+  onPageChange?: (pageQuery: I_PageInfo) => void;
+  setOrderInfo: (t: any) => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
 
 export interface I_OpenTable {
@@ -36,7 +42,7 @@ Must provide id field in the Data Array
 function OutsideTableOnAssignment({
   tableName,
   titles,
-  data,
+  assignData,
   subAssignData,
   goToCreatePage,
   viewItem = (id, item) => {
@@ -47,30 +53,22 @@ function OutsideTableOnAssignment({
   },
   deleteItem = (item) => {
     console.log(item);
-  }
+  },
+  pageInfo,
+  onPageChange,
+  setOrderInfo,
+  setFirstDrawerOpen
 }: I_Table) {
-  console.log("data in outside table", data);
-  if (!data) return <p>Loading</p>;
+  if (!assignData) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
         <div className="container-header-left">
           <span>{tableName}列表</span>
-          <ErrorIcon color="#8EA8C7" />
         </div>
       </div>
       <div className="container-pagination">
-        <span>
-          第{1}-{5}筆, 共{5}筆
-        </span>
-        <div className="actions">
-          <button>
-            <ChevronLeftIcon size={12} />
-          </button>
-          <button>
-            <ChevronRightIcon size={12} />
-          </button>
-        </div>
+        <PaginationField pageInfo={pageInfo} onPageChange={onPageChange} />
       </div>
       <div className="container-table">
         <TableSTY>
@@ -89,19 +87,22 @@ function OutsideTableOnAssignment({
             </tr>
           </thead>
           <tbody>
-            {data.length !== 0 ? (
-              data.map((item: any, idx) => {
+            {assignData.length !== 0 ? (
+              assignData.map((item: any, idx) => {
                 return (
                   <TableRow
-                    key={uuid()}
+                    // key={uuid()}
+                    key={`outsideRow-${item.maintenance_quote_no.value}`}
                     idx={idx}
                     item={item}
-                    data={data}
+                    assignData={assignData}
                     subAssignData={subAssignData}
                     goToCreatePage={goToCreatePage}
                     deleteItem={deleteItem}
                     goToEditPage={goToEditPage}
                     viewItem={viewItem}
+                    setOrderInfo={setOrderInfo}
+                    setFirstDrawerOpen={setFirstDrawerOpen}
                   />
                 );
               })

@@ -37,7 +37,6 @@ function Contact() {
     handleStateSwitch,
     handleCountryCode
   } = useContext<I_Region_Context>(RegionContext);
-  console.log("聯絡區塊看companyData", companyData);
 
   const [contactArr, setContactArr] = useState<I_Company_Contact_Type[] | any>([
     {
@@ -294,7 +293,6 @@ function Contact() {
         </Pane>
 
         {contactArr?.map((value: I_Company_Contact_Type, idx: number) => {
-          console.log("聯絡資訊value", value);
           return (
             <>
               <Pane className="input-line">

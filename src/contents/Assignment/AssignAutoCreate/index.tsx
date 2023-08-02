@@ -30,9 +30,13 @@ import CreateFail from "../CreateFail";
 
 interface I_AssignAutoCreateProps {
   orderInfo: I_ManualAssignType[];
+  setDisabledAutoList: (v: any) => void;
 }
 
-function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
+function AssignAutoCreate({
+  orderInfo,
+  setDisabledAutoList
+}: I_AssignAutoCreateProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
@@ -62,7 +66,7 @@ function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
     setLoading(false);
   }, []);
 
-  const handleDataChange = (e: any) => {
+  const handleBusGroupChange = (e: any) => {
     const newData = {
       quote_No: orderInfo[0]?.quote_no,
       estimated_Start_Date: orderInfo[0]?.departure_date,
@@ -82,8 +86,9 @@ function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
       if (res.statusCode === "200") {
         // router.reload();
       } else {
-        setFailMessage(res.message);
+        setFailMessage(res.message || "請確認必填欄位");
         setFailIsShown(true);
+        setDisabledAutoList((prev: any) => [...prev, orderInfo[0]?.quote_no]);
       }
     } catch (err) {
       console.log("auto assign err: ", err);
@@ -134,7 +139,7 @@ function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
         name="bus_group"
         value={autoAssignData?.areaConvoyGroupType}
         onChange={(e: any) => {
-          handleDataChange(e);
+          handleBusGroupChange(e);
         }}
       >
         {busGroupDDL?.map(
@@ -147,7 +152,10 @@ function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
           }
         )}
       </SelectField>
-
+      {/* 全部都填好之後的儲存按鈕 */}
+      <IconLeft text={"確定"} type="submit">
+        <FloppyDiskIcon size={14} />
+      </IconLeft>
       {failIsShown && (
         <CreateFail
           failIsShown={failIsShown}
@@ -155,11 +163,6 @@ function AssignAutoCreate({ orderInfo }: I_AssignAutoCreateProps) {
           failMessage={failMessage}
         />
       )}
-
-      {/* 全部都填好之後的儲存按鈕 */}
-      <IconLeft text={"確定"} type="submit">
-        <FloppyDiskIcon size={14} />
-      </IconLeft>
     </FormSTY>
   );
 }

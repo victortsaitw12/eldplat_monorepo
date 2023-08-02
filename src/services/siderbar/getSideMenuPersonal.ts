@@ -2,7 +2,7 @@
 export const getSideMenuPersonal = async () => {
   const res = await fetch(
     // API_Path.GetSideMenuPersonal,
-    "/api/getsidemenupersonal"
+    "/api/getsidemenupersonal",
     // ,
     // {
     //   method: "GET",
@@ -11,6 +11,11 @@ export const getSideMenuPersonal = async () => {
     //     Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     //   }
     // }
+    {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
   );
   return res.json();
 };

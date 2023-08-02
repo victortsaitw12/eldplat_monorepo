@@ -21,8 +21,7 @@ interface I_certificationType {
 function EmployeeInfo({
   handleEmployeeChange,
   insertData,
-  setInsertData,
-  editData
+  setInsertData
 }: I_Content_Props) {
   // 是否在職
   const [untilnowChecked, setUntilnowChecked] = useState<boolean>(
@@ -36,13 +35,13 @@ function EmployeeInfo({
 
   // 一進來先抓資料庫原本就有的證照資料
   useEffect(() => {
-    editData &&
+    insertData &&
       setCertificationArr(
-        editData?.license_name.map((v: string, i: number) => {
+        insertData?.license_name.map((v: string, i: number) => {
           return { id: i, value: v };
         })
       );
-  }, [editData]);
+  }, []);
 
   // 離職: 如果還在職(迄今)就存"1"，否則是"0"
   const handleStillWorking = (e: any) => {
@@ -109,7 +108,7 @@ function EmployeeInfo({
           <Text>員工編號</Text>
           <TextInput
             name="staff_no"
-            value={insertData.staff_no}
+            value={insertData.staff_no || ""}
             onChange={handleEmployeeChange}
           />
         </Pane>
@@ -118,7 +117,7 @@ function EmployeeInfo({
           <SelectField
             label=""
             name="job_title"
-            value={insertData.job_title}
+            value={insertData.job_title || ""}
             onChange={handleEmployeeChange}
             marginBottom="0px"
           >
@@ -141,7 +140,7 @@ function EmployeeInfo({
           <Text>部門別</Text>
           <SelectField
             label=""
-            value={insertData.department}
+            value={insertData.department || ""}
             name="department"
             onChange={handleEmployeeChange}
           >
@@ -155,7 +154,7 @@ function EmployeeInfo({
           <Text>組別</Text>
           <SelectField
             label=""
-            value={insertData.group}
+            value={insertData.group || ""}
             name="group"
             onChange={handleEmployeeChange}
           >
@@ -170,7 +169,7 @@ function EmployeeInfo({
           <TextInput
             type="date"
             name="arrive_date"
-            value={insertData.arrive_date}
+            value={insertData.arrive_date || ""}
             onChange={handleEmployeeChange}
           />
         </Pane>
@@ -181,7 +180,7 @@ function EmployeeInfo({
             <TextInput
               type="date"
               name="leave_date"
-              value={insertData.leave_date}
+              value={insertData.leave_date || ""}
               onChange={handleEmployeeChange}
               disabled={untilnowChecked ? true : false}
             />

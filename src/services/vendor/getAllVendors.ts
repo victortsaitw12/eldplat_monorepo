@@ -1,11 +1,21 @@
 import API_Path from "./apiPath";
+import { I_PageInfo } from "@components/PaginationField";
 // 取得供應商資料
 // status:"1"啟用 "2"停用
 // codeType:供應商分類
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: "vendor_no",
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
 export const getAllVendors = async (
   filter: { [key: string]: any } = {},
   status: string,
-  codeType: string
+  codeType: string,
+  pageQuery = defaultPageInfo
 ) => {
   const vendorFilter = [];
   let codeTypeValue = "";
@@ -42,14 +52,7 @@ export const getAllVendors = async (
       vendor_Status: status,
       vendor_Filter: vendorFilter,
       filter_Needed: true,
-      pageInfo: {
-        page_Index: 1,
-        page_Size: 30,
-        orderby: "vendor_no",
-        // arrangement: "asc",
-        total: 0,
-        last_Page: 0
-      }
+      pageInfo: pageQuery
     })
   });
   return await res.json();

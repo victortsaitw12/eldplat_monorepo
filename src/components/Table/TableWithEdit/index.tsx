@@ -22,6 +22,9 @@ interface I_Data {
 }
 
 interface I_Table {
+  needCheckBox?: boolean;
+  needAction?: boolean;
+  needCreateBtn?: boolean;
   tableName: string | any;
   cleanTableName?: string | React.ReactNode;
   titles: Array<string | number | React.ReactNode> | any;
@@ -46,6 +49,9 @@ interface I_Table {
 Must provide id field in the Data Array
 */
 function Table({
+  needCheckBox = true,
+  needAction = true,
+  needCreateBtn = true,
   tableName,
   cleanTableName,
   titles,
@@ -118,7 +124,7 @@ function Table({
             </>
           )}
         </div>
-        {!noButtonData.includes(tableName) && (
+        {needCreateBtn && !noButtonData.includes(tableName) && (
           <IconLeft
             text={
               createBtnText
@@ -140,14 +146,15 @@ function Table({
         <TableSTY>
           <thead>
             <tr>
-              <th>
-                <Checkbox
-                  style={{ margin: "8px 0" }}
-                  onChange={(e) => handleCheckAll(e)}
-                  checked={checkedItems.length === data.length}
-                />
-              </th>
-
+              {needCheckBox && (
+                <th>
+                  <Checkbox
+                    style={{ margin: "8px 0" }}
+                    onChange={(e) => handleCheckAll(e)}
+                    checked={checkedItems.length === data.length}
+                  />
+                </th>
+              )}
               {/* {tableName === "維保通知" && (
                 <th>
                   <input
@@ -176,7 +183,7 @@ function Table({
                   </th>
                 );
               })}
-              <th style={{ textAlign: "center" }}>操作</th>
+              {needAction && <th style={{ textAlign: "center" }}>操作</th>}
             </tr>
           </thead>
           <tbody>
@@ -184,15 +191,16 @@ function Table({
               data.map((item: any, idx) => {
                 return (
                   <tr key={uuid()}>
-                    <td>
-                      <Checkbox
-                        style={{ margin: "8px 0" }}
-                        checked={checkedItems.includes(item?.id?.value)}
-                        onChange={(e) => handleCheck(e)}
-                        id={item?.id?.value}
-                      />
-                    </td>
-
+                    {needCheckBox && (
+                      <td>
+                        <Checkbox
+                          style={{ margin: "8px 0" }}
+                          checked={checkedItems.includes(item?.id?.value)}
+                          onChange={(e) => handleCheck(e)}
+                          id={item?.id?.value}
+                        />
+                      </td>
+                    )}
                     {/* {tableName === "維保通知" && (
                       <td>
                         <input
@@ -234,34 +242,38 @@ function Table({
                         </td>
                       );
                     })}
-                    <td>
-                      <TableActionButton
-                        onView={
-                          viewItem && viewItem.bind(null, item.id?.value, item)
-                        }
-                        onEdit={
-                          goToEditPage &&
-                          goToEditPage.bind(null, item.id?.value, item)
-                        }
-                        onDelete={
-                          deleteItem && deleteItem.bind(null, item.id?.value)
-                        }
-                        onRecover={
-                          recoverItem && recoverItem.bind(null, item.id?.value)
-                        }
-                        deleteText={deleteText}
-                        isOpen={currentTab === idx}
-                        openOption={() => {
-                          console.log("openOption");
-                          setCurrentTab(idx);
-                        }}
-                        closeOption={() => {
-                          console.log("closeOption");
-                          setCurrentTab(null);
-                        }}
-                        tableName={tableName}
-                      />
-                    </td>
+                    {needAction && (
+                      <td>
+                        <TableActionButton
+                          onView={
+                            viewItem &&
+                            viewItem.bind(null, item.id?.value, item)
+                          }
+                          onEdit={
+                            goToEditPage &&
+                            goToEditPage.bind(null, item.id?.value, item)
+                          }
+                          onDelete={
+                            deleteItem && deleteItem.bind(null, item.id?.value)
+                          }
+                          onRecover={
+                            recoverItem &&
+                            recoverItem.bind(null, item.id?.value)
+                          }
+                          deleteText={deleteText}
+                          isOpen={currentTab === idx}
+                          openOption={() => {
+                            console.log("openOption");
+                            setCurrentTab(idx);
+                          }}
+                          closeOption={() => {
+                            console.log("closeOption");
+                            setCurrentTab(null);
+                          }}
+                          tableName={tableName}
+                        />
+                      </td>
+                    )}
                   </tr>
                 );
               })

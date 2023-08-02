@@ -67,7 +67,6 @@ const Page: NextPageWithLayout<never> = () => {
 
       // 由於table內不只有靜態資料顯示(有button功能)，所以客制加工一下 => 結案按鈕
       MainMissionData?.map((item) => {
-        console.log("item**************", item);
         if (item["completion_time"].label === "---") {
           const active =
             item["all_assignment_no"].value.length > 30 ? false : true;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -25,7 +25,9 @@ const mainFilterArray = [
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
-  const [nowTab, setNowTab] = useState("1");
+  const [nowTab, setNowTab] = useState(
+    (router?.query?.status as string) || "1"
+  );
   const [options, setOptions] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     arrangement: "desc",
@@ -105,6 +107,10 @@ const Page: NextPageWithLayout<never> = () => {
   };
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
+    router.push({
+      pathname: "/bus/",
+      query: { ...router?.query, status: value }
+    });
   };
   //
   const deleteItemHandler = async (id: string) => {

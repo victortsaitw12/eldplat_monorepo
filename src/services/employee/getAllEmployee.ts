@@ -1,7 +1,20 @@
 import API_Path from "./apiPath";
+import { I_PageInfo } from "@components/PaginationField";
+
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: null,
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
 
 // 取得員工資料
-export const getAllEmployees = async (filter: { [key: string]: any } = {}) => {
+export const getAllEmployees = async (
+  filter: { [key: string]: any } = {},
+  pageQuery = defaultPageInfo
+) => {
   const employeeFilter = [];
   for (const key in filter) {
     if (filter[key].value !== "") {
@@ -13,7 +26,7 @@ export const getAllEmployees = async (filter: { [key: string]: any } = {}) => {
       });
     }
   }
-  console.log("employeeFilter", employeeFilter);
+  // console.log("employeeFilter", employeeFilter);
 
   const res = await fetch(API_Path["GetAllEmployees"], {
     method: "POST",
@@ -24,7 +37,7 @@ export const getAllEmployees = async (filter: { [key: string]: any } = {}) => {
     body: JSON.stringify({
       filters: employeeFilter,
       filter_Needed: false,
-      pageInfo: { page_Index: 1, page_Size: 20 },
+      pageInfo: pageQuery,
       user_status: "1"
     })
   });

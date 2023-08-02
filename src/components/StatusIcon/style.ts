@@ -6,6 +6,7 @@ export const StyleIdIcon = styled.div<{ status: string }>`
   align-items: center;
   gap: 8px;
   border-radius: 10px;
+  width: fit-content !important;
   background: ${({ theme }) => theme.color.B50};
   > .icon-dot {
     background-color: ${({ status, theme }) => {

@@ -14,10 +14,11 @@ const EditBtn = ({
   }
 }: I_EditBtn) => {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
-  console.log("item", item);
+  // console.log("item", item);
   return (
     <>
       <button
+        className="table-action"
         onClick={(e) => {
           setOptionIsOpen((prev) => !prev);
         }}
@@ -25,7 +26,7 @@ const EditBtn = ({
         <MoreIcon />
       </button>
       {optionIsOpen && (
-        <div className="table-row-option">
+        <div className="table-row-option ">
           <button
             className="option-item"
             onClick={(e) => {
