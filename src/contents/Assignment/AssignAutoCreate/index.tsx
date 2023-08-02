@@ -30,12 +30,12 @@ import CreateFail from "../CreateFail";
 
 interface I_AssignAutoCreateProps {
   orderInfo: I_ManualAssignType[];
-  setDisabledAutoAssign: (v: any) => void;
+  setDisabledAutoList: (v: any) => void;
 }
 
 function AssignAutoCreate({
   orderInfo,
-  setDisabledAutoAssign
+  setDisabledAutoList
 }: I_AssignAutoCreateProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -88,7 +88,7 @@ function AssignAutoCreate({
       } else {
         setFailMessage(res.message || "請確認必填欄位");
         setFailIsShown(true);
-        setDisabledAutoAssign((prev: any) => [...prev, orderInfo[0]?.quote_no]);
+        setDisabledAutoList((prev: any) => [...prev, orderInfo[0]?.quote_no]);
       }
     } catch (err) {
       console.log("auto assign err: ", err);

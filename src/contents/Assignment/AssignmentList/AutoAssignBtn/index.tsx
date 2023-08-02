@@ -9,15 +9,13 @@ interface AutoAssignBtn_Type {
   disabled?: boolean;
   setFirstDrawerOpen: (v: string) => void;
   setOrderInfo: (t: any) => void;
-  // disabledAutoAssign: any[];
 }
 const AutoAssignBtn = ({
   id,
   disabled,
   setFirstDrawerOpen,
   setOrderInfo
-}: // disabledAutoAssign
-AutoAssignBtn_Type) => {
+}: AutoAssignBtn_Type) => {
   const handleAutoAssign = () => {
     try {
       setFirstDrawerOpen("autoAssign");
@@ -30,20 +28,29 @@ AutoAssignBtn_Type) => {
     }
   };
 
-  // console.log("🍅🍅🍅disabledAutoAssign:", disabledAutoAssign);
-  // console.log("🍅🍅🍅disabled:", disabled);
-
   return (
     <BodySTY>
-      <Label
-        style={{
-          width: "unset",
-          fontSize: "12px"
-        }}
-        onClick={handleAutoAssign}
-        disabled={disabled}
-        text="設定排程"
-      />
+      {/* // TODO 簡化button attribute "disabled"寫法 */}
+      {disabled ? (
+        <Label
+          style={{
+            width: "unset",
+            fontSize: "12px"
+          }}
+          onClick={handleAutoAssign}
+          text="設定排程"
+          disabled
+        />
+      ) : (
+        <Label
+          style={{
+            width: "unset",
+            fontSize: "12px"
+          }}
+          onClick={handleAutoAssign}
+          text="設定排程"
+        />
+      )}
     </BodySTY>
   );
 };

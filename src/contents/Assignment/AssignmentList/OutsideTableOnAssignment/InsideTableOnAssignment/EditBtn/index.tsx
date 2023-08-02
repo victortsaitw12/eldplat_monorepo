@@ -14,7 +14,7 @@ const EditBtn = ({
   }
 }: I_EditBtn) => {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
-  console.log("item", item);
+  // console.log("item", item);
   return (
     <>
       <button
