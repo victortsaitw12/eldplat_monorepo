@@ -17,12 +17,12 @@ export const BodySTY = styled.div`
 
   .input-line {
     display: grid;
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 1fr 2fr;
     margin: 16px auto;
 
     span {
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 400;
       color: #567190;
     }
 
@@ -70,5 +70,14 @@ export const BodySTY = styled.div`
         width: 14px;
       }
     }
+  }
+  & > .empty-msg {
+    font-size: ${({ theme }) => theme.fontSize.Paragraph200};
+    color: ${({ theme }) => theme.color.N700};
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1.25rem;
+    line-height: 2rem;
   }
 `;

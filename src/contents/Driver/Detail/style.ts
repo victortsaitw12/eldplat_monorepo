@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const DivSTY = styled.div`
+  height: 100%;
   /* 全部input欄位寬度 */
   .infoBox {
     .infoBox__label {

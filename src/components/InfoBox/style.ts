@@ -7,7 +7,9 @@ export const InfoBoxSTY = styled.div`
   border-radius: 10px;
   /* overflow: auto; */
   padding: 35px 20px;
-
+  h4 {
+    color: ${({ theme }) => theme.color.N700};
+  }
   & > .info-title {
     display: inline-block;
     font-size: 16px;

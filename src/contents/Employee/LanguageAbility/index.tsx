@@ -24,11 +24,16 @@ interface I_languageType {
 }
 
 interface I_Language_Props {
+  viewOnly?: boolean;
   insertData: any;
-  setInsertData: (insertData: any) => void;
+  setInsertData?: (insertData: any) => void;
 }
 
-function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
+function LanguageAbility({
+  viewOnly = false,
+  insertData,
+  setInsertData
+}: I_Language_Props) {
   const [insertLang, setInsertLang] = useState<I_languageType[]>([]); // 檢視樣子的:
   // [{language:"中文", listen:"聽-精通", read:"讀-精通", saved:true, speak:"說-精通", write:"寫-精通"}]
   const [LangForApi, setLangForApi] = useState<any[]>([]);
@@ -96,7 +101,7 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
     );
     const newData = { ...insertData };
     newData.languages = LangForApi;
-    setInsertData(newData);
+    setInsertData && setInsertData(newData);
   };
 
   const handleCancel = (idx: number) => {
@@ -115,7 +120,7 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
     // TODO: 移除大物件(insertData)中該物件
     const newData = { ...insertData };
     newData.languages = LangForApi;
-    setInsertData(newData);
+    setInsertData && setInsertData(newData);
   };
 
   const handleEdit = (idx: number, lang_line: any) => {
@@ -127,26 +132,27 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
   useEffect(() => {
     const newData = { ...insertData };
     newData.languages = LangForApi;
-    setInsertData(newData);
+    setInsertData && setInsertData(newData);
   }, [LangForApi, setInsertData]);
 
   return (
     <BodySTY>
       <Pane className="language-title">
         <Heading is="h4">語言能力</Heading>
-        <Button
-          marginRight={12}
-          iconBefore={PlusIcon}
-          onClick={() => {
-            handleInsertLang();
-          }}
-        >
-          新增語言
-        </Button>
+        {!viewOnly && (
+          <Button
+            marginRight={12}
+            iconBefore={PlusIcon}
+            onClick={() => {
+              handleInsertLang();
+            }}
+          >
+            新增語言
+          </Button>
+        )}
       </Pane>
 
       {insertLang?.map((lang_line, idx) => {
-        console.log("lang_line", lang_line);
         if (lang_line.saved)
           return (
             <Pane key={idx} className="input-line">
@@ -159,20 +165,24 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
                   <Text>{lang_line.write}</Text>
                 </Pane>
                 <Pane>
-                  <IconButton
-                    icon={EditIcon}
-                    className="edit-icon"
-                    onClick={() => {
-                      handleEdit(idx, lang_line);
-                    }}
-                  />
-                  <IconButton
-                    icon={TrashIcon}
-                    className="trash-icon"
-                    onClick={() => {
-                      handleCancel(idx);
-                    }}
-                  />
+                  {!viewOnly && (
+                    <>
+                      <IconButton
+                        icon={EditIcon}
+                        className="edit-icon"
+                        onClick={() => {
+                          handleEdit(idx, lang_line);
+                        }}
+                      />
+                      <IconButton
+                        icon={TrashIcon}
+                        className="trash-icon"
+                        onClick={() => {
+                          handleCancel(idx);
+                        }}
+                      />
+                    </>
+                  )}
                 </Pane>
               </Pane>
             </Pane>
@@ -180,6 +190,7 @@ function LanguageAbility({ insertData, setInsertData }: I_Language_Props) {
         return (
           <NewLanguage
             key={idx}
+            idx={idx}
             handleSave={getHandleSaveLang(idx)}
             defaultData={lang_line}
             handleRemoveLang={(e: any) => {

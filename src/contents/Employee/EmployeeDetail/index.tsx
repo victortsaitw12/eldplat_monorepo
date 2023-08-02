@@ -27,6 +27,7 @@ import {
 
 //@content
 import { CharactorCard } from "@contents/Employee/Charactor/";
+import LanguageAbility from "@contents/Employee/LanguageAbility";
 interface I_Props {
   submitRef: React.RefObject<HTMLButtonElement>;
   isEdit: boolean;
@@ -39,8 +40,9 @@ interface I_Props {
 }
 
 const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
+  console.log(data);
   const methods = useForm({ defaultValues: data });
-  const {} = { ...data };
+
   const sex: { [key: string]: string } = {
     "0": "女性",
     "1": "男性",
@@ -228,8 +230,8 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
   const language_info: I_infoData[] | undefined = [
     {
       req: false,
-      label: "中文",
-      value: "--"
+      label: "",
+      value: <LanguageAbility insertData={data} viewOnly={true} />
     }
   ];
   return (
@@ -292,7 +294,6 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
                 infoData={employee_info}
               />
               <InfoBox
-                infoTitle="語言能力"
                 style={{ flex: "1" }}
                 isEdit={isEdit}
                 infoData={language_info}

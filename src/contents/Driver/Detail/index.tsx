@@ -76,6 +76,7 @@ function DriverDetail({
           userName={driverData.info.user_name}
           refetch={refetch}
           driverNo={driverNo}
+          isEdit={isEdit}
         />
       )}
       {visibleForm === "3" && (

@@ -82,13 +82,9 @@ const Page: NextPageWithLayout<
           (item: { license_name: any }) => item.license_name
         ),
         groups: newData["groups"],
-        // group_no: newData.groups.map((item: any) => {
-        //   return {
-        //     title: item["group_name"],
-        //     description: item["description"],
-        //     id: item["group_no"]
-        //   };
-        // }),
+        group_no: newData.groups.map((item: any) => {
+          return item["group_no"];
+        }),
         languages: newData["languages"],
         healths: newData["healths"]
       };
