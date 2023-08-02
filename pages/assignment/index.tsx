@@ -32,11 +32,28 @@ import {
 
 import { I_PageInfo } from "@components/PaginationField";
 import AssignmentDrawers from "@contents/Assignment/AssignmentDrawers";
-//
+
+// ----- variables ----- //
 const mainFilterArray = [{ id: 1, label: "全部", value: "1" }];
 export const startTimeName = ["start_hours", "start_minutes", "start_type"];
 export const endTimeName = ["end_hours", "end_minutes", "end_type"];
-//
+const DUMMY_FILTER = [
+  {
+    field_Name: "maintenance_quote_no",
+    arrayConditions: ["like", "equal"],
+    displayType: "search",
+    dataType: "string",
+    label: "單號"
+  },
+  {
+    field_Name: "DUMMY_TYPE",
+    arrayConditions: ["like", "equal"],
+    displayType: "fix",
+    dataType: "string",
+    label: "分類"
+  }
+];
+
 const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
@@ -67,8 +84,9 @@ const Page: NextPageWithLayout<never> = () => {
     end_type: ""
   });
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
-  const [disabledAutoAssign, setDisabledAutoAssign] = useState<string[]>([]);
+  const [disabledAutoList, setDisabledAutoList] = useState<string[]>([]);
 
+  console.log("🍅disabledAutoList:", disabledAutoList);
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
   function setPosition(dayNum: number, carNum: number) {
@@ -78,7 +96,37 @@ const Page: NextPageWithLayout<never> = () => {
       setOrderIndex(2 * (dayNum - 1) + carNum - 1);
     }
   }
+  useEffect(() => {
+    console.log("disabledAutoList", disabledAutoList);
+    setData((oldData: Array<any>) => {
+      if (!oldData) return oldData;
+      const updateData = oldData.map((item) => {
+        const quoteNo = item.maintenance_quote_no.value;
+        if (disabledAutoList.includes(quoteNo)) {
+          const newItem = item;
+          newItem["auto_assign"] = {
+            label: (
+              <AutoAssignBtn
+                setFirstDrawerOpen={() => setFirstDrawerOpen("autoAssign")}
+                id={newItem.maintenance_quote_no.value}
+                setOrderInfo={setOrderInfo}
+                disabled={disabledAutoList.includes(
+                  newItem.maintenance_quote_no.value
+                )}
+              />
+            ),
+            value: null
+          };
 
+          return newItem;
+          //
+        }
+        return item;
+      });
+      return updateData;
+    });
+  }, [disabledAutoList]);
+  console.log("data!!!", data);
   const {
     initializeSubFilter,
     mainFilter,
@@ -88,72 +136,73 @@ const Page: NextPageWithLayout<never> = () => {
   } = useAssignmentStore();
   //
 
+  const assignParser = (data: any, key: string) => {
+    // if (key === "id") {
+    //   return {
+    //     label: data["customer_no"] || null,
+    //     value: data["customer_no"] || null
+    //   };
+    // }
+    if (key === "maintenance_quote_no") {
+      return {
+        label: (
+          <Text
+            style={{
+              cursor: "pointer"
+            }}
+            onClick={() => {
+              data.maintenance_quote_no.substring(0, 3) === "MTC"
+                ? router.push(
+                    `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
+                  )
+                : router.push(
+                    `/client/orders/detail/${data.maintenance_quote_no}`
+                  );
+              console.log("goToPageDetail");
+            }}
+          >
+            {data.maintenance_quote_no || "--"}
+          </Text>
+        ),
+        value: data.maintenance_quote_no || null
+      };
+    }
+    if (key === "task_start_time") {
+      return {
+        label:
+          data.task_start_time !== null
+            ? convertDateAndTimeFormat(data.task_start_time)
+            : "--",
+        value:
+          data.task_start_time !== null
+            ? convertDateAndTimeFormat(data.task_start_time)
+            : "--"
+      };
+    }
+    if (key === "task_end_time") {
+      return {
+        label:
+          data.task_end_time !== null
+            ? convertDateAndTimeFormat(data.task_end_time)
+            : "--",
+        value:
+          data.task_end_time !== null
+            ? convertDateAndTimeFormat(data.task_end_time)
+            : "--"
+      };
+    }
+
+    return {
+      label: data[key] || "--",
+      value: data[key] || null
+    };
+  };
+
   const fetchAssignData = async (
     isCanceled: boolean,
     mainFilter = "1",
     pageInfo = defaultPageInfo
   ) => {
-    const assignParser = (data: any, key: string) => {
-      // if (key === "id") {
-      //   return {
-      //     label: data["customer_no"] || null,
-      //     value: data["customer_no"] || null
-      //   };
-      // }
-      if (key === "maintenance_quote_no") {
-        return {
-          label: (
-            <Text
-              style={{
-                cursor: "pointer"
-              }}
-              onClick={() => {
-                data.maintenance_quote_no.substring(0, 3) === "MTC"
-                  ? router.push(
-                      `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
-                    )
-                  : router.push(
-                      `/client/orders/detail/${data.maintenance_quote_no}`
-                    );
-                console.log("goToPageDetail");
-              }}
-            >
-              {data.maintenance_quote_no || "--"}
-            </Text>
-          ),
-          value: data.maintenance_quote_no || null
-        };
-      }
-      if (key === "task_start_time") {
-        return {
-          label:
-            data.task_start_time !== null
-              ? convertDateAndTimeFormat(data.task_start_time)
-              : "--",
-          value:
-            data.task_start_time !== null
-              ? convertDateAndTimeFormat(data.task_start_time)
-              : "--"
-        };
-      }
-      if (key === "task_end_time") {
-        return {
-          label:
-            data.task_end_time !== null
-              ? convertDateAndTimeFormat(data.task_end_time)
-              : "--",
-          value:
-            data.task_end_time !== null
-              ? convertDateAndTimeFormat(data.task_end_time)
-              : "--"
-        };
-      }
-
-      return {
-        label: data[key] || "--",
-        value: data[key] || null
-      };
-    };
     //---------------------------------------------------------------
     getAllAssignments(pageInfo)
       .then((data) => {
@@ -162,24 +211,10 @@ const Page: NextPageWithLayout<never> = () => {
           return;
         }
         if (!subFilter) {
-          const DUMMY_FILTER = [
-            {
-              field_Name: "User_Name",
-              arrayConditions: ["like", "equal"],
-              displayType: "search",
-              dataType: "string",
-              label: "使用者姓名"
-            }
-          ];
-          data.conditionList
-            ? localStorage.setItem(
-                "assignmentInitFilter",
-                JSON.stringify(data.conditionList)
-              )
-            : localStorage.setItem(
-                "assignmentInitFilter",
-                JSON.stringify(DUMMY_FILTER)
-              );
+          localStorage.setItem(
+            "assignmentInitFilter",
+            JSON.stringify(data.conditionList || DUMMY_FILTER)
+          );
           initializeSubFilter();
         }
         // ✅設定子列表的狀態
@@ -199,7 +234,8 @@ const Page: NextPageWithLayout<never> = () => {
         );
         const newData = [...assignData];
         newData.map((v, idx) => {
-          const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
+          // const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
+          const item_no = (idx + 1).toString().padStart(4, "0");
           v["no"] = { label: item_no, value: item_no };
           if (v.maintenance_quote_no.value.substring(0, 3) === "MTC") {
             // 維保單無按鈕
@@ -213,14 +249,13 @@ const Page: NextPageWithLayout<never> = () => {
             };
           } else {
             // 全新訂單排程按鈕 or 已排程訂單修改按鈕
-            // TODO 🍅🍅🍅 這裡的 disabledAutoAssign 不會計入 virtual dom 更新state @@
             v["auto_assign"] = {
               label: newSubData[idx].length === 0 && (
                 <AutoAssignBtn
                   setFirstDrawerOpen={() => setFirstDrawerOpen("autoAssign")}
                   id={v.maintenance_quote_no.value}
                   setOrderInfo={setOrderInfo}
-                  disabled={disabledAutoAssign.includes(
+                  disabled={disabledAutoList.includes(
                     v.maintenance_quote_no.value
                   )}
                 />
@@ -513,7 +548,6 @@ const Page: NextPageWithLayout<never> = () => {
           }}
           filter={subFilter}
         >
-          {" "}
           <div style={{ color: "red", fontSize: "36px" }}></div>
           <AssignmentList
             assignData={data}
@@ -541,7 +575,7 @@ const Page: NextPageWithLayout<never> = () => {
             setFirstDrawerOpen("");
           }}
           orderInfo={orderInfo}
-          setDisabledAutoAssign={setDisabledAutoAssign}
+          setDisabledAutoList={setDisabledAutoList}
           showSecondTitle={showSecondTitle}
           setShowSecondTitle={setShowSecondTitle}
           setPosition={setPosition}

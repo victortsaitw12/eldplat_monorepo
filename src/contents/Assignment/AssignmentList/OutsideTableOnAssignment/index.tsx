@@ -59,7 +59,6 @@ function OutsideTableOnAssignment({
   setOrderInfo,
   setFirstDrawerOpen
 }: I_Table) {
-  console.log("assignData in outside table", assignData);
   if (!assignData) return <p>Loading</p>;
   return (
     <TableContainerSTY className="TableContainerSTY">
@@ -92,7 +91,8 @@ function OutsideTableOnAssignment({
               assignData.map((item: any, idx) => {
                 return (
                   <TableRow
-                    key={uuid()}
+                    // key={uuid()}
+                    key={`outsideRow-${item.maintenance_quote_no.value}`}
                     idx={idx}
                     item={item}
                     assignData={assignData}
