@@ -7,32 +7,13 @@ interface I_routers {
   }[];
 }
 
-const routers: I_routers = {
+const breadcrumbs: I_routers = {
   "/": [{ label: "入門", url: "/" }],
   "/bus/detail/[id]": [
     { label: "入門", url: "/" },
     { label: "汽車", url: "/bus" }
   ],
-  "/bus?type=1": [
-    { label: "汽車", url: "/" },
-    { label: "車輛清單", url: "/bus?type=1" }
-  ],
-  "/bus?type=2": [
-    { label: "汽車", url: "/" },
-    { label: "車輛分配", url: "/bus?type=2" }
-  ],
-  "/bus?type=3": [
-    { label: "汽車", url: "/" },
-    { label: "儀表歷史", url: "/bus?type=3" }
-  ],
-  "/bus?type=4": [
-    { label: "汽車", url: "/" },
-    { label: "費用歷史", url: "/bus?type=4" }
-  ],
-  "/bus?type=5": [
-    { label: "汽車", url: "/" },
-    { label: "替代分析", url: "/bus?type=5" }
-  ],
+
   "/shift": [
     { label: "入門", url: "/" },
     { label: "駕駛排班", url: "/shift" }
@@ -49,34 +30,6 @@ const routers: I_routers = {
     { label: "入門", url: "/" },
     { label: "客戶", url: "/customer" },
     { label: "詳情", url: "" }
-  ],
-  "/vendor?codeType=01": [
-    { label: "入門", url: "/" },
-    { label: "外部車隊", url: "/vendor?codeType=01" }
-  ],
-  "/vendor?codeType=03": [
-    { label: "入門", url: "/" },
-    { label: "維修廠", url: "/vendor?codeType=03" }
-  ],
-  "/vendor?codeType=05": [
-    { label: "入門", url: "/" },
-    { label: "燃料", url: "/vendor?codeType=05" }
-  ],
-  "/vendor?codeType=07": [
-    { label: "入門", url: "/" },
-    { label: "Etag", url: "/vendor?codeType=07" }
-  ],
-  "/vendor?codeType=02": [
-    { label: "入門", url: "/" },
-    { label: "設備庫存", url: "/vendor?codeType=02" }
-  ],
-  "/vendor?codeType=04": [
-    { label: "入門", url: "/" },
-    { label: "保險", url: "/vendor?codeType=04" }
-  ],
-  "/vendor?codeType=06": [
-    { label: "入門", url: "/" },
-    { label: "其他", url: "/vendor?codeType=04" }
   ],
   "/vendor/detail/[id]": [
     { label: "入門", url: "/" },
@@ -156,11 +109,71 @@ const routers: I_routers = {
   ]
 };
 
+const vendorsBreadcrumbs: I_routers = {
+  "01": [
+    { label: "入門", url: "/" },
+    { label: "外部車隊", url: "/vendor?codeType=01" }
+  ],
+  "03": [
+    { label: "入門", url: "/" },
+    { label: "維修廠", url: "/vendor?codeType=03" }
+  ],
+  "05": [
+    { label: "入門", url: "/" },
+    { label: "燃料", url: "/vendor?codeType=05" }
+  ],
+  "07": [
+    { label: "入門", url: "/" },
+    { label: "Etag", url: "/vendor?codeType=07" }
+  ],
+  "02": [
+    { label: "入門", url: "/" },
+    { label: "設備庫存", url: "/vendor?codeType=02" }
+  ],
+  "04": [
+    { label: "入門", url: "/" },
+    { label: "保險", url: "/vendor?codeType=04" }
+  ],
+  "06": [
+    { label: "入門", url: "/" },
+    { label: "其他", url: "/vendor?codeType=04" }
+  ]
+};
+
+const busListBreadcrumbs: I_routers = {
+  "1": [
+    { label: "汽車", url: "/" },
+    { label: "車輛清單", url: "/bus?type=1" }
+  ],
+  "2": [
+    { label: "汽車", url: "/" },
+    { label: "車輛分配", url: "/bus?type=2" }
+  ],
+  "3": [
+    { label: "汽車", url: "/" },
+    { label: "儀表歷史", url: "/bus?type=3" }
+  ],
+  "4": [
+    { label: "汽車", url: "/" },
+    { label: "費用歷史", url: "/bus?type=4" }
+  ],
+  "5": [
+    { label: "汽車", url: "/" },
+    { label: "替代分析", url: "/bus?type=5" }
+  ]
+};
+
 const getPageBreadCrumbs = (router: NextRouter) => {
-  console.log("router.pathname", router.pathname);
-  console.log("router.asPath", router.asPath);
-  const newRouters = routers[router.pathname] || routers[router.asPath] || [];
-  return newRouters;
+  // console.log("router.pathname", router.pathname);
+  // console.log("router.asPath", router.asPath);
+  // console.log("router.query", router.query);
+  const newBreadcrumbs =
+    breadcrumbs[router.pathname] ||
+    breadcrumbs[router.asPath] ||
+    vendorsBreadcrumbs[router?.query?.codeType as string] ||
+    busListBreadcrumbs[router?.query?.type as string] ||
+    [];
+  return newBreadcrumbs;
 };
 
 export default getPageBreadCrumbs;

@@ -14,26 +14,23 @@ const OrderListItem = ({
   setData: (v: any) => void;
 }) => {
   const progressInfo = mappingProgressInfo(itemData.status_list);
-  const handlePaymentClick = (e: any) => {
-    const fetchData = async () => {
-      try {
-        const queryRes = await getOrdersList(1);
-        const quoteRes = await getOrdersList(2);
-        const orderRes = await getOrdersList(3);
-        const finishRes = await getOrdersList(4);
-        setData({
-          query: queryRes,
-          quote: quoteRes,
-          order: orderRes,
-          finish: finishRes
-        });
-      } catch (e) {
-        console.log("出現錯誤");
-      }
-    };
-    fetchData();
-    e.stopPropagation();
+  const fetchData = async () => {
+    try {
+      const queryRes = await getOrdersList(1);
+      const quoteRes = await getOrdersList(2);
+      const orderRes = await getOrdersList(3);
+      const finishRes = await getOrdersList(4);
+      setData({
+        query: queryRes,
+        quote: quoteRes,
+        order: orderRes,
+        finish: finishRes
+      });
+    } catch (e) {
+      console.log("出現錯誤");
+    }
   };
+
   return (
     <BodySTY className="orderListItem">
       <div className="info-content">
@@ -53,10 +50,12 @@ const OrderListItem = ({
       <div className="info-progress">
         <ProgressList dataLists={progressInfo} />
       </div>
-      {itemData.status_list[1].status !== "pending" &&
-        itemData.status_list[3].status === "pending" && (
-          <PaymentBtn data={itemData} setData={(e) => handlePaymentClick(e)} />
-        )}{" "}
+      <div onClick={(e) => e.stopPropagation()}>
+        {itemData.status_list[1].status !== "pending" &&
+          itemData.status_list[3].status === "pending" && (
+            <PaymentBtn data={itemData} setData={fetchData} />
+          )}
+      </div>
     </BodySTY>
   );
 };

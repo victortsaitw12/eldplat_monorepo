@@ -19,16 +19,16 @@ import {
 //   { value: "03", label: "韓文" },
 //   { value: "04", label: "泰文" }
 // ];
-const currencyOptions = [
-  { value: "no", label: "請選擇" },
-  { value: "01", label: "台幣" },
-  { value: "02", label: "日幣" },
-  { value: "03", label: "韓元" },
-  { value: "04", label: "泰銖" }
-];
+// const currencyOptions = [
+//   { value: "no", label: "請選擇" },
+//   { value: "01", label: "台幣" },
+//   { value: "02", label: "日幣" },
+//   { value: "03", label: "韓元" },
+//   { value: "04", label: "泰銖" }
+// ];
 
 function CountrySet() {
-  const { companyData, setCompanyData, ddlLanguage, handleCompanyDDLChange } =
+  const { companyData, setCompanyData, handleCompanyDDLChange, companyDDL } =
     useContext<I_Company_Context>(CompanyContext);
   const { allCountries, setAllCountries } =
     useContext<I_Region_Context>(RegionContext);
@@ -38,6 +38,38 @@ function CountrySet() {
   const [editCurData, setEditCurData] = useState<any[]>();
   const [langData, setLangData] = useState<any[]>([]);
   const [currencyData, setCurrencyData] = useState<any[]>([]);
+  const [ddlLanguage, setDdlLanguage] = useState<any>([
+    { label: "請選擇", value: "no" }
+  ]);
+  const [ddlCurrency, setDdlCurrency] = useState<any>([
+    { label: "請選擇", value: "no" }
+  ]);
+
+  // 語系下拉資料
+  useEffect(() => {
+    const langDDL = companyDDL?.language_options.map(
+      (v: { option_name: string; option_code: string }) => {
+        return {
+          label: v.option_name,
+          value: v.option_code
+        };
+      }
+    );
+    setDdlLanguage(langDDL);
+  }, [companyDDL?.language_options]);
+
+  // 幣別下拉資料
+  useEffect(() => {
+    const curDDL = companyDDL?.currency_options.map(
+      (v: { option_name: string; option_code: string }) => {
+        return {
+          label: v.option_name,
+          value: v.option_code
+        };
+      }
+    );
+    setDdlCurrency(curDDL);
+  }, [companyDDL?.currency_options]);
 
   useEffect(() => {
     // 一進來先抓資料庫裡有語言的資料
@@ -48,7 +80,7 @@ function CountrySet() {
       };
     });
     setEditLangData(newLangData);
-  }, [, company_language_data]);
+  }, [company_language_data]);
 
   useEffect(() => {
     // 一進來先抓資料庫裡有幣別的資料
@@ -84,6 +116,10 @@ function CountrySet() {
 
     setCompanyData(apiData);
   }, [langData, currencyData]);
+
+  console.log("1️⃣langData", langData);
+  console.log("2️⃣currencyData", currencyData);
+
   return (
     <BodySTY>
       <Heading is="h4">國別 / 語系 / 幣別設定</Heading>
@@ -105,19 +141,6 @@ function CountrySet() {
               </option>
             ))}
           </SelectField>
-          {/* <SelectField
-            className="com_Country"
-            marginBottom="0px"
-            name="company_country"
-            value={companyData.company_country}
-            onChange={(e: any) => {
-              handleCompanyDDLChange(e);
-            }}
-          >
-            <option value="TW">台灣</option>
-            <option value="JP">日本</option>
-            <option value="US">美國</option>
-          </SelectField> */}
         </Pane>
         <Pane className="input-line">
           <Text className="">語系</Text>
@@ -131,7 +154,7 @@ function CountrySet() {
         <Pane className="input-line">
           <Text className="">幣別</Text>
           <TagSelect
-            options={currencyOptions}
+            options={ddlCurrency}
             handleCustomData={setCurrencyData}
             editData={editCurData}
           />

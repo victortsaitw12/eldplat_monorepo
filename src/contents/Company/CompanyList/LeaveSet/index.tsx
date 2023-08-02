@@ -18,8 +18,12 @@ function CountrySet() {
         <Pane className="input-line">
           <Text className="">排休種類</Text>
           <Pane>
-            {company_leave_data?.map((item) => {
-              return <Text key={item.leave_code}>{item.leave_name}、</Text>;
+            {company_leave_data?.map((item, idx) => {
+              return (
+                <Text key={item.leave_code}>{`${item.leave_name}${
+                  idx + 1 === company_leave_data?.length ? "" : "、"
+                }`}</Text>
+              );
             })}
           </Pane>
         </Pane>

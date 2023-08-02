@@ -16,6 +16,7 @@ import Drawer from "@components/Drawer";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import { I_PageInfo } from "@components/PaginationField";
+import { useRouter } from "next/router";
 
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -23,11 +24,14 @@ const mainFilterArray = [
 ];
 
 const Page: NextPageWithLayout<never> = () => {
+  const router = useRouter();
   const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
-  const [nowTab, setNowTab] = useState("1");
+  const [nowTab, setNowTab] = useState(
+    (router?.query?.status as string) || "1"
+  );
   const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
   React.useEffect(() => {
     let isCanceled = false;
@@ -142,7 +146,13 @@ const Page: NextPageWithLayout<never> = () => {
     };
   };
 
-  const changeMainFilterHandler = (value: string) => setNowTab(value);
+  const changeMainFilterHandler = (value: string) => {
+    setNowTab(value);
+    router.push({
+      pathname: "/driver/",
+      query: { ...router?.query, status: value }
+    });
+  };
 
   const handleOpenSearch = () => {
     setIsOpenDrawer((prev) => !prev);

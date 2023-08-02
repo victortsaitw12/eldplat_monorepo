@@ -28,7 +28,9 @@ const mainFilterArray = [
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
-  const [nowTab, setNowTab] = useState("1");
+  const [nowTab, setNowTab] = useState(
+    (router?.query?.status as string) || "1"
+  );
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     arrangement: "desc",
@@ -96,6 +98,10 @@ const Page: NextPageWithLayout<never> = () => {
   };
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
+    router.push({
+      pathname: "/customer/",
+      query: { ...router?.query, status: value }
+    });
   };
   const deleteItemHandler = async (id: string) => {
     deleteCustomer(id).then((res) => {
