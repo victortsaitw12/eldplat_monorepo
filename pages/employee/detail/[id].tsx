@@ -118,7 +118,7 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
           />
         );
       case "2":
-        return <HealthInfo isEdit={false} insertData={data} />;
+        return <HealthInfo userId={userId} isEdit={false} insertData={data} />;
       default:
         break;
     }
