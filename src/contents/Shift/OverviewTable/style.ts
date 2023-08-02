@@ -145,20 +145,18 @@ export const TableSTY = styled.div<{
     svg {
       fill: #fff;
     }
-    span {
-      &:n1 {
-        display: ${({ expandPercentage }) =>
-          showText(expandPercentage, 1) ? "inline" : "none"};
-      }
-      &:n2 {
-        display: ${({ expandPercentage }) =>
-          showText(expandPercentage, 2) ? "inline" : "none"};
-      }
-      &:n3 {
-        display: ${({ expandPercentage }) =>
-          showText(expandPercentage, 3) ? "inline" : "none"};
-      }
-    }
+  }
+  .n1 > span {
+    display: ${({ expandPercentage }) =>
+      showText(expandPercentage, 1) ? "inline" : "none"};
+  }
+  .n2 > span {
+    display: ${({ expandPercentage }) =>
+      showText(expandPercentage, 2) ? "inline" : "none"};
+  }
+  .n3 > span {
+    display: ${({ expandPercentage }) =>
+      showText(expandPercentage, 3) ? "inline" : "none"};
   }
   .noResultMsg {
     width: 100%;
