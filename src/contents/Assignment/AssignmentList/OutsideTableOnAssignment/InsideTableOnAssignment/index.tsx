@@ -63,7 +63,7 @@ function InsideTableOnAssignment({
             {assignData[idx].maintenance_quote_no?.value.substring(0, 3) !==
               "MTC" && (
               <th>
-                <span>操作</span>
+                <span className="table-action">操作</span>
               </th>
             )}
           </tr>
