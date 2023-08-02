@@ -158,6 +158,7 @@ const Page: NextPageWithLayout<
                 )}
                 {nowTab === "2" && (
                   <HealthInfo
+                    userId={userId}
                     isEdit={true}
                     insertData={editData}
                     setInsertData={setEditData}
