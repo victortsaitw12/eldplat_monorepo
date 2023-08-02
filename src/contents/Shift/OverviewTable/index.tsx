@@ -12,7 +12,7 @@ import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
 interface I_OverviewTable {
   data: DriverData[];
   initialMonthFirst: Date;
-  isExpand: boolean;
+  expandPercentage: number;
   handleCheckboxChange?: (item: any) => void;
   handleSelectAll?: () => void;
   handleDeselectAll?: () => void;
@@ -20,7 +20,7 @@ interface I_OverviewTable {
 const OverviewTable = ({
   data,
   initialMonthFirst,
-  isExpand,
+  expandPercentage,
   handleCheckboxChange = (item) => {
     console.log(item);
   },
@@ -64,12 +64,14 @@ const OverviewTable = ({
           item.schd_Type === "04"
             ? item.schd_Type.concat(item.check_Status)
             : item.schd_Type;
+        const shownTotal =
+          shiftsOnGivenDate.length >= 3 ? 3 : shiftsOnGivenDate.length;
         return (
           <EventTag
             key={`shift-${i}`}
             className={`shift-btn ${i >= 3 ? "hidden" : ""} ${
               item.check_Status === "0" ? "reminder" : ""
-            }`}
+            } n${shownTotal}`}
             value={EVENT_TYPE.get(eventTypeCode)}
           />
         );
@@ -124,7 +126,7 @@ const OverviewTable = ({
   return (
     <TableSTY
       className="overviewTable"
-      isExpand={isExpand}
+      expandPercentage={expandPercentage}
       ref={containerRef}
       // onWheel={handleScroll}
     >
@@ -137,10 +139,16 @@ const OverviewTable = ({
             onChange={(e) => handleCheckAll(e)}
             checked={checkedItems.length === data.length}
           />
-          <Table.TextHeaderCell className="eg-th">
+          <Table.TextHeaderCell
+            className="eg-th"
+            style={{ width: "64px", minWidth: "64px" }}
+          >
             駕駛姓名
           </Table.TextHeaderCell>
-          <Table.TextHeaderCell className="eg-th">
+          <Table.TextHeaderCell
+            className="eg-th"
+            style={{ width: "64px", minWidth: "64px" }}
+          >
             休假(天)
           </Table.TextHeaderCell>
           {dateCells}
@@ -163,10 +171,16 @@ const OverviewTable = ({
                   e.stopPropagation();
                 }}
               />
-              <Table.TextCell className="eg-td">
+              <Table.TextCell
+                className="eg-td"
+                style={{ width: "64px", minWidth: "64px" }}
+              >
                 {item.user_Name}
               </Table.TextCell>
-              <Table.TextCell className="eg-td">
+              <Table.TextCell
+                className="eg-td"
+                style={{ width: "64px", minWidth: "64px" }}
+              >
                 {item.total_Leave_Days}
               </Table.TextCell>
               {dateArr.map((date, i) => (

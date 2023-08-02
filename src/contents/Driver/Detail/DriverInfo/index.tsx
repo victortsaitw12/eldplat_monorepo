@@ -93,7 +93,10 @@ function DriverInfo({
     {
       req: false,
       label: "駕駛國家",
-      value: getValues("driver_country") || "--",
+      value:
+        (getValues("driver_country") &&
+          DRIVER_COUNTRY[getValues("driver_country")].label) ||
+        "--",
       editEle: (
         <Select
           key="driver_country"
@@ -111,7 +114,10 @@ function DriverInfo({
     {
       req: false,
       label: "執照州/省/地區",
-      value: getValues("license_area") || "--",
+      value:
+        (getValues("license_area") &&
+          LICENSE_AREA[getValues("license_area")].label) ||
+        "--",
       editEle: (
         <Select
           key="license_area"

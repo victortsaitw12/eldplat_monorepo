@@ -2,10 +2,22 @@ import styled from "styled-components";
 
 const checkboxWidth = 36;
 const freezeColWidth = 72;
+const showText = (value: number, length: number) => {
+  const min = 64;
+  const t1 = 80;
+  const t2 = 176;
+  const max = 256;
+  if (length === 1 && value < t1 / (max - min)) return false;
+  if (length === 2 && value < t2 / (max - min)) return false;
+  if (length >= 3 && value < 100) return false;
+  return true;
+};
 
-export const TableSTY = styled.div<{ isExpand: boolean }>`
-  ${({ isExpand }) => `
-    --cellWidth: ${isExpand ? "140px" : "72px"};
+export const TableSTY = styled.div<{
+  expandPercentage: number;
+}>`
+  ${({ expandPercentage }) => `
+    --cellWidth: ${64 + (expandPercentage * (256 - 64)) / 100 + "px"};
   `}
   height: 100%;
   width: fit-content;
@@ -125,7 +137,7 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
     }
   }
   .shift-btn {
-    width: ${({ isExpand }) => (isExpand ? "100%" : "unset")};
+    width: ${({ expandPercentage }) => (expandPercentage ? "100%" : "unset")};
     max-width: 100%;
     max-height: 100%;
     min-width: calc((100% - 2px * 2) / 3);
@@ -134,7 +146,18 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
       fill: #fff;
     }
     span {
-      display: ${({ isExpand }) => (isExpand ? "inline" : "none")};
+      &:n1 {
+        display: ${({ expandPercentage }) =>
+          showText(expandPercentage, 1) ? "inline" : "none"};
+      }
+      &:n2 {
+        display: ${({ expandPercentage }) =>
+          showText(expandPercentage, 2) ? "inline" : "none"};
+      }
+      &:n3 {
+        display: ${({ expandPercentage }) =>
+          showText(expandPercentage, 3) ? "inline" : "none"};
+      }
     }
   }
   .noResultMsg {
