@@ -8,9 +8,10 @@ export const BodySTY = styled.div`
       margin: 16px auto;
       align-items: center;
 
-      span {
+      span,
+      p {
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 400;
         color: #567190;
       }
       input {

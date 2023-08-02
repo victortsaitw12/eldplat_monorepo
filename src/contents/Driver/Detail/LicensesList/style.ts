@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const DivSTY = styled.div`
+  height: 100%;
   background-color: ${({ theme }) => theme.color.N0};
   padding: 20px;
   border-radius: 10px;
