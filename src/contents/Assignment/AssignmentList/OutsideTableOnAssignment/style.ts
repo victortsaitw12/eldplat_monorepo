@@ -94,16 +94,37 @@ const TableSTY = styled.table`
       background: #e3e3e3;
     }
   }
+
+  thead,
+  tbody {
+    tr {
+      th,
+      td {
+        /* alignment */
+        span,
+        div {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+        }
+        .table-action {
+          justify-content: center;
+          width: 100%;
+        }
+      }
+    }
+  }
   button {
     cursor: pointer;
-    background: none;
+    /* background: none; */
     border: none;
   }
   .data-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 8px;
+  }
+  .table-action {
+    justify-content: center;
+    width: 100%;
   }
   .dot {
     width: 6px;

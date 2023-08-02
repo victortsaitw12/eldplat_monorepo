@@ -39,11 +39,18 @@ export const startTimeName = ["start_hours", "start_minutes", "start_type"];
 export const endTimeName = ["end_hours", "end_minutes", "end_type"];
 const DUMMY_FILTER = [
   {
-    field_Name: "User_Name",
+    field_Name: "maintenance_quote_no",
     arrayConditions: ["like", "equal"],
     displayType: "search",
     dataType: "string",
-    label: "使用者姓名"
+    label: "單號"
+  },
+  {
+    field_Name: "DUMMY_TYPE",
+    arrayConditions: ["like", "equal"],
+    displayType: "fix",
+    dataType: "string",
+    label: "分類"
   }
 ];
 
