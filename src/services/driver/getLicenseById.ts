@@ -25,8 +25,8 @@ export interface I_License {
 // 取得單一駕駛證照資料
 export const getLicenseById = async (
   driver_no: string,
-  filter?: { [key: string]: any },
-  pageQuery?: any
+  pageQuery?: any,
+  filter?: { [key: string]: any }
 ) => {
   const requestBody = {
     driver_no: driver_no,

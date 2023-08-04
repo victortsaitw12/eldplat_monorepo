@@ -48,7 +48,6 @@ function LicensesList({ isEdit, userName, refetch, driverNo }: Props) {
     licn_issue: true,
     licn_exp: true,
     licn_examine_date: true,
-    // licn_filename: true,
     licn_link: true
   };
   const driverParser = (
@@ -128,6 +127,12 @@ function LicensesList({ isEdit, userName, refetch, driverNo }: Props) {
   const handleConfirm = () => {
     if (btnRef.current) btnRef.current.click();
   };
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      fetchLicenseData(pageQuery);
+    },
+    [driverNo]
+  );
   const asyncSubmitForm = async (data: any) => {
     console.log("😒😒😒 asyncSubmitForm called", data);
     const type = editNo ? false : true;
@@ -152,13 +157,13 @@ function LicensesList({ isEdit, userName, refetch, driverNo }: Props) {
       console.log(e);
     }
   };
+  const fetchLicenseData = async (pageQuery = defaultPageInfo) => {
+    const { licenses, pageInfo } = await getLicenseById(driverNo, pageQuery);
+    setLicensesData(licenses);
+    setPageInfo(pageInfo);
+  };
   React.useEffect(() => {
-    const fetchData = async () => {
-      const { licenses, pageInfo } = await getLicenseById(driverNo);
-      setLicensesData(licenses);
-      setPageInfo(pageInfo);
-    };
-    fetchData();
+    fetchLicenseData();
   }, [driverNo]);
 
   return (
@@ -174,6 +179,8 @@ function LicensesList({ isEdit, userName, refetch, driverNo }: Props) {
           deleteItem={handleDelete}
           createBtnText="新增駕駛證照"
           needCreateBtn={isEdit}
+          pageInfo={pageInfo}
+          onPageChange={handlePageChange}
         />
       )}
 
