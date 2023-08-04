@@ -86,7 +86,6 @@ const Page: NextPageWithLayout<never> = () => {
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [disabledAutoList, setDisabledAutoList] = useState<string[]>([]);
 
-  console.log("🍅disabledAutoList:", disabledAutoList);
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
   function setPosition(dayNum: number, carNum: number) {
@@ -156,7 +155,7 @@ const Page: NextPageWithLayout<never> = () => {
                     `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
                   )
                 : router.push(
-                    `/client/orders/detail/${data.maintenance_quote_no}`
+                    `/admin_orders/detail/${data.maintenance_quote_no}?type=1`
                   );
               console.log("goToPageDetail");
             }}
