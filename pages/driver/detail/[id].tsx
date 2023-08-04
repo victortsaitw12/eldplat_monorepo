@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { toaster, Pane, Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { DriverInfo } from "@contents/Driver/driver.type";
+import { I_DriverInfo } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
 import { useDriverStore } from "@contexts/filter/driverStore";
@@ -33,11 +33,7 @@ const Page: NextPageWithLayout<
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷"edit"
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [driverData, setDriverData] = useState<{
-    info: any;
-    workinghours: any;
-    languages: any;
-  }>();
+  const [driverData, setDriverData] = useState<I_DriverInfo>();
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const { mainFilter, updateMainFilter } = useDriverStore();
   // ------- useEffect ------- //
@@ -49,7 +45,7 @@ const Page: NextPageWithLayout<
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const data = await getDriverById(driverNo);
+        const data: I_DriverInfo = await getDriverById(driverNo);
         if (!data.info) {
           toaster.warning("查無此使用者，請重新選擇");
           router.push("/driver");

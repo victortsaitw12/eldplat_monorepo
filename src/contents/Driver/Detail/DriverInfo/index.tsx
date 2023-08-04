@@ -14,11 +14,10 @@ import { UpdateDriverInfoPayload } from "../../driver.type";
 import LanguageAbility from "@contents/Driver/Detail/LanguageAbility";
 import TagSelect from "@components/TagSelect";
 import {
-  DRIVER_COUNTRY,
-  LICENSE_AREA,
-  DSPH_AREA,
-  DSPH_CITY
-} from "@services/getDDL";
+  getDriverCountryDDL,
+  getLicenseAreaDDL,
+  I_AreaDDL
+} from "@services/driver/getAreaDDL";
 
 interface Props {
   selected?: boolean;
@@ -26,6 +25,10 @@ interface Props {
   getValues: UseFormGetValues<UpdateDriverInfoPayload>;
   isEdit: boolean;
   driverData: any;
+}
+interface I_LabelVal {
+  label: any;
+  value: any;
 }
 
 function DriverInfo({
@@ -37,6 +40,29 @@ function DriverInfo({
 }: Props) {
   const { info, workinghours } = driverData;
   const [checked, setChecked] = React.useState(false);
+  const [driverCountryDDL, setDriverCountryDDL] = React.useState<I_LabelVal[]>(
+    []
+  );
+  const [licenseAreaDDL, setLicenseAreaDDL] = React.useState([]);
+
+  // TODO const driverCountryDDL and licenseAreaDDL
+  React.useEffect(() => {
+    const fetchDDL = async () => {
+      const resCountryDDL = await getDriverCountryDDL();
+      const resAreaDDL = await getLicenseAreaDDL();
+
+      const driverCountryDDL = resCountryDDL.options.map((item: I_AreaDDL) => {
+        return { label: item.area_Name_Tw, value: item.area_No };
+      });
+      const licenseAreaDDL = resAreaDDL.options.map((item: I_AreaDDL) => {
+        return { label: item.area_Name_Tw, value: item.area_No };
+      });
+      setDriverCountryDDL(driverCountryDDL);
+      setLicenseAreaDDL(licenseAreaDDL);
+    };
+    fetchDDL();
+  }, []);
+
   // 基本資料
   const basicInfo = [
     {
@@ -56,7 +82,6 @@ function DriverInfo({
     }
   ];
   // 排班設定
-  console.log("🍅🍅🍅driverData", driverData);
   const schdInfo = [
     {
       req: true,
@@ -93,16 +118,19 @@ function DriverInfo({
     {
       req: false,
       label: "駕駛國家",
-      value: getValues("driver_country") || "--",
+      value:
+        driverCountryDDL.find(
+          (item: I_LabelVal) => item.value === getValues("driver_country")
+        )?.label || "--",
       editEle: (
         <Select
           key="driver_country"
           {...register("driver_country")}
           marginBottom="0"
         >
-          {Object.keys(DRIVER_COUNTRY).map((key) => (
-            <option key={key} value={key}>
-              {DRIVER_COUNTRY[key].label}
+          {driverCountryDDL?.map((item: any) => (
+            <option key={`driver_country${item.value}`} value={item.value}>
+              {item.label}
             </option>
           ))}
         </Select>
@@ -111,16 +139,16 @@ function DriverInfo({
     {
       req: false,
       label: "執照州/省/地區",
-      value: getValues("license_area") || "--",
+      value: driverData.info.license_area_name || "--",
       editEle: (
         <Select
           key="license_area"
           {...register("license_area")}
           marginBottom="0"
         >
-          {Object.keys(LICENSE_AREA).map((key) => (
-            <option key={key} value={key}>
-              {LICENSE_AREA[key].label}
+          {licenseAreaDDL?.map((item: any) => (
+            <option key={`driver_country${item.value}`} value={item.value}>
+              {item.label}
             </option>
           ))}
         </Select>
@@ -138,35 +166,34 @@ function DriverInfo({
       value: getValues("driver_seniority") || "--",
       editEle: <TextInput {...register("driver_seniority")} />
     },
-
-    {
-      req: false,
-      label: "派駐地待欄位",
-      value: getValues("dsph_city") || "--",
-      editEle: (
-        <Select key="dsph_city" {...register("dsph_city")} marginBottom="0">
-          {Object.keys(DSPH_CITY).map((key) => (
-            <option key={key} value={key}>
-              {DSPH_CITY[key].label}
-            </option>
-          ))}
-        </Select>
-      )
-    },
-    {
-      req: false,
-      label: "車隊待欄位",
-      value: getValues("dsph_area") || "--",
-      editEle: (
-        <Select key="dsph_area" {...register("dsph_area")} marginBottom="0">
-          {Object.keys(DSPH_AREA).map((key) => (
-            <option key={key} value={key}>
-              {DSPH_AREA[key].label}
-            </option>
-          ))}
-        </Select>
-      )
-    },
+    // {
+    //   req: false,
+    //   label: "派駐地待欄位",
+    //   value: getValues("dsph_city") || "--",
+    //   editEle: (
+    //     <Select key="dsph_city" {...register("dsph_city")} marginBottom="0">
+    //       {Object.keys(DSPH_CITY).map((key) => (
+    //         <option key={key} value={key}>
+    //           {DSPH_CITY[key].label}
+    //         </option>
+    //       ))}
+    //     </Select>
+    //   )
+    // },
+    // {
+    //   req: false,
+    //   label: "車隊待欄位",
+    //   value: getValues("dsph_area") || "--",
+    //   editEle: (
+    //     <Select key="dsph_area" {...register("dsph_area")} marginBottom="0">
+    //       {Object.keys(DSPH_AREA).map((key) => (
+    //         <option key={key} value={key}>
+    //           {DSPH_AREA[key].label}
+    //         </option>
+    //       ))}
+    //     </Select>
+    //   )
+    // },
     {
       req: false,
       label: "黑名單註記",

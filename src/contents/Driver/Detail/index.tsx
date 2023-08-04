@@ -35,12 +35,14 @@ function DriverDetail({
     defaultValues: {
       driver_no: driverData.info.driver_no,
       license_no: driverData.info.license_no,
-      driver_country: driverData.info.driver_country,
       license_area: driverData.info.license_area,
       license_lvl: driverData.info.license_lvl,
       driver_seniority: driverData.info.driver_seniority,
+      driver_country: driverData.info.driver_country,
       dsph_area: driverData.info.dsph_area,
-      dsph_city: driverData.info.dsph_city
+      dsph_group: driverData.info.dsph_group,
+      working_hours_code: driverData.info.working_hours_code,
+      working_hours_name: driverData.info.working_hours_name
     }
   });
 
@@ -72,10 +74,9 @@ function DriverDetail({
       </form>
       {visibleForm === "2" && (
         <LicensesList
-          licensesData={driverData.licenses}
+          driverNo={driverNo}
           userName={driverData.info.user_name}
           refetch={refetch}
-          driverNo={driverNo}
           isEdit={isEdit}
         />
       )}

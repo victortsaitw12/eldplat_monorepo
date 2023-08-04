@@ -13,7 +13,8 @@ const ZoomBar = ({
   const [initClientX, setInitClientX] = React.useState<number>(0);
 
   const zoomBarWidth = 100; //px
-  const stepSize = 100; //by percentage
+  // TODO remomve stepSize
+  const stepSize = 20; //by percentage
   const numSteps = 100 / stepSize;
   const limitMovement = (movement: number, limit: number): number => {
     return Math.max(Math.min(movement, limit), limit * -1);
@@ -34,23 +35,19 @@ const ZoomBar = ({
 
   const handleMouseMove = React.useCallback(
     (event: MouseEvent) => {
-      if (!isDragging) {
-        return;
-      }
+      if (!isDragging) return;
       const clientMouseMovement = event.clientX - initClientX;
       let adjustedMovement = (clientMouseMovement / zoomBarWidth) * 100;
-      if (scale <= 0 && adjustedMovement < 0) {
-        adjustedMovement = 0;
-      }
-      if (scale >= 100 && adjustedMovement > 0) {
-        adjustedMovement = 0;
-      }
+      if (scale <= 0 && adjustedMovement < 0) adjustedMovement = 0;
+      if (scale >= 100 && adjustedMovement > 0) adjustedMovement = 0;
+
       const adjustedMovementBySteps =
         Math.round(adjustedMovement / stepSize) * stepSize;
       const updatedScale = Math.min(scale + adjustedMovementBySteps, 100);
 
-      setScale(updatedScale);
-      setState && setState(updatedScale >= 100);
+      setScale(updatedScale <= 0 ? 0 : updatedScale);
+      // TODO add debounce
+      setState && setState(updatedScale <= 0 ? 0 : updatedScale);
     },
     [isDragging, initClientX, scale, setState]
   );
