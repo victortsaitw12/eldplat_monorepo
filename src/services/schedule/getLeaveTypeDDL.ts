@@ -12,7 +12,7 @@ export const getLeaveTypeDDL = async (): Promise<I_LeaveType[]> => {
   return result.dataList[0].leave_options;
 };
 
-interface I_LeaveType {
+export interface I_LeaveType {
   option_code: string; //'02
   option_name: string; // '病假'
 }

@@ -15,7 +15,7 @@ import {
 const LeaveTypePicker = () => {
   const UI = React.useContext(UIContext);
   const [showLeaveCode, setShowLeaveCode] = React.useState(true);
-  const [leaveTypes, setLeaveTypes] = React.useState([]);
+  const [leaveTypes, setLeaveTypes] = React.useState<I_LeaveType[]>([]);
   const schdType = UI.insertData.schd_Type;
 
   //------ functions ------//

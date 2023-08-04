@@ -12,12 +12,7 @@ import { I_DriverInfo } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
 import { useDriverStore } from "@contexts/filter/driverStore";
-import {
-  getDriverById,
-  I_Info,
-  I_Lang,
-  I_Workinghour
-} from "@services/driver/getDriverById";
+import { getDriverById } from "@services/driver/getDriverById";
 import { updateDriver } from "@services/driver/updateDriver";
 import DriverDetail from "@contents/Driver/Detail";
 import TableWrapper from "@layout/TableWrapper";
@@ -50,7 +45,7 @@ const Page: NextPageWithLayout<
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const data: I_Data = await getDriverById(driverNo);
+        const data: I_DriverInfo = await getDriverById(driverNo);
         if (!data.info) {
           toaster.warning("查無此使用者，請重新選擇");
           router.push("/driver");

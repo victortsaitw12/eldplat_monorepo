@@ -14,12 +14,6 @@ import { UpdateDriverInfoPayload } from "../../driver.type";
 import LanguageAbility from "@contents/Driver/Detail/LanguageAbility";
 import TagSelect from "@components/TagSelect";
 import {
-  DRIVER_COUNTRY,
-  LICENSE_AREA,
-  DSPH_AREA,
-  DSPH_CITY
-} from "@services/getDDL";
-import {
   getDriverCountryDDL,
   getLicenseAreaDDL,
   I_AreaDDL
@@ -46,7 +40,9 @@ function DriverInfo({
 }: Props) {
   const { info, workinghours } = driverData;
   const [checked, setChecked] = React.useState(false);
-  const [driverCountryDDL, setDriverCountryDDL] = React.useState([]);
+  const [driverCountryDDL, setDriverCountryDDL] = React.useState<I_LabelVal[]>(
+    []
+  );
   const [licenseAreaDDL, setLicenseAreaDDL] = React.useState([]);
 
   // TODO const driverCountryDDL and licenseAreaDDL
