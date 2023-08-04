@@ -7,10 +7,15 @@ import {
   CHECK_STATUS
 } from "@contents/Shift/shift.data";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
+import {
+  getLeaveTypeDDL,
+  I_LeaveType
+} from "@services/schedule/getLeaveTypeDDL";
 
 const LeaveTypePicker = () => {
   const UI = React.useContext(UIContext);
   const [showLeaveCode, setShowLeaveCode] = React.useState(true);
+  const [leaveTypes, setLeaveTypes] = React.useState([]);
   const schdType = UI.insertData.schd_Type;
 
   //------ functions ------//
@@ -36,7 +41,6 @@ const LeaveTypePicker = () => {
   };
 
   //------ render ------//
-
   const scheduleTypes = Array.from(SCHD_TYPE).map(([key, value]) => {
     if (key !== "01")
       return (
@@ -50,12 +54,16 @@ const LeaveTypePicker = () => {
         </option>
       );
   });
-  const leaveCode = Array.from(LEAVE_CODE).map(([key, value]) => (
-    <option key={"leaveType-" + key} value={key} color={value.color}>
-      {value.label}
-    </option>
-  ));
 
+  const fetchDDL = async () => {
+    const res = await getLeaveTypeDDL();
+    setLeaveTypes(res);
+  };
+
+  //------ useEffect ------//
+  React.useEffect(() => {
+    fetchDDL();
+  }, []);
   return (
     <>
       <LeaveTypePickerSTY
@@ -76,7 +84,14 @@ const LeaveTypePicker = () => {
             <option value="" disabled className="selectPlaceholder">
               請選擇假別
             </option>
-            {leaveCode}
+            {leaveTypes.map((item: I_LeaveType) => (
+              <option
+                key={"leaveType-" + item.option_code}
+                value={item.option_code}
+              >
+                {item.option_name}
+              </option>
+            ))}
           </Select>
         ) : (
           ""
