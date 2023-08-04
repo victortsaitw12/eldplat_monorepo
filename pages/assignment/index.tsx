@@ -156,7 +156,7 @@ const Page: NextPageWithLayout<never> = () => {
                     `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
                   )
                 : router.push(
-                    `/client/orders/detail/${data.maintenance_quote_no}`
+                    `/admin_orders/detail/${data.maintenance_quote_no}?type=1`
                   );
               console.log("goToPageDetail");
             }}
