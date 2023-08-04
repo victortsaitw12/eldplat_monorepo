@@ -40,7 +40,7 @@ interface I_Props {
 }
 
 const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
-  console.log(data);
+  console.log("data?.invts", data, data?.invts);
   const methods = useForm({ defaultValues: data });
 
   const sex: { [key: string]: string } = {
@@ -199,22 +199,7 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
       label: "離職日期",
       value: dayjs(data.leave_date).format("YYYY/MM/DD") || "--"
     },
-    //TODO:邀請時間與次數是啥？
-    {
-      req: false,
-      label: "邀請時間與次數",
-      value: "--"
-    },
-    {
-      req: false,
-      label: " ",
-      value: "--"
-    },
-    {
-      req: false,
-      label: " ",
-      value: "--"
-    },
+
     {
       req: false,
       label: "員工狀態",
@@ -226,6 +211,36 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
       value: data.license_name[0] || "--"
     }
   ];
+  //員工資訊-邀請次數
+  const invts_info =
+    data?.invts.length > 0
+      ? data?.invts.map((child: any, i: number) => {
+          if (i == 0) {
+            return {
+              req: false,
+              label: "邀請時間與次數",
+              value: child.invt_date + " 邀請第" + (i + 1) + "次"
+            };
+          } else {
+            return {
+              req: false,
+              label: " ",
+              value: child.invt_date + " 邀請第" + (i + 1) + "次"
+            };
+          }
+        })
+      : [
+          {
+            req: false,
+            label: "邀請時間與次數",
+            value: "--"
+          }
+        ];
+  //把邀請次數塞回員工資訊
+  invts_info.forEach((element: any, idx: number) => {
+    employee_info.splice(7 + idx, 0, element);
+  });
+
   //語言能力
   const language_info: I_infoData[] | undefined = [
     {

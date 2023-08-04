@@ -55,6 +55,7 @@ export interface I_Add_Employees_Type {
 }
 
 export interface I_Get_Employees_Type {
+  invts: any;
   user_name: string;
   user_first_name: string;
   user_english_name: string;

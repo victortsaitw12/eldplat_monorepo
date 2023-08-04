@@ -14,6 +14,7 @@ import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
 import { updateMaintenance } from "@services/maintenance/updateMaintenance";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
+
 const mainFilterArray = [{ id: 1, label: "維保資料", value: "1" }];
 //
 const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
@@ -41,12 +42,13 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
 
   useEffect(() => {
     updateMainFilter("1");
-
+    setLoading(true);
     // 如果進到檢視頁會先判斷這筆維保單是否已經結案，已結案就不會有編輯按鈕出現
     getMaintenanceById(maintenance_id).then((data) => {
       if (data.maintenance_status === "3") {
         setIsFinished(true);
       }
+      setLoading(false);
     });
   }, []);
   //TableWrapper
