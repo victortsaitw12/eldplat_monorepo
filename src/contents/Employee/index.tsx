@@ -18,7 +18,6 @@ import Basic from "./Basic";
 import Charactor from "./Charactor";
 import Contact from "./Contact";
 import EmployeeInfo from "./EmployeeInfo";
-import HealthFirst from "./HealthFirst";
 import LanguageAbility from "./LanguageAbility";
 import { BodySTY } from "./style";
 import LoadingSpinner from "@components/LoadingSpinner";

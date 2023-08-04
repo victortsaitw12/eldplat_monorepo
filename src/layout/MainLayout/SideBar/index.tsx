@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -29,10 +29,17 @@ interface Props {
 }
 //
 function SideBar({ menuData, personalData, isLoading }: Props) {
-  const personalPage = [];
-  const [isPersonal, setIsPersonal] = React.useState(false);
   const router = useRouter();
-  // console.log("📃📃📃📃📃📃📃📃", router);
+  const [isPersonal, setIsPersonal] = React.useState(false);
+  useEffect(() => {
+    setIsPersonal(
+      router.asPath.indexOf("/driver") >= 0 ||
+        router.asPath.indexOf("/employee") >= 0 ||
+        router.asPath.indexOf("/role") >= 0 ||
+        router.asPath.indexOf("/company") >= 0
+    );
+  }, [router]);
+
   return (
     <CompanyProvider>
       <BodySTY>
