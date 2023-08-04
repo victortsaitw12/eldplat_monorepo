@@ -102,11 +102,9 @@ function DriverForm({
       // 新增替代(駕駛)API
       const res = await createReplaceAssignment(data);
       // 成功or失敗訊息
-      if (res.statusCode !== "200") throw new Error(` ${res.resultString}`);
+      if (res.statusCode !== "200")
+        throw new Error(` ${res.resultString || ""}`);
       toaster.success("新增成功", {
-        description: `新增${dayjs(data.task_start_time).format(
-          "YYYY-MM-DD"
-        )}派工`,
         duration: 2,
         hasCloseButton: true
       });
@@ -114,8 +112,7 @@ function DriverForm({
       refetch && refetch();
       checkOtherAssignment(res.dataList[0]);
     } catch (e: any) {
-      toaster.success("新增失敗", {
-        description: `${e.message || ""}`,
+      toaster.danger("新增失敗", {
         duration: 3,
         hasCloseButton: true
       });

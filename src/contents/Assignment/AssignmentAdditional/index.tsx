@@ -113,7 +113,7 @@ I_AssignmentAdditionalVehicleProps) => {
       });
     } catch (e: any) {
       console.log(e);
-      toaster.success("新增失敗", {
+      toaster.danger("新增失敗", {
         description: `${e.message}`,
         duration: 2,
         hasCloseButton: true
