@@ -2,9 +2,26 @@ import { Heading, Pane, Text } from "evergreen-ui";
 import React from "react";
 import { BodySTY } from "./style";
 import { language_MAP } from "@contents/Driver/Detail/LanguageAbility/data";
-import { DriverInfo } from "@contents/Driver/driver.type";
+import { I_DriverInfo } from "@contents/Driver/driver.type";
+import { getOneDDL, I_LabelVal } from "@services/driver/getOneDDL";
 
-function LanguageAbility({ currentUserInfo }: { currentUserInfo: DriverInfo }) {
+function LanguageAbility({
+  currentUserInfo
+}: {
+  currentUserInfo: I_DriverInfo;
+}) {
+  let lang_name: I_LabelVal[] = [];
+  let lang_listen: I_LabelVal[] = [];
+  let lang_read: I_LabelVal[] = [];
+  let lang_speak: I_LabelVal[] = [];
+  let lang_write: I_LabelVal[] = [];
+
+  React.useEffect(() => {
+    const fetchDDL = async () => {
+      lang_name = await getOneDDL("language", "account");
+    };
+    fetchDDL();
+  }, []);
   return (
     <BodySTY>
       <Heading is="h4" className="title">
