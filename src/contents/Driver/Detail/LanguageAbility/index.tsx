@@ -11,10 +11,6 @@ function LanguageAbility({
   currentUserInfo: I_DriverInfo;
 }) {
   let lang_name: I_LabelVal[] = [];
-  let lang_listen: I_LabelVal[] = [];
-  let lang_read: I_LabelVal[] = [];
-  let lang_speak: I_LabelVal[] = [];
-  let lang_write: I_LabelVal[] = [];
 
   React.useEffect(() => {
     const fetchDDL = async () => {
