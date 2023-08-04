@@ -44,7 +44,6 @@ const MaintenanceDetail = ({
     defaultValues: async () => {
       return getMaintenanceById(maintenance_id).then((data) => {
         console.log("data for single one", data);
-        setLoading(false);
         const newData = { ...data };
         newData["service_start_date"] = dashDate(data.service_start_date);
         newData["service_end_date"] = dashDate(data.service_end_date);
@@ -244,9 +243,6 @@ const MaintenanceDetail = ({
     }
   ];
   console.log("register", register("meter"));
-  if (!loading) {
-    return <LoadingSpinner />;
-  }
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>
