@@ -49,29 +49,39 @@ const OverviewTable = ({
   };
 
   const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
-    const shiftsOnGivenDate = scheduleInfo.filter(
+    const shiftsOnDate = scheduleInfo.filter(
       (item: ScheduleInfoData) =>
         getDayStart(new Date(item.schd_Start_Time)) <=
           new Date(date.timestamp.valueOf()) &&
         new Date(item.schd_End_Time) >= new Date(date.timestamp.valueOf())
     );
+    const hideText = (value: number, length: number) => {
+      //設計稿給定 unit: px
+      const min = 64;
+      const t1 = 80;
+      const t2 = 176;
+      const max = 256;
+      if (length === 1 && value < t1 / (max - min)) return true;
+      if (length === 2 && value < t2 / (max - min)) return true;
+      if (length >= 3 && value < 100) return true;
+      return false;
+    };
 
-    if (shiftsOnGivenDate.length === 0) {
+    if (shiftsOnDate.length === 0) {
       return;
     } else {
-      return shiftsOnGivenDate.map((item: ScheduleInfoData, i: number) => {
+      return shiftsOnDate.map((item: ScheduleInfoData, i: number) => {
         const eventTypeCode =
           item.schd_Type === "04"
             ? item.schd_Type.concat(item.check_Status)
             : item.schd_Type;
-        const shownTotal =
-          shiftsOnGivenDate.length >= 3 ? 3 : shiftsOnGivenDate.length;
+        const shiftLength = shiftsOnDate.length >= 3 ? 3 : shiftsOnDate.length;
         return (
           <EventTag
             key={`shift-${i}`}
             className={`shift-btn ${i >= 3 ? "hidden" : ""} ${
               item.check_Status === "0" ? "reminder" : ""
-            } n${shownTotal}`}
+            } ${hideText(expandPercentage, shiftLength) && "hideText"}`}
             value={EVENT_TYPE.get(eventTypeCode)}
           />
         );
@@ -128,7 +138,6 @@ const OverviewTable = ({
       className="overviewTable"
       expandPercentage={expandPercentage}
       ref={containerRef}
-      // onWheel={handleScroll}
     >
       <Table className="eg-table">
         <Table.Head className="eg-head" style={{ paddingRight: "0px" }}>

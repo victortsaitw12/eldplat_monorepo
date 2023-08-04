@@ -2,16 +2,6 @@ import styled from "styled-components";
 
 const checkboxWidth = 36;
 const freezeColWidth = 72;
-const showText = (value: number, length: number) => {
-  const min = 64;
-  const t1 = 80;
-  const t2 = 176;
-  const max = 256;
-  if (length === 1 && value < t1 / (max - min)) return false;
-  if (length === 2 && value < t2 / (max - min)) return false;
-  if (length >= 3 && value < 100) return false;
-  return true;
-};
 
 export const TableSTY = styled.div<{
   expandPercentage: number;
@@ -146,17 +136,8 @@ export const TableSTY = styled.div<{
       fill: #fff;
     }
   }
-  .n1 > span {
-    display: ${({ expandPercentage }) =>
-      showText(expandPercentage, 1) ? "inline" : "none"};
-  }
-  .n2 > span {
-    display: ${({ expandPercentage }) =>
-      showText(expandPercentage, 2) ? "inline" : "none"};
-  }
-  .n3 > span {
-    display: ${({ expandPercentage }) =>
-      showText(expandPercentage, 3) ? "inline" : "none"};
+  .hideText > span {
+    display: none;
   }
   .noResultMsg {
     width: 100%;
