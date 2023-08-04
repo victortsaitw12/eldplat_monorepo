@@ -33,7 +33,11 @@ const Page: NextPageWithLayout<
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷"edit"
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [driverData, setDriverData] = useState<DriverInfo>();
+  const [driverData, setDriverData] = useState<{
+    info: any;
+    workinghours: any;
+    languages: any;
+  }>();
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const { mainFilter, updateMainFilter } = useDriverStore();
   // ------- useEffect ------- //
