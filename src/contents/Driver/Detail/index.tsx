@@ -72,10 +72,9 @@ function DriverDetail({
       </form>
       {visibleForm === "2" && (
         <LicensesList
-          licensesData={driverData.licenses}
+          driverNo={driverNo}
           userName={driverData.info.user_name}
           refetch={refetch}
-          driverNo={driverNo}
           isEdit={isEdit}
         />
       )}
