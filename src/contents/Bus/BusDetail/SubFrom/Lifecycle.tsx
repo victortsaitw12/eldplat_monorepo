@@ -53,6 +53,7 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
       editEle: (
         <TextInput
           key={"bus_lifecycle.estimated_service_months"}
+          type="number"
           {...register("bus_lifecycle.estimated_service_months")}
         />
       )
@@ -60,9 +61,7 @@ function Lifecycle({ register, getValues, isEdit }: Props) {
     {
       req: false,
       label: "估計使用壽命(里程)",
-      value:
-        getValues("bus_lifecycle.estimated_service_meter")?.toLocaleString() ||
-        "--",
+      value: getValues("bus_lifecycle.estimated_service_meter") || "--",
       editEle: (
         <TextInput
           key={"bus_lifecycle.estimated_service_meter"}

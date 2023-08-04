@@ -48,12 +48,18 @@ function PaginationField(props: I_PaginationField) {
       : startItem + (pageInfo?.page_Size || 0) - 1;
 
   // ----- function ----- //
-  const handlePrevPage = () => {
+  const handlePrevPage = (
+    event: React.MouseEvent<SVGSVGElement, MouseEvent>
+  ) => {
+    event.preventDefault();
     if (pageIndex === 1) return; // page_Index 是 1-based
     const updatePage = pageIndex - 1;
     setPageIndex(updatePage);
   };
-  const handleNextPage = () => {
+  const handleNextPage = (
+    event: React.MouseEvent<SVGSVGElement, MouseEvent>
+  ) => {
+    event.preventDefault();
     if (pageIndex === pageInfo?.last_Page) return;
     const updatePage = pageIndex + 1;
     setPageIndex(updatePage);
@@ -90,10 +96,16 @@ function PaginationField(props: I_PaginationField) {
         </span>
         <div className="actions">
           <button>
-            <ChevronLeftIcon onClick={handlePrevPage} size={12} />
+            <ChevronLeftIcon
+              onClick={(event) => handlePrevPage(event)}
+              size={12}
+            />
           </button>
           <button>
-            <ChevronRightIcon onClick={handleNextPage} size={12} />
+            <ChevronRightIcon
+              onClick={(event) => handleNextPage(event)}
+              size={12}
+            />
           </button>
         </div>
         <div>

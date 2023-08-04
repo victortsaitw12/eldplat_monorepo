@@ -17,6 +17,7 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 //
 import { getBusTitle } from "@services/bus/getAllBuses";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 //
 interface Props {
   register: UseFormRegister<BusDataTypes>;
@@ -54,6 +55,7 @@ const maintenanceTitle = [
   "派車單"
 ];
 function Maintenance({ register, errors, getValues, control, isEdit }: Props) {
+  const router = useRouter();
   return (
     <FlexWrapper padding="0">
       <BodySTY>
@@ -62,7 +64,9 @@ function Maintenance({ register, errors, getValues, control, isEdit }: Props) {
           cleanTableName="維保計劃"
           titles={maintenanceTitle}
           data={[]}
-          goToCreatePage={() => {
+          goToCreatePage={(e) => {
+            e.preventDefault();
+            router.push("/maintenance/mission");
             console.log("goToCreatePage");
           }}
           deleteItem={() => {

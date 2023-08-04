@@ -30,7 +30,7 @@ interface I_Table {
   titles: Array<string | number | React.ReactNode> | any;
   data: I_Data[];
   // onCheck?: (items: any) => void;
-  goToCreatePage?: () => void;
+  goToCreatePage?: (event: any) => void;
   goToEditPage?: (id: string, item: any) => void;
   viewItem?: (id: string, item: any) => void;
   deleteItem?: (id: any) => void;
@@ -133,7 +133,9 @@ function Table({
                 ? `新增${tableName.substring(0, 2)}`
                 : `新增${tableName}`
             }
-            onClick={goToCreatePage}
+            onClick={(event) => {
+              goToCreatePage && goToCreatePage(event);
+            }}
           >
             <PlusIcon size={14} />
           </IconLeft>

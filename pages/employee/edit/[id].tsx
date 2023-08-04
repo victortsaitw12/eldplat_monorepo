@@ -86,7 +86,8 @@ const Page: NextPageWithLayout<
           return item["group_no"];
         }),
         languages: newData["languages"],
-        healths: newData["healths"]
+        healths: newData["healths"],
+        invts: newData["invts"]
       };
       setEditData(result);
       setLoading(false);
