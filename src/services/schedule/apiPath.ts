@@ -8,7 +8,8 @@ const API_Path = {
   getScheduleSidebar: createUrlPath("ATR", "QueryScheduleSidebar"), // 檢視個別駕駛單日所有排休
   getScheduleUpdateList: createUrlPath("ATR", "QueryScheduleUpdateList"), // 檢視個別排休詳情
   updateSchedule: createUrlPath("ATR", "UpdateDriverSchedule"),
-  updateScheduleSign: createUrlPath("ATR", "UpdateScheduleSign")
+  updateScheduleSign: createUrlPath("ATR", "UpdateScheduleSign"),
+  getLeaveTypeDDL: createUrlPath("ATR", "GetCompanyOptions")
 };
 
 export default API_Path;
