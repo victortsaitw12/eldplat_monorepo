@@ -83,11 +83,12 @@ const Page: NextPageWithLayout<
           duration: 1.5
         });
         setIsEdit(false);
+      } else {
+        throw new Error(res.message);
       }
-      //router.push("/driver");
     } catch (e: any) {
       console.log(e);
-      toaster.warning(e.message);
+      toaster.danger("更新失敗", { description: e.message });
     }
     setIsLoading(false);
   };

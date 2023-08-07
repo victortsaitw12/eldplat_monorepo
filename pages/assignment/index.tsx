@@ -33,7 +33,7 @@ import {
 import { I_PageInfo } from "@components/PaginationField";
 import AssignmentDrawers from "@contents/Assignment/AssignmentDrawers";
 
-// ----- variables ----- //
+// ----- constants ----- //
 const mainFilterArray = [{ id: 1, label: "全部", value: "1" }];
 export const startTimeName = ["start_hours", "start_minutes", "start_type"];
 export const endTimeName = ["end_hours", "end_minutes", "end_type"];
@@ -55,6 +55,8 @@ const DUMMY_FILTER = [
 ];
 
 const Page: NextPageWithLayout<never> = () => {
+  const timeRef = useRef(null);
+  const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
@@ -64,15 +66,13 @@ const Page: NextPageWithLayout<never> = () => {
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
   const [showSecondTitle, setShowSecondTitle] = useState<any>();
-  const [carArr, setCarArr] = useState<any[]>([]);
+  // const [carArr, setCarArr] = useState<any[]>([]);
   const [orderIndex, setOrderIndex] = useState<number>(1);
   const [createAssignData, setCreateAssignData] = useState<I_ManualCreateType>({
     quote_no: "",
     manual_driver: [],
     manual_bus: []
   });
-  const timeRef = useRef(null);
-  const router = useRouter();
   const [startTime, setStartTime] = useState<any>({
     start_hours: "00",
     start_minutes: "00",
@@ -96,7 +96,6 @@ const Page: NextPageWithLayout<never> = () => {
     }
   }
   useEffect(() => {
-    console.log("disabledAutoList", disabledAutoList);
     setData((oldData: Array<any>) => {
       if (!oldData) return oldData;
       const updateData = oldData.map((item) => {
@@ -125,7 +124,6 @@ const Page: NextPageWithLayout<never> = () => {
       return updateData;
     });
   }, [disabledAutoList]);
-  console.log("data!!!", data);
   const {
     initializeSubFilter,
     mainFilter,
@@ -524,7 +522,7 @@ const Page: NextPageWithLayout<never> = () => {
   console.log("0️⃣assignData", data);
   console.log("1️⃣orderInfo", orderInfo);
   console.log("2️⃣showSecondTitle", showSecondTitle);
-  console.log("3️⃣carArr", carArr);
+  // console.log("3️⃣carArr", carArr);
   console.log("4️⃣manual_bus", createAssignData.manual_bus);
   console.log("5️⃣createAssignData", createAssignData);
   console.log("6️⃣subAssignData", subAssignData);

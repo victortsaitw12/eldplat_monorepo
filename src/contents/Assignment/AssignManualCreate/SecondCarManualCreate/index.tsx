@@ -10,6 +10,7 @@ import {
   TextInputField,
   TextareaField
 } from "evergreen-ui";
+import dayjs from "dayjs";
 
 //@layout
 import { I_ManualCreateType } from "@typings/assignment_type";
@@ -26,6 +27,13 @@ interface I_AssignManualCreateProps {
   data?: any;
   reloadData?: () => void;
 }
+interface I_Assigned {
+  bus_day_number: number;
+  bus_group: string;
+  bus_no: string;
+  task_end_time: string; //"2023-05-15T01:00";
+  task_start_time: string; //"2023-05-15T01:00";
+}
 
 function SecondCarAssignManualCreate({
   timeRef,
@@ -33,6 +41,23 @@ function SecondCarAssignManualCreate({
   showSecondTitle,
   createAssignData
 }: I_AssignManualCreateProps) {
+  const assigned: I_Assigned | undefined = createAssignData.manual_bus.find(
+    (item) => {
+      console.log(
+        "🍅task_start_time:",
+        dayjs(item.task_start_time).get("date")
+      );
+      console.log(
+        "🍅showSecondTitle:",
+        dayjs(showSecondTitle?.date).get("date")
+      );
+      return (
+        item.bus_day_number === showSecondTitle.car &&
+        dayjs(item.task_start_time).get("date") ===
+          dayjs(showSecondTitle?.date).get("date")
+      );
+    }
+  );
   const [loading, setLoading] = useState(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
@@ -62,14 +87,32 @@ function SecondCarAssignManualCreate({
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    const fetchBusName = async () => {
+      const res = await getAssignBusDDL(assigned?.bus_group);
+      setBusNameDDL([
+        { bus_no: "00", bus_name: "請選擇", license_plate: "" },
+        ...res.dataList[0].bus_options
+      ]);
+    };
+    fetchBusName();
+  }, [assigned]);
+
   const handleBusGroupChange = async (e: any) => {
-    const res = await getAssignBusDDL(e.target.value);
-    // setBusNameDDL(res.dataList[0].bus_options);
-    setBusNameDDL([
-      { bus_no: "00", bus_name: "請選擇", license_plate: "" },
-      ...res.dataList[0].bus_options
-    ]);
+    // const res = await getAssignBusDDL(e.target.value);
+    // // setBusNameDDL(res.dataList[0].bus_options);
+    // setBusNameDDL([
+    //   { bus_no: "00", bus_name: "請選擇", license_plate: "" },
+    //   ...res.dataList[0].bus_options
+    // ]);
   };
+  useEffect(() => {
+    const newDDL = [...busNameDDL];
+    const result = newDDL.filter((v) => {
+      return v.bus_no === assigned?.bus_no;
+    });
+    setPlateNo(result[0].license_plate);
+  }, [assigned]);
 
   const handleCarPlate = (e: any) => {
     const newDDL = [...busNameDDL];
@@ -108,7 +151,11 @@ function SecondCarAssignManualCreate({
         {busGroupDDL?.map(
           (item: { bus_group: string; bus_group_name: string }) => {
             return (
-              <option key={item.bus_group} value={item.bus_group}>
+              <option
+                key={item.bus_group}
+                value={item.bus_group}
+                selected={assigned && item.bus_group === assigned.bus_group}
+              >
                 {item.bus_group_name}
               </option>
             );
@@ -132,7 +179,11 @@ function SecondCarAssignManualCreate({
       >
         {busNameDDL?.map((item: any) => {
           return (
-            <option key={item.bus_no} value={item.bus_no}>
+            <option
+              key={item.bus_no}
+              value={item.bus_no}
+              selected={assigned && item.bus_no === assigned.bus_no}
+            >
               {item.bus_name}
             </option>
           );
