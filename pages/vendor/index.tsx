@@ -111,10 +111,17 @@ const Page: NextPageWithLayout<{
         value: vendors["contact_Name"]
       },
       contact_Tel: {
-        label:
-          vendors["contact_Tel_Code"] && vendors["contact_Tel"]
-            ? vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"]
-            : "",
+        label: (
+          <Pane>
+            {vendors["contact_Tel_Code"] && vendors["contact_Tel"]
+              ? vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"]
+              : ""}
+            <br />
+            {vendors["contact_Phone_Code"] && vendors["contact_Phone"]
+              ? vendors["contact_Phone_Code"] + " " + vendors["contact_Phone"]
+              : ""}
+          </Pane>
+        ),
         value:
           vendors["contact_Tel_Code"] && vendors["contact_Tel"]
             ? vendors["contact_Tel_Code"] + " " + vendors["contact_Tel"]
