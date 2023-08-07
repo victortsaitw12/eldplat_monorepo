@@ -36,4 +36,6 @@ export interface I_Select_Vendors_Type {
   contact_Name: string;
   contact_Tel: string;
   contact_Tel_Code: string;
+  contact_Phone_Code: string;
+  contact_Phone: string;
 }
