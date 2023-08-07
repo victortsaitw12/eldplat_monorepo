@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useRef, ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-import { Pane } from "evergreen-ui";
+import { Pane, toaster } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
