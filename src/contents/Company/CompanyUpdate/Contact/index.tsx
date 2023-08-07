@@ -19,7 +19,7 @@ import {
 import { I_Company_Contact_Type } from "@typings/company_type";
 import { getAllRegions } from "@services/region/getRegion";
 import {
-  I_AllRegions_Type,
+  I_RegionsPayload,
   I_Region_Context,
   RegionContext
 } from "@contexts/regionContext/regionProvider";

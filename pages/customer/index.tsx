@@ -19,6 +19,7 @@ import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
 import { PageInfoType } from "@services/type";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -119,58 +120,59 @@ const Page: NextPageWithLayout<never> = () => {
 
   console.log("CUSTOMER data", data);
   return (
-    <BodySTY>
-      <TableWrapper
-        isHide={isDrawerFullWidth}
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={nowTab}
-        mainFilterArray={mainFilterArray}
-        viewOnly={true}
-      >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={() => {
-            initializeSubFilter();
-          }}
-          filter={subFilter}
+    <RegionProvider>
+      <BodySTY>
+        <TableWrapper
+          isHide={isDrawerFullWidth}
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={nowTab}
+          mainFilterArray={mainFilterArray}
+          viewOnly={true}
         >
-          <CustomerList
-            listType={nowTab}
-            clientData={data}
-            customerData={data}
-            goToCreatePage={() => {
-              setDrawerOpen(true);
+          <FilterWrapper
+            updateFilter={updateSubFilter}
+            resetFilter={() => {
+              initializeSubFilter();
             }}
-            deleteItemHandler={deleteItemHandler}
-            recoverItemHandler={recoverItemHandler}
-            goToEditPageHandler={goToEditPageHandler}
-            goToDetailPage={goToDetailPageHandler}
-            upDatePageHandler={upDatePageHandler}
-            pageInfo={pageInfo}
-          />
-        </FilterWrapper>
-      </TableWrapper>
-      {isDrawerOpen && (
-        <Drawer
-          tabName={["新增客戶"]}
-          closeDrawer={() => {
-            setDrawerOpen(false);
-            setIsDrawerFullWidth(false);
-          }}
-          isFullScreen={isDrawerFullWidth}
-          toggleFullScreenDrawer={() => {
-            setIsDrawerFullWidth(!isDrawerFullWidth);
-          }}
-        >
-          <CustomerCreateForm
-            reloadData={() => {
-              fetchCustomerData(false, nowTab, pageInfo);
+            filter={subFilter}
+          >
+            <CustomerList
+              listType={nowTab}
+              customerData={data}
+              goToCreatePage={() => {
+                setDrawerOpen(true);
+              }}
+              deleteItemHandler={deleteItemHandler}
+              recoverItemHandler={recoverItemHandler}
+              goToEditPageHandler={goToEditPageHandler}
+              goToDetailPage={goToDetailPageHandler}
+              upDatePageHandler={upDatePageHandler}
+              pageInfo={pageInfo}
+            />
+          </FilterWrapper>
+        </TableWrapper>
+        {isDrawerOpen && (
+          <Drawer
+            tabName={["新增客戶"]}
+            closeDrawer={() => {
               setDrawerOpen(false);
+              setIsDrawerFullWidth(false);
             }}
-          />
-        </Drawer>
-      )}
-    </BodySTY>
+            isFullScreen={isDrawerFullWidth}
+            toggleFullScreenDrawer={() => {
+              setIsDrawerFullWidth(!isDrawerFullWidth);
+            }}
+          >
+            <CustomerCreateForm
+              reloadData={() => {
+                fetchCustomerData(false, nowTab, pageInfo);
+                setDrawerOpen(false);
+              }}
+            />
+          </Drawer>
+        )}
+      </BodySTY>
+    </RegionProvider>
   );
 };
 

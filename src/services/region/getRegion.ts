@@ -1,5 +1,33 @@
 import API_Path from "./apiPath";
-export const getAllRegions = async (area_no: string, level_num: string) => {
+export interface I_RegionsPayload {
+  regionName: string;
+  areaNo: string;
+  countryCode?: string;
+}
+
+export interface I_RegionsData {
+  area_No: string;
+  area_Name_Tw: string;
+  area_Name_Cn: string;
+  area_Name_En: string;
+  area_Name_Local: string;
+  abbr_Tw: string;
+  abbr_Cn: string;
+  abbr_En: string;
+  level_Num: string;
+  is_Delete: string;
+  cto_Id: string;
+  cto_Code: string;
+  creid: string;
+  credate: string;
+  updid: string;
+  upddate: string;
+  tel_Code: string;
+}
+export async function getAllRegions(
+  area_no: string,
+  level_num: string
+): Promise<{ options: I_RegionsData[] }> {
   const res = await fetch(`${API_Path["GetAreaDDL"]}`, {
     method: "POST",
     headers: {
@@ -13,4 +41,4 @@ export const getAllRegions = async (area_no: string, level_num: string) => {
     })
   });
   return res.json();
-};
+}

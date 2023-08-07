@@ -30,7 +30,7 @@ export const convertMap: { [key: string]: { [key: string]: any } } = {
   customer_country: {
     TW: {
       ch: "台灣",
-      en: "TTaiwan"
+      en: "Taiwan"
     },
     JP: {
       ch: "日本",
@@ -39,6 +39,24 @@ export const convertMap: { [key: string]: { [key: string]: any } } = {
     US: {
       ch: "美國",
       en: "United States"
+    }
+  },
+  customer_area: {
+    CA: {
+      ch: "CA",
+      en: "CA"
+    },
+    DA: {
+      ch: "DA",
+      en: "DA"
+    },
+    EA: {
+      ch: "EA",
+      en: "EA"
+    },
+    FA: {
+      ch: "FA",
+      en: "FA"
     }
   },
   type: {

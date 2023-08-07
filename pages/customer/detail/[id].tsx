@@ -70,8 +70,6 @@ const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
         onSave={() => {
-          console.log("save");
-          console.log("submitRef", submitRef.current);
           submitRef.current?.click();
         }}
         onEdit={() => {

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useContext } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { FormSTY } from "./style";
 //@sevices
-// import { createVendor } from "@services/vendor/createVendor";
 import { createCustomer } from "@services/customer/createCustomer";
 import FiledInput from "./FieldInput";
-import { PlusIcon, Text, SelectField, Select } from "evergreen-ui";
+import { PlusIcon, Text, Select } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
-
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
-
-//@components
-// import { I_contactData } from "../vendor.type";
+//@context
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 export interface CreateCustomerPayload {
   customer_name: string;
   customer_gui_no: string;
@@ -60,11 +60,22 @@ interface I_CustomerCreateFormProps {
 }
 
 function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
-  const { register, handleSubmit, control, reset } =
+  const { register, handleSubmit, control, reset, setValue } =
     useForm<CreateCustomerPayload>({
       defaultValues
     });
   const [loading, setLoading] = useState(false);
+  const {
+    countries,
+    states,
+    cities,
+    currentCountry,
+    currentState,
+    currentCity,
+    handleCountryChange,
+    handleStateChange,
+    handleCityChange
+  } = useContext<I_Region_Context>(RegionContext);
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     try {
@@ -139,20 +150,34 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
           gap: "8px"
         }}
       >
-        <label style={{ width: "68px", fontSize: "12px" }}>
-          <span style={{ color: "#D14343" }}>*</span>
-          城市
-        </label>
-        <Select
-          {...register("customer_city", {
-            required: "必填"
-          })}
-        >
-          <option value="01">基隆市</option>
-          <option value="02">台北市</option>
-          <option value="03">新北市</option>
-          <option value="04">桃園市</option>
-        </Select>
+        <Controller
+          name="customer_city"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <>
+              <label style={{ width: "68px", fontSize: "12px" }}>
+                <span style={{ color: "#D14343" }}>*</span>
+                城市
+              </label>
+              <Select
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                  handleCityChange(e.target.value);
+                }}
+              >
+                <>
+                  <option value={""}>請選擇</option>
+                  {cities?.map((city) => (
+                    <option key={city.area_No} value={city.area_No}>
+                      {city.area_Name_Tw}
+                    </option>
+                  ))}
+                </>
+              </Select>
+            </>
+          )}
+        />
       </FlexWrapper>
       <FlexWrapper
         padding="0"
@@ -161,13 +186,34 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
           gap: "8px"
         }}
       >
-        <label style={{ width: "68px", fontSize: "12px" }}>州/省/區域</label>
-        <Select {...register("customer_area")}>
-          <option value="01">基隆市</option>
-          <option value="02">台北市</option>
-          <option value="03">新北市</option>
-          <option value="04">桃園市</option>
-        </Select>
+        <Controller
+          name="customer_area"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <>
+              <label style={{ width: "68px", fontSize: "12px" }}>
+                州/省/區域
+              </label>
+              <Select
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                  handleStateChange(e.target.value);
+                  setValue("customer_city", "");
+                }}
+              >
+                <>
+                  <option value={""}>請選擇</option>
+                  {states?.map((state) => (
+                    <option key={state.area_No} value={state.area_No}>
+                      {state.area_Name_Tw}
+                    </option>
+                  ))}
+                </>
+              </Select>
+            </>
+          )}
+        />
       </FlexWrapper>
       <FiledInput
         label="郵政編碼"
@@ -183,17 +229,36 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
           alignItems: "center"
         }}
       >
-        <label style={{ width: "68px", fontSize: "12px" }}>
-          <span style={{ color: "#D14343" }}>*</span>
-          國家
-        </label>
-        <Select
-          {...register("customer_country", {
-            required: "必填"
-          })}
-        >
-          <option value="TW">台灣</option>
-        </Select>
+        <Controller
+          name="customer_country"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <>
+              <label style={{ width: "68px", fontSize: "12px" }}>
+                <span style={{ color: "#D14343" }}>*</span>
+                國家
+              </label>
+              <Select
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                  handleCountryChange(e.target.value);
+                  setValue("customer_city", "");
+                  setValue("customer_area", "");
+                }}
+              >
+                <>
+                  <option value={""}>請選擇</option>
+                  {countries?.map((item) => (
+                    <option key={item.area_No} value={item.area_No}>
+                      {item.area_Name_Tw}
+                    </option>
+                  ))}
+                </>
+              </Select>
+            </>
+          )}
+        />
       </FlexWrapper>
       <Text>
         <span style={{ color: "#D14343" }}>* </span>

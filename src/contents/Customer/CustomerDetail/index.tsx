@@ -144,15 +144,12 @@ const CustomerDetail = ({
       req: false,
       label: " ",
       value: [
-        // getValues("customer_city")
-        //   ? convertMap["customer_city"][getValues("customer_city")]["ch"]
-        //   : "--",
-        // getValues("customer_area") || "--"
-
         getValues("customer_city")
-          ? convertMap["customer_city"][getValues("customer_city")]
+          ? convertMap["customer_city"][getValues("customer_city")]["ch"]
           : "--",
-        getValues("customer_area") || "--"
+        getValues("customer_area")
+          ? convertMap["customer_area"][getValues("customer_area")]["ch"]
+          : "--"
       ],
       editEle: [
         <SelectField
@@ -184,134 +181,135 @@ const CustomerDetail = ({
           <option value="FA">FA區</option>
         </SelectField>
       ]
-    },
-    {
-      req: false,
-      label: " ",
-      value: [
-        getValues("customer_district_code") || "--",
-        getValues("customer_country")
-          ? convertMap["customer_country"][getValues("customer_country")]["ch"]
-          : "--"
-      ],
-      editEle: [
-        <TextInputField
-          key="customer_district_code"
-          label="郵遞區號"
-          {...register("customer_district_code")}
-          marginBottom="0"
-        />,
-        <SelectField
-          key="customer_country"
-          label={
-            <label>
-              <span style={{ color: "red" }}>*</span>國家
-            </label>
-          }
-          {...register("customer_country", { required: "必填" })}
-          marginBottom="0"
-        >
-          <option value="TW">台灣</option>
-          <option value="JP">日本</option>
-          <option value="US">美國</option>
-        </SelectField>
-      ]
-    },
-    {
-      req: true,
-      label: "公司電話",
-      value: getValues("customer_tel")
-        ? "+" + getValues("customer_tel_code") + " " + getValues("customer_tel")
-        : "--",
-      editEle: [
-        <div
-          key="customer_tel"
-          style={{
-            display: "flex",
-            flex: "1",
-            gap: "8px"
-          }}
-        >
-          <TextInput
-            {...register("customer_tel_code")}
-            style={{ width: "60px" }}
-            disabled
-          />
-          <TextInput
-            {...register("customer_tel", { required: "必填！" })}
-            style={{ flex: "1", width: "auto" }}
-          />
-        </div>
-      ]
-    },
-    {
-      req: false,
-      label: "公司傳真",
-      value: getValues("customer_fax")
-        ? "+" + getValues("customer_fax_code") + " " + getValues("customer_fax")
-        : "--",
-      editEle: [
-        <div
-          key="customer_tel"
-          style={{
-            display: "flex",
-            flex: "1",
-            gap: "8px"
-          }}
-        >
-          <TextInput
-            key="customer_fax_code"
-            style={{ width: "60px" }}
-            {...register("customer_fax_code")}
-            disabled
-          />
-          <TextInput
-            key="customer_fax"
-            {...register("customer_fax")}
-            style={{ flex: "1", width: "auto" }}
-          />
-        </div>
-      ]
-    },
-    {
-      req: false,
-      label: "公司信箱",
-      value: getValues("customer_email") || "--",
-      editEle: [
-        <TextInput
-          key="customer_email"
-          {...register("customer_email")}
-          style={{ flex: "1" }}
-        />
-      ]
-    },
-    {
-      req: false,
-      label: "公司網址",
-      value: getValues("customer_url") || "--",
-      editEle: [
-        <TextInput
-          key="customer_url"
-          {...register("customer_url")}
-          style={{ flex: "1" }}
-        />
-      ]
-    },
-    {
-      req: false,
-      inputType: "custom",
-      editEle: [
-        <ContactList
-          key="contact_list"
-          hide={false}
-          control={control}
-          errors={errors}
-          register={register}
-          isEdit={isEdit}
-          arrayName="customer_contact"
-        />
-      ]
     }
+    // {
+    //   req: false,
+    //   label: " ",
+    //   value: [
+    //     getValues("customer_district_code") || "--",
+    //     getValues("customer_country")
+    //       ? convertMap["customer_country"][getValues("customer_country")]["ch"]
+    //       : "--"
+    //   ],
+    //   editEle: [
+    //     <TextInputField
+    //       key="customer_district_code"
+    //       label="郵遞區號"
+    //       {...register("customer_district_code")}
+    //       marginBottom="0"
+    //     />,
+    //     <SelectField
+    //       key="customer_country"
+    //       label={
+    //         <label>
+    //           <span style={{ color: "red" }}>*</span>國家
+    //         </label>
+    //       }
+    //       {...register("customer_country", { required: "必填" })}
+    //       marginBottom="0"
+    //     >
+    //       <option value="TW">台灣</option>
+    //       <option value="JP">日本</option>
+    //       <option value="US">美國</option>
+    //     </SelectField>
+    //   ]
+    // },
+    // {
+    //   req: true,
+    //   label: "公司電話",
+    //   value: getValues("customer_tel")
+    //     ? "+" + getValues("customer_tel_code") + " " + getValues("customer_tel")
+    //     : "--",
+    //   editEle: [
+    //     <div
+    //       key="customer_tel"
+    //       style={{
+    //         display: "flex",
+    //         flex: "1",
+    //         gap: "8px"
+    //       }}
+    //     >
+    //       <TextInput
+    //         {...register("customer_tel_code")}
+    //         style={{ width: "60px" }}
+    //         disabled
+    //       />
+    //       <TextInput
+    //         {...register("customer_tel", { required: "必填！" })}
+    //         style={{ flex: "1", width: "auto" }}
+    //       />
+    //     </div>
+    //   ]
+    // },
+    // {
+    //   req: false,
+    //   label: "公司傳真",
+    //   value: getValues("customer_fax")
+    //     ? "+" + getValues("customer_fax_code") + " " + getValues("customer_fax")
+    //     : "--",
+    //   editEle: [
+    //     <div
+    //       key="customer_tel"
+    //       style={{
+    //         display: "flex",
+    //         flex: "1",
+    //         gap: "8px"
+    //       }}
+    //     >
+    //       <TextInput
+    //         key="customer_fax_code"
+    //         style={{ width: "60px" }}
+    //         {...register("customer_fax_code")}
+    //         disabled
+    //       />
+    //       <TextInput
+    //         key="customer_fax"
+    //         {...register("customer_fax")}
+    //         style={{ flex: "1", width: "auto" }}
+    //       />
+    //     </div>
+    //   ]
+    // },
+    // {
+    //   req: false,
+    //   label: "公司信箱",
+    //   value: getValues("customer_email") || "--",
+    //   editEle: [
+    //     <TextInput
+    //       key="customer_email"
+    //       {...register("customer_email")}
+    //       style={{ flex: "1" }}
+    //     />
+    //   ]
+    // },
+    // {
+    //   req: false,
+    //   label: "公司網址",
+    //   value: getValues("customer_url") || "--",
+    //   editEle: [
+    //     <TextInput
+    //       key="customer_url"
+    //       {...register("customer_url")}
+    //       style={{ flex: "1" }}
+    //     />
+    //   ]
+    // }
+    // {
+    //   req: false,
+    //   inputType: "custom",
+    //   editEle: [
+    //     <div key={23}>123</div>
+    //     // <ContactList
+    //     //   key="contact_list"
+    //     //   hide={false}
+    //     //   control={control}
+    //     //   errors={errors}
+    //     //   register={register}
+    //     //   isEdit={isEdit}
+    //     //   arrayName="customer_contact"
+    //     // />
+    //   ]
+    // }
   ];
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
