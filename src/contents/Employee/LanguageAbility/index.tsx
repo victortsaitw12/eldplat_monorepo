@@ -151,7 +151,6 @@ function LanguageAbility({
           </Button>
         )}
       </Pane>
-
       {insertLang?.map((lang_line, idx) => {
         if (lang_line.saved)
           return (
@@ -201,6 +200,9 @@ function LanguageAbility({
           />
         );
       })}
+      {(!insertLang || insertLang.length == 0) && (
+        <Text className="empty-msg">目前無資料</Text>
+      )}
     </BodySTY>
   );
 }
