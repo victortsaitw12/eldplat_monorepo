@@ -58,14 +58,6 @@ function DriverDetail({
     }
   }, [errors]);
 
-  const renderErrorMsg = () => {
-    if (errors) {
-      Object.entries(errors).forEach(([key, value]) =>
-        toaster.danger("更新失敗", { description: value.message || "" })
-      );
-      console.log(errors);
-    }
-  };
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);

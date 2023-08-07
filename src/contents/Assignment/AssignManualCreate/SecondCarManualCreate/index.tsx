@@ -43,14 +43,6 @@ function SecondCarAssignManualCreate({
 }: I_AssignManualCreateProps) {
   const assigned: I_Assigned | undefined = createAssignData.manual_bus.find(
     (item) => {
-      console.log(
-        "🍅task_start_time:",
-        dayjs(item.task_start_time).get("date")
-      );
-      console.log(
-        "🍅showSecondTitle:",
-        dayjs(showSecondTitle?.date).get("date")
-      );
       return (
         item.bus_day_number === showSecondTitle.car &&
         dayjs(item.task_start_time).get("date") ===
@@ -90,29 +82,28 @@ function SecondCarAssignManualCreate({
   useEffect(() => {
     const fetchBusName = async () => {
       const res = await getAssignBusDDL(assigned?.bus_group);
-      setBusNameDDL([
+      const updatedBusNameDDL = [
         { bus_no: "00", bus_name: "請選擇", license_plate: "" },
         ...res.dataList[0].bus_options
-      ]);
+      ];
+      setBusNameDDL(updatedBusNameDDL);
+      setPlateNo(
+        updatedBusNameDDL.find((arr) => arr.bus_no === assigned?.bus_no)
+          ?.license_plate
+      );
     };
+
     fetchBusName();
   }, [assigned]);
 
   const handleBusGroupChange = async (e: any) => {
-    // const res = await getAssignBusDDL(e.target.value);
-    // // setBusNameDDL(res.dataList[0].bus_options);
-    // setBusNameDDL([
-    //   { bus_no: "00", bus_name: "請選擇", license_plate: "" },
-    //   ...res.dataList[0].bus_options
-    // ]);
+    const res = await getAssignBusDDL(e.target.value);
+    // setBusNameDDL(res.dataList[0].bus_options);
+    setBusNameDDL([
+      { bus_no: "00", bus_name: "請選擇", license_plate: "" },
+      ...res.dataList[0].bus_options
+    ]);
   };
-  useEffect(() => {
-    const newDDL = [...busNameDDL];
-    const result = newDDL.filter((v) => {
-      return v.bus_no === assigned?.bus_no;
-    });
-    setPlateNo(result[0].license_plate);
-  }, [assigned]);
 
   const handleCarPlate = (e: any) => {
     const newDDL = [...busNameDDL];
@@ -141,9 +132,9 @@ function SecondCarAssignManualCreate({
           </div>
         }
         name="bus_group"
-        onClick={(e: any) => {
-          handleBusGroupChange(e);
-        }}
+        // onClick={(e: any) => {
+        //   handleBusGroupChange(e);
+        // }}
         onChange={(e: any) => {
           handleAssignmentCarChange(e);
         }}
@@ -170,9 +161,9 @@ function SecondCarAssignManualCreate({
           </div>
         }
         name="bus_no"
-        onClick={(e: any) => {
-          handleCarPlate(e);
-        }}
+        // onClick={(e: any) => {
+        //   handleCarPlate(e);
+        // }}
         onChange={(e: any) => {
           handleAssignmentCarChange(e);
         }}

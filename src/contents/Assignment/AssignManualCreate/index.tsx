@@ -7,7 +7,8 @@ import {
   Pane,
   DocumentShareIcon,
   Paragraph,
-  FloppyDiskIcon
+  FloppyDiskIcon,
+  toaster
 } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
@@ -97,12 +98,17 @@ function AssignManualCreate({
     try {
       console.log("👉data for click save", createAssignData);
       const res = await createAssignmentByManual(createAssignData);
+      if (res.statusCode === "200") {
+        toaster.success("手動派單成功", { duration: 1.5 });
+      } else {
+        throw new Error(res.message);
+      }
+      refetch && refetch();
     } catch (e: any) {
       console.log(e);
-      alert(e.message);
+      toaster.success("派單失敗", { description: e.message, duration: 1.5 });
     }
     setLoading(false);
-    refetch && refetch();
   };
 
   const handleClick = async (
