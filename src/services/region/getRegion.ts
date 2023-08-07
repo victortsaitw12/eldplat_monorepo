@@ -24,6 +24,7 @@ export interface I_RegionsData {
   upddate: string;
   tel_Code: string;
 }
+
 export async function getAllRegions(
   area_no: string,
   level_num: string
@@ -40,5 +41,19 @@ export async function getAllRegions(
       default_Needed: true
     })
   });
+  return res.json();
+}
+
+export async function getRegion(area_no: string) {
+  const res = await fetch(`${API_Path["GetAreaByAreaNo"]}?area_no=${area_no}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    }
+  });
+  // console.log("res", res);
+  // const data = await res.json();
+  // console.log("data", data);
   return res.json();
 }

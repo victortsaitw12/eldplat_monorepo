@@ -8,7 +8,8 @@ import React, { useState, createContext, useEffect, useContext } from "react";
 import {
   type I_RegionsPayload,
   type I_RegionsData,
-  getAllRegions
+  getAllRegions,
+  getRegion
 } from "@services/region/getRegion";
 
 // the provider of types
@@ -22,6 +23,7 @@ export interface I_Region_Context {
   handleCountryChange: (countryNo: string) => void;
   handleStateChange: (stateNo: string) => void;
   handleCityChange: (cityNo: string) => void;
+  getRegionData: (area_no: string) => Promise<I_RegionsData>;
 }
 
 // make a context for those components
@@ -39,6 +41,9 @@ export const RegionContext = createContext<I_Region_Context>({
     throw new Error("Function not implemented.");
   },
   handleCityChange: function (): void {
+    throw new Error("Function not implemented.");
+  },
+  getRegionData: function (): Promise<I_RegionsData> {
     throw new Error("Function not implemented.");
   }
 });
@@ -334,7 +339,8 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     currentCountry,
     handleCountryChange,
     handleStateChange,
-    handleCityChange
+    handleCityChange,
+    getRegionData: getRegion
   };
 
   return (

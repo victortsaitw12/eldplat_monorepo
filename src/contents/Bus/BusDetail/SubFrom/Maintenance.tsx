@@ -1,9 +1,4 @@
-import React, { useState } from "react";
-import { SelectField, Pane } from "evergreen-ui";
-import FormCard from "@components/FormCard";
-import RadioGroupColumn, {
-  RadioColumnField
-} from "@components/RadioGroupColumn";
+import React, { useEffect, useState } from "react";
 import {
   UseFormRegister,
   FieldErrors,
@@ -12,11 +7,10 @@ import {
 } from "react-hook-form";
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
-import InfoBox from "@components/InfoBox";
 import TableWithEdit from "@components/Table/TableWithEdit";
 //
-import { getBusTitle } from "@services/bus/getAllBuses";
 import styled from "styled-components";
+import { getMaintenanceByFilter } from "@services/bus/getMaintenanceByFilter";
 //
 interface Props {
   register: UseFormRegister<BusDataTypes>;
@@ -24,14 +18,8 @@ interface Props {
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
+  busId: string;
 }
-//
-const maintenace_info = [
-  {
-    label: "",
-    value: ""
-  }
-];
 //
 const BodySTY = styled.div`
   padding: 1rem;
@@ -53,7 +41,21 @@ const maintenanceTitle = [
   "派工單",
   "派車單"
 ];
-function Maintenance({ register, errors, getValues, control, isEdit }: Props) {
+function Maintenance({
+  register,
+  errors,
+  getValues,
+  control,
+  isEdit,
+  busId
+}: Props) {
+  const [busMaintenanceData, setBusMaintenanceData] = useState<any>(null);
+  useEffect(() => {
+    //TODO get busMaintenanceData
+    getMaintenanceByFilter(busId).then((res) => {
+      console.log("busMaintanceData", res);
+    });
+  }, [busId]);
   return (
     <FlexWrapper padding="0">
       <BodySTY>

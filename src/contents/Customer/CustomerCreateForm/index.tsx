@@ -69,12 +69,10 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
     countries,
     states,
     cities,
-    currentCountry,
-    currentState,
-    currentCity,
     handleCountryChange,
     handleStateChange,
-    handleCityChange
+    handleCityChange,
+    getRegionData
   } = useContext<I_Region_Context>(RegionContext);
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
@@ -88,7 +86,9 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
     reloadData && reloadData();
     reset();
   };
-
+  getRegionData("1000000000000000").then((res) => {
+    console.log(res);
+  });
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
