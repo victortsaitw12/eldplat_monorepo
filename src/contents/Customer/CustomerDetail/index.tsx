@@ -112,7 +112,7 @@ const CustomerDetail = ({
     {
       req: true,
       label: "",
-      value: getValues("customer_typ") || "--",
+      value: getValues("type_name") || "--",
       editEle: (
         <SelectField
           key="customer_typ"
@@ -172,10 +172,7 @@ const CustomerDetail = ({
     {
       req: false,
       label: " ",
-      value: [
-        getValues("customer_city") || "--",
-        getValues("customer_area") || "--"
-      ],
+      value: [getValues("city_name") || "--", getValues("area_name") || "--"],
       editEle: [
         <Controller
           key="customer_city"
@@ -235,7 +232,7 @@ const CustomerDetail = ({
       label: " ",
       value: [
         getValues("customer_district_code") || "--",
-        getValues("customer_country") || "--"
+        getValues("country_name") || "--"
       ],
       editEle: [
         <TextInputField
