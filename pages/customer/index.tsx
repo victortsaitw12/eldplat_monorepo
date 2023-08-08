@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -14,6 +14,7 @@ import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
+import { getCreateCustomerOptions } from "@services/customer/getCreateCustomerOptions";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
@@ -32,6 +33,7 @@ const Page: NextPageWithLayout<never> = () => {
   const [nowTab, setNowTab] = useState(
     (router?.query?.status as string) || "1"
   );
+  const [options, setOptions] = useState<any>(null);
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     arrangement: "desc",
@@ -79,6 +81,12 @@ const Page: NextPageWithLayout<never> = () => {
     });
   };
   //
+  useEffect(() => {
+    getCreateCustomerOptions().then((res) => {
+      console.log("getCreateCustomerOptions", res);
+      setOptions(res);
+    });
+  }, []);
   useEffect(() => {
     let isCanceled = false;
     fetchCustomerData(isCanceled, nowTab, pageInfo);
@@ -168,6 +176,7 @@ const Page: NextPageWithLayout<never> = () => {
                 fetchCustomerData(false, nowTab, pageInfo);
                 setDrawerOpen(false);
               }}
+              options={options}
             />
           </Drawer>
         )}

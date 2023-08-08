@@ -15,6 +15,7 @@ const mainFilterArray = [{ id: 1, label: "客戶資料", value: "1" }];
 import { getCustomerById } from "@services/customer/getCustomerById";
 
 import LoadingSpinner from "@components/LoadingSpinner";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
@@ -64,32 +65,34 @@ const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
     return <LoadingSpinner />;
   }
   return (
-    <BodySTY>
-      <TableWrapper
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={mainFilter}
-        mainFilterArray={mainFilterArray}
-        onSave={() => {
-          submitRef.current?.click();
-        }}
-        onEdit={() => {
-          router.push({
-            pathname: "/customer/detail/" + customerId,
-            query: { editPage: "edit" }
-          });
-        }}
-        onClose={onCancelHandler}
-        isEdit={editPage}
-      >
-        <CustomerDetail
+    <RegionProvider>
+      <BodySTY>
+        <TableWrapper
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={mainFilter}
+          mainFilterArray={mainFilterArray}
+          onSave={() => {
+            submitRef.current?.click();
+          }}
+          onEdit={() => {
+            router.push({
+              pathname: "/customer/detail/" + customerId,
+              query: { editPage: "edit" }
+            });
+          }}
+          onClose={onCancelHandler}
           isEdit={editPage}
-          submitRef={submitRef}
-          asyncSubmitForm={asyncSubmitForm}
-          customerId={customerId}
-          customerDefaultData={customerDefaultData}
-        />
-      </TableWrapper>
-    </BodySTY>
+        >
+          <CustomerDetail
+            isEdit={editPage}
+            submitRef={submitRef}
+            asyncSubmitForm={asyncSubmitForm}
+            customerId={customerId}
+            customerDefaultData={customerDefaultData}
+          />
+        </TableWrapper>
+      </BodySTY>
+    </RegionProvider>
   );
 };
 interface Props {

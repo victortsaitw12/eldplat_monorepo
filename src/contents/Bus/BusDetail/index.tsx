@@ -30,9 +30,7 @@ const BusDetail = ({
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
-  //
-  console.log("busDefaultData", busDefaultData);
-  //
+
   const {
     register,
     control,

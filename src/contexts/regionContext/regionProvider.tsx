@@ -23,7 +23,7 @@ export interface I_Region_Context {
   handleCountryChange: (countryNo: string) => void;
   handleStateChange: (stateNo: string) => void;
   handleCityChange: (cityNo: string) => void;
-  getRegionData: (area_no: string) => Promise<I_RegionsData>;
+  getRegionsData: (area_nos: string[]) => Promise<any>;
 }
 
 // make a context for those components
@@ -43,7 +43,7 @@ export const RegionContext = createContext<I_Region_Context>({
   handleCityChange: function (): void {
     throw new Error("Function not implemented.");
   },
-  getRegionData: function (): Promise<I_RegionsData> {
+  getRegionsData: function (area_nos: string[]): Promise<any> {
     throw new Error("Function not implemented.");
   }
 });
@@ -59,11 +59,9 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   );
   const [currentState, setCurrentState] = useState<I_RegionsData | null>(null);
   const [currentCity, setCurrentCity] = useState<I_RegionsData | null>(null);
-  //
-  console.log("allCountries", allCountries);
   console.log("currentCountry", currentCountry);
-  console.log("allStates", allStates);
-  console.log("allCities", allCities);
+  console.log("currentState", currentState);
+  console.log("currentCity", currentCity);
   // 取得國家選項內容
   useEffect(() => {
     console.log("update country");
@@ -182,91 +180,21 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     console.log("selectedCity: ", selectedCity);
     setCurrentCity(selectedCity);
   }
-  // const handleStateChange = (e: any) => {
-  //   const area_no = e.target.value.substring(0, 4);
-  //   const level_num = "3";
-  //   if (!filterStates(area_no)) {
-  //     getAllRegions(area_no, level_num).then((data) => {
-  //       setAllStates([]);
-  //       setAllCities([]);
-  //       data?.options?.map((v: { area_Name_Tw: string; area_No: string }) => {
-  //         if (v.area_Name_Tw !== "")
-  //           return setAllStates((prev: I_RegionsPayload[]) => [
-  //             ...prev,
-  //             { regionName: v.area_Name_Tw, areaNo: v.area_No }
-  //           ]);
-  //       });
-  //     });
-  //   } else {
-  //     setAllStates([]);
-  //     setAllCities([]);
-  //     getAllRegions(area_no, level_num).then((data) => {
-  //       data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
-  //         if (v.area_Name_Tw !== "")
-  //           return setAllCities((prev: I_RegionsPayload[]) => [
-  //             ...prev,
-  //             { regionName: v.area_Name_Tw, areaNo: v.area_No }
-  //           ]);
-  //       });
-  //     });
-  //   }
-  // };
-  // 偵測選取國家後要改顯示對應的州
-  // const handleStateChange = (e: any) => {
-  //   const area_no = e.target.value.substring(0, 4);
-  //   const level_num = "3";
-  //   if (!filterStates(area_no)) {
-  //     getAllRegions(area_no, level_num).then((data) => {
-  //       setAllStates([]);
-  //       setAllCities([]);
-  //       data?.options?.map((v: { area_Name_Tw: string; area_No: string }) => {
-  //         if (v.area_Name_Tw !== "")
-  //           return setAllStates((prev: I_RegionsPayload[]) => [
-  //             ...prev,
-  //             { regionName: v.area_Name_Tw, areaNo: v.area_No }
-  //           ]);
-  //       });
-  //     });
-  //   } else {
-  //     setAllStates([]);
-  //     setAllCities([]);
-  //     getAllRegions(area_no, level_num).then((data) => {
-  //       data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
-  //         if (v.area_Name_Tw !== "")
-  //           return setAllCities((prev: I_RegionsPayload[]) => [
-  //             ...prev,
-  //             { regionName: v.area_Name_Tw, areaNo: v.area_No }
-  //           ]);
-  //       });
-  //     });
-  //   }
-  // };
+  /**
+   * Get data with area_no
+   */
 
-  // 取得城市資料
-  // 州、省變動後設城市
-  // const handleCityChange = (e: any) => {
-  //   const area_no = e.target.value.substring(0, 7);
-  //   const level_num = "4";
-  //   getAllRegions(area_no, level_num).then((data) => {
-  //     setAllCities([]);
-  //     data.options.map((v: { area_Name_Tw: string; area_No: string }) => {
-  //       if (v.area_Name_Tw !== "")
-  //         return setAllCities((prev: any) => [
-  //           ...prev,
-  //           { regionName: v.area_Name_Tw, areaNo: v.area_No }
-  //         ]);
-  //     });
-  //   });
-  // };
-
-  // 如果州省或城市的欄位是空的，就顯示請選擇
-  // useEffect(() => {
-  //   if (allStates.length === 0) {
-  //     setAllStates([{ regionName: "請選擇", areaNo: "0" }]);
-  //   } else if (allCities.length === 0) {
-  //     setAllCities([{ regionName: "請選擇", areaNo: "0" }]);
-  //   }
-  // }, [allCities.length, allStates.length]);
+  async function getRegionsData(area_nos: string[]) {
+    const areaMap: { [key: string]: any } = {};
+    await Promise.all(area_nos.map((area_no) => getRegion(area_no))).then(
+      (regionsRes) => {
+        regionsRes.forEach((regionRes, idx) => {
+          areaMap[area_nos[idx]] = regionRes.dataList[0];
+        });
+      }
+    );
+    console.log("regionDatas", areaMap);
+  }
 
   // 將國家代號轉為文字形式
   // const handleCountrySwitch = (country: string) => {
@@ -340,7 +268,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     handleCountryChange,
     handleStateChange,
     handleCityChange,
-    getRegionData: getRegion
+    getRegionsData
   };
 
   return (

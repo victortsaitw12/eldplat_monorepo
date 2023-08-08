@@ -57,9 +57,13 @@ const defaultValues: CreateCustomerPayload = {
 interface I_CustomerCreateFormProps {
   data?: any;
   reloadData?: () => void;
+  options: any;
 }
 
-function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
+function CustomerCreateForm({
+  reloadData,
+  options
+}: I_CustomerCreateFormProps) {
   const { register, handleSubmit, control, reset, setValue } =
     useForm<CreateCustomerPayload>({
       defaultValues
@@ -72,7 +76,7 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
     handleCountryChange,
     handleStateChange,
     handleCityChange,
-    getRegionData
+    getRegionsData
   } = useContext<I_Region_Context>(RegionContext);
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
@@ -86,9 +90,6 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
     reloadData && reloadData();
     reset();
   };
-  getRegionData("1000000000000000").then((res) => {
-    console.log(res);
-  });
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
@@ -365,9 +366,14 @@ function CustomerCreateForm({ reloadData }: I_CustomerCreateFormProps) {
         }}
       >
         <Select {...register("customer_typ")}>
-          <option value="01">公司</option>
-          <option value="02">個人</option>
-          <option value="03">旅行社</option>
+          <option value="" disabled hidden>
+            請選擇
+          </option>
+          {options?.customer_typ.map((item: any, idx: number) => (
+            <option key={idx} value={item.value}>
+              {item.label}
+            </option>
+          ))}
         </Select>
       </FlexWrapper>
       <IconLeft text={"新增客戶"} type="submit">

@@ -74,9 +74,7 @@ function Details({
     {
       req: true,
       label: "品牌",
-      value: getValues("bus.make")
-        ? convertMap["make"][getValues("bus.make")]["ch"]
-        : "--",
+      value: getValues("bus.make") || "--",
       editEle: [
         <Select key="bus.make" {...register("bus.make")} marginBottom="0">
           <option value="01">Toyota</option>
@@ -90,9 +88,7 @@ function Details({
     {
       req: false,
       label: "車型",
-      value: getValues("bus.model")
-        ? convertMap["model"][getValues("bus.model")]["ch"]
-        : "--",
+      value: getValues("bus.model") || "--",
       editEle: [
         <Select key="bus.model" {...register("bus.model")} marginBottom="0">
           <option value="01">model-1</option>
@@ -157,9 +153,7 @@ function Details({
     {
       req: true,
       label: "車隊",
-      value: getValues("bus.bus_group")
-        ? convertMap["bus_group"][getValues("bus.bus_group")]["ch"]
-        : "--",
+      value: getValues("bus.bus_group") || "--",
       editEle: (
         <Select
           key="bus.bus_group"
@@ -210,9 +204,7 @@ function Details({
     {
       req: true,
       label: "所有權",
-      value: getValues("bus.ownership")
-        ? convertMap["ownership"][getValues("bus.ownership")]["ch"]
-        : "--",
+      value: getValues("bus.ownership") || "--",
       editEle: (
         <Select
           key="bus.ownership"
@@ -238,9 +230,7 @@ function Details({
     {
       req: false,
       label: "車身類型",
-      value: getValues("bus.body_type")
-        ? convertMap["body_type"][getValues("bus.body_type")]["ch"]
-        : "--",
+      value: getValues("bus.body_type") || "--",
       editEle: (
         <Select
           key="bus.body_type"
@@ -258,9 +248,7 @@ function Details({
     {
       req: false,
       label: "車身子類型",
-      value: getValues("bus.body_subtype")
-        ? convertMap["body_subtype"][getValues("bus.body_subtype")]["ch"]
-        : "--",
+      value: getValues("bus.body_subtype") || "--",
       editEle: (
         <Select
           key="bus.body_subtype"

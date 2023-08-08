@@ -10,7 +10,13 @@ import FlexWrapper from "@layout/FlexWrapper";
 import TableWithEdit from "@components/Table/TableWithEdit";
 //
 import styled from "styled-components";
-import { getMaintenanceByFilter } from "@services/bus/getMaintenanceByFilter";
+import {
+  getMaintenanceByFilter,
+  busMaintenaceParser,
+  busMaintenacePattern
+} from "@services/bus/getMaintenanceByFilter";
+import { PageInfoType } from "@services/type";
+import { mappingQueryData } from "@utils/mappingQueryData";
 //
 interface Props {
   register: UseFormRegister<BusDataTypes>;
@@ -50,12 +56,46 @@ function Maintenance({
   busId
 }: Props) {
   const [busMaintenanceData, setBusMaintenanceData] = useState<any>(null);
-  useEffect(() => {
-    //TODO get busMaintenanceData
-    getMaintenanceByFilter(busId).then((res) => {
-      console.log("busMaintanceData", res);
+  const [pageInfo, setPageInfo] = useState<PageInfoType>({
+    arrangement: "desc",
+    orderby: null,
+    page_Index: 1,
+    page_Size: 10,
+    last_Page: 10
+  });
+
+  async function fetchMaintenanceData(
+    isCanceled: boolean,
+    busId: string,
+    pageInfo: PageInfoType
+  ) {
+    getMaintenanceByFilter(busId, pageInfo).then((res) => {
+      if (isCanceled) {
+        return;
+      }
+      const busMaintenanceData = mappingQueryData(
+        res.contentList,
+        busMaintenacePattern,
+        busMaintenaceParser
+      );
+      console.log("busMaintenanceData", busMaintenanceData);
+      setBusMaintenanceData(busMaintenanceData);
+      setPageInfo(res.pageInfo);
     });
+  }
+
+  // async function updatePageHandler(newPageInfo: PageInfoType) {
+  //   fetchMaintenanceData(false, busId, newPageInfo);
+  // }
+
+  useEffect(() => {
+    let isCanceled = false;
+    fetchMaintenanceData(isCanceled, busId, pageInfo);
+    return () => {
+      isCanceled = true;
+    };
   }, [busId]);
+
   return (
     <FlexWrapper padding="0">
       <BodySTY>
@@ -63,7 +103,7 @@ function Maintenance({
           tableName="維保計劃"
           cleanTableName="維保計劃"
           titles={maintenanceTitle}
-          data={[]}
+          data={busMaintenanceData}
           goToCreatePage={() => {
             console.log("goToCreatePage");
           }}
@@ -76,6 +116,7 @@ function Maintenance({
           viewItem={() => {
             console.log("viewItem");
           }}
+          pageInfo={pageInfo}
         />
       </BodySTY>
     </FlexWrapper>

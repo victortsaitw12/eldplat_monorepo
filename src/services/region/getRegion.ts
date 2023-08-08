@@ -52,8 +52,5 @@ export async function getRegion(area_no: string) {
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     }
   });
-  // console.log("res", res);
-  // const data = await res.json();
-  // console.log("data", data);
   return res.json();
 }

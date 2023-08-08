@@ -32,7 +32,6 @@ export const getAllCustomers = async (
       pageInfo
     })
   });
-  console.log("res", res);
   return res.json();
 };
 
