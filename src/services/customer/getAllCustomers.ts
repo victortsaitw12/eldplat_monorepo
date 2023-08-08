@@ -69,34 +69,22 @@ export const customerParser = (data: any, key: string) => {
       label: data["customer_no"] || null,
       value: data["customer_no"] || null
     };
-  }
-  if (key === "customer_typ") {
-    let translatedLabel = "";
-    switch (data[key]) {
-      case "01":
-        translatedLabel = "公司";
-        break;
-      case "02":
-        translatedLabel = "個人";
-        break;
-      case "03":
-        translatedLabel = "旅行社";
-        break;
-      default:
-        translatedLabel = "--";
-    }
+  } else if (key === "customer_typ") {
     return {
-      label: translatedLabel,
+      label: data["type_name"] || null,
+      value: data["customer_typ"] || null
+    };
+  } else if (key === "customer_area") {
+    return {
+      label: data["area_name"] || "--",
       value: data[key] || null
     };
-  }
-  if (key === "customer_tel") {
+  } else if (key === "customer_tel") {
     return {
       label: data[key] || "--",
       value: data[key] || null
     };
-  }
-  if (key === "contact_phone_and_tel") {
+  } else if (key === "contact_phone_and_tel") {
     const lebelElement = createElement(
       "div",
       {
