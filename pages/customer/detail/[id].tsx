@@ -16,6 +16,7 @@ import { getCustomerById } from "@services/customer/getCustomerById";
 
 import LoadingSpinner from "@components/LoadingSpinner";
 import RegionProvider from "@contexts/regionContext/regionProvider";
+import { getCreateCustomerOptions } from "@services/customer/getCreateCustomerOptions";
 //
 const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
@@ -23,7 +24,15 @@ const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
   const router = useRouter();
   const [customerDefaultData, setCustomerDefaultData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-
+  const [options, setOptions] = useState<any>(null);
+  //
+  useEffect(() => {
+    getCreateCustomerOptions().then((res) => {
+      console.log("getCreateCustomerOptions", res);
+      setOptions(res);
+    });
+  }, []);
+  //
   useEffect(() => {
     updateMainFilter("1");
     setLoading(true);
@@ -89,6 +98,7 @@ const Page: NextPageWithLayout<never> = ({ customerId, editPage }) => {
             asyncSubmitForm={asyncSubmitForm}
             customerId={customerId}
             customerDefaultData={customerDefaultData}
+            options={options}
           />
         </TableWrapper>
       </BodySTY>

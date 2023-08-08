@@ -18,12 +18,14 @@ interface I_Props {
   asyncSubmitForm: (data: any) => Promise<void>;
   customerId: string;
   customerDefaultData: CustomerDataTypes;
+  options: any;
 }
 const CustomerDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
-  customerDefaultData
+  customerDefaultData,
+  options
 }: I_Props) => {
   const {
     register,
@@ -118,8 +120,14 @@ const CustomerDetail = ({
           label=""
           marginBottom="0"
         >
-          <option value="01">公司</option>
-          <option value="02">個人</option>
+          <option value="" disabled hidden>
+            請選擇
+          </option>
+          {options?.customer_typ.map((item: any, idx: number) => (
+            <option key={idx} value={item.value}>
+              {item.label}
+            </option>
+          ))}
         </SelectField>
       )
     }
@@ -263,6 +271,21 @@ const CustomerDetail = ({
               </>
             </SelectField>
           )}
+        />
+      ]
+    },
+    {
+      req: false,
+      inputType: "custom",
+      editEle: [
+        <ContactList
+          key="contact_list"
+          hide={false}
+          control={control}
+          errors={errors}
+          register={register}
+          isEdit={isEdit}
+          arrayName="customer_contact"
         />
       ]
     }

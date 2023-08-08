@@ -12,7 +12,6 @@ import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
 import TextInput from "@components/CustomTextInput";
 import StatusIcon from "@components/StatusIcon";
-import { convertMap } from "@utils/convertValueToText";
 interface Props {
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
@@ -52,9 +51,10 @@ function Details({
     {
       req: true,
       label: "車種",
-      value: busOptions?.type_options.find(
-        (option: any) => option.no === getValues("bus.type")
-      )?.name,
+      value:
+        busOptions?.type_options.find(
+          (option: any) => option.no === getValues("bus.type")
+        )?.name || "--",
       editEle: (
         <Select key="bus.type" {...register("bus.type")} marginBottom="0">
           {busOptions?.type_options.map((item: any) => (
@@ -74,14 +74,17 @@ function Details({
     {
       req: true,
       label: "品牌",
-      value: getValues("bus.make") || "--",
+      value:
+        busOptions?.make_options.find(
+          (option: any) => option.no === getValues("bus.make")
+        )?.name || "--",
       editEle: [
         <Select key="bus.make" {...register("bus.make")} marginBottom="0">
-          <option value="01">Toyota</option>
-          <option value="02">Mercedes-Benz</option>
-          <option value="03">Volkswagen</option>
-          <option value="04">BMW</option>
-          <option value="05">Tesla</option>
+          {busOptions?.make_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
         </Select>
       ]
     },
@@ -153,17 +156,22 @@ function Details({
     {
       req: true,
       label: "車隊",
-      value: getValues("bus.bus_group") || "--",
+      value:
+        busOptions?.bus_group_options.find(
+          (option: any) => option.no === getValues("bus.bus_group")
+        )?.name || "--",
+      // value: getValues("bus.bus_group") || "--",
       editEle: (
         <Select
           key="bus.bus_group"
           {...register("bus.bus_group")}
           marginBottom="0"
         >
-          <option value="01">群組1</option>
-          <option value="02">群組2</option>
-          <option value="03">群組3</option>
-          <option value="04">群組4</option>
+          {busOptions?.bus_group_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
         </Select>
       )
     },
@@ -204,17 +212,26 @@ function Details({
     {
       req: true,
       label: "所有權",
-      value: getValues("bus.ownership") || "--",
+      value:
+        busOptions?.ownership_options.find(
+          (option: any) => option.no === getValues("bus.ownership")
+        )?.name || "--",
+      // value: getValues("bus.ownership") || "--",
       editEle: (
         <Select
           key="bus.ownership"
           {...register("bus.ownership")}
           marginBottom="0"
         >
-          <option value="01">擁有的</option>
+          {busOptions?.ownership_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
+          {/* <option value="01">擁有的</option>
           <option value="02">租來的</option>
           <option value="03">出租中</option>
-          <option value="04">客戶的</option>
+          <option value="04">客戶的</option> */}
         </Select>
       )
     }
