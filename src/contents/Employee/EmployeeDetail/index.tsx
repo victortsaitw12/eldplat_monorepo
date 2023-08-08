@@ -128,7 +128,12 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
           }
         ];
   //排班設定
-  const shift_info: I_infoData[] | undefined = [];
+  const shift_info: I_infoData[] | undefined = [
+    {
+      req: true,
+      value: [data.working_hours_name || "--"]
+    }
+  ];
   //聯絡資訊
   const contact_info: I_infoData[] | undefined = [
     {

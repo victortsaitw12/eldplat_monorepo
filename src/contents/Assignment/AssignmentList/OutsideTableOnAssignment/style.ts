@@ -63,7 +63,6 @@ const TableSTY = styled.table`
   border-spacing: 0px;
   thead tr {
     background-color: ${({ theme }) => theme.color.N50};
-
     text-align: left;
   }
 

@@ -9,7 +9,6 @@ import {
   Paragraph,
   TextareaField
 } from "evergreen-ui";
-import dayjs from "dayjs";
 
 //@layout
 import { I_ManualCreateType } from "@typings/assignment_type";
@@ -26,28 +25,12 @@ interface I_AssignManualCreateProps {
   data?: any;
   reloadData?: () => void;
 }
-interface I_Assigned {
-  bus_day_number: number;
-  bus_group: string;
-  driver_no: string;
-  task_end_time: string; //"2023-05-15T01:00";
-  task_start_time: string; //"2023-05-15T01:00";
-}
 
 function SecondDriverAssignManualCreate({
   handleAssignmentDriverChange,
   showSecondTitle,
   createAssignData
 }: I_AssignManualCreateProps) {
-  const assigned: I_Assigned | undefined = createAssignData.manual_driver.find(
-    (item) => {
-      return (
-        item.bus_day_number === showSecondTitle.car &&
-        dayjs(item.task_start_time).get("date") ===
-          dayjs(showSecondTitle?.date).get("date")
-      );
-    }
-  );
   const [loading, setLoading] = useState(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
@@ -73,18 +56,6 @@ function SecondDriverAssignManualCreate({
     getDriverData();
     setLoading(false);
   }, []);
-
-  useEffect(() => {
-    const fetchDriverName = async () => {
-      const res = await getAssignDriverDDL(assigned?.bus_group);
-      const updatedBusNameDDL = [
-        { driver_no: "00", user_name: "請選擇" },
-        ...res.dataList[0].driver_options
-      ];
-      setDriverNameDDL(updatedBusNameDDL);
-    };
-    fetchDriverName();
-  }, [assigned]);
 
   const handleBusGroupChange = async (e: any) => {
     const res = await getAssignDriverDDL(e.target.value);
@@ -113,9 +84,9 @@ function SecondDriverAssignManualCreate({
           </div>
         }
         name="bus_group"
-        // onClick={(e: any) => {
-        //   handleBusGroupChange(e);
-        // }}
+        onClick={(e: any) => {
+          handleBusGroupChange(e);
+        }}
         onChange={(e: any) => {
           handleAssignmentDriverChange(e);
         }}

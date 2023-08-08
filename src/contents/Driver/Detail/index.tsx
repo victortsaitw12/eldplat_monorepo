@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { toaster } from "evergreen-ui";
 import { useForm } from "react-hook-form";
 import { DivSTY } from "./style";
 
@@ -50,14 +49,8 @@ function DriverDetail({
   const [visibleForm, setVisibleForm] = useState("1");
 
   useEffect(() => {
-    if (errors) {
-      Object.entries(errors).forEach(([key, value]) =>
-        toaster.danger("更新失敗", { description: value.message || "" })
-      );
-      console.log(errors);
-    }
+    if (errors) console.log(errors);
   }, [errors]);
-
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
@@ -77,7 +70,6 @@ function DriverDetail({
           getValues={getValues}
           isEdit={isEdit}
           driverData={driverData}
-          errors={errors}
         />
       </form>
       {visibleForm === "2" && (
