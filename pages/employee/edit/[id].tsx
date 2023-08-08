@@ -87,7 +87,8 @@ const Page: NextPageWithLayout<
         }),
         languages: newData["languages"],
         healths: newData["healths"],
-        invts: newData["invts"]
+        invts: newData["invts"],
+        workinghours: newData["workinghours"]
       };
       setEditData(result);
       setLoading(false);
