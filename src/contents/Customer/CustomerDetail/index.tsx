@@ -88,9 +88,7 @@ const CustomerDetail = ({
     {
       req: true,
       label: "",
-      value: getValues("customer_typ")
-        ? convertMap["customer_typ"][getValues("customer_typ")]["ch"]
-        : "--",
+      value: getValues("customer_typ") || "--",
       editEle: (
         <SelectField
           key="customer_typ"
@@ -144,14 +142,7 @@ const CustomerDetail = ({
       req: false,
       label: " ",
       value: [
-        // getValues("customer_city")
-        //   ? convertMap["customer_city"][getValues("customer_city")]["ch"]
-        //   : "--",
-        // getValues("customer_area") || "--"
-
-        getValues("customer_city")
-          ? convertMap["customer_city"][getValues("customer_city")]
-          : "--",
+        getValues("customer_city") || "--",
         getValues("customer_area") || "--"
       ],
       editEle: [
@@ -190,9 +181,7 @@ const CustomerDetail = ({
       label: " ",
       value: [
         getValues("customer_district_code") || "--",
-        getValues("customer_country")
-          ? convertMap["customer_country"][getValues("customer_country")]["ch"]
-          : "--"
+        getValues("customer_country") || "--"
       ],
       editEle: [
         <TextInputField
