@@ -24,6 +24,11 @@ export interface I_Region_Context {
   handleStateChange: (stateNo: string) => void;
   handleCityChange: (cityNo: string) => void;
   getRegionsData: (area_nos: string[]) => Promise<any>;
+  initOptions: (regionAreaNo: {
+    country?: string;
+    state?: string;
+    city?: string;
+  }) => void;
 }
 
 // make a context for those components
@@ -45,6 +50,13 @@ export const RegionContext = createContext<I_Region_Context>({
   },
   getRegionsData: function (area_nos: string[]): Promise<any> {
     throw new Error("Function not implemented.");
+  },
+  initOptions: function (regionAreaNo: {
+    country?: string;
+    state?: string;
+    city?: string;
+  }): void {
+    console.log(regionAreaNo);
   }
 });
 
@@ -59,12 +71,13 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   );
   const [currentState, setCurrentState] = useState<I_RegionsData | null>(null);
   const [currentCity, setCurrentCity] = useState<I_RegionsData | null>(null);
-  console.log("currentCountry", currentCountry);
-  console.log("currentState", currentState);
-  console.log("currentCity", currentCity);
+  //
+  console.log("all countries", allCountries);
+  console.log("all allStates", allStates);
+  console.log("all allCities", allCities);
   // 取得國家選項內容
   useEffect(() => {
-    console.log("update country");
+    console.log("update country", allCountries);
     getAllRegions("", "2")
       .then((data) => {
         const countriesData = data.options.filter((regionData) => {
@@ -78,20 +91,11 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
       .then((countriesData) => {
         console.log("new countries", countriesData);
         setAllCountries(countriesData);
-        // clean current country
-        // clean current state, state options, city, city options
-        setCurrentCountry(null);
-        setAllStates([]);
-        setCurrentState(null);
-        setAllCities([]);
-        setCurrentCity(null);
       })
       .catch((err) => console.error("get regions error: ", err));
   }, []);
   // 取得州選項內容
   useEffect(() => {
-    console.log("update states");
-    console.log("currentCountry", currentCountry);
     if (!currentCountry) return;
     getAllRegions(currentCountry.area_No.slice(0, 4), "3")
       .then((data) => {
@@ -115,9 +119,9 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
           setAllStates([]);
           setAllCities(statesData);
           setCurrentState(null);
-          if (statesData.length !== 0) {
-            setCurrentCity(statesData[0]);
-          }
+          // if (statesData.length !== 0) {
+          //   setCurrentCity(statesData[0]);
+          // }
         } else {
           setAllStates(statesData);
           // clean current state,city, city options
@@ -183,7 +187,6 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   /**
    * Get data with area_no
    */
-
   async function getRegionsData(area_nos: string[]) {
     const areaMap: { [key: string]: any } = {};
     await Promise.all(area_nos.map((area_no) => getRegion(area_no))).then(
@@ -195,68 +198,42 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     );
     console.log("regionDatas", areaMap);
   }
-
-  // 將國家代號轉為文字形式
-  // const handleCountrySwitch = (country: string) => {
-  //   const showCountry = allCountries?.filter((v) => {
-  //     return country === v.areaNo;
-  //   });
-  //   return showCountry[0]?.regionName;
-  // };
-
-  // 將州省代號轉為文字形式
-  // const handleStateSwitch = (state: string) => {
-  //   const showState = getState?.filter((v: { area_No: string }) => {
-  //     return state === v.area_No;
-  //   });
-  //   if (showState) return showState[0]?.area_Name_Tw;
-  // };
-
-  // 將城市代號轉為文字形式
-  // const handleCitySwitch = (city: string) => {
-  //   const showCity = getCity?.filter((v: { area_No: string }) => {
-  //     return city === v.area_No;
-  //   });
-  //   if (showCity) return showCity[0]?.area_Name_Tw;
-  // };
-
-  // 判斷國別來決定要顯示的國碼
-  // const handleCountryCode = (country: string) => {
-  //   const showCountryCode = allCountries?.filter((v) => {
-  //     return v.areaNo === country;
-  //   });
-  //   return showCountryCode[0]?.countryCode;
-  // };
-
-  // useEffect(() => {
-  //   const state_area_no = companyData?.company_country2.substring(0, 4);
-  //   const city_area_no = companyData?.company_area.substring(0, 7);
-  //   const state_level_num = "3";
-  //   const city_level_num = "4";
-  //   getAllRegions(state_area_no, state_level_num).then((data) => {
-  //     setGetState(data.options);
-  //   });
-  //   getAllRegions(city_area_no, city_level_num).then((data) => {
-  //     setGetCity(data.options);
-  //   });
-  // }, [companyData?.company_area, companyData?.company_country2]);
-
-  ///////////////////////////////////////////////////////
-  // const allContextValues = {
-  //   allCountries,
-  //   // setAllCountries,
-  //   allStates,
-  //   // setAllStates,
-  //   allCities,
-  //   // setAllCities,
-  //   handleCountryChange,
-  //   handleStateChange,
-  //   handleCityChange,
-  //   // handleCountrySwitch
-  //   // handleStateSwitch,
-  //   // handleCitySwitch,
-  //   // handleCountryCode
-  // };
+  // initOptions
+  async function updateStateOptions(areaNo?: string): Promise<void> {
+    if (!areaNo) return;
+    const data = await getAllRegions(areaNo.slice(0, 4), "3");
+    const statesData = data.options.filter((regionData) => {
+      return regionData.area_Name_Tw !== "" && regionData.area_No[0] !== "6";
+    });
+    console.log("init state", statesData);
+    setAllStates(statesData);
+    // if (filterStates(areaNo)) {
+    //   setAllStates([]);
+    //   setAllCities(statesData);
+    // } else {
+    //   setAllStates(statesData);
+    // }
+  }
+  async function updateCityOptions(areaNo?: string): Promise<void> {
+    if (!areaNo) return;
+    const data = await getAllRegions(areaNo.slice(0, 7), "4");
+    const citiesData = data.options.filter((regionData) => {
+      return regionData.area_Name_Tw !== "" && regionData.area_No[0] !== "6";
+    });
+    console.log("init City", citiesData);
+    setAllCities(citiesData);
+  }
+  //
+  async function initOptions(regionAreaNo: {
+    country?: string;
+    state?: string;
+  }) {
+    console.log("regionAreaNo", regionAreaNo);
+    await Promise.all([
+      updateStateOptions(regionAreaNo.country),
+      updateCityOptions(regionAreaNo.state)
+    ]);
+  }
 
   const allContextValues = {
     countries: allCountries,
@@ -268,7 +245,8 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     handleCountryChange,
     handleStateChange,
     handleCityChange,
-    getRegionsData
+    getRegionsData,
+    initOptions
   };
 
   return (

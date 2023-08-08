@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm, useWatch, Controller } from "react-hook-form";
 import { TextInputField, TextInput, SelectField } from "evergreen-ui";
 //@components
@@ -42,8 +42,16 @@ const CustomerDetail = ({
     handleCountryChange,
     handleStateChange,
     handleCityChange,
-    getRegionsData
+    getRegionsData,
+    initOptions
   } = useContext<I_Region_Context>(RegionContext);
+
+  useEffect(() => {
+    initOptions({
+      country: customerDefaultData?.customer_country,
+      state: customerDefaultData?.customer_area
+    });
+  }, []);
   useWatch({
     control,
     name: "customer_no"
@@ -161,27 +169,6 @@ const CustomerDetail = ({
         getValues("customer_area") || "--"
       ],
       editEle: [
-        // <SelectField
-        //   key="customer_city"
-        //   label={
-        //     <label>
-        //       <span style={{ color: "red" }}>*</span>城市
-        //     </label>
-        //   }
-        //   {...register("customer_city", {
-        //     required: "必填"
-        //   })}
-        //   marginBottom="0"
-        // >
-        //   <>
-        //     <option value={""}>請選擇</option>
-        //     {cities?.map((city) => (
-        //       <option key={city.area_No} value={city.area_No}>
-        //         {city.area_Name_Tw}
-        //       </option>
-        //     ))}
-        //   </>
-        // </SelectField>,
         <Controller
           key="customer_city"
           name="customer_city"
@@ -233,21 +220,6 @@ const CustomerDetail = ({
             </SelectField>
           )}
         />
-        // <SelectField
-        //   key="customer_area"
-        //   label="州/省/區"
-        //   {...register("customer_area")}
-        //   marginBottom="0"
-        // >
-        //   <>
-        //     <option value={""}>請選擇</option>
-        //     {states?.map((state) => (
-        //       <option key={state.area_No} value={state.area_No}>
-        //         {state.area_Name_Tw}
-        //       </option>
-        //     ))}
-        //   </>
-        // </SelectField>
       ]
     },
     {
