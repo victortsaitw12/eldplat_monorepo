@@ -45,7 +45,6 @@ const Page: NextPageWithLayout<
   useEffect(() => {
     setLoading(true);
     getEmployeeById(userId).then((data) => {
-      // console.log("single user data-----", data);
       const newData = { ...data.data };
       const result = {
         user_name: newData.basicInfo["user_name"],
@@ -53,7 +52,8 @@ const Page: NextPageWithLayout<
         user_english_name: newData.basicInfo["user_english_name"],
         user_identity: newData.basicInfo["user_identity"],
         user_country: newData.basicInfo["user_country"],
-        user_birthday: newData.basicInfo["user_birthday"]?.substring(0, 10),
+        user_birthday:
+          newData.basicInfo["user_birthday"]?.substring(0, 10) || null,
         user_sex: newData.basicInfo["user_sex"],
         user_photo_link: newData.basicInfo["user_photo_link"],
         user_email: newData.basicInfo["user_email"],
@@ -75,20 +75,20 @@ const Page: NextPageWithLayout<
         company_name: newData.basicInfo["company_name"],
         department: newData.basicInfo["department"],
         group: newData.basicInfo["group"],
-        arrive_date: newData.basicInfo["arrive_date"]?.substring(0, 10),
+        arrive_date: newData.basicInfo["arrive_date"]?.substring(0, 10) || null,
         leave_date: newData.basicInfo["leave_date"]?.substring(0, 10),
         leave_check: newData.basicInfo["leave_check"],
         license_name: newData["licenses"].map(
           (item: { license_name: any }) => item.license_name
         ),
-        groups: newData["groups"],
+        groups: newData["groups"], // insertDat不需要的資訊
         group_no: newData.groups.map((item: any) => {
           return item["group_no"];
         }),
         languages: newData["languages"],
         healths: newData["healths"],
-        invts: newData["invts"],
-        workinghours: newData["workinghours"]
+        invts: newData["invts"], // insertDat不需要的資訊
+        workinghours: newData["workinghours"] // insertDat不需要的資訊
       };
       setEditData(result);
       setLoading(false);

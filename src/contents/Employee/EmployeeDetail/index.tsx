@@ -71,7 +71,10 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: "生日",
-      value: dayjs(data.user_birthday).format("YYYY/MM/DD") || "--"
+      value:
+        (data.user_birthday &&
+          dayjs(data.user_birthday).format("YYYY/MM/DD")) ||
+        "--"
     },
     {
       req: false,
@@ -200,12 +203,15 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: "到職日期",
-      value: dayjs(data.arrive_date).format("YYYY/MM/DD") || "--"
+      value:
+        (data.arrive_date && dayjs(data.arrive_date).format("YYYY/MM/DD")) ||
+        "--"
     },
     {
       req: false,
       label: "離職日期",
-      value: dayjs(data.leave_date).format("YYYY/MM/DD") || "--"
+      value:
+        (data.leave_date && dayjs(data.leave_date).format("YYYY/MM/DD")) || "--"
     },
 
     {

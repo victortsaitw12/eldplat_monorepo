@@ -111,14 +111,7 @@ const PriceInfoView = () => {
       console.log(err);
     }
   };
-  const update_FE_status = async (quote_no: string, status_code: string) => {
-    try {
-      const res = await updateFEStatusLog(quote_no, status_code);
-      console.log(res);
-    } catch (err: any) {
-      console.log(err);
-    }
-  };
+
   return (
     <BodySTY>
       <Pane>
@@ -158,7 +151,6 @@ const PriceInfoView = () => {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  update_FE_status(quote_no, "12");
                   update_BE_status(quote_no, "13");
                   toaster.success(
                     "調度人員已收到訂單" + quote_no + "的預約派車需求",
@@ -181,7 +173,6 @@ const PriceInfoView = () => {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  update_FE_status(quote_no, "15");
                   update_BE_status(quote_no, "15");
                   router.push("/admin_orders/");
                 }}
@@ -336,7 +327,6 @@ const PriceInfoView = () => {
               const formData = getValues();
               console.log("當點擊送出報價後的表單資料:", formData);
               update_BE_status(quote_no, "3");
-              update_FE_status(quote_no, "4");
               router.push("/admin_orders/");
             }}
             text="送出報價"

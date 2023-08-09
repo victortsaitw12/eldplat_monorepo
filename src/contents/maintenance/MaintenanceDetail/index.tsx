@@ -22,8 +22,10 @@ interface I_Props {
   maintenance_id: string;
   mainCreateDdl?: any;
   setMainCreateDdl: (t: any) => void;
+  defaultData: any;
 }
 const MaintenanceDetail = ({
+  defaultData,
   isEdit,
   submitRef,
   asyncSubmitForm,
@@ -32,40 +34,41 @@ const MaintenanceDetail = ({
   setMainCreateDdl
 }: I_Props) => {
   const [loading, setLoading] = useState(true);
-  console.log("loadingloadingloading", loading);
   const {
     register,
     control,
     formState: { errors },
     setValue,
     getValues,
+    watch,
     handleSubmit
   } = useForm<I_Maintenance_Type>({
-    defaultValues: async () => {
-      return getMaintenanceById(maintenance_id).then((data) => {
-        console.log("data for single one", data);
-        const newData = { ...data };
-        newData["service_start_date"] = dashDate(data.service_start_date);
-        newData["service_end_date"] = dashDate(data.service_end_date);
-        return newData;
-      });
+    defaultValues: {
+      ...defaultData,
+      service_start_date: dashDate(defaultData.service_start_date),
+      service_end_date: dashDate(defaultData.service_end_date)
     }
   });
+  const package_names: any = {};
+  mainCreateDdl?.package_options.forEach(
+    (element: { no: string; name: string }) => {
+      package_names[element.no] = element.name;
+    }
+  );
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (name === "vendor_no") {
+        // 選維修廠之後分類會變
 
-  if (getValues("maintenance_no") === undefined) {
-    return <div></div>;
-  }
-
-  // 選維修廠之後分類會變
-  const handleChangeVendorDDL = (e: any) => {
-    getCreateDdl(e.target.value).then((data) => {
-      const newData = { ...data.dataList[0] };
-      console.log("㊗newData", newData);
-      setValue("vendor_no", e.target.value);
-      setMainCreateDdl(newData);
+        getCreateDdl(value?.vendor_no as string).then((data) => {
+          const newData = { ...data.dataList[0] };
+          console.log("㊗newData", newData);
+          setMainCreateDdl(newData);
+        });
+      }
     });
-  };
-
+    return () => subscription.unsubscribe();
+  }, [watch]);
   //車輛資料
   const vehicle_info = [
     {
@@ -110,9 +113,6 @@ const MaintenanceDetail = ({
       )
     }
   ];
-
-  console.log("vehicle_info", vehicle_info);
-  console.log("mainCreateDdl", mainCreateDdl);
 
   // 檢查詳情
   const check_info = [
@@ -163,17 +163,8 @@ const MaintenanceDetail = ({
       req: true,
       label: "維修廠",
       value: getValues("vendor_name"),
-      editEle: (
-        <Select
-          key="vendor_no"
-          {...(register("vendor_no"),
-          {
-            onChange: (e) => {
-              handleChangeVendorDDL(e);
-            }
-          })}
-          marginBottom="0"
-        >
+      editEle: mainCreateDdl && (
+        <Select key="vendor_no" {...register("vendor_no")} marginBottom="0">
           {mainCreateDdl?.vendor_options.map((item: any) => {
             return (
               <option key={item.no} value={item.no}>
@@ -187,20 +178,21 @@ const MaintenanceDetail = ({
     {
       req: true,
       label: "項目",
-      value: getValues("package_name"),
+      value: package_names[getValues("package_code")],
       editEle: (
         <Select
           key="package_code"
           {...register("package_code")}
           marginBottom="0"
         >
-          {mainCreateDdl?.package_options.map((item: any) => {
-            return (
-              <option key={item.no} value={item.no}>
-                {item.name}
-              </option>
-            );
-          })}
+          {mainCreateDdl &&
+            mainCreateDdl?.package_options.map((item: any) => {
+              return (
+                <option key={item.no} value={item.no}>
+                  {item.name}
+                </option>
+              );
+            })}
         </Select>
       )
     }
@@ -243,6 +235,11 @@ const MaintenanceDetail = ({
     }
   ];
   console.log("register", register("meter"));
+
+  if (getValues("maintenance_no") === undefined) {
+    return <div></div>;
+  }
+
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>

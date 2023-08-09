@@ -93,7 +93,7 @@ const Page: NextPageWithLayout<{ userId: string; editPage: string }> = ({
         company_name: newData.basicInfo["company_name"],
         department: newData.basicInfo["department"],
         group: newData.basicInfo["group"],
-        arrive_date: newData.basicInfo["arrive_date"]?.substring(0, 10),
+        arrive_date: newData.basicInfo["arrive_date"]?.substring(0, 10) || null,
         leave_date: newData.basicInfo["leave_date"]?.substring(0, 10),
         leave_check: newData.basicInfo["leave_check"],
         license_name: newData["licenses"].map(
