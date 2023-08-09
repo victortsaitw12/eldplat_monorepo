@@ -32,39 +32,53 @@ const MaintenanceDetail = ({
   setMainCreateDdl
 }: I_Props) => {
   const [loading, setLoading] = useState(true);
-  console.log("loadingloadingloading", loading);
+
   const {
     register,
     control,
     formState: { errors },
     setValue,
     getValues,
+    watch,
     handleSubmit
   } = useForm<I_Maintenance_Type>({
     defaultValues: async () => {
       return getMaintenanceById(maintenance_id).then((data) => {
-        console.log("data for single one", data);
+        console.log("🤣🤣🤣🤣🤣🤣data for single one", data);
         const newData = { ...data };
         newData["service_start_date"] = dashDate(data.service_start_date);
         newData["service_end_date"] = dashDate(data.service_end_date);
+        getCreateDdl(data.vendor_no).then((data) => {
+          const newData = { ...data.dataList[0] };
+          setMainCreateDdl(newData);
+        });
         return newData;
       });
     }
   });
 
-  if (getValues("maintenance_no") === undefined) {
-    return <div></div>;
-  }
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (name === "vendor_no") {
+        getCreateDdl(value?.vendor_no as string).then((data) => {
+          const newData = { ...data.dataList[0] };
+          console.log("㊗newData", newData);
+          setMainCreateDdl(newData);
+        });
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   // 選維修廠之後分類會變
-  const handleChangeVendorDDL = (e: any) => {
-    getCreateDdl(e.target.value).then((data) => {
-      const newData = { ...data.dataList[0] };
-      console.log("㊗newData", newData);
-      setValue("vendor_no", e.target.value);
-      setMainCreateDdl(newData);
-    });
-  };
+  // const handleChangeVendorDDL = (e: any) => {
+  //   getCreateDdl(e.target.value).then((data) => {
+  //     const newData = { ...data.dataList[0] };
+  //     console.log("㊗newData", newData);
+  //     setValue("vendor_no", e.target.value);
+  //     setMainCreateDdl(newData);
+  //   });
+  // };
 
   //車輛資料
   const vehicle_info = [
@@ -111,8 +125,11 @@ const MaintenanceDetail = ({
     }
   ];
 
-  console.log("vehicle_info", vehicle_info);
-  console.log("mainCreateDdl", mainCreateDdl);
+  // console.log("vehicle_info", vehicle_info);
+  // console.log("vendor_no", getValues("vendor_no"));
+  // console.log("mainCreateDdl", mainCreateDdl?.vendor_options);
+  // console.log("package_code", getValues("package_code"));
+  // console.log("mainCreateDdl?.package_options", mainCreateDdl?.package_options);
 
   // 檢查詳情
   const check_info = [
@@ -163,17 +180,8 @@ const MaintenanceDetail = ({
       req: true,
       label: "維修廠",
       value: getValues("vendor_name"),
-      editEle: (
-        <Select
-          key="vendor_no"
-          {...(register("vendor_no"),
-          {
-            onChange: (e) => {
-              handleChangeVendorDDL(e);
-            }
-          })}
-          marginBottom="0"
-        >
+      editEle: mainCreateDdl && (
+        <Select key="vendor_no" {...register("vendor_no")} marginBottom="0">
           {mainCreateDdl?.vendor_options.map((item: any) => {
             return (
               <option key={item.no} value={item.no}>
@@ -243,6 +251,11 @@ const MaintenanceDetail = ({
     }
   ];
   console.log("register", register("meter"));
+
+  if (getValues("maintenance_no") === undefined) {
+    return <div></div>;
+  }
+
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>
