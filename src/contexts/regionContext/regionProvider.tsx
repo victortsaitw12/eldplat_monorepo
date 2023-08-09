@@ -62,7 +62,7 @@ export const RegionContext = createContext<I_Region_Context>({
 
 // function component start
 export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
-  const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  // const { companyData } = useContext<I_Company_Context>(CompanyContext);
   const [allCountries, setAllCountries] = useState<I_RegionsData[]>([]); // 顯示所有國家
   const [allStates, setAllStates] = useState<I_RegionsData[]>([]);
   const [allCities, setAllCities] = useState<I_RegionsData[]>([]);
@@ -71,13 +71,8 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   );
   const [currentState, setCurrentState] = useState<I_RegionsData | null>(null);
   const [currentCity, setCurrentCity] = useState<I_RegionsData | null>(null);
-  //
-  console.log("all countries", allCountries);
-  console.log("all allStates", allStates);
-  console.log("all allCities", allCities);
   // 取得國家選項內容
   useEffect(() => {
-    console.log("update country", allCountries);
     getAllRegions("", "2")
       .then((data) => {
         const countriesData = data.options.filter((regionData) => {
@@ -89,7 +84,6 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
         return countriesData;
       })
       .then((countriesData) => {
-        console.log("new countries", countriesData);
         setAllCountries(countriesData);
       })
       .catch((err) => console.error("get regions error: ", err));
@@ -119,9 +113,6 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
           setAllStates([]);
           setAllCities(statesData);
           setCurrentState(null);
-          // if (statesData.length !== 0) {
-          //   setCurrentCity(statesData[0]);
-          // }
         } else {
           setAllStates(statesData);
           // clean current state,city, city options
@@ -158,31 +149,26 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
       })
       .catch((err) => console.error("get regions error: ", err));
   }, [currentState]);
+  // handleChange
+  function handleChange(
+    area_no: string,
+    areas: I_RegionsData[],
+    callback: (area: I_RegionsData) => void
+  ) {
+    const targetArea = areas.find((area) => area.area_No === area_no);
+    if (!targetArea) return;
+    callback(targetArea);
+  }
   // 選取國家
   function handleCountryChange(area_no: string) {
-    const selectedCountry = allCountries.find((country) => {
-      return country.area_No === area_no;
-    });
-    if (!selectedCountry) return;
-    console.log("selectedCountry: ", selectedCountry);
-    setCurrentCountry(selectedCountry);
+    return handleChange(area_no, allCountries, setCurrentCountry);
   }
 
   function handleStateChange(area_no: string) {
-    const selectedState = allStates.find((state) => {
-      return state.area_No === area_no;
-    });
-    if (!selectedState) return;
-    console.log("selectedState: ", selectedState);
-    setCurrentState(selectedState);
+    return handleChange(area_no, allStates, setCurrentState);
   }
   function handleCityChange(area_no: string) {
-    const selectedCity = allCities.find((city) => {
-      return city.area_No === area_no;
-    });
-    if (!selectedCity) return;
-    console.log("selectedCity: ", selectedCity);
-    setCurrentCity(selectedCity);
+    return handleChange(area_no, allCities, setCurrentCity);
   }
   /**
    * Get data with area_no
@@ -196,7 +182,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
         });
       }
     );
-    console.log("regionDatas", areaMap);
+    return areaMap;
   }
   // initOptions
   async function updateStateOptions(areaNo?: string): Promise<void> {
@@ -207,12 +193,6 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     });
     console.log("init state", statesData);
     setAllStates(statesData);
-    // if (filterStates(areaNo)) {
-    //   setAllStates([]);
-    //   setAllCities(statesData);
-    // } else {
-    //   setAllStates(statesData);
-    // }
   }
   async function updateCityOptions(areaNo?: string): Promise<void> {
     if (!areaNo) return;
@@ -228,14 +208,13 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     country?: string;
     state?: string;
   }) {
-    console.log("regionAreaNo", regionAreaNo);
     await Promise.all([
       updateStateOptions(regionAreaNo.country),
       updateCityOptions(regionAreaNo.state)
     ]);
   }
 
-  const allContextValues = {
+  const regionStore = {
     countries: allCountries,
     states: allStates,
     cities: allCities,
@@ -250,7 +229,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <RegionContext.Provider value={allContextValues}>
+    <RegionContext.Provider value={regionStore}>
       {children}
     </RegionContext.Provider>
   );
