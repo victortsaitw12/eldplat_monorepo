@@ -1,28 +1,19 @@
 import API_Path from "./apiPath";
 
 export const getEmployeeById = async (user_no: string) => {
-  const res = await fetch("/api/getEmployeeById", {
-    method: "POST",
+  const url = new URL(API_Path["GetEmployeeById"]);
+  url.searchParams.append("user_no", user_no);
+  const response = await fetch(url.href, {
+    method: "GET",
     headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ user_no: user_no })
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    }
   });
-  return res.json();
-  // const response = await fetch(
-  //   `${API_Path["GetEmployeeById"]}?user_no=${user_no}`,
-
-  //   {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-  //     }
-  //   }
-  // );
-  // const data = await response.json();
-  // // console.log(mappingData(data.contentList[0], employeePattern));
-  // return data;
+  console.log("response", response);
+  const data = await response.json();
+  console.log("data", data);
+  return data.dataList[0];
 };
 
 type PatternType = { [key: string]: string };
@@ -34,11 +25,3 @@ export const employeePattern: PatternType = {
   contact_Phone: "contact_Phone",
   contact_Email: "contact_Email"
 };
-
-// const mappingData = (data: { [key: string]: any }, pattern: PatternType) => {
-//   const result: { [key: string]: any } = {};
-//   for (const key in pattern) {
-//     result[key] = data[key];
-//   }
-//   return result;
-// };

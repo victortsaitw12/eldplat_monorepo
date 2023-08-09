@@ -32,13 +32,11 @@ export const useEmployeeFilterStore = create<StateTypes>((set) => ({
   initializeSubFilter: () => {
     const filter: any = {};
     const initFilter = localStorage.getItem("employeeInitFilter");
-    console.log("employeeInitFilter", initFilter);
     if (!initFilter) return;
     for (const item of JSON.parse(initFilter)) {
       filter[item.field_Name] = item;
       filter[item.field_Name].value = "";
     }
-    console.log("filter", filter);
     return set(() => {
       return {
         subFilter: filter

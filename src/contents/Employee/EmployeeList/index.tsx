@@ -1,10 +1,10 @@
-import Table from "@components/Table/TableWithEdit";
 import React from "react";
 import { getEmployeeTitle } from "@services/employee/getAllEmployee";
 import { BodySTY } from "./style";
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { I_PageInfo } from "@components/PaginationField";
 import StatusIconWithText from "@components/StatusIconWithText";
+import FirstNameIcon from "@components/FirstNameIcon";
 //
 interface I_EmployeeListType {
   [key: string]: any;
@@ -37,14 +37,19 @@ function EmployeeList({
     item["user_status"] = {
       label: (
         <StatusIconWithText status={"01"}>
-          {item["user_status"].label}
+          {item["user_status"].value}
         </StatusIconWithText>
       ),
-      value: item.value
+      value: item["user_status"].value
     };
     item["user_name"] = {
-      label: <div>{item["user_name"].label}</div>,
-      value: item.value
+      label: (
+        <div style={{ display: "flex", gap: "12px" }}>
+          <FirstNameIcon text={item["user_name"].value.slice(0, 1)} />
+          {item["user_name"].value}
+        </div>
+      ),
+      value: item["user_name"].value
     };
     return item;
   });
