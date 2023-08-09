@@ -26,7 +26,10 @@ function Index({ menu }: Props) {
       .indexOf(router.asPath) >= 0;
   const [openList, setOpenList] = useState(default_open);
   const isActive =
-    router.asPath === menu.url || router.asPath.indexOf(menu.url) >= 0;
+    router.asPath === menu.url ||
+    (menu.name !== "首頁" &&
+      menu.url !== "/" &&
+      router.asPath.indexOf(menu.url) >= 0);
   const isDisabled = menu.url === null && !menu.subList;
   return (
     <BodySTY>
