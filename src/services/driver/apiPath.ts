@@ -12,7 +12,8 @@ const API_Path = {
   updateDriverStatus: createUrlPath("ATR", "UpdateDriverStatus"), // 更新駕駛狀態（啟用/停用）
   getLicenseById: createUrlPath("ATR", "GetLicensesByID"), // 取得單一駕駛證照資料
   getHealthById: createUrlPath("ATR", "GetHealthsByID"), // 取得單一駕駛健康資料
-  getAreaDDL: createUrlPath("COM", "GetAreaDDL") // 取駕駛國家 執照地區下拉式資料
+  getAreaDDL: createUrlPath("COM", "GetAreaDDL"), // 取駕駛國家 執照地區下拉式資料
+  getOneDDL: createUrlPath("COM", "GetOneDDL") // 取駕駛國家 執照地區下拉式資料
 };
 
 export default API_Path;

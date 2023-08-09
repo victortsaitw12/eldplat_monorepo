@@ -10,7 +10,7 @@ export const getOneDDL = async (
     ddl_type: tableName //"account"
   };
 
-  const res = await fetch(`${API_Path["getAreaDDL"]}`, {
+  const res = await fetch(`${API_Path["getOneDDL"]}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
