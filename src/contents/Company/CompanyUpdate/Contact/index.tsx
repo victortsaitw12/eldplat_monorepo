@@ -19,7 +19,6 @@ import {
 import { I_Company_Contact_Type } from "@typings/company_type";
 import { getAllRegions } from "@services/region/getRegion";
 import {
-  I_RegionsPayload,
   I_Region_Context,
   RegionContext
 } from "@contexts/regionContext/regionProvider";
@@ -29,13 +28,12 @@ function Contact() {
   const { companyData, setCompanyData, handleCompanyContactChange, errMsg } =
     useContext<I_Company_Context>(CompanyContext);
   const {
-    allCountries,
-    allStates,
-    allCities,
+    cities,
+    states,
+    countries,
+    handleCountryChange,
     handleStateChange,
-    handleCityChange,
-    handleStateSwitch,
-    handleCountryCode
+    handleCityChange
   } = useContext<I_Region_Context>(RegionContext);
 
   const [contactArr, setContactArr] = useState<I_Company_Contact_Type[] | any>([
@@ -148,7 +146,8 @@ function Contact() {
             <TextInput
               className="country-number"
               name=""
-              value={handleCountryCode(companyData?.company_country)}
+              // value={handleCountryCode(companyData?.company_country)}
+              value={""}
               required
               disabled
             />
@@ -170,7 +169,8 @@ function Contact() {
             <TextInput
               className="country-number"
               name=""
-              value={handleCountryCode(companyData?.company_country)}
+              // value={handleCountryCode(companyData?.company_country)}
+              value={""}
               required
               disabled
             />
@@ -220,11 +220,21 @@ function Contact() {
                     handleCompanyContactChange(e);
                   }}
                 >
-                  {allCities?.map((item: any, idx: number) => (
+                  <>
+                    <option value={""} disabled>
+                      請選擇
+                    </option>
+                    {cities?.map((city) => (
+                      <option key={city.area_No} value={city.area_No}>
+                        {city.area_Name_Tw}
+                      </option>
+                    ))}
+                  </>
+                  {/* {allCities?.map((item: any, idx: number) => (
                     <option key={item.areaNo} value={item.areaNo}>
                       {item.regionName}
                     </option>
-                  ))}
+                  ))} */}
                 </SelectField>
               </Pane>
               <Pane>
@@ -239,11 +249,21 @@ function Contact() {
                     handleCityChange(e);
                   }}
                 >
-                  {allStates?.map((item: any, idx: number) => (
+                  <>
+                    <option value={""} disabled>
+                      請選擇
+                    </option>
+                    {states?.map((state) => (
+                      <option key={state.area_No} value={state.area_No}>
+                        {state.area_Name_Tw}
+                      </option>
+                    ))}
+                  </>
+                  {/* {allStates?.map((item: any, idx: number) => (
                     <option key={item.areaNo} value={item.areaNo}>
                       {item.regionName}
                     </option>
-                  ))}
+                  ))} */}
                 </SelectField>
               </Pane>
             </Pane>
@@ -268,11 +288,21 @@ function Contact() {
                     handleStateChange(e);
                   }}
                 >
-                  {allCountries?.map((item, idx) => (
+                  <>
+                    <option value={""} disabled>
+                      請選擇
+                    </option>
+                    {countries?.map((item) => (
+                      <option key={item.area_No} value={item.area_No}>
+                        {item.area_Name_Tw}
+                      </option>
+                    ))}
+                  </>
+                  {/* {allCountries?.map((item, idx) => (
                     <option key={item.areaNo} value={item.areaNo}>
                       {item.regionName}
                     </option>
-                  ))}
+                  ))} */}
                 </SelectField>
               </Pane>
             </Pane>

@@ -30,7 +30,9 @@ import {
 function CountrySet() {
   const { companyData, setCompanyData, handleCompanyDDLChange, companyDDL } =
     useContext<I_Company_Context>(CompanyContext);
-  const { allCountries, setAllCountries } =
+  // const { allCountries, setAllCountries } =
+  //   useContext<I_Region_Context>(RegionContext);
+  const { countries, handleCountryChange } =
     useContext<I_Region_Context>(RegionContext);
   const company_language_data = companyData?.company_language;
   const [editLangData, setEditLangData] = useState<any[]>();
@@ -137,11 +139,21 @@ function CountrySet() {
               handleCompanyDDLChange(e);
             }}
           >
-            {allCountries?.map((item) => (
+            <>
+              <option value={""} disabled>
+                請選擇
+              </option>
+              {countries?.map((item) => (
+                <option key={item.area_No} value={item.area_No}>
+                  {item.area_Name_Tw}
+                </option>
+              ))}
+            </>
+            {/* {allCountries?.map((item) => (
               <option key={item.areaNo} value={item.areaNo}>
                 {item.regionName}
               </option>
-            ))}
+            ))} */}
           </SelectField>
         </Pane>
         <Pane className="input-line">
