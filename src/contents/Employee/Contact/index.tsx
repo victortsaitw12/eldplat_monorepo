@@ -179,7 +179,6 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
             </Pane>
           </Pane>
         </Pane>
-        {/**/}
         <Pane className="input-line">
           <Text>緊急聯絡人</Text>
           <TextInput
