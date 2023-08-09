@@ -22,8 +22,10 @@ interface I_Props {
   maintenance_id: string;
   mainCreateDdl?: any;
   setMainCreateDdl: (t: any) => void;
+  defaultData: any;
 }
 const MaintenanceDetail = ({
+  defaultData,
   isEdit,
   submitRef,
   asyncSubmitForm,
@@ -32,7 +34,6 @@ const MaintenanceDetail = ({
   setMainCreateDdl
 }: I_Props) => {
   const [loading, setLoading] = useState(true);
-
   const {
     register,
     control,
@@ -42,24 +43,23 @@ const MaintenanceDetail = ({
     watch,
     handleSubmit
   } = useForm<I_Maintenance_Type>({
-    defaultValues: async () => {
-      return getMaintenanceById(maintenance_id).then((data) => {
-        console.log("🤣🤣🤣🤣🤣🤣data for single one", data);
-        const newData = { ...data };
-        newData["service_start_date"] = dashDate(data.service_start_date);
-        newData["service_end_date"] = dashDate(data.service_end_date);
-        getCreateDdl(data.vendor_no).then((data) => {
-          const newData = { ...data.dataList[0] };
-          setMainCreateDdl(newData);
-        });
-        return newData;
-      });
+    defaultValues: {
+      ...defaultData,
+      service_start_date: dashDate(defaultData.service_start_date),
+      service_end_date: dashDate(defaultData.service_end_date)
     }
   });
-
+  const package_names: any = {};
+  mainCreateDdl?.package_options.forEach(
+    (element: { no: string; name: string }) => {
+      package_names[element.no] = element.name;
+    }
+  );
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       if (name === "vendor_no") {
+        // 選維修廠之後分類會變
+
         getCreateDdl(value?.vendor_no as string).then((data) => {
           const newData = { ...data.dataList[0] };
           console.log("㊗newData", newData);
@@ -69,17 +69,6 @@ const MaintenanceDetail = ({
     });
     return () => subscription.unsubscribe();
   }, [watch]);
-
-  // 選維修廠之後分類會變
-  // const handleChangeVendorDDL = (e: any) => {
-  //   getCreateDdl(e.target.value).then((data) => {
-  //     const newData = { ...data.dataList[0] };
-  //     console.log("㊗newData", newData);
-  //     setValue("vendor_no", e.target.value);
-  //     setMainCreateDdl(newData);
-  //   });
-  // };
-
   //車輛資料
   const vehicle_info = [
     {
@@ -124,12 +113,6 @@ const MaintenanceDetail = ({
       )
     }
   ];
-
-  // console.log("vehicle_info", vehicle_info);
-  // console.log("vendor_no", getValues("vendor_no"));
-  // console.log("mainCreateDdl", mainCreateDdl?.vendor_options);
-  // console.log("package_code", getValues("package_code"));
-  // console.log("mainCreateDdl?.package_options", mainCreateDdl?.package_options);
 
   // 檢查詳情
   const check_info = [
@@ -195,20 +178,21 @@ const MaintenanceDetail = ({
     {
       req: true,
       label: "項目",
-      value: getValues("package_name"),
+      value: package_names[getValues("package_code")],
       editEle: (
         <Select
           key="package_code"
           {...register("package_code")}
           marginBottom="0"
         >
-          {mainCreateDdl?.package_options.map((item: any) => {
-            return (
-              <option key={item.no} value={item.no}>
-                {item.name}
-              </option>
-            );
-          })}
+          {mainCreateDdl &&
+            mainCreateDdl?.package_options.map((item: any) => {
+              return (
+                <option key={item.no} value={item.no}>
+                  {item.name}
+                </option>
+              );
+            })}
         </Select>
       )
     }

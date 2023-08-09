@@ -26,27 +26,23 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [isFinished, setIsFinished] = useState<boolean>(false); // 維保任務是否結案的boolean
   const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
-
-  // 取得新增時的下拉式資料
-  useEffect(() => {
-    setLoading(true);
-    try {
-      getCreateDdl("").then((data) => {
-        setMainCreateDdl(data.dataList[0]);
-      });
-    } catch (err) {
-      console.error("getDDL error: ", err);
-    }
-    setLoading(false);
-  }, []);
-
+  const [maintenanceData, setMaintenanceData] = useState<any>(null);
   useEffect(() => {
     updateMainFilter("1");
     setLoading(true);
     // 如果進到檢視頁會先判斷這筆維保單是否已經結案，已結案就不會有編輯按鈕出現
     getMaintenanceById(maintenance_id).then((data) => {
+      setMaintenanceData(data);
       if (data.maintenance_status === "3") {
         setIsFinished(true);
+      }
+      try {
+        // 取得新增時的下拉式資料
+        getCreateDdl(data.vendor_no).then((res) => {
+          setMainCreateDdl(res.dataList[0]);
+        });
+      } catch (err) {
+        console.error("getDDL error: ", err);
       }
       setLoading(false);
     });
@@ -126,7 +122,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
         isEdit={isEdit}
         viewOnly={isFinished}
       >
-        {mainCreateDdl && (
+        {maintenanceData && mainCreateDdl && (
           <MaintenanceDetail
             isEdit={isEdit}
             submitRef={submitRef}
@@ -134,6 +130,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
             maintenance_id={maintenance_id}
             mainCreateDdl={mainCreateDdl}
             setMainCreateDdl={setMainCreateDdl}
+            defaultData={maintenanceData}
           />
         )}
       </TableWrapper>
