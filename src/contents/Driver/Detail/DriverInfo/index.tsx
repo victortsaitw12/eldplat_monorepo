@@ -18,6 +18,7 @@ import {
   getLicenseAreaDDL,
   I_AreaDDL
 } from "@services/driver/getAreaDDL";
+import { getOneDDL } from "@services/";
 
 interface Props {
   selected?: boolean;
@@ -50,6 +51,8 @@ function DriverInfo({
     const fetchDDL = async () => {
       const resCountryDDL = await getDriverCountryDDL();
       const resAreaDDL = await getLicenseAreaDDL();
+      const resBusGroupDDL = await getOneDDL("bus_group", "bus");
+      const resDispachAreaDDL = await getOneDDL("registration_province", "bus");
 
       const driverCountryDDL = resCountryDDL.options.map((item: I_AreaDDL) => {
         return { label: item.area_Name_Tw, value: item.area_No };
@@ -166,34 +169,34 @@ function DriverInfo({
       value: getValues("driver_seniority") || "--",
       editEle: <TextInput {...register("driver_seniority")} />
     },
-    // {
-    //   req: false,
-    //   label: "派駐地待欄位",
-    //   value: getValues("dsph_city") || "--",
-    //   editEle: (
-    //     <Select key="dsph_city" {...register("dsph_city")} marginBottom="0">
-    //       {Object.keys(DSPH_CITY).map((key) => (
-    //         <option key={key} value={key}>
-    //           {DSPH_CITY[key].label}
-    //         </option>
-    //       ))}
-    //     </Select>
-    //   )
-    // },
-    // {
-    //   req: false,
-    //   label: "車隊待欄位",
-    //   value: getValues("dsph_area") || "--",
-    //   editEle: (
-    //     <Select key="dsph_area" {...register("dsph_area")} marginBottom="0">
-    //       {Object.keys(DSPH_AREA).map((key) => (
-    //         <option key={key} value={key}>
-    //           {DSPH_AREA[key].label}
-    //         </option>
-    //       ))}
-    //     </Select>
-    //   )
-    // },
+    {
+      req: false,
+      label: "派駐地",
+      value: getValues("dsph_area") || "--",
+      editEle: (
+        <Select key="dsph_city" {...register("dsph_area")} marginBottom="0">
+          {Object.keys(DSPH_AREA).map((key) => (
+            <option key={key} value={key}>
+              {DSPH_AREA[key].label}
+            </option>
+          ))}
+        </Select>
+      )
+    },
+    {
+      req: false,
+      label: "車隊",
+      value: getValues("dsph_group") || "--",
+      editEle: (
+        <Select key="dsph_group" {...register("dsph_group")} marginBottom="0">
+          {Object.keys(DSPH_GROUP).map((key) => (
+            <option key={key} value={key}>
+              {DSPH_GROUP[key].label}
+            </option>
+          ))}
+        </Select>
+      )
+    },
     {
       req: false,
       label: "黑名單註記",

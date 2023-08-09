@@ -105,7 +105,7 @@ const Page: NextPageWithLayout<never> = () => {
               <Link
                 href={{
                   pathname: "/driver/detail/[id]",
-                  query: { id: data["driver_No"], editPage: "edit" }
+                  query: { id: data["driver_No"], editPage: "view" }
                 }}
               >
                 {data["user_Name"]}
