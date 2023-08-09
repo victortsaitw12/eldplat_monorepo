@@ -96,7 +96,8 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
           return item["group_no"];
         }),
         languages: newData["languages"],
-        healths: newData["healths"]
+        healths: newData["healths"],
+        invts: newData["invts"]
       };
       console.log("👽👽👽👽👽👽result", result);
       setData(result);

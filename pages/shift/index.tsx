@@ -32,7 +32,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
     subFilter,
     updateSubFilter
   } = useShiftStore();
-  const [isExpand, setIsExpand] = React.useState(false);
+  const [expandPercentage, setExpandPercentage] = React.useState<number>(0);
   const [nowTab, setNowTab] = React.useState("1");
   const [data, setData] = React.useState<any>([]);
   const [pageInfo, setPageInfo] = React.useState<I_PageInfo>(defaultPageInfo);
@@ -71,8 +71,9 @@ const ShiftPage: NextPageWithLayout<never> = () => {
     setMonthCount(v);
   };
 
-  const handleZoombar = (value: boolean) => {
-    setIsExpand(value);
+  const handleZoombar = (value: number) => {
+    // setIsExpand(Boolean(value));
+    setExpandPercentage(value);
   };
 
   // TODO: 一進入畫面時不跑
@@ -143,7 +144,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
                 <OverviewTable
                   data={data}
                   initialMonthFirst={initialMonthFirst}
-                  isExpand={isExpand}
+                  expandPercentage={expandPercentage}
                 />
               </div>
             </Pane>

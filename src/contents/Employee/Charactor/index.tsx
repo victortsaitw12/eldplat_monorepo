@@ -24,6 +24,7 @@ export interface I_Charactor {
 }
 
 function Charactor({ insertData, setInsertData }: I_Content_Props) {
+  console.log("✨✨✨inserData in Charactor", insertData);
   const [charactorSelected, setCharactorSelected] = useState<any>(null);
   const [charactorArr, setCharactorArr] = useState<I_Charactor[] | any[]>([]);
   const [charactorValue, setCharactorValue] = useState<any[]>([]);
@@ -120,7 +121,7 @@ function Charactor({ insertData, setInsertData }: I_Content_Props) {
 
   return (
     <BodySTY>
-      <Heading is="h4">指定角色</Heading>
+      <Heading is="h4">指定群组</Heading>
       <SelectMenu
         title="搜尋角色"
         // options={charactor_DATA.map((label) => label)}
@@ -138,7 +139,7 @@ function Charactor({ insertData, setInsertData }: I_Content_Props) {
           handleSelect(item);
         }}
       >
-        <Button>{charactorSelected || "請新增角色"}</Button>
+        <Button>{charactorSelected || "請新增群组"}</Button>
       </SelectMenu>
 
       {charactorArr.map((item: any, idx: number) => {

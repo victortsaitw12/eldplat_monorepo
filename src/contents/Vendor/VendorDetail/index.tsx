@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { TextInputField, TextInput, SelectField } from "evergreen-ui";
+import { TextInputField, TextInput, SelectField, Text } from "evergreen-ui";
 import { BodySTY } from "./style";
 //@components
 import InfoBox from "@components/InfoBox";
@@ -187,7 +187,11 @@ const VendorDetail = ({
       editEle: [
         <SelectField
           key="vendor_City"
-          label="城市"
+          label={
+            <Text>
+              <Text color="#d14343">*</Text>城市
+            </Text>
+          }
           {...methods.register("vendor_City", {
             required: "必填"
           })}
@@ -228,7 +232,11 @@ const VendorDetail = ({
         />,
         <SelectField
           key="vendor_Country"
-          label="國家"
+          label={
+            <Text>
+              <Text color="#d14343">*</Text>國家
+            </Text>
+          }
           {...methods.register("vendor_Country", {
             required: "必填"
           })}

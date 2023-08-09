@@ -104,11 +104,9 @@ function VehicleForm({
       // 新增替代(車)API
       const res = await createReplaceAssignment(data);
       // 成功or失敗訊息
-      if (res.statusCode !== "200") throw new Error(` ${res.resultString}`);
+      if (res.statusCode !== "200")
+        throw new Error(`${res.resultString || ""}`);
       toaster.success("新增成功", {
-        description: `新增${dayjs(data.task_start_time).format(
-          "YYYY-MM-DD"
-        )}派車`,
         duration: 2,
         hasCloseButton: true
       });
@@ -116,8 +114,8 @@ function VehicleForm({
       refetch && refetch();
       checkOtherAssignment(res.dataList[0]);
     } catch (e: any) {
-      toaster.success("新增失敗", {
-        description: `${e.message || ""}`,
+      console.log("🍅e:", e);
+      toaster.danger("新增失敗", {
         duration: 3,
         hasCloseButton: true
       });

@@ -3,9 +3,11 @@ import styled from "styled-components";
 const checkboxWidth = 36;
 const freezeColWidth = 72;
 
-export const TableSTY = styled.div<{ isExpand: boolean }>`
-  ${({ isExpand }) => `
-    --cellWidth: ${isExpand ? "140px" : "72px"};
+export const TableSTY = styled.div<{
+  expandPercentage: number;
+}>`
+  ${({ expandPercentage }) => `
+    --cellWidth: ${64 + (expandPercentage * (256 - 64)) / 100 + "px"};
   `}
   height: 100%;
   width: fit-content;
@@ -125,7 +127,7 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
     }
   }
   .shift-btn {
-    width: ${({ isExpand }) => (isExpand ? "100%" : "unset")};
+    width: ${({ expandPercentage }) => (expandPercentage ? "100%" : "unset")};
     max-width: 100%;
     max-height: 100%;
     min-width: calc((100% - 2px * 2) / 3);
@@ -133,9 +135,9 @@ export const TableSTY = styled.div<{ isExpand: boolean }>`
     svg {
       fill: #fff;
     }
-    span {
-      display: ${({ isExpand }) => (isExpand ? "inline" : "none")};
-    }
+  }
+  .hideText > span {
+    display: none;
   }
   .noResultMsg {
     width: 100%;

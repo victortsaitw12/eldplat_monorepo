@@ -10,6 +10,12 @@ import LicenseForm from "@contents/Driver/Detail/LicenseForm";
 import { LICN_TYP } from "@services/getDDL";
 import { updateDriverLicense } from "@services/driver/updateDriverLicense";
 import { useRouter } from "next/router";
+import { I_PageInfo } from "@components/PaginationField";
+import {
+  getLicenseById,
+  I_License,
+  defaultPageInfo
+} from "@services/driver/getLicenseById";
 
 const table_title = [
   "證照種類",
@@ -22,21 +28,16 @@ const table_title = [
 ];
 interface Props {
   isEdit: boolean;
-  licensesData: any;
   userName: string;
   refetch: () => void;
   driverNo: string;
 }
 
-function LicensesList({
-  isEdit,
-  licensesData,
-  userName,
-  refetch,
-  driverNo
-}: Props) {
+function LicensesList({ isEdit, userName, refetch, driverNo }: Props) {
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
   const [editNo, setEditNo] = React.useState<number | null>(null);
+  const [licensesData, setLicensesData] = React.useState<I_License | any>([]);
+  const [pageInfo, setPageInfo] = React.useState<I_PageInfo>(defaultPageInfo);
   const btnRef = React.useRef<any>(null);
   // ordering for <TableWithEdit/>
   const driverPattern = {
@@ -47,7 +48,6 @@ function LicensesList({
     licn_issue: true,
     licn_exp: true,
     licn_examine_date: true,
-    // licn_filename: true,
     licn_link: true
   };
   const driverParser = (
@@ -127,6 +127,12 @@ function LicensesList({
   const handleConfirm = () => {
     if (btnRef.current) btnRef.current.click();
   };
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      fetchLicenseData(pageQuery);
+    },
+    [driverNo]
+  );
   const asyncSubmitForm = async (data: any) => {
     console.log("😒😒😒 asyncSubmitForm called", data);
     const type = editNo ? false : true;
@@ -151,20 +157,17 @@ function LicensesList({
       console.log(e);
     }
   };
+  const fetchLicenseData = async (pageQuery = defaultPageInfo) => {
+    const { licenses, pageInfo } = await getLicenseById(driverNo, pageQuery);
+    setLicensesData(licenses);
+    setPageInfo(pageInfo);
+  };
+  React.useEffect(() => {
+    fetchLicenseData();
+  }, [driverNo]);
 
   return (
     <DivSTY>
-      {/* <Pane className="licn-title">
-        <Text className="licn-title-left">{userName}</Text>
-        <IconLeft
-          className="licn-title-right"
-          type="button"
-          text={"新增駕駛證照"}
-          onClick={handleCreate}
-        >
-          <PlusIcon size={14} />
-        </IconLeft>
-      </Pane> */}
       {orderedLicensesData && (
         <TableWithEdit
           tableName=""
@@ -176,6 +179,8 @@ function LicensesList({
           deleteItem={handleDelete}
           createBtnText="新增駕駛證照"
           needCreateBtn={isEdit}
+          pageInfo={pageInfo}
+          onPageChange={handlePageChange}
         />
       )}
 

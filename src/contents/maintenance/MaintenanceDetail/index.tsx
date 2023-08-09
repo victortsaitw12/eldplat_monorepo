@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { TextInputField, TextInput, SelectField, Select } from "evergreen-ui";
 //@components
 import InfoBox from "@components/InfoBox";
+import LoadingSpinner from "@components/LoadingSpinner";
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
 //@service
@@ -30,6 +31,8 @@ const MaintenanceDetail = ({
   mainCreateDdl,
   setMainCreateDdl
 }: I_Props) => {
+  const [loading, setLoading] = useState(true);
+  console.log("loadingloadingloading", loading);
   const {
     register,
     control,
@@ -239,14 +242,12 @@ const MaintenanceDetail = ({
       // ]
     }
   ];
-
   console.log("register", register("meter"));
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>
         儲存
       </button>
-
       <FlexWrapper style={{ paddingBottom: "10px" }}>
         <InfoBox isEdit={isEdit} infoData={vehicle_info} infoTitle="車輛資料" />
         <InfoBox isEdit={isEdit} infoData={check_info} infoTitle="檢查詳情" />

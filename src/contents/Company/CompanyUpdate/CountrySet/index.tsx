@@ -55,6 +55,7 @@ function CountrySet() {
         };
       }
     );
+    langDDL && langDDL.unshift({ label: "請選擇", value: "no" });
     setDdlLanguage(langDDL);
   }, [companyDDL?.language_options]);
 
@@ -130,6 +131,7 @@ function CountrySet() {
             className="com_Country"
             label=""
             name="company_country"
+            defaultValue={companyData.company_country}
             value={companyData.company_country}
             onChange={(e: any) => {
               handleCompanyDDLChange(e);

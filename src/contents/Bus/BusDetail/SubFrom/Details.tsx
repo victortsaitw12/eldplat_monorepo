@@ -235,6 +235,25 @@ function Details({
         </Select>
       )
     }
+    // {
+    //   req: true,
+    //   label: "所有權",
+    //   value: getValues("bus.ownership")
+    //     ? convertMap["ownership"][getValues("bus.ownership")]["ch"]
+    //     : "--",
+    //   editEle: (
+    //     <Select
+    //       key="bus.ownership"
+    //       {...register("bus.ownership")}
+    //       marginBottom="0"
+    //     >
+    //       <option value="01">擁有的</option>
+    //       <option value="02">租來的</option>
+    //       <option value="03">出租中</option>
+    //       <option value="04">客戶的</option>
+    //     </Select>
+    //   )
+    // }
   ];
   // 其他細項
   const otherDetailInfo = [
