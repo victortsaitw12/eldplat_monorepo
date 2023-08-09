@@ -25,7 +25,6 @@ interface Props {
   getValues: UseFormGetValues<UpdateDriverInfoPayload>;
   isEdit: boolean;
   driverData: any;
-  errors: any;
 }
 interface I_LabelVal {
   label: any;
@@ -37,8 +36,7 @@ function DriverInfo({
   register,
   getValues,
   isEdit,
-  driverData,
-  errors
+  driverData
 }: Props) {
   const { info, workinghours } = driverData;
   const [checked, setChecked] = React.useState(false);
@@ -46,14 +44,6 @@ function DriverInfo({
     []
   );
   const [licenseAreaDDL, setLicenseAreaDDL] = React.useState([]);
-  console.log(
-    "🍅🍅🍅",
-    Boolean(
-      driverCountryDDL.find(
-        (item: I_LabelVal) => item.value === getValues("driver_country")
-      )
-    )
-  );
 
   // TODO const driverCountryDDL and licenseAreaDDL
   React.useEffect(() => {
@@ -98,36 +88,17 @@ function DriverInfo({
       label: "工時設定",
       value: info["working_hours_name"] || "--",
       editEle: (
-        <>
-          <Select
-            key="working_hours_code"
-            {...register("working_hours_code", {
-              // required: "工時設定欄位必填"
-            })}
-            marginBottom="0"
-          >
-            {workinghours.map((item: any, i: number) => (
-              <option
-                key={`working_hours-${i}`}
-                value={item.working_hours_code}
-              >
-                {item.working_hours_name || "--"}
-              </option>
-            ))}
-          </Select>
-          {errors.working_hours_code && (
-            <div
-              style={{
-                position: "absolute",
-                bottom: "-1rem",
-                color: "red",
-                fontSize: "0.84rem"
-              }}
-            >
-              * {errors.working_hours_code.message}
-            </div>
-          )}
-        </>
+        <Select
+          key="working_hours_code"
+          {...register("working_hours_code")}
+          marginBottom="0"
+        >
+          {workinghours.map((item: any, i: number) => (
+            <option key={`working_hours-${i}`} value={item.working_hours_code}>
+              {item.working_hours_name || "--"}
+            </option>
+          ))}
+        </Select>
       )
     }
   ];
@@ -158,11 +129,7 @@ function DriverInfo({
           marginBottom="0"
         >
           {driverCountryDDL?.map((item: any) => (
-            <option
-              key={`driver_country${item.value}`}
-              value={item.value}
-              selected={Boolean(item.value === getValues("driver_country"))}
-            >
+            <option key={`driver_country${item.value}`} value={item.value}>
               {item.label}
             </option>
           ))}
@@ -180,11 +147,7 @@ function DriverInfo({
           marginBottom="0"
         >
           {licenseAreaDDL?.map((item: any) => (
-            <option
-              key={`license_area${item.value}`}
-              value={item.value}
-              selected={Boolean(item.value === getValues("license_area"))}
-            >
+            <option key={`driver_country${item.value}`} value={item.value}>
               {item.label}
             </option>
           ))}

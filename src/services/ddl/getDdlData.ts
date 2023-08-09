@@ -1,8 +1,9 @@
 import { I_DDL_Type } from "@typings/ddl_type";
+import API_Path from "./apiPath";
 
 // 取ddl下拉式資料
 export const getDdlData = async (ddlData: I_DDL_Type): Promise<any> => {
-  const res = await fetch("https://localhost:7088/COM/GetOneDDL", {
+  const res = await fetch(`${API_Path["getOneDDL"]}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

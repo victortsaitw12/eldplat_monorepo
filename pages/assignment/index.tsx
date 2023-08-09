@@ -20,18 +20,20 @@ import {
   getAllAssignments,
   defaultPageInfo
 } from "@services/assignment/getAllAssignment";
+
+import { useAssignmentStore } from "@contexts/filter/assignmentStore";
+import { I_ManualCreateType } from "@typings/assignment_type";
+
+import { dashDate2 } from "@utils/convertDate";
 import {
   getBusAssignmentInfo,
   getDriverAssignmentInfo
 } from "@services/assignment/getAssignmentEdit";
 
-import { useAssignmentStore } from "@contexts/filter/assignmentStore";
-import { I_ManualCreateType } from "@typings/assignment_type";
-import { dashDate2 } from "@utils/convertDate";
 import { I_PageInfo } from "@components/PaginationField";
 import AssignmentDrawers from "@contents/Assignment/AssignmentDrawers";
 
-// ----- constants ----- //
+// ----- variables ----- //
 const mainFilterArray = [{ id: 1, label: "全部", value: "1" }];
 export const startTimeName = ["start_hours", "start_minutes", "start_type"];
 export const endTimeName = ["end_hours", "end_minutes", "end_type"];
@@ -53,8 +55,6 @@ const DUMMY_FILTER = [
 ];
 
 const Page: NextPageWithLayout<never> = () => {
-  const timeRef = useRef(null);
-  const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
@@ -64,13 +64,15 @@ const Page: NextPageWithLayout<never> = () => {
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
   const [showSecondTitle, setShowSecondTitle] = useState<any>();
-  // const [carArr, setCarArr] = useState<any[]>([]);
+  const [carArr, setCarArr] = useState<any[]>([]);
   const [orderIndex, setOrderIndex] = useState<number>(1);
   const [createAssignData, setCreateAssignData] = useState<I_ManualCreateType>({
     quote_no: "",
     manual_driver: [],
     manual_bus: []
   });
+  const timeRef = useRef(null);
+  const router = useRouter();
   const [startTime, setStartTime] = useState<any>({
     start_hours: "00",
     start_minutes: "00",
@@ -94,6 +96,7 @@ const Page: NextPageWithLayout<never> = () => {
     }
   }
   useEffect(() => {
+    console.log("disabledAutoList", disabledAutoList);
     setData((oldData: Array<any>) => {
       if (!oldData) return oldData;
       const updateData = oldData.map((item) => {
@@ -122,6 +125,7 @@ const Page: NextPageWithLayout<never> = () => {
       return updateData;
     });
   }, [disabledAutoList]);
+  console.log("data!!!", data);
   const {
     initializeSubFilter,
     mainFilter,
@@ -230,13 +234,7 @@ const Page: NextPageWithLayout<never> = () => {
         const newData = [...assignData];
         newData.map((v, idx) => {
           // const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
-          const item_no = (
-            (data.pageInfo.page_Index - 1) * data.pageInfo.page_Size +
-            idx +
-            1
-          )
-            .toString()
-            .padStart(4, "0");
+          const item_no = (idx + 1).toString().padStart(4, "0");
           v["no"] = { label: item_no, value: item_no };
           if (v.maintenance_quote_no.value.substring(0, 3) === "MTC") {
             // 維保單無按鈕
@@ -526,7 +524,7 @@ const Page: NextPageWithLayout<never> = () => {
   console.log("0️⃣assignData", data);
   console.log("1️⃣orderInfo", orderInfo);
   console.log("2️⃣showSecondTitle", showSecondTitle);
-  // console.log("3️⃣carArr", carArr);
+  console.log("3️⃣carArr", carArr);
   console.log("4️⃣manual_bus", createAssignData.manual_bus);
   console.log("5️⃣createAssignData", createAssignData);
   console.log("6️⃣subAssignData", subAssignData);

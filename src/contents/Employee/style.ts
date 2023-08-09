@@ -64,4 +64,9 @@ export const BodySTY = styled.div`
       }
     }
   }
+
+  // infoBox
+  .infoBox__label {
+    flex: unset !important;
+  }
 `;

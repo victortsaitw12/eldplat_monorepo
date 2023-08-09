@@ -196,7 +196,7 @@ const Page: NextPageWithLayout<never> = () => {
         user_phone
       );
       console.log("3️⃣res", res);
-      // router.reload();
+      router.reload();
     } catch (e: any) {
       console.log(e);
       alert(e.message);
