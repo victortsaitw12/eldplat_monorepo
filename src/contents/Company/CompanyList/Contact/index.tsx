@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Heading, Pane, Text } from "evergreen-ui";
 
 import { BodySTY } from "./style";
@@ -13,9 +13,10 @@ import {
 
 function Contact() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
-  const { handleCountrySwitch, handleStateSwitch, handleCitySwitch } =
-    useContext<I_Region_Context>(RegionContext);
-
+  // const { handleCountrySwitch, handleStateSwitch, handleCitySwitch } =
+  //   useContext<I_Region_Context>(RegionContext);
+  const { getRegionsData } = useContext<I_Region_Context>(RegionContext);
+  const [ddlData, setDdlData] = useState<any>(null);
   console.log("🈶companyData", companyData);
   return (
     <BodySTY>
@@ -35,12 +36,15 @@ function Contact() {
             <Text>{companyData?.address1}</Text>
             <Text>{companyData?.address2}</Text>
             <Pane className="company_area_city">
-              <Text>{handleCitySwitch(companyData?.company_city)}</Text>
-              <Text>{handleStateSwitch(companyData?.company_area)}</Text>
+              {/* <Text>{handleCitySwitch(companyData?.company_city)}</Text>
+              <Text>{handleStateSwitch(companyData?.company_area)}</Text> */}
+              <Text>{ddlData?.company_city}</Text>
+              <Text>{ddlData?.company_area}</Text>
             </Pane>
             <Pane className="company_country_code">
               <Text>{companyData?.company_district_code}</Text>
-              <Text>{handleCountrySwitch(companyData?.company_country2)}</Text>
+              {/* <Text>{handleCountrySwitch(companyData?.company_country2)}</Text> */}
+              <Text>{ddlData?.company_country2}</Text>
             </Pane>
           </Pane>
         </Pane>

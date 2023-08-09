@@ -14,6 +14,5 @@ export const mappingQueryData = (
       }
       result.push(mappedItem);
     }
-  console.log("💥result", result);
   return convertValueToText(result, "ch");
 };

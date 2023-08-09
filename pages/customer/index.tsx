@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 //
 import { getLayout } from "@layout/MainLayout";
@@ -14,11 +14,13 @@ import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
+import { getCreateCustomerOptions } from "@services/customer/getCreateCustomerOptions";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
 import { PageInfoType } from "@services/type";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -31,6 +33,7 @@ const Page: NextPageWithLayout<never> = () => {
   const [nowTab, setNowTab] = useState(
     (router?.query?.status as string) || "1"
   );
+  const [options, setOptions] = useState<any>(null);
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     arrangement: "desc",
@@ -54,7 +57,6 @@ const Page: NextPageWithLayout<never> = () => {
     mainFilter = "1",
     pageInfo: PageInfoType
   ) => {
-    console.log("mainFilter", mainFilter);
     getAllCustomers(pageInfo, subFilter, mainFilter).then((res) => {
       console.log("res", res);
       const customerData = mappingQueryData(
@@ -79,6 +81,12 @@ const Page: NextPageWithLayout<never> = () => {
   };
   //
   useEffect(() => {
+    getCreateCustomerOptions().then((res) => {
+      console.log("getCreateCustomerOptions", res);
+      setOptions(res);
+    });
+  }, []);
+  useEffect(() => {
     let isCanceled = false;
     fetchCustomerData(isCanceled, nowTab, pageInfo);
     return () => {
@@ -89,13 +97,15 @@ const Page: NextPageWithLayout<never> = () => {
   const upDatePageHandler = (newPageInfo: PageInfoType) => {
     fetchCustomerData(false, nowTab, newPageInfo);
   };
-  //
+
   const goToEditPageHandler = (id: string) => {
     router.push("/customer/detail/" + id + "?editPage=edit");
   };
+
   const goToDetailPageHandler = (id: string) => {
     router.push(`/customer/detail/${id}?editPage=view`);
   };
+
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
     router.push({
@@ -103,74 +113,76 @@ const Page: NextPageWithLayout<never> = () => {
       query: { ...router?.query, status: value }
     });
   };
+
   const deleteItemHandler = async (id: string) => {
     deleteCustomer(id).then((res) => {
       fetchCustomerData(false, nowTab, pageInfo);
     });
   };
+
   const recoverItemHandler = async (id: string) => {
     console.log("上一動");
   };
   //
-
   if (!data) {
     return <LoadingSpinner />;
   }
 
-  console.log("CUSTOMER data", data);
   return (
-    <BodySTY>
-      <TableWrapper
-        isHide={isDrawerFullWidth}
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={nowTab}
-        mainFilterArray={mainFilterArray}
-        viewOnly={true}
-      >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={() => {
-            initializeSubFilter();
-          }}
-          filter={subFilter}
+    <RegionProvider>
+      <BodySTY>
+        <TableWrapper
+          isHide={isDrawerFullWidth}
+          onChangeTab={changeMainFilterHandler}
+          mainFilter={nowTab}
+          mainFilterArray={mainFilterArray}
+          viewOnly={true}
         >
-          <CustomerList
-            listType={nowTab}
-            clientData={data}
-            customerData={data}
-            goToCreatePage={() => {
-              setDrawerOpen(true);
+          <FilterWrapper
+            updateFilter={updateSubFilter}
+            resetFilter={() => {
+              initializeSubFilter();
             }}
-            deleteItemHandler={deleteItemHandler}
-            recoverItemHandler={recoverItemHandler}
-            goToEditPageHandler={goToEditPageHandler}
-            goToDetailPage={goToDetailPageHandler}
-            upDatePageHandler={upDatePageHandler}
-            pageInfo={pageInfo}
-          />
-        </FilterWrapper>
-      </TableWrapper>
-      {isDrawerOpen && (
-        <Drawer
-          tabName={["新增客戶"]}
-          closeDrawer={() => {
-            setDrawerOpen(false);
-            setIsDrawerFullWidth(false);
-          }}
-          isFullScreen={isDrawerFullWidth}
-          toggleFullScreenDrawer={() => {
-            setIsDrawerFullWidth(!isDrawerFullWidth);
-          }}
-        >
-          <CustomerCreateForm
-            reloadData={() => {
-              fetchCustomerData(false, nowTab, pageInfo);
+            filter={subFilter}
+          >
+            <CustomerList
+              listType={nowTab}
+              customerData={data}
+              goToCreatePage={() => {
+                setDrawerOpen(true);
+              }}
+              deleteItemHandler={deleteItemHandler}
+              recoverItemHandler={recoverItemHandler}
+              goToEditPageHandler={goToEditPageHandler}
+              goToDetailPage={goToDetailPageHandler}
+              upDatePageHandler={upDatePageHandler}
+              pageInfo={pageInfo}
+            />
+          </FilterWrapper>
+        </TableWrapper>
+        {isDrawerOpen && (
+          <Drawer
+            tabName={["新增客戶"]}
+            closeDrawer={() => {
               setDrawerOpen(false);
+              setIsDrawerFullWidth(false);
             }}
-          />
-        </Drawer>
-      )}
-    </BodySTY>
+            isFullScreen={isDrawerFullWidth}
+            toggleFullScreenDrawer={() => {
+              setIsDrawerFullWidth(!isDrawerFullWidth);
+            }}
+          >
+            <CustomerCreateForm
+              reloadData={() => {
+                fetchCustomerData(false, nowTab, pageInfo);
+                setDrawerOpen(false);
+              }}
+              options={options}
+            />
+          </Drawer>
+        )}
+      </BodySTY>
+    </RegionProvider>
   );
 };
 

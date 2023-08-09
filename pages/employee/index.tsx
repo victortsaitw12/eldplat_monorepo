@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useMemo, ReactNode } from "react";
-import { Pane } from "evergreen-ui";
+import React, { useEffect, useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/MainLayout";
 import { useEmployeeFilterStore } from "@contexts/filter/employeeFilterStore";
 import { useRouter } from "next/router";
 import {
   getAllEmployees,
-  defaultPageInfo
+  employeeParser,
+  employeePattern
 } from "@services/employee/getAllEmployee";
 import EmployeeList from "@contents/Employee/EmployeeList";
 import { BodySTY } from "./style";
@@ -15,57 +15,31 @@ import FilterWrapper from "@layout/FilterWrapper";
 import TableWrapper from "@layout/TableWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
-import { createBriefEmployee } from "@services/employee/createEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
-import { I_PageInfo } from "@components/PaginationField";
-
+import LoadingSpinner from "@components/LoadingSpinner";
+import { PageInfoType } from "@services/type";
+import { mappingQueryData } from "@utils/mappingQueryData";
 //
-const fakeData = [
-  {
-    login_Times: "10",
-    first_Login: "2023-01-01"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-01-01"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-01-01"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-01-01"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-02-11"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-02-11"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-02-11"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-02-11"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-02-11"
-  },
-  {
-    login_Times: "10",
-    first_Login: "2023-02-11"
-  }
+const mainFilterArray = [
+  { id: 1, label: "啟用", value: "1" },
+  { id: 2, label: "停用", value: "2" }
 ];
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
+  const [employeesData, setEmployeesData] = useState<any>(null);
+  const [nowTab, setNowTab] = useState(
+    (router?.query?.status as string) || "1"
+  );
+  const [pageInfo, setPageInfo] = useState<PageInfoType>({
+    arrangement: "desc",
+    orderby: null,
+    page_Index: 1,
+    page_Size: 10,
+    last_Page: 10
+  });
+
+  const [loading, setLoading] = useState(false);
   const {
     initializeSubFilter,
     mainFilter,
@@ -78,20 +52,8 @@ const Page: NextPageWithLayout<never> = () => {
   useEffect(() => {
     updateMainFilter("1");
   }, []);
-  const mainFilterArray = useMemo(
-    () => [
-      { id: 1, label: "啟用", value: "1" },
-      { id: 2, label: "停用", value: "2" }
-    ],
-    []
-  );
-  const [nowTab, setNowTab] = useState(
-    (router?.query?.status as string) || "1"
-  );
-
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
-    // alert(value);
     updateMainFilter(value);
     router.push({
       pathname: "/employee/",
@@ -99,183 +61,53 @@ const Page: NextPageWithLayout<never> = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [employeeListData, setEmployeeListData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
-
-  // const initializeFilter = useFilterStore((state) => state.initializeFilter);
-  // const updateFilter = useFilterStore((state) => state.updateFilter);
-  const filter = useEmployeeFilterStore((state) => state.filter);
-
-  // useEffect(() => {
-  //   const isCanceled = false;
-  //   // fetchEmployeeData(false, nowTab, pageInfo);
-  //   getAllEmployees(filter).then((data) => {
-  //     console.log("💡get employees data from api :", data);
-  //     const newData = data.contentList.map((item: any, index: any) => {
-  //       return {
-  //         // user_No: item["user_No"],
-  //         id: { label: item.user_No, value: item.user_No },
-  //         user_Name: {
-  //           label: (
-  //             <Pane className="user_td">
-  //               <div className="user_icon">
-  //                 <span>{item.user_Name.charAt(0)}</span>
-  //               </div>
-  //               <div className="user_name">{item.user_Name}</div>
-  //             </Pane>
-  //           ),
-  //           // label: item.user_Name,
-  //           value: item.user_name
-  //         },
-  //         user_Email: { label: item.user_Email, value: item.user_Email },
-  //         group_Name: { label: item.group_Name, value: item.group_Name },
-  //         login_Times: {
-  //           label:
-  //             index < fakeData.length
-  //               ? fakeData[index].login_Times
-  //               : item.login_Times,
-  //           value: item.login_Times
-  //         },
-  //         first_Login: {
-  //           label:
-  //             index < fakeData.length
-  //               ? fakeData[index].first_Login
-  //               : item.first_Login,
-  //           value: item.first_Login
-  //         },
-  //         invt_Status: {
-  //           label: item.invt_Status,
-  //           value: item.invt_Status
-  //         }
-  //       };
-  //     });
-  //     if (isCanceled) {
-  //       console.log("canceled");
-  //       return;
-  //     }
-  //     if (!filter) {
-  //       localStorage.setItem(
-  //         "employeeInitFilter",
-  //         JSON.stringify(data.contentList)
-  //       );
-  //       initializeSubFilter();
-  //     }
-  //     const getPageInfo = { ...data.pageInfo };
-  //     setPageInfo(getPageInfo);
-  //     setEmployeeListData(newData);
-  //   });
-  // }, [filter, initializeSubFilter]);
-
   // Delete Employee
   const deleteItemHandler = async (id: string) => {
     deleteEmployee(id).then((res) => {
-      console.log("delete user res------------------", res);
-      router.reload();
+      fetchEmployeeData(false, nowTab, pageInfo);
     });
   };
   const recoverItemHandler = async (id: string) => {
     console.log("上一動");
   };
   const goToEditPageHandler = (id: string) => {
-    router.push(`/employee/edit/${id}`);
+    router.push(`/employee/edit/${id}?editPage=edit`);
   };
   const goToDetailPageHandler = (id: string) => {
-    router.push(`/employee/detail/${id}`);
+    router.push(`/employee/detail/${id}?editPage=view`);
   };
-  const createEmployeeHandler = async (employeeData: any) => {
-    console.log("1️⃣employeeData", employeeData);
-    const { user_first_name, user_name, user_email, user_phone } = employeeData;
 
-    setLoading(true);
-    try {
-      const res = await createBriefEmployee(
-        user_first_name,
-        user_name,
-        user_email,
-        user_phone
+  const fetchEmployeeData = async (
+    isCanceled: boolean,
+    mainFilter = "1",
+    pageInfo: PageInfoType
+  ) => {
+    getAllEmployees(pageInfo, subFilter, mainFilter).then((res) => {
+      const employeesData = mappingQueryData(
+        res.contentList,
+        employeePattern,
+        employeeParser
       );
-      console.log("3️⃣res", res);
-      router.reload();
-    } catch (e: any) {
-      console.log(e);
-      alert(e.message);
-    }
-    setLoading(false);
+      console.log("employeesData", employeesData);
+      if (isCanceled) {
+        console.log("canceled");
+        return;
+      }
+      if (!subFilter) {
+        localStorage.setItem(
+          "employeeInitFilter",
+          JSON.stringify(res.conditionList)
+        );
+        initializeSubFilter();
+      }
+      setEmployeesData(employeesData);
+      setPageInfo(res.pageInfo);
+    });
   };
-  const fetchEmployeeData = React.useCallback(
-    async (
-      isCanceled: boolean,
-      mainFilter = "1",
-      pageQuery = defaultPageInfo
-    ) => {
-      // console.log("fetchEmployeeData");
-      getAllEmployees(filter, pageQuery).then((data) => {
-        console.log("💡get employees data from api :", data);
-        const newData = data.contentList.map((item: any, index: any) => {
-          return {
-            // user_No: item["user_No"],
-            id: { label: item.user_No, value: item.user_No },
-            user_Name: {
-              label: (
-                <Pane className="user_td">
-                  <div className="user_icon">
-                    <span>{item.user_Name.charAt(0)}</span>
-                  </div>
-                  <div className="user_name">{item.user_Name}</div>
-                </Pane>
-              ),
-              // label: item.user_Name,
-              value: item.user_name
-            },
-            user_Email: { label: item.user_Email, value: item.user_Email },
-            group_Name: { label: item.group_Name, value: item.group_Name },
-            login_Times: {
-              label:
-                index < fakeData.length
-                  ? fakeData[index].login_Times
-                  : item.login_Times,
-              value: item.login_Times
-            },
-            first_Login: {
-              label:
-                index < fakeData.length
-                  ? fakeData[index].first_Login
-                  : item.first_Login,
-              value: item.first_Login
-            },
-            invt_Status: {
-              label: item.invt_Status,
-              value: item.invt_Status
-            }
-          };
-        });
-        if (isCanceled) {
-          console.log("canceled");
-          return;
-        }
-        if (!filter) {
-          localStorage.setItem(
-            "employeeInitFilter",
-            JSON.stringify(data.conditionList || [])
-          );
-          initializeSubFilter();
-        }
-        const getPageInfo = { ...data.pageInfo };
-        setPageInfo(getPageInfo);
-        setEmployeeListData(newData);
-      });
-    },
-    []
-  );
-  const handlePageChange = React.useCallback(
-    (pageQuery: I_PageInfo) => {
-      console.log("handlePageChange!!!!!!");
-      console.log(pageQuery);
-      fetchEmployeeData(false, nowTab, pageQuery);
-    },
-    [fetchEmployeeData, nowTab]
-  );
+
+  const updatePageHandler = (newPageInfo: PageInfoType) => {
+    fetchEmployeeData(false, nowTab, newPageInfo);
+  };
 
   React.useEffect(() => {
     let isCanceled = false;
@@ -284,6 +116,10 @@ const Page: NextPageWithLayout<never> = () => {
       isCanceled = true;
     };
   }, [nowTab]);
+
+  if (!employeesData) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <RegionProvider>
@@ -299,12 +135,11 @@ const Page: NextPageWithLayout<never> = () => {
             resetFilter={() => {
               initializeSubFilter();
             }}
-            filter={filter}
+            filter={subFilter}
           >
-            {/* Put your component here */}
             <EmployeeList
               listType={nowTab}
-              data={employeeListData}
+              data={employeesData}
               goToCreatePage={() => {
                 setDrawerOpen(true);
               }}
@@ -313,7 +148,7 @@ const Page: NextPageWithLayout<never> = () => {
               goToEditPageHandler={goToEditPageHandler}
               recoverItemHandler={recoverItemHandler}
               pageInfo={pageInfo}
-              handlePageChange={handlePageChange}
+              handlePageChange={updatePageHandler}
             />
           </FilterWrapper>
         </TableWrapper>
@@ -324,7 +159,12 @@ const Page: NextPageWithLayout<never> = () => {
               setDrawerOpen(false);
             }}
           >
-            <EmployeeCreateForm createEmployee={createEmployeeHandler} />
+            <EmployeeCreateForm
+              reloadData={() => {
+                fetchEmployeeData(false, nowTab, pageInfo);
+                setDrawerOpen(false);
+              }}
+            />
           </Drawer>
         )}
       </BodySTY>

@@ -2,17 +2,7 @@ import {
   I_Add_Employees_Type,
   I_Get_Employees_Type
 } from "@typings/employee_type";
-import {
-  Pane,
-  Text,
-  Button,
-  FloppyDiskIcon,
-  IconButton,
-  FullscreenIcon,
-  majorScale,
-  SmallCrossIcon,
-  Select
-} from "evergreen-ui";
+import { Pane, Select } from "evergreen-ui";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import Basic from "./Basic";
@@ -35,15 +25,6 @@ function AddEmployee({
   insertData,
   setInsertData
 }: I_AddEmployee_Props) {
-  // useEffect(() => {
-  //   const updatedData = { ...editData };
-  //   delete updatedData["groups"];
-  //   updatedData["group_no"] = editData?.groups?.map(
-  //     (v: { group_no: any }) => v.group_no
-  //   );
-  //   setInsertData(updatedData);
-  // }, [editData]);
-
   const handleEmployeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newData = { ...insertData };
     const targetName = e.target.name as
@@ -118,12 +99,6 @@ function AddEmployee({
             infoData={schdInfo}
             infoTitle={<span style={{ marginRight: "8px" }}>排班設定</span>}
           />
-          {/*新版健康記錄改成在頁簽裡面*/}
-          {/* <HealthFirst
-            handleEmployeeChange={handleEmployeeChange}
-            insertData={insertData}
-            setInsertData={setInsertData}
-          /> */}
         </Pane>
         <Pane className="right-blocks">
           <Contact

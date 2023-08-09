@@ -82,6 +82,26 @@ export const busParser = (
       label: data["age"] + "年" || null,
       value: data["age"] || null
     };
+  } else if (key === "type") {
+    return {
+      label: data["type_name"] || null,
+      value: data["type"] || null
+    };
+  } else if (key === "model") {
+    return {
+      label: data["model_name"] || null,
+      value: data["model"] || null
+    };
+  } else if (key === "bus_group") {
+    return {
+      label: data["bus_group_name"] || null,
+      value: data["bus_group"] || null
+    };
+  } else if (key === "ownership") {
+    return {
+      label: data["ownership_name"] || null,
+      value: data["ownership"] || null
+    };
   }
   return {
     label: data[key] || null,

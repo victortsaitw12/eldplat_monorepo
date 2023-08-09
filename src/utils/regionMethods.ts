@@ -1,5 +1,6 @@
 export const filterStates = (areaNo: string) => {
-  switch (areaNo) {
+  const countryAreaNo = areaNo.slice(0, 4);
+  switch (countryAreaNo) {
     case "1046":
       return true;
     case "4006":
@@ -17,8 +18,6 @@ export const filterStates = (areaNo: string) => {
     case "3004":
       return true;
     case "3007":
-      return true;
-    case "1010":
       return true;
     case "2047":
       return true;
@@ -43,8 +42,6 @@ export const filterStates = (areaNo: string) => {
     case "3026":
       return true;
     case "1024":
-      return true;
-    case "1025":
       return true;
     case "1026":
       return true;

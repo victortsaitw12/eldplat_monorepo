@@ -1,5 +1,5 @@
-import React from "react";
-import { useForm, useWatch } from "react-hook-form";
+import React, { useContext, useEffect } from "react";
+import { useForm, useWatch, Controller } from "react-hook-form";
 import { TextInputField, TextInput, SelectField } from "evergreen-ui";
 //@components
 import InfoBox from "@components/InfoBox";
@@ -7,29 +7,53 @@ import InfoBox from "@components/InfoBox";
 import FlexWrapper from "@layout/FlexWrapper";
 import ContactList from "@components/ContactList";
 import { CustomerDataTypes } from "../customer.type";
-import { convertMap } from "@utils/convertValueToText";
+//@context
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 interface I_Props {
   isEdit: boolean;
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
   asyncSubmitForm: (data: any) => Promise<void>;
   customerId: string;
   customerDefaultData: CustomerDataTypes;
+  options: any;
 }
 const CustomerDetail = ({
   isEdit,
   submitRef,
   asyncSubmitForm,
-  customerDefaultData
+  customerDefaultData,
+  options
 }: I_Props) => {
   const {
     register,
     control,
     formState: { errors },
     getValues,
+    setValue,
     handleSubmit
   } = useForm<CustomerDataTypes>({
     defaultValues: customerDefaultData
   });
+  const {
+    countries,
+    states,
+    cities,
+    handleCountryChange,
+    handleStateChange,
+    handleCityChange,
+    getRegionsData,
+    initOptions
+  } = useContext<I_Region_Context>(RegionContext);
+
+  useEffect(() => {
+    initOptions({
+      country: customerDefaultData?.customer_country,
+      state: customerDefaultData?.customer_area
+    });
+  }, []);
   useWatch({
     control,
     name: "customer_no"
@@ -88,7 +112,7 @@ const CustomerDetail = ({
     {
       req: true,
       label: "",
-      value: getValues("customer_typ") || "--",
+      value: getValues("type_name") || "--",
       editEle: (
         <SelectField
           key="customer_typ"
@@ -96,8 +120,14 @@ const CustomerDetail = ({
           label=""
           marginBottom="0"
         >
-          <option value="01">公司</option>
-          <option value="02">個人</option>
+          <option value="" disabled hidden>
+            請選擇
+          </option>
+          {options?.customer_typ.map((item: any, idx: number) => (
+            <option key={idx} value={item.value}>
+              {item.label}
+            </option>
+          ))}
         </SelectField>
       )
     }
@@ -138,42 +168,65 @@ const CustomerDetail = ({
         />
       )
     },
+
     {
       req: false,
       label: " ",
-      value: [
-        getValues("customer_city") || "--",
-        getValues("customer_area") || "--"
-      ],
+      value: [getValues("city_name") || "--", getValues("area_name") || "--"],
       editEle: [
-        <SelectField
+        <Controller
           key="customer_city"
-          label={
-            <label>
-              <span style={{ color: "red" }}>*</span>城市
-            </label>
-          }
-          {...register("customer_city", {
-            required: "必填"
-          })}
-          marginBottom="0"
-        >
-          <option value="LA">洛杉磯</option>
-          <option value="TP">台北</option>
-          <option value="TTP">新北</option>
-          <option value="TY">桃園</option>
-        </SelectField>,
-        <SelectField
+          name="customer_city"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <SelectField
+              value={value}
+              onChange={(e) => {
+                onChange(e.target.value);
+                handleCityChange(e.target.value);
+              }}
+              label="城市"
+              marginBottom="0"
+            >
+              <>
+                <option value={""}>請選擇</option>
+                {cities?.map((city) => (
+                  <option key={city.area_No} value={city.area_No}>
+                    {city.area_Name_Tw}
+                  </option>
+                ))}
+              </>
+            </SelectField>
+          )}
+        />,
+        <Controller
           key="customer_area"
-          label="州/省/區"
-          {...register("customer_area")}
-          marginBottom="0"
-        >
-          <option value="CA">CA區</option>
-          <option value="DA">DA區</option>
-          <option value="EA">EA區</option>
-          <option value="FA">FA區</option>
-        </SelectField>
+          name="customer_area"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <SelectField
+              value={value}
+              onChange={(e) => {
+                onChange(e.target.value);
+                handleStateChange(e.target.value);
+                setValue("customer_city", "");
+              }}
+              label="州/省/區"
+              marginBottom="0"
+            >
+              <>
+                <option value={""} disabled>
+                  請選擇
+                </option>
+                {states?.map((state) => (
+                  <option key={state.area_No} value={state.area_No}>
+                    {state.area_Name_Tw}
+                  </option>
+                ))}
+              </>
+            </SelectField>
+          )}
+        />
       ]
     },
     {
@@ -181,108 +234,44 @@ const CustomerDetail = ({
       label: " ",
       value: [
         getValues("customer_district_code") || "--",
-        getValues("customer_country") || "--"
+        getValues("country_name") || "--"
       ],
       editEle: [
         <TextInputField
+          label="郵遞區碼"
           key="customer_district_code"
-          label="郵遞區號"
           {...register("customer_district_code")}
           marginBottom="0"
         />,
-        <SelectField
+        <Controller
           key="customer_country"
-          label={
-            <label>
-              <span style={{ color: "red" }}>*</span>國家
-            </label>
-          }
-          {...register("customer_country", { required: "必填" })}
-          marginBottom="0"
-        >
-          <option value="TW">台灣</option>
-          <option value="JP">日本</option>
-          <option value="US">美國</option>
-        </SelectField>
-      ]
-    },
-    {
-      req: true,
-      label: "公司電話",
-      value: getValues("customer_tel")
-        ? "+" + getValues("customer_tel_code") + " " + getValues("customer_tel")
-        : "--",
-      editEle: [
-        <div
-          key="customer_tel"
-          style={{
-            display: "flex",
-            flex: "1",
-            gap: "8px"
-          }}
-        >
-          <TextInput
-            {...register("customer_tel_code")}
-            style={{ width: "60px" }}
-            disabled
-          />
-          <TextInput
-            {...register("customer_tel", { required: "必填！" })}
-            style={{ flex: "1", width: "auto" }}
-          />
-        </div>
-      ]
-    },
-    {
-      req: false,
-      label: "公司傳真",
-      value: getValues("customer_fax")
-        ? "+" + getValues("customer_fax_code") + " " + getValues("customer_fax")
-        : "--",
-      editEle: [
-        <div
-          key="customer_tel"
-          style={{
-            display: "flex",
-            flex: "1",
-            gap: "8px"
-          }}
-        >
-          <TextInput
-            key="customer_fax_code"
-            style={{ width: "60px" }}
-            {...register("customer_fax_code")}
-            disabled
-          />
-          <TextInput
-            key="customer_fax"
-            {...register("customer_fax")}
-            style={{ flex: "1", width: "auto" }}
-          />
-        </div>
-      ]
-    },
-    {
-      req: false,
-      label: "公司信箱",
-      value: getValues("customer_email") || "--",
-      editEle: [
-        <TextInput
-          key="customer_email"
-          {...register("customer_email")}
-          style={{ flex: "1" }}
-        />
-      ]
-    },
-    {
-      req: false,
-      label: "公司網址",
-      value: getValues("customer_url") || "--",
-      editEle: [
-        <TextInput
-          key="customer_url"
-          {...register("customer_url")}
-          style={{ flex: "1" }}
+          name="customer_country"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <SelectField
+              value={value}
+              onChange={(e) => {
+                onChange(e.target.value);
+                console.log("e.target.value", e.target.value);
+                handleCountryChange(e.target.value);
+                setValue("customer_city", "");
+                setValue("customer_area", "");
+              }}
+              label="國家"
+              marginBottom="0"
+            >
+              <>
+                <option value={""} disabled>
+                  請選擇
+                </option>
+                {countries?.map((item) => (
+                  <option key={item.area_No} value={item.area_No}>
+                    {item.area_Name_Tw}
+                  </option>
+                ))}
+              </>
+            </SelectField>
+          )}
         />
       ]
     },
