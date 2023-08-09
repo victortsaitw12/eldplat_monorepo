@@ -45,7 +45,6 @@ function AddEmployee({
   // }, [editData]);
 
   const handleEmployeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("🍅🍅called");
     const newData = { ...insertData };
     const targetName = e.target.name as
       | keyof (I_Add_Employees_Type | I_Get_Employees_Type);
@@ -75,8 +74,15 @@ function AddEmployee({
           marginBottom="0"
           onChange={(e: any) => handleEmployeeChange(e)}
         >
+          <option key="working_hours_op" value={""}>
+            請選擇
+          </option>
           {editData.workinghours.map((item: any, i: number) => (
-            <option key={`working_hours-${i}`} value={item.working_hours_code}>
+            <option
+              key={`working_hours-${i}`}
+              value={item.working_hours_code}
+              selected={editData.working_hours_code === item.working_hours_code}
+            >
               {item.working_hours_name || "--"}
             </option>
           ))}
