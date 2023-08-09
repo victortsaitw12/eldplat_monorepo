@@ -126,14 +126,16 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
         isEdit={isEdit}
         viewOnly={isFinished}
       >
-        <MaintenanceDetail
-          isEdit={isEdit}
-          submitRef={submitRef}
-          asyncSubmitForm={asyncSubmitForm}
-          maintenance_id={maintenance_id}
-          mainCreateDdl={mainCreateDdl}
-          setMainCreateDdl={setMainCreateDdl}
-        />
+        {mainCreateDdl && (
+          <MaintenanceDetail
+            isEdit={isEdit}
+            submitRef={submitRef}
+            asyncSubmitForm={asyncSubmitForm}
+            maintenance_id={maintenance_id}
+            mainCreateDdl={mainCreateDdl}
+            setMainCreateDdl={setMainCreateDdl}
+          />
+        )}
       </TableWrapper>
     </BodySTY>
   );

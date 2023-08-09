@@ -158,7 +158,7 @@ const PriceInfoView = () => {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  update_FE_status(quote_no, "12");
+                  // update_FE_status(quote_no, "12");
                   update_BE_status(quote_no, "13");
                   toaster.success(
                     "調度人員已收到訂單" + quote_no + "的預約派車需求",
