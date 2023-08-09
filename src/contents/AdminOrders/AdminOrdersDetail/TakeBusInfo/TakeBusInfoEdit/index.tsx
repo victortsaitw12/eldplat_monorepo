@@ -119,7 +119,12 @@ const TakeBusInfoEdit = ({ busListData }: I_Props) => {
                                 j +
                                 "].order_quantity"
                               }
-                              label={busItem.bus_name}
+                              label={
+                                busItem.bus_name +
+                                "-" +
+                                busItem.bus_seat +
+                                "人座"
+                              }
                             />
                           )
                         };
