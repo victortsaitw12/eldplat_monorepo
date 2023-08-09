@@ -62,7 +62,6 @@ export const RegionContext = createContext<I_Region_Context>({
 
 // function component start
 export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
-  // const { companyData } = useContext<I_Company_Context>(CompanyContext);
   const [allCountries, setAllCountries] = useState<I_RegionsData[]>([]); // 顯示所有國家
   const [allStates, setAllStates] = useState<I_RegionsData[]>([]);
   const [allCities, setAllCities] = useState<I_RegionsData[]>([]);
@@ -186,7 +185,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   }
   // initOptions
   async function updateStateOptions(areaNo?: string): Promise<void> {
-    if (!areaNo) return;
+    if (!areaNo || areaNo.trim().length === 0) return;
     const data = await getAllRegions(areaNo.slice(0, 4), "3");
     const statesData = data.options.filter((regionData) => {
       return regionData.area_Name_Tw !== "" && regionData.area_No[0] !== "6";
@@ -195,7 +194,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     setAllStates(statesData);
   }
   async function updateCityOptions(areaNo?: string): Promise<void> {
-    if (!areaNo) return;
+    if (!areaNo || areaNo.trim().length === 0) return;
     const data = await getAllRegions(areaNo.slice(0, 7), "4");
     const citiesData = data.options.filter((regionData) => {
       return regionData.area_Name_Tw !== "" && regionData.area_No[0] !== "6";

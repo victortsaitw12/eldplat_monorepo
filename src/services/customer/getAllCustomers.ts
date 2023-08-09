@@ -63,7 +63,7 @@ export const customerPattern: PatternType = {
   label_name: true
 };
 
-export const customerParser = (data: any, key: string) => {
+export function customerParser(data: any, key: string) {
   if (key === "id") {
     return {
       label: data["customer_no"] || null,
@@ -123,4 +123,4 @@ export const customerParser = (data: any, key: string) => {
     label: data[key] || "--",
     value: data[key] || null
   };
-};
+}

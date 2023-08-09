@@ -9,16 +9,22 @@ export const BodySTY = styled.div`
   table {
     tbody {
       td {
-        .login_Times {
+        .login_count {
           justify-content: flex-end;
+        }
+        .user_status {
+          justify-content: center;
         }
       }
     }
 
     thead {
       tr {
-        .login_Times {
+        .login_count {
           justify-content: flex-end;
+        }
+        .user_status {
+          justify-content: center;
         }
       }
     }

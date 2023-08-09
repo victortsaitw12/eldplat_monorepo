@@ -190,9 +190,9 @@ const CustomerDetail = ({
             >
               <>
                 <option value={""}>請選擇</option>
-                {cities?.map((state) => (
-                  <option key={state.area_No} value={state.area_No}>
-                    {state.area_Name_Tw}
+                {cities?.map((city) => (
+                  <option key={city.area_No} value={city.area_No}>
+                    {city.area_Name_Tw}
                   </option>
                 ))}
               </>
@@ -215,7 +215,9 @@ const CustomerDetail = ({
               marginBottom="0"
             >
               <>
-                <option value={""}>請選擇</option>
+                <option value={""} disabled>
+                  請選擇
+                </option>
                 {states?.map((state) => (
                   <option key={state.area_No} value={state.area_No}>
                     {state.area_Name_Tw}
@@ -259,7 +261,9 @@ const CustomerDetail = ({
               marginBottom="0"
             >
               <>
-                <option value={""}>請選擇</option>
+                <option value={""} disabled>
+                  請選擇
+                </option>
                 {countries?.map((item) => (
                   <option key={item.area_No} value={item.area_No}>
                     {item.area_Name_Tw}

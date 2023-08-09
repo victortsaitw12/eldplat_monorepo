@@ -8,7 +8,7 @@ import {
   Text,
   TextInput
 } from "evergreen-ui";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { convertCountryNum } from "@utils/convertValueToText";
 import { BodySTY } from "./style";
 import {
@@ -21,15 +21,31 @@ function Contact({
   insertData,
   setInsertData
 }: I_Content_Props) {
+  // const {
+  //   handleStateChange,
+  //   handleCityChange,
+  //   handleCountryChange,
+  //   allCountries,
+  //   allStates,
+  //   allCities
+  // } = useContext<I_Region_Context>(RegionContext);
+
   const {
+    handleCountryChange,
     handleStateChange,
     handleCityChange,
-    handleCountryCode,
-    allCountries,
-    allStates,
-    allCities
-  } = useContext<I_Region_Context>(RegionContext);
+    countries,
+    states,
+    cities,
+    initOptions
+  } = useContext(RegionContext);
 
+  useEffect(() => {
+    initOptions({
+      country: insertData?.dt_country,
+      state: insertData?.district
+    });
+  }, []);
   console.log("🉐insertData in contact", insertData);
 
   return (
@@ -51,7 +67,8 @@ function Contact({
             <TextInput
               className="country-number"
               name="user_phone_code"
-              value={handleCountryCode(insertData?.user_country) || ""}
+              // value={handleCountryCode(insertData?.user_country) || ""}
+              value={""}
               onChange={handleEmployeeChange}
               required
               disabled
@@ -100,13 +117,19 @@ function Contact({
                   value={insertData.city || ""}
                   onChange={(e: any) => {
                     handleEmployeeChange(e);
+                    handleCityChange(e.target.value);
                   }}
                 >
-                  {allCities?.map((item: any, idx: number) => (
-                    <option key={idx} value={item.areaNo}>
-                      {item.regionName}
+                  <>
+                    <option value={""} disabled>
+                      請選擇
                     </option>
-                  ))}
+                    {cities?.map((city) => (
+                      <option key={city.area_No} value={city.area_No}>
+                        {city.area_Name_Tw}
+                      </option>
+                    ))}
+                  </>
                 </SelectField>
               </Pane>
               <Pane>
@@ -118,14 +141,19 @@ function Contact({
                   value={insertData.district || ""}
                   onChange={(e: any) => {
                     handleEmployeeChange(e);
-                    handleCityChange(e);
+                    handleStateChange(e.target.value);
                   }}
                 >
-                  {allStates?.map((item: any, idx: number) => (
-                    <option key={idx} value={item.areaNo}>
-                      {item.regionName}
+                  <>
+                    <option value={""} disabled>
+                      請選擇
                     </option>
-                  ))}
+                    {states?.map((state) => (
+                      <option key={state.area_No} value={state.area_No}>
+                        {state.area_Name_Tw}
+                      </option>
+                    ))}
+                  </>
                 </SelectField>
               </Pane>
             </Pane>
@@ -148,14 +176,19 @@ function Contact({
                   value={insertData.dt_country || ""}
                   onChange={(e: any) => {
                     handleEmployeeChange(e);
-                    handleStateChange(e);
+                    handleCountryChange(e.target.value);
                   }}
                 >
-                  {allCountries?.map((item, idx) => (
-                    <option key={idx} value={item.areaNo}>
-                      {item.regionName}
+                  <>
+                    <option value={""} disabled>
+                      請選擇
                     </option>
-                  ))}
+                    {countries?.map((item) => (
+                      <option key={item.area_No} value={item.area_No}>
+                        {item.area_Name_Tw}
+                      </option>
+                    ))}
+                  </>
                 </SelectField>
               </Pane>
             </Pane>

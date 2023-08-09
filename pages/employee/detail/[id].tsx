@@ -6,6 +6,7 @@ import { Pane, Spinner } from "evergreen-ui";
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 
+import EmployeeDetail from "@contents/Employee/EmployeeDetail";
 //@services
 
 //@content
@@ -14,16 +15,19 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 import { useEmployeeFilterStore } from "@contexts/filter/employeeFilterStore";
 import { getEmployeeById } from "@services/employee/getEmployeeById";
+import LoadingSpinner from "@components/LoadingSpinner";
 import RegionProvider from "@contexts/regionContext/regionProvider";
-import EmployeeDetail from "@contents/Employee/EmployeeDetail";
 import HealthInfo from "@contents/Employee/HealthInfo";
-
+//
 const mainFilterArray = [
   { id: 1, label: "員工資料", value: "1" },
   { id: 2, label: "健康記錄", value: "2" }
 ];
 //
-const Page: NextPageWithLayout<never> = ({ userId }) => {
+const Page: NextPageWithLayout<{ userId: string; editPage: string }> = ({
+  userId,
+  editPage
+}) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
 
   const { mainFilter, updateMainFilter } = useEmployeeFilterStore();
@@ -63,6 +67,7 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
         user_english_name: newData.basicInfo["user_english_name"],
         user_identity: newData.basicInfo["user_identity"],
         user_country: newData.basicInfo["user_country"],
+        user_country_name: newData.basicInfo["user_country_name"],
         user_birthday: newData.basicInfo["user_birthday"]?.substring(0, 10),
         user_sex: newData.basicInfo["user_sex"],
         user_photo_link: newData.basicInfo["user_photo_link"],
@@ -70,8 +75,11 @@ const Page: NextPageWithLayout<never> = ({ userId }) => {
         user_phone_code: newData.basicInfo["user_phone_code"],
         user_phone: newData.basicInfo["user_phone"],
         dt_country: newData.basicInfo["dt_country"],
+        dt_country_name: newData.basicInfo["dt_country_name"],
         city: newData.basicInfo["city"],
+        city_name: newData.basicInfo["city_name"],
         district: newData.basicInfo["district"],
+        district_name: newData.basicInfo["district_name"],
         zip_code: newData.basicInfo["zip_code"],
         user_address1: newData.basicInfo["user_address1"],
         user_address2: newData.basicInfo["user_address2"],
@@ -163,10 +171,11 @@ interface Props {
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
 ) => {
-  const { params } = context;
+  const { params, query } = context;
   return {
     props: {
-      userId: params ? params.id : ""
+      userId: params ? params.id : "",
+      editPage: query.editPage || "view"
     }
   };
 };

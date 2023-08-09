@@ -57,7 +57,6 @@ const Page: NextPageWithLayout<never> = () => {
     mainFilter = "1",
     pageInfo: PageInfoType
   ) => {
-    console.log("mainFilter", mainFilter);
     getAllCustomers(pageInfo, subFilter, mainFilter).then((res) => {
       console.log("res", res);
       const customerData = mappingQueryData(
@@ -98,13 +97,15 @@ const Page: NextPageWithLayout<never> = () => {
   const upDatePageHandler = (newPageInfo: PageInfoType) => {
     fetchCustomerData(false, nowTab, newPageInfo);
   };
-  //
+
   const goToEditPageHandler = (id: string) => {
     router.push("/customer/detail/" + id + "?editPage=edit");
   };
+
   const goToDetailPageHandler = (id: string) => {
     router.push(`/customer/detail/${id}?editPage=view`);
   };
+
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
     router.push({
@@ -112,21 +113,21 @@ const Page: NextPageWithLayout<never> = () => {
       query: { ...router?.query, status: value }
     });
   };
+
   const deleteItemHandler = async (id: string) => {
     deleteCustomer(id).then((res) => {
       fetchCustomerData(false, nowTab, pageInfo);
     });
   };
+
   const recoverItemHandler = async (id: string) => {
     console.log("上一動");
   };
   //
-
   if (!data) {
     return <LoadingSpinner />;
   }
 
-  console.log("CUSTOMER data", data);
   return (
     <RegionProvider>
       <BodySTY>

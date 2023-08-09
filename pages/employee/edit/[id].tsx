@@ -98,6 +98,7 @@ const Page: NextPageWithLayout<
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     try {
+      console.log("updateData:", data);
       const res = await updateEmployee(userId, data);
       console.log("res in edit", res);
       router.push("/employee/detail/" + userId);
