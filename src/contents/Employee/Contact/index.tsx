@@ -9,27 +9,13 @@ import {
   TextInput
 } from "evergreen-ui";
 import React, { useContext, useEffect } from "react";
-import { convertCountryNum } from "@utils/convertValueToText";
 import { BodySTY } from "./style";
 import {
   I_Region_Context,
   RegionContext
 } from "@contexts/regionContext/regionProvider";
 
-function Contact({
-  handleEmployeeChange,
-  insertData,
-  setInsertData
-}: I_Content_Props) {
-  // const {
-  //   handleStateChange,
-  //   handleCityChange,
-  //   handleCountryChange,
-  //   allCountries,
-  //   allStates,
-  //   allCities
-  // } = useContext<I_Region_Context>(RegionContext);
-
+function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
   const {
     handleCountryChange,
     handleStateChange,
@@ -67,8 +53,7 @@ function Contact({
             <TextInput
               className="country-number"
               name="user_phone_code"
-              // value={handleCountryCode(insertData?.user_country) || ""}
-              value={""}
+              value={"886"}
               onChange={handleEmployeeChange}
               required
               disabled

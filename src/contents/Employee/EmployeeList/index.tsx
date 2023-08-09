@@ -31,9 +31,7 @@ function EmployeeList({
   handlePageChange
 }: I_EmployeeListType) {
   const employeeTitle = getEmployeeTitle();
-  console.log("EmployeeList", data);
   const employeeData = data.map((item: any) => {
-    console.log("itme", item);
     item["user_status"] = {
       label: (
         <StatusIconWithText status={"01"}>

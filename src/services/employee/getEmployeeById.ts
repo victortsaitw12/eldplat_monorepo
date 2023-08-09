@@ -13,7 +13,7 @@ export const getEmployeeById = async (user_no: string) => {
   console.log("response", response);
   const data = await response.json();
   console.log("data", data);
-  return data.dataList[0];
+  return data;
 };
 
 type PatternType = { [key: string]: string };
