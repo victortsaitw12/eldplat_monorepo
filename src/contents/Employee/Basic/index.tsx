@@ -28,7 +28,7 @@ function Basic({
   insertData,
   setInsertData
 }: I_Content_Props) {
-  const { allCountries } = useContext<I_Region_Context>(RegionContext);
+  const { countries } = useContext<I_Region_Context>(RegionContext);
 
   // 性別選擇
   const handleChangeSex = (e: any) => {
@@ -55,16 +55,6 @@ function Basic({
     setFileRejections([]);
   }, []);
   // 上傳照片 end ------
-
-  // const handleCountryNum = (e: any) => {
-  //   if (e.target.value === "TW") {
-  //     setCountryNum("(+886)");
-  //   } else if (e.target.value === "JP") {
-  //     setCountryNum("(+81)");
-  //   } else if (e.target.value === "US") {
-  //     setCountryNum("(+1)");
-  //   }
-  // };
 
   return (
     <BodySTY>
@@ -114,11 +104,16 @@ function Basic({
               // handleCountryNum(e);
             }}
           >
-            {allCountries?.map((item) => (
-              <option key={item.areaNo} value={item.areaNo}>
-                {item.regionName}
+            <>
+              <option value={""} disabled>
+                請選擇
               </option>
-            ))}
+              {countries?.map((item) => (
+                <option key={item.area_No} value={item.area_No}>
+                  {item.area_Name_Tw}
+                </option>
+              ))}
+            </>
           </SelectField>
         </Pane>
         <Pane className="input-line">

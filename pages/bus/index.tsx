@@ -68,6 +68,7 @@ const Page: NextPageWithLayout<never> = () => {
         );
         initializeSubFilter();
       }
+      console.log("busData", busesData);
       setData(busesData);
       setPageInfo(res.pageInfo);
     });
@@ -91,8 +92,6 @@ const Page: NextPageWithLayout<never> = () => {
   const upDatePageHandler = (newPageInfo: PageInfoType) => {
     fetchBusData(false, nowTab, newPageInfo);
   };
-  // const changePageSizeHandler = (size: number) => {};
-  //
   const goToEditPageHandler = (id: string, item: any) => {
     const license_plate = item?.license_plate?.value;
     router.push(

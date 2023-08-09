@@ -18,13 +18,6 @@ import FlexWrapper from "@layout/FlexWrapper";
 
 //@service
 
-//@utils
-import {
-  emailValidation,
-  numberValidation,
-  textValidation
-} from "@utils/inputValidation";
-
 //@content
 import { CharactorCard } from "@contents/Employee/Charactor/";
 import LanguageAbility from "@contents/Employee/LanguageAbility";
@@ -73,7 +66,7 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: "國籍",
-      value: data.user_country || "--"
+      value: data.user_country_name || "--"
     },
     {
       req: false,
@@ -158,6 +151,16 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
       req: false,
       label: " ",
       value: data.user_address2 || "--"
+    },
+    {
+      req: false,
+      label: " ",
+      value: `${data.city_name || "--"} ${data.district_name || "--"}`
+    },
+    {
+      req: false,
+      label: " ",
+      value: `${data.zip_code || "--"} ${data.dt_country_name || "--"}`
     },
     {
       req: false,

@@ -1,9 +1,4 @@
-import React, { useState } from "react";
-import { SelectField, Pane } from "evergreen-ui";
-import FormCard from "@components/FormCard";
-import RadioGroupColumn, {
-  RadioColumnField
-} from "@components/RadioGroupColumn";
+import React, { useEffect, useState } from "react";
 import {
   UseFormRegister,
   FieldErrors,
@@ -12,12 +7,16 @@ import {
 } from "react-hook-form";
 import { BusDataTypes } from "../../bus.type";
 import FlexWrapper from "@layout/FlexWrapper";
-import InfoBox from "@components/InfoBox";
 import TableWithEdit from "@components/Table/TableWithEdit";
 //
-import { getBusTitle } from "@services/bus/getAllBuses";
 import styled from "styled-components";
-import { useRouter } from "next/router";
+import {
+  getMaintenanceByFilter,
+  busMaintenaceParser,
+  busMaintenacePattern
+} from "@services/bus/getMaintenanceByFilter";
+import { PageInfoType } from "@services/type";
+import { mappingQueryData } from "@utils/mappingQueryData";
 //
 interface Props {
   register: UseFormRegister<BusDataTypes>;
@@ -25,14 +24,8 @@ interface Props {
   getValues: UseFormGetValues<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   isEdit: boolean;
+  busId: string;
 }
-//
-const maintenace_info = [
-  {
-    label: "",
-    value: ""
-  }
-];
 //
 const BodySTY = styled.div`
   padding: 1rem;
@@ -54,8 +47,55 @@ const maintenanceTitle = [
   "派工單",
   "派車單"
 ];
-function Maintenance({ register, errors, getValues, control, isEdit }: Props) {
-  const router = useRouter();
+function Maintenance({
+  register,
+  errors,
+  getValues,
+  control,
+  isEdit,
+  busId
+}: Props) {
+  const [busMaintenanceData, setBusMaintenanceData] = useState<any>(null);
+  const [pageInfo, setPageInfo] = useState<PageInfoType>({
+    arrangement: "desc",
+    orderby: null,
+    page_Index: 1,
+    page_Size: 10,
+    last_Page: 10
+  });
+
+  async function fetchMaintenanceData(
+    isCanceled: boolean,
+    busId: string,
+    pageInfo: PageInfoType
+  ) {
+    getMaintenanceByFilter(busId, pageInfo).then((res) => {
+      if (isCanceled) {
+        return;
+      }
+      const busMaintenanceData = mappingQueryData(
+        res.contentList,
+        busMaintenacePattern,
+        busMaintenaceParser
+      );
+      console.log("busMaintenanceData", busMaintenanceData);
+      setBusMaintenanceData(busMaintenanceData);
+      setPageInfo(res.pageInfo);
+    });
+  }
+
+  // async function updatePageHandler(newPageInfo: PageInfoType) {
+  //   fetchMaintenanceData(false, busId, newPageInfo);
+  // }
+
+  useEffect(() => {
+    let isCanceled = false;
+    fetchMaintenanceData(isCanceled, busId, pageInfo);
+    return () => {
+      isCanceled = true;
+    };
+  }, [busId]);
+
   return (
     <FlexWrapper padding="0">
       <BodySTY>
@@ -63,10 +103,8 @@ function Maintenance({ register, errors, getValues, control, isEdit }: Props) {
           tableName="維保計劃"
           cleanTableName="維保計劃"
           titles={maintenanceTitle}
-          data={[]}
-          goToCreatePage={(e) => {
-            e.preventDefault();
-            router.push("/maintenance/mission");
+          data={busMaintenanceData}
+          goToCreatePage={() => {
             console.log("goToCreatePage");
           }}
           deleteItem={() => {
@@ -78,6 +116,7 @@ function Maintenance({ register, errors, getValues, control, isEdit }: Props) {
           viewItem={() => {
             console.log("viewItem");
           }}
+          pageInfo={pageInfo}
         />
       </BodySTY>
     </FlexWrapper>

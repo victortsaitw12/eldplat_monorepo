@@ -18,7 +18,7 @@ interface StateTypes {
 }
 export const useEmployeeFilterStore = create<StateTypes>((set) => ({
   subFilter: null,
-  mainFilter: "",
+  mainFilter: "1",
   selectedForm: "",
   isDrawerOpen: false,
   setDrawerOpen: (value: boolean) => {
@@ -39,7 +39,7 @@ export const useEmployeeFilterStore = create<StateTypes>((set) => ({
     }
     return set(() => {
       return {
-        filter
+        subFilter: filter
       };
     });
   },
