@@ -30,7 +30,7 @@ interface I_VehicleFormProps {
   orderInfo: I_ManualAssignType[];
   setLoading: (v: boolean) => void;
   refetch?: () => void;
-  checkOtherAssignment: (v: I_creatOtherAssignment) => void;
+  checkOtherAssignment: (v: I_creatOtherAssignment) => any;
 }
 
 function VehicleForm({
@@ -111,10 +111,8 @@ function VehicleForm({
         hasCloseButton: true
       });
       // refetch, close drawer, ask update the rest shift?
-      refetch && refetch();
-      checkOtherAssignment(res.dataList[0]);
+      !checkOtherAssignment(res.dataList[0]) && refetch && refetch();
     } catch (e: any) {
-      console.log("🍅e:", e);
       toaster.danger("新增失敗", {
         duration: 3,
         hasCloseButton: true
