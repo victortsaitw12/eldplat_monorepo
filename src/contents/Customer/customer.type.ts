@@ -14,15 +14,19 @@ export interface CustomerDataTypes {
   customer_gui_no: string;
   customer_owner: string;
   customer_typ: string;
+  type_name: string;
   labels: Array<{
     label_name: string;
   }>;
   address1: string;
   address2: string;
   customer_city: string;
+  city_name: string;
   customer_area: string;
+  area_name: string;
   customer_district_code: string;
   customer_country: string;
+  country_name: string;
   customer_tel_code: string;
   customer_tel: string;
   customer_fax_code: string;
@@ -46,13 +50,17 @@ const customerDefaultData: CustomerDataTypes = {
   customer_gui_no: "",
   customer_owner: "",
   customer_typ: "",
+  type_name: "",
   labels: [],
   address1: "",
   address2: "",
   customer_city: "",
+  city_name: "",
   customer_area: "",
+  area_name: "",
   customer_district_code: "",
   customer_country: "",
+  country_name: "",
   customer_tel_code: "",
   customer_tel: "",
   customer_fax_code: "",

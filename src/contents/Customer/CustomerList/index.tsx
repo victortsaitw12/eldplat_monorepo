@@ -5,7 +5,6 @@ import { PageInfoType } from "@services/type";
 
 interface Props {
   listType: string;
-  clientData: any;
   customerData: any;
   goToCreatePage: () => void;
   deleteItemHandler: (id: string) => void;
@@ -18,7 +17,6 @@ interface Props {
 
 function CustomerList({
   listType,
-  clientData,
   customerData,
   goToCreatePage,
   deleteItemHandler,

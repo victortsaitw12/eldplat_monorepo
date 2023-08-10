@@ -23,15 +23,14 @@ const BusDetail = ({
   asyncSubmitForm,
   formType,
   busDefaultData,
-  busOptions
+  busOptions,
+  busId
 }: I_Props) => {
   const [visibleForm, setVisibleForm] = useState("1");
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
-  //
-  console.log("busDefaultData", busDefaultData);
-  //
+
   const {
     register,
     control,
@@ -62,6 +61,7 @@ const BusDetail = ({
       )}
       {visibleForm === "2" && (
         <Maintenance
+          busId={busId}
           register={register}
           errors={errors}
           getValues={getValues}

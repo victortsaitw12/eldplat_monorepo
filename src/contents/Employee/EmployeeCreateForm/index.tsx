@@ -1,11 +1,13 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { ItemSTY, FormSTY } from "./style";
 import { IconLeft } from "@components/Button/Primary";
 import FiledInput from "./FieldInput";
 import { PlusIcon } from "evergreen-ui";
-
+import { useState } from "react";
+import { createBriefEmployee } from "@services/employee/createEmployee";
 interface EmployeeCreateFormProps {
-  createEmployee: (EmployeeData: any) => void;
+  data?: any;
+  reloadData?: () => void;
 }
 export interface CreateEmployeePayload {
   user_name: string;
@@ -19,15 +21,28 @@ const defaultValues = {
   user_email: "",
   user_phone: ""
 };
-const EmployeeCreateForm = ({ createEmployee }: EmployeeCreateFormProps) => {
-  const { handleSubmit, control } = useForm<CreateEmployeePayload>({
+const EmployeeCreateForm = ({ reloadData }: EmployeeCreateFormProps) => {
+  const [loading, setLoading] = useState(false);
+  const asyncSubmitForm = async (data: any) => {
+    setLoading(true);
+    try {
+      const res = await createBriefEmployee(data);
+    } catch (e: any) {
+      console.log(e);
+      alert(e.message);
+    }
+    setLoading(false);
+    reloadData && reloadData();
+    reset();
+  };
+  const { handleSubmit, control, reset } = useForm<CreateEmployeePayload>({
     defaultValues
   });
   return (
-    <FormSTY onSubmit={handleSubmit(createEmployee)}>
+    <FormSTY onSubmit={handleSubmit(asyncSubmitForm)}>
       <FiledInput
         controlProps={{
-          name: "user_name",
+          name: "user_first_name",
           control,
           rules: { required: "此欄位必填" }
         }}
@@ -35,7 +50,7 @@ const EmployeeCreateForm = ({ createEmployee }: EmployeeCreateFormProps) => {
       />
       <FiledInput
         controlProps={{
-          name: "user_first_name",
+          name: "user_name",
           control,
           rules: { required: "此欄位必填" }
         }}

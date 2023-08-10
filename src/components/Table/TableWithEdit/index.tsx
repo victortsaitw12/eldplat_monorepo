@@ -157,31 +157,18 @@ function Table({
                   />
                 </th>
               )}
-              {/* {tableName === "維保通知" && (
-                <th>
-                  <input
-                    type="checkbox"
-                    checked={checkboxData?.every((item) => item.checked)}
-                    onChange={
-                      checkboxData?.every((item) => item.checked)
-                        ? handleDeselectAll
-                        : handleSelectAll
-                    }
-                  />
-                </th>
-              )} */}
               {titles.map((title: any) => {
                 if (title === "id") {
                   return;
                 }
-                const finalClass = customTableClass?.map((v) => {
-                  if (v.label === title) {
-                    return v.value;
-                  }
+                const finalClass = customTableClass?.find((v) => {
+                  return v.label === title;
                 });
                 return (
-                  <th key={uuid()}>
-                    <span className={finalClass && finalClass[0]}>{title}</span>
+                  <th key={title}>
+                    <span className={finalClass && finalClass.value}>
+                      {title}
+                    </span>
                   </th>
                 );
               })}
@@ -203,43 +190,18 @@ function Table({
                         />
                       </td>
                     )}
-                    {/* {tableName === "維保通知" && (
-                      <td>
-                        <input
-                          type="checkbox"
-                          checked={checkboxData?.map((v) => v.checked)[idx]}
-                          onChange={() => {
-                            handleCheckboxChange(item.mission.value);
-                          }}
-                        />
-                      </td>
-                    )} */}
-                    {Object.keys(item).map((key) => {
-                      const finalClass = customTableClass?.map((v) => {
-                        if (v.value === key) {
-                          return v.value;
-                        }
-                      });
 
+                    {Object.keys(item).map((key) => {
+                      const finalClass = customTableClass?.find((classObj) => {
+                        return classObj.value === key;
+                      });
                       if (key === "id") return;
-                      if (!item[key].label) {
-                        return (
-                          // 🟡NEW:
-                          <td key={item.id + key}>
-                            <span className={`${finalClass && finalClass[0]}`}>
-                              --
-                            </span>
-                          </td>
-                        );
-                      }
                       return (
                         <td key={item.id + key}>
                           <div
-                            className={`${
-                              finalClass && finalClass[0]
-                            } data-row`}
+                            className={`${finalClass?.value || ""} data-row`}
                           >
-                            {item[key].label}
+                            {item[key].label || "--"}
                           </div>
                         </td>
                       );
@@ -265,11 +227,9 @@ function Table({
                           deleteText={deleteText}
                           isOpen={currentTab === idx}
                           openOption={() => {
-                            console.log("openOption");
                             setCurrentTab(idx);
                           }}
                           closeOption={() => {
-                            console.log("closeOption");
                             setCurrentTab(null);
                           }}
                           tableName={tableName}

@@ -28,12 +28,15 @@ export const createEmployee = async (employeeData: any) => {
 };
 
 // List頁快速新增
-export const createBriefEmployee = async (
-  user_first_name: string,
-  user_name: string,
-  user_email: string,
-  user_phone: string
-) => {
+interface createBriefEmployeePayload {
+  user_first_name: string;
+  user_name: string;
+  user_email: string;
+  user_phone: string;
+}
+//
+export const createBriefEmployee = async (data: createBriefEmployeePayload) => {
+  const { user_first_name, user_name, user_email, user_phone } = data;
   const res = await fetch(
     `${API_Path["CreateBriefEmployee"]}?user_first_name=${user_first_name}&user_name=${user_name}&user_email=${user_email}&user_phone=${user_phone}`,
     {

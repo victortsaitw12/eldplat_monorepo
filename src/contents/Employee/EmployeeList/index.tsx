@@ -1,9 +1,10 @@
-import Table from "@components/Table/TableWithEdit";
 import React from "react";
 import { getEmployeeTitle } from "@services/employee/getAllEmployee";
 import { BodySTY } from "./style";
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { I_PageInfo } from "@components/PaginationField";
+import StatusIconWithText from "@components/StatusIconWithText";
+import FirstNameIcon from "@components/FirstNameIcon";
 //
 interface I_EmployeeListType {
   [key: string]: any;
@@ -14,7 +15,10 @@ interface I_EmployeeListType {
   goToDetailPageHandler: (id: string) => void;
   handlePageChange: (pageQuery: I_PageInfo) => void;
 }
-
+const customTableClass = [
+  { label: "登入次數", value: "login_count" },
+  { label: "加入狀態", value: "user_status" }
+];
 function EmployeeList({
   listType,
   data,
@@ -27,22 +31,35 @@ function EmployeeList({
   handlePageChange
 }: I_EmployeeListType) {
   const employeeTitle = getEmployeeTitle();
-  const customTableClass = [
-    { label: "登入次數", value: "login_Times" },
-    { label: "加入狀態", value: "invt_Status" }
-  ];
-
+  const employeeData = data.map((item: any) => {
+    item["user_status"] = {
+      label: (
+        <StatusIconWithText status={"01"}>
+          {item["user_status"].value}
+        </StatusIconWithText>
+      ),
+      value: item["user_status"].value
+    };
+    item["user_name"] = {
+      label: (
+        <div style={{ display: "flex", gap: "12px" }}>
+          <FirstNameIcon text={item["user_name"].value.slice(0, 1)} />
+          {item["user_name"].value}
+        </div>
+      ),
+      value: item["user_name"].value
+    };
+    return item;
+  });
   return (
     <BodySTY className="list-style">
       <TableWithEdit
         titles={employeeTitle}
-        data={data}
+        data={employeeData}
         tableName="員工列表"
         goToCreatePage={goToCreatePage}
         pageInfo={pageInfo}
         onPageChange={handlePageChange}
-        // deleteItem={deleteItemHandler}
-        // goToEditPage={goToEditPageHandler}
         {...(listType == "1" && {
           viewItem: (id) => {
             goToDetailPageHandler(id);
@@ -66,21 +83,3 @@ function EmployeeList({
 }
 
 export default EmployeeList;
-
-{
-  /* <Pane className="employee-list-title">
-        <Heading>員工列表</Heading>
-        <Button
-          className="add-employee-btn"
-          borderRadius="32px"
-          marginY={8}
-          marginRight={12}
-          iconBefore={PlusIcon}
-          onClick={() => {
-            setAddEmployeeActive(true);
-          }}
-        >
-          新增員工
-        </Button>
-      </Pane> */
-}

@@ -34,10 +34,10 @@ function FilterWrapper({
     }, 500);
   };
   //
+  console.log("FilterWrapper", filter);
   if (!filter) {
     return <div>loading...</div>;
   }
-  console.log("filter", filter);
 
   return (
     <BodySTY>
