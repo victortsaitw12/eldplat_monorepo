@@ -325,72 +325,114 @@ const Page: NextPageWithLayout<never> = () => {
       ...target,
       [e.target.name]: e.target.value,
       bus_day_number: showSecondTitle.car,
-      task_start_time: `${dashDate2(showSecondTitle.date)}T01:00`,
-      task_end_time: `${dashDate2(showSecondTitle.date)}T01:00`
+      task_start_time: `${dashDate2(showSecondTitle.date)}T${
+        startTime.start_hours
+      }:${startTime.start_minutes}`,
+      task_end_time: `${dashDate2(showSecondTitle.date)}T${endTime.end_hours}:${
+        endTime.end_minutes
+      }`
     };
-
     // 判斷變動到的是起始時間而不是其他下拉選項的話:
     if (startTimeName.includes(e.target.name)) {
+      let newStartTime = updatedTarget.task_start_time;
       if (e.target.name === "start_hours") {
         setStartTime((prev: any) => {
           return { ...prev, start_hours: e.target.value };
         });
+        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+          startTime.start_type === "pm"
+            ? (Number(e.target.value) + 12).toString()
+            : e.target.value
+        }:${startTime.start_minutes}`;
       } else if (e.target.name === "start_minutes") {
         setStartTime((prev: any) => {
           return { ...prev, start_minutes: e.target.value };
         });
+
+        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+          startTime.start_type === "pm"
+            ? (Number(startTime.start_hours) + 12).toString()
+            : startTime.start_hours
+        }:${e.target.value}`;
       } else if (e.target.name === "start_type") {
         setStartTime((prev: any) => {
           return { ...prev, start_type: e.target.value };
         });
+        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+          e.target.value === "pm"
+            ? (Number(startTime.start_hours) + 12).toString()
+            : startTime.start_hours
+        }:${startTime.start_minutes}`;
       }
+      updatedTarget.task_start_time = newStartTime;
     }
     // 判斷變動到的是截止時間而不是其他下拉選項的話:
     if (endTimeName.includes(e.target.name)) {
+      let newEndTime = updatedTarget.task_end_time;
       if (e.target.name === "end_hours") {
         setEndTime((prev: any) => {
           return { ...prev, end_hours: e.target.value };
         });
+
+        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+          endTime.end_type === "pm"
+            ? (Number(e.target.value) + 12).toString()
+            : e.target.value
+        }:${endTime.end_minutes}`;
       } else if (e.target.name === "end_minutes") {
         setEndTime((prev: any) => {
           return { ...prev, end_minutes: e.target.value };
         });
+        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+          endTime.end_type === "pm"
+            ? (Number(endTime.end_hours) + 12).toString()
+            : endTime.end_hours
+        }:${e.target.value}`;
       } else if (e.target.name === "end_type") {
         setEndTime((prev: any) => {
           return { ...prev, end_type: e.target.value };
         });
+
+        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+          e.target.value === "pm"
+            ? (Number(endTime.end_hours) + 12).toString()
+            : endTime.end_hours
+        }:${endTime.end_minutes}`;
       }
+      updatedTarget.task_end_time = newEndTime;
     }
 
     // 把所有的時間組合成API可以接受的格式 (yyyy-mm-ddThh:mm)
-    const newStartTime = `${dashDate2(showSecondTitle.date)}T${
-      startTime.start_type === "pm"
-        ? (Number(startTime.start_hours) + 12).toString()
-        : startTime.start_hours
-    }:${startTime.start_minutes}`;
-    const newEndTime = `${dashDate2(showSecondTitle.date)}T${
-      endTime.end_type === "pm"
-        ? (Number(endTime.end_hours) + 12).toString()
-        : endTime.end_hours
-    }:${endTime.end_minutes}`;
+    // const newStartTime = `${dashDate2(showSecondTitle.date)}T${
+    //   startTime.start_type === "pm"
+    //     ? (Number(startTime.start_hours) + 12).toString()
+    //     : startTime.start_hours
+    // }:${startTime.start_minutes}`;
+    // const newEndTime = `${dashDate2(showSecondTitle.date)}T${
+    //   endTime.end_type === "pm"
+    //     ? (Number(endTime.end_hours) + 12).toString()
+    //     : endTime.end_hours
+    // }:${endTime.end_minutes}`;
 
     // 設回原大物件
-    if (startTimeName.includes(e.target.name)) {
-      newBusArr[orderIndex] = {
-        ...target,
-        task_start_time: newStartTime
-      };
-      newCreateAssignData.manual_bus = newBusArr;
-    } else if (endTimeName.includes(e.target.name)) {
-      newBusArr[orderIndex] = {
-        ...target,
-        task_end_time: newEndTime
-      };
-      newCreateAssignData.manual_bus = newBusArr;
-    } else {
-      newBusArr[orderIndex] = updatedTarget;
-      newCreateAssignData.manual_bus = newBusArr;
-    }
+    newBusArr[orderIndex] = updatedTarget;
+    newCreateAssignData.manual_bus = newBusArr;
+    // if (startTimeName.includes(e.target.name)) {
+    //   newBusArr[orderIndex] = {
+    //     ...target,
+    //     task_start_time: newStartTime
+    //   };
+    //   newCreateAssignData.manual_bus = newBusArr;
+    // } else if (endTimeName.includes(e.target.name)) {
+    //   newBusArr[orderIndex] = {
+    //     ...target,
+    //     task_end_time: newEndTime
+    //   };
+    //   newCreateAssignData.manual_bus = newBusArr;
+    // } else {
+    //   newBusArr[orderIndex] = updatedTarget;
+    //   newCreateAssignData.manual_bus = newBusArr;
+    // }
 
     // 判斷如果使用者沒選時間的話，就給個預設的
     // if (!Object.keys(newBusArr[orderIndex]).includes("task_start_time")) {
@@ -422,71 +464,114 @@ const Page: NextPageWithLayout<never> = () => {
       ...target,
       [e.target.name]: e.target.value,
       bus_day_number: showSecondTitle.car,
-      task_start_time: `${dashDate2(showSecondTitle.date)}T01:00`,
-      task_end_time: `${dashDate2(showSecondTitle.date)}T01:00`
+      task_start_time: `${dashDate2(showSecondTitle.date)}T${
+        startTime.start_hours
+      }:${startTime.start_minutes}`,
+      task_end_time: `${dashDate2(showSecondTitle.date)}T${endTime.end_hours}:${
+        endTime.end_minutes
+      }`
     };
     // 判斷變動到的是起始時間而不是其他下拉選項的話:
     if (startTimeName.includes(e.target.name)) {
+      let newStartTime = updatedTarget.task_start_time;
       if (e.target.name === "start_hours") {
         setStartTime((prev: any) => {
           return { ...prev, start_hours: e.target.value };
         });
+        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+          startTime.start_type === "pm"
+            ? (Number(e.target.value) + 12).toString()
+            : e.target.value
+        }:${startTime.start_minutes}`;
       } else if (e.target.name === "start_minutes") {
         setStartTime((prev: any) => {
           return { ...prev, start_minutes: e.target.value };
         });
+
+        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+          startTime.start_type === "pm"
+            ? (Number(startTime.start_hours) + 12).toString()
+            : startTime.start_hours
+        }:${e.target.value}`;
       } else if (e.target.name === "start_type") {
         setStartTime((prev: any) => {
           return { ...prev, start_type: e.target.value };
         });
+        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+          e.target.value === "pm"
+            ? (Number(startTime.start_hours) + 12).toString()
+            : startTime.start_hours
+        }:${startTime.start_minutes}`;
       }
+      updatedTarget.task_start_time = newStartTime;
     }
     // 判斷變動到的是截止時間而不是其他下拉選項的話:
     if (endTimeName.includes(e.target.name)) {
+      let newEndTime = updatedTarget.task_end_time;
       if (e.target.name === "end_hours") {
         setEndTime((prev: any) => {
           return { ...prev, end_hours: e.target.value };
         });
+
+        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+          endTime.end_type === "pm"
+            ? (Number(e.target.value) + 12).toString()
+            : e.target.value
+        }:${endTime.end_minutes}`;
       } else if (e.target.name === "end_minutes") {
         setEndTime((prev: any) => {
           return { ...prev, end_minutes: e.target.value };
         });
+        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+          endTime.end_type === "pm"
+            ? (Number(endTime.end_hours) + 12).toString()
+            : endTime.end_hours
+        }:${e.target.value}`;
       } else if (e.target.name === "end_type") {
         setEndTime((prev: any) => {
           return { ...prev, end_type: e.target.value };
         });
+
+        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+          e.target.value === "pm"
+            ? (Number(endTime.end_hours) + 12).toString()
+            : endTime.end_hours
+        }:${endTime.end_minutes}`;
       }
+      updatedTarget.task_end_time = newEndTime;
     }
 
     // 把所有的時間組合成API可以接受的格式 (yyyy-mm-ddThh:mm)
-    const newStartTime = `${dashDate2(showSecondTitle.date)}T${
-      startTime.start_type === "pm"
-        ? (Number(startTime.start_hours) + 12).toString()
-        : startTime.start_hours
-    }:${startTime.start_minutes}`;
-    const newEndTime = `${dashDate2(showSecondTitle.date)}T${
-      endTime.end_type === "pm"
-        ? (Number(endTime.end_hours) + 12).toString()
-        : endTime.end_hours
-    }:${endTime.end_minutes}`;
+    // const newStartTime = `${dashDate2(showSecondTitle.date)}T${
+    //   startTime.start_type === "pm"
+    //     ? (Number(startTime.start_hours) + 12).toString()
+    //     : startTime.start_hours
+    // }:${startTime.start_minutes}`;
+    // const newEndTime = `${dashDate2(showSecondTitle.date)}T${
+    //   endTime.end_type === "pm"
+    //     ? (Number(endTime.end_hours) + 12).toString()
+    //     : endTime.end_hours
+    // }:${endTime.end_minutes}`;
 
     // 設回原大物件
-    if (startTimeName.includes(e.target.name)) {
-      newDriverArr[orderIndex] = {
-        ...target,
-        task_start_time: newStartTime
-      };
-      newCreateAssignData.manual_driver = newDriverArr;
-    } else if (endTimeName.includes(e.target.name)) {
-      newDriverArr[orderIndex] = {
-        ...target,
-        task_end_time: newEndTime
-      };
-      newCreateAssignData.manual_driver = newDriverArr;
-    } else {
-      newDriverArr[orderIndex] = updatedTarget;
-      newCreateAssignData.manual_driver = newDriverArr;
-    }
+    newDriverArr[orderIndex] = updatedTarget;
+    newCreateAssignData.manual_driver = newDriverArr;
+    // if (startTimeName.includes(e.target.name)) {
+    //   newDriverArr[orderIndex] = {
+    //     ...target,
+    //     task_start_time: newStartTime
+    //   };
+    //   newCreateAssignData.manual_driver = newDriverArr;
+    // } else if (endTimeName.includes(e.target.name)) {
+    //   newDriverArr[orderIndex] = {
+    //     ...target,
+    //     task_end_time: newEndTime
+    //   };
+    //   newCreateAssignData.manual_driver = newDriverArr;
+    // } else {
+    //   newDriverArr[orderIndex] = updatedTarget;
+    //   newCreateAssignData.manual_driver = newDriverArr;
+    // }
 
     // 判斷如果使用者沒選時間的話，就給個預設的
     // if (newDriverArr[orderIndex].task_start_time === undefined) {

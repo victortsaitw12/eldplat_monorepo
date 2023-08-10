@@ -12,9 +12,10 @@ import {
 } from "evergreen-ui";
 
 //@layout
-import { I_ManualCreateType } from "@typings/assignment_type";
+import { I_ManualBus, I_ManualCreateType } from "@typings/assignment_type";
 import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
 import { hours, minutes } from "@services/assignment/mock_data";
+import dayjs from "dayjs";
 
 //@components
 
@@ -33,6 +34,20 @@ function SecondCarAssignManualCreate({
   showSecondTitle,
   createAssignData
 }: I_AssignManualCreateProps) {
+  let defaultValue: I_ManualBus | null = null;
+  if (createAssignData?.manual_bus) {
+    defaultValue = createAssignData?.manual_bus
+      .filter((ele) => {
+        return (
+          dayjs(ele.task_start_time).format("YYYY/MM/DD") ==
+          dayjs(showSecondTitle.date).format("YYYY/MM/DD")
+        );
+      })
+      .filter((ele) => {
+        return ele.bus_day_number == showSecondTitle.car;
+      })[0];
+  }
+
   const [loading, setLoading] = useState(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
@@ -59,11 +74,14 @@ function SecondCarAssignManualCreate({
       setLoading(false);
     };
     getbusData();
+    if (defaultValue && defaultValue?.bus_group) {
+      handleBusGroupChange(defaultValue?.bus_group);
+    }
     setLoading(false);
   }, []);
 
-  const handleBusGroupChange = async (e: any) => {
-    const res = await getAssignBusDDL(e.target.value);
+  const handleBusGroupChange = async (bus_group: any) => {
+    const res = await getAssignBusDDL(bus_group);
     // setBusNameDDL(res.dataList[0].bus_options);
     setBusNameDDL([
       { bus_no: "00", bus_name: "請選擇", license_plate: "" },
@@ -99,11 +117,12 @@ function SecondCarAssignManualCreate({
         }
         name="bus_group"
         onClick={(e: any) => {
-          handleBusGroupChange(e);
+          handleBusGroupChange(e.target.value);
         }}
         onChange={(e: any) => {
           handleAssignmentCarChange(e);
         }}
+        value={defaultValue?.bus_group || ""}
       >
         {busGroupDDL?.map(
           (item: { bus_group: string; bus_group_name: string }) => {
@@ -129,6 +148,7 @@ function SecondCarAssignManualCreate({
         onChange={(e: any) => {
           handleAssignmentCarChange(e);
         }}
+        value={defaultValue?.bus_no || ""}
       >
         {busNameDDL?.map((item: any) => {
           return (
@@ -145,13 +165,24 @@ function SecondCarAssignManualCreate({
         <Paragraph>起始時間</Paragraph>
         <Select
           name="start_hours"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentCarChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentCarChange(e);
           }}
           ref={timeRef}
         >
           {hours.map((item: string) => (
-            <option key={item} value={item}>
+            <option
+              key={item}
+              value={item}
+              selected={
+                (defaultValue &&
+                  dayjs(defaultValue?.task_start_time).format("HH")) == item ||
+                false
+              }
+            >
               {item}
             </option>
           ))}
@@ -159,26 +190,58 @@ function SecondCarAssignManualCreate({
         <Text fontSize={20}> : </Text>
         <Select
           name="start_minutes"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentCarChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentCarChange(e);
           }}
           ref={timeRef}
         >
           {minutes().map((item: string) => (
-            <option key={item} value={item}>
+            <option
+              key={item}
+              value={item}
+              selected={
+                (defaultValue &&
+                  dayjs(defaultValue?.task_start_time).format("mm")) == item ||
+                false
+              }
+            >
               {item}
             </option>
           ))}
         </Select>
         <Select
           name="start_type"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentCarChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentCarChange(e);
           }}
           ref={timeRef}
         >
-          <option value="am">AM</option>
-          <option value="pm">PM</option>
+          <option
+            value="am"
+            selected={
+              (defaultValue &&
+                dayjs(defaultValue?.task_start_time).format("A")) == "AM" ||
+              false
+            }
+          >
+            AM
+          </option>
+          <option
+            value="pm"
+            selected={
+              (defaultValue &&
+                dayjs(defaultValue?.task_start_time).format("A")) == "PM" ||
+              false
+            }
+          >
+            PM
+          </option>
         </Select>
       </Pane>
 
@@ -186,13 +249,24 @@ function SecondCarAssignManualCreate({
         <Paragraph>截止時間</Paragraph>
         <Select
           name="end_hours"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentCarChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentCarChange(e);
           }}
           ref={timeRef}
         >
           {hours.map((item: string) => (
-            <option key={item} value={item}>
+            <option
+              key={item}
+              value={item}
+              selected={
+                (defaultValue &&
+                  dayjs(defaultValue?.task_end_time).format("HH")) == item ||
+                false
+              }
+            >
               {item}
             </option>
           ))}
@@ -200,26 +274,58 @@ function SecondCarAssignManualCreate({
         <Text fontSize={20}> : </Text>
         <Select
           name="end_minutes"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentCarChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentCarChange(e);
           }}
           ref={timeRef}
         >
           {minutes().map((item: string) => (
-            <option key={item} value={item}>
+            <option
+              key={item}
+              value={item}
+              selected={
+                (defaultValue &&
+                  dayjs(defaultValue?.task_end_time).format("mm")) == item ||
+                false
+              }
+            >
               {item}
             </option>
           ))}
         </Select>
         <Select
           name="end_type"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentCarChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentCarChange(e);
           }}
           ref={timeRef}
         >
-          <option value="am">AM</option>
-          <option value="pm">PM</option>
+          <option
+            value="am"
+            selected={
+              (defaultValue &&
+                dayjs(defaultValue?.task_start_time).format("A")) == "AM" ||
+              false
+            }
+          >
+            AM
+          </option>
+          <option
+            value="pm"
+            selected={
+              (defaultValue &&
+                dayjs(defaultValue?.task_start_time).format("A")) == "PM" ||
+              false
+            }
+          >
+            PM
+          </option>
         </Select>
       </Pane>
 
