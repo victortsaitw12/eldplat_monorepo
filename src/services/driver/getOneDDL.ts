@@ -35,3 +35,15 @@ export interface I_LabelVal {
   value: string; //"01";
   edit: boolean;
 }
+
+export interface I_DsphGroupDDL {
+  label: string; //"第二車隊",
+  value: string; //"02",
+  edit: boolean; //false
+}
+
+export interface I_DsphAreaDDL {
+  label: string; //"北北基",
+  value: string; //"02",
+  edit: boolean; //false
+}

@@ -18,7 +18,11 @@ import {
   getLicenseAreaDDL,
   I_AreaDDL
 } from "@services/driver/getAreaDDL";
-import { getOneDDL } from "@services/";
+import {
+  getOneDDL,
+  I_DsphGroupDDL,
+  I_DsphAreaDDL
+} from "@services/driver/getOneDDL";
 
 interface Props {
   selected?: boolean;
@@ -45,13 +49,15 @@ function DriverInfo({
     []
   );
   const [licenseAreaDDL, setLicenseAreaDDL] = React.useState([]);
+  const [dsphGroupDDL, setDsphGroupDDL] = React.useState<I_DsphGroupDDL[]>([]);
+  const [dsphAreaDDL, setDsphAreaDDL] = React.useState<I_DsphAreaDDL[]>([]);
 
   // TODO const driverCountryDDL and licenseAreaDDL
   React.useEffect(() => {
     const fetchDDL = async () => {
       const resCountryDDL = await getDriverCountryDDL();
       const resAreaDDL = await getLicenseAreaDDL();
-      const resBusGroupDDL = await getOneDDL("bus_group", "bus");
+      const resDsphGroupDDL = await getOneDDL("bus_group", "bus");
       const resDispachAreaDDL = await getOneDDL("registration_province", "bus");
 
       const driverCountryDDL = resCountryDDL.options.map((item: I_AreaDDL) => {
@@ -60,8 +66,20 @@ function DriverInfo({
       const licenseAreaDDL = resAreaDDL.options.map((item: I_AreaDDL) => {
         return { label: item.area_Name_Tw, value: item.area_No };
       });
+      const dsphGroupDDL: I_DsphGroupDDL[] = resDsphGroupDDL.map(
+        (item: I_DsphGroupDDL) => {
+          return { label: item.label, value: item.value, edit: item.edit };
+        }
+      );
+      const dsphAreaDDL: I_DsphAreaDDL[] = resDispachAreaDDL.map(
+        (item: I_DsphAreaDDL) => {
+          return { label: item.label, value: item.value, edit: item.edit };
+        }
+      );
       setDriverCountryDDL(driverCountryDDL);
       setLicenseAreaDDL(licenseAreaDDL);
+      setDsphGroupDDL(dsphGroupDDL);
+      setDsphAreaDDL(dsphAreaDDL);
     };
     fetchDDL();
   }, []);
@@ -172,12 +190,16 @@ function DriverInfo({
     {
       req: false,
       label: "派駐地",
-      value: getValues("dsph_area") || "--",
+      value:
+        dsphAreaDDL?.find(
+          (item: I_DsphAreaDDL) => item.value === getValues("dsph_area")
+        )?.label || "--",
       editEle: (
-        <Select key="dsph_city" {...register("dsph_area")} marginBottom="0">
-          {Object.keys(DSPH_AREA).map((key) => (
-            <option key={key} value={key}>
-              {DSPH_AREA[key].label}
+        <Select key="dsph_area" {...register("dsph_area")} marginBottom="0">
+          <option key="dsph_area-0"></option>
+          {dsphAreaDDL?.map((item: I_DsphAreaDDL) => (
+            <option key={`dsph_area-${item.value}`} value={item.value}>
+              {item.label}
             </option>
           ))}
         </Select>
@@ -186,12 +208,15 @@ function DriverInfo({
     {
       req: false,
       label: "車隊",
-      value: getValues("dsph_group") || "--",
+      value:
+        dsphGroupDDL?.find(
+          (item: I_DsphGroupDDL) => item.value === getValues("dsph_group")
+        )?.label || "--",
       editEle: (
         <Select key="dsph_group" {...register("dsph_group")} marginBottom="0">
-          {Object.keys(DSPH_GROUP).map((key) => (
-            <option key={key} value={key}>
-              {DSPH_GROUP[key].label}
+          {dsphGroupDDL?.map((item: I_DsphGroupDDL) => (
+            <option key={`dsph_area-${item.value}`} value={item.value}>
+              {item.label}
             </option>
           ))}
         </Select>
@@ -200,7 +225,13 @@ function DriverInfo({
     {
       req: false,
       label: "黑名單註記",
-      value: <Checkbox checked={checked} disabled />,
+      value: (
+        <Checkbox
+          checked={checked}
+          disabled
+          style={{ height: "14px", marginTop: "0", marginBottom: "0" }}
+        />
+      ),
       editEle: (
         <Checkbox
           checked={checked}
