@@ -14,25 +14,28 @@ const CreateEventBtn = ({
   selectType?: string;
   view: "monthly" | "daily";
 }) => {
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
 
   //------ functions ------//
   const handleSelectStardDate = (timestamp: number) => {
+    scheduleUI.resetState();
     const selectedDT =
       view === "monthly"
         ? getDayStart(new Date(timestamp))
         : new Date(timestamp);
-    UI.setIsSelect(true);
-    UI.setStartDate(selectedDT);
+    scheduleUI.setIsSelect(true);
+    scheduleUI.setStartDate(selectedDT);
     view === "monthly"
-      ? UI.setEndDate(getDayEnd(selectedDT))
-      : UI.setEndDate(new Date(parseInt(timestamp + UI.timeframe)));
+      ? scheduleUI.setEndDate(getDayEnd(selectedDT))
+      : scheduleUI.setEndDate(
+          new Date(parseInt(timestamp + scheduleUI.timeframe))
+        );
   };
 
   return (
     <>
       <CreateEventBtnSTY
-        startDate={UI.startDate}
+        startDate={scheduleUI.startDate}
         value={cellTimestamp}
         onMouseDown={handleSelectStardDate.bind(null, cellTimestamp)}
         className={`${selectType} cell__createEventBtn`}

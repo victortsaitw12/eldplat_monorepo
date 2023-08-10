@@ -22,8 +22,6 @@ import { I_PageInfo } from "@components/PaginationField";
 
 const mainFilterArray = [{ id: 1, label: "啟用", value: "1" }];
 
-// 3) 接Pagination
-
 const ShiftPage: NextPageWithLayout<never> = () => {
   const {
     initializeSubFilter,
@@ -77,9 +75,18 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   };
 
   // TODO: 一進入畫面時不跑
-  const handlePageChange = React.useCallback((pageQuery: I_PageInfo) => {
-    fetchData(subFilter, pageInfo);
-  }, []);
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      if (
+        pageInfo.page_Index === pageQuery.page_Index &&
+        pageInfo.page_Size === pageQuery.page_Size
+      )
+        return;
+      console.log("🍅called");
+      fetchData(subFilter, pageQuery);
+    },
+    [fetchData]
+  );
 
   // 排班列表頁其實僅顯示"啟用"
   const changeMainFilterHandler = (value: string) => setNowTab(value);

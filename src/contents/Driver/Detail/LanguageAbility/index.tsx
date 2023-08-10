@@ -10,14 +10,6 @@ function LanguageAbility({
 }: {
   currentUserInfo: I_DriverInfo;
 }) {
-  let lang_name: I_LabelVal[] = [];
-
-  React.useEffect(() => {
-    const fetchDDL = async () => {
-      lang_name = await getOneDDL("language", "account");
-    };
-    fetchDDL();
-  }, []);
   return (
     <BodySTY>
       <Heading is="h4" className="title">
