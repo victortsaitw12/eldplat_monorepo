@@ -109,7 +109,7 @@ function EmployeeInfo({
         <Pane className="input-line">
           <Text>員工編號</Text>
           <TextInput
-            width="100%"
+            width="280px"
             name="staff_no"
             value={insertData.staff_no || ""}
             onChange={handleEmployeeChange}
@@ -131,7 +131,7 @@ function EmployeeInfo({
             <option value="04">歐洲線線控</option>
           </SelectField> */}
           <TextInput
-            width={"100%"}
+            width="280px"
             name="job_title"
             value={insertData.job_title || ""}
             onChange={handleEmployeeChange}
@@ -144,6 +144,7 @@ function EmployeeInfo({
         <Pane className="input-line">
           <Text>部門別</Text>
           <SelectField
+            width="280px"
             label=""
             value={insertData.department || ""}
             name="department"
@@ -158,6 +159,7 @@ function EmployeeInfo({
         <Pane className="input-line">
           <Text>組別</Text>
           <SelectField
+            width="280px"
             label=""
             value={insertData.group || ""}
             name="group"
