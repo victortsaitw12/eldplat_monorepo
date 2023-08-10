@@ -82,7 +82,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
         pageInfo.page_Size === pageQuery.page_Size
       )
         return;
-      console.log("🍅called");
+
       fetchData(subFilter, pageQuery);
     },
     [fetchData]
