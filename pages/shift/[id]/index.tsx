@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Pane } from "evergreen-ui";
+import { Pane, Tab } from "evergreen-ui";
 import { ViewIdSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
@@ -25,6 +25,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const [view, setView] = React.useState<"monthly" | "daily">("monthly");
   const [isExpand, setIsExpand] = React.useState(false);
   const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
 
   const initialMonthFirst = new Date(
     Array.isArray(cur) ? cur[0] : cur || Date.now()
@@ -59,9 +60,13 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
         </Head>
         <Pane className="wrapMain">
           <Tabs
-            titles={[monthlyData && monthlyData[0]?.user_Name]}
-            setIsOpenDrawer={setIsOpenDrawer}
+            titles={["回到總表", monthlyData && monthlyData[0]?.user_Name]}
+            selectedIdx={selectedIndex}
             isOpenDrawer={isOpenDrawer}
+            onSelect={(index) => {
+              setSelectedIndex(index);
+              if (index === 0) router.push("/shift");
+            }}
           />
           <Pane className="pageContent">
             <TableTitle

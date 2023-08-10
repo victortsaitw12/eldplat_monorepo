@@ -10,18 +10,20 @@ import { TabsSTY } from "./style";
 
 interface I_Tabs {
   titles?: any[];
+  selectedIdx?: number;
   setIsOpenDrawer?: (arg: boolean) => void;
   isOpenDrawer?: boolean;
+  onSelect?: (arg: any) => void;
 }
 const Tabs = ({
   titles,
-  setIsOpenDrawer = () => {
-    console.log("open drawer!");
-  },
-  isOpenDrawer
+  selectedIdx,
+  setIsOpenDrawer,
+  isOpenDrawer,
+  onSelect
 }: I_Tabs) => {
   const DETAIL_TABS = titles || ["編輯"]; // 顯示頁籤名稱, 預設單一標籤:"編輯"
-  const [currentTab, setCurrentTab] = useState(0); //預設選取第一個 tab
+  const [currentTab, setCurrentTab] = useState(selectedIdx || 0); //預設選取第一個 tab
 
   return (
     <TabsSTY>
@@ -29,11 +31,12 @@ const Tabs = ({
         {DETAIL_TABS.map((item, index) => {
           return (
             <Text
-              className={`tab ${index === currentTab ? "current" : ""}`}
+              className={`tab ${index === currentTab && "current"}`}
               key={"tab-" + index}
               onClick={() => {
                 const updateCurrent = index;
                 setCurrentTab(updateCurrent);
+                onSelect && onSelect(index);
               }}
             >
               {item}
@@ -42,14 +45,19 @@ const Tabs = ({
         })}
       </Pane>
       <Pane className="icons">
-        <IconButton
-          icon={FullscreenIcon}
-          onClick={() => setIsOpenDrawer(false)}
-        />
-        <IconButton
-          icon={SmallCrossIcon}
-          onClick={() => setIsOpenDrawer(!isOpenDrawer)}
-        />
+        {setIsOpenDrawer && (
+          <>
+            {" "}
+            <IconButton
+              icon={FullscreenIcon}
+              onClick={() => setIsOpenDrawer(false)}
+            />
+            <IconButton
+              icon={SmallCrossIcon}
+              onClick={() => setIsOpenDrawer(!isOpenDrawer)}
+            />
+          </>
+        )}
       </Pane>
     </TabsSTY>
   );
