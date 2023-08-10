@@ -11,12 +11,14 @@ import {
 } from "evergreen-ui";
 
 //@layout
-import { I_ManualCreateType } from "@typings/assignment_type";
+import { I_ManualCreateType, I_ManualDriver } from "@typings/assignment_type";
+
 import {
   getAssignBusDDL,
   getAssignDriverDDL
 } from "@services/assignment/getAssignmentDDL";
 import { hours, minutes } from "@services/assignment/mock_data";
+import dayjs from "dayjs";
 
 interface I_AssignManualCreateProps {
   handleAssignmentDriverChange: (e: any) => void;
@@ -31,6 +33,19 @@ function SecondDriverAssignManualCreate({
   showSecondTitle,
   createAssignData
 }: I_AssignManualCreateProps) {
+  let defaultValue: I_ManualDriver | null = null;
+  if (createAssignData?.manual_driver) {
+    defaultValue = createAssignData?.manual_driver
+      .filter((ele) => {
+        return (
+          dayjs(ele.task_start_time).format("YYYY/MM/DD") ==
+          dayjs(showSecondTitle.date).format("YYYY/MM/DD")
+        );
+      })
+      .filter((ele) => {
+        return ele.bus_day_number == showSecondTitle.car;
+      })[0];
+  }
   const [loading, setLoading] = useState(false);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
@@ -54,11 +69,14 @@ function SecondDriverAssignManualCreate({
       setLoading(false);
     };
     getDriverData();
+    if (defaultValue && defaultValue?.bus_group) {
+      handleBusGroupChange(defaultValue?.bus_group);
+    }
     setLoading(false);
   }, []);
 
-  const handleBusGroupChange = async (e: any) => {
-    const res = await getAssignDriverDDL(e.target.value);
+  const handleBusGroupChange = async (bus_group: any) => {
+    const res = await getAssignDriverDDL(bus_group);
     setDriverNameDDL([
       { driver_no: "00", user_name: "請選擇" },
       ...res.dataList[0].driver_options
@@ -85,11 +103,12 @@ function SecondDriverAssignManualCreate({
         }
         name="bus_group"
         onClick={(e: any) => {
-          handleBusGroupChange(e);
+          handleBusGroupChange(e.target.value);
         }}
         onChange={(e: any) => {
           handleAssignmentDriverChange(e);
         }}
+        value={defaultValue?.bus_group || ""}
       >
         {busGroupDDL?.map(
           (item: { bus_group: string; bus_group_name: string }) => {
@@ -112,6 +131,7 @@ function SecondDriverAssignManualCreate({
         onChange={(e: any) => {
           handleAssignmentDriverChange(e);
         }}
+        value={defaultValue?.driver_no || ""}
       >
         {driverNameDDL?.map((item: any) => {
           return (
@@ -126,12 +146,23 @@ function SecondDriverAssignManualCreate({
         <Paragraph>起始時間</Paragraph>
         <Select
           name="start_hours"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentDriverChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentDriverChange(e);
           }}
         >
           {hours.map((item: string) => (
-            <option key={item} value={item}>
+            <option
+              key={item}
+              value={item}
+              selected={
+                (defaultValue &&
+                  dayjs(defaultValue?.task_start_time).format("HH")) == item ||
+                false
+              }
+            >
               {item}
             </option>
           ))}
@@ -139,24 +170,56 @@ function SecondDriverAssignManualCreate({
         <Text fontSize={20}> : </Text>
         <Select
           name="start_minutes"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentDriverChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentDriverChange(e);
           }}
         >
           {minutes().map((item: string) => (
-            <option key={item} value={item}>
+            <option
+              key={item}
+              value={item}
+              selected={
+                (defaultValue &&
+                  dayjs(defaultValue?.task_start_time).format("mm")) == item ||
+                false
+              }
+            >
               {item}
             </option>
           ))}
         </Select>
         <Select
           name="start_type"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentDriverChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentDriverChange(e);
           }}
         >
-          <option value="am">AM</option>
-          <option value="pm">PM</option>
+          <option
+            value="am"
+            selected={
+              (defaultValue &&
+                dayjs(defaultValue?.task_start_time).format("A")) == "AM" ||
+              false
+            }
+          >
+            AM
+          </option>
+          <option
+            value="pm"
+            selected={
+              (defaultValue &&
+                dayjs(defaultValue?.task_start_time).format("A")) == "PM" ||
+              false
+            }
+          >
+            PM
+          </option>
         </Select>
       </Pane>
 
@@ -164,12 +227,23 @@ function SecondDriverAssignManualCreate({
         <Paragraph>截止時間</Paragraph>
         <Select
           name="end_hours"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentDriverChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentDriverChange(e);
           }}
         >
           {hours.map((item: string) => (
-            <option key={item} value={item}>
+            <option
+              key={item}
+              value={item}
+              selected={
+                (defaultValue &&
+                  dayjs(defaultValue?.task_end_time).format("HH")) == item ||
+                false
+              }
+            >
               {item}
             </option>
           ))}
@@ -177,12 +251,23 @@ function SecondDriverAssignManualCreate({
         <Text fontSize={20}> : </Text>
         <Select
           name="end_minutes"
-          onClick={(e: any) => {
+          // onClick={(e: any) => {
+          //   handleAssignmentDriverChange(e);
+          // }}
+          onChange={(e: any) => {
             handleAssignmentDriverChange(e);
           }}
         >
           {minutes().map((item: string) => (
-            <option key={item} value={item}>
+            <option
+              key={item}
+              value={item}
+              selected={
+                (defaultValue &&
+                  dayjs(defaultValue?.task_end_time).format("mm")) == item ||
+                false
+              }
+            >
               {item}
             </option>
           ))}
@@ -193,8 +278,26 @@ function SecondDriverAssignManualCreate({
             handleAssignmentDriverChange(e);
           }}
         >
-          <option value="am">AM</option>
-          <option value="pm">PM</option>
+          <option
+            value="am"
+            selected={
+              (defaultValue &&
+                dayjs(defaultValue?.task_start_time).format("A")) == "AM" ||
+              false
+            }
+          >
+            AM
+          </option>
+          <option
+            value="pm"
+            selected={
+              (defaultValue &&
+                dayjs(defaultValue?.task_start_time).format("A")) == "PM" ||
+              false
+            }
+          >
+            PM
+          </option>
         </Select>
       </Pane>
 
