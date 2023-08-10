@@ -17,7 +17,7 @@ interface I_Table {
   idx: number;
   titles: Array<string | number | React.ReactNode> | any;
   assignData: I_Data[];
-  subAssignData: I_SubAssignData[];
+  subAssignData: I_SubAssignData[][];
   isOpen?: I_OpenTable[];
   onCheck?: (items: any) => void;
   goToCreatePage?: () => void;
@@ -34,7 +34,6 @@ function InsideTableOnAssignment({
   titles,
   assignData,
   subAssignData,
-
   goToEditPage = (item: any) => {
     console.log("EDIT");
   }
@@ -43,8 +42,45 @@ function InsideTableOnAssignment({
   console.log("🅱assignData", assignData);
   console.log("🅾idx", idx);
   // const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
+  const sortArr = (defaultArr: I_SubAssignData[]) => {
+    const old = [...defaultArr];
+    old.sort((a: any, b: any) => {
+      const dateA: any = new Date(a.task_start_time);
+      const dateB: any = new Date(b.task_start_time);
+      return dateA - dateB || a.bus_day_number - b.bus_day_number;
+    });
+
+    const a: any = {};
+    //把同一天的派車資訊放在一起
+    old.forEach((ele: any, i) => {
+      const date: string = dayjs(ele.task_start_time).format("YYYY/DD/MM");
+      if (!a[date]) {
+        a[date] = [ele];
+      } else if (a[date].length > 0) {
+        a[date].push(ele);
+      }
+    });
+    //針對第一車or第二車排好
+    Object.keys(a).forEach((ele) => {
+      a[ele] = a[ele].sort((a: any, b: any) => {
+        return a.bus_day_number - b.bus_day_number;
+      });
+    });
+    let resultArr: any[] = [];
+    Object.keys(a).forEach((ele) => {
+      if (resultArr.length > 0) {
+        resultArr = resultArr.concat(a[ele]);
+      } else {
+        resultArr = [...a[ele]];
+      }
+    });
+    return resultArr as I_SubAssignData[];
+  };
+
+  subAssignData[idx] = sortArr(subAssignData[idx]);
 
   if (!assignData) return <p>Loading</p>;
+
   return (
     <TableContainerSTY className="TableContainerSTY">
       <TableSTY>
@@ -81,85 +117,78 @@ function InsideTableOnAssignment({
                   assignData[idx]?.task_end_time?.label
                 ) + 1;
 
-              arr.sort((a, b) => {
-                const dateA: any = new Date(a.task_start_time);
-                const dateB: any = new Date(b.task_start_time);
-
-                return dateA - dateB || a.bus_day_number - b.bus_day_number;
-              });
+              arr = sortArr(arr);
 
               return (
-                <>
-                  <tr key={uuid()}>
-                    {/* // TODO 暫以原<tr>修改bug, 可以改成用grid方式處理或請後端調整response結構 */}
-                    {/* {i % Math.ceil(arr.length / dayCount) === 0 && ( */}
-                    {(i === 0 ||
-                      dayjs(item.task_start_time).date() !==
-                        dayjs(arr[i - 1].task_start_time).date()) && (
-                      <td
-                        rowSpan={
-                          arr.filter(
-                            (arrItem) =>
-                              dayjs(arrItem.task_start_time).date() ===
+                <tr key={uuid()}>
+                  {/* // TODO 暫以原<tr>修改bug, 可以改成用grid方式處理或請後端調整response結構 */}
+                  {/* {i % Math.ceil(arr.length / dayCount) === 0 && ( */}
+                  {(i === 0 ||
+                    dayjs(item.task_start_time).date() !==
+                      dayjs(arr[i - 1].task_start_time).date()) && (
+                    <td
+                      rowSpan={
+                        arr.filter(
+                          (arrItem) =>
+                            dayjs(arrItem.task_start_time).date() ===
+                            dayjs(item.task_start_time).date()
+                        ).length
+                      }
+                    >
+                      {/* <td rowSpan={Math.ceil(arr.length / dayCount)}> */}
+                      <div>{startDate}</div>
+                    </td>
+                  )}
+                  {/* {(i + 1) % 2 !== 0 && ( */}
+                  {(i === 0 ||
+                    dayjs(item.task_start_time).date() !==
+                      dayjs(arr[i - 1].task_start_time).date() ||
+                    item.bus_day_number !== arr[i - 1].bus_day_number) && (
+                    // <td rowSpan={2}>
+                    <td
+                      rowSpan={
+                        arr.filter(
+                          (arrItem) =>
+                            arrItem.bus_day_number === item.bus_day_number &&
+                            dayjs(arrItem.task_start_time).date() ===
                               dayjs(item.task_start_time).date()
-                          ).length
-                        }
-                      >
-                        {/* <td rowSpan={Math.ceil(arr.length / dayCount)}> */}
-                        <div>{startDate}</div>
-                      </td>
-                    )}
-                    {/* {(i + 1) % 2 !== 0 && ( */}
-                    {(i === 0 ||
-                      dayjs(item.task_start_time).date() !==
-                        dayjs(arr[i - 1].task_start_time).date() ||
-                      item.bus_day_number !== arr[i - 1].bus_day_number) && (
-                      // <td rowSpan={2}>
-                      <td
-                        rowSpan={
-                          arr.filter(
-                            (arrItem) =>
-                              arrItem.bus_day_number === item.bus_day_number &&
-                              dayjs(arrItem.task_start_time).date() ===
-                                dayjs(item.task_start_time).date()
-                          ).length
-                        }
-                        className="busDayCol"
-                      >
-                        <div>第{item.bus_day_number}車</div>
-                      </td>
-                    )}
-                    <td>
-                      <div>{item.assignment_no}</div>
+                        ).length
+                      }
+                      className="busDayCol"
+                    >
+                      <div>第{item.bus_day_number}車</div>
                     </td>
+                  )}
+                  <td>
+                    <div>{item.assignment_no}</div>
+                  </td>
+                  <td>
+                    <div>{item.bus_group_name}</div>
+                  </td>
+                  <td>
+                    <div>{item.bus_name}</div>
+                  </td>
+                  <td>
+                    <div>{item.license_plate}</div>
+                  </td>
+                  <td>
+                    <div>{item.driver_name}</div>
+                  </td>
+                  <td>
+                    <div>{startTime}</div>
+                  </td>
+                  <td>
+                    <div>{endTime}</div>
+                  </td>
+                  {assignData[idx].maintenance_quote_no?.value.substring(
+                    0,
+                    3
+                  ) !== "MTC" && (
                     <td>
-                      <div>{item.bus_group_name}</div>
+                      <EditBtn item={item} goToEditPage={goToEditPage} />
                     </td>
-                    <td>
-                      <div>{item.bus_name}</div>
-                    </td>
-                    <td>
-                      <div>{item.license_plate}</div>
-                    </td>
-                    <td>
-                      <div>{item.driver_name}</div>
-                    </td>
-                    <td>
-                      <div>{startTime}</div>
-                    </td>
-                    <td>
-                      <div>{endTime}</div>
-                    </td>
-                    {assignData[idx].maintenance_quote_no?.value.substring(
-                      0,
-                      3
-                    ) !== "MTC" && (
-                      <td>
-                        <EditBtn item={item} goToEditPage={goToEditPage} />
-                      </td>
-                    )}
-                  </tr>
-                </>
+                  )}
+                </tr>
               );
             }
           )}
