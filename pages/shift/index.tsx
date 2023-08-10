@@ -77,6 +77,12 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   // TODO: 一進入畫面時不跑
   const handlePageChange = React.useCallback(
     (pageQuery: I_PageInfo) => {
+      if (
+        pageInfo.page_Index === pageQuery.page_Index &&
+        pageInfo.page_Size === pageQuery.page_Size
+      )
+        return;
+      console.log("🍅called");
       fetchData(subFilter, pageQuery);
     },
     [fetchData]

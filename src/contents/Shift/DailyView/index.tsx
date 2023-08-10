@@ -26,6 +26,7 @@ const DailyView = ({
 }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
+  //TODO: 在component呼叫的時候改名 UI=>scheduleUI
   const UI = React.useContext(UIContext);
   const router = useRouter();
   UI.setId(router.query.id);
