@@ -38,12 +38,12 @@ function SecondDriverAssignManualCreate({
     defaultValue = createAssignData?.manual_driver
       .filter((ele) => {
         return (
-          dayjs(ele.task_start_time).format("YYYY/MM/DD") ==
+          dayjs(ele?.task_start_time).format("YYYY/MM/DD") ==
           dayjs(showSecondTitle.date).format("YYYY/MM/DD")
         );
       })
       .filter((ele) => {
-        return ele.bus_day_number == showSecondTitle.car;
+        return ele?.bus_day_number == showSecondTitle.car;
       })[0];
   }
   const [loading, setLoading] = useState(false);
