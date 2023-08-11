@@ -26,7 +26,16 @@ export const getAllAssignments = async (pageInfo = defaultPageInfo) => {
 };
 
 export const getAssignmentTitle = () => {
-  const DUMMY_TITLES = ["序號", "單號", "分類", "起始日期", "截止日期", "", ""];
+  const DUMMY_TITLES = [
+    "序號",
+    "單號",
+    "分類",
+    "起始日期",
+    "截止日期",
+    "",
+    "",
+    ""
+  ];
   return DUMMY_TITLES;
 };
 export const getSubAssignmentTitle = () => {
