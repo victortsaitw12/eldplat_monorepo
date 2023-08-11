@@ -37,8 +37,8 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
   const methods = useForm({ defaultValues: data });
 
   const sex: { [key: string]: string } = {
-    "0": "女性",
     "1": "男性",
+    "2": "女性",
     "3": "非二次元性別"
   };
   //基本資料

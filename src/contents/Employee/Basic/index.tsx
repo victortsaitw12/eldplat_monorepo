@@ -1,13 +1,11 @@
 import { I_Content_Props } from "@typings/employee_type";
 import {
-  Button,
   FileCard,
   FileUploader,
   Heading,
   Pane,
   RadioGroup,
   SelectField,
-  SelectMenu,
   Text,
   TextInput
 } from "evergreen-ui";
