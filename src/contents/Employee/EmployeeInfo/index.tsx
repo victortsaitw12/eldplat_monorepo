@@ -148,6 +148,7 @@ function EmployeeInfo({
             value={insertData.department || ""}
             name="department"
             onChange={handleEmployeeChange}
+            marginBottom="0px"
           >
             <option value="" disabled>
               請選擇
@@ -166,6 +167,7 @@ function EmployeeInfo({
             value={insertData.group || ""}
             name="group"
             onChange={handleEmployeeChange}
+            marginBottom="0px"
           >
             <option value="" disabled>
               請選擇

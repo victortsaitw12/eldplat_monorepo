@@ -1,15 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import dayjs from "dayjs";
-import {
-  TextInputField,
-  TextInput,
-  SelectField,
-  Avatar,
-  Pane,
-  Text
-} from "evergreen-ui";
+import { Avatar, Pane, Text } from "evergreen-ui";
 import { BodySTY } from "./style";
+import { employee_options } from "./FuelData";
 //@components
 import InfoBox, { I_infoData } from "@components/InfoBox";
 
@@ -183,7 +177,8 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: "職務名稱",
-      value: data.job_title || "--"
+      value: employee_options["job_title"][data.job_title] || "--"
+      // value: data.job_title || "--"
     },
     {
       req: false,
@@ -193,12 +188,13 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: "部門別",
-      value: data.department || "--"
+      value: employee_options["department"][data.department] || "--"
     },
     {
       req: false,
       label: "組別",
-      value: data.group || "--"
+      // value: data.group || "--"
+      value: employee_options["group"][data.group] || "--"
     },
     {
       req: false,
