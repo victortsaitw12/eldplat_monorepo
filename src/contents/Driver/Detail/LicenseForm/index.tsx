@@ -123,7 +123,7 @@ function LicenseForm({
         <Pane>
           <Text>{getValues("licn_filename")}</Text>
           <Pane className="licnFileBox">
-            <IconButton className="DocumentIcon" icon={DocumentIcon} />
+            <IconButton className="DocumentIcon" icon={DocumentIcon} disabled />
             <div className="licnFileInfo">
               {getValues("licn_filename")}
               <div className="fileSize">1.2MB</div>

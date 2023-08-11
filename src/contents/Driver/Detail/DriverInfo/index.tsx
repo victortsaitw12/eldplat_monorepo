@@ -89,7 +89,7 @@ function DriverInfo({
     {
       readonly: true,
       label: "姓名",
-      value: info["user_name"] || "--"
+      value: info["user_first_name"].concat(info["user_name"]) || "--"
     },
     {
       readonly: true,

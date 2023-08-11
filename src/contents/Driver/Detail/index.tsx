@@ -47,6 +47,9 @@ function DriverDetail({
   });
 
   const [visibleForm, setVisibleForm] = useState("1");
+  const userName = driverData.info["user_first_name"].concat(
+    driverData.info["user_name"]
+  );
 
   useEffect(() => {
     if (errors) console.log(errors);
@@ -54,6 +57,7 @@ function DriverDetail({
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
+
   return (
     <DivSTY>
       <form
@@ -73,18 +77,10 @@ function DriverDetail({
         />
       </form>
       {visibleForm === "2" && (
-        <LicensesList
-          driverNo={driverNo}
-          userName={driverData.info.user_name}
-          refetch={refetch}
-          isEdit={isEdit}
-        />
+        <LicensesList driverNo={driverNo} userName={userName} isEdit={isEdit} />
       )}
       {visibleForm === "3" && (
-        <HealthRecords
-          userNo={driverData.info.user_no}
-          userName={driverData.info.user_name}
-        />
+        <HealthRecords userNo={driverData.info.user_no} userName={userName} />
       )}
     </DivSTY>
   );
