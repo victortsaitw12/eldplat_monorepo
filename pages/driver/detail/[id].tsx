@@ -8,6 +8,10 @@ import { useRouter } from "next/router";
 import { toaster, Pane, Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
+import LightBox from "@components/Lightbox";
+import LabelSecondaryButton from "@components/Button/Secondary/Label";
+import LabelButton from "@components/Button/Primary/Label";
+
 import { I_DriverInfo } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
@@ -36,6 +40,9 @@ const Page: NextPageWithLayout<
   const [driverData, setDriverData] = useState<I_DriverInfo>();
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const { mainFilter, updateMainFilter } = useDriverStore();
+  const [isLightOpen, setLightOpen] = useState(false);
+  const [switchTabValue, setSwitchTabValue] = useState<string | null>(null);
+
   // ------- useEffect ------- //
   useEffect(() => {
     updateMainFilter("1");
@@ -71,7 +78,18 @@ const Page: NextPageWithLayout<
     setIsLoading(false);
   }, [driverNo]);
 
-  const changeMainFilterHandler = (value: string) => updateMainFilter(value);
+  const switchTabHandler = (value: string) => {
+    if (mainFilter === "1" && isEdit) {
+      setLightOpen(true);
+      setSwitchTabValue(value);
+    } else {
+      changeMainFilterHandler(value);
+    }
+  };
+
+  const changeMainFilterHandler = (value: string) => {
+    updateMainFilter(value);
+  };
 
   const asyncSubmitForm = async (data: any) => {
     setIsLoading(true);
@@ -99,7 +117,7 @@ const Page: NextPageWithLayout<
     <BodySTY>
       {(!isLoading && driverData && (
         <TableWrapper
-          onChangeTab={changeMainFilterHandler}
+          onChangeTab={switchTabHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
           isEdit={isEdit}
@@ -132,6 +150,41 @@ const Page: NextPageWithLayout<
           <Spinner />
         </Pane>
       )}
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => {
+          setLightOpen((prev) => false);
+        }}
+      >
+        如果你現在離開 ，將會遺失未儲存的資料。
+        <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
+          <LabelSecondaryButton
+            style={{
+              width: "unset",
+              fontSize: "12px",
+              fontWeight: "600"
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              setLightOpen((prev) => false);
+            }}
+            text="取消"
+          />
+          <LabelButton
+            style={{
+              width: "unset",
+              fontSize: "12px"
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              switchTabValue && updateMainFilter(switchTabValue);
+              setTimeout(() => setLightOpen(false), 500);
+            }}
+            text="確定離開"
+          />
+        </Pane>
+      </LightBox>
     </BodySTY>
   );
 };
