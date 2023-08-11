@@ -79,8 +79,8 @@ function HealthRecords({
 
   return (
     <BodySTY>
-      <Pane className="health-title">
-        <Heading is="h4">{userName}</Heading>
+      <Pane className="health-title container-header">
+        <div className="container-header-left">{userName}</div>
       </Pane>
       <Pane className="health-title-right">
         <PaginationField />
