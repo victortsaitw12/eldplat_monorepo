@@ -98,7 +98,7 @@ const Page: NextPageWithLayout<never> = () => {
           (
             <UserSTY>
               <Avatar
-                name={data["user_Name"]}
+                name={data["user_First_Name"]}
                 size={32}
                 style={{ padding: "8px", justifyContent: "center" }}
               />
@@ -108,7 +108,7 @@ const Page: NextPageWithLayout<never> = () => {
                   query: { id: data["driver_No"], editPage: "view" }
                 }}
               >
-                {data["user_Name"]}
+                {data["user_First_Name"].concat(data["user_Name"])}
               </Link>
               {/* {data["license_No"].trim() === "" && (
                 <IssueIcon size={16} color={"#D14343"} />
