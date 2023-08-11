@@ -99,6 +99,7 @@ function Table({
     if (checkedItems.includes(e.target.id)) {
       const updated = checkedItems.filter((item) => item !== e.target.id);
       setCheckedItems(updated);
+      console.log("🍅checkedItems", checkedItems);
     } else {
       const updated = [...checkedItems, e.target.id];
       setCheckedItems(updated);
@@ -153,7 +154,10 @@ function Table({
                   <Checkbox
                     style={{ margin: "8px 0" }}
                     onChange={(e) => handleCheckAll(e)}
-                    checked={checkedItems.length === data.length}
+                    checked={
+                      checkedItems.length !== 0 &&
+                      checkedItems.length === data.length
+                    }
                   />
                 </th>
               )}

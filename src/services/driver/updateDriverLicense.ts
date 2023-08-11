@@ -1,7 +1,10 @@
 import API_Path from "./apiPath";
 
 // 更新-單筆駕駛證照
-export const updateDriverLicense = async (data: any, type: boolean) => {
+export const updateDriverLicense = async (
+  data: any,
+  type: 0 | 2 | 3 //integer($int32) 0 = 新增，2 = 更新，3 = 刪除
+) => {
   const filteredNullData: { [key: string]: string | null } = {};
   for (const key in data) {
     console.log("key", key);

@@ -7,7 +7,7 @@ export const defaultPageInfo: I_PageInfo = {
   page_Index: 1,
   page_Size: 10,
   orderby: "driver_no", // 準備刪除
-  arrangement: "asc", // 準備刪除
+  arrangement: "desc", // 準備刪除
   total: 0, // 準備刪除
   last_Page: 0 // 準備刪除
 };
