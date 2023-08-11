@@ -153,10 +153,10 @@ function EmployeeInfo({
             <option value="" disabled>
               請選擇
             </option>
-            <option value="1">多元發展部</option>
-            <option value="2">創新發展部</option>
-            <option value="3">資通部</option>
-            <option value="4">營運部</option>
+            <option value="01">多元發展部</option>
+            <option value="02">創新發展部</option>
+            <option value="03">資通部</option>
+            <option value="04">營運部</option>
           </SelectField>
         </Pane>
         <Pane className="input-line">
@@ -172,10 +172,13 @@ function EmployeeInfo({
             <option value="" disabled>
               請選擇
             </option>
-            <option value="1">應用專案管理組</option>
-            <option value="2">前端互動應用組</option>
-            <option value="3">商業互動設計組</option>
-            <option value="4">通運應用整合組</option>
+            <option value="01">應用專案管理組</option>
+            <option value="02">前端互動應用組</option>
+            <option value="03">商業互動設計組</option>
+            <option value="04">通運應用整合組</option>
+            <option value="05">車管組</option>
+            <option value="06">調度組</option>
+            <option value="07">業務組</option>
           </SelectField>
         </Pane>
         <Pane className="input-line">
