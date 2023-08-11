@@ -108,8 +108,6 @@ const Page: NextPageWithLayout<
     setLoading(false);
   };
 
-  console.log("1️⃣editData in edit page:", editData);
-
   //TableWrapper
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
@@ -124,16 +122,6 @@ const Page: NextPageWithLayout<
       <BodySTY>
         {
           <Pane width="100%" height="100%" borderRadius="10px" overflow="auto">
-            {/* Put your component here */}
-            {/* {loading ? (
-            <LoadingSpinner />
-          ) : (
-            <AddEmployee
-              submitForm={asyncSubmitForm}
-              onCancel={cancelFormHandler}
-              editData={editData}
-            />
-          )} */}
             {(!loading && editData && (
               <TableWrapper
                 isEdit={true}

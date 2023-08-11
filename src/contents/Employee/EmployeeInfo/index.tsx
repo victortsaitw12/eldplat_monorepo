@@ -117,25 +117,24 @@ function EmployeeInfo({
         </Pane>
         <Pane className="input-line">
           <Text>職務名稱</Text>
-
-          {/* <SelectField
+          <SelectField
             label=""
+            width="280px"
             name="job_title"
             value={insertData.job_title || ""}
             onChange={handleEmployeeChange}
             marginBottom="0px"
           >
-            <option value="01">前端工程師</option>
-            <option value="02">後端工程師</option>
-            <option value="03">日本線業務</option>
-            <option value="04">歐洲線線控</option>
-          </SelectField> */}
-          <TextInput
-            width="280px"
-            name="job_title"
-            value={insertData.job_title || ""}
-            onChange={handleEmployeeChange}
-          />
+            <option value="" disabled>
+              請選擇
+            </option>
+            <option value="01">車管主管</option>
+            <option value="02">車管</option>
+            <option value="03">調度</option>
+            <option value="04">調度主管</option>
+            <option value="05">駕駛員</option>
+            <option value="06">業務主管</option>
+          </SelectField>
         </Pane>
         <Pane className="input-line">
           <Text>公司名稱</Text>
@@ -149,11 +148,15 @@ function EmployeeInfo({
             value={insertData.department || ""}
             name="department"
             onChange={handleEmployeeChange}
+            marginBottom="0px"
           >
-            <option value="1">多元發展部</option>
-            <option value="2">創新發展部</option>
-            <option value="3">資通部</option>
-            <option value="4">營運部</option>
+            <option value="" disabled>
+              請選擇
+            </option>
+            <option value="01">多元發展部</option>
+            <option value="02">創新發展部</option>
+            <option value="03">資通部</option>
+            <option value="04">營運部</option>
           </SelectField>
         </Pane>
         <Pane className="input-line">
@@ -164,11 +167,18 @@ function EmployeeInfo({
             value={insertData.group || ""}
             name="group"
             onChange={handleEmployeeChange}
+            marginBottom="0px"
           >
-            <option value="1">應用專案管理組</option>
-            <option value="2">前端互動應用組</option>
-            <option value="3">商業互動設計組</option>
-            <option value="4">通運應用整合組</option>
+            <option value="" disabled>
+              請選擇
+            </option>
+            <option value="01">應用專案管理組</option>
+            <option value="02">前端互動應用組</option>
+            <option value="03">商業互動設計組</option>
+            <option value="04">通運應用整合組</option>
+            <option value="05">車管組</option>
+            <option value="06">調度組</option>
+            <option value="07">業務組</option>
           </SelectField>
         </Pane>
         <Pane className="input-line">

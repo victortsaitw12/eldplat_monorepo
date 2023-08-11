@@ -1,6 +1,5 @@
 import { I_Content_Props } from "@typings/employee_type";
 import {
-  Combobox,
   Heading,
   Pane,
   Paragraph,
