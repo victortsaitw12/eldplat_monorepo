@@ -29,11 +29,10 @@ const table_title = [
 interface Props {
   isEdit: boolean;
   userName: string;
-  refetch: () => void;
   driverNo: string;
 }
 
-function LicensesList({ isEdit, userName, refetch, driverNo }: Props) {
+function LicensesList({ isEdit, userName, driverNo }: Props) {
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
   const [editNo, setEditNo] = React.useState<number | null>(null);
   const [licensesData, setLicensesData] = React.useState<I_License | any>([]);
@@ -57,7 +56,7 @@ function LicensesList({ isEdit, userName, refetch, driverNo }: Props) {
     if (key === "id") {
       return {
         label: data["no"],
-        value: data["no"]
+        value: data["no"]?.toString()
       };
     }
     if (key === "licn_typ") {
@@ -135,13 +134,13 @@ function LicensesList({ isEdit, userName, refetch, driverNo }: Props) {
   );
   const asyncSubmitForm = async (data: any) => {
     console.log("😒😒😒 asyncSubmitForm called", data);
-    const type = editNo ? false : true;
+    const type = 0; //type: 0 = 新增，2 = 更新，3 = 刪除
     try {
-      const res = await updateDriverLicense(data, type); //type: true = 新增，false = 更新
+      const res = await updateDriverLicense(data, type);
       if (res.result === true)
         toaster.success("成功更新駕駛證照", { duration: 1.5 });
       // update license list
-      await refetch();
+      await fetchLicenseData();
       setIsLightBoxOpen(false);
     } catch (e: any) {
       console.log(e);

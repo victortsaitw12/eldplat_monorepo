@@ -76,7 +76,6 @@ function DriverDetail({
         <LicensesList
           driverNo={driverNo}
           userName={driverData.info.user_name}
-          refetch={refetch}
           isEdit={isEdit}
         />
       )}
