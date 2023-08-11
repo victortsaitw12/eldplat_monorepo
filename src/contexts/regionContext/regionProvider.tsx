@@ -1,12 +1,7 @@
-import {
-  I_Company_Context,
-  CompanyContext
-} from "@contexts/companyContext/companyProvider";
 // import { getAllRegions } from "@services/region/getRegion";
-import { filterStates } from "@utils/regionMethods";
-import React, { useState, createContext, useEffect, useContext } from "react";
+// import { filterStates } from "@utils/regionMethods";
+import React, { useState, createContext, useEffect } from "react";
 import {
-  type I_RegionsPayload,
   type I_RegionsData,
   getAllRegions,
   getRegion
@@ -108,17 +103,17 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
           return;
         }
         // some country has no state, the api will return city as state data...
-        if (filterStates(currentCountry.area_No)) {
-          setAllStates([]);
-          setAllCities(statesData);
-          setCurrentState(null);
-        } else {
-          setAllStates(statesData);
-          // clean current state,city, city options
-          setCurrentState(null);
-          setAllCities([]);
-          setCurrentCity(null);
-        }
+        // if (filterStates(currentCountry.area_No)) {
+        //   setAllStates([]);
+        //   setAllCities(statesData);
+        //   setCurrentState(null);
+        // } else {
+        // }
+        setAllStates(statesData);
+        // clean current state,city, city options
+        setCurrentState(null);
+        setAllCities([]);
+        setCurrentCity(null);
       })
       .catch((err) => console.error("get regions error: ", err));
   }, [currentCountry]);

@@ -1,14 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import dayjs from "dayjs";
-import {
-  TextInputField,
-  TextInput,
-  SelectField,
-  Avatar,
-  Pane,
-  Text
-} from "evergreen-ui";
+import { Avatar, Pane, Text } from "evergreen-ui";
 import { BodySTY } from "./style";
 //@components
 import InfoBox, { I_infoData } from "@components/InfoBox";
@@ -37,8 +30,8 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
   const methods = useForm({ defaultValues: data });
 
   const sex: { [key: string]: string } = {
-    "0": "女性",
     "1": "男性",
+    "2": "女性",
     "3": "非二次元性別"
   };
   //基本資料
@@ -183,7 +176,7 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: "職務名稱",
-      value: data.job_title || "--"
+      value: data.job_title_name || "--"
     },
     {
       req: false,
@@ -193,12 +186,13 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: "部門別",
-      value: data.department || "--"
+
+      value: data.department_name || "--"
     },
     {
       req: false,
       label: "組別",
-      value: data.group || "--"
+      value: data.group_name || "--"
     },
     {
       req: false,

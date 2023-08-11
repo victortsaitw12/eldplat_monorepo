@@ -23,9 +23,6 @@ function Basic({}) {
   const [fileRejections, setFileRejections] = useState<any[]>([]);
   const handleChangeFile = (files: any[]) => {
     setFiles([files[0]]);
-    // const newFile = { ...insertData };
-    // newFile.user_photo_link = files[0].name;
-    // setInsertData(newFile);
   };
   const handleRejected = useCallback(
     (fileRejections: any[]) => setFileRejections([fileRejections[0]]),
@@ -60,9 +57,6 @@ function Basic({}) {
             value={companyData.company_name}
             onChange={handleCompanyBasicChange}
           />
-          {/* {errMsg["errField"] === "company_name" && (
-              <Text color="red !important">{errMsg["errText"]}</Text>
-            )} */}
         </Pane>
         <Pane className="input-line">
           <Text className="">統一編號</Text>
