@@ -79,10 +79,10 @@ I_AssignmentAdditionalVehicleProps) => {
     // 檢查原本那台(車/駕駛)於該筆訂單後面還有單 => render一併更新的彈窗
     if (resDataListZero && resDataListZero.time_list.length !== 0) {
       setBusRestShifts(resDataListZero);
-      setTimeout(() => {
-        setIsLightBoxOpen(true);
-      }, 2000);
+      setIsLightBoxOpen(true);
+      return true;
     }
+    return false;
   };
 
   const handleCheckDates = (e: any) => {
@@ -122,7 +122,6 @@ I_AssignmentAdditionalVehicleProps) => {
       refetch && refetch();
     }
   }, [busRestShifts]);
-
   return (
     <DivSTY>
       <Pane display="flex" justifyContent="center">
@@ -181,6 +180,7 @@ I_AssignmentAdditionalVehicleProps) => {
                         value={item.assignment_no}
                         onChange={handleCheckDates}
                         defaultChecked
+                        style={{ marginBottom: "8px" }}
                       />
                     ))}
                 </Paragraph>
