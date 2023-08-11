@@ -81,10 +81,11 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
       try {
         const res = await getAssignBusDDL();
         setBusGroupDDL([
-          {
-            bus_group: editData.bus_group,
-            bus_group_name: editData.bus_group_name
-          },
+          // {
+          //   bus_group: editData.bus_group,
+          //   bus_group_name: editData.bus_group_name
+          // },
+          { bus_group: "00", bus_group_name: "請選擇" },
           ...res.dataList[0].bus_group_options
         ]);
       } catch (e: any) {
