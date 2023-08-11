@@ -48,7 +48,7 @@ function AddHealth({
   const handleUploadReport = (e: any) => {
     e.preventDefault();
   };
-
+  console.log("healthData", healthData);
   // 失效checkbox邏輯
   const handleInvalidChange = () => {
     const newData = { ...healthData };

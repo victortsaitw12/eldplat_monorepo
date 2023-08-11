@@ -1,12 +1,10 @@
 import {
   I_Add_Employees_Type,
-  I_Get_Employees_Type,
-  I_Health_TYPE
+  I_Get_Employees_Type
 } from "@typings/employee_type";
 import React, { useEffect, useState } from "react";
 import { BodySTY } from "./style";
 import { Pane, DocumentIcon } from "evergreen-ui";
-import { v4 as uuid } from "uuid";
 //@components
 import LightBox from "@components/Lightbox";
 import TableWithEdit from "@components/Table/TableWithEdit";
@@ -19,29 +17,35 @@ import { getHealthById, defaultPageInfo } from "@services/driver/getHealthById";
 
 import { HEAL_TYP } from "@services/getDDL/";
 
+//
 interface I_Props {
   userId: string;
+  userName: string;
   insertData: any;
   isEdit: boolean;
   setInsertData?: (data: any) => void;
 }
+//
 const mock_title = ["日期", "分類", "機構", "結果", "報告"];
 
-const HealthInfo = ({ userId, insertData, setInsertData, isEdit }: I_Props) => {
+const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
   const [pageInfo, setPageInfo] = useState(null);
   const [healthsData, setHealthData] = useState([]);
-  const handleEmployeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newData = { ...insertData };
-    const targetName = e.target.name as
-      | keyof (I_Add_Employees_Type | I_Get_Employees_Type);
-    let targetValue = e.target.value as any;
+  async function updateHealthHandler(userId: string, healthPayload: any) {
+    console.log("userId", userId);
+    console.log("healthPayload", healthPayload);
+  }
+  // const handleEmployeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const newData = { ...insertData };
+  //   const targetName = e.target.name as
+  //     | keyof (I_Add_Employees_Type | I_Get_Employees_Type);
+  //   let targetValue = e.target.value as any;
 
-    if (e.target.type === "date") targetValue ||= null;
-    //  targetValue ||= null 的意思就等於 targetValue = targetValue || null
-    newData[targetName] = targetValue;
-    setInsertData && setInsertData(newData);
-  };
-
+  //   if (e.target.type === "date") targetValue ||= null;
+  //   //  targetValue ||= null 的意思就等於 targetValue = targetValue || null
+  //   newData[targetName] = targetValue;
+  //   setInsertData && setInsertData(newData);
+  // };
   const [modalOpen, setModalOpen] = useState<any>(null);
 
   const tableData = () => {
@@ -92,10 +96,11 @@ const HealthInfo = ({ userId, insertData, setInsertData, isEdit }: I_Props) => {
     };
     fetchData();
   }, [userId]);
-
+  console.log("healthData: ", healthsData);
+  //
   return (
     <BodySTY>
-      {insertData && (
+      {healthsData && (
         <>
           <TableWithEdit
             needCheckBox={isEdit}
@@ -105,7 +110,7 @@ const HealthInfo = ({ userId, insertData, setInsertData, isEdit }: I_Props) => {
               setModalOpen({ type: "create", open: true });
             }}
             needAction={isEdit}
-            cleanTableName={insertData?.user_name || "缺少員工名稱"}
+            cleanTableName={userName || "缺少員工名稱"}
             tableName=""
             titles={mock_title}
             data={tableData()}
@@ -113,7 +118,8 @@ const HealthInfo = ({ userId, insertData, setInsertData, isEdit }: I_Props) => {
               setModalOpen({
                 type: "edit",
                 open: true,
-                defaultData: insertData["healths"][id] || null,
+                // defaultData: healthsData[] || null,
+                defaultData: null,
                 dataIndex: id || null
               });
             }}
@@ -138,9 +144,10 @@ const HealthInfo = ({ userId, insertData, setInsertData, isEdit }: I_Props) => {
                 })}
                 dataIndex={modalOpen?.dataIndex || null}
                 setShowHealthModal={setModalOpen}
-                handleEmployeeChange={handleEmployeeChange}
-                insertData={insertData}
-                setInsertData={setInsertData}
+                userName={userName}
+                // handleEmployeeChange={handleEmployeeChange}
+                // insertData={insertData}
+                // setInsertData={setInsertData}
               />
             )}
           </LightBox>

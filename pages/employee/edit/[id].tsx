@@ -131,7 +131,6 @@ const Page: NextPageWithLayout<
                 onSave={() => {
                   console.log("點擊全部儲存");
                   handleSaveAll();
-                  // submitRef.current && submitRef.current.click();
                 }}
                 onEdit={() => {
                   console.log("TableWrapper onEdit");

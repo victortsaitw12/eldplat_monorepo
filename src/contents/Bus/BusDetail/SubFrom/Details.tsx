@@ -28,6 +28,7 @@ function Details({
   isEdit,
   busOptions
 }: Props) {
+  console.log("busOptions", busOptions);
   const [imageFile, setImageFile] = useState<File | null>(null);
   // 身分識別
   const identityInfo = [
@@ -201,11 +202,11 @@ function Details({
       value: <StatusIcon status={getValues("bus.status")}></StatusIcon>,
       editEle: (
         <Select key="bus.status" {...register("bus.status")} marginBottom="0">
-          <option value="01">活躍中</option>
-          <option value="02">已售出</option>
-          <option value="03">終止服務</option>
-          <option value="04">在維修廠</option>
-          <option value="05">閒置中</option>
+          {busOptions?.status_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
         </Select>
       )
     },
@@ -216,7 +217,6 @@ function Details({
         busOptions?.ownership_options.find(
           (option: any) => option.no === getValues("bus.ownership")
         )?.name || "--",
-      // value: getValues("bus.ownership") || "--",
       editEle: (
         <Select
           key="bus.ownership"
@@ -228,32 +228,9 @@ function Details({
               {item.name}
             </option>
           ))}
-          {/* <option value="01">擁有的</option>
-          <option value="02">租來的</option>
-          <option value="03">出租中</option>
-          <option value="04">客戶的</option> */}
         </Select>
       )
     }
-    // {
-    //   req: true,
-    //   label: "所有權",
-    //   value: getValues("bus.ownership")
-    //     ? convertMap["ownership"][getValues("bus.ownership")]["ch"]
-    //     : "--",
-    //   editEle: (
-    //     <Select
-    //       key="bus.ownership"
-    //       {...register("bus.ownership")}
-    //       marginBottom="0"
-    //     >
-    //       <option value="01">擁有的</option>
-    //       <option value="02">租來的</option>
-    //       <option value="03">出租中</option>
-    //       <option value="04">客戶的</option>
-    //     </Select>
-    //   )
-    // }
   ];
   // 其他細項
   const otherDetailInfo = [
