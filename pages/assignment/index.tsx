@@ -234,7 +234,13 @@ const Page: NextPageWithLayout<never> = () => {
         const newData = [...assignData];
         newData.map((v, idx) => {
           // const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
-          const item_no = (idx + 1).toString().padStart(4, "0");
+          const item_no = (
+            (pageInfo.page_Index - 1) * pageInfo.page_Size +
+            idx +
+            1
+          )
+            .toString()
+            .padStart(4, "0");
           v["no"] = { label: item_no, value: item_no };
           if (v.maintenance_quote_no.value.substring(0, 3) === "MTC") {
             // 維保單無按鈕
@@ -655,7 +661,8 @@ const Page: NextPageWithLayout<never> = () => {
           setSecondDrawerOpen={setSecondDrawerOpen}
           assignData={data}
           refetch={() => {
-            fetchAssignData(false, nowTab);
+            setPageInfo(defaultPageInfo);
+            fetchAssignData(false, nowTab, defaultPageInfo);
             setFirstDrawerOpen("");
           }}
           orderInfo={orderInfo}

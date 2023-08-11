@@ -1,5 +1,6 @@
 import React from "react";
 import { BodySTY } from "./style";
+import { IconButton } from "evergreen-ui";
 
 import {
   ChevronLeftIcon,
@@ -7,6 +8,16 @@ import {
   Select,
   CogIcon
 } from "evergreen-ui";
+
+// TODO 原本存在各支service檔案裡的defaultPageInfo 改統一引用這一支
+export const defaultPageInfo: I_PageInfo = {
+  page_Index: 1,
+  page_Size: 10,
+  orderby: null,
+  arrangement: "desc",
+  total: 0,
+  last_Page: 0
+};
 
 interface I_PaginationField {
   pageInfo?: I_PageInfo;
@@ -23,29 +34,28 @@ export interface I_PageInfo {
   last_Page?: number; //1
 }
 
-function PaginationField(props: I_PaginationField) {
-  const {
-    pageInfo,
-    onPageChange
-    // onClickNext,
-    // onClickPrevious
-  } = props;
-  const [pageIndex, setPageIndex] = React.useState<number>(
-    pageInfo?.page_Index || 1
-  );
-  const [pageSize, setPageSize] = React.useState<number>(
-    pageInfo?.page_Size || 10
-  );
+function PaginationField({
+  pageInfo = defaultPageInfo,
+  onPageChange
+}: I_PaginationField) {
+  // const {
+  //   pageInfo,
+  //   onPageChange
+  //   onClickNext,
+  //   onClickPrevious
+  // } = props;
+  const [pageIndex, setPageIndex] = React.useState<number>(pageInfo.page_Index);
+  const [pageSize, setPageSize] = React.useState<number>(pageInfo.page_Size);
 
   const pageSizeOption = [10, 20, 30, 40, 50]; // 設計給定值 預設10
-  const totalItems = pageInfo?.total || 0;
+  const totalItems = pageInfo.total || 0;
 
   const startItem =
-    ((pageInfo?.page_Index || 1) - 1) * (pageInfo?.page_Size || 0) + 1;
+    ((pageInfo?.page_Index || 1) - 1) * (pageInfo.page_Size || 0) + 1;
   const endItem =
-    pageInfo?.last_Page === pageInfo?.page_Index
+    pageInfo?.last_Page === pageInfo.page_Index
       ? totalItems
-      : startItem + (pageInfo?.page_Size || 0) - 1;
+      : startItem + (pageInfo.page_Size || 0) - 1;
 
   // ----- function ----- //
   const handlePrevPage = (
@@ -60,7 +70,7 @@ function PaginationField(props: I_PaginationField) {
     event: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (pageIndex === pageInfo?.last_Page) return;
+    if (pageIndex === pageInfo.last_Page) return;
     const updatePage = pageIndex + 1;
     setPageIndex(updatePage);
   };
@@ -95,18 +105,28 @@ function PaginationField(props: I_PaginationField) {
           第{startItem}-{endItem}筆, 共{totalItems}筆
         </span>
         <div className="actions">
-          <button>
-            <ChevronLeftIcon
-              onClick={(event) => handlePrevPage(event)}
-              size={12}
-            />
-          </button>
-          <button>
-            <ChevronRightIcon
-              onClick={(event) => handleNextPage(event)}
-              size={12}
-            />
-          </button>
+          <IconButton
+            icon={ChevronLeftIcon}
+            onClick={(event: any) => handlePrevPage(event)}
+            style={{
+              minHeight: "24px",
+              minWidth: "24px",
+              width: "24px",
+              height: "24px"
+            }}
+            disabled={pageIndex === 1 || undefined}
+          />
+          <IconButton
+            icon={ChevronRightIcon}
+            onClick={(event: any) => handleNextPage(event)}
+            style={{
+              minHeight: "24px",
+              minWidth: "24px",
+              width: "24px",
+              height: "24px"
+            }}
+            disabled={pageIndex === pageInfo.last_Page || undefined}
+          />
         </div>
         <div>
           <span>每頁筆數</span>
