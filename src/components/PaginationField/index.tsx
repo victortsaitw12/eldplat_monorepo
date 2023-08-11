@@ -38,15 +38,6 @@ function PaginationField({
   pageInfo = defaultPageInfo,
   onPageChange
 }: I_PaginationField) {
-  // const {
-  //   pageInfo,
-  //   onPageChange
-  //   onClickNext,
-  //   onClickPrevious
-  // } = props;
-  const [pageIndex, setPageIndex] = React.useState<number>(pageInfo.page_Index);
-  const [pageSize, setPageSize] = React.useState<number>(pageInfo.page_Size);
-
   const pageSizeOption = [10, 20, 30, 40, 50]; // 設計給定值 預設10
   const totalItems = pageInfo.total || 0;
 
@@ -62,41 +53,36 @@ function PaginationField({
     event: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (pageIndex === 1) return; // page_Index 是 1-based
-    const updatePage = pageIndex - 1;
-    setPageIndex(updatePage);
+    if (pageInfo.page_Index === 1) return; // page_Index 是 1-based
+    const updatePage = pageInfo.page_Index - 1;
+    handleUpdatePage(updatePage, undefined);
   };
+
   const handleNextPage = (
     event: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (pageIndex === pageInfo.last_Page) return;
-    const updatePage = pageIndex + 1;
-    setPageIndex(updatePage);
+    if (pageInfo.page_Index === pageInfo.last_Page) return;
+    const updatePage = pageInfo.page_Index + 1;
+    handleUpdatePage(updatePage, undefined);
   };
 
   const handlePageSizeChange = (e: any) => {
     if (!e.target.value) return;
-    setPageSize(e.target.value);
+    // setPageSize(e.target.value);
+    handleUpdatePage(undefined, e.target.value);
   };
+
   const handleUpdatePage = React.useCallback(
-    (type: "index" | "size") => {
+    (page_Index: number | undefined, page_Size: number | undefined) => {
       if (!onPageChange || !pageInfo) return;
       const updatedPageInfo = { ...pageInfo };
-      updatedPageInfo.page_Index = type === "index" ? pageIndex : 1;
-      updatedPageInfo.page_Size = pageSize;
+      if (page_Index) updatedPageInfo.page_Index = page_Index;
+      if (page_Size) updatedPageInfo.page_Size = page_Size;
       onPageChange(updatedPageInfo);
     },
-    [pageIndex, pageSize, pageInfo, onPageChange]
+    [pageInfo, onPageChange]
   );
-
-  // ----- useEffect ----- //
-  React.useEffect(() => {
-    handleUpdatePage.call(null, "index");
-  }, [pageIndex]);
-  React.useEffect(() => {
-    handleUpdatePage.call(null, "size");
-  }, [pageSize]);
 
   return (
     <BodySTY>
@@ -114,7 +100,7 @@ function PaginationField({
               width: "24px",
               height: "24px"
             }}
-            disabled={pageIndex === 1 || undefined}
+            disabled={pageInfo.page_Index === 1 || undefined}
           />
           <IconButton
             icon={ChevronRightIcon}
@@ -125,7 +111,7 @@ function PaginationField({
               width: "24px",
               height: "24px"
             }}
-            disabled={pageIndex === pageInfo.last_Page || undefined}
+            disabled={pageInfo.page_Index === pageInfo.last_Page || undefined}
           />
         </div>
         <div>
