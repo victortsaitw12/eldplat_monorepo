@@ -93,15 +93,8 @@ const TableSTY = styled.table`
     & > div {
       margin: 0.5rem 0;
     }
-    span,
-    div:not(.table-action) {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-    }
+
     label > div:not(:first-child) {
-      /* <Checkbox/> from evergreen-ui*/
-      /* add"div:not(:first-child) " only for css selector specificity */
       justify-content: center;
     }
     &:first-child {

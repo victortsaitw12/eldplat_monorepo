@@ -7,7 +7,8 @@ const API_Path = {
   GetAllEmployees: createUrlPath("ATR", "GetAccountList"), //取得所有員工資料(列表)
   GetEmployeeById: createUrlPath("ATR", "GetUpdateList"), //取得某位員工資料(單筆)
   UpdateEmployee: createUrlPath("ATR", "UpdateAccount"), //更新員工資料
-  GetHealthById: createUrlPath("ATR", "GetHealthsByID") // 取得單一駕駛健康資料
+  GetHealthById: createUrlPath("ATR", "GetHealthsByID"), // 取得單一駕駛健康資料
+  UpdateAccountHealth: createUrlPath("ATR", "UpdateAccountHealth") // 取得單一駕駛健康資料
 };
 
 export default API_Path;

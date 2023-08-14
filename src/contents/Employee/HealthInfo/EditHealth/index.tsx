@@ -1,4 +1,3 @@
-import { I_Add_Employees_Type } from "@typings/employee_type";
 import dayjs from "dayjs";
 import {
   Button,

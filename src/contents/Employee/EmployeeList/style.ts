@@ -5,7 +5,10 @@ export const BodySTY = styled.div`
   background-color: rgb(255, 255, 255);
   overflow-x: auto;
   height: 100%;
-
+  .anchor {
+    text-decoration: none;
+    color: inherit;
+  }
   table {
     tbody {
       td {

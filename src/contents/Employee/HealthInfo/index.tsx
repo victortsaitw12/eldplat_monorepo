@@ -1,7 +1,7 @@
-import {
-  I_Add_Employees_Type,
-  I_Get_Employees_Type
-} from "@typings/employee_type";
+// import {
+//   I_Add_Employees_Type,
+//   I_Get_Employees_Type
+// } from "@typings/employee_type";
 import React, { useEffect, useState } from "react";
 import { BodySTY } from "./style";
 import { Pane, DocumentIcon } from "evergreen-ui";
@@ -11,12 +11,15 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 //@content
 import dayjs from "dayjs";
 import EditHealth from "./EditHealth";
-
 //@service
 import { getHealthById, defaultPageInfo } from "@services/driver/getHealthById";
-
 import { HEAL_TYP } from "@services/getDDL/";
-
+import {
+  createAccuontHealthData,
+  updateAccuontHealthData
+} from "@services/employee/healthAPI";
+//
+import LoadingSpinner from "@components/LoadingSpinner";
 //
 interface I_Props {
   userId: string;
@@ -29,24 +32,26 @@ interface I_Props {
 const mock_title = ["日期", "分類", "機構", "結果", "報告"];
 
 const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [pageInfo, setPageInfo] = useState(null);
   const [healthsData, setHealthData] = useState([]);
-  async function updateHealthHandler(userId: string, healthPayload: any) {
-    console.log("userId", userId);
-    console.log("healthPayload", healthPayload);
-  }
-  // const handleEmployeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const newData = { ...insertData };
-  //   const targetName = e.target.name as
-  //     | keyof (I_Add_Employees_Type | I_Get_Employees_Type);
-  //   let targetValue = e.target.value as any;
-
-  //   if (e.target.type === "date") targetValue ||= null;
-  //   //  targetValue ||= null 的意思就等於 targetValue = targetValue || null
-  //   newData[targetName] = targetValue;
-  //   setInsertData && setInsertData(newData);
-  // };
   const [modalOpen, setModalOpen] = useState<any>(null);
+  async function updateHealthHandler(userId: string, healthPayload: any) {
+    const createHealthPayload = {
+      ...healthPayload,
+      user_no: userId
+    };
+    setLoading(true);
+    try {
+      const result = await createAccuontHealthData(createHealthPayload);
+      setModalOpen(null);
+      await fetchData();
+    } catch {
+      console.log("createHealthPayload error");
+    }
+    setLoading(false);
+  }
+  // };
 
   const tableData = () => {
     return healthsData.map((child: { [key: string]: string }, i: number) => {
@@ -88,12 +93,18 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
     });
   };
 
-  React.useEffect(() => {
-    const fetchData = async () => {
+  async function fetchData() {
+    setLoading(true);
+    try {
       const { healths, pageInfo } = await getHealthById(userId);
       setHealthData(healths);
       setPageInfo(pageInfo);
-    };
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  }
+  React.useEffect(() => {
     fetchData();
   }, [userId]);
   console.log("healthData: ", healthsData);
@@ -102,31 +113,35 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
     <BodySTY>
       {healthsData && (
         <>
-          <TableWithEdit
-            needCheckBox={isEdit}
-            needCreateBtn={isEdit}
-            createBtnText="新增健康記錄"
-            goToCreatePage={() => {
-              setModalOpen({ type: "create", open: true });
-            }}
-            needAction={isEdit}
-            cleanTableName={userName || "缺少員工名稱"}
-            tableName=""
-            titles={mock_title}
-            data={tableData()}
-            goToEditPage={(id, item) => {
-              setModalOpen({
-                type: "edit",
-                open: true,
-                // defaultData: healthsData[] || null,
-                defaultData: null,
-                dataIndex: id || null
-              });
-            }}
-            deleteItem={() => {
-              console.log("點擊刪除");
-            }}
-          />
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <TableWithEdit
+              needCheckBox={isEdit}
+              needCreateBtn={isEdit}
+              createBtnText="新增健康記錄"
+              goToCreatePage={() => {
+                setModalOpen({ type: "create", open: true });
+              }}
+              needAction={isEdit}
+              cleanTableName={userName || "缺少員工名稱"}
+              tableName=""
+              titles={mock_title}
+              data={tableData()}
+              goToEditPage={(id, item) => {
+                setModalOpen({
+                  type: "edit",
+                  open: true,
+                  defaultData: null,
+                  dataIndex: id || null
+                });
+              }}
+              deleteItem={() => {
+                console.log("點擊刪除");
+              }}
+              pageInfo={pageInfo || defaultPageInfo}
+            />
+          )}
           <LightBox
             wrapperStyle={{ maxWidth: "37rem" }}
             title={
@@ -145,9 +160,7 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
                 dataIndex={modalOpen?.dataIndex || null}
                 setShowHealthModal={setModalOpen}
                 userName={userName}
-                // handleEmployeeChange={handleEmployeeChange}
-                // insertData={insertData}
-                // setInsertData={setInsertData}
+                updateHealthHandler={updateHealthHandler.bind(null, userId)}
               />
             )}
           </LightBox>

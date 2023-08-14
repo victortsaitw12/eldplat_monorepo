@@ -130,7 +130,14 @@ const Page: NextPageWithLayout<{ userId: string; editPage: string }> = ({
           />
         );
       case "2":
-        return <HealthInfo userId={userId} isEdit={false} insertData={data} />;
+        return (
+          <HealthInfo
+            userName={data?.user_name || null}
+            userId={userId}
+            isEdit={false}
+            insertData={data}
+          />
+        );
       default:
         break;
     }

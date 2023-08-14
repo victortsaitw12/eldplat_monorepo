@@ -5,6 +5,7 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 import { I_PageInfo } from "@components/PaginationField";
 import StatusIconWithText from "@components/StatusIconWithText";
 import FirstNameIcon from "@components/FirstNameIcon";
+import Link from "next/link";
 //
 interface I_EmployeeListType {
   [key: string]: any;
@@ -42,10 +43,15 @@ function EmployeeList({
     };
     item["user_name"] = {
       label: (
-        <div style={{ display: "flex", gap: "12px" }}>
-          <FirstNameIcon text={item["user_name"].value.slice(0, 1)} />
-          {item["user_name"].value}
-        </div>
+        <Link
+          className="anchor"
+          href={`/employee/detail/${item.id.value}?editPage=view`}
+        >
+          <div style={{ display: "flex", gap: "12px" }}>
+            <FirstNameIcon text={item["user_name"].value.slice(0, 1)} />
+            {item["user_name"].value}
+          </div>
+        </Link>
       ),
       value: item["user_name"].value
     };
