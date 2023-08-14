@@ -47,15 +47,17 @@ export const getAssignDateDDL = async (
   return res.json();
 };
 
-export const getBusDayNumberDDL = async (
+export const getDayDriverNameDDL = async (
   quote_no: string,
-  order_date: string
+  order_date: string,
+  bus_group?: string
 ) => {
   const requestBody = {
     quote_no: quote_no,
-    order_date: order_date
+    order_date: order_date,
+    bus_group: bus_group
   };
-  const res = await fetch(`${API_Path["GetBusDayNumberDDL"]}`, {
+  const res = await fetch(`${API_Path["GetDayDriverNameDDL"]}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -66,17 +68,17 @@ export const getBusDayNumberDDL = async (
   return res.json();
 };
 
-export const getDriverNameDDL = async (
+export const getDayBusNameDDL = async (
   quote_no: string,
   order_date: string,
-  bus_group: string
+  bus_group?: string
 ) => {
   const requestBody = {
     quote_no: quote_no,
     order_date: order_date,
     bus_group: bus_group
   };
-  const res = await fetch(`${API_Path["GetDriverNameDDL"]}`, {
+  const res = await fetch(`${API_Path["GetDayBusNameDDL"]}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
