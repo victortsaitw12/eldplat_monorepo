@@ -11,18 +11,11 @@ import {
 import dayjs from "dayjs";
 import { DivSTY } from "./style";
 
-import {
-  I_ManualAssignType,
-  I_ManualCreateType
-} from "@typings/assignment_type";
+import { I_ManualAssignType } from "@typings/assignment_type";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import VehicleForm from "@contents/Assignment/AssignmentAdditional/VehicleForm";
 import DriverForm from "@contents/Assignment/AssignmentAdditional/DriverForm";
-import { getAllAssignments } from "@services/assignment/getAllAssignment";
-import {
-  createOtherAssignment,
-  I_OtherAssignment
-} from "@services/assignment/createOtherAssignment";
+import { createOtherAssignment } from "@services/assignment/createOtherAssignment";
 import { I_creatOtherAssignment } from "@services/assignment/createReplaceAssignment";
 import CheckBox from "@components/CheckBox";
 
@@ -30,18 +23,13 @@ interface I_AssignmentAdditionalVehicleProps {
   type: "car" | "driver";
   orderInfo: I_ManualAssignType[];
   refetch?: () => void;
-  // setSubAssignData: (v: any) => void;
-  // setFirstDrawerOpen: (v: string) => void;
 }
 
 const AssignmentAdditional = ({
   type,
   orderInfo,
   refetch
-}: // setSubAssignData,
-// setFirstDrawerOpen
-
-I_AssignmentAdditionalVehicleProps) => {
+}: I_AssignmentAdditionalVehicleProps) => {
   const [loading, setLoading] = React.useState(false);
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
   const [busRestShifts, setBusRestShifts] =

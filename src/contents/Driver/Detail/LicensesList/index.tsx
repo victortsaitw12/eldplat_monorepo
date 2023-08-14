@@ -3,13 +3,11 @@ import dayjs from "dayjs";
 import { Pane, DocumentIcon, Tooltip, toaster, Dialog } from "evergreen-ui";
 import { DivSTY } from "./style";
 
-import { IconLeft } from "@components/Button/Primary";
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import LicenseForm from "@contents/Driver/Detail/LicenseForm";
 import { LICN_TYP } from "@services/getDDL";
 import { updateDriverLicense } from "@services/driver/updateDriverLicense";
-import { useRouter } from "next/router";
 import { I_PageInfo } from "@components/PaginationField";
 import {
   getLicenseById,
@@ -117,8 +115,10 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
   const handleEdit = (id: any) => {
     setEditNo(id);
     setIsLightBoxOpen(true);
-    console.log("打開新增彈窗");
+    console.log("🍅id:", typeof id);
+    console.log("🍅licensesData:", licensesData);
   };
+
   const handleCancel = () => {
     setIsLightBoxOpen(false);
   };
@@ -132,14 +132,29 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
     },
     [driverNo]
   );
-  const asyncSubmitForm = async (data: any) => {
+  const asyncSubmitCreateForm = async (data: any) => {
+    const type = 0;
+    //type: 0 = 新增，2 = 更新，3 = 刪除
     console.log("😒😒😒 asyncSubmitForm called", data);
-    const type = 0; //type: 0 = 新增，2 = 更新，3 = 刪除
+    try {
+      const res = await updateDriverLicense(data, type);
+      if (res.result === true)
+        toaster.success("成功新增駕駛證照", { duration: 1.5 });
+      await fetchLicenseData();
+      setIsLightBoxOpen(false);
+    } catch (e: any) {
+      console.log(e);
+      toaster.warning(e.message);
+    }
+  };
+  const asyncSubmitEditForm = async (data: any) => {
+    const type = 2;
+    //type: 0 = 新增，2 = 更新，3 = 刪除
+    console.log("😒😒😒 asyncSubmitForm called", data);
     try {
       const res = await updateDriverLicense(data, type);
       if (res.result === true)
         toaster.success("成功更新駕駛證照", { duration: 1.5 });
-      // update license list
       await fetchLicenseData();
       setIsLightBoxOpen(false);
     } catch (e: any) {
@@ -149,16 +164,31 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
   };
 
   //刪除該筆證照資料
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: any) => {
+    const data = licensesData.find((item: any) => item.no.toString() === id);
     try {
-      alert("刪除該筆證照資料");
-    } catch (e) {
+      const res = await updateDriverLicense(data, 3);
+      if (res.result === true) {
+        toaster.success("成功刪除證照資料", { duration: 1.5 });
+      } else {
+        throw new Error(`${res.resultString}`);
+      }
+      await fetchLicenseData();
+    } catch (e: any) {
       console.log(e);
+      toaster.danger("刪除失敗", {
+        description: `${e.message}`,
+        duration: 2,
+        hasCloseButton: true
+      });
     }
   };
   const fetchLicenseData = async (pageQuery = defaultPageInfo) => {
     const { licenses, pageInfo } = await getLicenseById(driverNo, pageQuery);
-    setLicensesData(licenses);
+    const IDLicences = licenses.map((item: any) => {
+      return { ...item, id: { label: item.no, value: item.no } };
+    });
+    setLicensesData(IDLicences);
     setPageInfo(pageInfo);
   };
   React.useEffect(() => {
@@ -200,11 +230,10 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
                 />
                 <LicenseForm
                   btnRef={btnRef}
-                  type={editNo ? false : true}
-                  licensesData={
-                    licensesData.filter((item: any) => item.no === editNo)[0]
-                  }
-                  asyncSubmitForm={asyncSubmitForm}
+                  editNo={editNo}
+                  licensesData={licensesData}
+                  asyncSubmitCreateForm={asyncSubmitCreateForm}
+                  asyncSubmitEditForm={asyncSubmitEditForm}
                   driverNo={driverNo}
                 />
               </>
