@@ -57,12 +57,16 @@ function AssignManualCreate({
     if (!orderInfoArr) return;
     const orderInfo = orderInfoArr[0];
     // 計算一開始到最後一天共有幾天
-    const dayCount =
-      dayjs(orderInfo.return_date).diff(orderInfo.departure_date, "day") + 1;
-
+    const dayCount = dayjs(orderInfo.return_date).isAfter(
+      dayjs(orderInfo.departure_date)
+    )
+      ? dayjs(orderInfo.return_date).diff(orderInfo.departure_date, "day") + 1
+      : 1;
     let carCounter = 0;
 
     // [...new Array(放數字)] 代表請產出一個有多少內容的陣列
+    console.log(orderInfo.return_date, orderInfo.departure_date, dayCount);
+
     const arr = [...new Array(dayCount)].reduce((acc, _, dayIdx) => {
       const data = {
         date: dayjs(orderInfo.departure_date)
@@ -173,6 +177,7 @@ function AssignManualCreate({
       orderInfo[0]?.departure_date,
       "day"
     );
+
     return (count + 1) * orderInfo[0]?.order_quantity;
   };
 

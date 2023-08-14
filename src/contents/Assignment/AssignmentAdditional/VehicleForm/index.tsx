@@ -115,6 +115,7 @@ function VehicleForm({
     } catch (e: any) {
       toaster.danger("新增失敗", {
         duration: 3,
+        description: "同一時間點重複派車，請選擇其他時間。",
         hasCloseButton: true
       });
     }
