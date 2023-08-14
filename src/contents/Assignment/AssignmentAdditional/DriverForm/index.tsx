@@ -15,7 +15,6 @@ import { I_ManualAssignType } from "@typings/assignment_type";
 import {
   getAssignBusDDL,
   getAssignDateDDL,
-  getBusDayNumberDDL,
   getDayDriverNameDDL
 } from "@services/assignment/getAssignmentDDL";
 import {
