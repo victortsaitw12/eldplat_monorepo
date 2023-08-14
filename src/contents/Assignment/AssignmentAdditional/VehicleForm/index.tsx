@@ -165,8 +165,7 @@ function VehicleForm({
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
-        console.log("🍅 submit data:", data);
-        // asyncSubmitForm({ ...data });
+        asyncSubmitForm(data);
       })}
     >
       <SelectField

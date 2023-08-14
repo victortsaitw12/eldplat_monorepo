@@ -157,9 +157,7 @@ function DriverForm({
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
-        console.log("🍅 submit data:", data);
-        console.log("🍅 dateBase:", dateBase);
-        // asyncSubmitForm({ ...data });
+        asyncSubmitForm(data);
       })}
     >
       <SelectField
