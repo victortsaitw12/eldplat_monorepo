@@ -22,19 +22,24 @@ import ButtonPrimaryRadius from "@components/Button/PrimaryRadius";
 
 interface Props {
   editNo: number | null;
-  licenseData: any;
+  licensesData: any[];
   btnRef: any;
-  asyncSubmitForm: (data: any) => void;
+  asyncSubmitCreateForm: (data: any) => void;
+  asyncSubmitEditForm: (data: any) => void;
   driverNo: string;
 }
 
 function LicenseForm({
   editNo,
-  licenseData,
+  licensesData,
   btnRef,
-  asyncSubmitForm,
+  asyncSubmitCreateForm,
+  asyncSubmitEditForm,
   driverNo
 }: Props) {
+  const licenseData = licensesData.find(
+    (item: any) => item.no?.toString() === editNo
+  );
   const {
     register,
     formState: { errors },
@@ -173,7 +178,11 @@ function LicenseForm({
     }
   ];
   return (
-    <FormSTY onSubmit={handleSubmit(asyncSubmitForm)}>
+    <FormSTY
+      onSubmit={handleSubmit(
+        editNo ? asyncSubmitEditForm : asyncSubmitCreateForm
+      )}
+    >
       <button ref={btnRef} type="submit" style={{ display: "none" }}></button>
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={true} infoData={licenseInfo} />
