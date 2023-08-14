@@ -21,20 +21,25 @@ import { LICN_TYP } from "@services/getDDL";
 import ButtonPrimaryRadius from "@components/Button/PrimaryRadius";
 
 interface Props {
-  type: boolean; //true = 新增，false = 更新
-  licensesData: any;
+  editNo: number | null;
+  licensesData: any[];
   btnRef: any;
-  asyncSubmitForm: (data: any) => void;
+  asyncSubmitCreateForm: (data: any) => void;
+  asyncSubmitEditForm: (data: any) => void;
   driverNo: string;
 }
 
 function LicenseForm({
-  type,
+  editNo,
   licensesData,
   btnRef,
-  asyncSubmitForm,
+  asyncSubmitCreateForm,
+  asyncSubmitEditForm,
   driverNo
 }: Props) {
+  const licenseData = licensesData.find(
+    (item: any) => item.no?.toString() === editNo
+  );
   const {
     register,
     formState: { errors },
@@ -42,7 +47,7 @@ function LicenseForm({
     getValues,
     setValue
   } = useForm<UpdateLicensePayload>({
-    defaultValues: type
+    defaultValues: !editNo
       ? {
           driver_no: driverNo,
           licn_typ: null,
@@ -55,16 +60,16 @@ function LicenseForm({
           licn_link: null
         }
       : {
-          no: licensesData.no.toString(),
-          driver_no: licensesData.driver_no,
-          licn_typ: licensesData.licn_typ,
-          licn_name: licensesData.licn_name,
-          licn_unit: licensesData.licn_unit,
-          licn_issue: formatDateFromAPI(licensesData.licn_issue),
-          licn_exp: formatDateFromAPI(licensesData.licn_exp),
-          licn_examine_date: formatDateFromAPI(licensesData.licn_examine_Date),
-          licn_filename: licensesData.licn_filename,
-          licn_link: licensesData.licn_link
+          no: editNo?.toString(),
+          driver_no: licenseData?.driver_no,
+          licn_typ: licenseData?.licn_typ,
+          licn_name: licenseData?.licn_name,
+          licn_unit: licenseData?.licn_unit,
+          licn_issue: formatDateFromAPI(licenseData?.licn_issue),
+          licn_exp: formatDateFromAPI(licenseData?.licn_exp),
+          licn_examine_date: formatDateFromAPI(licenseData?.licn_examine_Date),
+          licn_filename: licenseData?.licn_filename,
+          licn_link: licenseData?.licn_link
         }
   });
   const [checked, setChecked] = React.useState(false);
@@ -173,7 +178,11 @@ function LicenseForm({
     }
   ];
   return (
-    <FormSTY onSubmit={handleSubmit(asyncSubmitForm)}>
+    <FormSTY
+      onSubmit={handleSubmit(
+        editNo ? asyncSubmitEditForm : asyncSubmitCreateForm
+      )}
+    >
       <button ref={btnRef} type="submit" style={{ display: "none" }}></button>
       <FlexWrapper flexDirection="column">
         <InfoBox isEdit={true} infoData={licenseInfo} />

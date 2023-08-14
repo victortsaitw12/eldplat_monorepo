@@ -40,12 +40,12 @@ function SearchEmployee({ update, closeSearch, refetch }: any) {
         width="100%"
       />
       {allEmployees.reduce((acc: any[], item: any) => {
-        if (item.User_Name.includes(value)) {
+        if (item.user_first_name.concat(item.User_Name).includes(value)) {
           acc.push(
             <EmployeeItem
               key={item.User_No}
               userNo={item.User_No}
-              userName={item.User_Name}
+              userName={item.user_first_name.concat(item.User_Name)}
               selectedUser={selectedUser}
               setSelectedUser={setSelectedUser}
               value={value}
