@@ -18,7 +18,7 @@ import { v4 as uuid } from "uuid";
 import dayjs from "dayjs";
 import { getOrderDates } from "@services/assignment/getOrderDates";
 import { Label } from "@components/Button/Primary";
-import { dashDate2 } from "@utils/convertDate";
+import { dashDate } from "@utils/convertDate";
 import { UpdateSingleAssignment } from "@services/assignment/UpdateSingleAssignment";
 import { useRouter } from "next/router";
 
@@ -166,12 +166,12 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
   // 時間有變動時就將重組好的時間格式設回大物件
   useEffect(() => {
     const newData = { ...updateData };
-    const newStartTime = `${dashDate2(editData.task_start_time)}T${
+    const newStartTime = `${dashDate(editData.task_start_time)}T${
       startTime.start_type === "pm"
         ? (Number(startTime.start_hours) + 12).toString()
         : startTime.start_hours
     }:${startTime.start_minutes}`;
-    const newEndTime = `${dashDate2(editData.task_end_time)}T${
+    const newEndTime = `${dashDate(editData.task_end_time)}T${
       endTime.end_type === "pm"
         ? (Number(endTime.end_hours) + 12).toString()
         : endTime.end_hours

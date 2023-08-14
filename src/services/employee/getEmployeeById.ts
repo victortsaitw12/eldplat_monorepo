@@ -4,22 +4,22 @@ export const getEmployeeById = async (user_no: string) => {
   // const url = new URL(
   //   "http://uvehicle-api.eldplat.com/ATR/api/DownStream/GetUpdateList"
   // );
-  // // const url = new URL(API_Path["GetEmployeeById"]);
-  // url.searchParams.append("user_no", user_no);
-  // const response = await fetch(url.href, {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-  //   }
-  // });
-  const response = await fetch("/api/getEmployeeById", {
-    method: "POST",
+  const url = new URL(API_Path["GetEmployeeById"]);
+  url.searchParams.append("user_no", user_no);
+  const response = await fetch(url.href, {
+    method: "GET",
     headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ user_no })
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    }
   });
+  // const response = await fetch("/api/getEmployeeById", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   },
+  //   body: JSON.stringify({ user_no })
+  // });
   console.log("response", response);
   const data = await response.json();
   console.log("data", data);
