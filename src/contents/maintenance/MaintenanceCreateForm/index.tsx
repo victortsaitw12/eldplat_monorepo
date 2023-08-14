@@ -37,6 +37,7 @@ function MaintenanceCreateForm({
   busNo,
   reminderNo
 }: I_MaintenanceCreateFormProps) {
+  console.log("noticeData: ", noticeData);
   const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
   // default value
   const defaultValues: CreateMaintenancePayload = {
@@ -239,13 +240,18 @@ function MaintenanceCreateForm({
           }
         })}
       >
-        {mainCreateDdl?.vendor_options.map((item: any) => {
-          return (
-            <option key={item.no} value={item.no}>
-              {item.name}
-            </option>
-          );
-        })}
+        <>
+          <option value={""} disabled hidden>
+            請選擇
+          </option>
+          {mainCreateDdl?.vendor_options.map((item: any) => {
+            return (
+              <option key={item.no} value={item.no}>
+                {item.name}
+              </option>
+            );
+          })}
+        </>
       </SelectField>
       <SelectField
         label={
@@ -255,13 +261,18 @@ function MaintenanceCreateForm({
         }
         {...register("package_code")}
       >
-        {mainCreateDdl?.package_options.map((item: any) => {
-          return (
-            <option key={item.no} value={item.no}>
-              {item.name}
-            </option>
-          );
-        })}
+        <>
+          <option value={""} disabled hidden>
+            請選擇
+          </option>
+          {mainCreateDdl?.package_options.map((item: any) => {
+            return (
+              <option key={item.no} value={item.no}>
+                {item.name}
+              </option>
+            );
+          })}
+        </>
       </SelectField>
       <TextInputField
         label="起始日期"

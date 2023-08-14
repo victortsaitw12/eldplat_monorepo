@@ -102,7 +102,6 @@ const Page: NextPageWithLayout<never> = () => {
           }
         };
       });
-      console.log("newData", newData);
       if (isCanceled) {
         console.log("canceled");
         return;
