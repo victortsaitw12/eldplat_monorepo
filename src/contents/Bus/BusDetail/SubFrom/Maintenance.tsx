@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import {
   UseFormRegister,
   FieldErrors,
@@ -63,7 +64,7 @@ function Maintenance({
     page_Size: 10,
     last_Page: 10
   });
-
+  const router = useRouter();
   async function fetchMaintenanceData(
     isCanceled: boolean,
     busId: string,
@@ -78,15 +79,10 @@ function Maintenance({
         busMaintenacePattern,
         busMaintenaceParser
       );
-      console.log("busMaintenanceData", busMaintenanceData);
       setBusMaintenanceData(busMaintenanceData);
       setPageInfo(res.pageInfo);
     });
   }
-
-  // async function updatePageHandler(newPageInfo: PageInfoType) {
-  //   fetchMaintenanceData(false, busId, newPageInfo);
-  // }
 
   useEffect(() => {
     let isCanceled = false;
@@ -104,18 +100,11 @@ function Maintenance({
           cleanTableName="維保計劃"
           titles={maintenanceTitle}
           data={busMaintenanceData}
-          goToCreatePage={() => {
-            console.log("goToCreatePage");
+          goToCreatePage={(e) => {
+            e.preventDefault()
+            router.push("/maintenance/mission");
           }}
-          deleteItem={() => {
-            console.log("deleteItem");
-          }}
-          goToEditPage={() => {
-            console.log("goToEditPage");
-          }}
-          viewItem={() => {
-            console.log("viewItem");
-          }}
+          needAction={false}
           pageInfo={pageInfo}
         />
       </BodySTY>
