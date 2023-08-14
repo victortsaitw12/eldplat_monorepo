@@ -117,8 +117,10 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
   const handleEdit = (id: any) => {
     setEditNo(id);
     setIsLightBoxOpen(true);
-    console.log("打開新增彈窗");
+    console.log("🍅id:", id);
+    console.log("🍅licensesData:", licensesData);
   };
+
   const handleCancel = () => {
     setIsLightBoxOpen(false);
   };
@@ -158,7 +160,10 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
   };
   const fetchLicenseData = async (pageQuery = defaultPageInfo) => {
     const { licenses, pageInfo } = await getLicenseById(driverNo, pageQuery);
-    setLicensesData(licenses);
+    const IDLicences = licenses.map((item: any) => {
+      return { ...item, id: { label: item.no, value: item.no } };
+    });
+    setLicensesData(IDLicences);
     setPageInfo(pageInfo);
   };
   React.useEffect(() => {
@@ -200,10 +205,12 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
                 />
                 <LicenseForm
                   btnRef={btnRef}
-                  type={editNo ? false : true}
-                  licensesData={
-                    licensesData.filter((item: any) => item.no === editNo)[0]
-                  }
+                  editNo={editNo}
+                  licenseData={licensesData.find((item: any) => {
+                    console.log("🍅 editNo:", editNo);
+                    console.log("🍅 item.no", item.no);
+                    return item.no === editNo;
+                  })}
                   asyncSubmitForm={asyncSubmitForm}
                   driverNo={driverNo}
                 />
