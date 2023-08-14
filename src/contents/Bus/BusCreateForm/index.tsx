@@ -118,11 +118,11 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <option value="" disabled hidden>
           請選擇
         </option>
-        <option value="01">Toyota</option>
-        <option value="02">Mercedes-Benz</option>
-        <option value="03">Volkswagen</option>
-        <option value="04">BMW</option>
-        <option value="05">Tesla</option>
+        {options?.make_options.map((item: any) => (
+          <option key={item.no} value={item.no}>
+            {item.name}
+          </option>
+        ))}
       </SelectField>
       <FiledInput
         controlProps={{
@@ -154,10 +154,11 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <option value="" disabled hidden>
           請選擇
         </option>
-        <option value="01">群組1</option>
-        <option value="02">群組2</option>
-        <option value="03">群組3</option>
-        <option value="04">群組4</option>
+        {options?.bus_group_options.map((item: any) => (
+          <option key={item.no} value={item.no}>
+            {item.name}
+          </option>
+        ))}
       </SelectField>
       <SelectField
         label={
@@ -189,11 +190,11 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <option value="" disabled hidden>
           請選擇
         </option>
-        <option value="01">活躍中</option>
-        <option value="02">已售出</option>
-        <option value="03">終止服務</option>
-        <option value="04">在維修廠</option>
-        <option value="05">閒置中</option>
+        {options?.status_options.map((item: any) => (
+          <option key={item.no} value={item.no}>
+            {item.name}
+          </option>
+        ))}
       </SelectField>
       <SelectField
         label={
@@ -207,14 +208,11 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <option value="" disabled hidden>
           請選擇
         </option>
-        <option value="01">擁有的</option>
-        <option value="02">租來的</option>
-        <option value="03">出租中</option>
-        <option value="04">客戶的</option>
-        <option value="05">擁有的</option>
-        <option value="06">租來的</option>
-        <option value="07">出租中</option>
-        <option value="08">客戶的</option>
+        {options?.ownership_options.map((item: any) => (
+          <option key={item.no} value={item.no}>
+            {item.name}
+          </option>
+        ))}
       </SelectField>
       <IconLeft text={"新增車輛"} type="submit">
         <PlusIcon size={14} />

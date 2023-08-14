@@ -24,7 +24,7 @@ import {
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import { I_ManualCreateType } from "@typings/assignment_type";
 
-import { dashDate2 } from "@utils/convertDate";
+import { dashDate } from "@utils/convertDate";
 import {
   getBusAssignmentInfo,
   getDriverAssignmentInfo
@@ -331,10 +331,10 @@ const Page: NextPageWithLayout<never> = () => {
       ...target,
       [e.target.name]: e.target.value,
       bus_day_number: showSecondTitle.car,
-      task_start_time: `${dashDate2(showSecondTitle.date)}T${
+      task_start_time: `${dashDate(showSecondTitle.date)}T${
         startTime.start_hours
       }:${startTime.start_minutes}`,
-      task_end_time: `${dashDate2(showSecondTitle.date)}T${endTime.end_hours}:${
+      task_end_time: `${dashDate(showSecondTitle.date)}T${endTime.end_hours}:${
         endTime.end_minutes
       }`
     };
@@ -345,7 +345,7 @@ const Page: NextPageWithLayout<never> = () => {
         setStartTime((prev: any) => {
           return { ...prev, start_hours: e.target.value };
         });
-        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+        newStartTime = `${dashDate(showSecondTitle.date)}T${
           startTime.start_type === "pm"
             ? (Number(e.target.value) + 12).toString()
             : e.target.value
@@ -355,7 +355,7 @@ const Page: NextPageWithLayout<never> = () => {
           return { ...prev, start_minutes: e.target.value };
         });
 
-        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+        newStartTime = `${dashDate(showSecondTitle.date)}T${
           startTime.start_type === "pm"
             ? (Number(startTime.start_hours) + 12).toString()
             : startTime.start_hours
@@ -364,7 +364,7 @@ const Page: NextPageWithLayout<never> = () => {
         setStartTime((prev: any) => {
           return { ...prev, start_type: e.target.value };
         });
-        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+        newStartTime = `${dashDate(showSecondTitle.date)}T${
           e.target.value === "pm"
             ? (Number(startTime.start_hours) + 12).toString()
             : startTime.start_hours
@@ -380,7 +380,7 @@ const Page: NextPageWithLayout<never> = () => {
           return { ...prev, end_hours: e.target.value };
         });
 
-        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+        newEndTime = `${dashDate(showSecondTitle.date)}T${
           endTime.end_type === "pm"
             ? (Number(e.target.value) + 12).toString()
             : e.target.value
@@ -389,7 +389,7 @@ const Page: NextPageWithLayout<never> = () => {
         setEndTime((prev: any) => {
           return { ...prev, end_minutes: e.target.value };
         });
-        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+        newEndTime = `${dashDate(showSecondTitle.date)}T${
           endTime.end_type === "pm"
             ? (Number(endTime.end_hours) + 12).toString()
             : endTime.end_hours
@@ -399,7 +399,7 @@ const Page: NextPageWithLayout<never> = () => {
           return { ...prev, end_type: e.target.value };
         });
 
-        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+        newEndTime = `${dashDate(showSecondTitle.date)}T${
           e.target.value === "pm"
             ? (Number(endTime.end_hours) + 12).toString()
             : endTime.end_hours
@@ -409,12 +409,12 @@ const Page: NextPageWithLayout<never> = () => {
     }
 
     // 把所有的時間組合成API可以接受的格式 (yyyy-mm-ddThh:mm)
-    // const newStartTime = `${dashDate2(showSecondTitle.date)}T${
+    // const newStartTime = `${dashDate(showSecondTitle.date)}T${
     //   startTime.start_type === "pm"
     //     ? (Number(startTime.start_hours) + 12).toString()
     //     : startTime.start_hours
     // }:${startTime.start_minutes}`;
-    // const newEndTime = `${dashDate2(showSecondTitle.date)}T${
+    // const newEndTime = `${dashDate(showSecondTitle.date)}T${
     //   endTime.end_type === "pm"
     //     ? (Number(endTime.end_hours) + 12).toString()
     //     : endTime.end_hours
@@ -445,13 +445,13 @@ const Page: NextPageWithLayout<never> = () => {
     //   console.log("77777");
     //   newBusArr[orderIndex] = {
     //     ...target,
-    //     task_start_time: `${dashDate2(showSecondTitle.date)}T01:00`
+    //     task_start_time: `${dashDate(showSecondTitle.date)}T01:00`
     //   };
     //   console.log("newBusArr", newBusArr);
     // } else if (!Object.keys(newBusArr[orderIndex]).includes("task_end_time")) {
     //   newBusArr[orderIndex] = {
     //     ...target,
-    //     task_end_time: `${dashDate2(showSecondTitle.date)}T01:00`
+    //     task_end_time: `${dashDate(showSecondTitle.date)}T01:00`
     //   };
     // }
 
@@ -470,10 +470,10 @@ const Page: NextPageWithLayout<never> = () => {
       ...target,
       [e.target.name]: e.target.value,
       bus_day_number: showSecondTitle.car,
-      task_start_time: `${dashDate2(showSecondTitle.date)}T${
+      task_start_time: `${dashDate(showSecondTitle.date)}T${
         startTime.start_hours
       }:${startTime.start_minutes}`,
-      task_end_time: `${dashDate2(showSecondTitle.date)}T${endTime.end_hours}:${
+      task_end_time: `${dashDate(showSecondTitle.date)}T${endTime.end_hours}:${
         endTime.end_minutes
       }`
     };
@@ -484,7 +484,7 @@ const Page: NextPageWithLayout<never> = () => {
         setStartTime((prev: any) => {
           return { ...prev, start_hours: e.target.value };
         });
-        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+        newStartTime = `${dashDate(showSecondTitle.date)}T${
           startTime.start_type === "pm"
             ? (Number(e.target.value) + 12).toString()
             : e.target.value
@@ -494,7 +494,7 @@ const Page: NextPageWithLayout<never> = () => {
           return { ...prev, start_minutes: e.target.value };
         });
 
-        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+        newStartTime = `${dashDate(showSecondTitle.date)}T${
           startTime.start_type === "pm"
             ? (Number(startTime.start_hours) + 12).toString()
             : startTime.start_hours
@@ -503,7 +503,7 @@ const Page: NextPageWithLayout<never> = () => {
         setStartTime((prev: any) => {
           return { ...prev, start_type: e.target.value };
         });
-        newStartTime = `${dashDate2(showSecondTitle.date)}T${
+        newStartTime = `${dashDate(showSecondTitle.date)}T${
           e.target.value === "pm"
             ? (Number(startTime.start_hours) + 12).toString()
             : startTime.start_hours
@@ -519,7 +519,7 @@ const Page: NextPageWithLayout<never> = () => {
           return { ...prev, end_hours: e.target.value };
         });
 
-        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+        newEndTime = `${dashDate(showSecondTitle.date)}T${
           endTime.end_type === "pm"
             ? (Number(e.target.value) + 12).toString()
             : e.target.value
@@ -528,7 +528,7 @@ const Page: NextPageWithLayout<never> = () => {
         setEndTime((prev: any) => {
           return { ...prev, end_minutes: e.target.value };
         });
-        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+        newEndTime = `${dashDate(showSecondTitle.date)}T${
           endTime.end_type === "pm"
             ? (Number(endTime.end_hours) + 12).toString()
             : endTime.end_hours
@@ -538,7 +538,7 @@ const Page: NextPageWithLayout<never> = () => {
           return { ...prev, end_type: e.target.value };
         });
 
-        newEndTime = `${dashDate2(showSecondTitle.date)}T${
+        newEndTime = `${dashDate(showSecondTitle.date)}T${
           e.target.value === "pm"
             ? (Number(endTime.end_hours) + 12).toString()
             : endTime.end_hours
@@ -548,12 +548,12 @@ const Page: NextPageWithLayout<never> = () => {
     }
 
     // 把所有的時間組合成API可以接受的格式 (yyyy-mm-ddThh:mm)
-    // const newStartTime = `${dashDate2(showSecondTitle.date)}T${
+    // const newStartTime = `${dashDate(showSecondTitle.date)}T${
     //   startTime.start_type === "pm"
     //     ? (Number(startTime.start_hours) + 12).toString()
     //     : startTime.start_hours
     // }:${startTime.start_minutes}`;
-    // const newEndTime = `${dashDate2(showSecondTitle.date)}T${
+    // const newEndTime = `${dashDate(showSecondTitle.date)}T${
     //   endTime.end_type === "pm"
     //     ? (Number(endTime.end_hours) + 12).toString()
     //     : endTime.end_hours
@@ -583,13 +583,13 @@ const Page: NextPageWithLayout<never> = () => {
     // if (newDriverArr[orderIndex].task_start_time === undefined) {
     //   newDriverArr[orderIndex] = {
     //     ...target,
-    //     task_start_time: `${dashDate2(showSecondTitle.date)}T01:00`
+    //     task_start_time: `${dashDate(showSecondTitle.date)}T01:00`
     //   };
     //   newCreateAssignData.manual_driver = newDriverArr;
     // } else if (newDriverArr[orderIndex].task_end_time === undefined) {
     //   newDriverArr[orderIndex] = {
     //     ...target,
-    //     task_end_time: `${dashDate2(showSecondTitle.date)}T01:00`
+    //     task_end_time: `${dashDate(showSecondTitle.date)}T01:00`
     //   };
     //   newCreateAssignData.manual_driver = newDriverArr;
     // }
