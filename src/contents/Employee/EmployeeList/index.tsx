@@ -47,7 +47,13 @@ function EmployeeList({
           className="anchor"
           href={`/employee/detail/${item.id.value}?editPage=view`}
         >
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "12px",
+              alignItems: "center"
+            }}
+          >
             <FirstNameIcon text={item["user_name"].value.slice(0, 1)} />
             {item["user_name"].value}
           </div>

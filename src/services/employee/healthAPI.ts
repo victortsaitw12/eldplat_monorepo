@@ -71,6 +71,19 @@ async function updateAccuontHealthData(healthData: any) {
   }
 }
 
+// 刪除駕駛資料
+async function deleteAccuontHealthData(healthNo: string) {
+  try {
+    const res = await updateAccountHealth({
+      operationType: "3",
+      healthData: { health_no: healthNo }
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 // 取得單一駕駛健康資料
 async function getHealthById(
   userNo: string,
@@ -98,4 +111,9 @@ async function getHealthById(
   return { healths, pageInfo };
 }
 
-export { createAccuontHealthData, updateAccuontHealthData, getHealthById };
+export {
+  createAccuontHealthData,
+  updateAccuontHealthData,
+  deleteAccuontHealthData,
+  getHealthById
+};

@@ -11,7 +11,6 @@ import {
   UploadIcon
 } from "evergreen-ui";
 import React, { useState, useEffect } from "react";
-// import { healthCate_DATA, healthResult_DATA } from "./data";
 import { BodySTY } from "./style";
 
 interface I_AddHealthProps {
@@ -24,11 +23,11 @@ interface I_AddHealthProps {
 
 function EditHealth({
   userName,
-  dataIndex,
   defaultData,
   setShowHealthModal,
   updateHealthHandler
 }: I_AddHealthProps) {
+  console.log("defaultData", defaultData);
   const [healthData, setHealthData] = useState({
     heal_typ: "01",
     heal_agency: "",
@@ -37,15 +36,13 @@ function EditHealth({
     invalid: "N",
     invalid_remark: "",
     ...defaultData,
-    heal_date:
-      (dayjs(defaultData?.heal_date || null).isValid() &&
-        dayjs(defaultData?.heal_date || null).format("YYYY/MM/DD")) ||
-      "",
+    heal_date: defaultData?.heal_date || null,
     heal_examine_date:
       (dayjs(defaultData?.heal_examine_date || null).isValid() &&
         dayjs(defaultData?.heal_examine_date || null).format("YYYY/MM/DD")) ||
       ""
   });
+
   // const [healthCateSelected, setHealthCateSelected] = useState<any>(null); // 分類下拉選單
   // const [healthResultSelected, setHealthResultSelected] = useState<any>(null); // 結果下拉選單
   const [reportChecked, setReportChecked] = useState<boolean>(false); // 報告失效勾選

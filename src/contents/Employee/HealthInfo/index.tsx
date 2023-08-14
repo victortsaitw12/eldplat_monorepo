@@ -1,7 +1,3 @@
-// import {
-//   I_Add_Employees_Type,
-//   I_Get_Employees_Type
-// } from "@typings/employee_type";
 import React, { useEffect, useState } from "react";
 import { BodySTY } from "./style";
 import { Pane, DocumentIcon } from "evergreen-ui";
@@ -16,11 +12,13 @@ import { getHealthById, defaultPageInfo } from "@services/driver/getHealthById";
 import { HEAL_TYP } from "@services/getDDL/";
 import {
   createAccuontHealthData,
-  updateAccuontHealthData
+  updateAccuontHealthData,
+  deleteAccuontHealthData
 } from "@services/employee/healthAPI";
 //
 import LoadingSpinner from "@components/LoadingSpinner";
 //
+import { dashDate } from "@utils/convertDate";
 interface I_Props {
   userId: string;
   userName: string;
@@ -41,9 +39,25 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
       ...healthPayload,
       user_no: userId
     };
+    if (!createHealthPayload.heal_date) {
+      console.log(
+        "no createHealthPayload.heal_date",
+        createHealthPayload.heal_date
+      );
+      delete createHealthPayload["heal_date"];
+    }
+    if (!createHealthPayload.heal_examine_date) {
+      console.log(
+        "no createHealthPayload.heal_examine_date",
+        createHealthPayload.heal_examine_date
+      );
+      delete createHealthPayload["heal_examine_date"];
+    }
     setLoading(true);
     try {
-      const result = await createAccuontHealthData(createHealthPayload);
+      modalOpen.type === "create"
+        ? await createAccuontHealthData(createHealthPayload)
+        : await updateAccuontHealthData(createHealthPayload);
       setModalOpen(null);
       await fetchData();
     } catch {
@@ -51,12 +65,22 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
     }
     setLoading(false);
   }
-  // };
+
+  async function deleteHealthHandler(healthNo: string) {
+    setLoading(true);
+    try {
+      await deleteAccuontHealthData(healthNo);
+      await fetchData();
+    } catch (err) {
+      console.log("deleteHealthHandler error: ", err);
+    }
+    setLoading(false);
+  }
 
   const tableData = () => {
-    return healthsData.map((child: { [key: string]: string }, i: number) => {
+    return healthsData.map((child: { [key: string]: string }) => {
       return {
-        id: { label: i.toString(), value: i.toString() },
+        id: { label: child["health_no"], value: child["health_no"] },
         heal_date: {
           label: dayjs(child["heal_date"]).format("YYYY/MM/DD"),
           value: child["heal_date"]
@@ -97,6 +121,7 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
     setLoading(true);
     try {
       const { healths, pageInfo } = await getHealthById(userId);
+      console.log("healths: ", healths);
       setHealthData(healths);
       setPageInfo(pageInfo);
     } catch (err) {
@@ -107,7 +132,26 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
   React.useEffect(() => {
     fetchData();
   }, [userId]);
-  console.log("healthData: ", healthsData);
+  //
+  function convertHealthDataToEditForm(healthData: any) {
+    console.log("healthData: ", healthData);
+    const healthForm = {
+      health_no: healthData["id"].value,
+      heal_agency: healthData["heal_agency"].value,
+      heal_date: healthData["heal_date"].value
+        ? dashDate(healthData["heal_date"].value)
+        : null,
+      heal_examine_date: null,
+      heal_filename: null,
+      heal_link: healthData["heal_link"].value,
+      heal_status: null,
+      heal_typ: healthData["heal_typ"].value,
+      invalid: null,
+      invalid_mark: null
+    };
+    console.log("healthForm", healthForm);
+    return healthForm;
+  }
   //
   return (
     <BodySTY>
@@ -132,13 +176,11 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
                 setModalOpen({
                   type: "edit",
                   open: true,
-                  defaultData: null,
+                  defaultData: convertHealthDataToEditForm(item),
                   dataIndex: id || null
                 });
               }}
-              deleteItem={() => {
-                console.log("點擊刪除");
-              }}
+              deleteItem={deleteHealthHandler}
               pageInfo={pageInfo || defaultPageInfo}
             />
           )}
@@ -154,9 +196,7 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
           >
             {modalOpen && modalOpen?.open && (
               <EditHealth
-                {...(modalOpen?.defaultData && {
-                  defaultData: modalOpen?.defaultData
-                })}
+                defaultData={modalOpen?.defaultData}
                 dataIndex={modalOpen?.dataIndex || null}
                 setShowHealthModal={setModalOpen}
                 userName={userName}

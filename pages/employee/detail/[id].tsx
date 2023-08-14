@@ -15,7 +15,6 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 import { useEmployeeFilterStore } from "@contexts/filter/employeeFilterStore";
 import { getEmployeeById } from "@services/employee/getEmployeeById";
-import LoadingSpinner from "@components/LoadingSpinner";
 import RegionProvider from "@contexts/regionContext/regionProvider";
 import HealthInfo from "@contents/Employee/HealthInfo";
 //
@@ -47,12 +46,7 @@ const Page: NextPageWithLayout<{ userId: string; editPage: string }> = ({
     //TableWrapper
     setNowTab(value);
   };
-  //
-  const asyncSubmitForm = async (data: any) => {
-    console.log("⚽data", data);
-    return;
-  };
-  //
+
   const onCancelHandler = () => {
     router.push("/employee");
   };
