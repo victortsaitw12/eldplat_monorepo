@@ -73,10 +73,11 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
       try {
         const res = await getAssignDriverDDL();
         setBusGroupDDL([
-          {
-            bus_group: editData.bus_group,
-            bus_group_name: editData.bus_group_name
-          },
+          // {
+          //   bus_group: editData.bus_group,
+          //   bus_group_name: editData.bus_group_name
+          // },
+          { bus_group: "00", bus_group_name: "請選擇" },
           ...res.dataList[0].bus_group_options
         ]);
       } catch (e: any) {
@@ -230,7 +231,11 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
         {busGroupDDL?.map(
           (item: { bus_group: string; bus_group_name: string }) => {
             return (
-              <option key={uuid()} value={item.bus_group}>
+              <option
+                key={uuid()}
+                value={item.bus_group}
+                selected={item.bus_group === editData.bus_group}
+              >
                 {item.bus_group_name}
               </option>
             );
