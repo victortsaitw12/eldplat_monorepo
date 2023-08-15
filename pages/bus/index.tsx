@@ -69,7 +69,7 @@ const busParser = (data: any, key: string): { label: any; value: any } => {
           <Link
             href={{
               pathname: `/bus/detail/${data["bus_no"]}`,
-              query: { editPage: "edit", license_plate: data["license_plate"] }
+              query: { editPage: "view", license_plate: data["license_plate"] }
             }}
             style={{ textDecoration: "none", color: "inherit" }}
           >
