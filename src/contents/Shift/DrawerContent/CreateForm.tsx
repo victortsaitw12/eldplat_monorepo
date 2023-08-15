@@ -57,7 +57,7 @@ const CreateForm = ({
           UI.setFlag(!UI.flag);
           setIsOpenDrawer(false);
         } else {
-          throw Error(res.message);
+          throw Error(res.resultString);
         }
       } catch (e: any) {
         toaster.warning(e.message, {
@@ -100,7 +100,7 @@ const CreateForm = ({
           <CalendarIcon />
           <span>假別</span>
         </label>
-        <LeaveTypePicker />
+        <LeaveTypePicker date={UI.startDate} />
       </section>
       <section className="form__description">
         <label className="form__label">
