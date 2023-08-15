@@ -30,6 +30,9 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const initialMonthFirst = new Date(
     Array.isArray(cur) ? cur[0] : cur || Date.now()
   );
+  const userFullName = monthlyData
+    ?.at(0)
+    ?.user_First_Name.concat(monthlyData[0]?.user_Name);
 
   //------ functions ------//
   const handleLayout = (type: "monthly" | "daily") => {
@@ -54,13 +57,11 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     <UIProvider>
       <ViewIdSTY isOpenDrawer={isOpenDrawer}>
         <Head>
-          <title>
-            駕駛排班 - {monthlyData ? monthlyData[0]?.user_Name : ""}
-          </title>
+          <title>駕駛排班 - {monthlyData ? userFullName : ""}</title>
         </Head>
         <Pane className="wrapMain">
           <Tabs
-            titles={["回到總表", monthlyData && monthlyData[0]?.user_Name]}
+            titles={["回到總表", monthlyData && userFullName]}
             selectedIdx={selectedIndex}
             isOpenDrawer={isOpenDrawer}
             onSelect={(index) => {
