@@ -57,7 +57,7 @@ const CreateForm = ({
           UI.setFlag(!UI.flag);
           setIsOpenDrawer(false);
         } else {
-          throw Error(res.message);
+          throw Error(res.resultString);
         }
       } catch (e: any) {
         toaster.warning(e.message, {
