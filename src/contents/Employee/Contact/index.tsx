@@ -9,10 +9,7 @@ import {
 } from "evergreen-ui";
 import React, { useContext, useEffect } from "react";
 import { BodySTY } from "./style";
-import {
-  I_Region_Context,
-  RegionContext
-} from "@contexts/regionContext/regionProvider";
+import { RegionContext } from "@contexts/regionContext/regionProvider";
 
 function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
   const {
@@ -52,10 +49,9 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
             <TextInput
               className="country-number"
               name="user_phone_code"
-              value={"886"}
+              value={insertData.user_phone_code || ""}
               onChange={handleEmployeeChange}
               required
-              disabled
             />
             <TextInput
               className="phone-number"
@@ -66,7 +62,6 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
             />
           </Pane>
         </Pane>
-        {/**/}
         <Pane className="input-line address-frame">
           <Text className="">聯絡地址</Text>
           <Pane className="address">
@@ -80,7 +75,6 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
                 onChange={handleEmployeeChange}
               />
             </Pane>
-
             {/* 第二行地址 */}
             <Pane className="second-address">
               <Paragraph>地址2</Paragraph>
@@ -212,52 +206,3 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
 }
 
 export default Contact;
-
-/* <Pane className="input-line">
-<Text>聯絡地址</Text>
-<Pane>
-  <Pane className="address">
-    <SelectField
-      label=""
-      name="city"
-      value={insertData.city}
-      onChange={handleEmployeeChange}
-    >
-      <option value="1">台北市</option>
-      <option value="2">新北市</option>
-      <option value="3">桃園市</option>
-      <option value="4">新竹市</option>
-    </SelectField>  
-    <SelectField
-      label=""
-      name="district"
-      value={insertData.district}
-      onChange={handleEmployeeChange}
-    >
-      <option value="1">南港區</option>
-      <option value="2">信義區</option>
-      <option value="3">大安區</option>
-      <option value="4">大同區</option>
-    </SelectField>
- 
-    <SelectField
-      label=""
-      name="street"
-      value={insertData.street}
-      onChange={handleEmployeeChange}
-    >
-      <option value="1">忠孝東路一段</option>
-      <option value="2">忠孝東路二段</option>
-      <option value="3">忠孝東路三段</option>
-      <option value="4">忠孝東路四段</option>
-    </SelectField>
-
-  </Pane>
-  <TextInput
-    marginTop={16}
-    name="user_address"
-    value={insertData.user_address}
-    onChange={handleEmployeeChange}
-  />
-</Pane>
-</Pane>  */

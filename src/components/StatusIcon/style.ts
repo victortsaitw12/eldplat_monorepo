@@ -14,13 +14,13 @@ export const StyleIdIcon = styled.div<{ status: string }>`
         case "01":
           return theme.color.G400;
         case "02":
-          return theme.color.N500;
-        case "03":
-          return theme.color.R400;
-        case "04":
-          return theme.color.Y400;
-        default:
           return theme.color.B400;
+        case "03":
+          return theme.color.Y400;
+        case "04":
+          return theme.color.R400;
+        default:
+          return theme.color.N500;
       }
     }};
     border-radius: 50%;

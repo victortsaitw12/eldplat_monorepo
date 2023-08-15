@@ -71,12 +71,6 @@ function AddEmployee({
       )
     }
   ];
-  // 性別選擇
-  // const handleChangeWorkinghours = (e: any) => {
-  //   const newData = { ...insertData };
-  //   newData.user_sex = e.target.value;
-  //   setInsertData(newData);
-  // };
 
   return (
     <BodySTY>

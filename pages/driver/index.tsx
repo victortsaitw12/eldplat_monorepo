@@ -107,9 +107,6 @@ const Page: NextPageWithLayout<never> = () => {
               >
                 {data["user_First_Name"].concat(data["user_Name"])}
               </Link>
-              {/* {data["license_No"].trim() === "" && (
-                <IssueIcon size={16} color={"#D14343"} />
-              )} */}
             </UserSTY>
           ) || "--",
         value: data["user_Name"] || null
