@@ -34,7 +34,7 @@ const Page: NextPageWithLayout<
   const mainFilterArray = useMemo(
     () => [
       { id: 1, label: "員工資料", value: "1" },
-      { id: 2, label: "健康記錄", value: "2" }
+      { id: 2, label: "健康紀錄", value: "2" }
     ],
     []
   );

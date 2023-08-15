@@ -18,9 +18,10 @@ import {
   maintenancePattern
 } from "@services/maintenance/getMaintenanceNotice";
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
-import AddMissionBtn from "@contents/maintenance/Notice/NoticeList/AddMissionBtn";
+
 import MaintenanceCreateForm from "@contents/maintenance/MaintenanceCreateForm";
 import { I_PageInfo } from "@components/PaginationField";
+import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 //
 const mainFilterArray = [
   { id: 1, label: "通知", value: "1" },
@@ -34,11 +35,10 @@ const Page: NextPageWithLayout<never> = () => {
   const [nowTab, setNowTab] = useState("1");
   const [busNo, setBusNo] = useState<string>("");
   const [reminderNo, setReminderNo] = useState<string>("");
-
+  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   const {
     initializeSubFilter,
-    mainFilter,
-    updateMainFilter,
     subFilter,
     updateSubFilter,
     isDrawerOpen,
@@ -70,38 +70,38 @@ const Page: NextPageWithLayout<never> = () => {
           { id: v.reminders_no, checked: false }
         ]);
       });
-
-      const newData = maintenanceData?.map((item, idx) => {
-        console.log("😺item", item);
-        return {
-          id: { label: item.id.label, value: item.id.value },
-          bus_name: { label: item.bus_name.label, value: item.bus_name.value },
-          driver_name: {
-            label: item.driver_name.label,
-            value: item.driver_name.value
-          },
-          meter: { label: item.meter.label, value: item.meter.value },
-          vendor_name: {
-            label: item.vendor_name.label,
-            value: item.vendor_name.value
-          },
-          component_name: {
-            label: item.component_name.label,
-            value: item.component_name.value
-          },
-          mission: {
-            label: (
-              <AddMissionBtn
-                item={item}
-                setDrawerOpen={setDrawerOpen}
-                setBusNo={setBusNo}
-                setReminderNo={setReminderNo}
-              ></AddMissionBtn>
-            ),
-            value: item.reminders_no.label
-          }
-        };
-      });
+      console.log("maintenanceData", maintenanceData);
+      // const newData = maintenanceData?.map((item, idx) => {
+      //   const mappingItem = {
+      //     id: { label: item.id.label, value: item.id.value },
+      //     bus_name: { label: item.bus_name.label, value: item.bus_name.value },
+      //     driver_name: {
+      //       label: item.driver_name.label,
+      //       value: item.driver_name.value
+      //     },
+      //     meter: { label: item.meter.label, value: item.meter.value },
+      //     vendor_name: {
+      //       label: item.vendor_name.label,
+      //       value: item.vendor_name.value
+      //     },
+      //     component_name: {
+      //       label: item.component_name.label,
+      //       value: item.component_name.value
+      //     },
+      //     mission: {
+      //       label: (
+      //         <AddMissionBtn
+      //           item={item}
+      //           setDrawerOpen={setDrawerOpen}
+      //           setBusNo={setBusNo}
+      //           setReminderNo={setReminderNo}
+      //         ></AddMissionBtn>
+      //       ),
+      //       value: item.reminders_no.label
+      //     }
+      //   };
+      //   return mappingItem;
+      // });
       if (isCanceled) {
         console.log("canceled");
         return;
@@ -115,7 +115,7 @@ const Page: NextPageWithLayout<never> = () => {
       }
       console.log("notice maintenanceData", maintenanceData);
 
-      setData(newData);
+      setData(maintenanceData);
     });
   };
 
@@ -130,12 +130,34 @@ const Page: NextPageWithLayout<never> = () => {
   };
   //
   useEffect(() => {
+    setDrawerOpen(false);
+  }, []);
+  useEffect(() => {
     let isCanceled = false;
     fetchMaintenanceNoticeData(isCanceled, nowTab);
     return () => {
       isCanceled = true;
     };
   }, [nowTab]);
+  useEffect(() => {
+    setLoading(true);
+    try {
+      getCreateDdl().then((DDLdata) => {
+        console.log("DDL data", DDLdata);
+        const newData = { ...DDLdata.dataList[0] };
+        setMainCreateDdl(newData);
+        setLoading(false);
+      });
+    } catch (err) {
+      throw new Error("getDDL maintenance error");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+  /**
+   * 
+/ 取得新增時的下拉式資料
+   */
   if (!data) {
     return <LoadingSpinner />;
   }
@@ -160,7 +182,7 @@ const Page: NextPageWithLayout<never> = () => {
           filter={subFilter}
         >
           <MaintenanceNoticeList
-            clientData={data}
+            maintenanceData={data}
             checkboxData={checkItems}
             setCheckboxData={setCheckItems}
             goToCreatePage={() => {
@@ -169,6 +191,7 @@ const Page: NextPageWithLayout<never> = () => {
             deleteItemHandler={deleteItemHandler}
             pageInfo={pageInfo}
             handlePageChange={handlePageChange}
+            setReminderNo={setReminderNo}
           />
         </FilterWrapper>
       </TableWrapper>
@@ -181,12 +204,12 @@ const Page: NextPageWithLayout<never> = () => {
         >
           <MaintenanceCreateForm
             noticeData={data}
+            reminderNo={reminderNo}
             reloadData={() => {
               fetchMaintenanceNoticeData(false);
               setDrawerOpen(false);
             }}
-            busNo={busNo}
-            reminderNo={reminderNo}
+            mainCreateDdl={mainCreateDdl}
           />
         </Drawer>
       )}

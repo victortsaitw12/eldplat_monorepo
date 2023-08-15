@@ -87,6 +87,11 @@ export const busParser = (
       label: data["type_name"] || null,
       value: data["type"] || null
     };
+  } else if (key === "make") {
+    return {
+      label: data["make_name"] || null,
+      value: data["make"] || null
+    };
   } else if (key === "model") {
     return {
       label: data["model_name"] || null,
