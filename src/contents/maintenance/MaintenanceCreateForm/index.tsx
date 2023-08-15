@@ -236,8 +236,6 @@ function MaintenanceCreateForm({
               {mainCreateDdl?.package_options
                 .filter((package_option: any) => {
                   const vendorNo = getValues("vendor_no") || "";
-                  console.log("vendorNo", vendorNo);
-                  console.log("package_option", package_option);
                   if (!vendorNo) return true;
                   return package_option.vendor_no === vendorNo;
                 })
