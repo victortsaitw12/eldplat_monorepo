@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BodySTY = styled.div`
+export const DivSTY = styled.div`
   background: ${({ theme }) => theme.color.N0};
   width: 100%;
   min-height: 100px;
@@ -8,6 +8,9 @@ export const BodySTY = styled.div`
   border-radius: 10px;
   overflow: auto;
   padding: 35px 20px;
+  .input-line {
+    grid-template-columns: 1fr 2fr;
+  }
   h4 {
     font-style: normal;
     font-weight: 600;

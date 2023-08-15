@@ -3,6 +3,7 @@ import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { Pane, Tab } from "evergreen-ui";
+import dayjs from "dayjs";
 import { ViewIdSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
@@ -15,6 +16,7 @@ import Tabs from "@components/Tabs";
 import TableTitle from "@components/Table/TableTitle";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
+import TotalLeaveDays from "@contents/shift/TotalLeaveDays";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -31,36 +33,35 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     Array.isArray(cur) ? cur[0] : cur || Date.now()
   );
 
+  const userFullName = monthlyData
+    ?.at(0)
+    ?.user_First_Name.concat(monthlyData[0]?.user_Name);
+
   //------ functions ------//
   const handleLayout = (type: "monthly" | "daily") => {
     setView(type);
     setIsOpenDrawer(false);
     setIsExpand(false);
   };
-
   //------ render ------//
   const tableName = [
     <MonthPicker key="monthpicker" initialMonthFirst={initialMonthFirst} />,
-    <div key="tabelTitle-type" className="container-header-left">
-      {monthlyData && (
-        <span className="red">
-          休假天數 {monthlyData[0]?.total_Leave_Days} 天
-        </span>
-      )}
-    </div>
+    <TotalLeaveDays
+      key="totalLeaveDays"
+      monthlyData={monthlyData}
+      initialMonthFirst={initialMonthFirst}
+    />
   ];
 
   return (
     <UIProvider>
       <ViewIdSTY isOpenDrawer={isOpenDrawer}>
         <Head>
-          <title>
-            駕駛排班 - {monthlyData ? monthlyData[0]?.user_Name : ""}
-          </title>
+          <title>駕駛排班 - {monthlyData ? userFullName : ""}</title>
         </Head>
         <Pane className="wrapMain">
           <Tabs
-            titles={["回到總表", monthlyData && monthlyData[0]?.user_Name]}
+            titles={["回到總表", monthlyData && userFullName]}
             selectedIdx={selectedIndex}
             isOpenDrawer={isOpenDrawer}
             onSelect={(index) => {

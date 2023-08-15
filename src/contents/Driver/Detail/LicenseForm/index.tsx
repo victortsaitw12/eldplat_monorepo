@@ -67,7 +67,7 @@ function LicenseForm({
           licn_unit: licenseData?.licn_unit,
           licn_issue: formatDateFromAPI(licenseData?.licn_issue),
           licn_exp: formatDateFromAPI(licenseData?.licn_exp),
-          licn_examine_date: formatDateFromAPI(licenseData?.licn_examine_Date),
+          licn_examine_date: formatDateFromAPI(licenseData?.licn_examine_date),
           licn_filename: licenseData?.licn_filename,
           licn_link: licenseData?.licn_link
         }

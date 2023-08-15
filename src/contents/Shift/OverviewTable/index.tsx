@@ -184,7 +184,7 @@ const OverviewTable = ({
                 className="eg-td"
                 style={{ width: "64px", minWidth: "64px" }}
               >
-                {item.user_Name}
+                {item.user_First_Name.concat(item.user_Name)}
               </Table.TextCell>
               <Table.TextCell
                 className="eg-td"

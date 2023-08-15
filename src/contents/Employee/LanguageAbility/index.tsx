@@ -37,6 +37,7 @@ function LanguageAbility({
   const [insertLang, setInsertLang] = useState<I_languageType[]>([]); // 檢視樣子的:
   // [{language:"中文", listen:"聽-精通", read:"讀-精通", saved:true, speak:"說-精通", write:"寫-精通"}]
   const [LangForApi, setLangForApi] = useState<any[]>([]);
+  console.log("🍅insertData", insertData);
 
   // 一進來有editData的話先設好要顯示的語言們
   useEffect(() => {

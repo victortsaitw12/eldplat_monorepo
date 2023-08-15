@@ -6,12 +6,13 @@ import {
   Checkbox,
   Textarea
 } from "evergreen-ui";
+import { DivSTY } from "./style";
 
 import InfoBox from "@components/InfoBox";
 import { UseFormRegister, UseFormGetValues } from "react-hook-form";
 import FlexWrapper from "@layout/FlexWrapper";
 import { UpdateDriverInfoPayload } from "../../driver.type";
-import LanguageAbility from "@contents/Driver/Detail/LanguageAbility";
+import LanguageAbility from "@contents/Employee/LanguageAbility";
 import TagSelect from "@components/TagSelect";
 import {
   getDriverCountryDDL,
@@ -302,7 +303,9 @@ function DriverInfo({
             </span>
           }
         />
-        <LanguageAbility currentUserInfo={driverData} />
+        <DivSTY>
+          <LanguageAbility insertData={driverData} viewOnly />
+        </DivSTY>
         <InfoBox
           isEdit={isEdit}
           infoData={schdInfo}
