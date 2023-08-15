@@ -15,7 +15,7 @@ import Tabs from "@components/Tabs";
 import TableTitle from "@components/Table/TableTitle";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
-import TotalLeaveDays from "@contents/shift/TotalLeaveDays";
+import TotalLeaveDays from "@contents/Shift/TotalLeaveDays";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
