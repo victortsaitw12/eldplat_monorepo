@@ -17,6 +17,7 @@ import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import { I_PageInfo } from "@components/PaginationField";
 import { useRouter } from "next/router";
+import FirstNameIcon from "@components/FirstNameIcon";
 
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
@@ -97,11 +98,7 @@ const Page: NextPageWithLayout<never> = () => {
         label:
           (
             <UserSTY>
-              <Avatar
-                name={data["user_First_Name"]}
-                size={32}
-                style={{ padding: "8px", justifyContent: "center" }}
-              />
+              <FirstNameIcon text={data["user_First_Name"].slice(0, 1)} />
               <Link
                 href={{
                   pathname: "/driver/detail/[id]",
