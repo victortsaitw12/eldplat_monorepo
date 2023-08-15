@@ -55,7 +55,7 @@ function VehicleForm({
     { order_date: "", order_weekday: "請選擇" }
   ]);
   const [busDayNumberDDL, setBusDayNumberDDL] = useState<any>([
-    { bus_day_number: "00", assignment_no: "", label: "請先選取日期" }
+    { bus_day_number: "00", label: "請先選取日期" }
   ]);
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
@@ -125,9 +125,7 @@ function VehicleForm({
     async (e: any) => {
       setDateBase(e.target.value);
       if (!e.target.value) {
-        setBusDayNumberDDL([
-          { bus_day_number: "", assignment_no: "", label: "請選擇" }
-        ]);
+        setBusDayNumberDDL([{ bus_day_number: "", label: "請選擇" }]);
         return;
       }
       // 取得當日可選車次
@@ -139,7 +137,7 @@ function VehicleForm({
         }
       );
       setBusDayNumberDDL([
-        { bus_day_number: "", assignment_no: "", label: "請選擇" },
+        { bus_day_number: "", label: "請選擇" },
         ...resBusDayNumberDDL
       ]);
     },
