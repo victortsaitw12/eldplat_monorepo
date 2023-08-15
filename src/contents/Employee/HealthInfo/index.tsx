@@ -8,7 +8,10 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 import dayjs from "dayjs";
 import EditHealth from "./EditHealth";
 //@service
-import { getHealthById, defaultPageInfo } from "@services/driver/getHealthById";
+import {
+  getHealthListByAccountId,
+  defaultPageInfo
+} from "@services/employee/healthAPI";
 import { HEAL_TYP } from "@services/getDDL/";
 import {
   createAccuontHealthData,
@@ -120,7 +123,7 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
   async function fetchData() {
     setLoading(true);
     try {
-      const { healths, pageInfo } = await getHealthById(userId);
+      const { healths, pageInfo } = await getHealthListByAccountId(userId);
       console.log("healths: ", healths);
       setHealthData(healths);
       setPageInfo(pageInfo);
@@ -163,7 +166,7 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
             <TableWithEdit
               needCheckBox={isEdit}
               needCreateBtn={isEdit}
-              createBtnText="新增健康記錄"
+              createBtnText="新增健康紀錄"
               goToCreatePage={() => {
                 setModalOpen({ type: "create", open: true });
               }}
@@ -187,7 +190,7 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
           <LightBox
             wrapperStyle={{ maxWidth: "37rem" }}
             title={
-              modalOpen?.type == "create" ? "新增健康記錄" : "編輯健康記錄"
+              modalOpen?.type == "create" ? "新增健康紀錄" : "編輯健康紀錄"
             }
             isOpen={modalOpen?.open}
             handleCloseLightBox={() => {
@@ -196,8 +199,7 @@ const HealthInfo = ({ userId, isEdit, userName }: I_Props) => {
           >
             {modalOpen && modalOpen?.open && (
               <EditHealth
-                defaultData={modalOpen?.defaultData}
-                dataIndex={modalOpen?.dataIndex || null}
+                healthNo={modalOpen?.dataIndex || null}
                 setShowHealthModal={setModalOpen}
                 userName={userName}
                 updateHealthHandler={updateHealthHandler.bind(null, userId)}

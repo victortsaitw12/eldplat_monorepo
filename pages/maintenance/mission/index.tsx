@@ -23,6 +23,7 @@ import AssignBtn from "@contents/maintenance/Mission/MissionList/AssignBtn";
 import { CloseAssignment } from "@services/maintenance/updateMaintenance";
 import Link from "next/link";
 import { I_PageInfo } from "@components/PaginationField";
+import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 //
 const mainFilterArray = [
   { id: 1, label: "任務", value: "1" },
@@ -35,6 +36,8 @@ const Page: NextPageWithLayout<never> = () => {
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState("1");
   const [listStatus, setListStatus] = useState("1");
+  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   const {
     initializeSubFilter,
     mainFilter,
@@ -167,6 +170,23 @@ const Page: NextPageWithLayout<never> = () => {
       isCanceled = true;
     };
   }, [nowTab, listStatus]);
+
+  useEffect(() => {
+    setLoading(true);
+    try {
+      getCreateDdl().then((DDLdata) => {
+        console.log("DDL data", DDLdata);
+        const newData = { ...DDLdata.dataList[0] };
+        setMainCreateDdl(newData);
+        setLoading(false);
+      });
+    } catch (err) {
+      throw new Error("getDDL maintenance error");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   if (!data) {
     return <LoadingSpinner />;
   }
@@ -211,10 +231,12 @@ const Page: NextPageWithLayout<never> = () => {
           }}
         >
           <MaintenanceCreateForm
+            noticeData={data}
             reloadData={() => {
               fetchMaintenanceData(false);
               setDrawerOpen(false);
             }}
+            mainCreateDdl={mainCreateDdl}
           />
         </Drawer>
       )}

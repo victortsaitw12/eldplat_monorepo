@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { FormSTY } from "./style";
 import { PlusIcon, SelectField, TextInputField } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
 //@layout
-import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import { createMaintenance } from "@services/maintenance/createMaintenance";
 import router from "next/router";
-import dayjs from "dayjs";
 import { CancelMaintenanceById } from "@services/maintenance/getMaintenanceNotice";
+import LoadingSpinner from "@components/LoadingSpinner";
 
 //@components
 export interface CreateMaintenancePayload {
@@ -29,15 +28,15 @@ interface I_MaintenanceCreateFormProps {
   reloadData?: () => void;
   busNo?: string;
   reminderNo?: string;
+  mainCreateDdl: any;
 }
 
 function MaintenanceCreateForm({
   noticeData,
   reloadData,
-  busNo,
-  reminderNo
+  reminderNo,
+  mainCreateDdl
 }: I_MaintenanceCreateFormProps) {
-  const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
   // default value
   const defaultValues: CreateMaintenancePayload = {
     bus_no: "",
@@ -50,72 +49,30 @@ function MaintenanceCreateForm({
     service_start_date: "",
     service_end_date: ""
   };
-  const { register, handleSubmit, control, reset, setValue, getValues } =
+  useEffect(() => {
+    if (reminderNo) {
+      console.log("busNo", reminderNo);
+      console.log("noticeData", noticeData);
+      const targetReminder = noticeData?.find(
+        (reminder: any) => reminder.id.value === reminderNo
+      );
+      console.log("targetReminder", targetReminder);
+      if (targetReminder) {
+        setValue("bus_no", targetReminder.bus_no.value);
+        setValue("driver_no", targetReminder.driver_no.value);
+        setValue("vendor_no", targetReminder.vendor_no.value);
+        setValue("package_code", targetReminder.component_code.value);
+      }
+    }
+  }, [reminderNo]);
+  const { register, handleSubmit, control, reset, setValue, getValues, watch } =
     useForm<CreateMaintenancePayload>({
       defaultValues
     });
-  const [loading, setLoading] = useState(false);
-
-  // 取得新增時的下拉式資料
-  useEffect(() => {
-    setLoading(true);
-    try {
-      getCreateDdl("").then((DDLdata) => {
-        console.log("DDL data", DDLdata);
-        console.log("維保通知打開側邊新增的data", noticeData);
-        const newData = { ...DDLdata.dataList[0] };
-        newData.bus_options.map((v: { no: any }, idx: any) => {
-          if (v.no === busNo) {
-            newData.bus_options.splice(idx, 1);
-            newData.bus_options.splice(0, 0, v);
-            setValue("bus_no", v.no);
-          }
-        });
-        setMainCreateDdl(newData);
-      });
-    } catch (err) {
-      console.error("getDDL error: ", err);
-    }
-    setLoading(false);
-  }, [loading]);
-
-  // 選完車輛時，抓到該車輛的主要駕駛
-  const handleChangeBusDDL = (e: any) => {
-    getCreateDdl("").then((data) => {
-      const newData = { ...data.dataList[0] };
-      const busChosen = newData.bus_options.filter((v: { no: any }) => {
-        return v.no === e.target.value;
-      });
-
-      const driverChosen = newData.driver_options.filter((v: { no: any }) => {
-        return v.no === busChosen[0].driver_no;
-      });
-
-      newData.driver_options.map((v: { no: any }, idx: any) => {
-        if (v.no === driverChosen[0]?.no && driverChosen.length > 0) {
-          newData.driver_options.splice(idx, 1);
-          newData.driver_options.splice(0, 0, driverChosen[0]);
-          setValue("driver_no", driverChosen[0]?.no);
-        }
-      });
-      setMainCreateDdl(newData);
-      setValue("bus_no", busChosen[0]?.no);
-    });
-  };
-
-  // 選維修廠之後分類會變
-  const handleChangeVendorDDL = (e: any) => {
-    getCreateDdl(e.target.value).then((data) => {
-      const newData = { ...data.dataList[0] };
-      console.log("㊗newData", newData);
-      setValue("vendor_no", e.target.value);
-      setMainCreateDdl(newData);
-    });
-  };
-
+  //
+  watch("vendor_no");
   // 送出表單:
   const asyncSubmitForm = async (data: any) => {
-    setLoading(true);
     console.log("BEFORE:data for submitting", data);
     const newData = { ...data };
     newData["bus_no"] = !newData["bus_no"]
@@ -160,7 +117,6 @@ function MaintenanceCreateForm({
       console.log(e);
       alert(e.message);
     }
-    setLoading(false);
     reloadData && reloadData();
     reset();
   };
@@ -168,115 +124,149 @@ function MaintenanceCreateForm({
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
+        console.log("data", data);
         asyncSubmitForm({
           ...data
         });
       })}
     >
-      <SelectField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>車輛名稱
-          </div>
-        }
-        {...(register("bus_no"),
-        {
-          onChange: (e) => {
-            handleChangeBusDDL(e);
-          }
-        })}
-      >
-        {mainCreateDdl?.bus_options.map((item: any) => {
-          return (
-            <option key={item.no} value={item.no}>
-              {item.name}
-            </option>
-          );
-        })}
-      </SelectField>
-      <SelectField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>駕駛
-          </div>
-        }
-        {...register("driver_no")}
-      >
-        {mainCreateDdl?.driver_options.map((item: any) => {
-          return (
-            <option key={item.no} value={item.no}>
-              {item.name}
-            </option>
-          );
-        })}
-      </SelectField>
-      <SelectField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>分類
-          </div>
-        }
-        {...register("maintenance_type")}
-      >
-        {mainCreateDdl?.type_options.map((item: any) => {
-          return (
-            <option key={item.no} value={item.no}>
-              {item.name}
-            </option>
-          );
-        })}
-      </SelectField>
-      <SelectField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>維修廠
-          </div>
-        }
-        {...(register("vendor_no"),
-        {
-          onChange: (e) => {
-            handleChangeVendorDDL(e);
-          }
-        })}
-      >
-        {mainCreateDdl?.vendor_options.map((item: any) => {
-          return (
-            <option key={item.no} value={item.no}>
-              {item.name}
-            </option>
-          );
-        })}
-      </SelectField>
-      <SelectField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>項目
-          </div>
-        }
-        {...register("package_code")}
-      >
-        {mainCreateDdl?.package_options.map((item: any) => {
-          return (
-            <option key={item.no} value={item.no}>
-              {item.name}
-            </option>
-          );
-        })}
-      </SelectField>
-      <TextInputField
-        label="起始日期"
-        type="datetime-local"
-        {...register("service_start_date")}
-      />
-      <TextInputField
-        label="截止日期"
-        type="datetime-local"
-        {...register("service_end_date")}
-      />
+      {!mainCreateDdl ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <Controller
+            name="bus_no"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SelectField
+                label={
+                  <div>
+                    <span style={{ color: "#D14343" }}>*</span>車輛名稱
+                  </div>
+                }
+                value={value}
+                onChange={(e) => {
+                  const targetBusOption = mainCreateDdl?.bus_options.find(
+                    (bus_option: any) => bus_option.no === e.target.value
+                  );
+                  onChange(e.target.value);
+                  setValue("driver_no", targetBusOption?.driver_no);
+                }}
+              >
+                {mainCreateDdl?.bus_options.map((item: any) => {
+                  return (
+                    <option key={item.no} value={item.no}>
+                      {item.name}
+                    </option>
+                  );
+                })}
+              </SelectField>
+            )}
+          />
+          <SelectField
+            label={
+              <div>
+                <span style={{ color: "#D14343" }}>*</span>駕駛
+              </div>
+            }
+            {...register("driver_no")}
+          >
+            {mainCreateDdl?.driver_options.map((item: any) => {
+              return (
+                <option key={item.no} value={item.no}>
+                  {item.name}
+                </option>
+              );
+            })}
+          </SelectField>
+          <SelectField
+            label={
+              <div>
+                <span style={{ color: "#D14343" }}>*</span>分類
+              </div>
+            }
+            {...register("maintenance_type")}
+          >
+            {mainCreateDdl?.type_options.map((item: any) => {
+              return (
+                <option key={item.no} value={item.no}>
+                  {item.name}
+                </option>
+              );
+            })}
+          </SelectField>
+          <Controller
+            name="vendor_no"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SelectField
+                label={
+                  <div>
+                    <span style={{ color: "#D14343" }}>*</span>維修廠
+                  </div>
+                }
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                  setValue("package_code", "");
+                }}
+              >
+                {mainCreateDdl?.vendor_options.map((item: any) => {
+                  return (
+                    <option key={item.no} value={item.no}>
+                      {item.name}
+                    </option>
+                  );
+                })}
+              </SelectField>
+            )}
+          />
+          <SelectField
+            label={
+              <div>
+                <span style={{ color: "#D14343" }}>*</span>項目
+              </div>
+            }
+            {...register("package_code")}
+          >
+            <>
+              <option value={""} disabled hidden>
+                請選擇
+              </option>
+              {mainCreateDdl?.package_options
+                .filter((package_option: any) => {
+                  const vendorNo = getValues("vendor_no") || "";
+                  console.log("vendorNo", vendorNo);
+                  console.log("package_option", package_option);
+                  if (!vendorNo) return true;
+                  return package_option.vendor_no === vendorNo;
+                })
+                .map((package_option: any) => {
+                  console.log("filtered optoin: ", package_option);
+                  return (
+                    <option key={package_option.no} value={package_option.no}>
+                      {package_option.name}
+                    </option>
+                  );
+                })}
+            </>
+          </SelectField>
+          <TextInputField
+            label="起始日期"
+            type="datetime-local"
+            {...register("service_start_date")}
+          />
+          <TextInputField
+            label="截止日期"
+            type="datetime-local"
+            {...register("service_end_date")}
+          />
 
-      <IconLeft text={"新增維保任務"} type="submit">
-        <PlusIcon size={14} />
-      </IconLeft>
+          <IconLeft text={"新增維保任務"} type="submit">
+            <PlusIcon size={14} />
+          </IconLeft>
+        </>
+      )}
     </FormSTY>
   );
 }

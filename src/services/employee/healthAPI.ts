@@ -9,14 +9,6 @@ export const defaultPageInfo: I_PageInfo = {
   total: 0,
   last_Page: 0
 };
-interface I_Healths {
-  heal_date: string; //"2023-08-02T04:29:16.926Z";
-  heal_typ: string;
-  heal_agency: string;
-  heal_status: string;
-  heal_link: string;
-}
-
 // create or update health
 interface updateHealthPayload {
   operationType: "0" | "2" | "3";
@@ -84,8 +76,8 @@ async function deleteAccuontHealthData(healthNo: string) {
   }
 }
 
-// 取得單一駕駛健康資料
-async function getHealthById(
+// 取得單一駕駛健康資料列表
+async function getHealthListByAccountId(
   userNo: string,
   filter?: { [key: string]: any },
   pageQuery?: any
@@ -96,7 +88,7 @@ async function getHealthById(
     filter_Needed: true,
     pageInfo: pageQuery || defaultPageInfo
   };
-  const res = await fetch(`${API_Path["GetHealthById"]}`, {
+  const res = await fetch(`${API_Path["GetHealthsListByID"]}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -111,9 +103,27 @@ async function getHealthById(
   return { healths, pageInfo };
 }
 
+// 取得單一健康資料
+async function getHealthDataByHealthId(healthNo: string) {
+  const url = new URL(API_Path["GetHealthByID"]);
+  url.searchParams.append("health_no", healthNo);
+  const res = await fetch(url.href, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
+    }
+  });
+  const result = await res.json();
+  const healthData = result.data;
+
+  return healthData;
+}
+
 export {
   createAccuontHealthData,
   updateAccuontHealthData,
   deleteAccuontHealthData,
-  getHealthById
+  getHealthListByAccountId,
+  getHealthDataByHealthId
 };
