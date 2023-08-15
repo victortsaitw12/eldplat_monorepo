@@ -36,33 +36,6 @@ const AssignmentAdditional = ({
     React.useState<I_creatOtherAssignment | null>(null);
 
   // ----- function ----- //
-  // TODO 待測試確認沒問題後刪除
-  // refetch function (待抽出:等page/assignment 裡面的fetchAssignData拆開)
-  // const refetch = async (resDataListZero: I_OtherAssignment) => {
-  //   // refetch 更新子列表
-  //   getAllAssignments()
-  //     .then((data) => {
-  //       const newSubData = data.contentList.map(
-  //         (item: { assignments: any }) => {
-  //           return item.assignments;
-  //         }
-  //       );
-  //       setSubAssignData(newSubData);
-  //     })
-  //     .catch((err) => {
-  //       console.error("error in assignment list", err);
-  //     });
-  //   // 檢查原本那台(車/駕駛)於該筆訂單後面還有單 => refetch一併更新的彈窗
-  //   if (resDataListZero && resDataListZero.time_list.length !== 0) {
-  //     setBusRestShifts(resDataListZero);
-  //     setTimeout(() => {
-  //       setIsLightBoxOpen(true);
-  //     }, 2000);
-  //   } else {
-  //     //關抽屜;
-  //     setFirstDrawerOpen("");
-  //   }
-  // };
   const checkOtherAssignment = (resDataListZero: I_creatOtherAssignment) => {
     // 檢查原本那台(車/駕駛)於該筆訂單後面還有單 => render一併更新的彈窗
     if (resDataListZero && resDataListZero.time_list.length !== 0) {
@@ -92,7 +65,6 @@ const AssignmentAdditional = ({
     if (!busRestShifts) return;
     try {
       const res = await createOtherAssignment(busRestShifts);
-      // 成功or失敗訊息
       if (res.statusCode !== "200") throw new Error(` ${res.resultString}`);
       toaster.success("新增成功", {
         description: "一併新增其他日期派車成功",
