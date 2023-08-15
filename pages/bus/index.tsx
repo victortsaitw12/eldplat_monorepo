@@ -1,9 +1,11 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
+import Link from "next/link";
+
 //
 import { getLayout } from "@layout/MainLayout";
 import BusList from "@contents/Bus/BusList";
-import { getAllBuses, busPattern, busParser } from "@services/bus/getAllBuses";
+import { getAllBuses, busPattern } from "@services/bus/getAllBuses";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { useRouter } from "next/router";
 import { useBusStore } from "@contexts/filter/busStore";
@@ -16,12 +18,67 @@ import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 import { PageInfoType } from "@services/type";
+
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
   { id: 2, label: "停用", value: "2" }
 ];
 //
+
+const busParser = (data: any, key: string): { label: any; value: any } => {
+  if (key === "id") {
+    return {
+      label: data["bus_no"] || null,
+      value: data["bus_no"] || null
+    };
+  } else if (key === "age") {
+    return {
+      label: data["age"] + "年" || null,
+      value: data["age"] || null
+    };
+  } else if (key === "type") {
+    return {
+      label: data["type_name"] || null,
+      value: data["type"] || null
+    };
+  } else if (key === "model") {
+    return {
+      label: data["model_name"] || null,
+      value: data["model"] || null
+    };
+  } else if (key === "bus_group") {
+    return {
+      label: data["bus_group_name"] || null,
+      value: data["bus_group"] || null
+    };
+  } else if (key === "ownership") {
+    return {
+      label: data["ownership_name"] || null,
+      value: data["ownership"] || null
+    };
+  } else if (key === "bus_name" || key === "license_plate") {
+    return {
+      label:
+        (
+          <Link
+            href={{
+              pathname: `/bus/detail/${data["bus_no"]}`,
+              query: { editPage: "edit", license_plate: data["license_plate"] }
+            }}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            {data[key]}
+          </Link>
+        ) || null,
+      value: data[key] || null
+    };
+  }
+  return {
+    label: data[key] || null,
+    value: data[key] || null
+  };
+};
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
