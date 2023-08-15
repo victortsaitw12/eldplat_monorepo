@@ -100,14 +100,14 @@ function AssignAutoCreate({
     <FormSTY onSubmit={asyncSubmitForm}>
       {/* 超連結按鈕 */}
       <Pane display="flex" justifyContent="center" className="anchorBtn">
-        <Button iconBefore={DocumentShareIcon} marginRight={12}>
+        <Button iconBefore={DocumentShareIcon} marginRight={12} type="button">
           車輛分配
         </Button>
         <Button
           iconBefore={DocumentShareIcon}
           onClick={(e: any) => {
             e.preventDefault();
-            window.open("/driver", "_blank");
+            window.open("/shift", "_blank");
           }}
         >
           駕駛排班
