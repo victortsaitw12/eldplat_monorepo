@@ -151,14 +151,9 @@ const UserSTY = styled.div`
   color: ${({ theme }) => theme.color.N900};
 
   /* fonts */
-
   a {
     color: ${({ theme }) => theme.color.N900};
     text-decoration: inherit !important;
-  }
-  // initial in Avatar
-  div > span {
-    justify-content: center;
   }
 `;
 

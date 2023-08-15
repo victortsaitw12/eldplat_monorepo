@@ -33,7 +33,7 @@ const TimeInput = ({
   setDate: (date: string) => void;
   disabled?: boolean;
 }) => {
-  const [hour, setHour] = React.useState<number>(dayjs(date).hour() % 12);
+  const [hour, setHour] = React.useState<number>(dayjs(date).hour() % 12 || 0);
   const [minute, setMinute] = React.useState<number>(dayjs(date).minute() || 0);
   const [timeslot, setTimeslot] = React.useState<number>(
     dayjs(date).hour() >= 12 ? 12 : 0
@@ -70,7 +70,7 @@ const TimeInput = ({
     }
     const optionArr = options.map((item, i) =>
       i === 0 ? (
-        <option key={`hour-${item.value}`} value={item.value} disabled>
+        <option key={`hour-${item.value}`} value={item.value}>
           {item.label}
         </option>
       ) : (

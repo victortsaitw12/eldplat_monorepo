@@ -16,7 +16,7 @@ import { I_ManualAssignType } from "@typings/assignment_type";
 import {
   getAssignBusDDL,
   getAssignDateDDL,
-  getBusDayNumberDDL
+  getDayBusNameDDL
 } from "@services/assignment/getAssignmentDDL";
 import {
   I_ReplaceAssignment,
@@ -131,10 +131,7 @@ function VehicleForm({
         return;
       }
       // 取得當日可選車次
-      const res = await getBusDayNumberDDL(
-        orderInfo[0].quote_no,
-        e.target.value
-      );
+      const res = await getDayBusNameDDL(orderInfo[0].quote_no, e.target.value);
 
       const resBusDayNumberDDL = res.dataList[0].day_bus_options.map(
         (item: any, i: number) => {
@@ -168,7 +165,7 @@ function VehicleForm({
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
-        asyncSubmitForm({ ...data });
+        asyncSubmitForm(data);
       })}
     >
       <SelectField

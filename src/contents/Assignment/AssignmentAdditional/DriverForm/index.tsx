@@ -15,8 +15,7 @@ import { I_ManualAssignType } from "@typings/assignment_type";
 import {
   getAssignBusDDL,
   getAssignDateDDL,
-  getBusDayNumberDDL,
-  getDriverNameDDL
+  getDayDriverNameDDL
 } from "@services/assignment/getAssignmentDDL";
 import {
   I_ReplaceAssignment,
@@ -124,7 +123,7 @@ function DriverForm({
       setDateBase(e.target.value);
       if (!e.target.value) return;
       // 取得當日可選車次
-      const res = await getBusDayNumberDDL(
+      const res = await getDayDriverNameDDL(
         orderInfo[0].quote_no,
         e.target.value
       );
@@ -143,7 +142,7 @@ function DriverForm({
   );
 
   const handleBusGroupChange = async (e: any) => {
-    const res = await getDriverNameDDL(
+    const res = await getDayDriverNameDDL(
       orderInfo[0].quote_no,
       dateBase,
       e.target.value
@@ -157,7 +156,7 @@ function DriverForm({
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
-        asyncSubmitForm({ ...data });
+        asyncSubmitForm(data);
       })}
     >
       <SelectField
