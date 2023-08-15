@@ -47,6 +47,11 @@ const busParser = (data: any, key: string): { label: any; value: any } => {
       label: data["model_name"] || null,
       value: data["model"] || null
     };
+  } else if (key === "make") {
+    return {
+      label: data["make_name"] || null,
+      value: data["make"] || null
+    };
   } else if (key === "bus_group") {
     return {
       label: data["bus_group_name"] || null,

@@ -55,19 +55,20 @@ const MaintenanceDetail = ({
       package_names[element.no] = element.name;
     }
   );
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (name === "vendor_no") {
-        // 選維修廠之後分類會變
-        getCreateDdl().then((data) => {
-          const newData = { ...data.dataList[0] };
-          console.log("㊗newData", newData);
-          setMainCreateDdl(newData);
-        });
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  watch("vendor_no");
+  // useEffect(() => {
+  //   const subscription = watch((value, { name, type }) => {
+  //     if (name === "vendor_no") {
+  //       // 選維修廠之後分類會變
+  //       getCreateDdl().then((data) => {
+  //         const newData = { ...data.dataList[0] };
+  //         console.log("㊗newData", newData);
+  //         setMainCreateDdl(newData);
+  //       });
+  //     }
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, [watch]);
   //車輛資料
   const vehicle_info = [
     {
@@ -185,13 +186,19 @@ const MaintenanceDetail = ({
           marginBottom="0"
         >
           {mainCreateDdl &&
-            mainCreateDdl?.package_options.map((item: any) => {
-              return (
-                <option key={item.no} value={item.no}>
-                  {item.name}
-                </option>
-              );
-            })}
+            mainCreateDdl?.package_options
+              .filter((package_option: any) => {
+                const vendorNo = getValues("vendor_no") || "";
+                if (!vendorNo) return true;
+                return package_option.vendor_no === vendorNo;
+              })
+              .map((item: any) => {
+                return (
+                  <option key={item.no} value={item.no}>
+                    {item.name}
+                  </option>
+                );
+              })}
         </Select>
       )
     }
