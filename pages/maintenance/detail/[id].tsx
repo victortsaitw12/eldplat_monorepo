@@ -89,7 +89,6 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
         window.location.replace(
           `/maintenance/detail/${maintenance_id}?editPage=view`
         );
-        // router.push(`/maintenance/detail/${maintenance_id}?editPage=view`);
       } else {
         setIsEdit(false);
         router.reload();
