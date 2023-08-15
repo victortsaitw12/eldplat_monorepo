@@ -1,4 +1,3 @@
-import { convertValueToText } from "@utils/convertValueToText";
 export type PatternType = { [key: string]: boolean };
 export const mappingQueryData = (
   data: { [key: string]: any }[],
@@ -14,5 +13,5 @@ export const mappingQueryData = (
       }
       result.push(mappedItem);
     }
-  return convertValueToText(result, "ch");
+  return result;
 };
