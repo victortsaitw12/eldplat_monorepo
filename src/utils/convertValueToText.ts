@@ -319,42 +319,6 @@ export const convertMap: { [key: string]: { [key: string]: any } } = {
       en: "Vehicle Registration and Taxes"
     }
   },
-  make: {
-    "01": {
-      ch: "Toyota",
-      en: "Toyota"
-    },
-    "02": {
-      ch: "Mercedes-Benz",
-      en: "Mercedes-Benz"
-    },
-    "03": {
-      ch: "Volkswagen",
-      en: "Volkswagen"
-    },
-    "04": {
-      ch: "BMW",
-      en: "BMW"
-    },
-    "05": {
-      ch: "Tesla",
-      en: "Tesla"
-    }
-  },
-  model: {
-    "01": {
-      ch: "model-1",
-      en: "model-1"
-    },
-    "02": {
-      ch: "model-2",
-      en: "model-2"
-    },
-    "03": {
-      ch: "model-3",
-      en: "model-3"
-    }
-  },
   vendorNo: {
     "01": {
       ch: "大大國際",

@@ -33,7 +33,6 @@ function BusList({
   upDatePageHandler,
   pageInfo
 }: Props) {
-  console.log("busData", busData);
   const busTitle = getBusTitle();
   busData.forEach((data: any) => {
     data["status"] = {
