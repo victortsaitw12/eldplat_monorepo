@@ -49,7 +49,6 @@ function SideBar({ menuData, personalData, isLoading }: Props) {
             router.push("/employee");
           }}
         />
-
         <div className="container">
           {isPersonal && (
             <span

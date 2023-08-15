@@ -38,7 +38,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
       }
       try {
         // 取得新增時的下拉式資料
-        getCreateDdl(data.vendor_no).then((res) => {
+        getCreateDdl().then((res) => {
           setMainCreateDdl(res.dataList[0]);
         });
       } catch (err) {

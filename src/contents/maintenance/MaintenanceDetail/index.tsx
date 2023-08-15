@@ -59,8 +59,7 @@ const MaintenanceDetail = ({
     const subscription = watch((value, { name, type }) => {
       if (name === "vendor_no") {
         // 選維修廠之後分類會變
-
-        getCreateDdl(value?.vendor_no as string).then((data) => {
+        getCreateDdl().then((data) => {
           const newData = { ...data.dataList[0] };
           console.log("㊗newData", newData);
           setMainCreateDdl(newData);

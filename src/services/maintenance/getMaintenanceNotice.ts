@@ -66,10 +66,13 @@ export const maintenancePattern: PatternType = {
   reminders_no: true,
   bus_no: true,
   bus_name: true,
+  vendor_no: true,
   vendor_name: true,
+  driver_no: true,
   driver_name: true,
   meter: true,
   month: true,
+  component_code: true,
   component_name: true
 };
 

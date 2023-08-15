@@ -8,7 +8,7 @@ export const convertDateAndTimeFormat = (date: string) => {
 // 把2023-06-18T00:00:00 變成=> 2023-06-18
 export const dashDate = (date: string) => {
   // return date?.substring(0, 10);
-  console.log("date", date);
+  if (dayjs(date).isValid() === false) return "";
   return dayjs(date).format("YYYY-MM-DD");
 };
 
