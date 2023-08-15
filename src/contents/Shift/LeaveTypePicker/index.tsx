@@ -11,8 +11,9 @@ import {
   getLeaveTypeDDL,
   I_LeaveType
 } from "@services/schedule/getLeaveTypeDDL";
+import { getDayStart } from "../shift.util";
 
-const LeaveTypePicker = () => {
+const LeaveTypePicker = (date: any) => {
   const UI = React.useContext(UIContext);
   const [showLeaveCode, setShowLeaveCode] = React.useState(true);
   const [leaveTypes, setLeaveTypes] = React.useState<I_LeaveType[]>([]);
@@ -42,17 +43,34 @@ const LeaveTypePicker = () => {
 
   //------ render ------//
   const scheduleTypes = Array.from(SCHD_TYPE).map(([key, value]) => {
-    if (key !== "01")
-      return (
-        <option
-          key={"leaveType-" + key}
-          value={key}
-          color={value.color}
-          className="option"
-        >
-          {value.label}
-        </option>
-      );
+    switch (key) {
+      case "01":
+        break;
+      case "04":
+        if (date.date >= getDayStart(new Date()))
+          return (
+            <option
+              key={"leaveType-" + key}
+              value={key}
+              color={value.color}
+              className="option"
+            >
+              {value.label}
+            </option>
+          );
+        break;
+      default:
+        return (
+          <option
+            key={"leaveType-" + key}
+            value={key}
+            color={value.color}
+            className="option"
+          >
+            {value.label}
+          </option>
+        );
+    }
   });
 
   const fetchDDL = async () => {
