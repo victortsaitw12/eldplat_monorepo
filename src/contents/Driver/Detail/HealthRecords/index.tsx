@@ -84,7 +84,6 @@ function HealthRecords({
       </Pane>
       <Pane className="health-title-right">
         <PaginationField />
-        <CogIcon color="#718BAA" size={11} />
       </Pane>
       {healthData.length !== 0 ? (
         <Table titles={table_title} data={orderedTableData} />

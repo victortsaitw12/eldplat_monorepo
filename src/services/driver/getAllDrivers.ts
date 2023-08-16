@@ -48,7 +48,7 @@ export const getDriverTitle = () => {
   const DUMMY_TITLES = [
     "姓名",
     "E-MAIL",
-    "車輛團隊",
+    "車隊",
     "指定車輛",
     "群組",
     "登入次數",
