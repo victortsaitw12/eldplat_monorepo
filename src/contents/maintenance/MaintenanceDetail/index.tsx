@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { TextInputField, TextInput, SelectField, Select } from "evergreen-ui";
 //@components
 import InfoBox from "@components/InfoBox";
@@ -55,20 +55,20 @@ const MaintenanceDetail = ({
       package_names[element.no] = element.name;
     }
   );
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (name === "vendor_no") {
-        // 選維修廠之後分類會變
-
-        getCreateDdl(value?.vendor_no as string).then((data) => {
-          const newData = { ...data.dataList[0] };
-          console.log("㊗newData", newData);
-          setMainCreateDdl(newData);
-        });
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  watch("vendor_no");
+  // useEffect(() => {
+  //   const subscription = watch((value, { name, type }) => {
+  //     if (name === "vendor_no") {
+  //       // 選維修廠之後分類會變
+  //       getCreateDdl().then((data) => {
+  //         const newData = { ...data.dataList[0] };
+  //         console.log("㊗newData", newData);
+  //         setMainCreateDdl(newData);
+  //       });
+  //     }
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, [watch]);
   //車輛資料
   const vehicle_info = [
     {
@@ -164,15 +164,28 @@ const MaintenanceDetail = ({
       label: "維修廠",
       value: getValues("vendor_name"),
       editEle: mainCreateDdl && (
-        <Select key="vendor_no" {...register("vendor_no")} marginBottom="0">
-          {mainCreateDdl?.vendor_options.map((item: any) => {
-            return (
-              <option key={item.no} value={item.no}>
-                {item.name}
-              </option>
-            );
-          })}
-        </Select>
+        <Controller
+          name="vendor_no"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Select
+              marginBottom="0"
+              value={value}
+              onChange={(e) => {
+                onChange(e.target.value);
+                setValue("package_code", "");
+              }}
+            >
+              {mainCreateDdl?.vendor_options.map((item: any) => {
+                return (
+                  <option key={item.no} value={item.no}>
+                    {item.name}
+                  </option>
+                );
+              })}
+            </Select>
+          )}
+        />
       )
     },
     {
@@ -185,14 +198,25 @@ const MaintenanceDetail = ({
           {...register("package_code")}
           marginBottom="0"
         >
-          {mainCreateDdl &&
-            mainCreateDdl?.package_options.map((item: any) => {
-              return (
-                <option key={item.no} value={item.no}>
-                  {item.name}
-                </option>
-              );
-            })}
+          <>
+            <option value={""} disabled hidden>
+              請選擇
+            </option>
+            {mainCreateDdl &&
+              mainCreateDdl?.package_options
+                .filter((package_option: any) => {
+                  const vendorNo = getValues("vendor_no") || "";
+                  if (!vendorNo) return true;
+                  return package_option.vendor_no === vendorNo;
+                })
+                .map((item: any) => {
+                  return (
+                    <option key={item.no} value={item.no}>
+                      {item.name}
+                    </option>
+                  );
+                })}
+          </>
         </Select>
       )
     }

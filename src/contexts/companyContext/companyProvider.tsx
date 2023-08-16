@@ -91,7 +91,6 @@ export const CompanyProvider = ({ children }: any) => {
     setLoading(true);
     try {
       getCompanyOptions().then((item) => {
-        console.log("公司所有下拉item", item);
         setCompanyDDL(item.dataList[0]);
       });
     } catch (e: any) {
@@ -107,7 +106,6 @@ export const CompanyProvider = ({ children }: any) => {
     const languageObj = { ddl_column: "company_language", ddl_type: "company" };
     try {
       getDdlData(languageObj).then((data) => {
-        console.log("ddl lang data", data);
         const originData = [...ddlLanguage];
         const newData = data.dataList.map(
           (v: { label: string; value: string }) => {
