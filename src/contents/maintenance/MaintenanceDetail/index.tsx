@@ -13,7 +13,7 @@ import { I_Maintenance_Type } from "@typings/maintenance_type";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import ItemListTable from "./ItemListTable";
-import { dashDate } from "@utils/convertDate";
+import { dashDate, convertDateAndTimeFormat } from "@utils/convertDate";
 import { BodySTY } from "./style";
 interface I_Props {
   isEdit: boolean;
@@ -45,10 +45,11 @@ const MaintenanceDetail = ({
   } = useForm<I_Maintenance_Type>({
     defaultValues: {
       ...defaultData,
-      service_start_date: dashDate(defaultData.service_start_date),
-      service_end_date: dashDate(defaultData.service_end_date)
+      service_start_date: defaultData.service_start_date || "",
+      service_end_date: defaultData.service_end_date || ""
     }
   });
+
   const package_names: any = {};
   mainCreateDdl?.package_options.forEach(
     (element: { no: string; name: string }) => {
@@ -144,20 +145,38 @@ const MaintenanceDetail = ({
     {
       req: false,
       label: "起始日期",
-      value: dashDate(getValues("service_start_date")),
-      editEle: <TextInput type="date" {...register("service_start_date")} />
+      value:
+        (getValues("service_start_date") &&
+          convertDateAndTimeFormat(getValues("service_start_date"))) ||
+        "--",
+      editEle: (
+        <TextInput
+          type="datetime-local"
+          {...register("service_start_date")}
+          style={{ width: "100%" }}
+        />
+      )
     },
     {
       req: false,
       label: "截止日期",
-      value: dashDate(getValues("service_end_date")),
-      editEle: <TextInput type="date" {...register("service_end_date")} />
+      value:
+        (getValues("service_end_date") &&
+          convertDateAndTimeFormat(getValues("service_end_date"))) ||
+        "--",
+      editEle: (
+        <TextInput
+          type="datetime-local"
+          {...register("service_end_date")}
+          style={{ width: "100%" }}
+        />
+      )
     },
     {
       req: false,
       label: "里程數",
       value: getValues("meter")?.toLocaleString(),
-      editEle: <TextInput {...register("meter")} />
+      editEle: <TextInput {...register("meter")} style={{ width: "100%" }} />
     },
     {
       req: true,
