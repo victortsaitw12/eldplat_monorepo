@@ -142,8 +142,9 @@ function Details({
     },
     {
       req: false,
-      inputType: "custom",
-
+      inputType:
+        // getValues("bus.photo_url") ? "custom" :
+        "valueOnly",
       editEle:
         // 照片要先放預設圖片 for demo 先comment掉
         // getValues("bus.photo_url") ?
