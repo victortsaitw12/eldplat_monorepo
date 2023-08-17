@@ -4,6 +4,7 @@ import {
 } from "@typings/vendors_type";
 import { Pane, GlobeIcon } from "evergreen-ui";
 import { GetServerSideProps, NextPageWithLayout } from "next";
+import Link from "next/link";
 import React, { useEffect, useState, useMemo, ReactNode } from "react";
 import { useRouter } from "next/router";
 import { FormattedMessage } from "react-intl";
@@ -85,7 +86,14 @@ const Page: NextPageWithLayout<{
         value: "無"
       },
       vendor_name: {
-        label: vendors["vendor_Name"],
+        label: (
+          <span
+            onClick={goToDetailPage.bind(null, vendors["vendor_No"])}
+            style={{ cursor: "pointer", textDecoration: "none" }}
+          >
+            {vendors["vendor_Name"]}
+          </span>
+        ),
         value: vendors["vendor_Name"]
       },
       vendor_fullAddress: {
