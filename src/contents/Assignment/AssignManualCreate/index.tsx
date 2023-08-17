@@ -7,7 +7,8 @@ import {
   Pane,
   DocumentShareIcon,
   Paragraph,
-  FloppyDiskIcon
+  FloppyDiskIcon,
+  toaster
 } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
@@ -98,16 +99,25 @@ function AssignManualCreate({
 
   // 按下儲存派單按鈕
   const asyncSubmitForm = async () => {
-    setLoading(true);
+    // setLoading(true);
     try {
       console.log("👉data for click save", createAssignData);
       const res = await createAssignmentByManual(createAssignData);
+      if (res.statusCode !== "200") throw new Error(` ${res.resultString}`);
+      toaster.success("排程成功", {
+        duration: 120
+      });
     } catch (e: any) {
       console.log(e);
-      alert(e.message);
+      toaster.danger("排程失敗", {
+        description: `${e.message}`,
+        duration: 2,
+        hasCloseButton: true
+      });
+    } finally {
+      // setLoading(false);
+      refetch && refetch();
     }
-    setLoading(false);
-    refetch && refetch();
   };
 
   const handleClick = async (
@@ -226,8 +236,10 @@ function AssignManualCreate({
         text={"儲存派單"}
         type="submit"
         disabled={
-          createAssignData.manual_bus.length !== arrCount() ||
-          createAssignData.manual_driver.length !== arrCount()
+          createAssignData.manual_bus.filter((item) => item.bus_no).length !==
+            arrCount() ||
+          createAssignData.manual_driver.filter((item) => item.driver_no)
+            .length !== arrCount()
         }
       >
         <FloppyDiskIcon size={14} />

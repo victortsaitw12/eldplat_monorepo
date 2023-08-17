@@ -4,6 +4,8 @@ export const BodySTY = styled.div`
   height: 200px;
   width: 200px;
   position: relative;
+  border: 1px solid ${({ theme }) => theme.color.N300};
+  border-radius: 5px;
 `;
 
 export const StyledButton = styled.button`

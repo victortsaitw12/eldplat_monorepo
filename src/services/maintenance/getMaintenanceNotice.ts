@@ -1,4 +1,5 @@
 import { PatternType } from "@utils/mappingQueryData";
+import { createElement } from "react";
 import API_Path from "./apiPath";
 import { I_PageInfo } from "@components/PaginationField";
 
@@ -81,6 +82,19 @@ export const maintenanceParser = (data: any, key: string) => {
     return {
       label: data["reminders_no"] || null,
       value: data["reminders_no"] || null
+    };
+  } else if (key === "bus_name") {
+    const labelElement = createElement(
+      "a",
+      {
+        style: { textDecoration: "none", cursor: "pointer", color: "inherit" },
+        href: `/maintenance/detail/${data["maintenance_no"]}?editPage=view`
+      },
+      data["bus_name"]
+    );
+    return {
+      label: labelElement,
+      value: data["bus_name"] || null
     };
   }
 

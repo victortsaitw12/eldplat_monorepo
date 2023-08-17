@@ -2,8 +2,7 @@ import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Pane, Tab } from "evergreen-ui";
-import dayjs from "dayjs";
+import { Pane } from "evergreen-ui";
 import { ViewIdSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
@@ -16,7 +15,7 @@ import Tabs from "@components/Tabs";
 import TableTitle from "@components/Table/TableTitle";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
-import TotalLeaveDays from "@contents/shift/TotalLeaveDays";
+import TotalLeaveDays from "@contents/Shift/TotalLeaveDays";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();

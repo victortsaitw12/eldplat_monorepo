@@ -124,7 +124,10 @@ const AssignmentAdditional = ({
             isShown={isLightBoxOpen}
             title="是否需要一起修改之後天數的派單？"
             onConfirm={handleCreateOther}
-            onCloseComplete={() => setIsLightBoxOpen(false)}
+            onCloseComplete={() => {
+              setIsLightBoxOpen(false);
+              refetch && refetch();
+            }}
             cancelLabel="取消"
             confirmLabel="確認"
           >

@@ -8,7 +8,8 @@ import {
   DocumentShareIcon,
   Paragraph,
   FloppyDiskIcon,
-  SelectField
+  SelectField,
+  toaster
 } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 
@@ -31,11 +32,13 @@ import CreateFail from "../CreateFail";
 interface I_AssignAutoCreateProps {
   orderInfo: I_ManualAssignType[];
   setDisabledAutoList: (v: any) => void;
+  refetch?: () => void;
 }
 
 function AssignAutoCreate({
   orderInfo,
-  setDisabledAutoList
+  setDisabledAutoList,
+  refetch
 }: I_AssignAutoCreateProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -84,12 +87,15 @@ function AssignAutoCreate({
       const res = await createAssignmentByAuto(autoAssignData);
       console.log("auto assign res: ", res);
       if (res.statusCode === "200") {
-        // router.reload();
+        toaster.success("自動排程成功", {
+          duration: 1.5
+        });
       } else {
         setFailMessage(res.message || "請確認必填欄位");
         setFailIsShown(true);
         setDisabledAutoList((prev: any) => [...prev, orderInfo[0]?.quote_no]);
       }
+      refetch && refetch();
     } catch (err) {
       console.log("auto assign err: ", err);
     }
