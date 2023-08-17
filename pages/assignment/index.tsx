@@ -5,7 +5,6 @@ import { Text } from "evergreen-ui";
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
-import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import TableWrapper from "@layout/TableWrapper";
@@ -24,7 +23,11 @@ import {
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import { I_ManualCreateType } from "@typings/assignment_type";
 
-import { dashDate, slashDate } from "@utils/convertDate";
+import {
+  dashDate,
+  slashDate,
+  convertDateAndTimeFormat
+} from "@utils/convertDate";
 import {
   getBusAssignmentInfo,
   getDriverAssignmentInfo
@@ -170,18 +173,24 @@ const Page: NextPageWithLayout<never> = () => {
       return {
         label:
           data.task_start_time !== null
-            ? slashDate(data.task_start_time)
+            ? convertDateAndTimeFormat(data.task_start_time)
             : "--",
         value:
-          data.task_start_time !== null ? slashDate(data.task_start_time) : "--"
+          data.task_start_time !== null
+            ? convertDateAndTimeFormat(data.task_start_time)
+            : "--"
       };
     }
     if (key === "task_end_time") {
       return {
         label:
-          data.task_end_time !== null ? slashDate(data.task_end_time) : "--",
+          data.task_end_time !== null
+            ? convertDateAndTimeFormat(data.task_end_time)
+            : "--",
         value:
-          data.task_end_time !== null ? slashDate(data.task_end_time) : "--"
+          data.task_end_time !== null
+            ? convertDateAndTimeFormat(data.task_end_time)
+            : "--"
       };
     }
 
