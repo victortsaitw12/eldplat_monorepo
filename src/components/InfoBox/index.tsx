@@ -62,6 +62,18 @@ function InfoBox({
       if (!value && !editEle) {
         return;
       }
+      if (inputType === "valueOnly") {
+        return (
+          <ListItem key={infoBoxId + "_text_" + i} className="infoBox">
+            {
+              <Pane className="infoBox__label">
+                <span> </span>
+              </Pane>
+            }
+            <Pane className="infoBox__value">{editEle}</Pane>
+          </ListItem>
+        );
+      }
       if (inputType === "custom") {
         return editEle;
       }

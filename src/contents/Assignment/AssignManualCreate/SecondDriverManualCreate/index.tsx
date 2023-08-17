@@ -78,7 +78,7 @@ function SecondDriverAssignManualCreate({
   const handleBusGroupChange = async (bus_group: any) => {
     const res = await getAssignDriverDDL(bus_group);
     setDriverNameDDL([
-      { driver_no: "00", user_name: "請選擇" },
+      { driver_no: "", user_name: "請選擇" },
       ...res.dataList[0].driver_options
     ]);
   };

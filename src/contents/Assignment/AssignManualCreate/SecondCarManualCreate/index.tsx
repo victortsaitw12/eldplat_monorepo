@@ -84,7 +84,7 @@ function SecondCarAssignManualCreate({
     const res = await getAssignBusDDL(bus_group);
     // setBusNameDDL(res.dataList[0].bus_options);
     setBusNameDDL([
-      { bus_no: "00", bus_name: "請選擇", license_plate: "" },
+      { bus_no: "", bus_name: "請選擇", license_plate: "" },
       ...res.dataList[0].bus_options
     ]);
   };

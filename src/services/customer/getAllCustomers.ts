@@ -69,6 +69,23 @@ export function customerParser(data: any, key: string) {
       label: data["customer_no"] || null,
       value: data["customer_no"] || null
     };
+  } else if (key === "customer_name") {
+    const lebelElement = createElement(
+      "a",
+      {
+        style: {
+          textDecoration: "none",
+          cursor: "pointer",
+          color: "inherit"
+        },
+        href: `/customer/detail/${data["customer_no"]}?editPage=view`
+      },
+      data["customer_name"]
+    );
+    return {
+      label: lebelElement || null,
+      value: data["customer_name"] || null
+    };
   } else if (key === "customer_typ") {
     return {
       label: data["type_name"] || null,
