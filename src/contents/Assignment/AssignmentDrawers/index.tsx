@@ -63,6 +63,7 @@ function AssignmentDrawers({
           <AssignAutoCreate
             orderInfo={orderInfo}
             setDisabledAutoList={setDisabledAutoList}
+            refetch={refetch}
           />
         )
       }
