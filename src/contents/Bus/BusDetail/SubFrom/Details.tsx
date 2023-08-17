@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { Select } from "evergreen-ui";
 import InfoBox from "@components/InfoBox";
 import ImageUploader from "@components/ImageUploader";
@@ -142,14 +143,35 @@ function Details({
     {
       req: false,
       inputType: "custom",
-      editEle: [
-        <div
-          key="bus.bus_picture"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          <ImageUploader isEdit={isEdit} />
-        </div>
-      ]
+
+      editEle:
+        // 照片要先放預設圖片 for demo 先comment掉
+        // getValues("bus.photo_url") ?
+        [
+          <div
+            key="bus.bus_picture"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              position: "relative",
+              height: "200px",
+              maxWidth: "270px"
+            }}
+          >
+            <Image
+              src="/image/bus34.jpg"
+              alt="Picture of the bus"
+              sizes="width:100%"
+              style={{ borderRadius: "5px", objectFit: "cover" }} //"contain"
+              fill={true}
+            />
+          </div>
+        ]
+      // : [
+      //     <div key="bus.bus_picture">
+      //       <ImageUploader isEdit={isEdit} />
+      //     </div>
+      //   ]
     }
   ];
   // 分類
