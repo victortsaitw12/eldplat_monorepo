@@ -95,7 +95,7 @@ const MaintenanceDetail = ({
     {
       req: false,
       label: "主要駕駛",
-      value: getValues("operator_name")
+      value: `${getValues("bus_group_name")} / ${getValues("operator_name")}`
     },
     {
       req: false,
