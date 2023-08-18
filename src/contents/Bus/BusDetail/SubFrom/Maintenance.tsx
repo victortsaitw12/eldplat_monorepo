@@ -36,6 +36,11 @@ const BodySTY = styled.div`
   width: 100%;
   border-radius: 10px;
   padding: 30px 20px;
+  .container-header {
+    button > svg {
+      display: none;
+    }
+  }
 `;
 //
 const maintenanceTitle = [
@@ -97,11 +102,12 @@ function Maintenance({
       <BodySTY>
         <TableWithEdit
           tableName="維保計劃"
+          createBtnText="前往維保任務"
           cleanTableName="維保計劃"
           titles={maintenanceTitle}
           data={busMaintenanceData}
           goToCreatePage={(e) => {
-            e.preventDefault()
+            e.preventDefault();
             router.push("/maintenance/mission");
           }}
           needAction={false}
