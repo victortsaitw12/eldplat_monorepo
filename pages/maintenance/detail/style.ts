@@ -22,6 +22,10 @@ export const BodySTY = styled.div`
   .infoBox__value {
     flex: 2 !important;
     flex-direction: column;
+    div,
+    input {
+      max-width: 270px;
+    }
     select {
       height: 32px;
     }
