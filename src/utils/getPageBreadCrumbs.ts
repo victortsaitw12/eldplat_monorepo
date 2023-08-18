@@ -9,6 +9,10 @@ interface I_routers {
 
 const breadcrumbs: I_routers = {
   "/": [{ label: "入門", url: "/" }],
+  "/bus": [
+    { label: "首頁", url: "/" },
+    { label: "車輛清單", url: "/bus" }
+  ],
   "/bus/detail/[id]": [
     { label: "入門", url: "/" },
     { label: "汽車", url: "/bus" }
