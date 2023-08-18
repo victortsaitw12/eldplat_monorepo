@@ -108,6 +108,7 @@ const MaintenanceDetail = ({
             {...register("bus_group")}
             marginBottom="0"
             placeholder="請選擇車隊"
+            disabled
           >
             {mainCreateDdl?.driver_options.map((item: any) => {
               return (
