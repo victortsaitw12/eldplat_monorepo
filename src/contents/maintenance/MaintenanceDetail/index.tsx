@@ -102,15 +102,32 @@ const MaintenanceDetail = ({
       label: "派工駕駛",
       value: getValues("driver_name"),
       editEle: (
-        <Select key="driver_no" {...register("driver_no")} marginBottom="0">
-          {mainCreateDdl?.driver_options.map((item: any) => {
-            return (
-              <option key={item.no} value={item.no}>
-                {item.name}
-              </option>
-            );
-          })}
-        </Select>
+        <>
+          <Select
+            key="bus_group"
+            {...register("bus_group")}
+            marginBottom="0"
+            placeholder="請選擇車隊"
+            disabled
+          >
+            {mainCreateDdl?.driver_options.map((item: any) => {
+              return (
+                <option key={item.no} value={item.no}>
+                  {item.name}
+                </option>
+              );
+            })}
+          </Select>
+          <Select key="driver_no" {...register("driver_no")} marginBottom="0">
+            {mainCreateDdl?.driver_options.map((item: any) => {
+              return (
+                <option key={item.no} value={item.no}>
+                  {item.name}
+                </option>
+              );
+            })}
+          </Select>
+        </>
       )
     }
   ];

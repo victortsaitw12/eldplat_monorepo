@@ -51,72 +51,79 @@ const Page: NextPageWithLayout<never> = () => {
     mainFilter = "1",
     pageQuery = defaultPageInfo
   ) => {
-    getAllMaintenanceNotices(subFilter, mainFilter).then((res) => {
-      console.log("res in notice", res);
-      const maintenanceData = mappingQueryData(
-        res.contentList,
-        maintenancePattern,
-        maintenanceParser
-      );
-
-      // 處理分頁
-      const getPageInfo = { ...res.pageInfo };
-      getPageInfo["orderby"] = "reminders_no";
-      setPageInfo(getPageInfo);
-
-      res.contentList.map((v: { reminders_no: { label: any } }) => {
-        setCheckItems((prev) => [
-          ...prev,
-          { id: v.reminders_no, checked: false }
-        ]);
-      });
-      console.log("maintenanceData", maintenanceData);
-      // const newData = maintenanceData?.map((item, idx) => {
-      //   const mappingItem = {
-      //     id: { label: item.id.label, value: item.id.value },
-      //     bus_name: { label: item.bus_name.label, value: item.bus_name.value },
-      //     driver_name: {
-      //       label: item.driver_name.label,
-      //       value: item.driver_name.value
-      //     },
-      //     meter: { label: item.meter.label, value: item.meter.value },
-      //     vendor_name: {
-      //       label: item.vendor_name.label,
-      //       value: item.vendor_name.value
-      //     },
-      //     component_name: {
-      //       label: item.component_name.label,
-      //       value: item.component_name.value
-      //     },
-      //     mission: {
-      //       label: (
-      //         <AddMissionBtn
-      //           item={item}
-      //           setDrawerOpen={setDrawerOpen}
-      //           setBusNo={setBusNo}
-      //           setReminderNo={setReminderNo}
-      //         ></AddMissionBtn>
-      //       ),
-      //       value: item.reminders_no.label
-      //     }
-      //   };
-      //   return mappingItem;
-      // });
-      if (isCanceled) {
-        console.log("canceled");
-        return;
-      }
-      if (!subFilter) {
-        localStorage.setItem(
-          "maintenanceInitFilter",
-          JSON.stringify(res.conditionList)
+    setLoading(true);
+    try {
+      getAllMaintenanceNotices(subFilter, mainFilter, pageQuery).then((res) => {
+        console.log("res in notice", res);
+        const maintenanceData = mappingQueryData(
+          res.contentList,
+          maintenancePattern,
+          maintenanceParser
         );
-        initializeSubFilter();
-      }
-      console.log("notice maintenanceData", maintenanceData);
 
-      setData(maintenanceData);
-    });
+        // 處理分頁
+        const getPageInfo = { ...res.pageInfo };
+        getPageInfo["orderby"] = "reminders_no";
+        setPageInfo(getPageInfo);
+
+        res.contentList.map((v: { reminders_no: { label: any } }) => {
+          setCheckItems((prev) => [
+            ...prev,
+            { id: v.reminders_no, checked: false }
+          ]);
+        });
+        console.log("maintenanceData", maintenanceData);
+        // const newData = maintenanceData?.map((item, idx) => {
+        //   const mappingItem = {
+        //     id: { label: item.id.label, value: item.id.value },
+        //     bus_name: { label: item.bus_name.label, value: item.bus_name.value },
+        //     driver_name: {
+        //       label: item.driver_name.label,
+        //       value: item.driver_name.value
+        //     },
+        //     meter: { label: item.meter.label, value: item.meter.value },
+        //     vendor_name: {
+        //       label: item.vendor_name.label,
+        //       value: item.vendor_name.value
+        //     },
+        //     component_name: {
+        //       label: item.component_name.label,
+        //       value: item.component_name.value
+        //     },
+        //     mission: {
+        //       label: (
+        //         <AddMissionBtn
+        //           item={item}
+        //           setDrawerOpen={setDrawerOpen}
+        //           setBusNo={setBusNo}
+        //           setReminderNo={setReminderNo}
+        //         ></AddMissionBtn>
+        //       ),
+        //       value: item.reminders_no.label
+        //     }
+        //   };
+        //   return mappingItem;
+        // });
+        if (isCanceled) {
+          console.log("canceled");
+          return;
+        }
+        if (!subFilter) {
+          localStorage.setItem(
+            "maintenanceInitFilter",
+            JSON.stringify(res.conditionList)
+          );
+          initializeSubFilter();
+        }
+        console.log("notice maintenanceData", maintenanceData);
+
+        setData(maintenanceData);
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const deleteItemHandler = async (id: string) => {
@@ -162,7 +169,7 @@ const Page: NextPageWithLayout<never> = () => {
     return <LoadingSpinner />;
   }
 
-  const handlePageChange = (pageQuery: I_PageInfo) => {
+  const handlePageChange = async (pageQuery: I_PageInfo) => {
     fetchMaintenanceNoticeData(false, nowTab, pageQuery);
   };
 
