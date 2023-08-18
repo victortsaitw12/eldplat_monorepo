@@ -66,6 +66,19 @@ export const maintenanceParser = (data: any, key: string) => {
       label: data["maintenance_no"] || null,
       value: data["maintenance_no"] || null
     };
+  } else if (key === "bus_name") {
+    const labelElement = createElement(
+      "a",
+      {
+        style: { textDecoration: "none", cursor: "pointer", color: "inherit" },
+        href: `/maintenance/detail/${data["maintenance_no"]}?editPage=view`
+      },
+      data["bus_name"]
+    );
+    return {
+      label: labelElement,
+      value: data["bus_name"] || null
+    };
   }
   if (key === "all_assignment_no") {
     const labelElement = createElement(

@@ -70,7 +70,7 @@ function PaginationField({
   const handlePageSizeChange = (e: any) => {
     if (!e.target.value) return;
     // setPageSize(e.target.value);
-    handleUpdatePage(undefined, e.target.value);
+    handleUpdatePage(1, e.target.value);
   };
 
   const handleUpdatePage = React.useCallback(
