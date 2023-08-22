@@ -135,7 +135,7 @@ const MaintenanceDetail = ({
                 <option
                   key={`operator_bus_group_options-${item.no}`}
                   value={item.no}
-                  selected={getValues("am_driver_bus_group_no") === item.no}
+                  // selected={getValues("am_driver_bus_group_no") === item.no}
                 >
                   {item.name}
                 </option>
@@ -155,7 +155,7 @@ const MaintenanceDetail = ({
               <option
                 key={item.no}
                 value={item.no}
-                selected={getValues("driver_no") === item.no}
+                // selected={getValues("driver_no") === item.no}
               >
                 {item.name}
               </option>

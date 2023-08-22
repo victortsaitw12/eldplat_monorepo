@@ -4,7 +4,7 @@ export const getCreateBusOptions = async (dsph_group?: string) => {
 
   const url = new URL(
     `${API_Path["getCreateBusOptions"]}${
-      dsph_group ? "dsph_group=" + dsph_group : ""
+      dsph_group ? "?dsph_group=" + dsph_group : ""
     }`
   );
   //

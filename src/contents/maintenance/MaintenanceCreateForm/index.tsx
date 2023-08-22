@@ -47,6 +47,10 @@ function MaintenanceCreateForm({
 }: I_MaintenanceCreateFormProps) {
   const [busGroup, setBusGroup] = React.useState<string>("");
   const [driverGroup, setDriverGroup] = React.useState<string>("");
+  const [isBusDDLLoading, setIsBusDDLoading] = React.useState<boolean>(false);
+  const [isDriverDDLLoading, setIsDriverDDlLoading] =
+    React.useState<boolean>(false);
+
   // default value
   const defaultValues: CreateMaintenancePayload = {
     bus_no: "",
@@ -143,16 +147,20 @@ function MaintenanceCreateForm({
       console.log(e.message);
     }
   };
-  const handleBusGroupChange = (e: any) => {
+  const handleBusGroupChange = async (e: any) => {
     setBusGroup(e.target.value);
+    setIsBusDDLoading(true);
     const bus_group = e.target.value;
-    fetchDDL(bus_group, driverGroup);
+    await fetchDDL(bus_group, driverGroup);
+    setIsBusDDLoading(false);
   };
 
-  const handleOperatorGroupChange = (e: any) => {
+  const handleOperatorGroupChange = async (e: any) => {
     setDriverGroup(e.target.value);
+    setIsDriverDDlLoading(true);
     const dsph_group = e.target.value;
-    fetchDDL(busGroup, dsph_group);
+    await fetchDDL(busGroup, dsph_group);
+    setIsDriverDDlLoading(false);
   };
 
   return (
@@ -202,6 +210,7 @@ function MaintenanceCreateForm({
                   onChange(e.target.value);
                   setValue("bus_no", targetBusOption?.bus_no);
                 }}
+                disabled={isBusDDLLoading}
               >
                 <option key="bus_options" value="">
                   請選擇車輛
@@ -242,7 +251,7 @@ function MaintenanceCreateForm({
               );
             })}
           </Select>
-          <Select {...register("driver_no")}>
+          <Select {...register("driver_no")} disabled={isDriverDDLLoading}>
             <option key="driver_no_option" value="">
               請選擇駕駛
             </option>
