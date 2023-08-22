@@ -5,15 +5,14 @@ import { useRouter } from "next/router";
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 //@services
-
+import { updateMaintenance } from "@services/maintenance/updateMaintenance";
+import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
+import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 //
 import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import MaintenanceDetail from "@contents/maintenance/MaintenanceDetail";
 import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
-import { updateMaintenance } from "@services/maintenance/updateMaintenance";
-import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
-import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 
 const mainFilterArray = [{ id: 1, label: "維保資料", value: "1" }];
 //
@@ -27,6 +26,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   const [isFinished, setIsFinished] = useState<boolean>(false); // 維保任務是否結案的boolean
   const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
   const [maintenanceData, setMaintenanceData] = useState<any>(null);
+
   useEffect(() => {
     updateMainFilter("1");
     setLoading(true);
@@ -36,17 +36,17 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
       if (data.maintenance_status === "3") {
         setIsFinished(true);
       }
-      try {
-        // 取得新增時的下拉式資料
-        getCreateDdl().then((res) => {
-          setMainCreateDdl(res.dataList[0]);
-        });
-      } catch (err) {
-        console.error("getDDL error: ", err);
-      }
       setLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (!maintenanceData) return;
+    !maintenanceData.am_driver_bus_group_no
+      ? fetchDDL()
+      : fetchDDL(undefined, maintenanceData.am_driver_bus_group_no);
+  }, [maintenanceData]);
+
   //TableWrapper
   const changeMainFilterHandler = () => {
     console.log("changeMainFilterHandler");
@@ -54,11 +54,12 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   //
 
   console.log("router", router);
+
   const asyncSubmitForm = async (data: any) => {
-    console.log("⚽data", data);
+    console.log("🍅🍅🍅⚽data", data);
     setLoading(true);
 
-    const driver = mainCreateDdl?.driver_options?.filter((v: { no: any }) => {
+    const driver = mainCreateDdl?.operator_options?.filter((v: { no: any }) => {
       return v.no === data.driver_no;
     });
 
@@ -80,7 +81,6 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     });
 
     console.log("🉐edited data", newData);
-
     try {
       const res = await updateMaintenance(newData, data["files"]);
       console.log("儲存 res", res);
@@ -98,6 +98,18 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     }
     setLoading(false);
     return;
+  };
+  const fetchDDL = async (bus_group?: string, dsph_group?: string) => {
+    try {
+      const res = await getCreateDdl(bus_group, dsph_group);
+      if (res.statusCode === "200") {
+        setMainCreateDdl(res.dataList[0]);
+      } else {
+        throw new Error(`${res.resultString}`);
+      }
+    } catch (e: any) {
+      console.log(e.message);
+    }
   };
   //
   const onCancelHandler = () => {
@@ -121,7 +133,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
         isEdit={isEdit}
         viewOnly={isFinished}
       >
-        {maintenanceData && mainCreateDdl && (
+        {maintenanceData && (
           <MaintenanceDetail
             isEdit={isEdit}
             submitRef={submitRef}
@@ -130,6 +142,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
             mainCreateDdl={mainCreateDdl}
             setMainCreateDdl={setMainCreateDdl}
             defaultData={maintenanceData}
+            fetchDDL={fetchDDL}
           />
         )}
       </TableWrapper>

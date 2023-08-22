@@ -98,14 +98,14 @@ function AssignManualCreate({
   const orderArr = formatOrderInfo(orderInfo);
 
   // 按下儲存派單按鈕
-  const asyncSubmitForm = async () => {
-    // setLoading(true);
+  const asyncSubmitForm = async (e: any) => {
+    e.preventDefault();
     try {
       console.log("👉data for click save", createAssignData);
       const res = await createAssignmentByManual(createAssignData);
       if (res.statusCode !== "200") throw new Error(` ${res.resultString}`);
       toaster.success("排程成功", {
-        duration: 120
+        duration: 2
       });
     } catch (e: any) {
       console.log(e);
@@ -115,7 +115,6 @@ function AssignManualCreate({
         hasCloseButton: true
       });
     } finally {
-      // setLoading(false);
       refetch && refetch();
     }
   };

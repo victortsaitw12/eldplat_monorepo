@@ -7,18 +7,21 @@ export interface I_Receipt_Type {
 }
 
 export interface I_Maintenance_Type {
-  bus_no: string;
+  am_driver_bus_group_name: string;
+  am_driver_bus_group_no: string;
+  bus_assignment_no: string;
   bus_name: string;
-  license_plate: string;
-  year: number;
-  operator_no: string;
+  bus_no: string;
   bus_group: string;
   bus_group_name: string;
-  operator_name: string;
-  bus_assignment_no: string;
   driver_assignment_no: string;
   driver_name: string;
   driver_no: string;
+  license_plate: string;
+  year: number;
+  operator_no: string;
+  operator_bus_group_name: string;
+  operator_name: string;
   maintenance_no: string;
   maintenance_type: string;
   type_name: string;
