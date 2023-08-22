@@ -217,6 +217,7 @@ const Page: NextPageWithLayout<never> = () => {
               setDrawerOpen(false);
             }}
             mainCreateDdl={mainCreateDdl}
+            setMainCreateDdl={setMainCreateDdl}
           />
         </Drawer>
       )}
