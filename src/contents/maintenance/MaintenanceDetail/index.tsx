@@ -7,11 +7,11 @@ import LoadingSpinner from "@components/LoadingSpinner";
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
 //@service
+import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
+import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 //@utils
 //
 import { I_Maintenance_Type } from "@typings/maintenance_type";
-import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
-import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import ItemListTable from "./ItemListTable";
 import { dashDate, convertDateAndTimeFormat } from "@utils/convertDate";
 import { BodySTY } from "./style";
@@ -23,6 +23,7 @@ interface I_Props {
   mainCreateDdl?: any;
   setMainCreateDdl: (t: any) => void;
   defaultData: any;
+  fetchDDL: (bus_group?: string, dsph_group?: string) => void;
 }
 const MaintenanceDetail = ({
   defaultData,
@@ -31,7 +32,8 @@ const MaintenanceDetail = ({
   asyncSubmitForm,
   maintenance_id,
   mainCreateDdl,
-  setMainCreateDdl
+  setMainCreateDdl,
+  fetchDDL
 }: I_Props) => {
   const [loading, setLoading] = useState(true);
   const {
@@ -70,6 +72,12 @@ const MaintenanceDetail = ({
   //   });
   //   return () => subscription.unsubscribe();
   // }, [watch]);
+
+  const handleDriverGroupChange = (e: any) => {
+    const dsph_group = e.target.value;
+    fetchDDL(undefined, dsph_group);
+  };
+
   //車輛資料
   const vehicle_info = [
     {
@@ -95,37 +103,63 @@ const MaintenanceDetail = ({
     {
       req: false,
       label: "主要駕駛",
-      value: `${getValues("bus_group_name")} / ${getValues("operator_name")}`
+      value: `${getValues("operator_bus_group_name") || "--"} / ${
+        getValues("operator_name") || "--"
+      }`
+      //TODO check with PM about where does the "bus_group_option" use for here
     },
     {
       req: false,
       label: "派工駕駛",
-      value: getValues("driver_name"),
+      value: `${getValues("am_driver_bus_group_name") || "--"} / ${
+        getValues("driver_name") || "--"
+      }`,
       editEle: (
         <>
           <Select
-            key="bus_group"
-            {...register("bus_group")}
+            key="operator_bus_group_select"
+            {...register("am_driver_bus_group_no")}
             marginBottom="0"
-            placeholder="請選擇車隊"
-            disabled
+            onChange={handleDriverGroupChange}
           >
-            {mainCreateDdl?.driver_options.map((item: any) => {
+            <option
+              key={"operator_bus_group_options"}
+              value={""}
+              disabled
+              hidden
+            >
+              請選擇車隊
+            </option>
+            {mainCreateDdl?.operator_bus_group_options?.map((item: any) => {
               return (
-                <option key={item.no} value={item.no}>
+                <option
+                  key={`operator_bus_group_options-${item.no}`}
+                  value={item.no}
+                  selected={getValues("am_driver_bus_group_no") === item.no}
+                >
                   {item.name}
                 </option>
               );
             })}
           </Select>
-          <Select key="driver_no" {...register("driver_no")} marginBottom="0">
-            {mainCreateDdl?.driver_options.map((item: any) => {
-              return (
-                <option key={item.no} value={item.no}>
-                  {item.name}
-                </option>
-              );
-            })}
+          <Select
+            key="driver_no_select"
+            {...register("driver_no")}
+            marginBottom="0"
+            disabled={!getValues("am_driver_bus_group_no")}
+          >
+            <option key={"driver_no_options"} value={""} selected hidden>
+              請選擇駕駛
+            </option>
+            {mainCreateDdl?.operator_options?.map((item: any) => (
+              <option
+                key={item.no}
+                value={item.no}
+                selected={getValues("driver_no") === item.no}
+              >
+                {item.name}
+              </option>
+            ))}
           </Select>
         </>
       )

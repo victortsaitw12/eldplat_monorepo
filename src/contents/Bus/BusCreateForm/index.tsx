@@ -1,6 +1,13 @@
 import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
-import { PlusIcon, SelectField } from "evergreen-ui";
+import {
+  Pane,
+  Group,
+  Label,
+  PlusIcon,
+  SelectField,
+  Select
+} from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 import FiledInput from "./FieldInput";
 import { useState } from "react";
@@ -142,6 +149,7 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         required
         label="出廠年份"
       />
+
       <SelectField
         label={
           <div>
@@ -152,7 +160,7 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         defaultValue=""
       >
         <option value="" disabled hidden>
-          請選擇
+          請選擇車輛車隊
         </option>
         {options?.bus_group_options.map((item: any) => (
           <option key={item.no} value={item.no}>
@@ -160,24 +168,39 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
           </option>
         ))}
       </SelectField>
-      <SelectField
-        label={
+      <Pane style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <Label>
           <div>
             <span style={{ color: "#D14343" }}>*</span>主要駕駛
           </div>
-        }
-        {...register("operator_no", { required: "此欄位必填" })}
-        defaultValue=""
-      >
-        <option value="" disabled hidden>
-          請選擇
-        </option>
-        {options?.operator_options.map((item: any) => (
-          <option key={item.no} value={item.no}>
-            {item.name}
+        </Label>
+        <Select
+          {...register("operator_no", { required: "此欄位必填" })}
+          defaultValue=""
+        >
+          <option value="" disabled hidden>
+            請選擇駕駛車隊
           </option>
-        ))}
-      </SelectField>
+          {options?.operator_bus_group_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
+        </Select>
+        <Select
+          {...register("operator_no", { required: "此欄位必填" })}
+          defaultValue=""
+        >
+          <option value="" disabled hidden>
+            請選擇
+          </option>
+          {options?.operator_options.map((item: any) => (
+            <option key={item.no} value={item.no}>
+              {item.name}
+            </option>
+          ))}
+        </Select>
+      </Pane>
       <SelectField
         label={
           <div>
