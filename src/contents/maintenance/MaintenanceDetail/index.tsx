@@ -119,17 +119,17 @@ const MaintenanceDetail = ({
     {
       req: false,
       label: "主要駕駛",
-      value: `${getValues("operator_bus_group_name")} / ${getValues(
-        "operator_name"
-      )}`
+      value: `${getValues("operator_bus_group_name") || "--"} / ${
+        getValues("operator_name") || "--"
+      }`
       //TODO check with PM about where does the "bus_group_option" use for here
     },
     {
       req: false,
       label: "派工駕駛",
-      value: `${getValues("am_driver_bus_group_name")} / ${getValues(
-        "driver_name"
-      )}`,
+      value: `${getValues("am_driver_bus_group_name") || "--"} / ${
+        getValues("driver_name") || "--"
+      }`,
       editEle: (
         <>
           <Select

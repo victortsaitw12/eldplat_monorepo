@@ -6,7 +6,7 @@ const FormSTY = styled.form`
   }
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   padding: 20px;
   select {
     height: 34px;

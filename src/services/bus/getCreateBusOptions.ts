@@ -1,7 +1,12 @@
 import API_Path from "./apiPath";
-export const getCreateBusOptions = async () => {
+export const getCreateBusOptions = async (dsph_group?: string) => {
   //
-  const url = new URL(API_Path["getCreateBusOptions"]);
+
+  const url = new URL(
+    `${API_Path["getCreateBusOptions"]}${
+      dsph_group ? "dsph_group=" + dsph_group : ""
+    }`
+  );
   //
   const res = await fetch(url.href, {
     method: "GET",
