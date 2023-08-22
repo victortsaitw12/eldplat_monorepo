@@ -228,6 +228,7 @@ const Page: NextPageWithLayout<never> = () => {
               setDrawerOpen(false);
             }}
             options={options}
+            setOptions={setOptions}
           />
         </Drawer>
       )}
