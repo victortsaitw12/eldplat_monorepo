@@ -12,10 +12,13 @@ import { IconLeft } from "@components/Button/Primary";
 import FiledInput from "./FieldInput";
 import { useState } from "react";
 import { createBus } from "@services/bus/createBus";
+import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
+
 interface I_BusCreateFormProps {
   data?: any;
   reloadData?: () => void;
   options: any;
+  setOptions: (v: any) => void;
 }
 export interface CreateBusPayload {
   bus_name: string;
@@ -43,11 +46,18 @@ const defaultValues: CreateBusPayload = {
   status: "",
   ownership: ""
 };
-const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
+const BusCreateForm = ({
+  reloadData,
+  options,
+  setOptions
+}: I_BusCreateFormProps) => {
   const { register, handleSubmit, control, reset } = useForm<CreateBusPayload>({
     defaultValues
   });
   const [loading, setLoading] = useState(false);
+  const [busGroup, setBusGroup] = useState<string>("");
+  const [isDriverDDLLoading, setIsDriverDDLoading] = useState<boolean>(false);
+
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     try {
@@ -60,6 +70,28 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
     reloadData && reloadData();
     reset();
   };
+
+  const fetchDDL = async (dsph_group?: string) => {
+    try {
+      const res = await getCreateBusOptions(dsph_group);
+      if (res.statusCode === "200") {
+        setOptions(res.dataList[0]);
+      } else {
+        throw new Error(`${res.resultString}`);
+      }
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  const handleBusGroupChange = async (e: any) => {
+    setBusGroup(e.target.value);
+    setIsDriverDDLoading(true);
+    const bus_group = e.target.value;
+    await fetchDDL(bus_group);
+    setIsDriverDDLoading(false);
+  };
+
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
@@ -174,10 +206,7 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
             <span style={{ color: "#D14343" }}>*</span>主要駕駛
           </div>
         </Label>
-        <Select
-          {...register("operator_no", { required: "此欄位必填" })}
-          defaultValue=""
-        >
+        <Select defaultValue="" onChange={handleBusGroupChange}>
           <option value="" disabled hidden>
             請選擇駕駛車隊
           </option>
@@ -190,6 +219,7 @@ const BusCreateForm = ({ reloadData, options }: I_BusCreateFormProps) => {
         <Select
           {...register("operator_no", { required: "此欄位必填" })}
           defaultValue=""
+          disabled={isDriverDDLLoading}
         >
           <option value="" disabled hidden>
             請選擇
