@@ -5,8 +5,11 @@ const FormSTY = styled.form`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   padding: 20px;
+  div {
+    /* margin-bottom: unset; */
+  }
   select {
     height: 34px;
     & + svg {

@@ -27,6 +27,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   const [isFinished, setIsFinished] = useState<boolean>(false); // 維保任務是否結案的boolean
   const [mainCreateDdl, setMainCreateDdl] = useState<any>(null);
   const [maintenanceData, setMaintenanceData] = useState<any>(null);
+
   useEffect(() => {
     updateMainFilter("1");
     setLoading(true);
@@ -47,6 +48,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
       setLoading(false);
     });
   }, []);
+
   //TableWrapper
   const changeMainFilterHandler = () => {
     console.log("changeMainFilterHandler");
@@ -54,11 +56,12 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   //
 
   console.log("router", router);
+
   const asyncSubmitForm = async (data: any) => {
-    console.log("⚽data", data);
+    console.log("🍅🍅🍅⚽data", data);
     setLoading(true);
 
-    const driver = mainCreateDdl?.driver_options?.filter((v: { no: any }) => {
+    const driver = mainCreateDdl?.operator_options?.filter((v: { no: any }) => {
       return v.no === data.driver_no;
     });
 
@@ -80,7 +83,6 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
     });
 
     console.log("🉐edited data", newData);
-
     try {
       const res = await updateMaintenance(newData, data["files"]);
       console.log("儲存 res", res);

@@ -1,30 +1,6 @@
 import API_Path from "./apiPath";
 
-// export const updateMaintenance = async (MaintenanceData: any) => {
-//   // for (const key in MaintenanceData) {
-//   //   if (MaintenanceData[key] === "") {
-//   //     delete MaintenanceData[key];
-//   //   }
-//   // }
-
-//   //
-//   const res = await fetch(API_Path["UpdateMaintenance"], {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-//     },
-//     body: JSON.stringify(MaintenanceData)
-//   });
-//   const result = await res.json();
-//   return result;
-// };
 export const updateMaintenance = async (MaintenanceData: any, files?: any) => {
-  // for (const key in MaintenanceData) {
-  //   if (MaintenanceData[key] === "") {
-  //     delete MaintenanceData[key];
-  //   }
-  // }
   const formData = new FormData();
 
   const newDts = MaintenanceData["maintenanceDts"].map((v: any) => {
@@ -59,38 +35,17 @@ export const updateMaintenance = async (MaintenanceData: any, files?: any) => {
   formData.append("service_start_date", MaintenanceData["service_start_date"]);
   formData.append("service_end_date", MaintenanceData["service_end_date"]);
   formData.append("vendor_no", MaintenanceData["vendor_no"]);
+  formData.append("driver_no", MaintenanceData["driver_no"]);
+  // TODO confirm with backend if this is required
+  // formData.append(
+  //   "am_driver_bus_group_no",
+  //   MaintenanceData["am_driver_bus_group_no"]
+  // );
 
-  // const newFiles = files.map((v: any) => {
-  //   return {
-  //     name: v.name,
-  //     lastModified: v.lastModified,
-  //     lastModifiedDate: v.lastModifiedDate,
-  //     type: v.type,
-  //     webkitRelativePath: v.webkitRelativePath
-  //   };
-  // });
-  // formData.append("files", JSON.stringify(newFiles));
   files?.forEach((file: any) => {
     formData.append("files", file ? file : "");
   });
 
-  // files.forEach((item: any, index: any) => {
-  //   formData.append(`items[${index}].name`, item.name);
-  //   formData.append(`items[${index}].lastModified`, item.lastModified);
-  //   formData.append(`items[${index}].lastModifiedDate`, item.lastModifiedDate);
-  //   formData.append(`items[${index}].type`, item.type);
-  //   formData.append(
-  //     `items[${index}].webkitRelativePath`,
-  //     item.webkitRelativePath
-  //   );
-  // });
-  // formData.append("name", files[0].name);
-  // formData.append("lastModified", files[0].lastModified);
-  // formData.append("lastModifiedDate", files[0].lastModifiedDate);
-  // formData.append("type", files[0].type);
-  // formData.append("webkitRelativePath", files[0].webkitRelativePath);
-
-  // console.log("🎅formData", formData.get("maintenanceInput"));
   console.log("🤐formData", formData);
 
   //
@@ -100,8 +55,6 @@ export const updateMaintenance = async (MaintenanceData: any, files?: any) => {
       // "Content-Type": "multipart/form-data",
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
-    // body: JSON.stringify(MaintenanceData)
-    // body:  formData
     body: formData
   });
   const result = await res.json();

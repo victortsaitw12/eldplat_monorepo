@@ -1,13 +1,19 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { FormSTY } from "./style";
-import { PlusIcon, SelectField, TextInputField } from "evergreen-ui";
+import {
+  Label,
+  Select,
+  PlusIcon,
+  SelectField,
+  TextInputField
+} from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
-
+import router from "next/router";
 //@layout
 import { createMaintenance } from "@services/maintenance/createMaintenance";
-import router from "next/router";
 import { CancelMaintenanceById } from "@services/maintenance/getMaintenanceNotice";
+import { getCreateDdl } from "@services/maintenance/getCreateDdl";
 import LoadingSpinner from "@components/LoadingSpinner";
 
 //@components
@@ -29,14 +35,18 @@ interface I_MaintenanceCreateFormProps {
   busNo?: string;
   reminderNo?: string;
   mainCreateDdl: any;
+  setMainCreateDdl: (data: any) => void;
 }
 
 function MaintenanceCreateForm({
   noticeData,
   reloadData,
   reminderNo,
-  mainCreateDdl
+  mainCreateDdl,
+  setMainCreateDdl
 }: I_MaintenanceCreateFormProps) {
+  const [busGroup, setBusGroup] = React.useState<string>("");
+  const [driverGroup, setDriverGroup] = React.useState<string>("");
   // default value
   const defaultValues: CreateMaintenancePayload = {
     bus_no: "",
@@ -95,7 +105,7 @@ function MaintenanceCreateForm({
       return v.no === newData.bus_no;
     });
     newData["bus_name"] = selectedBus[0]?.name;
-    const selectedDriver = mainCreateDdl.driver_options.filter(
+    const selectedDriver = mainCreateDdl.operator_options.filter(
       (v: { no: any }) => {
         return v.no === newData.driver_no;
       }
@@ -121,6 +131,30 @@ function MaintenanceCreateForm({
     reset();
   };
 
+  const fetchDDL = async (bus_group?: string, dsph_group?: string) => {
+    try {
+      const res = await getCreateDdl(bus_group, dsph_group);
+      if (res.statusCode === "200") {
+        setMainCreateDdl(res.dataList[0]);
+      } else {
+        throw new Error(`${res.resultString}`);
+      }
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+  const handleBusGroupChange = (e: any) => {
+    setBusGroup(e.target.value);
+    const bus_group = e.target.value;
+    fetchDDL(bus_group, driverGroup);
+  };
+
+  const handleOperatorGroupChange = (e: any) => {
+    setDriverGroup(e.target.value);
+    const dsph_group = e.target.value;
+    fetchDDL(busGroup, dsph_group);
+  };
+
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
@@ -134,59 +168,108 @@ function MaintenanceCreateForm({
         <LoadingSpinner />
       ) : (
         <>
+          <Label>
+            <div>
+              <span style={{ color: "#D14343" }}>*</span>車輛名稱
+            </div>
+          </Label>
+          <Select style={{ marginBottom: "0" }} onChange={handleBusGroupChange}>
+            <option key="bus_group_options" value="" selected disabled>
+              請選擇車輛車隊
+            </option>
+            {mainCreateDdl?.bus_group_options.map((item: any) => {
+              return (
+                <option
+                  key={item.no}
+                  value={item.no}
+                  selected={busGroup === item.no}
+                >
+                  {item.name}
+                </option>
+              );
+            })}
+          </Select>
           <Controller
             name="bus_no"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <SelectField
-                label={
-                  <div>
-                    <span style={{ color: "#D14343" }}>*</span>車輛名稱
-                  </div>
-                }
+              <Select
                 value={value}
                 onChange={(e) => {
                   const targetBusOption = mainCreateDdl?.bus_options.find(
                     (bus_option: any) => bus_option.no === e.target.value
                   );
                   onChange(e.target.value);
-                  setValue("driver_no", targetBusOption?.driver_no);
+                  setValue("bus_no", targetBusOption?.bus_no);
                 }}
               >
+                <option key="bus_options" value="">
+                  請選擇車輛
+                </option>
                 {mainCreateDdl?.bus_options.map((item: any) => {
                   return (
-                    <option key={item.no} value={item.no}>
+                    <option
+                      key={item.no}
+                      value={item.no}
+                      selected={getValues("bus_no") === item.no}
+                    >
                       {item.name}
                     </option>
                   );
                 })}
-              </SelectField>
+              </Select>
             )}
           />
-          <SelectField
-            label={
-              <div>
-                <span style={{ color: "#D14343" }}>*</span>駕駛
-              </div>
-            }
-            {...register("driver_no")}
-          >
-            {mainCreateDdl?.driver_options.map((item: any) => {
+          <Label style={{ marginTop: "24px" }}>
+            {" "}
+            <div>
+              <span style={{ color: "#D14343" }}>*</span>駕駛
+            </div>
+          </Label>
+          <Select onChange={handleOperatorGroupChange}>
+            <option key="operator_bus_group_option" value="" selected disabled>
+              請選擇駕駛車隊
+            </option>
+            {mainCreateDdl?.operator_bus_group_options?.map((item: any) => {
               return (
-                <option key={item.no} value={item.no}>
+                <option
+                  key={item.no}
+                  value={item.no}
+                  selected={driverGroup === item.no}
+                >
                   {item.name}
                 </option>
               );
             })}
-          </SelectField>
+          </Select>
+          <Select {...register("driver_no")}>
+            <option key="driver_no_option" value="">
+              請選擇駕駛
+            </option>
+            {mainCreateDdl?.operator_options?.map((item: any) => {
+              return (
+                <option
+                  key={item.no}
+                  value={item.no}
+                  selected={getValues("driver_no") === item.no}
+                >
+                  {item.name}
+                </option>
+              );
+            })}
+          </Select>
+
           <SelectField
             label={
-              <div>
+              <div style={{ marginTop: "24px" }}>
                 <span style={{ color: "#D14343" }}>*</span>分類
               </div>
             }
             {...register("maintenance_type")}
           >
+            <option key="vendor_options" value="" disabled>
+              請選擇
+            </option>
             {mainCreateDdl?.type_options.map((item: any) => {
               return (
                 <option key={item.no} value={item.no}>
@@ -211,6 +294,9 @@ function MaintenanceCreateForm({
                   setValue("package_code", "");
                 }}
               >
+                <option key="vendor_options" value="" disabled>
+                  請選擇
+                </option>
                 {mainCreateDdl?.vendor_options.map((item: any) => {
                   return (
                     <option key={item.no} value={item.no}>
