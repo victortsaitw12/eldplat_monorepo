@@ -98,15 +98,15 @@ function AssignManualCreate({
   const orderArr = formatOrderInfo(orderInfo);
 
   // 按下儲存派單按鈕
-  const asyncSubmitForm = async () => {
+  const asyncSubmitForm = async (e: any) => {
+    e.preventDefault();
     try {
       console.log("👉data for click save", createAssignData);
-      // TODO: uncommenting after I find what refresh the page....
-      // const res = await createAssignmentByManual(createAssignData);
-      // if (res.statusCode !== "200") throw new Error(` ${res.resultString}`);
-      // toaster.success("排程成功", {
-      //   duration: 120
-      // });
+      const res = await createAssignmentByManual(createAssignData);
+      if (res.statusCode !== "200") throw new Error(` ${res.resultString}`);
+      toaster.success("排程成功", {
+        duration: 2
+      });
     } catch (e: any) {
       console.log(e);
       toaster.danger("排程失敗", {
