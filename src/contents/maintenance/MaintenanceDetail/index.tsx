@@ -23,6 +23,7 @@ interface I_Props {
   mainCreateDdl?: any;
   setMainCreateDdl: (t: any) => void;
   defaultData: any;
+  fetchDDL: (bus_group?: string, dsph_group?: string) => void;
 }
 const MaintenanceDetail = ({
   defaultData,
@@ -31,7 +32,8 @@ const MaintenanceDetail = ({
   asyncSubmitForm,
   maintenance_id,
   mainCreateDdl,
-  setMainCreateDdl
+  setMainCreateDdl,
+  fetchDDL
 }: I_Props) => {
   const [loading, setLoading] = useState(true);
   const {
@@ -70,30 +72,12 @@ const MaintenanceDetail = ({
   //   });
   //   return () => subscription.unsubscribe();
   // }, [watch]);
-  const fetchDDL = async (bus_group?: string, dsph_group?: string) => {
-    try {
-      const res = await getCreateDdl(bus_group, dsph_group);
-      if (res.statusCode === "200") {
-        setMainCreateDdl(res.dataList[0]);
-      } else {
-        throw new Error(`${res.resultString}`);
-      }
-    } catch (e: any) {
-      console.log(e.message);
-    }
-  };
+
   const handleDriverGroupChange = (e: any) => {
     const dsph_group = e.target.value;
     fetchDDL(undefined, dsph_group);
   };
-  // const handleDriverChange = (e: any) => {
-  //   setValue(
-  //     "driver_name",
-  //     mainCreateDdl.operator_options.find(
-  //       (item: any) => item.no === e.target.value
-  //     )?.name || ""
-  //   );
-  // };
+
   //車輛資料
   const vehicle_info = [
     {
@@ -138,7 +122,12 @@ const MaintenanceDetail = ({
             marginBottom="0"
             onChange={handleDriverGroupChange}
           >
-            <option key={"operator_bus_group_options"} value={""} disabled>
+            <option
+              key={"operator_bus_group_options"}
+              value={""}
+              disabled
+              hidden
+            >
               請選擇車隊
             </option>
             {mainCreateDdl?.operator_bus_group_options?.map((item: any) => {
@@ -157,10 +146,9 @@ const MaintenanceDetail = ({
             key="driver_no_select"
             {...register("driver_no")}
             marginBottom="0"
-            isInvalid={!getValues("am_driver_bus_group_no")}
-            // onChange={handleDriverChange}
+            disabled={!getValues("am_driver_bus_group_no")}
           >
-            <option key={"driver_no_options"} value={""}>
+            <option key={"driver_no_options"} value={""} selected hidden>
               請選擇駕駛
             </option>
             {mainCreateDdl?.operator_options?.map((item: any) => (
