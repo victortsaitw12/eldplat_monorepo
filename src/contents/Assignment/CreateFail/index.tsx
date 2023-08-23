@@ -5,19 +5,24 @@ interface I_CreateFail {
   failIsShown: boolean;
   setFailIsShown: (failIsShown: boolean) => void;
   failMessage: string;
+  onClose: () => void;
 }
 
 const CreateFail = ({
   failIsShown,
   setFailIsShown,
-  failMessage
+  failMessage,
+  onClose
 }: I_CreateFail) => {
   return (
     <Pane>
       <Dialog
         isShown={failIsShown}
         title={failMessage}
-        onCloseComplete={() => setFailIsShown(false)}
+        onCloseComplete={() => {
+          setFailIsShown(false);
+          onClose();
+        }}
         confirmLabel="確定"
         cancelLabel="取消"
       ></Dialog>

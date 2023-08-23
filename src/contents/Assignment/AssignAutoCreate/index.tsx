@@ -33,12 +33,14 @@ interface I_AssignAutoCreateProps {
   orderInfo: I_ManualAssignType[];
   setDisabledAutoList: (v: any) => void;
   refetch?: () => void;
+  setFirstDrawerOpen: (v: string) => void;
 }
 
 function AssignAutoCreate({
   orderInfo,
   setDisabledAutoList,
-  refetch
+  refetch,
+  setFirstDrawerOpen
 }: I_AssignAutoCreateProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -85,17 +87,17 @@ function AssignAutoCreate({
     e.preventDefault();
     try {
       const res = await createAssignmentByAuto(autoAssignData);
-      console.log("auto assign res: ", res);
       if (res.statusCode === "200") {
+        console.log("🍅 successed");
         toaster.success("自動排程成功", {
           duration: 1.5
         });
+        refetch && refetch();
       } else {
         setFailMessage(res.message || "請確認必填欄位");
         setFailIsShown(true);
         setDisabledAutoList((prev: any) => [...prev, orderInfo[0]?.quote_no]);
       }
-      refetch && refetch();
     } catch (err) {
       console.log("auto assign err: ", err);
     }
@@ -167,6 +169,7 @@ function AssignAutoCreate({
           failIsShown={failIsShown}
           setFailIsShown={setFailIsShown}
           failMessage={failMessage}
+          onClose={setFirstDrawerOpen.bind(null, "")}
         />
       )}
     </FormSTY>
