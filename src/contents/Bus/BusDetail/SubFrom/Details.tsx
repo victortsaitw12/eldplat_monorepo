@@ -216,7 +216,7 @@ function Details({
       req: true,
       label: "主要駕駛",
       // TODO bus.bus_group_name => bus.operator_bus_group_name
-      value: `${getValues("bus.bus_group_name")}/${getValues(
+      value: `${getValues("bus.bus_group_name")} / ${getValues(
         "bus.driver_name"
       )}`,
       editEle: (
