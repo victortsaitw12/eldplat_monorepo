@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Select } from "evergreen-ui";
+import { Select, Pane } from "evergreen-ui";
 import InfoBox from "@components/InfoBox";
 import ImageUploader from "@components/ImageUploader";
 import {
@@ -20,6 +20,7 @@ interface Props {
   control: Control<BusDataTypes, any>;
   busOptions: any;
   isEdit: boolean;
+  fetchDDL: (v: any) => void;
 }
 function Details({
   register,
@@ -27,10 +28,22 @@ function Details({
   getValues,
   control,
   isEdit,
-  busOptions
+  busOptions,
+  fetchDDL
 }: Props) {
   console.log("busOptions", busOptions);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [busGroup, setBusGroup] = useState<string>("");
+  const [isDriverDDLLoading, setIsDriverDDLoading] = useState<boolean>(false);
+
+  const handleDriverGroupChange = async (e: any) => {
+    setBusGroup(e.target.value);
+    setIsDriverDDLoading(true);
+    const bus_group = e.target.value;
+    await fetchDDL(bus_group);
+    setIsDriverDDLoading(false);
+  };
+
   // 身分識別
   const identityInfo = [
     {
@@ -202,21 +215,57 @@ function Details({
     {
       req: true,
       label: "主要駕駛",
-      value: busOptions?.operator_options.find(
-        (option: any) => option.no === getValues("bus.operator_no")
-      )?.name,
+      // TODO bus.bus_group_name => bus.operator_bus_group_name
+      value: `${getValues("bus.bus_group_name")}/${getValues(
+        "bus.driver_name"
+      )}`,
       editEle: (
-        <Select
-          key="bus.operator"
-          {...register("bus.operator_no")}
-          marginBottom="0"
+        <Pane
+          className="operator_bus_group_select"
+          style={{ display: "flex", flexDirection: "column", gap: "8px" }}
         >
-          {busOptions?.operator_options.map((item: any) => (
-            <option key={item.no} value={item.no}>
-              {item.name}
+          <Select
+            key="operator_bus_group_select"
+            marginBottom="0"
+            onChange={handleDriverGroupChange}
+          >
+            <option
+              key={"operator_bus_group_options"}
+              value={""}
+              disabled
+              hidden
+            >
+              請選擇車隊
             </option>
-          ))}
-        </Select>
+            {busOptions?.operator_bus_group_options?.map((item: any) => {
+              return (
+                <option
+                  key={`operator_bus_group_options-${item.no}`}
+                  value={item.no}
+                  // TODO uncomment after API is revised
+                  // selected={getValues("operator_bus_group_no") === item.no}
+                >
+                  {item.name}
+                </option>
+              );
+            })}
+          </Select>
+          <Select
+            key="bus.operator"
+            {...register("bus.operator_no")}
+            marginBottom="0"
+            disabled={isDriverDDLLoading}
+          >
+            <option key={"driver_no_options"} value={""} selected hidden>
+              請選擇駕駛
+            </option>
+            {busOptions?.operator_options.map((item: any) => (
+              <option key={item.no} value={item.no}>
+                {item.name}
+              </option>
+            ))}
+          </Select>
+        </Pane>
       )
     },
     {
