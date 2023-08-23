@@ -64,6 +64,7 @@ function AssignmentDrawers({
             orderInfo={orderInfo}
             setDisabledAutoList={setDisabledAutoList}
             refetch={refetch}
+            setFirstDrawerOpen={setFirstDrawerOpen}
           />
         )
       }

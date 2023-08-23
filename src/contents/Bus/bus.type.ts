@@ -3,6 +3,8 @@ export interface BusDataTypes {
   bus: {
     bus_no: string;
     bus_name: string;
+    bus_group_name: string;
+    driver_name: string;
     vin: string;
     license_plate: string;
     type: string;

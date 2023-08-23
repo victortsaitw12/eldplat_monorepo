@@ -112,9 +112,14 @@ function DriverInfo({
       editEle: (
         <Select
           key="working_hours_code"
-          {...register("working_hours_code")}
+          {...register("working_hours_code", {
+            required: true
+          })}
           marginBottom="0"
         >
+          <option key={"working_hours"} selected hidden>
+            請選擇
+          </option>
           {workinghours.map((item: any, i: number) => (
             <option key={`working_hours-${i}`} value={item.working_hours_code}>
               {item.working_hours_name || "--"}
@@ -207,14 +212,20 @@ function DriverInfo({
     //   )
     // },
     {
-      req: false,
+      req: true,
       label: "車隊",
       value:
         dsphGroupDDL?.find(
           (item: I_DsphGroupDDL) => item.value === getValues("dsph_group")
         )?.label || "--",
       editEle: (
-        <Select key="dsph_group" {...register("dsph_group")} marginBottom="0">
+        <Select
+          key="dsph_group"
+          {...register("dsph_group", {
+            required: true
+          })}
+          marginBottom="0"
+        >
           {dsphGroupDDL?.map((item: I_DsphGroupDDL) => (
             <option key={`dsph_group-${item.value}`} value={item.value}>
               {item.label}

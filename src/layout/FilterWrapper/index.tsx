@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { countActiveFilter } from "@utils/countActiveFilter";
 import { BodySTY } from "./style";
 import SubFilterButton from "./SubFilterButton";
+import LoadingSpinner from "@components/LoadingSpinner";
 // import { useFilterStore } from "@stores/busFilterStore";
 // TODO: 測試用，之後可以拿掉
 interface I_MainBookmark {
@@ -36,7 +37,7 @@ function FilterWrapper({
   //
   console.log("FilterWrapper", filter);
   if (!filter) {
-    return <div>loading...</div>;
+    return <LoadingSpinner />;
   }
 
   return (

@@ -4,6 +4,8 @@ import { v4 as uuid } from "uuid";
 import { MenuDataType } from "src/mock-data/side-bar/data";
 import ListItem from "../ListItem";
 import { BodySTY, ItemListSTY } from "./style";
+import LoadingSpinner from "@components/LoadingSpinner";
+
 //
 type SubList = NonNullable<MenuDataType[0]["subList"]>;
 //
@@ -14,7 +16,7 @@ interface Props {
 function Index({ data }: Props) {
   console.log("data", data);
   if (!data) {
-    return <div>loading...</div>;
+    return <LoadingSpinner />;
   }
   return (
     <BodySTY>

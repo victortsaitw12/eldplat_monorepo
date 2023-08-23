@@ -203,13 +203,7 @@ function MaintenanceCreateForm({
             render={({ field: { onChange, value } }) => (
               <Select
                 value={value}
-                onChange={(e) => {
-                  const targetBusOption = mainCreateDdl?.bus_options.find(
-                    (bus_option: any) => bus_option.no === e.target.value
-                  );
-                  onChange(e.target.value);
-                  setValue("bus_no", targetBusOption?.bus_no);
-                }}
+                onChange={onChange}
                 disabled={isBusDDLLoading}
               >
                 <option key="bus_options" value="">

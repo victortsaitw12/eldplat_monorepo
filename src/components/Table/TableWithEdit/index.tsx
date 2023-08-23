@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { ErrorIcon, PlusIcon, Checkbox } from "evergreen-ui";
+import { ErrorIcon, PlusIcon, Checkbox, Spinner, Pane } from "evergreen-ui";
 import TableActionButton from "@components/Table/TableActionButton";
 import { v4 as uuid } from "uuid";
 import { IconLeft } from "@components/Button/Primary";
 import { TableSTY, TableContainerSTY } from "./style";
 import { noButtonData } from "../noButtonData";
 import PaginationField, { I_PageInfo } from "@components/PaginationField";
+import LoadingSpinner from "@components/LoadingSpinner";
+
 //
 const dontShowList = [
   "維保通知",
@@ -84,7 +86,12 @@ function Table({
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-  if (!data) return <p>Loading</p>;
+  if (!data)
+    return (
+      <Pane style={{ display: "flex", justifyContent: "center" }}>
+        <LoadingSpinner />
+      </Pane>
+    );
 
   // checkbox +++
   const handleCheckAll = (e: any) => {
@@ -99,7 +106,6 @@ function Table({
     if (checkedItems.includes(e.target.id)) {
       const updated = checkedItems.filter((item) => item !== e.target.id);
       setCheckedItems(updated);
-      console.log("🍅checkedItems", checkedItems);
     } else {
       const updated = [...checkedItems, e.target.id];
       setCheckedItems(updated);

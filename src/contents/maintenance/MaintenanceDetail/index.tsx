@@ -106,7 +106,6 @@ const MaintenanceDetail = ({
       value: `${getValues("operator_bus_group_name") || "--"} / ${
         getValues("operator_name") || "--"
       }`
-      //TODO check with PM about where does the "bus_group_option" use for here
     },
     {
       req: false,

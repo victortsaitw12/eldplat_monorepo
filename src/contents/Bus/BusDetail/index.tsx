@@ -16,6 +16,7 @@ interface I_Props {
   formType: string;
   busDefaultData: BusDataTypes;
   busOptions: any;
+  fetchDDL: (v: any) => void;
 }
 const BusDetail = ({
   isEdit,
@@ -24,7 +25,8 @@ const BusDetail = ({
   formType,
   busDefaultData,
   busOptions,
-  busId
+  busId,
+  fetchDDL
 }: I_Props) => {
   const [visibleForm, setVisibleForm] = useState("1");
   useEffect(() => {
@@ -41,6 +43,7 @@ const BusDetail = ({
     defaultValues: busDefaultData
   });
   //TODO 分類的選法
+  console.log("🍅 busDefaultData:", busDefaultData);
   if (!busDefaultData) {
     return <div>查無相關資料...</div>;
   }
@@ -57,6 +60,7 @@ const BusDetail = ({
           control={control}
           isEdit={isEdit}
           busOptions={busOptions}
+          fetchDDL={fetchDDL}
         />
       )}
       {visibleForm === "2" && (
