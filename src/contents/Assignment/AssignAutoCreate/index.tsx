@@ -88,7 +88,6 @@ function AssignAutoCreate({
     try {
       const res = await createAssignmentByAuto(autoAssignData);
       if (res.statusCode === "200") {
-        console.log("🍅 successed");
         toaster.success("自動排程成功", {
           duration: 1.5
         });

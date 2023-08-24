@@ -5,7 +5,7 @@ const FormSTY = styled.form`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   padding: 20px;
   div {
     /* margin-bottom: unset; */
@@ -27,6 +27,11 @@ const FormSTY = styled.form`
     display: flex;
     justify-content: center;
     background-color: ${({ theme }) => theme.color.B400};
+  }
+  .info-box {
+    background: #f1f6fd;
+    border-radius: 10px;
+    padding: 12px 20px;
   }
 `;
 const ItemSTY = styled.label`

@@ -5,13 +5,8 @@ const FormSTY = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  .time-area {
-    width: max-content;
-    select {
-      width: 80px;
-      display: flex;
-      flex-wrap: nowrap;
-    }
+  .time-area > div {
+    width: 100%;
   }
 
   button {

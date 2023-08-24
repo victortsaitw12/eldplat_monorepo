@@ -141,6 +141,7 @@ const PriceInfoView = () => {
                 }}
                 className="submit_btn"
                 text="送出報價"
+                disabled={(!isFullPayment && !isDeposit) || undefined}
               />
             )}
             {isCheckedStatus() && !isAssignedStatus() && (

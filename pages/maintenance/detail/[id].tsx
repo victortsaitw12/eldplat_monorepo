@@ -56,7 +56,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
   console.log("router", router);
 
   const asyncSubmitForm = async (data: any) => {
-    console.log("🍅🍅🍅⚽data", data);
+    console.log("⚽data", data);
     setLoading(true);
 
     const driver = mainCreateDdl?.operator_options?.filter((v: { no: any }) => {
