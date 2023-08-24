@@ -116,12 +116,16 @@ function DriverInfo({
             required: true
           })}
           marginBottom="0"
+          defaultValue=""
         >
-          <option key={"working_hours"} selected hidden>
+          <option value="" disabled hidden>
             請選擇
           </option>
           {workinghours.map((item: any, i: number) => (
-            <option key={`working_hours-${i}`} value={item.working_hours_code}>
+            <option
+              key={`working_hours_options-${i}`}
+              value={item.working_hours_code}
+            >
               {item.working_hours_name || "--"}
             </option>
           ))}
@@ -154,9 +158,13 @@ function DriverInfo({
           key="driver_country"
           {...register("driver_country")}
           marginBottom="0"
+          defaultValue=""
         >
+          <option value="" disabled hidden>
+            請選擇
+          </option>
           {driverCountryDDL?.map((item: any) => (
-            <option key={`driver_country${item.value}`} value={item.value}>
+            <option key={`driver_country-${item.value}`} value={item.value}>
               {item.label}
             </option>
           ))}
@@ -172,9 +180,13 @@ function DriverInfo({
           key="license_area"
           {...register("license_area")}
           marginBottom="0"
+          defaultValue=""
         >
+          <option value="" disabled hidden>
+            請選擇
+          </option>
           {licenseAreaDDL?.map((item: any) => (
-            <option key={`driver_country${item.value}`} value={item.value}>
+            <option key={`license_area-${item.value}`} value={item.value}>
               {item.label}
             </option>
           ))}
@@ -225,7 +237,11 @@ function DriverInfo({
             required: true
           })}
           marginBottom="0"
+          defaultValue=""
         >
+          <option value="" disabled hidden>
+            請選擇
+          </option>
           {dsphGroupDDL?.map((item: I_DsphGroupDDL) => (
             <option key={`dsph_group-${item.value}`} value={item.value}>
               {item.label}
@@ -270,8 +286,9 @@ function DriverInfo({
         <TagSelect
           options={[
             {
-              label: "",
-              value: "00"
+              label: "請選擇",
+              value: "00",
+              placeholder: true
             },
             {
               label: "特優",

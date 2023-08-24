@@ -255,8 +255,9 @@ function Details({
             {...register("bus.operator_no")}
             marginBottom="0"
             disabled={isDriverDDLLoading}
+            defaultValue=""
           >
-            <option key={"driver_no_options"} value={""} selected hidden>
+            <option value="" disabled hidden>
               請選擇駕駛
             </option>
             {busOptions?.operator_options.map((item: any) => (
