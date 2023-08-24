@@ -88,7 +88,6 @@ const Page: NextPageWithLayout<never> = () => {
   });
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [disabledAutoList, setDisabledAutoList] = useState<string[]>([]);
-  const [hightlightItem, setHightlightItem] = useState<string>("");
 
   // dayNum: 第幾天(點的那天-出發日期)
   // carNum: 點的那個日期的第幾車
@@ -654,7 +653,6 @@ const Page: NextPageWithLayout<never> = () => {
             onPageChange={upDatePageHandler}
             setOrderInfo={setOrderInfo}
             setFirstDrawerOpen={setFirstDrawerOpen}
-            hightlightItem={hightlightItem}
           />
         </FilterWrapper>
       </TableWrapper>
@@ -665,11 +663,10 @@ const Page: NextPageWithLayout<never> = () => {
           secondDrawerOpen={secondDrawerOpen}
           setSecondDrawerOpen={setSecondDrawerOpen}
           assignData={data}
-          refetch={(id?: string) => {
+          refetch={() => {
             setPageInfo(defaultPageInfo);
             fetchAssignData(false, nowTab, defaultPageInfo);
             setFirstDrawerOpen("");
-            id && setHightlightItem(id);
           }}
           orderInfo={orderInfo}
           setDisabledAutoList={setDisabledAutoList}
