@@ -36,7 +36,7 @@ export async function getAllRegions(
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
     body: JSON.stringify({
-      area_No: area_no,
+      // area_No: area_no,
       level_Num: level_num,
       default_Needed: true
     })

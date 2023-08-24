@@ -3,9 +3,9 @@ import API_Path from "./apiPath";
 // 取駕駛國家下拉式資料
 export const getDriverCountryDDL = async (): Promise<any> => {
   const requestBody = {
-    area_No: "",
+    // area_No: area_no,
     level_Num: "2",
-    default_Needed: true
+    default_Needed: false
   };
 
   const res = await fetch(`${API_Path["getAreaDDL"]}`, {
