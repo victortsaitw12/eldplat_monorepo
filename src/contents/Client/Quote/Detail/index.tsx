@@ -18,6 +18,7 @@ import {
 } from "@services/client/mappingQuotationData";
 import { QuotationCreatePayload } from "../type";
 import { convertMap } from "@utils/convertValueToText";
+import LoadingSpinner from "@components/LoadingSpinner";
 //
 const OrdersDetail = () => {
   const methods = useFormContext<QuotationCreatePayload>();
@@ -84,7 +85,7 @@ const OrdersDetail = () => {
       </>
     );
   };
-  return <BodySTY>{!orderData ? <div>loading...</div> : r_template()}</BodySTY>;
+  return <BodySTY>{!orderData ? <LoadingSpinner /> : r_template()}</BodySTY>;
 };
 
 export default OrdersDetail;

@@ -106,7 +106,6 @@ const MaintenanceDetail = ({
       value: `${getValues("operator_bus_group_name") || "--"} / ${
         getValues("operator_name") || "--"
       }`
-      //TODO check with PM about where does the "bus_group_option" use for here
     },
     {
       req: false,
@@ -152,11 +151,7 @@ const MaintenanceDetail = ({
               請選擇駕駛
             </option>
             {mainCreateDdl?.operator_options?.map((item: any) => (
-              <option
-                key={item.no}
-                value={item.no}
-                // selected={getValues("driver_no") === item.no}
-              >
+              <option key={item.no} value={item.no}>
                 {item.name}
               </option>
             ))}

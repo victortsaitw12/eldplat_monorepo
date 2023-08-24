@@ -70,6 +70,18 @@ const Page: NextPageWithLayout<
     router.push("/bus/detail/" + busId + "?editPage=view");
     setLoading(false);
   };
+  const fetchDDL = async (dsph_group?: string) => {
+    try {
+      const res = await getCreateBusOptions(dsph_group);
+      if (res.statusCode === "200") {
+        setOptions(res.dataList[0]);
+      } else {
+        throw new Error(`${res.resultString}`);
+      }
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
   const onCancelHandler = () => {
     router.push("/bus");
   };
@@ -99,6 +111,7 @@ const Page: NextPageWithLayout<
           formType={mainFilter}
           busDefaultData={busDefaultData}
           busOptions={options}
+          fetchDDL={fetchDDL}
         />
       </TableWrapper>
     </BodySTY>

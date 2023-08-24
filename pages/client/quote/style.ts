@@ -39,7 +39,8 @@ export const BodySTY = styled.div`
     > .content-entry {
       display: flex;
       width: 100%;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 25px;
     }
   }
 `;
