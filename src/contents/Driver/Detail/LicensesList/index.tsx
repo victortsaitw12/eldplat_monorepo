@@ -115,8 +115,6 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
   const handleEdit = (id: any) => {
     setEditNo(id);
     setIsLightBoxOpen(true);
-    console.log("🍅id:", typeof id);
-    console.log("🍅licensesData:", licensesData);
   };
 
   const handleCancel = () => {

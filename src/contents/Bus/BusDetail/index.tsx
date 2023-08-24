@@ -43,7 +43,6 @@ const BusDetail = ({
     defaultValues: busDefaultData
   });
   //TODO 分類的選法
-  console.log("🍅 busDefaultData:", busDefaultData);
   if (!busDefaultData) {
     return <div>查無相關資料...</div>;
   }
