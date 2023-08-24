@@ -25,6 +25,26 @@ const FormSTY = styled.form`
 
   button {
     justify-content: center;
+    &.Primary-Radius-yellow {
+      background: ${({ theme }) => theme.color.Y400};
+      border: 2px solid ${({ theme }) => theme.color.Y400};
+      &:hover {
+        background: ${({ theme }) => theme.color.Y500};
+        border: 2px solid ${({ theme }) => theme.color.Y500};
+      }
+      &:focus {
+        background: ${({ theme }) => theme.color.Y600};
+        border: 2px solid ${({ theme }) => theme.color.Y100};
+      }
+      &:active {
+        background: ${({ theme }) => theme.color.Y500};
+        border: 2px solid ${({ theme }) => theme.color.Y500};
+      }
+      &:disabled {
+        background: ${({ theme }) => theme.color.Y100};
+        border: 2px solid ${({ theme }) => theme.color.Y100};
+      }
+    }
   }
 
   .assign-table {
