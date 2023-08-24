@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import { TableSTY, TableContainerSTY, StyledDot } from "./style";
 import TableRow from "./TableRow";
 import PaginationField, { I_PageInfo } from "@components/PaginationField";
+import LoadingSpinner from "@components/LoadingSpinner";
 
 //
 export interface I_labelValue {
@@ -59,7 +60,7 @@ function OutsideTableOnAssignment({
   setOrderInfo,
   setFirstDrawerOpen
 }: I_Table) {
-  if (!assignData) return <p>Loading</p>;
+  if (!assignData) return <LoadingSpinner />;
   return (
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
