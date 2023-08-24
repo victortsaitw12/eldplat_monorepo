@@ -5,6 +5,7 @@ import { BodySTY } from "./style";
 interface Option {
   label: string;
   value: string;
+  placeholder?: boolean;
 }
 
 interface Props {
@@ -61,7 +62,12 @@ const TagSelect: React.FC<Props> = ({
         marginBottom="6px"
       >
         {options?.map((option) => (
-          <option key={option?.value} value={option?.value}>
+          <option
+            key={option?.value}
+            value={option?.value}
+            selected={option?.placeholder || undefined}
+            hidden={option?.placeholder || undefined}
+          >
             {option?.label}
           </option>
         ))}
