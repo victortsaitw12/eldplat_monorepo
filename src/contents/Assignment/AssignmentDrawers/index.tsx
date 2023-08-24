@@ -140,7 +140,7 @@ function AssignmentDrawers({
       >
         {firstDrawerList.get(firstDrawerOpen)?.conponent || <Spinner />}
       </Drawer>
-      {secondDrawerOpen === "派車" && (
+      {firstDrawerOpen === "manualAssign" && secondDrawerOpen === "派車" && (
         <Drawer
           isTabShown={false}
           closeDrawer={() => {
@@ -155,7 +155,7 @@ function AssignmentDrawers({
           ></SecondCarAssignManualCreate>
         </Drawer>
       )}
-      {secondDrawerOpen === "派工" && (
+      {firstDrawerOpen === "manualAssign" && secondDrawerOpen === "派工" && (
         <Drawer
           isTabShown={false}
           closeDrawer={() => {

@@ -7,7 +7,8 @@ import {
   Select,
   Pane,
   Paragraph,
-  TextareaField
+  TextareaField,
+  Group
 } from "evergreen-ui";
 
 //@layout
@@ -266,92 +267,96 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <Select
-          name="start_hours"
-          onClick={(e: any) => {
-            handleTimeChange(e);
-          }}
-          defaultValue={startHour}
-        >
-          {hours.map((item: string) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
-        </Select>
-        <Text fontSize={20}> : </Text>
-        <Select
-          name="start_minutes"
-          onClick={(e: any) => {
-            handleTimeChange(e);
-          }}
-          defaultValue={startMinute}
-        >
-          {minutes().map((item: string) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
-        </Select>
-        <Select
-          name="start_type"
-          onClick={(e: any) => {
-            handleTimeChange(e);
-          }}
-          defaultValue={
-            Number(dayjs(editData.task_start_time).format("HH")) > 12
-              ? "pm"
-              : "am"
-          }
-        >
-          <option value="am">AM</option>
-          <option value="pm">PM</option>
-        </Select>
+        <Group>
+          <Select
+            name="start_hours"
+            onClick={(e: any) => {
+              handleTimeChange(e);
+            }}
+            defaultValue={startHour}
+          >
+            {hours.map((item: string) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </Select>
+          <Text fontSize={20}> : </Text>
+          <Select
+            name="start_minutes"
+            onClick={(e: any) => {
+              handleTimeChange(e);
+            }}
+            defaultValue={startMinute}
+          >
+            {minutes().map((item: string) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </Select>
+          <Select
+            name="start_type"
+            onClick={(e: any) => {
+              handleTimeChange(e);
+            }}
+            defaultValue={
+              Number(dayjs(editData.task_start_time).format("HH")) > 12
+                ? "pm"
+                : "am"
+            }
+          >
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+          </Select>
+        </Group>
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <Select
-          name="end_hours"
-          onClick={(e: any) => {
-            handleTimeChange(e);
-          }}
-          defaultValue={endHour}
-        >
-          {hours.map((item: string) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
-        </Select>
-        <Text fontSize={20}> : </Text>
-        <Select
-          name="end_minutes"
-          onClick={(e: any) => {
-            handleTimeChange(e);
-          }}
-          defaultValue={endMinute}
-        >
-          {minutes().map((item: string) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
-        </Select>
-        <Select
-          name="end_type"
-          onClick={(e: any) => {
-            handleTimeChange(e);
-          }}
-          defaultValue={
-            Number(dayjs(editData.task_end_time).format("HH")) > 12
-              ? "pm"
-              : "am"
-          }
-        >
-          <option value="am">AM</option>
-          <option value="pm">PM</option>
-        </Select>
+        <Group>
+          <Select
+            name="end_hours"
+            onClick={(e: any) => {
+              handleTimeChange(e);
+            }}
+            defaultValue={endHour}
+          >
+            {hours.map((item: string) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </Select>
+          <Text fontSize={20}> : </Text>
+          <Select
+            name="end_minutes"
+            onClick={(e: any) => {
+              handleTimeChange(e);
+            }}
+            defaultValue={endMinute}
+          >
+            {minutes().map((item: string) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </Select>
+          <Select
+            name="end_type"
+            onClick={(e: any) => {
+              handleTimeChange(e);
+            }}
+            defaultValue={
+              Number(dayjs(editData.task_end_time).format("HH")) > 12
+                ? "pm"
+                : "am"
+            }
+          >
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+          </Select>
+        </Group>
       </Pane>
 
       <TextareaField

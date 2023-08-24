@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { FormSTY } from "./style";
 import {
+  Pane,
+  Paragraph,
+  Text,
   Label,
   Select,
   PlusIcon,
@@ -63,14 +66,20 @@ function MaintenanceCreateForm({
     service_start_date: "",
     service_end_date: ""
   };
+
+  const targetReminder = React.useMemo(
+    () => noticeData?.find((reminder: any) => reminder.id.value === reminderNo),
+    [reminderNo]
+  );
+
   useEffect(() => {
     if (reminderNo) {
       console.log("busNo", reminderNo);
       console.log("noticeData", noticeData);
-      const targetReminder = noticeData?.find(
-        (reminder: any) => reminder.id.value === reminderNo
-      );
-      console.log("targetReminder", targetReminder);
+      // const targetReminder = noticeData?.find(
+      //   (reminder: any) => reminder.id.value === reminderNo
+      // );
+      // console.log("targetReminder", targetReminder);
       if (targetReminder) {
         setValue("bus_no", targetReminder.bus_no.value);
         setValue("driver_no", targetReminder.driver_no.value);
@@ -176,57 +185,72 @@ function MaintenanceCreateForm({
         <LoadingSpinner />
       ) : (
         <>
-          <Label>
-            <div>
-              <span style={{ color: "#D14343" }}>*</span>車輛名稱
-            </div>
-          </Label>
-          <Select style={{ marginBottom: "0" }} onChange={handleBusGroupChange}>
-            <option key="bus_group_options" value="" selected disabled>
-              請選擇車輛車隊
-            </option>
-            {mainCreateDdl?.bus_group_options.map((item: any) => {
-              return (
-                <option
-                  key={item.no}
-                  value={item.no}
-                  selected={busGroup === item.no}
-                >
-                  {item.name}
-                </option>
-              );
-            })}
-          </Select>
-          <Controller
-            name="bus_no"
-            control={control}
-            render={({ field: { onChange, value } }) => (
+          {/* 資訊小方塊 */}
+          {targetReminder ? (
+            <Pane className="info-box">
+              <Text>
+                {targetReminder.bus_group_no?.value || "--"} /{" "}
+                {targetReminder.bus_name.value || "--"}
+              </Text>
+            </Pane>
+          ) : (
+            <>
+              <Label>
+                <div>
+                  <span style={{ color: "#D14343" }}>*</span>車輛名稱
+                </div>
+              </Label>
               <Select
-                value={value}
-                onChange={onChange}
-                disabled={isBusDDLLoading}
+                style={{ marginBottom: "0" }}
+                onChange={handleBusGroupChange}
               >
-                <option key="bus_options" value="">
-                  請選擇車輛
+                <option key="bus_group_options" value="" selected disabled>
+                  請選擇車輛車隊
                 </option>
-                {mainCreateDdl?.bus_options.map((item: any) => {
+                {mainCreateDdl?.bus_group_options.map((item: any) => {
                   return (
                     <option
                       key={item.no}
                       value={item.no}
-                      selected={getValues("bus_no") === item.no}
+                      selected={busGroup === item.no}
                     >
                       {item.name}
                     </option>
                   );
                 })}
               </Select>
-            )}
-          />
-          <Label style={{ marginTop: "24px" }}>
+              <Controller
+                name="bus_no"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    value={value}
+                    onChange={onChange}
+                    disabled={isBusDDLLoading}
+                  >
+                    <option key="bus_options" value="">
+                      請選擇車輛
+                    </option>
+                    {mainCreateDdl?.bus_options.map((item: any) => {
+                      return (
+                        <option
+                          key={item.no}
+                          value={item.no}
+                          selected={getValues("bus_no") === item.no}
+                        >
+                          {item.name}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                )}
+              />
+            </>
+          )}
+          <Label style={{ marginTop: "12px" }}>
             {" "}
             <div>
-              <span style={{ color: "#D14343" }}>*</span>駕駛
+              <span style={{ color: "#D14343" }}>*</span>派工駕駛
             </div>
           </Label>
           <Select onChange={handleOperatorGroupChange}>
@@ -261,10 +285,9 @@ function MaintenanceCreateForm({
               );
             })}
           </Select>
-
           <SelectField
             label={
-              <div style={{ marginTop: "24px" }}>
+              <div style={{ marginTop: "20px" }}>
                 <span style={{ color: "#D14343" }}>*</span>分類
               </div>
             }
@@ -348,7 +371,6 @@ function MaintenanceCreateForm({
             type="datetime-local"
             {...register("service_end_date")}
           />
-
           <IconLeft text={"新增維保任務"} type="submit">
             <PlusIcon size={14} />
           </IconLeft>

@@ -23,15 +23,11 @@ const FormSTY = styled.form`
     }
   }
 
-  .time-area {
-    width: max-content;
-    select {
-      width: 80px;
-      display: flex;
-      flex-wrap: nowrap;
-    }
+  .time-area > div {
+    width: 100%;
+    display: flex;
+    gap: 8px;
   }
-
   button {
     justify-content: center;
   }
