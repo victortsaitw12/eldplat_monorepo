@@ -8,7 +8,8 @@ import {
   Pane,
   Paragraph,
   TextInputField,
-  TextareaField
+  TextareaField,
+  Group
 } from "evergreen-ui";
 
 //@layout
@@ -163,170 +164,174 @@ function SecondCarAssignManualCreate({
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <Select
-          name="start_hours"
-          // onClick={(e: any) => {
-          //   handleAssignmentCarChange(e);
-          // }}
-          onChange={(e: any) => {
-            handleAssignmentCarChange(e);
-          }}
-          ref={timeRef}
-        >
-          {hours.map((item: string) => (
+        <Group>
+          <Select
+            name="start_hours"
+            // onClick={(e: any) => {
+            //   handleAssignmentCarChange(e);
+            // }}
+            onChange={(e: any) => {
+              handleAssignmentCarChange(e);
+            }}
+            ref={timeRef}
+          >
+            {hours.map((item: string) => (
+              <option
+                key={item}
+                value={item}
+                selected={
+                  (defaultValue &&
+                    dayjs(defaultValue?.task_start_time).format("HH")) ==
+                    item || false
+                }
+              >
+                {item}
+              </option>
+            ))}
+          </Select>
+          <Text fontSize={20}> : </Text>
+          <Select
+            name="start_minutes"
+            // onClick={(e: any) => {
+            //   handleAssignmentCarChange(e);
+            // }}
+            onChange={(e: any) => {
+              handleAssignmentCarChange(e);
+            }}
+            ref={timeRef}
+          >
+            {minutes().map((item: string) => (
+              <option
+                key={item}
+                value={item}
+                selected={
+                  (defaultValue &&
+                    dayjs(defaultValue?.task_start_time).format("mm")) ==
+                    item || false
+                }
+              >
+                {item}
+              </option>
+            ))}
+          </Select>
+          <Select
+            name="start_type"
+            // onClick={(e: any) => {
+            //   handleAssignmentCarChange(e);
+            // }}
+            onChange={(e: any) => {
+              handleAssignmentCarChange(e);
+            }}
+            ref={timeRef}
+          >
             <option
-              key={item}
-              value={item}
+              value="am"
               selected={
                 (defaultValue &&
-                  dayjs(defaultValue?.task_start_time).format("HH")) == item ||
+                  dayjs(defaultValue?.task_start_time).format("A")) == "AM" ||
                 false
               }
             >
-              {item}
+              AM
             </option>
-          ))}
-        </Select>
-        <Text fontSize={20}> : </Text>
-        <Select
-          name="start_minutes"
-          // onClick={(e: any) => {
-          //   handleAssignmentCarChange(e);
-          // }}
-          onChange={(e: any) => {
-            handleAssignmentCarChange(e);
-          }}
-          ref={timeRef}
-        >
-          {minutes().map((item: string) => (
             <option
-              key={item}
-              value={item}
+              value="pm"
               selected={
                 (defaultValue &&
-                  dayjs(defaultValue?.task_start_time).format("mm")) == item ||
+                  dayjs(defaultValue?.task_start_time).format("A")) == "PM" ||
                 false
               }
             >
-              {item}
+              PM
             </option>
-          ))}
-        </Select>
-        <Select
-          name="start_type"
-          // onClick={(e: any) => {
-          //   handleAssignmentCarChange(e);
-          // }}
-          onChange={(e: any) => {
-            handleAssignmentCarChange(e);
-          }}
-          ref={timeRef}
-        >
-          <option
-            value="am"
-            selected={
-              (defaultValue &&
-                dayjs(defaultValue?.task_start_time).format("A")) == "AM" ||
-              false
-            }
-          >
-            AM
-          </option>
-          <option
-            value="pm"
-            selected={
-              (defaultValue &&
-                dayjs(defaultValue?.task_start_time).format("A")) == "PM" ||
-              false
-            }
-          >
-            PM
-          </option>
-        </Select>
+          </Select>
+        </Group>
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <Select
-          name="end_hours"
-          // onClick={(e: any) => {
-          //   handleAssignmentCarChange(e);
-          // }}
-          onChange={(e: any) => {
-            handleAssignmentCarChange(e);
-          }}
-          ref={timeRef}
-        >
-          {hours.map((item: string) => (
+        <Group>
+          <Select
+            name="end_hours"
+            // onClick={(e: any) => {
+            //   handleAssignmentCarChange(e);
+            // }}
+            onChange={(e: any) => {
+              handleAssignmentCarChange(e);
+            }}
+            ref={timeRef}
+          >
+            {hours.map((item: string) => (
+              <option
+                key={item}
+                value={item}
+                selected={
+                  (defaultValue &&
+                    dayjs(defaultValue?.task_end_time).format("HH")) == item ||
+                  false
+                }
+              >
+                {item}
+              </option>
+            ))}
+          </Select>
+          <Text fontSize={20}> : </Text>
+          <Select
+            name="end_minutes"
+            // onClick={(e: any) => {
+            //   handleAssignmentCarChange(e);
+            // }}
+            onChange={(e: any) => {
+              handleAssignmentCarChange(e);
+            }}
+            ref={timeRef}
+          >
+            {minutes().map((item: string) => (
+              <option
+                key={item}
+                value={item}
+                selected={
+                  (defaultValue &&
+                    dayjs(defaultValue?.task_end_time).format("mm")) == item ||
+                  false
+                }
+              >
+                {item}
+              </option>
+            ))}
+          </Select>
+          <Select
+            name="end_type"
+            // onClick={(e: any) => {
+            //   handleAssignmentCarChange(e);
+            // }}
+            onChange={(e: any) => {
+              handleAssignmentCarChange(e);
+            }}
+            ref={timeRef}
+          >
             <option
-              key={item}
-              value={item}
+              value="am"
               selected={
                 (defaultValue &&
-                  dayjs(defaultValue?.task_end_time).format("HH")) == item ||
+                  dayjs(defaultValue?.task_start_time).format("A")) == "AM" ||
                 false
               }
             >
-              {item}
+              AM
             </option>
-          ))}
-        </Select>
-        <Text fontSize={20}> : </Text>
-        <Select
-          name="end_minutes"
-          // onClick={(e: any) => {
-          //   handleAssignmentCarChange(e);
-          // }}
-          onChange={(e: any) => {
-            handleAssignmentCarChange(e);
-          }}
-          ref={timeRef}
-        >
-          {minutes().map((item: string) => (
             <option
-              key={item}
-              value={item}
+              value="pm"
               selected={
                 (defaultValue &&
-                  dayjs(defaultValue?.task_end_time).format("mm")) == item ||
+                  dayjs(defaultValue?.task_start_time).format("A")) == "PM" ||
                 false
               }
             >
-              {item}
+              PM
             </option>
-          ))}
-        </Select>
-        <Select
-          name="end_type"
-          // onClick={(e: any) => {
-          //   handleAssignmentCarChange(e);
-          // }}
-          onChange={(e: any) => {
-            handleAssignmentCarChange(e);
-          }}
-          ref={timeRef}
-        >
-          <option
-            value="am"
-            selected={
-              (defaultValue &&
-                dayjs(defaultValue?.task_start_time).format("A")) == "AM" ||
-              false
-            }
-          >
-            AM
-          </option>
-          <option
-            value="pm"
-            selected={
-              (defaultValue &&
-                dayjs(defaultValue?.task_start_time).format("A")) == "PM" ||
-              false
-            }
-          >
-            PM
-          </option>
-        </Select>
+          </Select>
+        </Group>
       </Pane>
 
       <TextareaField
