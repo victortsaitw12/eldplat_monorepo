@@ -7,7 +7,7 @@ interface Props {
 }
 const ServerEntry = ({ imageUrl, label, onClick }: Props) => {
   return (
-    <BodySTY onClick={onClick}>
+    <BodySTY className="serverEntryBtn" onClick={onClick}>
       <IconSTY>
         {imageUrl ? <Image src={imageUrl} alt="icon" fill={true} /> : null}
       </IconSTY>
