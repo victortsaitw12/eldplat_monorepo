@@ -13,16 +13,21 @@ export const BodySTY = styled.div`
       }
 
       .phone-input {
+        max-width: 270px;
         display: flex;
+        gap: 8px;
         margin: 6px 0;
-        .country-number {
-          width: 20%;
-          margin-right: 10px;
+        .prefix {
+          width: 60px;
         }
         .tel,
         .contact-tel,
-        .contact-phone {
-          width: 60%;
+        .contact-phone,
+        .zipcode,
+        .country,
+        .city,
+        .addressArea {
+          flex: 10;
         }
         p {
           display: flex;
@@ -32,42 +37,10 @@ export const BodySTY = styled.div`
       }
 
       .address {
-        .first-address,
-        .second-address {
-          p {
-            font-weight: 400;
-            font-size: 12px;
-          }
-        }
-      }
-
-      .city-and-district {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-
-        p {
+        label {
           font-weight: 400;
           font-size: 12px;
-        }
-        .city,
-        .company_area {
-          margin-top: -10px;
-        }
-      }
-
-      .zip-and-country {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-
-        p {
-          font-weight: 400;
-          font-size: 12px;
-        }
-        .country {
-          margin-top: -10px;
-        }
-        input {
-          width: 100%;
+          transform: translateY(6px);
         }
       }
 

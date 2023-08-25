@@ -216,7 +216,7 @@ function CustomerCreateForm({
         />
       </FlexWrapper>
       <FiledInput
-        label="郵政編碼"
+        label="郵遞區號"
         horizonLabel={true}
         controlProps={{
           name: "customer_district_code",

@@ -32,20 +32,18 @@ function Contact() {
         </Pane>
         <Pane className="input-line">
           <Text className="">公司地址</Text>
+
           <Pane className="address">
-            <Text>{companyData?.address1}</Text>
-            <Text>{companyData?.address2}</Text>
-            <Pane className="company_area_city">
-              {/* <Text>{handleCitySwitch(companyData?.company_city)}</Text>
-              <Text>{handleStateSwitch(companyData?.company_area)}</Text> */}
-              <Text>{ddlData?.company_city}</Text>
-              <Text>{ddlData?.company_area}</Text>
+            <Pane className="address__value">
+              <Text>{companyData?.company_district_code}</Text>{" "}
+              <Text>{companyData?.country_name}</Text>
             </Pane>
-            <Pane className="company_country_code">
-              <Text>{companyData?.company_district_code}</Text>
-              {/* <Text>{handleCountrySwitch(companyData?.company_country2)}</Text> */}
-              <Text>{ddlData?.company_country2}</Text>
+            <Pane className="address__value">
+              <Text className="address__value">{companyData?.city_name}</Text>
             </Pane>
+            <Text className="address__value">
+              {companyData?.address1.concat(companyData?.address2)}
+            </Text>
           </Pane>
         </Pane>
 

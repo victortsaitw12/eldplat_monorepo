@@ -13,12 +13,9 @@ export const BodySTY = styled.div`
       }
 
       .address {
-        .company_area_city,
-        .company_country_code {
+        &__value {
           display: flex;
-          span {
-            margin: 4px 12px 0px 0;
-          }
+          margin-bottom: 6px;
         }
       }
 
