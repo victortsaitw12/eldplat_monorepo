@@ -36,7 +36,9 @@ export interface I_Company_Context {
   countryNumInput: any | I_CountryNum;
   setCountryNumInput: (countryNumInput: I_CountryNum) => void;
   handleCompanyBasicChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleCompanyContactChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCompanyContactChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   handleCompanyDDLChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

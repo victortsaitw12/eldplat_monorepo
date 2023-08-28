@@ -38,14 +38,22 @@ const BusDetail = ({
     control,
     formState: { errors },
     getValues,
+    setValue,
     handleSubmit
   } = useForm<BusDataTypes>({
     defaultValues: busDefaultData
   });
+
+  React.useEffect(() => {
+    const bus_group = getValues("bus.operator_bus_group_no");
+    fetchDDL(bus_group);
+  }, [busDefaultData]);
+
   //TODO 分類的選法
   if (!busDefaultData) {
     return <div>查無相關資料...</div>;
   }
+
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>
@@ -56,6 +64,7 @@ const BusDetail = ({
           register={register}
           errors={errors}
           getValues={getValues}
+          setValue={setValue}
           control={control}
           isEdit={isEdit}
           busOptions={busOptions}

@@ -188,7 +188,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
       </FlexWrapper>
       <FiledInput
         req={false}
-        label="郵政編碼"
+        label="郵遞區號"
         horizonLabel={true}
         controlProps={{
           name: "vendor_District_Code",

@@ -73,37 +73,6 @@ const Page: NextPageWithLayout<never> = () => {
           ]);
         });
         console.log("maintenanceData", maintenanceData);
-        // const newData = maintenanceData?.map((item, idx) => {
-        //   const mappingItem = {
-        //     id: { label: item.id.label, value: item.id.value },
-        //     bus_name: { label: item.bus_name.label, value: item.bus_name.value },
-        //     driver_name: {
-        //       label: item.driver_name.label,
-        //       value: item.driver_name.value
-        //     },
-        //     meter: { label: item.meter.label, value: item.meter.value },
-        //     vendor_name: {
-        //       label: item.vendor_name.label,
-        //       value: item.vendor_name.value
-        //     },
-        //     component_name: {
-        //       label: item.component_name.label,
-        //       value: item.component_name.value
-        //     },
-        //     mission: {
-        //       label: (
-        //         <AddMissionBtn
-        //           item={item}
-        //           setDrawerOpen={setDrawerOpen}
-        //           setBusNo={setBusNo}
-        //           setReminderNo={setReminderNo}
-        //         ></AddMissionBtn>
-        //       ),
-        //       value: item.reminders_no.label
-        //     }
-        //   };
-        //   return mappingItem;
-        // });
         if (isCanceled) {
           console.log("canceled");
           return;

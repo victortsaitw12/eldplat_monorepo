@@ -17,6 +17,8 @@ export interface BusDataTypes {
     status: string;
     bus_group: string;
     operator_no: string;
+    operator_bus_group_no: string;
+    operator_bus_group_name: string;
     ownership: string;
     color: string;
     bus_seat: number;
