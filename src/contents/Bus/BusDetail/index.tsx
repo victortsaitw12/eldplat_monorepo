@@ -45,10 +45,9 @@ const BusDetail = ({
   });
 
   React.useEffect(() => {
-    if (!isEdit) return;
     const bus_group = getValues("bus.operator_bus_group_no");
     fetchDDL(bus_group);
-  }, [isEdit, busDefaultData]);
+  }, [busDefaultData]);
 
   //TODO 分類的選法
   if (!busDefaultData) {
