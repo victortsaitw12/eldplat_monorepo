@@ -107,8 +107,7 @@ const Page: NextPageWithLayout<
         <BusDetail
           isEdit={isEdit}
           submitRef={submitRef}
-          // asyncSubmitForm={asyncSubmitForm}
-          asyncSubmitForm={(data) => console.log("🍅 data:", data)}
+          asyncSubmitForm={asyncSubmitForm}
           busId={busId}
           formType={mainFilter}
           busDefaultData={busDefaultData}
