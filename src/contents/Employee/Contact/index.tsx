@@ -137,7 +137,7 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
             </Pane>
             <Pane className="zip-and-country">
               <Pane marginRight="6px">
-                <Paragraph marginBottom={8}>郵政編號</Paragraph>
+                <Paragraph marginBottom={8}>郵遞區號</Paragraph>
                 <TextInput
                   className="zip-code"
                   name="zip_code"

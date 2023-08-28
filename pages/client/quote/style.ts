@@ -41,6 +41,15 @@ export const BodySTY = styled.div`
       width: 100%;
       justify-content: flex-start;
       gap: 25px;
+      .serverEntryBtn {
+        width: 240px;
+        height: 264px;
+        padding: 25.5px 40px;
+        div {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
     }
   }
 `;

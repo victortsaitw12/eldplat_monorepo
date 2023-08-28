@@ -74,7 +74,10 @@ export const maintenancePattern: PatternType = {
   meter: true,
   month: true,
   component_code: true,
-  component_name: true
+  component_name: true,
+  am_driver_bus_group_name: true,
+
+  bus_group_name: true
 };
 
 export const maintenanceParser = (data: any, key: string) => {
@@ -82,6 +85,18 @@ export const maintenanceParser = (data: any, key: string) => {
     return {
       label: data["reminders_no"] || null,
       value: data["reminders_no"] || null
+    };
+  }
+  if (key === "am_driver_bus_group_name") {
+    return {
+      label: data["am_driver_bus_group_name"] || null,
+      value: data["am_driver_bus_group_no"] || null
+    };
+  }
+  if (key === "bus_group_name") {
+    return {
+      label: data["bus_group_name"] || null,
+      value: data["bus_group_no"] || null
     };
   }
 

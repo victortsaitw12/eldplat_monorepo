@@ -6,10 +6,16 @@ import {
   Text,
   TextInput,
   SelectField,
+  Select,
   Button,
   PlusIcon,
   IconButton,
-  TrashIcon
+  TrashIcon,
+  TextInputField,
+  Textarea,
+  TextareaField,
+  Label,
+  Group
 } from "evergreen-ui";
 import { BodySTY } from "./style";
 import {
@@ -144,7 +150,7 @@ function Contact() {
           <Text className="">公司電話</Text>
           <Pane className="phone-input">
             <TextInput
-              className="country-number"
+              className="prefix"
               name=""
               // value={handleCountryCode(companyData?.company_country)}
               value={""}
@@ -167,7 +173,7 @@ function Contact() {
           <Text className="">公司傳真</Text>
           <Pane className="phone-input">
             <TextInput
-              className="country-number"
+              className="prefix"
               name=""
               // value={handleCountryCode(companyData?.company_country)}
               value={""}
@@ -189,123 +195,70 @@ function Contact() {
         <Pane className="input-line">
           <Text className="">公司地址</Text>
           <Pane className="address">
-            {/* 第一行地址 */}
-            <Pane className="first-address">
-              <Paragraph>地址1</Paragraph>
+            {/* ------------------------- */}
+            <Pane className="phone-input" marginRight="6px">
+              <Label className="prefix">郵遞區號</Label>
               <TextInput
-                name="address1"
-                value={companyData.address1}
+                className="zipcode"
+                name="company_district_code"
+                value={companyData.company_district_code}
                 onChange={handleCompanyContactChange}
               />
             </Pane>
-
-            {/* 第二行地址 */}
-            <Pane className="second-address">
-              <Paragraph>地址2</Paragraph>
-              <TextInput
-                name="address2"
-                value={companyData.address2}
-                onChange={handleCompanyContactChange}
-              />
+            <Pane className="phone-input">
+              <Label className="prefix">國家</Label>
+              <Select
+                className="country"
+                name="company_country2"
+                value={companyData.company_country2}
+                onChange={(e: any) => {
+                  handleCompanyContactChange(e);
+                  handleStateChange(e);
+                }}
+              >
+                <option value={""} disabled>
+                  請選擇
+                </option>
+                {countries?.map((item) => (
+                  <option key={item.area_No} value={item.area_No}>
+                    {item.area_Name_Tw}
+                  </option>
+                ))}
+              </Select>
             </Pane>
             <Pane className="city-and-district">
-              <Pane marginRight="6px">
-                <Paragraph>城市</Paragraph>
-                <SelectField
+              <Pane className="phone-input" marginRight="6px">
+                <Label className="prefix">城市</Label>
+                <Select
                   className="city"
-                  label=""
                   name="company_city"
                   value={companyData.company_city}
                   onChange={(e: any) => {
                     handleCompanyContactChange(e);
                   }}
+                  defaultValue={companyData.city_name || ""}
                 >
-                  <>
-                    <option value={""} disabled>
-                      請選擇
+                  <option value={""} disabled>
+                    請選擇
+                  </option>
+                  {cities?.map((city) => (
+                    <option key={city.area_No} value={city.area_No}>
+                      {city.area_Name_Tw}
                     </option>
-                    {cities?.map((city) => (
-                      <option key={city.area_No} value={city.area_No}>
-                        {city.area_Name_Tw}
-                      </option>
-                    ))}
-                  </>
-                  {/* {allCities?.map((item: any, idx: number) => (
-                    <option key={item.areaNo} value={item.areaNo}>
-                      {item.regionName}
-                    </option>
-                  ))} */}
-                </SelectField>
-              </Pane>
-              <Pane>
-                <Paragraph>州/省/區域</Paragraph>
-                <SelectField
-                  className="company_area"
-                  label=""
-                  name="company_area"
-                  value={companyData.company_area}
-                  onChange={(e: any) => {
-                    handleCompanyContactChange(e);
-                    handleCityChange(e);
-                  }}
-                >
-                  <>
-                    <option value={""} disabled>
-                      請選擇
-                    </option>
-                    {states?.map((state) => (
-                      <option key={state.area_No} value={state.area_No}>
-                        {state.area_Name_Tw}
-                      </option>
-                    ))}
-                  </>
-                  {/* {allStates?.map((item: any, idx: number) => (
-                    <option key={item.areaNo} value={item.areaNo}>
-                      {item.regionName}
-                    </option>
-                  ))} */}
-                </SelectField>
+                  ))}
+                </Select>
               </Pane>
             </Pane>
-            <Pane className="zip-and-country">
-              <Pane marginRight="6px">
-                <Paragraph>郵政編號</Paragraph>
-                <TextInput
-                  name="company_district_code"
-                  value={companyData.company_district_code}
-                  onChange={handleCompanyContactChange}
-                />
-              </Pane>
-              <Pane>
-                <Paragraph>國家</Paragraph>
-                <SelectField
-                  className="country"
-                  label=""
-                  name="company_country2"
-                  value={companyData.company_country2}
-                  onChange={(e: any) => {
-                    handleCompanyContactChange(e);
-                    handleStateChange(e);
-                  }}
-                >
-                  <>
-                    <option value={""} disabled>
-                      請選擇
-                    </option>
-                    {countries?.map((item) => (
-                      <option key={item.area_No} value={item.area_No}>
-                        {item.area_Name_Tw}
-                      </option>
-                    ))}
-                  </>
-                  {/* {allCountries?.map((item, idx) => (
-                    <option key={item.areaNo} value={item.areaNo}>
-                      {item.regionName}
-                    </option>
-                  ))} */}
-                </SelectField>
-              </Pane>
+            <Pane className="phone-input" marginRight="6px">
+              <Label className="prefix">地址</Label>
+              <Textarea
+                className="addressArea"
+                name="address1"
+                value={companyData.address1.concat(companyData.address2)}
+                onChange={handleCompanyContactChange}
+              />
             </Pane>
+            {/* ------------------------- */}
           </Pane>
         </Pane>
         <Pane className="input-line">
@@ -356,7 +309,7 @@ function Contact() {
                     <Paragraph size={200}>市話</Paragraph>
                     <TextInput
                       type="tel"
-                      className="country-number"
+                      className="prefix"
                       name="contact_tel_code"
                       placeholder="ex:+886"
                       // value={countryNumInput.contactTel}
@@ -386,7 +339,7 @@ function Contact() {
                   <Pane className="phone-input">
                     <Paragraph size={200}>手機</Paragraph>
                     <TextInput
-                      className="country-number"
+                      className="prefix"
                       name="contact_phone_code"
                       placeholder="ex:+886"
                       // value={countryNumInput.contactPhone}
