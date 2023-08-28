@@ -11,7 +11,6 @@ export const BodySTY = styled.div`
         font-weight: 600;
         color: #567190;
       }
-
       .address {
         &__value {
           display: flex;
