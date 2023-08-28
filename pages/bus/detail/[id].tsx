@@ -54,6 +54,7 @@ const Page: NextPageWithLayout<
         setLoading(false);
       });
   }, [router]);
+
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
   };
@@ -106,7 +107,8 @@ const Page: NextPageWithLayout<
         <BusDetail
           isEdit={isEdit}
           submitRef={submitRef}
-          asyncSubmitForm={asyncSubmitForm}
+          // asyncSubmitForm={asyncSubmitForm}
+          asyncSubmitForm={(data) => console.log("🍅 data:", data)}
           busId={busId}
           formType={mainFilter}
           busDefaultData={busDefaultData}

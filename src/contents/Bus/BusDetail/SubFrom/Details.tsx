@@ -7,6 +7,7 @@ import {
   UseFormRegister,
   FieldErrors,
   UseFormGetValues,
+  UseFormSetValue,
   Control
 } from "react-hook-form";
 import { BusDataTypes } from "../../bus.type";
@@ -17,6 +18,7 @@ interface Props {
   register: UseFormRegister<BusDataTypes>;
   errors: FieldErrors<BusDataTypes>;
   getValues: UseFormGetValues<BusDataTypes>;
+  setValue: UseFormSetValue<BusDataTypes>;
   control: Control<BusDataTypes, any>;
   busOptions: any;
   isEdit: boolean;
@@ -26,6 +28,7 @@ function Details({
   register,
   errors,
   getValues,
+  setValue,
   control,
   isEdit,
   busOptions,
@@ -33,12 +36,12 @@ function Details({
 }: Props) {
   console.log("busOptions", busOptions);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [busGroup, setBusGroup] = useState<string>("");
   const [isDriverDDLLoading, setIsDriverDDLoading] = useState<boolean>(false);
 
   const handleDriverGroupChange = async (e: any) => {
-    setBusGroup(e.target.value);
     setIsDriverDDLoading(true);
+    setValue("bus.operator_no", "");
+    setValue("bus.operator_bus_group_name", e.target.label);
     const bus_group = e.target.value;
     await fetchDDL(bus_group);
     setIsDriverDDLoading(false);
@@ -199,15 +202,9 @@ function Details({
         )?.name || "--",
       // value: getValues("bus.bus_group") || "--",
       editEle: (
-        <Select
-          key="bus.bus_group"
-          {...register("bus.bus_group")}
-          marginBottom="0"
-        >
+        <Select {...register("bus.bus_group")} marginBottom="0">
           {busOptions?.bus_group_options.map((item: any) => (
-            <option key={item.no} value={item.no}>
-              {item.name}
-            </option>
+            <option key={item.no} value={item.no} label={item.name} />
           ))}
         </Select>
       )
@@ -215,8 +212,7 @@ function Details({
     {
       req: true,
       label: "主要駕駛",
-      // TODO bus.bus_group_name => bus.operator_bus_group_name
-      value: `${getValues("bus.bus_group_name")} / ${getValues(
+      value: `${getValues("bus.operator_bus_group_name")} / ${getValues(
         "bus.driver_name"
       )}`,
       editEle: (
@@ -225,16 +221,12 @@ function Details({
           style={{ display: "flex", flexDirection: "column", gap: "8px" }}
         >
           <Select
-            key="operator_bus_group_select"
             marginBottom="0"
-            onChange={handleDriverGroupChange}
+            {...register("bus.operator_bus_group_no", {
+              onChange: handleDriverGroupChange
+            })}
           >
-            <option
-              key={"operator_bus_group_options"}
-              value={""}
-              disabled
-              hidden
-            >
+            <option value={""} disabled hidden>
               請選擇車隊
             </option>
             {busOptions?.operator_bus_group_options?.map((item: any) => {
@@ -242,28 +234,26 @@ function Details({
                 <option
                   key={`operator_bus_group_options-${item.no}`}
                   value={item.no}
-                  // TODO uncomment after API is revised
-                  // selected={getValues("operator_bus_group_no") === item.no}
-                >
-                  {item.name}
-                </option>
+                  label={item.name}
+                />
               );
             })}
           </Select>
           <Select
-            key="bus.operator"
             {...register("bus.operator_no")}
             marginBottom="0"
             disabled={isDriverDDLLoading}
-            defaultValue=""
           >
-            <option value="" disabled hidden>
+            <option value="" disabled>
               請選擇駕駛
             </option>
             {busOptions?.operator_options.map((item: any) => (
-              <option key={item.no} value={item.no}>
-                {item.name}
-              </option>
+              <option
+                key={`operator_no-${item.no}`}
+                value={item.no}
+                label={item.name}
+                selected={getValues("bus.operator_no") === item.no}
+              />
             ))}
           </Select>
         </Pane>
