@@ -16,7 +16,10 @@ import router from "next/router";
 //@layout
 import { createMaintenance } from "@services/maintenance/createMaintenance";
 import { CancelMaintenanceById } from "@services/maintenance/getMaintenanceNotice";
+
 import { getCreateDdl } from "@services/maintenance/getCreateDdl";
+import { getBusById } from "@services/bus/getBusById";
+
 import LoadingSpinner from "@components/LoadingSpinner";
 
 //@components
@@ -71,6 +74,8 @@ function MaintenanceCreateForm({
     () => noticeData?.find((reminder: any) => reminder.id.value === reminderNo),
     [reminderNo]
   );
+  console.log("🍅 targetReminder:", targetReminder);
+  console.log("🍅 noticeData:", noticeData);
 
   useEffect(() => {
     if (reminderNo) {
@@ -88,6 +93,14 @@ function MaintenanceCreateForm({
       }
     }
   }, [reminderNo]);
+
+  useEffect(() => {
+    if (!targetReminder) return;
+    setDriverGroup(targetReminder.am_driver_bus_group_name.value);
+    const bus_group = targetReminder.am_driver_bus_group_name.value;
+    fetchDDL(bus_group, driverGroup);
+  }, [targetReminder]);
+
   const { register, handleSubmit, control, reset, setValue, getValues, watch } =
     useForm<CreateMaintenancePayload>({
       defaultValues
@@ -164,14 +177,23 @@ function MaintenanceCreateForm({
     setIsBusDDLoading(false);
   };
 
-  const handleOperatorGroupChange = async (e: any) => {
-    setDriverGroup(e.target.value);
+  const handleBusChange = async (e: any) => {
     setIsDriverDDlLoading(true);
-    const dsph_group = e.target.value;
-    await fetchDDL(busGroup, dsph_group);
+    const res = await getBusById(e.target.value);
+    setDriverGroup(res.bus.operator_bus_group_no);
+    setValue("driver_no", res.bus.operator_no);
     setIsDriverDDlLoading(false);
   };
 
+  const handleOperatorGroupChange = async (e: any) => {
+    setDriverGroup(e.target.value);
+  };
+  useEffect(() => {
+    setIsDriverDDlLoading(true);
+    const dsph_group = driverGroup;
+    fetchDDL(busGroup, dsph_group);
+    setIsDriverDDlLoading(false);
+  }, [driverGroup]);
   return (
     <FormSTY
       onSubmit={handleSubmit((data) => {
@@ -189,7 +211,7 @@ function MaintenanceCreateForm({
           {targetReminder ? (
             <Pane className="info-box">
               <Text>
-                {targetReminder.bus_group_no?.value || "--"} /{" "}
+                {targetReminder.bus_group_name?.label || "--"} /{" "}
                 {targetReminder.bus_name.value || "--"}
               </Text>
             </Pane>
@@ -219,32 +241,20 @@ function MaintenanceCreateForm({
                   );
                 })}
               </Select>
-              <Controller
-                name="bus_no"
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    value={value}
-                    onChange={onChange}
-                    disabled={isBusDDLLoading}
+              <Select onChange={handleBusChange} disabled={isBusDDLLoading}>
+                <option key="bus_options" value="">
+                  請選擇車輛
+                </option>
+                {mainCreateDdl?.bus_options.map((item: any) => (
+                  <option
+                    key={item.no}
+                    value={item.no}
+                    selected={getValues("bus_no") === item.no}
                   >
-                    <option key="bus_options" value="">
-                      請選擇車輛
-                    </option>
-                    {mainCreateDdl?.bus_options.map((item: any) => {
-                      return (
-                        <option
-                          key={item.no}
-                          value={item.no}
-                          selected={getValues("bus_no") === item.no}
-                        >
-                          {item.name}
-                        </option>
-                      );
-                    })}
-                  </Select>
-                )}
-              />
+                    {item.name}
+                  </option>
+                ))}
+              </Select>
             </>
           )}
           <Label style={{ marginTop: "12px" }}>
