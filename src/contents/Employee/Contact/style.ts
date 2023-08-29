@@ -29,7 +29,6 @@ export const BodySTY = styled.div`
       .phone-input {
         width: 280px;
         display: flex;
-
         .country-number {
           width: 20%;
           margin-right: 6px;
@@ -43,50 +42,22 @@ export const BodySTY = styled.div`
     // 地址區域樣式
     .address-frame {
       align-items: flex-start;
-
-      .address {
-        .first-address,
-        .second-address {
-          p {
-            font-weight: 400;
-            font-size: 12px;
-          }
+      .address__form {
+        max-width: 280px;
+        display: flex;
+        gap: 6px;
+        margin: 6px 0;
+        &:first-child {
+          margin-top: 0;
         }
-      }
-
-      .city-and-district {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-
-        p {
+        .label {
+          width: 20%;
           font-weight: 400;
           font-size: 12px;
+          transform: translateY(6px);
         }
-        .ub-mb_24px {
-          margin-bottom: 0px;
-        }
-
-        .city,
-        .district {
-          /* margin-top: -10px; */
-          /* margin-bottom: 0px !important; */
-          /* margin-bottom: 36px; */
-        }
-      }
-
-      .zip-and-country {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-
-        p {
-          font-weight: 400;
-          font-size: 12px;
-        }
-        .country {
-          /* margin-top: -8px; */
-        }
-        input {
-          width: 100%;
+        .input {
+          flex: 10;
         }
       }
     }

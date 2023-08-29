@@ -26,7 +26,7 @@ export interface I_RegionsData {
 }
 
 export async function getAllRegions(
-  area_no: string,
+  area_no: string | null,
   level_num: string
 ): Promise<{ options: I_RegionsData[] }> {
   const res = await fetch(`${API_Path["GetAreaDDL"]}`, {
@@ -36,9 +36,10 @@ export async function getAllRegions(
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
     body: JSON.stringify({
-      // area_No: area_no,
+      // to work with backend: show only one contry: Taiwan
+      area_No: area_no,
       level_Num: level_num,
-      default_Needed: true
+      default_Needed: false
     })
   });
   return res.json();

@@ -67,7 +67,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentCity, setCurrentCity] = useState<I_RegionsData | null>(null);
   // 取得國家選項內容
   useEffect(() => {
-    getAllRegions("", "2")
+    getAllRegions(null, "2")
       .then((data) => {
         const countriesData = data.options.filter((regionData) => {
           // 空的國家或測試錯誤訊息的都篩掉
@@ -75,6 +75,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
             regionData.area_Name_Tw !== "" && regionData.area_No[0] !== "6"
           );
         });
+        console.log("🍅 getAllRegions(null,2):", data);
         return countriesData;
       })
       .then((countriesData) => {
@@ -82,67 +83,21 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
       })
       .catch((err) => console.error("get regions error: ", err));
   }, []);
-  // 取得州選項內容
+
+  // 取得城市選項內容 (0906 Demo, PM: default cities in Taiwan)
   useEffect(() => {
-    if (!currentCountry) return;
-    getAllRegions(currentCountry.area_No.slice(0, 4), "3")
+    const area_No = currentCountry
+      ? currentCountry.area_No.slice(0, 4)
+      : "2039";
+
+    getAllRegions(area_No, "3")
       .then((data) => {
-        const statesData = data.options.filter((regionData) => {
-          return (
-            regionData.area_Name_Tw !== "" && regionData.area_No[0] !== "6"
-          );
-        });
-        return statesData;
-      })
-      .then((statesData) => {
-        if (statesData.length === 0) {
-          setAllStates([]);
-          setAllCities([]);
-          setCurrentState(null);
-          setCurrentCity(null);
-          return;
-        }
-        // some country has no state, the api will return city as state data...
-        // if (filterStates(currentCountry.area_No)) {
-        //   setAllStates([]);
-        //   setAllCities(statesData);
-        //   setCurrentState(null);
-        // } else {
-        // }
-        setAllStates(statesData);
-        // clean current state,city, city options
-        setCurrentState(null);
-        setAllCities([]);
+        setAllCities(data.options);
         setCurrentCity(null);
       })
       .catch((err) => console.error("get regions error: ", err));
   }, [currentCountry]);
-  // 取得城市選項內容
-  useEffect(() => {
-    console.log("update cities!");
-    console.log("currentState", currentState);
-    if (!currentState) return;
-    getAllRegions(currentState.area_No.slice(0, 7), "4")
-      .then((data) => {
-        const citiesData = data.options.filter((regionData) => {
-          return (
-            regionData.area_Name_Tw !== "" && regionData.area_No[0] !== "6"
-          );
-        });
-        return citiesData;
-      })
-      .then((citiesData) => {
-        if (citiesData.length === 0) {
-          setAllCities([]);
-          setCurrentCity(null);
-          return;
-        }
-        setAllCities(citiesData);
-        // clean current city
-        setCurrentCity(null);
-      })
-      .catch((err) => console.error("get regions error: ", err));
-  }, [currentState]);
+
   // handleChange
   function handleChange(
     area_no: string,
