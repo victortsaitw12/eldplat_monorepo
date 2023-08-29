@@ -156,23 +156,22 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
         <span style={{ color: "#D14343" }}>* </span>
         公司地址
       </Text>
-
-      <FiledInput
-        req={false}
-        label="郵遞區號"
-        horizonLabel={true}
-        controlProps={{
-          name: "vendor_District_Code",
-          control
-        }}
-      />
       <FlexWrapper
         padding="0"
         style={{
           alignItems: "center"
         }}
       >
-        <label style={{ width: "41%" }} htmlFor="">
+        <label style={{ width: "68px", fontSize: "12px" }}>郵遞區號</label>
+        <TextInput style={{ flex: 1 }} {...register("vendor_District_Code")} />
+      </FlexWrapper>
+      <FlexWrapper
+        padding="0"
+        style={{
+          alignItems: "center"
+        }}
+      >
+        <label style={{ width: "68px", fontSize: "12px" }} htmlFor="">
           <span style={{ color: "#D14343" }}>*</span>
           國家
         </label>
@@ -195,7 +194,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
           alignItems: "center"
         }}
       >
-        <label style={{ width: "41%" }} htmlFor="">
+        <label style={{ width: "68px", fontSize: "12px" }} htmlFor="">
           <span style={{ color: "#D14343" }}>*</span>
           城市
         </label>
@@ -212,15 +211,20 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
           ))}
         </Select>
       </FlexWrapper>
-      <FiledInput
-        req={false}
-        label="地址"
-        horizonLabel={true}
-        controlProps={{
-          name: "address1",
-          control
+      <FlexWrapper
+        padding="0"
+        style={{
+          alignItems: "center"
         }}
-      />
+      >
+        <label
+          style={{ width: "68px", fontSize: "12px", alignSelf: "flex-start" }}
+        >
+          地址
+        </label>
+        <Textarea style={{ flex: 1 }} {...register("address1")} />
+      </FlexWrapper>
+
       <Text>
         <span style={{ color: "#968686" }}>* </span>
         公司電話
