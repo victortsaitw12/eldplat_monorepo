@@ -81,9 +81,11 @@ const VendorDetail = ({
     address1,
     address2,
     vendor_City,
+    vendor_city_name,
     vendor_Area,
     vendor_District_Code,
     vendor_Country,
+    vendor_country_name,
     vendor_Tel,
     vendor_Tel_Code,
     vendor_Fax,
@@ -176,7 +178,7 @@ const VendorDetail = ({
     {
       req: true,
       label: "公司地址",
-      value: vendor_District_Code,
+      value: vendor_District_Code || "--",
       editEle: (
         <Pane className="address__form">
           <Label className="label">郵遞區號</Label>
@@ -194,7 +196,7 @@ const VendorDetail = ({
     {
       req: false,
       label: " ",
-      value: vendor_Country,
+      value: vendor_country_name || "--",
       editEle: (
         <Pane className="address__form">
           <Label className="label">
@@ -223,7 +225,7 @@ const VendorDetail = ({
     {
       req: false,
       label: " ",
-      value: vendor_City,
+      value: vendor_city_name || "--",
       editEle: (
         <Pane className="address__form">
           <Label className="label">
@@ -249,7 +251,7 @@ const VendorDetail = ({
     {
       req: false,
       label: " ",
-      value: address1,
+      value: address1 || "--",
       editEle: (
         <Pane className="address__form">
           <Label className="label">地址</Label>
