@@ -1,4 +1,3 @@
-import { InfoBox } from "@components/InfoBox";
 import styled from "styled-components";
 
 export const FormSTY = styled.form`

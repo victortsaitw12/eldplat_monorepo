@@ -24,6 +24,8 @@ import { keysToLowercase } from "@utils/keysToLowercase";
 
 //@context
 import { useVendorStore } from "@contexts/filter/vendorStore";
+import RegionProvider from "@contexts/regionContext/regionProvider";
+
 //
 const Index: NextPageWithLayout<never> = ({ vendor_id, editPage }) => {
   const submitRef = useRef<HTMLButtonElement | null>(null);
@@ -88,49 +90,51 @@ const Index: NextPageWithLayout<never> = ({ vendor_id, editPage }) => {
   }, [vendor_id]);
 
   return (
-    <BodySTY>
-      {!loading && oldVendorData && (
-        <TableWrapper
-          isEdit={editPage}
-          onChangeTab={(value) => changeMainFilterHandler(value)}
-          mainFilter={nowTab}
-          mainFilterArray={mainFilterArray}
-          onSave={() => {
-            submitRef.current && submitRef.current.click();
-          }}
-          onEdit={() => {
-            router.push({
-              pathname: "/vendor/detail/" + vendor_id,
-              query: { editPage: "edit" }
-            });
-          }}
-          onClose={() => {
-            router.push("/vendor");
-          }}
-        >
-          {nowTab === "vendor" && (
-            <VendorDetail
-              submitRef={submitRef}
-              submitForm={asyncSubmitForm}
-              isEdit={editPage}
-              vendorData={oldVendorData}
-            />
-          )}
-          {nowTab === "subpoint" && (
-            // <FilterWrapper
-            //   updateFilter={updateSubFilter}
-            //   resetFilter={() => {
-            //     initializeSubFilter();
-            //   }}
-            //   filter={subFilter}
-            // >
-            //   <VendorSubPoint isEdit={editPage} />
-            // </FilterWrapper>
-            <VendorSubPoint isEdit={editPage} />
-          )}
-        </TableWrapper>
-      )}
-    </BodySTY>
+    <RegionProvider>
+      <BodySTY>
+        {!loading && oldVendorData && (
+          <TableWrapper
+            isEdit={editPage}
+            onChangeTab={(value) => changeMainFilterHandler(value)}
+            mainFilter={nowTab}
+            mainFilterArray={mainFilterArray}
+            onSave={() => {
+              submitRef.current && submitRef.current.click();
+            }}
+            onEdit={() => {
+              router.push({
+                pathname: "/vendor/detail/" + vendor_id,
+                query: { editPage: "edit" }
+              });
+            }}
+            onClose={() => {
+              router.push("/vendor");
+            }}
+          >
+            {nowTab === "vendor" && (
+              <VendorDetail
+                submitRef={submitRef}
+                submitForm={asyncSubmitForm}
+                isEdit={editPage}
+                vendorData={oldVendorData}
+              />
+            )}
+            {nowTab === "subpoint" && (
+              // <FilterWrapper
+              //   updateFilter={updateSubFilter}
+              //   resetFilter={() => {
+              //     initializeSubFilter();
+              //   }}
+              //   filter={subFilter}
+              // >
+              //   <VendorSubPoint isEdit={editPage} />
+              // </FilterWrapper>
+              <VendorSubPoint isEdit={editPage} />
+            )}
+          </TableWrapper>
+        )}
+      </BodySTY>
+    </RegionProvider>
   );
 };
 interface Props {

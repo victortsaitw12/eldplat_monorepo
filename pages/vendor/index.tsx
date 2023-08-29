@@ -30,6 +30,7 @@ import LabelTag from "@components/LabelTag";
 import { I_PageInfo } from "@components/PaginationField";
 //@contexts
 import { useVendorStore } from "@contexts/filter/vendorStore";
+import RegionProvider from "@contexts/regionContext/regionProvider";
 
 const Page: NextPageWithLayout<{
   locale: string;
@@ -302,63 +303,65 @@ const Page: NextPageWithLayout<{
   );
 
   return (
-    <BodySTY>
-      <>
-        <TableWrapper
-          isHide={isDrawerFullWidth}
-          onChangeTab={changeMainFilterHandler}
-          mainFilter={nowTab}
-          mainFilterArray={mainFilterArray}
-          viewOnly={true}
-        >
-          <FilterWrapper
-            updateFilter={updateSubFilter}
-            resetFilter={() => {
-              initializeSubFilter();
-            }}
-            filter={subFilter}
+    <RegionProvider>
+      <BodySTY>
+        <>
+          <TableWrapper
+            isHide={isDrawerFullWidth}
+            onChangeTab={changeMainFilterHandler}
+            mainFilter={nowTab}
+            mainFilterArray={mainFilterArray}
+            viewOnly={true}
           >
-            {/* <FormattedMessage id="vendor_name" /> */}
-            {data && (
-              <VendorList
-                vendor_code={router.query.codeType as string}
-                listType={nowTab}
-                vendorData={data}
-                goToDetailPage={goToDetailPage}
-                goToCreatePage={goToCreatePage}
-                goToEditPageHandler={goToEditPageHandler}
-                deleteItemHandler={deleteItemHandler}
-                recoverItem={recoverItem}
-                pageInfo={pageInfo}
-                handlePageChange={handlePageChange}
-              ></VendorList>
-            )}
-          </FilterWrapper>
-        </TableWrapper>
-        {/* <SideBookMark /> */}
-        {isDrawerOpen && (
-          <Drawer
-            tabName={["新增供應商"]}
-            isFullScreen={isDrawerFullWidth}
-            closeDrawer={() => {
-              setDrawerOpen(false);
-              setIsDrawerFullWidth(false);
-            }}
-            toggleFullScreenDrawer={() => {
-              setIsDrawerFullWidth(!isDrawerFullWidth);
-            }}
-          >
-            <VendorCreateForm
-              reloadData={() => {
-                setDrawerOpen(false);
-                setData([]);
-                fetchVendorsData(false, "1", pageInfo);
+            <FilterWrapper
+              updateFilter={updateSubFilter}
+              resetFilter={() => {
+                initializeSubFilter();
               }}
-            />
-          </Drawer>
-        )}
-      </>
-    </BodySTY>
+              filter={subFilter}
+            >
+              {/* <FormattedMessage id="vendor_name" /> */}
+              {data && (
+                <VendorList
+                  vendor_code={router.query.codeType as string}
+                  listType={nowTab}
+                  vendorData={data}
+                  goToDetailPage={goToDetailPage}
+                  goToCreatePage={goToCreatePage}
+                  goToEditPageHandler={goToEditPageHandler}
+                  deleteItemHandler={deleteItemHandler}
+                  recoverItem={recoverItem}
+                  pageInfo={pageInfo}
+                  handlePageChange={handlePageChange}
+                ></VendorList>
+              )}
+            </FilterWrapper>
+          </TableWrapper>
+          {/* <SideBookMark /> */}
+          {isDrawerOpen && (
+            <Drawer
+              tabName={["新增供應商"]}
+              isFullScreen={isDrawerFullWidth}
+              closeDrawer={() => {
+                setDrawerOpen(false);
+                setIsDrawerFullWidth(false);
+              }}
+              toggleFullScreenDrawer={() => {
+                setIsDrawerFullWidth(!isDrawerFullWidth);
+              }}
+            >
+              <VendorCreateForm
+                reloadData={() => {
+                  setDrawerOpen(false);
+                  setData([]);
+                  fetchVendorsData(false, "1", pageInfo);
+                }}
+              />
+            </Drawer>
+          )}
+        </>
+      </BodySTY>
+    </RegionProvider>
   );
 };
 
