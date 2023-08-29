@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { TextInputField, TextInput, SelectField, Text } from "evergreen-ui";
+import {
+  TextInputField,
+  TextInput,
+  SelectField,
+  Text,
+  Pane,
+  Label,
+  Select,
+  Textarea
+} from "evergreen-ui";
 import { BodySTY } from "./style";
 //@components
 import InfoBox from "@components/InfoBox";
@@ -9,7 +18,11 @@ import ContactList from "@components/ContactList";
 
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
-
+//@context
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 //@service
 
 //@utils
@@ -43,6 +56,16 @@ const VendorDetail = ({
   vendorData,
   submitForm
 }: I_Props) => {
+  const {
+    countries,
+    states,
+    cities,
+    handleCountryChange,
+    handleStateChange,
+    handleCityChange,
+    getRegionsData,
+    initOptions
+  } = React.useContext<I_Region_Context>(RegionContext);
   console.log("💫💫💫原本的供應商資料：", vendorData);
   const defaultFuelValue = vendorData.vendor_Code_List.map((child) => {
     return child.vendor_Code;
@@ -58,9 +81,11 @@ const VendorDetail = ({
     address1,
     address2,
     vendor_City,
+    vendor_city_name,
     vendor_Area,
     vendor_District_Code,
     vendor_Country,
+    vendor_country_name,
     vendor_Tel,
     vendor_Tel_Code,
     vendor_Fax,
@@ -153,100 +178,92 @@ const VendorDetail = ({
     {
       req: true,
       label: "公司地址",
-      value: address1,
+      value: vendor_District_Code || "--",
       editEle: (
-        <TextInputField
-          className="text-input-field w100"
-          label="地址1"
-          {...methods.register("address1", {
-            validate: textValidation
-          })}
-          marginBottom="0"
-        />
+        <Pane className="address__form">
+          <Label className="label">郵遞區號</Label>
+          <TextInputField
+            className="input"
+            key="vendor_District_Code"
+            {...methods.register("vendor_District_Code", {
+              validate: textValidation
+            })}
+            marginBottom="0"
+          />
+        </Pane>
       )
     },
     {
       req: false,
       label: " ",
-      value: address2,
+      value: vendor_country_name || "--",
       editEle: (
-        <TextInputField
-          className="text-input-field w100"
-          label="地址2"
-          {...methods.register("address2", {
-            validate: textValidation
-          })}
-          marginBottom="0"
-        />
+        <Pane className="address__form">
+          <Label className="label">
+            <Text color="#d14343">* </Text>國家
+          </Label>
+          <Select
+            className="input"
+            key="vendor_Country"
+            {...methods.register("vendor_Country", {
+              required: "必填"
+            })}
+            marginBottom="0"
+          >
+            <option value={""} disabled>
+              請選擇
+            </option>
+            {countries?.map((item) => (
+              <option key={item.area_No} value={item.area_No}>
+                {item.area_Name_Tw}
+              </option>
+            ))}
+          </Select>
+        </Pane>
       )
     },
     {
       req: false,
       label: " ",
-      value: [vendor_City, vendor_Area],
-      editEle: [
-        <SelectField
-          key="vendor_City"
-          label={
-            <Text>
-              <Text color="#d14343">*</Text>城市
-            </Text>
-          }
-          {...methods.register("vendor_City", {
-            required: "必填"
-          })}
-          marginBottom="0"
-        >
-          <option value="A">A市</option>
-          <option value="B">B市</option>
-          <option value="C">C市</option>
-          <option value="D">D市</option>
-        </SelectField>,
-        <SelectField
-          key="vendor_Area"
-          label="州/省/區"
-          {...methods.register("vendor_Area", {
-            required: "必填"
-          })}
-          marginBottom="0"
-        >
-          <option value="A">A區</option>
-          <option value="B">B區</option>
-          <option value="C">C區</option>
-          <option value="D">D區</option>
-        </SelectField>
-      ]
+      value: vendor_city_name || "--",
+      editEle: (
+        <Pane className="address__form">
+          <Label className="label">
+            <Text color="#d14343">* </Text>城市
+          </Label>
+          <Select
+            key="vendor_City"
+            {...methods.register("vendor_City", {
+              required: "必填"
+            })}
+            marginBottom="0"
+          >
+            <option value={""}>請選擇</option>
+            {cities?.map((city) => (
+              <option key={city.area_No} value={city.area_No}>
+                {city.area_Name_Tw}
+              </option>
+            ))}
+          </Select>
+        </Pane>
+      )
     },
     {
       req: false,
       label: " ",
-      value: [vendor_District_Code, vendor_Country],
-      editEle: [
-        <TextInputField
-          key="vendor_District_Code"
-          label="郵遞區號"
-          {...methods.register("vendor_District_Code", {
-            validate: textValidation
-          })}
-          marginBottom="0"
-        />,
-        <SelectField
-          key="vendor_Country"
-          label={
-            <Text>
-              <Text color="#d14343">*</Text>國家
-            </Text>
-          }
-          {...methods.register("vendor_Country", {
-            required: "必填"
-          })}
-          marginBottom="0"
-        >
-          <option value="A">A國</option>
-          <option value="B">B國</option>
-          <option value="C">C國</option>
-        </SelectField>
-      ]
+      value: address1 || "--",
+      editEle: (
+        <Pane className="address__form">
+          <Label className="label">地址</Label>
+          <Textarea
+            className="input text-input-field w100"
+            {...methods.register("address1", {
+              validate: textValidation
+            })}
+            marginBottom="0"
+          />
+        </Pane>
+      )
     },
     {
       req: true,

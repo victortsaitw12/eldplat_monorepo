@@ -173,7 +173,7 @@ function DriverInfo({
     },
     {
       req: false,
-      label: "執照州/省/地區",
+      label: "城市",
       value: driverData.info.license_area_name || "--",
       editEle: (
         <Select

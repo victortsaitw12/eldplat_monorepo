@@ -22,8 +22,8 @@ export const getDriverCountryDDL = async (): Promise<any> => {
 // 取執照地區下拉式資料
 export const getLicenseAreaDDL = async (): Promise<any> => {
   const requestBody = {
-    area_No: "20390100",
-    level_Num: "4"
+    area_No: "2039",
+    level_Num: "3"
   };
   const res = await fetch(`${API_Path["getAreaDDL"]}`, {
     method: "POST",
