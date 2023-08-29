@@ -69,13 +69,11 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     getAllRegions(null, "2")
       .then((data) => {
-        const countriesData = data.options.filter((regionData) => {
-          // 空的國家或測試錯誤訊息的都篩掉
-          return (
+        // 空的國家或測試錯誤訊息的都篩掉
+        const countriesData = data.options.filter(
+          (regionData) =>
             regionData.area_Name_Tw !== "" && regionData.area_No[0] !== "6"
-          );
-        });
-        console.log("🍅 getAllRegions(null,2):", data);
+        );
         return countriesData;
       })
       .then((countriesData) => {
@@ -86,10 +84,17 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
 
   // 取得城市選項內容 (0906 Demo, PM: default cities in Taiwan)
   useEffect(() => {
-    const area_No = currentCountry
-      ? currentCountry.area_No.slice(0, 4)
-      : "2039";
+    const area_No = "2039";
+    getAllRegions(area_No, "3")
+      .then((data) => {
+        setAllCities(data.options);
+        setCurrentCity(null);
+      })
+      .catch((err) => console.error("get regions error: ", err));
+  }, []);
 
+  useEffect(() => {
+    const area_No = currentCountry?.area_No || null;
     getAllRegions(area_No, "3")
       .then((data) => {
         setAllCities(data.options);
