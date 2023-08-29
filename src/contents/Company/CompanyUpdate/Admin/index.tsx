@@ -14,11 +14,7 @@ function CountrySet() {
       <Heading is="h4">最高管理員</Heading>
       <form>
         <Pane className="input-line admin">
-          <Avatar
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-            name="Alan Turing"
-            size={40}
-          />
+          <Avatar src="/image/avatar1.jpg" name="portrait" size={40} />
           <Text>{companyData.administrator_name}(你)</Text>
           <Button
             marginY={8}
