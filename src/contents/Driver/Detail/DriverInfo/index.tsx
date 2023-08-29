@@ -160,7 +160,7 @@ function DriverInfo({
           marginBottom="0"
           defaultValue=""
         >
-          <option value="" disabled hidden>
+          <option value="" disabled>
             請選擇
           </option>
           {driverCountryDDL?.map((item: any) => (
@@ -182,7 +182,7 @@ function DriverInfo({
           marginBottom="0"
           defaultValue=""
         >
-          <option value="" disabled hidden>
+          <option value="" disabled>
             請選擇
           </option>
           {licenseAreaDDL?.map((item: any) => (

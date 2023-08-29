@@ -24,6 +24,7 @@ interface I_Props {
   deleteItemHandler?: (id: string) => void;
   submitForm: (data: any) => void;
 }
+import Address from "@components/Address";
 
 const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
   console.log("data?.invts", data, data?.invts);
@@ -138,22 +139,18 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: "聯絡地址",
-      value: data.user_address1 || "--"
+      value: `${data.zip_code || "--"} ${data.dt_country_name || "--"}` || "--"
+    },
+
+    {
+      req: false,
+      label: " ",
+      value: data.city_name || "--"
     },
     {
       req: false,
       label: " ",
-      value: data.user_address2 || "--"
-    },
-    {
-      req: false,
-      label: " ",
-      value: `${data.city_name || "--"} ${data.district_name || "--"}`
-    },
-    {
-      req: false,
-      label: " ",
-      value: `${data.zip_code || "--"} ${data.dt_country_name || "--"}`
+      value: data.user_address1
     },
     {
       req: false,

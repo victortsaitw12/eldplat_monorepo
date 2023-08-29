@@ -12,13 +12,6 @@ export const BodySTY = styled.div`
         color: #567190;
       }
 
-      .address {
-        &__value {
-          display: flex;
-          margin-bottom: 6px;
-        }
-      }
-
       // 主要聯絡人電話那邊
       .contact-phone-detail {
         display: flex;

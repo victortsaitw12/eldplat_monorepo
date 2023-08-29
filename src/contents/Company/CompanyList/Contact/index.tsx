@@ -10,6 +10,7 @@ import {
   I_Region_Context,
   RegionContext
 } from "@contexts/regionContext/regionProvider";
+import Address from "@components/Address";
 
 function Contact() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
@@ -32,19 +33,7 @@ function Contact() {
         </Pane>
         <Pane className="input-line">
           <Text className="">公司地址</Text>
-
-          <Pane className="address">
-            <Pane className="address__value">
-              <Text>{companyData?.company_district_code}</Text>{" "}
-              <Text>{companyData?.country_name}</Text>
-            </Pane>
-            <Pane className="address__value">
-              <Text className="address__value">{companyData?.city_name}</Text>
-            </Pane>
-            <Text className="address__value">
-              {companyData?.address1.concat(companyData?.address2)}
-            </Text>
-          </Pane>
+          <Address data={companyData} />
         </Pane>
 
         <Pane className="input-line">

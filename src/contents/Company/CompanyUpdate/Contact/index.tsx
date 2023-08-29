@@ -5,19 +5,13 @@ import {
   Paragraph,
   Text,
   TextInput,
-  SelectField,
-  Select,
   Button,
   PlusIcon,
   IconButton,
-  TrashIcon,
-  TextInputField,
-  Textarea,
-  TextareaField,
-  Label,
-  Group
+  TrashIcon
 } from "evergreen-ui";
 import { BodySTY } from "./style";
+
 import {
   I_Company_Context,
   CompanyContext
@@ -29,6 +23,7 @@ import {
   RegionContext
 } from "@contexts/regionContext/regionProvider";
 import LoadingSpinner from "@components/LoadingSpinner";
+import Address from "@components/Address";
 
 function Contact() {
   const { companyData, setCompanyData, handleCompanyContactChange, errMsg } =
@@ -194,72 +189,12 @@ function Contact() {
         </Pane>
         <Pane className="input-line">
           <Text className="">公司地址</Text>
-          <Pane className="address">
-            {/* ------------------------- */}
-            <Pane className="phone-input" marginRight="6px">
-              <Label className="prefix">郵遞區號</Label>
-              <TextInput
-                className="zipcode"
-                name="company_district_code"
-                value={companyData.company_district_code}
-                onChange={handleCompanyContactChange}
-              />
-            </Pane>
-            <Pane className="phone-input">
-              <Label className="prefix">國家</Label>
-              <Select
-                className="country"
-                name="company_country2"
-                value={companyData.company_country2}
-                onChange={(e: any) => {
-                  handleCompanyContactChange(e);
-                  handleStateChange(e);
-                }}
-              >
-                <option value={""} disabled>
-                  請選擇
-                </option>
-                {countries?.map((item) => (
-                  <option key={item.area_No} value={item.area_No}>
-                    {item.area_Name_Tw}
-                  </option>
-                ))}
-              </Select>
-            </Pane>
-            <Pane className="city-and-district">
-              <Pane className="phone-input" marginRight="6px">
-                <Label className="prefix">城市</Label>
-                <Select
-                  className="city"
-                  name="company_city"
-                  value={companyData.company_city}
-                  onChange={(e: any) => {
-                    handleCompanyContactChange(e);
-                  }}
-                  defaultValue={companyData.city_name || ""}
-                >
-                  <option value={""} disabled>
-                    請選擇
-                  </option>
-                  {cities?.map((city) => (
-                    <option key={city.area_No} value={city.area_No}>
-                      {city.area_Name_Tw}
-                    </option>
-                  ))}
-                </Select>
-              </Pane>
-            </Pane>
-            <Pane className="phone-input" marginRight="6px">
-              <Label className="prefix">地址</Label>
-              <Textarea
-                className="addressArea"
-                name="address1"
-                value={companyData.address1.concat(companyData.address2)}
-                onChange={handleCompanyContactChange}
-              />
-            </Pane>
-            {/* ------------------------- */}
-          </Pane>
+          <Address
+            data={companyData}
+            options={{ countries, cities }}
+            onChange={handleCompanyContactChange}
+            isEdit={true}
+          />
         </Pane>
         <Pane className="input-line">
           <Text className="">公司E-Mail</Text>

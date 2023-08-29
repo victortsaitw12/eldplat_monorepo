@@ -5,7 +5,10 @@ import {
   Paragraph,
   SelectField,
   Text,
-  TextInput
+  TextInput,
+  Label,
+  Select,
+  Textarea
 } from "evergreen-ui";
 import React, { useContext, useEffect } from "react";
 import { BodySTY } from "./style";
@@ -65,110 +68,71 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
         <Pane className="input-line address-frame">
           <Text className="">聯絡地址</Text>
           <Pane className="address">
-            {/* 第一行地址 */}
-            <Pane className="first-address">
-              <Paragraph>地址1</Paragraph>
+            <Pane className="address__form" marginRight="6px">
+              <Label className="label" marginBottom={8}>
+                郵遞區號
+              </Label>
               <TextInput
+                className="input"
+                name="zip_code"
+                value={insertData.zip_code || ""}
+                onChange={handleEmployeeChange}
+              />
+            </Pane>
+            <Pane className="address__form" marginRight="6px">
+              <Label className="label">國家</Label>
+              <Select
+                className="input"
+                name="dt_country"
+                value={insertData.dt_country || ""}
+                onChange={(e: any) => {
+                  handleEmployeeChange(e);
+                  handleCountryChange(e.target.value);
+                }}
+              >
+                <>
+                  <option value={""} disabled>
+                    請選擇
+                  </option>
+                  {countries?.map((item) => (
+                    <option key={item.area_No} value={item.area_No}>
+                      {item.area_Name_Tw}
+                    </option>
+                  ))}
+                </>
+              </Select>
+            </Pane>
+            <Pane className="address__form" marginRight="6px">
+              <Label className="label">城市</Label>
+              <Select
+                className="input"
+                name="city"
+                value={insertData.city || ""}
+                onChange={(e: any) => {
+                  handleEmployeeChange(e);
+                  handleCityChange(e.target.value);
+                }}
+              >
+                <option value={""} disabled>
+                  請選擇
+                </option>
+                {cities?.map((city) => (
+                  <option key={city.area_No} value={city.area_No}>
+                    {city.area_Name_Tw}
+                  </option>
+                ))}
+              </Select>
+            </Pane>
+            <Pane className="address__form" marginRight="6px">
+              {" "}
+              <Label className="label">地址</Label>
+              <Textarea
+                className="input"
                 name="user_address1"
                 placeholder="例如:街道地址、郵政信箱等"
                 value={insertData.user_address1 || ""}
                 onChange={handleEmployeeChange}
               />
-            </Pane>
-            {/* 第二行地址 */}
-            <Pane className="second-address">
-              <Paragraph>地址2</Paragraph>
-              <TextInput
-                name="user_address2"
-                placeholder="例如:套房、建築、大樓、樓層等"
-                value={insertData.user_address2 || ""}
-                onChange={handleEmployeeChange}
-              />
-            </Pane>
-            <Pane className="city-and-district">
-              <Pane marginRight="6px">
-                <Paragraph>城市</Paragraph>
-                <SelectField
-                  className="city"
-                  label=""
-                  name="city"
-                  value={insertData.city || ""}
-                  onChange={(e: any) => {
-                    handleEmployeeChange(e);
-                    handleCityChange(e.target.value);
-                  }}
-                >
-                  <>
-                    <option value={""} disabled>
-                      請選擇
-                    </option>
-                    {cities?.map((city) => (
-                      <option key={city.area_No} value={city.area_No}>
-                        {city.area_Name_Tw}
-                      </option>
-                    ))}
-                  </>
-                </SelectField>
-              </Pane>
-              <Pane>
-                <Paragraph>州/省/區域</Paragraph>
-                <SelectField
-                  className="district"
-                  label=""
-                  name="district"
-                  value={insertData.district || ""}
-                  onChange={(e: any) => {
-                    handleEmployeeChange(e);
-                    handleStateChange(e.target.value);
-                  }}
-                >
-                  <>
-                    <option value={""} disabled>
-                      請選擇
-                    </option>
-                    {states?.map((state) => (
-                      <option key={state.area_No} value={state.area_No}>
-                        {state.area_Name_Tw}
-                      </option>
-                    ))}
-                  </>
-                </SelectField>
-              </Pane>
-            </Pane>
-            <Pane className="zip-and-country">
-              <Pane marginRight="6px">
-                <Paragraph marginBottom={8}>郵遞區號</Paragraph>
-                <TextInput
-                  className="zip-code"
-                  name="zip_code"
-                  value={insertData.zip_code || ""}
-                  onChange={handleEmployeeChange}
-                />
-              </Pane>
-              <Pane>
-                <Paragraph>國家</Paragraph>
-                <SelectField
-                  className="country"
-                  label=""
-                  name="dt_country"
-                  value={insertData.dt_country || ""}
-                  onChange={(e: any) => {
-                    handleEmployeeChange(e);
-                    handleCountryChange(e.target.value);
-                  }}
-                >
-                  <>
-                    <option value={""} disabled>
-                      請選擇
-                    </option>
-                    {countries?.map((item) => (
-                      <option key={item.area_No} value={item.area_No}>
-                        {item.area_Name_Tw}
-                      </option>
-                    ))}
-                  </>
-                </SelectField>
-              </Pane>
             </Pane>
           </Pane>
         </Pane>
