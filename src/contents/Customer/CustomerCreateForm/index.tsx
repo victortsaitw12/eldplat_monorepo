@@ -128,94 +128,6 @@ function CustomerCreateForm({
         <span style={{ color: "#D14343" }}>*</span>公司地址
       </Text>
       <FiledInput
-        label="地址1"
-        horizonLabel={true}
-        controlProps={{
-          name: "address1",
-          control
-        }}
-      />
-      <FiledInput
-        label="地址2"
-        horizonLabel={true}
-        controlProps={{
-          name: "address2",
-          control
-        }}
-      />
-      <FlexWrapper
-        padding="0"
-        style={{
-          alignItems: "center",
-          gap: "8px"
-        }}
-      >
-        <Controller
-          name="customer_city"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <>
-              <label style={{ width: "68px", fontSize: "12px" }}>
-                <span style={{ color: "#D14343" }}>*</span>
-                城市
-              </label>
-              <Select
-                value={value}
-                onChange={(e) => {
-                  onChange(e.target.value);
-                  handleCityChange(e.target.value);
-                }}
-              >
-                <>
-                  <option value={""}>請選擇</option>
-                  {cities?.map((city) => (
-                    <option key={city.area_No} value={city.area_No}>
-                      {city.area_Name_Tw}
-                    </option>
-                  ))}
-                </>
-              </Select>
-            </>
-          )}
-        />
-      </FlexWrapper>
-      <FlexWrapper
-        padding="0"
-        style={{
-          alignItems: "center",
-          gap: "8px"
-        }}
-      >
-        <Controller
-          name="customer_area"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <>
-              <label style={{ width: "68px", fontSize: "12px" }}>
-                州/省/區域
-              </label>
-              <Select
-                value={value}
-                onChange={(e) => {
-                  onChange(e.target.value);
-                  handleStateChange(e.target.value);
-                  setValue("customer_city", "");
-                }}
-              >
-                <>
-                  <option value={""}>請選擇</option>
-                  {states?.map((state) => (
-                    <option key={state.area_No} value={state.area_No}>
-                      {state.area_Name_Tw}
-                    </option>
-                  ))}
-                </>
-              </Select>
-            </>
-          )}
-        />
-      </FlexWrapper>
-      <FiledInput
         label="郵遞區號"
         horizonLabel={true}
         controlProps={{
@@ -260,6 +172,50 @@ function CustomerCreateForm({
           )}
         />
       </FlexWrapper>
+      <FlexWrapper
+        padding="0"
+        style={{
+          alignItems: "center",
+          gap: "8px"
+        }}
+      >
+        <Controller
+          name="customer_city"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <>
+              <label style={{ width: "68px", fontSize: "12px" }}>
+                <span style={{ color: "#D14343" }}>*</span>
+                城市
+              </label>
+              <Select
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                  handleCityChange(e.target.value);
+                }}
+              >
+                <>
+                  <option value={""}>請選擇</option>
+                  {cities?.map((city) => (
+                    <option key={city.area_No} value={city.area_No}>
+                      {city.area_Name_Tw}
+                    </option>
+                  ))}
+                </>
+              </Select>
+            </>
+          )}
+        />
+      </FlexWrapper>
+      <FiledInput
+        label="地址"
+        horizonLabel={true}
+        controlProps={{
+          name: "address1",
+          control
+        }}
+      />
       <Text>
         <span style={{ color: "#D14343" }}>* </span>
         公司電話

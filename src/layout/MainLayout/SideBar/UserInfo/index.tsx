@@ -16,11 +16,7 @@ function Index(props: any) {
       <div className="title">{companyData?.company_name}</div>
       <div className="user-container">
         <div className="user-info">
-          <Avatar
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-            name="Alan Turing"
-            size={44}
-          />
+          <Avatar src="/image/avatar1.jpg" name="portrait" size={44} />
           {/* <Image
             src="/image/avatar1.jpg"
             alt="user avatar"

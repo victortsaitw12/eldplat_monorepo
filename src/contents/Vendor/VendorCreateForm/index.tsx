@@ -3,15 +3,30 @@ import { useForm } from "react-hook-form";
 import { FormSTY } from "./style";
 import { useRouter } from "next/router";
 import { ThemeContext } from "styled-components";
+import {
+  PlusIcon,
+  Text,
+  TextInput,
+  SelectField,
+  Select,
+  Pane,
+  Label,
+  Textarea
+} from "evergreen-ui";
 //@sevices
 import { createVendor } from "@services/vendor/createVendor";
 import FiledInput from "./FieldInput";
-import { PlusIcon, Text, Select } from "evergreen-ui";
 import { IconLeft } from "@components/Button/Primary";
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";
+//@context
+import {
+  I_Region_Context,
+  RegionContext
+} from "@contexts/regionContext/regionProvider";
 //@components
 import CheckboxField from "@components/CheckboxField";
+import InfoBox from "@components/InfoBox";
 import { I_contactData } from "../vendor.type";
 
 //@mock-data
@@ -19,7 +34,9 @@ import { vedor_code_text } from "@mock-data/vendors/03VendorCodeList";
 export interface CreateVendorPayload {
   vendor_Name: string;
   vendor_City: string;
+  vendor_city_name: string;
   vendor_Country: string;
+  vendor_country_name: string;
   vendor_Owner: string;
   vendor_Gui_No: string;
   address1: string;
@@ -64,6 +81,16 @@ interface I_VendorCreateFormProps {
 
 function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
   const themeContext = useContext(ThemeContext);
+  const {
+    countries,
+    states,
+    cities,
+    handleCountryChange,
+    handleStateChange,
+    handleCityChange,
+    getRegionsData,
+    initOptions
+  } = React.useContext<I_Region_Context>(RegionContext);
   const router = useRouter();
   //供應商的分類
   const { codeType = "01" } = router.query;
@@ -131,44 +158,14 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
         <span style={{ color: "#D14343" }}>* </span>
         公司地址
       </Text>
-      <FiledInput
-        req={false}
-        label="地址1"
-        horizonLabel={true}
-        controlProps={{
-          name: "address1",
-          control
-        }}
-      />
-      <FiledInput
-        req={false}
-        label="地址2"
-        horizonLabel={true}
-        controlProps={{
-          name: "address2",
-          control
-        }}
-      />
       <FlexWrapper
         padding="0"
         style={{
           alignItems: "center"
         }}
       >
-        <label style={{ width: "41%" }} htmlFor="">
-          <span style={{ color: "#D14343" }}>*</span>
-          城市
-        </label>
-        <Select
-          {...register("vendor_City", {
-            required: "必填"
-          })}
-        >
-          <option value="A">A市</option>
-          <option value="B">B市</option>
-          <option value="C">C市</option>
-          <option value="D">D市</option>
-        </Select>
+        <label style={{ width: "68px", fontSize: "12px" }}>郵遞區號</label>
+        <TextInput style={{ flex: 1 }} {...register("vendor_District_Code")} />
       </FlexWrapper>
       <FlexWrapper
         padding="0"
@@ -176,32 +173,7 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
           alignItems: "center"
         }}
       >
-        <label style={{ width: "41%" }} htmlFor="">
-          州/省/區域
-        </label>
-        <Select {...register("vendor_Area")}>
-          <option value="A">A區</option>
-          <option value="B">B區</option>
-          <option value="C">C區</option>
-          <option value="D">D區</option>
-        </Select>
-      </FlexWrapper>
-      <FiledInput
-        req={false}
-        label="郵遞區號"
-        horizonLabel={true}
-        controlProps={{
-          name: "vendor_District_Code",
-          control
-        }}
-      />
-      <FlexWrapper
-        padding="0"
-        style={{
-          alignItems: "center"
-        }}
-      >
-        <label style={{ width: "41%" }} htmlFor="">
+        <label style={{ width: "68px", fontSize: "12px" }} htmlFor="">
           <span style={{ color: "#D14343" }}>*</span>
           國家
         </label>
@@ -210,14 +182,53 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
             required: "必填"
           })}
         >
-          <option value="A">A國</option>
-          <option value="B">B國</option>
-          <option value="C">C國</option>
-          <option value="D">D國</option>
+          <option value={""}>請選擇</option>
+          {countries?.map((item) => (
+            <option key={item.area_No} value={item.area_No}>
+              {item.area_Name_Tw}
+            </option>
+          ))}
         </Select>
       </FlexWrapper>
+      <FlexWrapper
+        padding="0"
+        style={{
+          alignItems: "center"
+        }}
+      >
+        <label style={{ width: "68px", fontSize: "12px" }} htmlFor="">
+          <span style={{ color: "#D14343" }}>*</span>
+          城市
+        </label>
+        <Select
+          {...register("vendor_City", {
+            required: "必填"
+          })}
+        >
+          <option value={""}>請選擇</option>
+          {cities?.map((city) => (
+            <option key={city.area_No} value={city.area_No}>
+              {city.area_Name_Tw}
+            </option>
+          ))}
+        </Select>
+      </FlexWrapper>
+      <FlexWrapper
+        padding="0"
+        style={{
+          alignItems: "center"
+        }}
+      >
+        <label
+          style={{ width: "68px", fontSize: "12px", alignSelf: "flex-start" }}
+        >
+          地址
+        </label>
+        <Textarea style={{ flex: 1 }} {...register("address1")} />
+      </FlexWrapper>
+
       <Text>
-        <span style={{ color: "#D14343" }}>* </span>
+        <span style={{ color: "#968686" }}>* </span>
         公司電話
       </Text>
       <FlexWrapper padding="0">
