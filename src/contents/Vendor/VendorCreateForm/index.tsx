@@ -34,7 +34,9 @@ import { vedor_code_text } from "@mock-data/vendors/03VendorCodeList";
 export interface CreateVendorPayload {
   vendor_Name: string;
   vendor_City: string;
+  vendor_city_name: string;
   vendor_Country: string;
+  vendor_country_name: string;
   vendor_Owner: string;
   vendor_Gui_No: string;
   address1: string;

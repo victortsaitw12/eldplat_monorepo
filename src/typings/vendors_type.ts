@@ -25,7 +25,9 @@ export interface I_Select_Vendors_Type {
   vendor_Zip: string;
   vendor_State: string;
   vendor_City: string;
+  vendor_city_name: string;
   vendor_Country: string;
+  vendor_country_name: string;
   vendor_Contact_Name: string;
   vendor_Contact_Phone: string;
   vendor_Contact_Email: string;

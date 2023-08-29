@@ -98,7 +98,7 @@ const Page: NextPageWithLayout<{
         value: vendors["vendor_Name"]
       },
       vendor_fullAddress: {
-        label: vendors["vendor_City"],
+        label: vendors["vendor_city_name"],
         value: vendors["vendor_City"]
       },
       vendor_Tel: {
