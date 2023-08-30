@@ -94,8 +94,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (!currentCountry) return;
-    const area_No = currentCountry?.area_No || null;
+    const area_No = currentCountry?.area_No || "2039";
     getAllRegions(area_No, "3")
       .then((data) => {
         setAllCities(data.options);
