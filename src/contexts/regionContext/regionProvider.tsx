@@ -16,7 +16,6 @@ export interface I_Region_Context {
   cities: I_RegionsData[];
   currentCity: I_RegionsData | null;
   handleCountryChange: (countryNo: string) => void;
-  handleStateChange: (stateNo: string) => void;
   handleCityChange: (cityNo: string) => void;
   getRegionsData: (area_nos: string[]) => Promise<any>;
   initOptions: (regionAreaNo: {
@@ -37,9 +36,7 @@ export const RegionContext = createContext<I_Region_Context>({
   handleCountryChange: function (): void {
     throw new Error("Function not implemented.");
   },
-  handleStateChange: function (): void {
-    throw new Error("Function not implemented.");
-  },
+
   handleCityChange: function (): void {
     throw new Error("Function not implemented.");
   },
@@ -84,18 +81,8 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
 
   // 取得城市選項內容 (0906 Demo, PM: default cities in Taiwan)
   useEffect(() => {
-    const area_No = "2039";
-    getAllRegions(area_No, "3")
-      .then((data) => {
-        setAllCities(data.options);
-        setCurrentCity(null);
-      })
-      .catch((err) => console.error("get regions error: ", err));
-  }, []);
-
-  useEffect(() => {
     if (!currentCountry) return;
-    const area_No = currentCountry?.area_No || null;
+    const area_No = currentCountry?.area_No?.slice(0, 4) || "2039";
     getAllRegions(area_No, "3")
       .then((data) => {
         setAllCities(data.options);
@@ -119,9 +106,6 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     return handleChange(area_no, allCountries, setCurrentCountry);
   }
 
-  function handleStateChange(area_no: string) {
-    return handleChange(area_no, allStates, setCurrentState);
-  }
   function handleCityChange(area_no: string) {
     return handleChange(area_no, allCities, setCurrentCity);
   }
@@ -177,7 +161,6 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
     currentState,
     currentCountry,
     handleCountryChange,
-    handleStateChange,
     handleCityChange,
     getRegionsData,
     initOptions

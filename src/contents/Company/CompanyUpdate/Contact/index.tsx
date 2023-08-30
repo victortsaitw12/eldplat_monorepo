@@ -28,14 +28,8 @@ import Address from "@components/Address";
 function Contact() {
   const { companyData, setCompanyData, handleCompanyContactChange, errMsg } =
     useContext<I_Company_Context>(CompanyContext);
-  const {
-    cities,
-    states,
-    countries,
-    handleCountryChange,
-    handleStateChange,
-    handleCityChange
-  } = useContext<I_Region_Context>(RegionContext);
+  const { cities, states, countries, handleCountryChange, handleCityChange } =
+    useContext<I_Region_Context>(RegionContext);
 
   const [contactArr, setContactArr] = useState<I_Company_Contact_Type[] | any>([
     {

@@ -50,7 +50,6 @@ const CustomerDetail = ({
     states,
     cities,
     handleCountryChange,
-    handleStateChange,
     handleCityChange,
     getRegionsData,
     initOptions

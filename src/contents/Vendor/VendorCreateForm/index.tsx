@@ -52,7 +52,7 @@ export interface CreateVendorPayload {
 const defaultValues = {
   vendor_Name: "",
   vendor_City: "",
-  vendor_Country: "TW",
+  vendor_Country: "",
   vendor_Owner: "",
   vendor_Gui_No: "",
   address1: "",
@@ -86,7 +86,6 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
     states,
     cities,
     handleCountryChange,
-    handleStateChange,
     handleCityChange,
     getRegionsData,
     initOptions
@@ -179,10 +178,15 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
         </label>
         <Select
           {...register("vendor_Country", {
-            required: "必填"
+            required: "必填",
+            onChange: (e) => {
+              handleCountryChange(e.target.value);
+            }
           })}
         >
-          <option value={""}>請選擇</option>
+          <option value={""} disabled>
+            請選擇
+          </option>
           {countries?.map((item) => (
             <option key={item.area_No} value={item.area_No}>
               {item.area_Name_Tw}
@@ -205,7 +209,9 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
             required: "必填"
           })}
         >
-          <option value={""}>請選擇</option>
+          <option value={""} disabled>
+            請選擇
+          </option>
           {cities?.map((city) => (
             <option key={city.area_No} value={city.area_No}>
               {city.area_Name_Tw}

@@ -52,6 +52,7 @@ const MaintenanceDetail = ({
     }
   });
 
+  console.log("🍅 defaultData:", defaultData);
   const package_names: any = {};
   mainCreateDdl?.package_options.forEach(
     (element: { no: string; name: string }) => {
@@ -74,6 +75,7 @@ const MaintenanceDetail = ({
   // }, [watch]);
 
   const handleDriverGroupChange = (e: any) => {
+    setValue("driver_no", "");
     const dsph_group = e.target.value;
     fetchDDL(undefined, dsph_group);
   };
@@ -117,16 +119,12 @@ const MaintenanceDetail = ({
         <>
           <Select
             key="operator_bus_group_select"
-            {...register("am_driver_bus_group_no")}
+            {...register("am_driver_bus_group_no", {
+              onChange: handleDriverGroupChange
+            })}
             marginBottom="0"
-            onChange={handleDriverGroupChange}
           >
-            <option
-              key={"operator_bus_group_options"}
-              value={""}
-              disabled
-              hidden
-            >
+            <option key={"operator_bus_group_options"} value={""} disabled>
               請選擇車隊
             </option>
             {mainCreateDdl?.operator_bus_group_options?.map((item: any) => {
@@ -134,7 +132,7 @@ const MaintenanceDetail = ({
                 <option
                   key={`operator_bus_group_options-${item.no}`}
                   value={item.no}
-                  // selected={getValues("am_driver_bus_group_no") === item.no}
+                  selected={getValues("am_driver_bus_group_no") === item.no}
                 >
                   {item.name}
                 </option>
@@ -147,11 +145,15 @@ const MaintenanceDetail = ({
             marginBottom="0"
             disabled={!getValues("am_driver_bus_group_no")}
           >
-            <option key={"driver_no_options"} value={""} selected hidden>
+            <option key={"driver_no_options"} value={""} disabled>
               請選擇駕駛
             </option>
             {mainCreateDdl?.operator_options?.map((item: any) => (
-              <option key={item.no} value={item.no}>
+              <option
+                key={`driver_no_options-${item.no}`}
+                value={item.no}
+                selected={getValues("driver_no") === item.no}
+              >
                 {item.name}
               </option>
             ))}
