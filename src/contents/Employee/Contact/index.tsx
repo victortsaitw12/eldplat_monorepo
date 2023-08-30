@@ -13,6 +13,7 @@ import {
 import React, { useContext, useEffect } from "react";
 import { BodySTY } from "./style";
 import { RegionContext } from "@contexts/regionContext/regionProvider";
+import { getValue } from "evergreen-ui/types/theme";
 
 function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
   const {
@@ -29,6 +30,11 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
       country: insertData?.dt_country,
       state: insertData?.district
     });
+  }, []);
+
+  useEffect(() => {
+    if (!insertData.dt_country) return;
+    handleCountryChange(insertData.dt_country);
   }, []);
   console.log("🉐insertData in contact", insertData);
 
@@ -83,6 +89,7 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
               <Select
                 className="input"
                 name="dt_country"
+                defaultValue={""}
                 value={insertData.dt_country || ""}
                 onChange={(e: any) => {
                   handleEmployeeChange(e);

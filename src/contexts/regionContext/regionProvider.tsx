@@ -81,7 +81,6 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
 
   // 取得城市選項內容 (0906 Demo, PM: default cities in Taiwan)
   useEffect(() => {
-    console.log("🍅 useEffect:");
     if (!currentCountry) return;
     const area_No = currentCountry?.area_No?.slice(0, 4) || "2039";
     getAllRegions(area_No, "3")
@@ -104,12 +103,10 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   }
   // 選取國家
   function handleCountryChange(area_no: string) {
-    console.log("🍅 area_No:", area_no);
     return handleChange(area_no, allCountries, setCurrentCountry);
   }
 
   function handleCityChange(area_no: string) {
-    console.log("🍅 area_No:", area_no);
     return handleChange(area_no, allCities, setCurrentCity);
   }
   /**
