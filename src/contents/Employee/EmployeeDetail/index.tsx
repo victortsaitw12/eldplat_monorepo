@@ -146,7 +146,7 @@ const EmployeeDetail = ({ submitRef, isEdit, data, submitForm }: I_Props) => {
     {
       req: false,
       label: " ",
-      value: data.user_address1
+      value: data.user_address1 || "--"
     },
     {
       req: false,
