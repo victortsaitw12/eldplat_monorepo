@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import {
   TextInputField,
@@ -106,6 +106,16 @@ const VendorDetail = ({
     }
     setFuelValue(newData);
   };
+
+  useEffect(() => {
+    const curCountry = methods.getValues("vendor_Country");
+    const curCity = methods.getValues("vendor_City");
+    console.log("🍅 curCity:", curCity);
+    if (!curCountry) return;
+    handleCountryChange(curCountry);
+    // methods.setValue("vendor_City", curCity);
+  }, []);
+
   //基本資料
   const basic_info = [
     {
@@ -205,7 +215,8 @@ const VendorDetail = ({
             className="input"
             key="vendor_Country"
             {...methods.register("vendor_Country", {
-              required: "必填"
+              required: "必填",
+              onChange: (e) => handleCountryChange(e.target.value)
             })}
             marginBottom="0"
           >
@@ -239,7 +250,11 @@ const VendorDetail = ({
           >
             <option value={""}>請選擇</option>
             {cities?.map((city) => (
-              <option key={city.area_No} value={city.area_No}>
+              <option
+                key={city.area_No}
+                value={city.area_No}
+                selected={city.area_No === methods.getValues("vendor_City")}
+              >
                 {city.area_Name_Tw}
               </option>
             ))}
