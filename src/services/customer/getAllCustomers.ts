@@ -55,7 +55,7 @@ export const customerPattern: PatternType = {
   customer_no: true,
   customer_name: true,
   customer_typ: true,
-  customer_area: true,
+  customer_city: true,
   customer_tel: true,
   customer_email: true,
   contact_name: true,
@@ -91,9 +91,9 @@ export function customerParser(data: any, key: string) {
       label: data["type_name"] || null,
       value: data["customer_typ"] || null
     };
-  } else if (key === "customer_area") {
+  } else if (key === "customer_city") {
     return {
-      label: data["area_name"] || "--",
+      label: data["customer_city_name"] || "--",
       value: data[key] || null
     };
   } else if (key === "customer_tel") {

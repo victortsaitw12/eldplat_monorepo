@@ -263,7 +263,10 @@ function MaintenanceCreateForm({
               <span style={{ color: "#D14343" }}>*</span>派工駕駛
             </div>
           </Label>
-          <Select onChange={handleOperatorGroupChange}>
+          <Select
+            onChange={handleOperatorGroupChange}
+            disabled={isDriverDDLLoading || isBusDDLLoading}
+          >
             <option key="operator_bus_group_option" value="" selected disabled>
               請選擇駕駛車隊
             </option>
@@ -279,7 +282,10 @@ function MaintenanceCreateForm({
               );
             })}
           </Select>
-          <Select {...register("driver_no")} disabled={isDriverDDLLoading}>
+          <Select
+            {...register("driver_no")}
+            disabled={isDriverDDLLoading || isBusDDLLoading}
+          >
             <option key="driver_no_option" value="">
               請選擇駕駛
             </option>
