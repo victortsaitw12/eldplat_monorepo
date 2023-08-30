@@ -86,7 +86,6 @@ function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
     states,
     cities,
     handleCountryChange,
-    handleStateChange,
     handleCityChange,
     getRegionsData,
     initOptions

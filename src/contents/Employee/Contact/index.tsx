@@ -17,7 +17,6 @@ import { RegionContext } from "@contexts/regionContext/regionProvider";
 function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
   const {
     handleCountryChange,
-    handleStateChange,
     handleCityChange,
     countries,
     states,
@@ -130,7 +129,7 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
                 className="input"
                 name="user_address1"
                 placeholder="例如:街道地址、郵政信箱等"
-                value={insertData.user_address1 || "--"}
+                value={insertData.user_address1 || ""}
                 onChange={handleEmployeeChange}
               />
             </Pane>

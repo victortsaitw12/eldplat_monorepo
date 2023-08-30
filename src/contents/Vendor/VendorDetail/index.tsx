@@ -61,7 +61,6 @@ const VendorDetail = ({
     states,
     cities,
     handleCountryChange,
-    handleStateChange,
     handleCityChange,
     getRegionsData,
     initOptions

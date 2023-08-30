@@ -69,14 +69,8 @@ function CustomerCreateForm({
       defaultValues
     });
   const [loading, setLoading] = useState(false);
-  const {
-    countries,
-    states,
-    cities,
-    handleCountryChange,
-    handleStateChange,
-    handleCityChange
-  } = useContext<I_Region_Context>(RegionContext);
+  const { countries, states, cities, handleCountryChange, handleCityChange } =
+    useContext<I_Region_Context>(RegionContext);
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     try {
