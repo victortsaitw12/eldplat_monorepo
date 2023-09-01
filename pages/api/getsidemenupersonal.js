@@ -1,7 +1,10 @@
+import API_Path from "@services/siderbar/apiPath";
+
 export default async function handler(req, res) {
   try {
     const result = await fetch(
-      "http://uvehicle-api.eldplat.com/COM/api/DownStream/GetSideMenuPersonal",
+      API_Path.GetSideMenuPersonal,
+      // "http://uvehicle-api.eldplat.com/COM/api/DownStream/GetSideMenuPersonal",
       {
         method: "GET",
         headers: {
