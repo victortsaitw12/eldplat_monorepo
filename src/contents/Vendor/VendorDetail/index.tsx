@@ -3,7 +3,6 @@ import { useForm, FormProvider } from "react-hook-form";
 import {
   TextInputField,
   TextInput,
-  SelectField,
   Text,
   Pane,
   Label,
@@ -58,14 +57,13 @@ const VendorDetail = ({
 }: I_Props) => {
   const {
     countries,
-    states,
     cities,
     handleCountryChange,
     handleCityChange,
     getRegionsData,
     initOptions
   } = React.useContext<I_Region_Context>(RegionContext);
-  console.log("💫💫💫原本的供應商資料：", vendorData);
+  // console.log("💫💫💫原本的供應商資料：", vendorData);
   const defaultFuelValue = vendorData.vendor_Code_List.map((child) => {
     return child.vendor_Code;
   });
@@ -108,12 +106,9 @@ const VendorDetail = ({
   };
 
   useEffect(() => {
-    const curCountry = methods.getValues("vendor_Country");
-    const curCity = methods.getValues("vendor_City");
-    console.log("🍅 curCity:", curCity);
-    if (!curCountry) return;
-    handleCountryChange(curCountry);
-    // methods.setValue("vendor_City", curCity);
+    initOptions({
+      country: methods.getValues("vendor_Country")
+    });
   }, []);
 
   //基本資料

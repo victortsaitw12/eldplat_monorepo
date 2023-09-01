@@ -47,7 +47,6 @@ const CustomerDetail = ({
   });
   const {
     countries,
-    states,
     cities,
     handleCountryChange,
     handleCityChange,
@@ -57,16 +56,15 @@ const CustomerDetail = ({
 
   useEffect(() => {
     initOptions({
-      country: customerDefaultData?.customer_country,
-      state: customerDefaultData?.customer_area
+      country: customerDefaultData?.customer_country
     });
   }, []);
+
   useWatch({
     control,
     name: "customer_no"
   });
   //
-  console.log("getValues", getValues());
   if (!customerDefaultData) {
     return <div>查無相關資料...</div>;
   }
@@ -178,7 +176,6 @@ const CustomerDetail = ({
             key="customer_country"
             {...register("customer_country", {
               onChange: (e: any) => {
-                console.log("e.target.value", e.target.value);
                 handleCountryChange(e.target.value);
                 setValue("customer_city", "");
                 setValue("customer_area", "");
