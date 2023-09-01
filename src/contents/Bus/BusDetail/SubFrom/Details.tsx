@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Select, Pane } from "evergreen-ui";
 import InfoBox from "@components/InfoBox";
 import ImageUploader from "@components/ImageUploader";
+import ImeageSketleton from "@components/ImageSkeleton";
 import {
   UseFormRegister,
   FieldErrors,
@@ -175,6 +176,7 @@ function Details({
               maxWidth: "270px"
             }}
           >
+            {/* <ImeageSketleton /> */}
             <Image
               src="/image/bus34.jpg"
               alt="Picture of the bus"
