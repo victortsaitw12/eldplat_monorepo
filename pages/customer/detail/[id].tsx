@@ -23,9 +23,6 @@ const Page: NextPageWithLayout<{ customerId: string; editPage: string }> = ({
   customerId,
   editPage
 }) => {
-  //
-  console.log("editPage", editPage);
-  //
   const submitRef = useRef<HTMLButtonElement | null>(null);
   const { mainFilter, updateMainFilter } = useCustomerStore();
   const router = useRouter();

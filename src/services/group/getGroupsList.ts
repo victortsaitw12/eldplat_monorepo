@@ -1,5 +1,7 @@
+import API_Path from "./apiPath";
+
 export const getGroupsList = async () => {
-  const response = await fetch("https://localhost:7088/ATR/GetGroupList", {
+  const response = await fetch(API_Path["getGroupsList"], {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
