@@ -20,22 +20,16 @@ function Contact({ handleEmployeeChange, insertData }: I_Content_Props) {
     handleCountryChange,
     handleCityChange,
     countries,
-    states,
     cities,
     initOptions
   } = useContext(RegionContext);
 
   useEffect(() => {
     initOptions({
-      country: insertData?.dt_country,
-      state: insertData?.district
+      country: insertData?.dt_country
     });
   }, []);
 
-  useEffect(() => {
-    if (!insertData.dt_country) return;
-    handleCountryChange(insertData.dt_country);
-  }, []);
   console.log("🉐insertData in contact", insertData);
 
   return (

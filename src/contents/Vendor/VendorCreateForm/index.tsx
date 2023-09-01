@@ -81,15 +81,8 @@ interface I_VendorCreateFormProps {
 
 function VendorCreateForm({ data, reloadData }: I_VendorCreateFormProps) {
   const themeContext = useContext(ThemeContext);
-  const {
-    countries,
-    states,
-    cities,
-    handleCountryChange,
-    handleCityChange,
-    getRegionsData,
-    initOptions
-  } = React.useContext<I_Region_Context>(RegionContext);
+  const { countries, cities, handleCountryChange } =
+    React.useContext<I_Region_Context>(RegionContext);
   const router = useRouter();
   //供應商的分類
   const { codeType = "01" } = router.query;
