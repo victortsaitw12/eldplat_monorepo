@@ -30,12 +30,11 @@ const PaymentBtn = ({
   };
 
   const handleTakeQuote = React.useCallback(async () => {
-    //接後端API更改status_qode = '5'
     const status_code = "5";
     try {
       const res = await updateStatus(status_code, data.quote_no, "FE");
       if (res.statusCode !== "200") throw new Error(res.resultString);
-      toaster.success("接受報價", {
+      toaster.success("接受報價成功", {
         description: res.resultString,
         duration: 2,
         hasCloseButton: true
