@@ -7,6 +7,7 @@ import PrimaryRadiusBtn from "@components/Button/PrimaryRadius";
 import SecondaryRadiusBtn from "@components/Button/SecondaryRadius";
 
 import { updatePayment } from "@services/client/updatePayment";
+import { updateStatus } from "@services/client/updateStatus";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 import { I_Order } from "@services/client/getOrdersList";
 
@@ -32,15 +33,20 @@ const PaymentBtn = ({
     //接後端API更改status_qode = '5'
     const status_code = "5";
     try {
-      const res = await updatePayment(status_code, data.quote_no);
+      const res = await updateStatus(status_code, data.quote_no, "FE");
+      if (res.statusCode !== "200") throw new Error(res.resultString);
       toaster.success("接受報價", {
         description: res.resultString,
         duration: 2,
         hasCloseButton: true
       });
       setTimeout(() => setIsLightBoxOpen(false), 100);
-    } catch (e) {
-      console.log("接受報價失敗");
+    } catch (e: any) {
+      toaster.warning("接受報價失敗", {
+        description: e.message,
+        duration: 2,
+        hasCloseButton: true
+      });
     } finally {
       handleRefetch();
     }
