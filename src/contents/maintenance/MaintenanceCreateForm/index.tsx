@@ -74,8 +74,8 @@ function MaintenanceCreateForm({
     () => noticeData?.find((reminder: any) => reminder.id.value === reminderNo),
     [reminderNo]
   );
-  console.log("🍅 targetReminder:", targetReminder);
-  console.log("🍅 noticeData:", noticeData);
+  console.log("targetReminder:", targetReminder);
+  console.log("noticeData:", noticeData);
 
   useEffect(() => {
     if (reminderNo) {
@@ -87,6 +87,7 @@ function MaintenanceCreateForm({
       // console.log("targetReminder", targetReminder);
       if (targetReminder) {
         setValue("bus_no", targetReminder.bus_no.value);
+        setValue("bus_name", targetReminder.bus_name.value);
         setValue("driver_no", targetReminder.driver_no.value);
         setValue("vendor_no", targetReminder.vendor_no.value);
         setValue("package_code", targetReminder.component_code.value);
@@ -130,7 +131,9 @@ function MaintenanceCreateForm({
     const selectedBus = mainCreateDdl.bus_options.filter((v: { no: any }) => {
       return v.no === newData.bus_no;
     });
-    newData["bus_name"] = selectedBus[0]?.name;
+    newData["bus_name"] = targetReminder
+      ? getValues("bus_name")
+      : selectedBus[0]?.name;
     const selectedDriver = mainCreateDdl.operator_options.filter(
       (v: { no: any }) => {
         return v.no === newData.driver_no;

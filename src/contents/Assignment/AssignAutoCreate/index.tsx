@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FormSTY } from "./style";
 //@sevices
 import {
@@ -48,8 +48,9 @@ function AssignAutoCreate({
     { bus_group: "00", bus_group_name: "請選擇" }
   ]);
   const [autoAssignData, setAutoAssignData] = useState<AutoAssignType>();
-  const [failIsShown, setFailIsShown] = useState<boolean>(false);
-  const [failMessage, setFailMessage] = useState<string>("");
+  const [modalIsShown, setModalIsShown] = useState<boolean>(false);
+  const [modalMessage, setModalMessage] = useState<string>("");
+  const [isFailed, setIsFailed] = useState<boolean>(false);
 
   // 一進來先抓bus_group DDL
   useEffect(() => {
@@ -87,21 +88,22 @@ function AssignAutoCreate({
     e.preventDefault();
     try {
       const res = await createAssignmentByAuto(autoAssignData);
-      if (res.statusCode === "200") {
-        toaster.success("自動排程成功", {
-          duration: 1.5
-        });
-        refetch && refetch();
-      } else {
-        setFailMessage(res.message || "請確認必填欄位");
-        setFailIsShown(true);
-        setDisabledAutoList((prev: any) => [...prev, orderInfo[0]?.quote_no]);
-      }
-    } catch (err) {
+      if (res.result === false) throw new Error(`${res.message}`);
+      setModalMessage(res.message);
+      setModalIsShown(true);
+    } catch (err: any) {
+      setModalMessage(err.message || "請確認必填欄位");
+      setModalIsShown(true);
+      setDisabledAutoList((prev: any) => [...prev, orderInfo[0]?.quote_no]);
+      setIsFailed(true);
       console.log("auto assign err: ", err);
     }
     console.log("autoAssignData", autoAssignData);
   };
+
+  const handleModalMessageClose = useCallback(() => {
+    isFailed ? setFirstDrawerOpen("") : refetch && refetch();
+  }, [isFailed]);
 
   return (
     <FormSTY onSubmit={asyncSubmitForm}>
@@ -163,12 +165,12 @@ function AssignAutoCreate({
       <IconLeft text={"確定"} type="submit">
         <FloppyDiskIcon size={14} />
       </IconLeft>
-      {failIsShown && (
+      {modalIsShown && (
         <CreateFail
-          failIsShown={failIsShown}
-          setFailIsShown={setFailIsShown}
-          failMessage={failMessage}
-          onClose={setFirstDrawerOpen.bind(null, "")}
+          failIsShown={modalIsShown}
+          setFailIsShown={setModalIsShown}
+          failMessage={modalMessage}
+          onClose={handleModalMessageClose}
         />
       )}
     </FormSTY>
