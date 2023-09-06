@@ -2,6 +2,8 @@ import API_Path from "./apiPath";
 
 // 側邊快速新增資料
 export const createMaintenance = async (maintenanceData: any) => {
+  console.log("🍅 maintenanceData:", maintenanceData);
+
   const filteredNullData: { [key: string]: string | null } = {};
   for (const key in maintenanceData) {
     if (maintenanceData[key] !== null && maintenanceData[key].trim() !== "") {

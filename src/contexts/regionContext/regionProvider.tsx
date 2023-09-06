@@ -64,15 +64,10 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
         return countriesData;
       })
       .then((countriesData) => {
-        console.log("🍅 setAllCountries:", countriesData);
         setAllCountries(countriesData);
       })
       .catch((err) => console.error("get regions error: ", err));
   }, []);
-
-  useEffect(() => {
-    console.log("🍅 allCountries:", allCountries);
-  }, [allCountries]);
 
   // 取得城市選項內容
   useEffect(() => {
@@ -95,8 +90,6 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   }
   // 選取國家
   function handleCountryChange(area_no: string) {
-    console.log("🍅 handleCountryChange:", area_no);
-    console.log("🍅 handleCountryChange:", allCountries);
     return handleChange(area_no, allCountries, setCurrentCountry);
   }
 

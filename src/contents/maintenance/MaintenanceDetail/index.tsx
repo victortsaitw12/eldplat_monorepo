@@ -52,7 +52,7 @@ const MaintenanceDetail = ({
     }
   });
 
-  console.log("🍅 defaultData:", defaultData);
+  console.log("defaultData:", defaultData);
   const package_names: any = {};
   mainCreateDdl?.package_options.forEach(
     (element: { no: string; name: string }) => {
