@@ -4,7 +4,6 @@ import {
   Button,
   NotificationsIcon,
   MoonIcon,
-  FlashIcon,
   HelpIcon,
   mergeTheme,
   defaultTheme,
@@ -62,9 +61,6 @@ const theme = mergeTheme(defaultTheme, {
 const Header = ({ layoutProps }: any) => {
   const handleLangChange = (e: any) => {
     layoutProps?.setLocale(e.target.value);
-  };
-  const handleToggleTheme = () => {
-    console.log("toggleTheme");
   };
 
   return (
