@@ -70,11 +70,12 @@ const Header = ({ layoutProps, theme, setTheme }: any) => {
     <ThemeProvider value={theme}>
       <BodySTY>
         <div className="header__title">{layoutProps?.title}</div>
-        <div className="header__settings">
+        <div className="header__settings plan-info">
           <Select
             className="header__settings-lang"
             width={100}
             onChange={handleLangChange}
+            style={{ padding: "4px 4px" }}
           >
             <option value="zh-tw">繁體中文</option>
             <option value="en-us">英語</option>
