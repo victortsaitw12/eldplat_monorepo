@@ -150,13 +150,15 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
     const newData = { ...updateData };
     const newStartTime = `${dashDate(editData.task_start_time)}T${
       startTime.start_type === "pm"
-        ? (Number(startTime.start_hours) + 12).toString()
-        : startTime.start_hours
+        ? ((Number(startTime.start_hours) % 12) + 12)
+            .toString()
+            .padStart(2, "0")
+        : ((Number(startTime.start_hours) % 12) + 0).toString().padStart(2, "0")
     }:${startTime.start_minutes}`;
     const newEndTime = `${dashDate(editData.task_end_time)}T${
       endTime.end_type === "pm"
-        ? (Number(endTime.end_hours) + 12).toString()
-        : endTime.end_hours
+        ? ((Number(endTime.end_hours) % 12) + 12).toString().padStart(2, "0")
+        : ((Number(endTime.end_hours) % 12) + 0).toString().padStart(2, "0")
     }:${endTime.end_minutes}`;
     newData["task_start_time"] = newStartTime;
     newData["task_end_time"] = newEndTime;
@@ -222,12 +224,8 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
         }
         name="bus_group"
         value={updateData?.bus_group}
-        onClick={(e: any) => {
-          handleBusGroupChange(e);
-        }}
-        onChange={(e: any) => {
-          handleDataChange(e);
-        }}
+        onClick={handleBusGroupChange}
+        onChange={handleDataChange}
       >
         {busGroupDDL?.map(
           (item: { bus_group: string; bus_group_name: string }) => {
@@ -252,9 +250,7 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
         }
         name="driver_no"
         value={updateData?.driver_no}
-        onChange={(e: any) => {
-          handleDataChange(e);
-        }}
+        onChange={handleDataChange}
       >
         {driverNameDDL?.map((item: any) => {
           return (
@@ -270,9 +266,7 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
         <Group>
           <Select
             name="start_hours"
-            onClick={(e: any) => {
-              handleTimeChange(e);
-            }}
+            onClick={handleTimeChange}
             defaultValue={startHour}
           >
             {hours.map((item: string) => (
@@ -284,9 +278,7 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
           <Text fontSize={20}> : </Text>
           <Select
             name="start_minutes"
-            onClick={(e: any) => {
-              handleTimeChange(e);
-            }}
+            onClick={handleTimeChange}
             defaultValue={startMinute}
           >
             {minutes().map((item: string) => (
@@ -297,13 +289,12 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
           </Select>
           <Select
             name="start_type"
-            onClick={(e: any) => {
-              handleTimeChange(e);
-            }}
+            onClick={handleTimeChange}
             defaultValue={
-              Number(dayjs(editData.task_start_time).format("HH")) > 12
-                ? "pm"
-                : "am"
+              dayjs(editData.task_start_time).format("a")
+              // Number(dayjs(editData.task_start_time).format("HH")) > 12
+              //   ? "pm"
+              //   : "am"
             }
           >
             <option value="am">AM</option>
@@ -317,9 +308,7 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
         <Group>
           <Select
             name="end_hours"
-            onClick={(e: any) => {
-              handleTimeChange(e);
-            }}
+            onClick={handleTimeChange}
             defaultValue={endHour}
           >
             {hours.map((item: string) => (
@@ -331,9 +320,7 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
           <Text fontSize={20}> : </Text>
           <Select
             name="end_minutes"
-            onClick={(e: any) => {
-              handleTimeChange(e);
-            }}
+            onClick={handleTimeChange}
             defaultValue={endMinute}
           >
             {minutes().map((item: string) => (
@@ -344,13 +331,12 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
           </Select>
           <Select
             name="end_type"
-            onClick={(e: any) => {
-              handleTimeChange(e);
-            }}
+            onClick={handleTimeChange}
             defaultValue={
-              Number(dayjs(editData.task_end_time).format("HH")) > 12
-                ? "pm"
-                : "am"
+              dayjs(editData.task_end_time).format("a")
+              // Number(dayjs(editData.task_end_time).format("HH")) > 12
+              //   ? "pm"
+              //   : "am"
             }
           >
             <option value="am">AM</option>
