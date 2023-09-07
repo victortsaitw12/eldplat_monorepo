@@ -4,6 +4,7 @@ import {
   Button,
   NotificationsIcon,
   MoonIcon,
+  FlashIcon,
   HelpIcon,
   mergeTheme,
   defaultTheme,
@@ -62,6 +63,9 @@ const Header = ({ layoutProps }: any) => {
   const handleLangChange = (e: any) => {
     layoutProps?.setLocale(e.target.value);
   };
+  const handleToggleTheme = () => {
+    console.log("toggleTheme");
+  };
 
   return (
     <ThemeProvider value={theme}>
@@ -85,14 +89,22 @@ const Header = ({ layoutProps }: any) => {
           <Button appearance="link">對接口</Button> */}
         </div>
         <div className="plan-info">
-          <NotificationsIcon color="#F53630" size={16} />
-          <StyledButton>訂閱期限還剩{30}天</StyledButton>
+          <NotificationsIcon
+            className="notification"
+            color="#FAC86B"
+            size={16}
+          />
+          <StyledButton>使用期限還剩{30}天</StyledButton>
           <MoonIcon color="#91A9C5" size={16} />
           <HelpIcon color="#91A9C5" size={16} />
-          <Select width={100} onChange={handleLangChange}>
-            <option value="zh-tw">Chinese</option>
-            <option value="en-us">English</option>
-            <option value="th-th">Thai</option>
+          <Select
+            width={100}
+            onChange={handleLangChange}
+            style={{ padding: "4px 4px" }}
+          >
+            <option value="zh-tw">繁體中文</option>
+            <option value="en-us">英語</option>
+            <option value="th-th">日語</option>
           </Select>
         </div>
       </BodySTY>

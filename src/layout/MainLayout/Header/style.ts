@@ -24,12 +24,23 @@ const BodySTY = styled.div`
     align-items: center;
     gap: 10px;
 
+    svg:not(.notification) {
+      fill: ${({ theme }) => theme.color.N0};
+    }
     select {
-      background-color: #fff;
+      background-color: transparent;
       border-radius: 32px;
-
+      border-color: transparent;
+      color: ${({ theme }) => theme.color.N0};
+      &:hover {
+        background-color: transparent;
+      }
+      /* &:focus {
+        outline: none;
+      } */
       option {
         border-radius: 32px;
+        color: ${({ theme }) => theme.color.N800};
       }
     }
   }
@@ -56,12 +67,12 @@ const BodySTY = styled.div`
 `;
 
 const StyledButton = styled.button`
-  padding: 2px 8px;
+  padding: 4px 12px 4px 12px;
   /* Chart/Chart Green */
-  color: #6bdaae;
+  color: ${({ theme }) => theme.color.G600};
   border: 1px solid #6bdaae;
   border-radius: 20px;
-  background: none;
+  background: ${({ theme }) => theme.color.ChartGreen};
   font-weight: 600;
   font-size: 14px;
 `;
