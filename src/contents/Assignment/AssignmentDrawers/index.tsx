@@ -135,38 +135,31 @@ function AssignmentDrawers({
       <Drawer
         tabName={[firstDrawerList.get(firstDrawerOpen)?.tabName || "--"]}
         closeDrawer={
-          !secondDrawerOpen ? () => setFirstDrawerOpen("") : undefined
+          !secondDrawerOpen ? setFirstDrawerOpen.bind(null, "") : undefined
         }
       >
         {firstDrawerList.get(firstDrawerOpen)?.conponent || <Spinner />}
       </Drawer>
-      {firstDrawerOpen === "manualAssign" && secondDrawerOpen === "派車" && (
+      {firstDrawerOpen === "manualAssign" && secondDrawerOpen !== "" && (
         <Drawer
           isTabShown={false}
-          closeDrawer={() => {
-            setSecondDrawerOpen("");
-          }}
+          closeDrawer={setSecondDrawerOpen.bind(null, "")}
         >
-          <SecondCarAssignManualCreate
-            createAssignData={createAssignData}
-            showSecondTitle={showSecondTitle}
-            handleAssignmentCarChange={handleAssignmentCarChange}
-            timeRef={timeRef}
-          ></SecondCarAssignManualCreate>
-        </Drawer>
-      )}
-      {firstDrawerOpen === "manualAssign" && secondDrawerOpen === "派工" && (
-        <Drawer
-          isTabShown={false}
-          closeDrawer={() => {
-            setSecondDrawerOpen("");
-          }}
-        >
-          <SecondDriverAssignManualCreate
-            createAssignData={createAssignData}
-            showSecondTitle={showSecondTitle}
-            handleAssignmentDriverChange={handleAssignmentDriverChange}
-          ></SecondDriverAssignManualCreate>
+          {secondDrawerOpen === "派車" && (
+            <SecondCarAssignManualCreate
+              createAssignData={createAssignData}
+              showSecondTitle={showSecondTitle}
+              handleAssignmentCarChange={handleAssignmentCarChange}
+              timeRef={timeRef}
+            />
+          )}
+          {secondDrawerOpen === "派工" && (
+            <SecondDriverAssignManualCreate
+              createAssignData={createAssignData}
+              showSecondTitle={showSecondTitle}
+              handleAssignmentDriverChange={handleAssignmentDriverChange}
+            />
+          )}
         </Drawer>
       )}
     </>
