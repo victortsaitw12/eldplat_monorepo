@@ -18,14 +18,19 @@ export const BodySTY = styled.div`
       align-items: center;
       gap: 10px;
     }
-    &__settings {
+    &__settings,
+    .plan-info {
       display: flex;
       align-items: center;
       gap: 10px;
+      svg {
+        fill: ${({ theme }) => theme.color.N0};
+        cursor: pointer;
+        width: 16px;
+      }
       &-lang {
         select {
           background-color: transparent;
-          border: none;
           border-radius: 32px;
           color: ${({ theme }) => theme.color.N0};
           &:hover {
@@ -39,10 +44,6 @@ export const BodySTY = styled.div`
             color: ${({ theme }) => theme.color.N800};
           }
         }
-      }
-      svg {
-        fill: ${({ theme }) => theme.color.N0};
-        cursor: pointer;
       }
 
       &-member {
