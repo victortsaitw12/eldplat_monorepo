@@ -169,13 +169,15 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
     const newData = { ...updateData };
     const newStartTime = `${dashDate(editData.task_start_time)}T${
       startTime.start_type === "pm"
-        ? (Number(startTime.start_hours) + 12).toString()
-        : startTime.start_hours
+        ? ((Number(startTime.start_hours) % 12) + 12)
+            .toString()
+            .padStart(2, "0")
+        : ((Number(startTime.start_hours) % 12) + 0).toString().padStart(2, "0")
     }:${startTime.start_minutes}`;
     const newEndTime = `${dashDate(editData.task_end_time)}T${
       endTime.end_type === "pm"
-        ? (Number(endTime.end_hours) + 12).toString()
-        : endTime.end_hours
+        ? ((Number(endTime.end_hours) % 12) + 12).toString().padStart(2, "0")
+        : ((Number(endTime.end_hours) % 12) + 0).toString().padStart(2, "0")
     }:${endTime.end_minutes}`;
     newData["task_start_time"] = newStartTime;
     newData["task_end_time"] = newEndTime;
