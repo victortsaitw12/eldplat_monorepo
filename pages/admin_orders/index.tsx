@@ -23,6 +23,8 @@ import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
 import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
 import LabelTag from "@components/LabelTag";
+import { I_PageInfo } from "@components/PaginationField";
+import { defaultPageInfo } from "@services/admin_orders/getQuotationByFilter";
 
 //@contexts
 import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
@@ -45,12 +47,14 @@ const ORDER_STATUS_TEXT: { [key: string]: { label: string; value: string } } = {
   "14": { label: "預約完成", value: "14" },
   "15": { label: "結案", value: "15" }
 };
+
 const Page: NextPageWithLayout<{
   locale: string;
   setPageType: (t: string) => void;
 }> = ({ locale, setPageType }) => {
   const router = useRouter();
   const [data, setData] = useState<I_Data[] | any>();
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState(
     (router?.query?.status as string) || "1"
   );
@@ -219,16 +223,21 @@ const Page: NextPageWithLayout<{
 
     return newdata;
   };
-  const getDataByTab = async (tab_code: string) => {
-    try {
-      const res = await getQuotationByFilter(subFilter, tab_code);
-      const orderData = mapping_to_table(res.contentList);
-      // setData(data.contentList || []);
-      setData(orderData);
-    } catch {
-      //刷新列表失敗
-    }
-  };
+  const getDataByTab = React.useCallback(
+    async (tab_code: string, pageQuery?: I_PageInfo) => {
+      try {
+        const res = await getQuotationByFilter(subFilter, tab_code, pageQuery);
+        const orderData = mapping_to_table(res.contentList);
+        // setData(data.contentList || []);
+        setData(orderData);
+        setPageInfo(res.pageInfo);
+      } catch {
+        //刷新列表失敗
+      }
+    },
+    [subFilter]
+  );
+
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
     setData([]);
@@ -239,6 +248,13 @@ const Page: NextPageWithLayout<{
       query: { status: value }
     });
   };
+
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      getDataByTab(nowTab, pageQuery);
+    },
+    [nowTab]
+  );
   //
   const mainFilterArray = useMemo(
     () => [
@@ -277,6 +293,8 @@ const Page: NextPageWithLayout<{
                 goToCreatePage={goToCreatePage}
                 {...(nowTab !== "6" && { goToEditPageHandler })}
                 {...(nowTab !== "6" && { deleteItemHandler })}
+                pageInfo={pageInfo}
+                handlePageChange={handlePageChange}
               ></AdminOrdersList>
             </FilterWrapper>
           </TableWrapper>
