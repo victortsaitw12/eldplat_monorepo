@@ -1,7 +1,8 @@
 import API_Path from "./apiPath";
 // 取得詢價單&報價單列表
 export const getQuotationByFilter = async (
-  filter: { [key: string]: any } = {}
+  filter: { [key: string]: any } = {},
+  tab_code?: any
 ) => {
   const orderFilter = [];
   const filteredNullData: { [key: string]: any } = {};
@@ -32,6 +33,7 @@ export const getQuotationByFilter = async (
       Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
     },
     body: JSON.stringify({
+      tab_code: tab_code,
       order_filter: orderFilter,
       filter_needed: true,
       page_info: {

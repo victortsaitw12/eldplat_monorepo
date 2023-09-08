@@ -16,7 +16,6 @@ import AdminOrderCreateForm from "@contents/AdminOrders/AdminOrderCreateForm";
 // import Vendor from "@contents/Vendor";
 //@services
 import { getQuotationByFilter } from "@services/admin_orders/getQuotationByFilter";
-import { getQuotationByStatus } from "@services/admin_orders/getQuotationByStatus";
 import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
 import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
 
@@ -208,7 +207,7 @@ const Page: NextPageWithLayout<{
           value: "--"
         },
         order_label: {
-          label: order["label_list"].map(
+          label: order["label_name_list"].map(
             (child: { label_name: string }, i: number) => {
               return <LabelTag key={i} text={child.label_name} />;
             }
@@ -217,12 +216,13 @@ const Page: NextPageWithLayout<{
         }
       };
     });
+
     return newdata;
   };
   const getDataByTab = async (tab_code: string) => {
     try {
-      const res = await getQuotationByStatus(tab_code);
-      const orderData = mapping_to_table(res.data);
+      const res = await getQuotationByFilter(subFilter, tab_code);
+      const orderData = mapping_to_table(res.contentList);
       // setData(data.contentList || []);
       setData(orderData);
     } catch {
