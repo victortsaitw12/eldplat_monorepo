@@ -58,7 +58,6 @@ const Page: NextPageWithLayout<{
   const [nowTab, setNowTab] = useState(
     (router?.query?.status as string) || "1"
   );
-  console.log("💕💕💕💕nowTab", nowTab);
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const {
     initializeSubFilter,
@@ -79,15 +78,10 @@ const Page: NextPageWithLayout<{
   }, [router.query.codeType, setDrawerOpen]);
 
   useEffect(() => {
-    getDataByTab(nowTab);
     let isCanceled = false;
     //串接API中
-    getQuotationByFilter(subFilter)
+    getDataByTab(nowTab)
       .then((data) => {
-        // const orderData =mapping_to_table(data.contentList)
-        // console.log(data.conditionList);
-        // setData(data.contentList || []);
-        // setData(orderData);
         if (!subFilter) {
           localStorage.setItem(
             "adminOrderFilter",
@@ -231,6 +225,7 @@ const Page: NextPageWithLayout<{
         // setData(data.contentList || []);
         setData(orderData);
         setPageInfo(res.pageInfo);
+        return res;
       } catch {
         //刷新列表失敗
       }
