@@ -22,9 +22,9 @@ const MonthlyView = ({
   setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
 }) => {
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
-  UI.setId(router.query.id);
+  scheduleUI.setId(router.query.id);
   const { cur } = router.query;
   const dateCellRef = React.useRef<HTMLDivElement>(null);
   // 初始頁面、resize 的顯示事件數: initMaxEventCount
@@ -39,7 +39,7 @@ const MonthlyView = ({
   const wkDays = ["日", "一", "二", "三", "四", "五", "六"];
   const curMonthFirst: Date = new Date(
     initialMonthFirst.getFullYear(),
-    initialMonthFirst.getMonth() + UI.monthCount,
+    initialMonthFirst.getMonth() + scheduleUI.monthCount,
     1
   );
   const eventH = 24; // (Icon)16px + 4px * 2  > (font)0.86rem + 4px * 2
@@ -48,9 +48,24 @@ const MonthlyView = ({
   const minCellH = eventH * 3 + gapH * 2 + cellPd;
 
   //------ functions ------//
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const result = await getScheduleList(scheduleUI.id);
+      setMonthlyData(result.data);
+    } catch (e: any) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+  const initInsertData = () => {
+    const updated = { ...scheduleUI.insertData };
+    updated.driver_no = scheduleUI.id;
+    scheduleUI.setInsertData(updated);
+  };
   const renderCreateForm = () => {
-    UI.setIsSelect(false);
-    UI.setDrawerType({
+    scheduleUI.setIsSelect(false);
+    scheduleUI.setDrawerType({
       type: "create",
       title: "新增"
     });
@@ -72,10 +87,20 @@ const MonthlyView = ({
   }, [initMaxEventCount]);
 
   // ------- useEffect ------- //
+  React.useEffect(() => {
+    if (!scheduleUI.id) return;
+    fetchData();
+  }, [scheduleUI.flag]);
+
+  React.useEffect(() => {
+    if (!scheduleUI.id) return;
+    initInsertData();
+  }, [scheduleUI.id]);
+
   // monitor window for eventCount shown
   React.useEffect(() => {
     handleEventCount();
-  }, [UI.monthCount]);
+  }, [scheduleUI.monthCount]);
 
   // TODO feat: resize
   // React.useEffect(() => {
@@ -90,32 +115,14 @@ const MonthlyView = ({
   //   };
   // }, []);
 
-  // fetch data from db
-  React.useEffect(() => {
-    if (!UI.id) return;
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const updated = { ...UI.insertData };
-        updated.driver_no = UI.id;
-        UI.setInsertData(updated);
-        const result = await getScheduleList(UI.id);
-        setMonthlyData(result.data);
-      } catch (e: any) {
-        console.log(e);
-      }
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [UI.id, cur, UI.flag, setMonthlyData]);
-
   // handle isSelect end
   React.useEffect(() => {
-    if (UI.isSelect) document.addEventListener("mouseup", renderCreateForm);
+    if (scheduleUI.isSelect)
+      document.addEventListener("mouseup", renderCreateForm);
     return () => {
       document.removeEventListener("mouseup", renderCreateForm);
     };
-  }, [UI.isSelect]);
+  }, [scheduleUI.isSelect]);
 
   //------ render ------//
   const dateArr: Array<DateArrItem> = [];
@@ -211,9 +218,12 @@ const MonthlyView = ({
       </div>
       <div className="dateCells">{renderRow()}</div>
       <div style={{ paddingBottom: "68px" }}> </div>
-      {UI.isMouseMenuBtn && (
+      {scheduleUI.isMouseMenuBtn && (
         <MouseMenuBtnSTY
-          style={{ top: UI.mousePosition.y, left: UI.mousePosition.x }}
+          style={{
+            top: scheduleUI.mousePosition.y,
+            left: scheduleUI.mousePosition.x
+          }}
         >
           Next Month View
         </MouseMenuBtnSTY>

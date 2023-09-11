@@ -41,19 +41,16 @@ const DailyView = ({
     0
   ).getDate();
 
+  // ------- useEffect ------- //
   React.useEffect(() => {
     if (!scheduleUI.id) return;
-    setIsLoading(true);
-    const updated = { ...scheduleUI.insertData };
-    updated.driver_no = scheduleUI.id;
-    scheduleUI.setInsertData(updated);
-    const fetchData = async () => {
-      const result = await getScheduleList(scheduleUI.id);
-      setMonthlyData(result.data);
-      setIsLoading(false);
-    };
     fetchData();
-  }, [scheduleUI.id, cur, scheduleUI.flag]);
+  }, [scheduleUI.flag]);
+
+  React.useEffect(() => {
+    if (!scheduleUI.id) return;
+    initInsertData();
+  }, [scheduleUI.id]);
 
   React.useEffect(() => {
     if (scheduleUI.isSelect)
@@ -64,6 +61,18 @@ const DailyView = ({
   }, [scheduleUI.isSelect]);
 
   //------ functions ------//
+  const fetchData = async () => {
+    setIsLoading(true);
+    const result = await getScheduleList(scheduleUI.id);
+    setMonthlyData(result.data);
+    setIsLoading(false);
+  };
+  const initInsertData = () => {
+    const updated = { ...scheduleUI.insertData };
+    updated.driver_no = scheduleUI.id;
+    scheduleUI.setInsertData(updated);
+  };
+
   const handleCreateFullDayEvent = (timestamp: number) => {
     const selectedDT = new Date(timestamp);
     scheduleUI.setStartDate(selectedDT);

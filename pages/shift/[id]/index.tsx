@@ -16,16 +16,18 @@ import TableTitle from "@components/Table/TableTitle";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
 import TotalLeaveDays from "@contents/Shift/TotalLeaveDays";
+import { getScheduleList } from "@services/schedule/getScheduleList";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const { cur } = router.query;
+  const { id, cur } = router.query;
   const [monthlyData, setMonthlyData] = React.useState<MonthlyData[] | null>(
     null
   );
   const [view, setView] = React.useState<"monthly" | "daily">("monthly");
   const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const initialMonthFirst = new Date(
     Array.isArray(cur) ? cur[0] : cur || Date.now()
@@ -44,6 +46,22 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     setSelectedIndex(index);
     if (index === 0) router.push("/shift");
   };
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getScheduleList(id);
+      setMonthlyData(result.data);
+    } catch (e: any) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+
+  // ------- useEffect ------- //
+  React.useEffect(() => {
+    if (!id) return;
+    fetchData();
+  }, [id]);
   //------ render ------//
   const tableName = [
     <MonthPicker key="monthpicker" initialMonthFirst={initialMonthFirst} />,
