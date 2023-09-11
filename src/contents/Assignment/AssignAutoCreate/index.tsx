@@ -26,6 +26,7 @@ import { v4 as uuid } from "uuid";
 import { createAssignmentByAuto } from "@services/assignment/createAssignByAuto";
 import { useRouter } from "next/router";
 import CreateFail from "../CreateFail";
+import { I_FirstDrawer } from "@contents/Assignment/AssignmentDrawers";
 
 //@components
 
@@ -33,7 +34,7 @@ interface I_AssignAutoCreateProps {
   orderInfo: I_ManualAssignType[];
   setDisabledAutoList: (v: any) => void;
   refetch?: () => void;
-  setFirstDrawerOpen: (v: string) => void;
+  setFirstDrawerOpen: (v: I_FirstDrawer) => void;
 }
 
 function AssignAutoCreate({

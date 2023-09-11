@@ -7,6 +7,7 @@ import { getSubAssignmentTitle } from "@services/assignment/getAllAssignment";
 import AdditionalVehicleBtn from "@contents/Assignment/AssignmentAdditional/AdditionalVehicleBtn";
 import AdditionalDriverBtn from "@contents/Assignment/AssignmentAdditional/AdditionalDriverBtn";
 import { StyledTr } from "./style";
+import { I_FirstDrawer } from "@contents/Assignment/AssignmentDrawers";
 
 interface I_TableRow {
   idx: number;
@@ -19,7 +20,7 @@ interface I_TableRow {
   viewItem?: (id: any, item: any) => void;
   deleteItem?: (item: any) => void;
   setOrderInfo: (t: any) => void;
-  setFirstDrawerOpen: (v: string) => void;
+  setFirstDrawerOpen: (v: I_FirstDrawer) => void;
 }
 
 const TableRow = ({
