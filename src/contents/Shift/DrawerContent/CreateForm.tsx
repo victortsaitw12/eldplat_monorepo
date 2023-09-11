@@ -23,28 +23,27 @@ const CreateForm = ({
   setIsOpenDrawer: (value: boolean) => void;
   view: "monthly" | "daily";
 }) => {
-  //TODO: 在component呼叫的時候改名 UI=>scheduleUI
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
   const { id } = router.query;
   //------ functions ------//
   const handleDescription = React.useCallback(
     (e: any) => {
-      const updatedInsertData = { ...UI.insertData };
+      const updatedInsertData = { ...scheduleUI.insertData };
       updatedInsertData.leave_Description = e.target.value;
-      UI.setInsertData(updatedInsertData);
+      scheduleUI.setInsertData(updatedInsertData);
     },
-    [UI.insertData]
+    [scheduleUI.insertData]
   );
 
   const handleSubmit = React.useCallback(
     async (e: any) => {
       e.preventDefault();
-      const updatedData = { ...UI.insertData };
+      const updatedData = { ...scheduleUI.insertData };
       updatedData.driver_No = id;
-      updatedData.schd_Date = formatToDB(getDayStart(UI.startDate));
-      updatedData.schd_Start_Time = formatToDB(UI.startDate);
-      updatedData.schd_End_Time = formatToDB(UI.endDate);
+      updatedData.schd_Date = formatToDB(getDayStart(scheduleUI.startDate));
+      updatedData.schd_Start_Time = formatToDB(scheduleUI.startDate);
+      updatedData.schd_End_Time = formatToDB(scheduleUI.endDate);
       try {
         const res = await createSchedule(updatedData);
         if (res.statusCode === "200") {
@@ -53,8 +52,8 @@ const CreateForm = ({
             duration: 1.5
           });
           console.log("res:", res);
-          UI.resetState();
-          UI.setFlag(!UI.flag);
+          scheduleUI.resetState();
+          scheduleUI.setFlag(!scheduleUI.flag);
           setIsOpenDrawer(false);
         } else {
           throw Error(res.resultString);
@@ -65,7 +64,7 @@ const CreateForm = ({
         });
       }
     },
-    [UI.insertData, UI.startDate, UI.endDate]
+    [scheduleUI.insertData, scheduleUI.startDate, scheduleUI.endDate]
   );
 
   return (
@@ -77,8 +76,8 @@ const CreateForm = ({
         </label>
         <Timepicker
           type="start"
-          date={UI.startDate}
-          setDate={UI.setStartDate}
+          date={scheduleUI.startDate}
+          setDate={scheduleUI.setStartDate}
           fullDay={view === "monthly" ? true : false}
         />
       </section>
@@ -89,10 +88,10 @@ const CreateForm = ({
         </label>
         <Timepicker
           type="end"
-          date={UI.endDate}
-          setDate={UI.setEndDate}
+          date={scheduleUI.endDate}
+          setDate={scheduleUI.setEndDate}
           fullDay={view === "monthly" ? true : false}
-          minDate={UI.startDate}
+          minDate={scheduleUI.startDate}
         />
       </section>
       <section className="form__leaveCode">
@@ -100,7 +99,7 @@ const CreateForm = ({
           <CalendarIcon />
           <span>假別</span>
         </label>
-        <LeaveTypePicker date={UI.startDate} />
+        <LeaveTypePicker date={scheduleUI.startDate} />
       </section>
       <section className="form__description">
         <label className="form__label">
@@ -109,7 +108,7 @@ const CreateForm = ({
         </label>
         <Textarea
           onChange={handleDescription}
-          value={UI.insertData.leave_Description}
+          value={scheduleUI.insertData.leave_Description}
         />
       </section>
 

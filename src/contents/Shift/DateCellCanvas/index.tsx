@@ -12,18 +12,20 @@ const DateCellCanvas = ({
   date: DateArrItem;
   rowIndex: number;
 }) => {
-  //TODO: 在component呼叫的時候改名 UI=>scheduleUI
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
 
   //------ functions ------//
   const checkDateSelected = (timestamp: string | number) => {
-    if (!UI.startDate || !UI.endDate) return false;
+    if (!scheduleUI.startDate || !scheduleUI.endDate) return false;
     const date = new Date(timestamp);
-    return date >= getDayStart(UI.startDate) && getDayStart(date) <= UI.endDate;
+    return (
+      date >= getDayStart(scheduleUI.startDate) &&
+      getDayStart(date) <= scheduleUI.endDate
+    );
   };
   const checkDateStart = (timestamp: string | number) => {
-    if (!UI.startDate) return false;
-    return timestamp == UI.startDate.valueOf();
+    if (!scheduleUI.startDate) return false;
+    return timestamp == scheduleUI.startDate.valueOf();
   };
 
   return (

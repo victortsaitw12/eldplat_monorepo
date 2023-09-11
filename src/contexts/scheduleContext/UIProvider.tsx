@@ -22,7 +22,6 @@ export const initData: InsertData = {
   check_Status: ""
 };
 
-//TODO: 在component呼叫的時候改名 UI=>scheduleUI
 export const UIProvider = ({ children }: any) => {
   const [id, setId] = React.useState<string>(""); // for [id]頁面裡面全部 component
   const [currentTab, setCurrentTab] = React.useState<number>(0); //如果未來 shift頁面要出現多個頁籤時使用
@@ -44,20 +43,19 @@ export const UIProvider = ({ children }: any) => {
   const [isMouseMenuBtn, setIsMouseMenuBtn] = React.useState(false);
 
   const resetState = (): void => {
-    console.log("< Reset state >");
-    UI.setIsSelect(false);
-    UI.setStartDate(null);
-    UI.setEndDate(null);
-    UI.setViewEventList([]);
-    UI.setDrawerType({
+    scheduleUI.setIsSelect(false);
+    scheduleUI.setStartDate(null);
+    scheduleUI.setEndDate(null);
+    scheduleUI.setViewEventList([]);
+    scheduleUI.setDrawerType({
       type: "",
       title: "新增",
       timestamp: null
     });
-    UI.setInsertData(initData);
+    scheduleUI.setInsertData(initData);
   };
 
-  const UI: UItyping = {
+  const scheduleUI: UItyping = {
     id,
     setId,
     currentTab,
@@ -89,7 +87,7 @@ export const UIProvider = ({ children }: any) => {
     // 共用 function
     resetState
   };
-  return <UIContext.Provider value={UI}>{children}</UIContext.Provider>;
+  return <UIContext.Provider value={scheduleUI}>{children}</UIContext.Provider>;
 };
 
 export default UIProvider;

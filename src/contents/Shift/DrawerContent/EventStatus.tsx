@@ -14,8 +14,7 @@ const EventStatus = ({
 }: {
   setIsOpenDrawer: (value: boolean) => void;
 }) => {
-  //TODO: 在component呼叫的時候改名 UI=>scheduleUI
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
 
   //------ functions ------//
   const checkFullDay = (event: any) => {
@@ -23,7 +22,7 @@ const EventStatus = ({
     let result;
     const eventStart = new Date(event.schd_Start_Time);
     const eventEnd = new Date(event.schd_End_Time);
-    const today = new Date(UI.drawerType.timestamp);
+    const today = new Date(scheduleUI.drawerType.timestamp);
     if (eventStart <= today && eventEnd >= getDayEnd(today)) {
       result = <span>整天</span>;
     } else {
@@ -40,38 +39,38 @@ const EventStatus = ({
 
   const renderEditForm = (event: any) => {
     // 1) UI render drawer
-    UI.resetState();
-    UI.setIsLoading(true);
-    UI.setInsertData(event);
-    const updatedDrawerType = { ...UI.drawerType };
+    scheduleUI.resetState();
+    scheduleUI.setIsLoading(true);
+    scheduleUI.setInsertData(event);
+    const updatedDrawerType = { ...scheduleUI.drawerType };
     updatedDrawerType.type = "edit";
-    UI.setDrawerType(updatedDrawerType);
-    UI.setStartDate(new Date(event.schd_Start_Time));
-    UI.setEndDate(new Date(event.schd_End_Time));
-    UI.setIsLoading(false);
+    scheduleUI.setDrawerType(updatedDrawerType);
+    scheduleUI.setStartDate(new Date(event.schd_Start_Time));
+    scheduleUI.setEndDate(new Date(event.schd_End_Time));
+    scheduleUI.setIsLoading(false);
   };
 
   const handleDeleteSchdule = React.useCallback(
     async (event: any) => {
       const drv_schedule_no = event.drv_Schedule_No;
-      UI.setIsLoading(true);
+      scheduleUI.setIsLoading(true);
       try {
         await deleteSchedule(drv_schedule_no);
         toaster.success("刪除成功");
       } catch (e: any) {
         alert(e.message);
       }
-      UI.setIsLoading(false);
-      UI.setFlag(!UI.flag);
+      scheduleUI.setIsLoading(false);
+      scheduleUI.setFlag(!scheduleUI.flag);
       setIsOpenDrawer(false);
-      UI.resetState();
+      scheduleUI.resetState();
     },
-    [UI.id]
+    [scheduleUI.id]
   );
 
   //------ render ------//
 
-  const eventsArray = UI.viewEventList?.map((event: any, i: number) => (
+  const eventsArray = scheduleUI.viewEventList?.map((event: any, i: number) => (
     <ViewSTY
       key={`eventStatus-${i}`}
       color={SCHD_TYPE.get(event.schd_Type)?.color ?? "N300"}
@@ -114,7 +113,7 @@ const EventStatus = ({
 
   return (
     <>
-      {UI.isLoading ? (
+      {scheduleUI.isLoading ? (
         <Pane
           display="flex"
           alignItems="center"
@@ -125,7 +124,7 @@ const EventStatus = ({
         </Pane>
       ) : (
         <section className="detailRows">
-          {UI.viewEventList.length === 0 ? (
+          {scheduleUI.viewEventList.length === 0 ? (
             <div className="msg" style={{ textAlign: "center" }}>
               本日無行程
             </div>

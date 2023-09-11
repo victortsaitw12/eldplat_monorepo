@@ -27,58 +27,57 @@ const EditForm = ({
 }: {
   setIsOpenDrawer: (value: boolean) => void;
 }) => {
-  //TODO: 在component呼叫的時候改名 UI=>scheduleUI
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
   const { id } = router.query;
 
   //------ functions ------//
   const handleSignOff = React.useCallback(
     (e: any) => {
-      const updatedInsertData = { ...UI.insertData };
+      const updatedInsertData = { ...scheduleUI.insertData };
       updatedInsertData.check_Status = e.target.value;
-      UI.setInsertData(updatedInsertData);
+      scheduleUI.setInsertData(updatedInsertData);
     },
-    [UI.insertData]
+    [scheduleUI.insertData]
   );
   const handleDescription = React.useCallback(
     (e: any) => {
-      const updatedInsertData = { ...UI.insertData };
+      const updatedInsertData = { ...scheduleUI.insertData };
       updatedInsertData.leave_Description = e.target.value;
-      UI.setInsertData(updatedInsertData);
+      scheduleUI.setInsertData(updatedInsertData);
     },
-    [UI.insertData]
+    [scheduleUI.insertData]
   );
 
   const handleSubmit = React.useCallback(
     async (e: any) => {
       e.preventDefault();
-      const updatedData = { ...UI.insertData };
+      const updatedData = { ...scheduleUI.insertData };
       updatedData.driver_No = id;
-      updatedData.schd_Date = formatToDBDate(getDayStart(UI.startDate));
-      updatedData.schd_Start_Time = formatToDB(UI.startDate);
-      updatedData.schd_End_Time = formatToDB(UI.endDate);
+      updatedData.schd_Date = formatToDBDate(getDayStart(scheduleUI.startDate));
+      updatedData.schd_Start_Time = formatToDB(scheduleUI.startDate);
+      updatedData.schd_End_Time = formatToDB(scheduleUI.endDate);
       try {
         updatedData.check_Status
           ? await updateScheduleSign(updatedData)
           : await updateSchedule(updatedData);
-        UI.resetState();
-        UI.setFlag(!UI.flag);
+        scheduleUI.resetState();
+        scheduleUI.setFlag(!scheduleUI.flag);
         // setIsOpenDrawer(false);
         // render EventStatus
         // fetch API
         const result = await getScheduleUpdateList(
-          UI.insertData.drv_Schedule_No,
-          UI.insertData.driver_No
+          scheduleUI.insertData.drv_Schedule_No,
+          scheduleUI.insertData.driver_No
         );
         const updateViewEventList = [result.data];
         // update UI
-        UI.setViewEventList(updateViewEventList);
+        scheduleUI.setViewEventList(updateViewEventList);
 
         const cellTimestamp = getDayStart(
           new Date(updatedData.schd_Date)
         ).valueOf();
-        UI.setDrawerType({
+        scheduleUI.setDrawerType({
           type: "view",
           title: formatDate(new Date(cellTimestamp)),
           timestamp: cellTimestamp
@@ -87,7 +86,7 @@ const EditForm = ({
         alert(e.message);
       }
     },
-    [UI.insertData, UI.startDate, UI.endDate, id]
+    [scheduleUI.insertData, scheduleUI.startDate, scheduleUI.endDate, id]
   );
 
   return (
@@ -99,8 +98,8 @@ const EditForm = ({
         </label>
         <Timepicker
           type="start"
-          date={UI.startDate}
-          setDate={UI.setStartDate}
+          date={scheduleUI.startDate}
+          setDate={scheduleUI.setStartDate}
           fullDay={false}
         />
       </section>
@@ -111,8 +110,8 @@ const EditForm = ({
         </label>
         <Timepicker
           type="end"
-          date={UI.endDate}
-          setDate={UI.setEndDate}
+          date={scheduleUI.endDate}
+          setDate={scheduleUI.setEndDate}
           fullDay={false}
         />
       </section>
@@ -130,11 +129,11 @@ const EditForm = ({
         </label>
         <Textarea
           onChange={handleDescription}
-          value={UI.insertData.leave_Description}
+          value={scheduleUI.insertData.leave_Description}
           // {...register("leave_Description", {})}
         />
       </section>
-      {UI.drawerType.title === "簽核" ? (
+      {scheduleUI.drawerType.title === "簽核" ? (
         <section className="form_signOff">
           <label className="form__label">
             <AnnotationIcon />
