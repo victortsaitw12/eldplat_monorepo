@@ -16,7 +16,6 @@ import AdminOrderCreateForm from "@contents/AdminOrders/AdminOrderCreateForm";
 // import Vendor from "@contents/Vendor";
 //@services
 import { getQuotationByFilter } from "@services/admin_orders/getQuotationByFilter";
-import { getQuotationByStatus } from "@services/admin_orders/getQuotationByStatus";
 import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
 import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
 
@@ -24,6 +23,8 @@ import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
 import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
 import LabelTag from "@components/LabelTag";
+import { I_PageInfo } from "@components/PaginationField";
+import { defaultPageInfo } from "@services/admin_orders/getQuotationByFilter";
 
 //@contexts
 import { useAdminOrderStore } from "@contexts/filter/adminOrdersStore";
@@ -46,16 +47,17 @@ const ORDER_STATUS_TEXT: { [key: string]: { label: string; value: string } } = {
   "14": { label: "預約完成", value: "14" },
   "15": { label: "結案", value: "15" }
 };
+
 const Page: NextPageWithLayout<{
   locale: string;
   setPageType: (t: string) => void;
 }> = ({ locale, setPageType }) => {
   const router = useRouter();
   const [data, setData] = useState<I_Data[] | any>();
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState(
     (router?.query?.status as string) || "1"
   );
-  console.log("💕💕💕💕nowTab", nowTab);
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
   const {
     initializeSubFilter,
@@ -76,15 +78,10 @@ const Page: NextPageWithLayout<{
   }, [router.query.codeType, setDrawerOpen]);
 
   useEffect(() => {
-    getDataByTab(nowTab);
     let isCanceled = false;
     //串接API中
-    getQuotationByFilter(subFilter)
+    getDataByTab(nowTab)
       .then((data) => {
-        // const orderData =mapping_to_table(data.contentList)
-        // console.log(data.conditionList);
-        // setData(data.contentList || []);
-        // setData(orderData);
         if (!subFilter) {
           localStorage.setItem(
             "adminOrderFilter",
@@ -208,7 +205,7 @@ const Page: NextPageWithLayout<{
           value: "--"
         },
         order_label: {
-          label: order["label_list"].map(
+          label: order["label_name_list"].map(
             (child: { label_name: string }, i: number) => {
               return <LabelTag key={i} text={child.label_name} />;
             }
@@ -217,18 +214,25 @@ const Page: NextPageWithLayout<{
         }
       };
     });
+
     return newdata;
   };
-  const getDataByTab = async (tab_code: string) => {
-    try {
-      const res = await getQuotationByStatus(tab_code);
-      const orderData = mapping_to_table(res.data);
-      // setData(data.contentList || []);
-      setData(orderData);
-    } catch {
-      //刷新列表失敗
-    }
-  };
+  const getDataByTab = React.useCallback(
+    async (tab_code: string, pageQuery?: I_PageInfo) => {
+      try {
+        const res = await getQuotationByFilter(subFilter, tab_code, pageQuery);
+        const orderData = mapping_to_table(res.contentList);
+        // setData(data.contentList || []);
+        setData(orderData);
+        setPageInfo(res.pageInfo);
+        return res;
+      } catch {
+        //刷新列表失敗
+      }
+    },
+    [subFilter]
+  );
+
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
     setData([]);
@@ -239,6 +243,13 @@ const Page: NextPageWithLayout<{
       query: { status: value }
     });
   };
+
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      getDataByTab(nowTab, pageQuery);
+    },
+    [nowTab]
+  );
   //
   const mainFilterArray = useMemo(
     () => [
@@ -277,6 +288,8 @@ const Page: NextPageWithLayout<{
                 goToCreatePage={goToCreatePage}
                 {...(nowTab !== "6" && { goToEditPageHandler })}
                 {...(nowTab !== "6" && { deleteItemHandler })}
+                pageInfo={pageInfo}
+                handlePageChange={handlePageChange}
               ></AdminOrdersList>
             </FilterWrapper>
           </TableWrapper>
