@@ -17,12 +17,11 @@ const LayoutControl = ({
   isOpenDrawer: boolean;
   setIsOpenDrawer: (v: boolean) => void;
 }) => {
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
   const renderToggleView = (type: "monthly" | "daily") => {
     const rendering = () => {
       setState(type);
-      UI.resetState();
-      // UI.setTimeframe(1000 * 60 * 60 * 1);
+      scheduleUI.resetState();
     };
     if (isOpenDrawer) {
       setIsOpenDrawer(false);

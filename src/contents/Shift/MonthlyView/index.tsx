@@ -14,15 +14,13 @@ const MonthlyView = ({
   setIsOpenDrawer,
   monthlyData,
   setMonthlyData,
-  view,
-  isExpand
+  view
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
-  isExpand: boolean;
 }) => {
   const UI = React.useContext(UIContext);
   const router = useRouter();
@@ -91,10 +89,6 @@ const MonthlyView = ({
   //     window.removeEventListener("resize", debounce(handleResize, 250));
   //   };
   // }, []);
-
-  React.useEffect(() => {
-    isExpand ? setMaxEventCount(99) : setMaxEventCount(initMaxEventCount);
-  }, [isExpand, initMaxEventCount]);
 
   // fetch data from db
   React.useEffect(() => {

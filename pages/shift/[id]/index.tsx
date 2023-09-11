@@ -24,8 +24,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     null
   );
   const [view, setView] = React.useState<"monthly" | "daily">("monthly");
-  const [isExpand, setIsExpand] = React.useState(false);
-  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
+  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
 
   const initialMonthFirst = new Date(
@@ -40,7 +39,6 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const handleLayout = (type: "monthly" | "daily") => {
     setView(type);
     setIsOpenDrawer(false);
-    setIsExpand(false);
   };
   //------ render ------//
   const tableName = [
@@ -90,7 +88,6 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                   initialMonthFirst={initialMonthFirst}
                   setIsOpenDrawer={setIsOpenDrawer}
                   view={view}
-                  isExpand={isExpand}
                 />
               </div>
             ) : (
