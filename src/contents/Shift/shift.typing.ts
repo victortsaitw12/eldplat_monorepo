@@ -10,15 +10,6 @@ export interface DriverData {
   total_Leave_Days: string;
   schedule_List: Array<ScheduleInfoData>;
 }
-// old for ref
-// export interface DriverData {
-//   driverLeaveInfo: {
-//     driver_No: string;
-//     user_Name: string;
-//     total_Leave_Days: string;
-//   };
-//   scheduleInfo: Array<ScheduleInfoData>;
-// }
 
 export interface ScheduleInfoData {
   drv_Schedule_No: string;

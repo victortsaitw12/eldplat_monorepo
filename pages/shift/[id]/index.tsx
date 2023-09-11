@@ -40,6 +40,10 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     setView(type);
     setIsOpenDrawer(false);
   };
+  const handleSelectTab = (index: number) => {
+    setSelectedIndex(index);
+    if (index === 0) router.push("/shift");
+  };
   //------ render ------//
   const tableName = [
     <MonthPicker key="monthpicker" initialMonthFirst={initialMonthFirst} />,
@@ -58,13 +62,9 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
         </Head>
         <Pane className="wrapMain">
           <Tabs
-            titles={["回到總表", monthlyData && userFullName]}
+            titleNames={["回到總表", monthlyData && userFullName]}
             selectedIdx={selectedIndex}
-            isOpenDrawer={isOpenDrawer}
-            onSelect={(index) => {
-              setSelectedIndex(index);
-              if (index === 0) router.push("/shift");
-            }}
+            onSelectTab={handleSelectTab}
           />
           <Pane className="pageContent">
             <TableTitle
