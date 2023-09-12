@@ -36,7 +36,6 @@ export const UIProvider = ({ children }: any) => {
     timestamp: null
   });
   const [insertData, setInsertData] = React.useState<InsertData>(initData);
-  const [flag, setFlag] = React.useState<boolean>(true);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [timeframe, setTimeframe] = React.useState<number>(1000 * 60 * 60 * 1);
   const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
@@ -74,8 +73,6 @@ export const UIProvider = ({ children }: any) => {
     setDrawerType,
     insertData,
     setInsertData,
-    flag,
-    setFlag,
     isLoading,
     setIsLoading,
     timeframe,

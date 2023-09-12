@@ -1,7 +1,7 @@
 import React from "react";
 import { EventListSTY, EventBtnSTY } from "./style";
 
-import { EVENT_TYPE, SCHD_TYPE } from "../shift.data";
+import { SCHD_TYPE } from "../shift.data";
 import { formatDate } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
@@ -58,7 +58,7 @@ const EventList = ({
 
     setPlaceholders(eventsthroughDate);
     setItems(eventsStartsFromDate.concat(eventsInsideDate));
-  }, [monthlyData, UI.monthCount, UI.flag]);
+  }, [monthlyData, UI.monthCount]);
 
   //------ functions ------//
   const renderEventStatus = async (drv_Schedule_No: string) => {

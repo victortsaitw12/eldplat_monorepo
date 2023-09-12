@@ -37,7 +37,7 @@ const EventBars = ({
     });
 
     if (eventsInDate) setItems(eventsInDate);
-  }, [monthlyData, UI.monthCount, UI.flag]);
+  }, [monthlyData, UI.monthCount]);
 
   //------ functions ------//
   // TODO 考慮讓 EditForm 共用這個function

@@ -10,9 +10,11 @@ import { deleteSchedule } from "@services/schedule/deleteSchedule";
 import EventTag from "@contents/Shift/EventTag";
 
 const EventStatus = ({
-  setIsOpenDrawer
+  setIsOpenDrawer,
+  refetch
 }: {
   setIsOpenDrawer: (value: boolean) => void;
+  refetch: () => void;
 }) => {
   const scheduleUI = React.useContext(UIContext);
 
@@ -57,11 +59,12 @@ const EventStatus = ({
       try {
         await deleteSchedule(drv_schedule_no);
         toaster.success("刪除成功");
+        refetch && refetch();
       } catch (e: any) {
         alert(e.message);
       }
       scheduleUI.setIsLoading(false);
-      scheduleUI.setFlag(!scheduleUI.flag);
+      // scheduleUI.setFlag(!scheduleUI.flag);
       setIsOpenDrawer(false);
       scheduleUI.resetState();
     },

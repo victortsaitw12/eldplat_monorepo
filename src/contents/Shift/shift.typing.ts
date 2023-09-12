@@ -126,8 +126,8 @@ export interface UItyping {
   setDrawerType: React.Dispatch<React.SetStateAction<DrawerType>>;
   insertData: InsertData;
   setInsertData: React.Dispatch<React.SetStateAction<InsertData>>;
-  flag: boolean;
-  setFlag: React.Dispatch<React.SetStateAction<boolean>>;
+  // flag: boolean;
+  // setFlag: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   timeframe: number;

@@ -1,13 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Spinner, Pane } from "evergreen-ui";
 import { DailyViewSTY } from "./style";
 import { MonthlyData, TimeItem } from "../shift.typing";
 import { WKDAY_LABEL } from "@contents/Shift/shift.data";
 import { getDayEnd } from "../shift.util";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import { getScheduleList } from "@services/schedule/getScheduleList";
 import EventBars from "@contents/Shift/EventBars";
 import TimeCell from "@contents/Shift/TimeCell";
 
@@ -15,21 +13,16 @@ const DailyView = ({
   initialMonthFirst,
   setIsOpenDrawer,
   monthlyData,
-  setMonthlyData,
   view
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
-  setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
 }) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
   const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
   scheduleUI.setId(router.query.id);
-  const { cur } = router.query;
   const curMonthFirst: Date = new Date(
     initialMonthFirst.getFullYear(),
     initialMonthFirst.getMonth() + scheduleUI.monthCount,
@@ -44,11 +37,6 @@ const DailyView = ({
   // ------- useEffect ------- //
   React.useEffect(() => {
     if (!scheduleUI.id) return;
-    fetchData();
-  }, [scheduleUI.flag]);
-
-  React.useEffect(() => {
-    if (!scheduleUI.id) return;
     initInsertData();
   }, [scheduleUI.id]);
 
@@ -61,12 +49,6 @@ const DailyView = ({
   }, [scheduleUI.isSelect]);
 
   //------ functions ------//
-  const fetchData = async () => {
-    setIsLoading(true);
-    const result = await getScheduleList(scheduleUI.id);
-    setMonthlyData(result.data);
-    setIsLoading(false);
-  };
   const initInsertData = () => {
     const updated = { ...scheduleUI.insertData };
     updated.driver_no = scheduleUI.id;

@@ -59,8 +59,10 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
 
   // ------- useEffect ------- //
   React.useEffect(() => {
+    console.log("🍅 called [id]", id);
     if (!id) return;
     fetchData();
+    console.log("🍅 finished [id]");
   }, [id]);
   //------ render ------//
   const tableName = [
@@ -102,7 +104,6 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               <div className="monthlyContainer">
                 <MonthlyView
                   monthlyData={monthlyData}
-                  setMonthlyData={setMonthlyData}
                   initialMonthFirst={initialMonthFirst}
                   setIsOpenDrawer={setIsOpenDrawer}
                   view={view}
@@ -112,7 +113,6 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               <div className="dailyContainer">
                 <DailyView
                   monthlyData={monthlyData}
-                  setMonthlyData={setMonthlyData}
                   initialMonthFirst={initialMonthFirst}
                   setIsOpenDrawer={setIsOpenDrawer}
                   view={view}
@@ -125,6 +125,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
           isOpenDrawer={isOpenDrawer}
           setIsOpenDrawer={setIsOpenDrawer}
           view={view}
+          fetchData={fetchData}
         />
       </ViewIdSTY>
     </UIProvider>

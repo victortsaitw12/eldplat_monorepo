@@ -18,10 +18,12 @@ import { formatToDB, getDayStart } from "../shift.util";
 
 const CreateForm = ({
   setIsOpenDrawer,
-  view
+  view,
+  refetch
 }: {
   setIsOpenDrawer: (value: boolean) => void;
   view: "monthly" | "daily";
+  refetch: () => void;
 }) => {
   const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
@@ -47,13 +49,12 @@ const CreateForm = ({
       try {
         const res = await createSchedule(updatedData);
         if (res.statusCode === "200") {
-          // await refetch();
           toaster.success("新增成功", {
             duration: 1.5
           });
-          console.log("res:", res);
           scheduleUI.resetState();
-          scheduleUI.setFlag(!scheduleUI.flag);
+          // scheduleUI.setFlag(!scheduleUI.flag);
+          refetch && refetch();
           setIsOpenDrawer(false);
         } else {
           throw Error(res.resultString);

@@ -22,11 +22,7 @@ import {
   formatDate
 } from "../shift.util";
 
-const EditForm = ({
-  setIsOpenDrawer
-}: {
-  setIsOpenDrawer: (value: boolean) => void;
-}) => {
+const EditForm = ({ refetch }: { refetch: () => void }) => {
   const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
   const { id } = router.query;
@@ -62,10 +58,9 @@ const EditForm = ({
           ? await updateScheduleSign(updatedData)
           : await updateSchedule(updatedData);
         scheduleUI.resetState();
-        scheduleUI.setFlag(!scheduleUI.flag);
-        // setIsOpenDrawer(false);
-        // render EventStatus
-        // fetch API
+        // scheduleUI.setFlag(!scheduleUI.flag);
+        refetch && refetch();
+        // TODO: refactor this part below
         const result = await getScheduleUpdateList(
           scheduleUI.insertData.drv_Schedule_No,
           scheduleUI.insertData.driver_No
