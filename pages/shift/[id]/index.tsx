@@ -59,10 +59,8 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
 
   // ------- useEffect ------- //
   React.useEffect(() => {
-    console.log("🍅 called [id]", id);
     if (!id) return;
     fetchData();
-    console.log("🍅 finished [id]");
   }, [id]);
   //------ render ------//
   const tableName = [
