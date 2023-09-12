@@ -1,28 +1,17 @@
 /* -------------------
- 0. TYPING  
-------------------- */
-
-/* -------------------
  1. CONSANTS
 ------------------- */
-
-// ------------------- get Date => certain Date ------------------- //
 export const MINUTE_INTERVAL = 15;
+
 /* -------------------
  2. GET STH (DATE OR NUMBER for javascript calculation)
 ------------------- */
 // ------------------- get Date => certain Date ------------------- //
-export const getFirstDate = (date: Date) =>
-  new Date(date.getFullYear(), date.getMonth(), 1);
-
 export const getDayStart = (date: Date) =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
 export const getDayEnd = (date: Date) =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59);
-
-export const getTmrStart = (date: Date) =>
-  new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
 
 // ------------------- get Date => certain number ------------------- //
 export const getTotalDays = (date: Date) =>
@@ -38,15 +27,6 @@ export const getLastMonthTotalDays = (date: Date) =>
 export const formatYYYYMM = (date: Date) => {
   // month is 0-based
   return `${date.getFullYear()} / ${date.getMonth() + 1}`;
-};
-
-// ------------------- formate Date => "週五" ------------------- //
-export const formatDAY = (date: Date) => {
-  const options: Intl.DateTimeFormatOptions = { weekday: "short" };
-  const formatedDate = new Intl.DateTimeFormat("zh-TW", options).formatToParts(
-    date
-  );
-  return formatedDate;
 };
 
 // ------------------- formate Date => "08:00 AM" ------------------- //
@@ -75,31 +55,9 @@ export const formatDate = (date: Date) => {
   return formatedDate;
 };
 
-// ------------------- formate Date from DB "2023-04-01"=> "2023-4-1 ------------------- //
-export const removePad = (input: string) => input.replaceAll("-0", "-");
-
 /* -------------------
  4. TRANSLATE (for i18n NOT IN USE)
 ------------------- */
-// get formated dates (i18n, not in use)
-export const formatIntl = (date: Date) => {
-  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const locales = "zh-TW";
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    weekday: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: userTimezone
-  };
-
-  // get the local time string for the UTC time
-  const localTime = date.toLocaleString(locales, options);
-  return localTime;
-};
-
 // ------------------- formate Date => FOR 資料庫相關  ------------------- //
 export const formatDateForAPI = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -140,18 +98,6 @@ export const formatToDBDate = (date: Date) => {
   const offsetNow = new Date(nowTimestamp - timezoneOffsetMiliSeconds);
   const isoString = offsetNow.toISOString().split("T")[0];
   return isoString;
-};
-
-//-- keep for 跨時區 NOT-IN-USE -- //
-// format (UTC string) => {local date: Date} to user???
-// "4/6/2023, 2:26:48 PM"
-// format (date:Date) => {local string for user} (frontend)
-export const formatLocal = (date: Date) => {
-  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const localTime = date.toLocaleString(undefined, {
-    timeZone: userTimezone
-  });
-  return localTime;
 };
 
 /* -------------------

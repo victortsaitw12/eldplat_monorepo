@@ -8,6 +8,16 @@ import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 import EventBtn from "@contents/Shift/EventBtn";
 
+interface I_Props {
+  cellTimestamp: number;
+  monthlyData: MonthlyData[] | null;
+  setIsOpenDrawer: (value: boolean) => void;
+  placeholders: MonthlyData[];
+  setPlaceholders: (value: MonthlyData[]) => void;
+  items: MonthlyData[];
+  setItems: (value: MonthlyData[]) => void;
+  maxEventCount: number;
+}
 const EventList = ({
   cellTimestamp,
   monthlyData,
@@ -17,16 +27,7 @@ const EventList = ({
   items,
   setItems,
   maxEventCount
-}: {
-  cellTimestamp: number;
-  monthlyData: MonthlyData[] | null;
-  setIsOpenDrawer: (value: boolean) => void;
-  placeholders: MonthlyData[];
-  setPlaceholders: (value: MonthlyData[]) => void;
-  items: MonthlyData[];
-  setItems: (value: MonthlyData[]) => void;
-  maxEventCount: number;
-}) => {
+}: I_Props) => {
   const UI = React.useContext(UIContext);
 
   React.useEffect(() => {
@@ -62,48 +63,13 @@ const EventList = ({
 
   //------ functions ------//
   const renderEventStatus = async (drv_Schedule_No: string) => {
-    // 1) UI render drawer
-    UI.resetState();
-    UI.setIsLoading(true);
-    UI.setDrawerType({
-      type: "view",
-      title: formatDate(new Date(cellTimestamp)),
-      timestamp: cellTimestamp
-    });
+    UI.getEventStatusDrawer(drv_Schedule_No, cellTimestamp);
     setIsOpenDrawer(true);
-    try {
-      // 2) fetch API
-      const result = await getScheduleUpdateList(drv_Schedule_No, UI.id);
-      const updateViewEventList = [result.data];
-      // 3) update UI
-      UI.setViewEventList(updateViewEventList);
-      UI.setIsLoading(false);
-    } catch (e) {
-      alert(e);
-    }
   };
 
   const renderSignOffEditForm = async (drv_Schedule_No: string) => {
-    // 1) UI render drawer
-    UI.resetState();
-    UI.setIsLoading(true);
-    UI.setDrawerType({
-      type: "edit",
-      title: "簽核"
-    });
+    UI.getSignOffEditDrawer(drv_Schedule_No, cellTimestamp);
     setIsOpenDrawer(true);
-    try {
-      // 2) fetch API
-      const result = await getScheduleUpdateList(drv_Schedule_No, UI.id);
-      const updateInsertData = result.data;
-      // 3) update UI
-      UI.setInsertData(updateInsertData);
-      UI.setStartDate(new Date(updateInsertData.schd_Start_Time));
-      UI.setEndDate(new Date(updateInsertData.schd_End_Time));
-      UI.setIsLoading(false);
-    } catch (e) {
-      alert(e);
-    }
   };
 
   const getEventDurationLeft = (item: MonthlyData) => {
