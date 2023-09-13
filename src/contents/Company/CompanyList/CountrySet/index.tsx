@@ -13,19 +13,17 @@ import {
 
 function CountrySet() {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
-  const [ddlData, setDdlData] = useState<any>(null);
   // const { handleCountrySwitch } = useContext<I_Region_Context>(RegionContext);
   const { getRegionsData } = useContext<I_Region_Context>(RegionContext);
   const company_language_data = companyData?.company_language;
   const company_currency_data = companyData?.company_currency;
-
   return (
     <BodySTY>
       <Heading is="h4">國別 / 語系 / 幣別設定</Heading>
       <form>
         <Pane className="input-line">
           <Text className="">國別</Text>
-          <Text>{ddlData?.company_country}</Text>
+          <Text>{companyData?.country_name}</Text>
           {/* <Text>{handleCountrySwitch(companyData?.company_country)}</Text> */}
         </Pane>
         <Pane className="input-line">
