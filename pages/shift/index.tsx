@@ -70,7 +70,6 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   };
 
   const handleZoombar = (value: number) => {
-    // setIsExpand(Boolean(value));
     setExpandPercentage(value);
   };
 

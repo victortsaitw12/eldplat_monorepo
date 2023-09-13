@@ -9,7 +9,7 @@ import { getSideMenuBackend } from "@services/siderbar/getSideMenuBackend";
 import { getSideMenuPersonal } from "@services/siderbar/getSideMenuPersonal";
 //
 function mapping_menus(list: any, key: string) {
-  console.log("list", list);
+  // console.log("list", list);
   return list.map((ele: any) => {
     return {
       name: ele?.[key + "_name"],
