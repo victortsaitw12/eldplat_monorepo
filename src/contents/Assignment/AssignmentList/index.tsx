@@ -2,6 +2,7 @@ import { BodySTY } from "./style";
 import OutsideTableOnAssignment from "./OutsideTableOnAssignment";
 import { getAssignmentTitle } from "@services/assignment/getAllAssignment";
 import { I_PageInfo } from "@components/PaginationField";
+import { I_FirstDrawer } from "@contents/Assignment/AssignmentDrawers";
 
 interface Props {
   assignData: any;
@@ -11,7 +12,7 @@ interface Props {
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
   setOrderInfo: (t: any) => void;
-  setFirstDrawerOpen: (v: string) => void;
+  setFirstDrawerOpen: (v: I_FirstDrawer) => void;
 }
 
 function AssignmentList({

@@ -38,20 +38,20 @@ const Timepicker = ({
   minDate
 }: {
   type: "start" | "end";
-  date: Date; // UI.startDate or UI.endDate
+  date: Date; // scheduleUI.startDate or scheduleUI.endDate
   setDate: (date: Date) => void;
   fullDay: boolean;
   minDate?: Date;
 }) => {
-  //TODO: 在component呼叫的時候改名 UI=>scheduleUI
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
   const dateBase = getDayStart(date); // 僅存在 <Timepicker/>裡面做為計算基準
   const [isFullDay, setIsFullDay] = React.useState(fullDay);
 
   //------ functions ------//
   const handleDateChange = (v: Date) => {
     // case: 使用者把開始時間選在結束時間後 => 把結束時間設成開始日的23:59
-    if (type == "start" && v > UI.endDate) UI.setEndDate(getDayEnd(v));
+    if (type == "start" && v > scheduleUI.endDate)
+      scheduleUI.setEndDate(getDayEnd(v));
     setDate(v);
   };
 
@@ -113,15 +113,17 @@ const Timepicker = ({
     <ThemeProvider value={customTheme}>
       <TimepickerSTY>
         <DatePicker
-          selected={type === "start" ? UI.startDate : UI.endDate}
+          selected={
+            type === "start" ? scheduleUI.startDate : scheduleUI.endDate
+          }
           onChange={handleDateChange}
           minDate={minDate}
           dateFormat={"yyyy / MM / dd, hh:mm aa"}
           monthsShown={2}
           portalId="root-portal"
           renderCustomHeader={renderCustomHeader}
-          startDate={UI.startDate}
-          endDate={UI.endDate}
+          startDate={scheduleUI.startDate}
+          endDate={scheduleUI.endDate}
         />
         <TimeInput
           date={dayjs(date).format("YYYY-MM-DD HH:mm")}

@@ -16,17 +16,18 @@ import TableTitle from "@components/Table/TableTitle";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
 import TotalLeaveDays from "@contents/Shift/TotalLeaveDays";
+import { getScheduleList } from "@services/schedule/getScheduleList";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const { cur } = router.query;
+  const { id, cur } = router.query;
   const [monthlyData, setMonthlyData] = React.useState<MonthlyData[] | null>(
     null
   );
   const [view, setView] = React.useState<"monthly" | "daily">("monthly");
-  const [isExpand, setIsExpand] = React.useState(false);
-  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false); //如果頁面有 Drawer 時使用
+  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const initialMonthFirst = new Date(
     Array.isArray(cur) ? cur[0] : cur || Date.now()
@@ -40,8 +41,27 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const handleLayout = (type: "monthly" | "daily") => {
     setView(type);
     setIsOpenDrawer(false);
-    setIsExpand(false);
   };
+  const handleSelectTab = (index: number) => {
+    setSelectedIndex(index);
+    if (index === 0) router.push("/shift");
+  };
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getScheduleList(id);
+      setMonthlyData(result.data);
+    } catch (e: any) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+
+  // ------- useEffect ------- //
+  React.useEffect(() => {
+    if (!id) return;
+    fetchData();
+  }, [id]);
   //------ render ------//
   const tableName = [
     <MonthPicker key="monthpicker" initialMonthFirst={initialMonthFirst} />,
@@ -60,13 +80,9 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
         </Head>
         <Pane className="wrapMain">
           <Tabs
-            titles={["回到總表", monthlyData && userFullName]}
+            titleNames={["回到總表", monthlyData && userFullName]}
             selectedIdx={selectedIndex}
-            isOpenDrawer={isOpenDrawer}
-            onSelect={(index) => {
-              setSelectedIndex(index);
-              if (index === 0) router.push("/shift");
-            }}
+            onSelectTab={handleSelectTab}
           />
           <Pane className="pageContent">
             <TableTitle
@@ -86,18 +102,15 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               <div className="monthlyContainer">
                 <MonthlyView
                   monthlyData={monthlyData}
-                  setMonthlyData={setMonthlyData}
                   initialMonthFirst={initialMonthFirst}
                   setIsOpenDrawer={setIsOpenDrawer}
                   view={view}
-                  isExpand={isExpand}
                 />
               </div>
             ) : (
               <div className="dailyContainer">
                 <DailyView
                   monthlyData={monthlyData}
-                  setMonthlyData={setMonthlyData}
                   initialMonthFirst={initialMonthFirst}
                   setIsOpenDrawer={setIsOpenDrawer}
                   view={view}
@@ -110,6 +123,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
           isOpenDrawer={isOpenDrawer}
           setIsOpenDrawer={setIsOpenDrawer}
           view={view}
+          fetchData={fetchData}
         />
       </ViewIdSTY>
     </UIProvider>

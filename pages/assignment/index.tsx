@@ -34,7 +34,9 @@ import {
 } from "@services/assignment/getAssignmentEdit";
 
 import { I_PageInfo } from "@components/PaginationField";
-import AssignmentDrawers from "@contents/Assignment/AssignmentDrawers";
+import AssignmentDrawers, {
+  I_FirstDrawer
+} from "@contents/Assignment/AssignmentDrawers";
 
 // ----- variables ----- //
 const mainFilterArray = [{ id: 1, label: "全部", value: "1" }];
@@ -61,8 +63,7 @@ const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
-  const [firstDrawerOpen, setFirstDrawerOpen] = useState<string>("");
-  // "autoAssign"|"manualAssign"| "editCar"| "editDriver"| "additionalCar" | "additionalDriver" | ""
+  const [firstDrawerOpen, setFirstDrawerOpen] = useState<I_FirstDrawer>("");
   const [secondDrawerOpen, setSecondDrawerOpen] = useState<string>("");
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);

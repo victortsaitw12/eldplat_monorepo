@@ -6,25 +6,39 @@ import EditForm from "@contents/Shift/DrawerContent/EditForm";
 import EventStatus from "@contents/Shift/DrawerContent/EventStatus";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
-const DrawerContent = ({
-  isOpenDrawer,
-  setIsOpenDrawer,
-  view
-}: {
+interface I_Props {
   isOpenDrawer: boolean;
   setIsOpenDrawer: (value: boolean) => void;
   view: "monthly" | "daily";
-}) => {
+  fetchData: () => void;
+}
+const DrawerContent = ({
+  isOpenDrawer,
+  setIsOpenDrawer,
+  view,
+  fetchData
+}: I_Props) => {
   const UI = React.useContext(UIContext);
 
   const renderContent = () => {
+    const refetch = () => {
+      fetchData();
+    };
     switch (UI.drawerType.type) {
       case "view":
-        return <EventStatus setIsOpenDrawer={setIsOpenDrawer} />;
+        return (
+          <EventStatus setIsOpenDrawer={setIsOpenDrawer} refetch={refetch} />
+        );
       case "create":
-        return <CreateForm setIsOpenDrawer={setIsOpenDrawer} view={view} />;
+        return (
+          <CreateForm
+            setIsOpenDrawer={setIsOpenDrawer}
+            view={view}
+            refetch={refetch}
+          />
+        );
       case "edit":
-        return <EditForm setIsOpenDrawer={setIsOpenDrawer} />;
+        return <EditForm refetch={refetch} />;
       default:
         return (
           <Pane
@@ -39,16 +53,15 @@ const DrawerContent = ({
     }
   };
 
+  const handleCloseDrawer = () => {
+    setIsOpenDrawer(false);
+    UI.resetState();
+  };
+
   return (
     <>
       {isOpenDrawer && (
-        <Drawer
-          tabName={[UI.drawerType.title]}
-          closeDrawer={() => {
-            setIsOpenDrawer(false);
-            UI.resetState();
-          }}
-        >
+        <Drawer tabName={[UI.drawerType.title]} closeDrawer={handleCloseDrawer}>
           {UI.isLoading ? (
             <Pane
               display="flex"

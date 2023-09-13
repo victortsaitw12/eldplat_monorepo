@@ -10,15 +10,6 @@ export interface DriverData {
   total_Leave_Days: string;
   schedule_List: Array<ScheduleInfoData>;
 }
-// old for ref
-// export interface DriverData {
-//   driverLeaveInfo: {
-//     driver_No: string;
-//     user_Name: string;
-//     total_Leave_Days: string;
-//   };
-//   scheduleInfo: Array<ScheduleInfoData>;
-// }
 
 export interface ScheduleInfoData {
   drv_Schedule_No: string;
@@ -119,8 +110,6 @@ export interface LeaveCodeLabel {
 export interface UItyping {
   id: string;
   setId: (id: string) => void;
-  currentTab: number;
-  setCurrentTab: React.Dispatch<React.SetStateAction<number>>;
   monthCount: number;
   setMonthCount: React.Dispatch<React.SetStateAction<number>>;
   isSelect: boolean;
@@ -135,8 +124,6 @@ export interface UItyping {
   setDrawerType: React.Dispatch<React.SetStateAction<DrawerType>>;
   insertData: InsertData;
   setInsertData: React.Dispatch<React.SetStateAction<InsertData>>;
-  flag: boolean;
-  setFlag: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   timeframe: number;
@@ -146,4 +133,12 @@ export interface UItyping {
   isMouseMenuBtn: boolean;
   setIsMouseMenuBtn: React.Dispatch<React.SetStateAction<boolean>>;
   resetState: () => void;
+  getEventStatusDrawer: (
+    drv_Schedule_No: string,
+    cellTimestamp: number
+  ) => void;
+  getSignOffEditDrawer: (
+    drv_Schedule_No: string,
+    cellTimestamp: number
+  ) => void;
 }

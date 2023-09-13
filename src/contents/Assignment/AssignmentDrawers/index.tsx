@@ -14,10 +14,17 @@ import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 import SecondCarAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondCarManualCreate";
 import SecondDriverAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondDriverManualCreate";
 
+export type I_FirstDrawer =
+  | "autoAssign"
+  | "manualAssign"
+  | "editCar"
+  | "editDriver"
+  | "additionalCar"
+  | "additionalDriver"
+  | "";
 interface Props {
-  firstDrawerOpen: string;
-  // "autoAssign"|"manualAssign"| "editCar"| "editDriver"| "additionalCar" | "additionalDriver" | ""
-  setFirstDrawerOpen: (v: string) => void;
+  firstDrawerOpen: I_FirstDrawer;
+  setFirstDrawerOpen: (v: I_FirstDrawer) => void;
   secondDrawerOpen: string;
   setSecondDrawerOpen: (v: string) => void;
   orderInfo: I_ManualAssignType[];

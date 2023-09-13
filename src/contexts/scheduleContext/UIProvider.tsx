@@ -1,16 +1,25 @@
 import React from "react";
+
 import {
   InsertData,
   EventData,
   DrawerType,
   UItyping
 } from "@contents/Shift/shift.typing";
+import { formatDate } from "@contents/Shift/shift.util";
+import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 
 let defultUI: any;
+const defaultDrawer = {
+  type: "", //"view", "edit"
+  title: "新增",
+  timestamp: null
+};
+const defaultTimeframe = 1000 * 60 * 60 * 1;
+
 export const UIContext = React.createContext(defultUI);
 
 export const initData: InsertData = {
-  //TODO: check 大小寫必要
   driver_No: "",
   schd_Date: "",
   schd_Type: "03", //預設排休
@@ -22,46 +31,76 @@ export const initData: InsertData = {
   check_Status: ""
 };
 
-//TODO: 在component呼叫的時候改名 UI=>scheduleUI
 export const UIProvider = ({ children }: any) => {
   const [id, setId] = React.useState<string>(""); // for [id]頁面裡面全部 component
-  const [currentTab, setCurrentTab] = React.useState<number>(0); //如果未來 shift頁面要出現多個頁籤時使用
   const [monthCount, setMonthCount] = React.useState<number>(0);
   const [isSelect, setIsSelect] = React.useState<boolean>(false);
   const [startDate, setStartDate] = React.useState<Date | null>(null);
   const [endDate, setEndDate] = React.useState<Date | null>(null);
   const [viewEventList, setViewEventList] = React.useState<EventData[]>([]);
-  const [drawerType, setDrawerType] = React.useState<DrawerType>({
-    type: "", //"view", "edit"
-    title: "新增",
-    timestamp: null
-  });
+  const [drawerType, setDrawerType] = React.useState<DrawerType>(defaultDrawer);
   const [insertData, setInsertData] = React.useState<InsertData>(initData);
-  const [flag, setFlag] = React.useState<boolean>(true);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [timeframe, setTimeframe] = React.useState<number>(1000 * 60 * 60 * 1); // PM: fix to 1hour now
+  const [timeframe, setTimeframe] = React.useState<number>(defaultTimeframe);
   const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
   const [isMouseMenuBtn, setIsMouseMenuBtn] = React.useState(false);
 
-  const resetState = (): void => {
-    console.log("< Reset state >");
-    UI.setIsSelect(false);
-    UI.setStartDate(null);
-    UI.setEndDate(null);
-    UI.setViewEventList([]);
-    UI.setDrawerType({
-      type: "",
-      title: "新增",
-      timestamp: null
-    });
-    UI.setInsertData(initData);
-  };
+  const resetState = React.useCallback((): void => {
+    setIsSelect(false);
+    setStartDate(null);
+    setEndDate(null);
+    setViewEventList([]);
+    setDrawerType(defaultDrawer);
+    setInsertData(initData);
+  }, []);
 
-  const UI: UItyping = {
+  const getEventStatusDrawer = React.useCallback(
+    async (drv_Schedule_No: string, cellTimestamp: number) => {
+      resetState();
+      setIsLoading(true);
+      setDrawerType({
+        type: "view",
+        title: formatDate(new Date(cellTimestamp)),
+        timestamp: cellTimestamp
+      });
+      try {
+        const result = await getScheduleUpdateList(drv_Schedule_No, id);
+        const updateViewEventList = [result.data];
+        setViewEventList(updateViewEventList);
+        setIsLoading(false);
+      } catch (e) {
+        alert(e);
+      }
+    },
+    [id, resetState]
+  );
+
+  const getSignOffEditDrawer = React.useCallback(
+    async (drv_Schedule_No: string, cellTimestamp: number) => {
+      resetState();
+      setIsLoading(true);
+      setDrawerType({
+        type: "edit",
+        title: "簽核",
+        timestamp: cellTimestamp
+      });
+      try {
+        const result = await getScheduleUpdateList(drv_Schedule_No, id);
+        const updateInsertData = result.data;
+        setInsertData(updateInsertData);
+        setStartDate(new Date(updateInsertData.schd_Start_Time));
+        setEndDate(new Date(updateInsertData.schd_End_Time));
+        setIsLoading(false);
+      } catch (e) {
+        alert(e);
+      }
+    },
+    [id, resetState]
+  );
+
+  const scheduleUI: UItyping = {
     id,
     setId,
-    currentTab,
-    setCurrentTab,
     monthCount,
     setMonthCount,
     isSelect,
@@ -76,8 +115,6 @@ export const UIProvider = ({ children }: any) => {
     setDrawerType,
     insertData,
     setInsertData,
-    flag,
-    setFlag,
     isLoading,
     setIsLoading,
     timeframe,
@@ -86,10 +123,12 @@ export const UIProvider = ({ children }: any) => {
     setMousePosition,
     isMouseMenuBtn,
     setIsMouseMenuBtn,
-    // 共用 function
-    resetState
+    // function //
+    resetState,
+    getEventStatusDrawer,
+    getSignOffEditDrawer
   };
-  return <UIContext.Provider value={UI}>{children}</UIContext.Provider>;
+  return <UIContext.Provider value={scheduleUI}>{children}</UIContext.Provider>;
 };
 
 export default UIProvider;

@@ -25,8 +25,7 @@ const DateCell = React.forwardRef(function DateCell({
   rowIndex: number;
   dateCellRef: React.RefObject<HTMLDivElement>;
 }) {
-  //TODO: 在component呼叫的時候改名 UI=>scheduleUI
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
   const [placeholders, setPlaceholders] = React.useState<MonthlyData[]>([]);
   const [items, setItems] = React.useState<MonthlyData[]>([]);
   const [singleRowExpand, setSingleRowExpand] = React.useState<number | null>(
@@ -34,7 +33,7 @@ const DateCell = React.forwardRef(function DateCell({
   );
   React.useEffect(() => {
     setSingleRowExpand(null);
-  }, [UI.monthCount]);
+  }, [scheduleUI.monthCount]);
 
   //------ functions ------//
   const handleSingleRowExpand = () => {
@@ -42,21 +41,21 @@ const DateCell = React.forwardRef(function DateCell({
   };
   const handleSelectEndDate = (timestamp: string | number) => {
     const selectedDT = getDayEnd(new Date(timestamp));
-    UI.setEndDate(selectedDT);
+    scheduleUI.setEndDate(selectedDT);
   };
 
   const checkDateStart = (timestamp: string | number) => {
-    if (!UI.startDate) return false;
-    return timestamp == UI.startDate.valueOf();
+    if (!scheduleUI.startDate) return false;
+    return timestamp == scheduleUI.startDate.valueOf();
   };
 
   const renderAllDayEventStatus = async (timestamp: string | number) => {
     const schd_date = formatDateForAPI(new Date(timestamp));
-    const driver_no = UI.id;
+    const driver_no = scheduleUI.id;
     // 1) UI render drawer
-    UI.resetState();
-    UI.setIsLoading(true);
-    UI.setDrawerType({
+    scheduleUI.resetState();
+    scheduleUI.setIsLoading(true);
+    scheduleUI.setDrawerType({
       type: "view",
       title: formatDate(new Date(timestamp)),
       timestamp: timestamp
@@ -67,8 +66,8 @@ const DateCell = React.forwardRef(function DateCell({
       const result = await getScheduleSidebar(schd_date, driver_no);
       result.data.timestamp = timestamp;
       // 3) update UI
-      UI.setViewEventList(result.data);
-      UI.setIsLoading(false);
+      scheduleUI.setViewEventList(result.data);
+      scheduleUI.setIsLoading(false);
     } catch (e) {
       alert(e);
     }
@@ -83,7 +82,7 @@ const DateCell = React.forwardRef(function DateCell({
             ${checkDateStart.call(null, date.timestamp) ? "start" : ""}
             row-${rowIndex}`}
       onMouseEnter={() => {
-        if (UI.isSelect) handleSelectEndDate(date.timestamp);
+        if (scheduleUI.isSelect) handleSelectEndDate(date.timestamp);
       }}
     >
       {monthlyData ? (

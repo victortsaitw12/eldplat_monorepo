@@ -5,42 +5,26 @@ export const TabsSTY = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
-
-  .tabs {
-    .tab {
-      background-color: ${({ theme }) => theme.color.B100};
-      border-radius: 10px 10px 0px 0px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 8px 12px;
-      color: #567190;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      &:nth-child(1) {
-        margin-left: 24px;
-      }
-    }
-    .current {
-      background-color: ${({ theme }) => theme.color.N0};
-      gap: 4px;
-      &:after {
-        content: "›";
-        transform: rotate(90deg);
-        margin-left: 4px;
-      }
-    }
+  justify-content: flex-start;
+  padding-left: 24px;
+  .tab {
+    background: ${({ theme }) => theme.color.B100};
+    border-radius: 10px 10px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    color: ${({ theme }) => theme.color.N700};
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
   }
-  .icons {
-    color: #718baa;
-    button {
-      background-color: transparent;
-      border: none;
-      &:hover {
-        background-color: transparent;
-      }
-    }
+  .current {
+    background: ${({ theme }) => theme.color.N0};
+    gap: 4px;
+  }
+  .icon {
+    height: 12px;
+    width: 12px;
   }
 `;

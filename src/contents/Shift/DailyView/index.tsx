@@ -1,13 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Spinner, Pane } from "evergreen-ui";
 import { DailyViewSTY } from "./style";
 import { MonthlyData, TimeItem } from "../shift.typing";
 import { WKDAY_LABEL } from "@contents/Shift/shift.data";
 import { getDayEnd } from "../shift.util";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import { getScheduleList } from "@services/schedule/getScheduleList";
 import EventBars from "@contents/Shift/EventBars";
 import TimeCell from "@contents/Shift/TimeCell";
 
@@ -15,65 +13,58 @@ const DailyView = ({
   initialMonthFirst,
   setIsOpenDrawer,
   monthlyData,
-  setMonthlyData,
   view
 }: {
   initialMonthFirst: Date;
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
-  setMonthlyData: (data: MonthlyData[] | null) => void;
   view: "monthly" | "daily";
 }) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  //TODO: 在component呼叫的時候改名 UI=>scheduleUI
-  const UI = React.useContext(UIContext);
+  const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
-  UI.setId(router.query.id);
-  const { cur } = router.query;
+  scheduleUI.setId(router.query.id);
   const curMonthFirst: Date = new Date(
     initialMonthFirst.getFullYear(),
-    initialMonthFirst.getMonth() + UI.monthCount,
+    initialMonthFirst.getMonth() + scheduleUI.monthCount,
     1
   );
   const curMonthTotal: number = new Date(
     initialMonthFirst.getFullYear(),
-    initialMonthFirst.getMonth() + 1 + UI.monthCount,
+    initialMonthFirst.getMonth() + 1 + scheduleUI.monthCount,
     0
   ).getDate();
 
+  // ------- useEffect ------- //
   React.useEffect(() => {
-    if (!UI.id) return;
-    setIsLoading(true);
-    const updated = { ...UI.insertData };
-    updated.driver_no = UI.id;
-    UI.setInsertData(updated);
-    const fetchData = async () => {
-      const result = await getScheduleList(UI.id);
-      setMonthlyData(result.data);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [UI.id, cur, UI.flag]);
+    if (!scheduleUI.id) return;
+    initInsertData();
+  }, [scheduleUI.id]);
 
   React.useEffect(() => {
-    if (UI.isSelect) document.addEventListener("mouseup", renderCreateForm);
+    if (scheduleUI.isSelect)
+      document.addEventListener("mouseup", renderCreateForm);
     return () => {
       document.removeEventListener("mouseup", renderCreateForm);
     };
-  }, [UI.isSelect]);
+  }, [scheduleUI.isSelect]);
 
   //------ functions ------//
+  const initInsertData = () => {
+    const updated = { ...scheduleUI.insertData };
+    updated.driver_no = scheduleUI.id;
+    scheduleUI.setInsertData(updated);
+  };
+
   const handleCreateFullDayEvent = (timestamp: number) => {
     const selectedDT = new Date(timestamp);
-    UI.setStartDate(selectedDT);
-    UI.setEndDate(getDayEnd(selectedDT));
+    scheduleUI.setStartDate(selectedDT);
+    scheduleUI.setEndDate(getDayEnd(selectedDT));
     renderCreateForm();
   };
 
   const renderCreateForm = () => {
-    UI.setIsSelect(false);
-    UI.setDrawerType({
+    scheduleUI.setIsSelect(false);
+    scheduleUI.setDrawerType({
       type: "create",
       title: "新增",
       timestamp: null
@@ -82,7 +73,7 @@ const DailyView = ({
   };
   //------ render body ------//
   const times: Array<TimeItem> = [];
-  for (let h = 0; h < 24; h += UI.timeframe / (1000 * 60 * 60 * 1)) {
+  for (let h = 0; h < 24; h += scheduleUI.timeframe / (1000 * 60 * 60 * 1)) {
     const hour = h === 0 ? 12 : h > 12 ? h - 12 : h;
     const timeslot = h < 12 ? "AM" : "PM";
     const time = {
@@ -145,7 +136,9 @@ const DailyView = ({
                   <>
                     <TimeCell
                       key={`canvas-${i}-${index}`}
-                      cellTimestamp={date.timestamp + index * UI.timeframe}
+                      cellTimestamp={
+                        date.timestamp + index * scheduleUI.timeframe
+                      }
                       view={view}
                     />
                   </>

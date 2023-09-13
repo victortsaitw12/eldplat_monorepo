@@ -5,6 +5,7 @@ import { TableSTY, TableContainerSTY, StyledDot } from "./style";
 import TableRow from "./TableRow";
 import PaginationField, { I_PageInfo } from "@components/PaginationField";
 import LoadingSpinner from "@components/LoadingSpinner";
+import { I_FirstDrawer } from "@contents/Assignment/AssignmentDrawers";
 
 //
 export interface I_labelValue {
@@ -30,7 +31,7 @@ interface I_Table {
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
   setOrderInfo: (t: any) => void;
-  setFirstDrawerOpen: (v: string) => void;
+  setFirstDrawerOpen: (v: I_FirstDrawer) => void;
 }
 
 export interface I_OpenTable {
