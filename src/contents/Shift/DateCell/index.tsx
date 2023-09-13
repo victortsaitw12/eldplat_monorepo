@@ -26,8 +26,9 @@ const DateCell = React.forwardRef(function DateCell({
   dateCellRef: React.RefObject<HTMLDivElement>;
 }) {
   const scheduleUI = React.useContext(UIContext);
-  const [placeholders, setPlaceholders] = React.useState<MonthlyData[]>([]);
-  const [items, setItems] = React.useState<MonthlyData[]>([]);
+  // TODO: EventList (<= EventBars)
+  // TODO: remove DateCellCanvas
+  const [eventCount, setEventCount] = React.useState<number>(0);
   const [singleRowExpand, setSingleRowExpand] = React.useState<number | null>(
     null
   );
@@ -90,10 +91,7 @@ const DateCell = React.forwardRef(function DateCell({
           cellTimestamp={date.timestamp}
           monthlyData={monthlyData}
           setIsOpenDrawer={setIsOpenDrawer}
-          placeholders={placeholders}
-          setPlaceholders={setPlaceholders}
-          items={items}
-          setItems={setItems}
+          setEventCount={setEventCount}
           maxEventCount={singleRowExpand ? singleRowExpand : maxEventCount}
         />
       ) : (
@@ -103,16 +101,14 @@ const DateCell = React.forwardRef(function DateCell({
       <CreateEventBtn cellTimestamp={date.timestamp} view={view} />
       <div className="cell__date">
         <span className="cell__date-info">
-          {placeholders.length + items.length - maxEventCount > 0 ? (
+          {eventCount - maxEventCount > 0 ? (
             <button
               className="cell__unfold-btn"
               onClick={handleSingleRowExpand}
             >
               {singleRowExpand
                 ? "收合"
-                : `還有 ${
-                    placeholders.length + items.length - maxEventCount
-                  } 個`}
+                : `還有 ${eventCount - maxEventCount} 個`}
             </button>
           ) : (
             ""

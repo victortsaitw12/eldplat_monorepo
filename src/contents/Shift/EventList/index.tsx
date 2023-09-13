@@ -10,10 +10,7 @@ interface I_Props {
   cellTimestamp: number;
   monthlyData: MonthlyData[] | null;
   setIsOpenDrawer: (value: boolean) => void;
-  placeholders: MonthlyData[];
-  setPlaceholders: (value: MonthlyData[]) => void;
-  items: MonthlyData[];
-  setItems: (value: MonthlyData[]) => void;
+  setEventCount: (value: number) => void;
   maxEventCount: number;
 }
 
@@ -23,73 +20,51 @@ const EventList = ({
   cellTimestamp,
   monthlyData,
   setIsOpenDrawer,
-  placeholders,
-  setPlaceholders,
-  items,
-  setItems,
+  setEventCount,
   maxEventCount
 }: I_Props) => {
+  //------ variables, states ------//
   const schdUI = React.useContext(UIContext);
 
-  const eventsInDate = React.useMemo(() => {
-    const cellDateStart = new Date(cellTimestamp);
-    const cellDateEnd = new Date(cellTimestamp + TotalMS);
-
-    // +placeholder(not Mon) OR +eventList(Mon)
+  const placeholderEvents = React.useMemo(() => {
+    if (new Date(cellTimestamp).getDay() === 0) return [];
+    const cellDateStart = cellTimestamp;
+    const cellDateEnd = cellTimestamp + TotalMS;
     const eventsStartBeforeDate =
       monthlyData?.filter((shift: any): boolean => {
-        const eventStart = new Date(shift.schd_Start_Time);
-        const eventEnd = new Date(shift.schd_End_Time);
-        return eventStart < cellDateStart && eventEnd <= cellDateEnd;
+        const eventStart = new Date(shift.schd_Start_Time).valueOf();
+        const eventEnd = new Date(shift.schd_End_Time).valueOf();
+        return eventStart < cellDateStart && eventEnd >= cellDateStart;
       }) || [];
-
-    // +placeholder
     const eventsSpanAcrossDate =
       monthlyData?.filter((shift: any): boolean => {
-        const eventStart = new Date(shift.schd_Start_Time);
-        const eventEnd = new Date(shift.schd_End_Time);
+        const eventStart = new Date(shift.schd_Start_Time).valueOf();
+        const eventEnd = new Date(shift.schd_End_Time).valueOf();
         return eventStart < cellDateStart && eventEnd > cellDateEnd;
       }) || [];
 
-    // +eventList
-    const eventsStartsInDate =
-      monthlyData?.filter((shift: any) => {
-        const eventStart = new Date(shift.schd_Start_Time);
-        const eventEnd = new Date(shift.schd_End_Time);
-        return eventStart >= cellDateStart && eventStart < cellDateEnd;
-      }) || [];
+    return eventsStartBeforeDate.concat(eventsSpanAcrossDate);
   }, [cellTimestamp, monthlyData]);
 
-  React.useEffect(() => {
-    const cellDateStart = new Date(cellTimestamp);
-    const cellDateEnd = new Date(cellTimestamp + TotalMS);
-
-    const eventsthroughDate =
+  const shownEvents = React.useMemo(() => {
+    const cellDateStart = cellTimestamp;
+    const cellDateEnd = cellTimestamp + TotalMS;
+    const eventsStartBeforeDate =
       monthlyData?.filter((shift: any): boolean => {
-        const eventStart = new Date(shift.schd_Start_Time);
-        const eventEnd = new Date(shift.schd_End_Time);
-        return cellDateStart > eventStart && cellDateStart <= eventEnd;
+        const eventStart = new Date(shift.schd_Start_Time).valueOf();
+        const eventEnd = new Date(shift.schd_End_Time).valueOf();
+        return eventStart < cellDateStart && eventEnd >= cellDateStart;
       }) || [];
-    const eventsStartsFromDate =
+    const eventsStartsInDate =
       monthlyData?.filter((shift: any) => {
-        const eventStart = new Date(shift.schd_Start_Time);
-        const eventEnd = new Date(shift.schd_End_Time);
-        return (
-          eventStart >= cellDateStart &&
-          eventStart < cellDateEnd &&
-          eventEnd >= cellDateEnd
-        );
-      }) || [];
-    const eventsInsideDate =
-      monthlyData?.filter((shift: any) => {
-        const eventStart = new Date(shift.schd_Start_Time);
-        const eventEnd = new Date(shift.schd_End_Time);
-        return eventStart >= cellDateStart && eventEnd <= cellDateEnd;
+        const eventStart = new Date(shift.schd_Start_Time).valueOf();
+        return eventStart >= cellDateStart && eventStart < cellDateEnd;
       }) || [];
 
-    setPlaceholders(eventsthroughDate);
-    setItems(eventsStartsFromDate.concat(eventsInsideDate));
-  }, [monthlyData, schdUI.monthCount]);
+    return new Date(cellTimestamp).getDay() === 0
+      ? eventsStartBeforeDate.concat(eventsStartsInDate)
+      : eventsStartsInDate;
+  }, [cellTimestamp, monthlyData]);
 
   //------ functions ------//
   const renderEventStatus = async (drv_Schedule_No: string) => {
@@ -116,75 +91,53 @@ const EventList = ({
     if (cellDay === 0) {
       if (idx + 1 > maxEventCount) return true;
     } else {
-      if (placeholders.length + idx + 1 > maxEventCount) return true;
+      if (placeholderEvents.length + idx + 1 > maxEventCount) return true;
     }
     return false;
   };
-  const eventBtns = items?.map((item, i) => (
-    <EventBtnSTY
-      key={`event-${cellTimestamp}-${i}`}
-      color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
-      duration={getEventDurationLeft(item)}
-      // className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}
-      // `}
-      className={`idx-${i} ${getIsHide(i) ? "hide" : ""}
-      `}
-    >
-      <EventBtn
-        item={item}
-        i={i}
-        cellTimestamp={cellTimestamp}
-        onClickEvent={
-          item.check_Status === "0"
-            ? renderSignOffEditForm.bind(null, item.drv_Schedule_No)
-            : renderEventStatus.bind(null, item.drv_Schedule_No)
-        }
-      />
-    </EventBtnSTY>
-  ));
 
-  const prevEventBtns = placeholders.map((item, i) =>
-    new Date(cellTimestamp).getDay() === 0 ? (
-      <EventBtnSTY
-        key={`event-${cellTimestamp}-${i}`}
-        color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
-        duration={getEventDurationLeft(item)}
-        className={`${
-          placeholders.length + i + 1 > maxEventCount ? "hide" : ""
-        }`}
-      >
-        <EventBtn
-          item={item}
-          i={i}
-          cellTimestamp={cellTimestamp}
-          onClickEvent={
-            item.check_Status === "0"
-              ? renderSignOffEditForm.bind(null, item.drv_Schedule_No)
-              : renderEventStatus.bind(null, item.drv_Schedule_No)
-          }
-        />
-      </EventBtnSTY>
-    ) : (
-      <EventBtnSTY
-        aria-hidden="true"
-        key={`placeholder-${cellTimestamp}-${i}`}
-        duration={1}
-        className="placeholder"
-        style={{
-          width: "100%",
-          pointerEvents: "none"
-        }}
-      ></EventBtnSTY>
-    )
-  );
+  //------ useEffect ------//
+  React.useEffect(() => {
+    const eventCount = placeholderEvents.length + shownEvents.length;
+    setEventCount(eventCount);
+  }, [schdUI.monthCount]);
 
   return (
     <EventListSTY
       maxEventCount={maxEventCount}
       style={{ pointerEvents: "none" }}
     >
-      {prevEventBtns}
-      {eventBtns}
+      {placeholderEvents.map((item, i) => (
+        <EventBtnSTY
+          aria-hidden="true"
+          key={`placeholder-${cellTimestamp}-${i}`}
+          duration={1}
+          className="placeholder"
+          style={{
+            width: "100%",
+            pointerEvents: "none"
+          }}
+        />
+      ))}
+      {shownEvents?.map((item, i) => (
+        <EventBtnSTY
+          key={`event-${cellTimestamp}-${i}`}
+          color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
+          duration={getEventDurationLeft(item)}
+          className={`${getIsHide(i) ? "hide" : ""}`}
+        >
+          <EventBtn
+            item={item}
+            i={i}
+            cellTimestamp={cellTimestamp}
+            onClickEvent={
+              item.check_Status === "0"
+                ? renderSignOffEditForm.bind(null, item.drv_Schedule_No)
+                : renderEventStatus.bind(null, item.drv_Schedule_No)
+            }
+          />
+        </EventBtnSTY>
+      ))}
     </EventListSTY>
   );
 };
