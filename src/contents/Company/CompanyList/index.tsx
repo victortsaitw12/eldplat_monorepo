@@ -2,16 +2,7 @@ import React, { useContext } from "react";
 import { BodySTY } from "./style";
 import Router from "next/router";
 
-import {
-  Pane,
-  Text,
-  Button,
-  IconButton,
-  FullscreenIcon,
-  SmallCrossIcon,
-  majorScale,
-  EditIcon
-} from "evergreen-ui";
+import { Pane, Text, Button, EditIcon } from "evergreen-ui";
 import Basic from "@contents/Company/CompanyList/Basic";
 import CountrySet from "./CountrySet";
 import CompanyRule from "./CompanyRule";

@@ -19,6 +19,8 @@ import RegionProvider from "@contexts/regionContext/regionProvider";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { PageInfoType } from "@services/type";
 import { mappingQueryData } from "@utils/mappingQueryData";
+import { I_PageInfo } from "@components/PaginationField";
+
 //
 const mainFilterArray = [
   { id: 1, label: "啟用", value: "1" },
