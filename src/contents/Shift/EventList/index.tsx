@@ -2,10 +2,8 @@ import React from "react";
 import { EventListSTY, EventBtnSTY } from "./style";
 
 import { SCHD_TYPE } from "../shift.data";
-import { formatDate } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import { getScheduleUpdateList } from "@services/schedule/getScheduleUpdateList";
 import EventBtn from "@contents/Shift/EventBtn";
 
 interface I_Props {
@@ -18,6 +16,9 @@ interface I_Props {
   setItems: (value: MonthlyData[]) => void;
   maxEventCount: number;
 }
+
+const TotalMS = 1000 * 60 * 60 * 24;
+
 const EventList = ({
   cellTimestamp,
   monthlyData,
@@ -28,11 +29,11 @@ const EventList = ({
   setItems,
   maxEventCount
 }: I_Props) => {
-  const UI = React.useContext(UIContext);
+  const schdUI = React.useContext(UIContext);
 
   React.useEffect(() => {
     const cellDateStart = new Date(cellTimestamp);
-    const cellDateEnd = new Date(cellTimestamp + 1000 * 60 * 60 * 24);
+    const cellDateEnd = new Date(cellTimestamp + TotalMS);
 
     const eventsthroughDate =
       monthlyData?.filter((shift: any): boolean => {
@@ -59,16 +60,16 @@ const EventList = ({
 
     setPlaceholders(eventsthroughDate);
     setItems(eventsStartsFromDate.concat(eventsInsideDate));
-  }, [monthlyData, UI.monthCount]);
+  }, [monthlyData, schdUI.monthCount]);
 
   //------ functions ------//
   const renderEventStatus = async (drv_Schedule_No: string) => {
-    UI.getEventStatusDrawer(drv_Schedule_No, cellTimestamp);
+    schdUI.getEventStatusDrawer(drv_Schedule_No, cellTimestamp);
     setIsOpenDrawer(true);
   };
 
   const renderSignOffEditForm = async (drv_Schedule_No: string) => {
-    UI.getSignOffEditDrawer(drv_Schedule_No, cellTimestamp);
+    schdUI.getSignOffEditDrawer(drv_Schedule_No, cellTimestamp);
     setIsOpenDrawer(true);
   };
 
@@ -77,17 +78,27 @@ const EventList = ({
     const eventDuration = Math.ceil(
       (new Date(item.schd_End_Time).valueOf() -
         new Date(cellTimestamp).valueOf()) /
-        (1000 * 60 * 60 * 24)
+        TotalMS
     );
     return eventDuration <= maxDuration ? eventDuration : maxDuration;
   };
-
+  const getIsHide = (idx: number) => {
+    const cellDay = new Date(cellTimestamp).getDay();
+    if (cellDay === 0) {
+      if (idx + 1 > maxEventCount) return true;
+    } else {
+      if (placeholders.length + idx + 1 > maxEventCount) return true;
+    }
+    return false;
+  };
   const eventBtns = items?.map((item, i) => (
     <EventBtnSTY
       key={`event-${cellTimestamp}-${i}`}
       color={SCHD_TYPE.get(item.schd_Type)?.color ?? "N300"}
       duration={getEventDurationLeft(item)}
-      className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}
+      // className={`${placeholders.length + i + 1 > maxEventCount ? "hide" : ""}
+      // `}
+      className={`idx-${i} ${getIsHide(i) ? "hide" : ""}
       `}
     >
       <EventBtn
@@ -134,9 +145,7 @@ const EventList = ({
           width: "100%",
           pointerEvents: "none"
         }}
-      >
-        {" "}
-      </EventBtnSTY>
+      ></EventBtnSTY>
     )
   );
 

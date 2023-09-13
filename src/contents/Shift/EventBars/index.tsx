@@ -22,8 +22,7 @@ const EventBars = ({
   setIsOpenDrawer,
   cellWidth
 }: I_Props) => {
-  // const [items, setItems] = React.useState<MonthlyData[]>([]);
-  const UI = React.useContext(UIContext);
+  const schdUI = React.useContext(UIContext);
 
   const eventsInDate = React.useMemo(() => {
     const cellDateStart = new Date(cellTimestamp);
@@ -41,12 +40,12 @@ const EventBars = ({
 
   //------ functions ------//
   const renderEventStatus = async (drv_Schedule_No: string) => {
-    UI.getEventStatusDrawer(drv_Schedule_No, cellTimestamp);
+    schdUI.getEventStatusDrawer(drv_Schedule_No, cellTimestamp);
     setIsOpenDrawer(true);
   };
 
   const renderSignOffEditForm = async (drv_Schedule_No: string) => {
-    UI.getSignOffEditDrawer(drv_Schedule_No, cellTimestamp);
+    schdUI.getSignOffEditDrawer(drv_Schedule_No, cellTimestamp);
     setIsOpenDrawer(true);
   };
 
@@ -60,7 +59,7 @@ const EventBars = ({
         ? cellTimestamp + TotalMS
         : new Date(item.schd_End_Time).valueOf();
     const duration = Math.ceil(
-      (eventEndInCell - eventStartInCell) / UI.timeframe
+      (eventEndInCell - eventStartInCell) / schdUI.timeframe
     );
     return duration;
   };
@@ -70,7 +69,7 @@ const EventBars = ({
     return Math.ceil(
       (new Date(item.schd_Start_Time).valueOf() -
         getDayStart(new Date(cellTimestamp)).valueOf()) /
-        UI.timeframe
+        schdUI.timeframe
     );
   };
   return (
