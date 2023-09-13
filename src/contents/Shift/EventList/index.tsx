@@ -31,6 +31,35 @@ const EventList = ({
 }: I_Props) => {
   const schdUI = React.useContext(UIContext);
 
+  const eventsInDate = React.useMemo(() => {
+    const cellDateStart = new Date(cellTimestamp);
+    const cellDateEnd = new Date(cellTimestamp + TotalMS);
+
+    // +placeholder(not Mon) OR +eventList(Mon)
+    const eventsStartBeforeDate =
+      monthlyData?.filter((shift: any): boolean => {
+        const eventStart = new Date(shift.schd_Start_Time);
+        const eventEnd = new Date(shift.schd_End_Time);
+        return eventStart < cellDateStart && eventEnd <= cellDateEnd;
+      }) || [];
+
+    // +placeholder
+    const eventsSpanAcrossDate =
+      monthlyData?.filter((shift: any): boolean => {
+        const eventStart = new Date(shift.schd_Start_Time);
+        const eventEnd = new Date(shift.schd_End_Time);
+        return eventStart < cellDateStart && eventEnd > cellDateEnd;
+      }) || [];
+
+    // +eventList
+    const eventsStartsInDate =
+      monthlyData?.filter((shift: any) => {
+        const eventStart = new Date(shift.schd_Start_Time);
+        const eventEnd = new Date(shift.schd_End_Time);
+        return eventStart >= cellDateStart && eventStart < cellDateEnd;
+      }) || [];
+  }, [cellTimestamp, monthlyData]);
+
   React.useEffect(() => {
     const cellDateStart = new Date(cellTimestamp);
     const cellDateEnd = new Date(cellTimestamp + TotalMS);
