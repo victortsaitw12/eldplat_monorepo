@@ -1,7 +1,7 @@
 import React from "react";
 import { CellSTY } from "./style";
-import { getDayEnd, formatDate, formatDateForAPI } from "../shift.util";
-import { MonthlyData, DateArrItem } from "../shift.typing";
+import { getDayEnd, formatDate, formatDateForAPI } from "../../shift.util";
+import { MonthlyData, DateArrItem } from "../../shift.typing";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { getScheduleSidebar } from "@services/schedule/getScheduleSidebar";

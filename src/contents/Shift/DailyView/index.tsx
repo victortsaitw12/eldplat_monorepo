@@ -7,7 +7,9 @@ import { getDayEnd } from "../shift.util";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import EventBars from "@contents/Shift/EventBars";
-import TimeCell from "@contents/Shift/TimeCell";
+import TimeCell from "@contents/Shift/DailyView/TimeCell";
+
+const TotalMS = 1000 * 60 * 60 * 24;
 
 const DailyView = ({
   initialMonthFirst,
@@ -93,7 +95,7 @@ const DailyView = ({
     dateArr.push({
       date: i + 1,
       day: WKDAY_LABEL.get((curMonthFirst.getDay() + i) % 7),
-      timestamp: curMonthFirst.valueOf() + 86400000 * i
+      timestamp: curMonthFirst.valueOf() + TotalMS * i
     });
   }
 

@@ -9,6 +9,8 @@ import EventTag from "@contents/Shift/EventTag";
 import { getDayStart } from "../shift.util";
 import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
 
+const TotalMS = 1000 * 60 * 60 * 24;
+
 interface I_OverviewTable {
   data: DriverData[];
   initialMonthFirst: Date;
@@ -120,7 +122,7 @@ const OverviewTable = ({
     dateArr.push({
       date: i + 1,
       day: wkday,
-      timestamp: curMonthFirst.valueOf() + 86400000 * i
+      timestamp: curMonthFirst.valueOf() + TotalMS * i
     });
   }
 

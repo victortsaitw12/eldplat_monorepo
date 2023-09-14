@@ -130,8 +130,6 @@ export interface UItyping {
   setTimeframe: React.Dispatch<React.SetStateAction<number>>;
   mousePosition: any;
   setMousePosition: React.Dispatch<React.SetStateAction<any>>;
-  isMouseMenuBtn: boolean;
-  setIsMouseMenuBtn: React.Dispatch<React.SetStateAction<boolean>>;
   resetState: () => void;
   getEventStatusDrawer: (
     drv_Schedule_No: string,

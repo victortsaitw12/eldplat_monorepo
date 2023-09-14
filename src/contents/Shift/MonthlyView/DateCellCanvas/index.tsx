@@ -1,8 +1,8 @@
 import React from "react";
 import { CellSTY } from "./style";
 
-import { getDayStart } from "../shift.util";
-import { DateArrItem } from "../shift.typing";
+import { getDayStart } from "../../shift.util";
+import { DateArrItem } from "../../shift.typing";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const DateCellCanvas = ({
