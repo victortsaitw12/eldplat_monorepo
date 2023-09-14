@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const DivSTY = styled.div<{ minCellH: number }>`
-  height: 100%;
+  min-height: calc(100% / 5);
+  height: fit-content;
   width: 100%;
   position: relative;
   display: flex;
@@ -26,12 +27,6 @@ export const DivSTY = styled.div<{ minCellH: number }>`
     min-height: ${({ minCellH }) => `${minCellH}px`};
     padding: 8px;
     z-index: 10;
-  }
-
-  .highlight {
-    background: ${({ theme }) => theme.color.N100};
-    position: relative;
-    z-index: 0;
   }
 
   .disabled {

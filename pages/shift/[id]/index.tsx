@@ -20,6 +20,7 @@ import { getScheduleList } from "@services/schedule/getScheduleList";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const containerRef = React.useRef(null);
   const { id, cur } = router.query;
   const [monthlyData, setMonthlyData] = React.useState<MonthlyData[] | null>(
     null
@@ -99,12 +100,13 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               page={false}
             />
             {view === "monthly" ? (
-              <div className="monthlyContainer">
+              <div className="monthlyContainer" ref={containerRef}>
                 <MonthlyView
                   monthlyData={monthlyData}
                   initialMonthFirst={initialMonthFirst}
                   setIsOpenDrawer={setIsOpenDrawer}
                   view={view}
+                  containerRef={containerRef}
                 />
               </div>
             ) : (

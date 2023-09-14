@@ -16,6 +16,7 @@ interface I_Props {
 
 const TotalMS = 1000 * 60 * 60 * 24;
 
+// TODO: EventList (<= EventBars)
 const EventList = ({
   cellTimestamp,
   monthlyData,

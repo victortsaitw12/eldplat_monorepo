@@ -2,7 +2,6 @@ import React from "react";
 import { DivSTY } from "./style";
 import { MonthlyData, DateArrItem } from "../../shift.typing";
 
-import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import DateCell from "@contents/Shift/MonthlyView/DateCell";
 import DateCellCanvas from "@contents/Shift/MonthlyView/DateCellCanvas";
 
@@ -12,6 +11,7 @@ interface I_Props {
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   view: "monthly" | "daily";
+  initEventCount: number;
 }
 
 const eventH = 24; // (Icon)16px + 4px * 2  > (font)0.86rem + 4px * 2
@@ -24,36 +24,16 @@ const WeekRow = ({
   idx,
   setIsOpenDrawer,
   monthlyData,
-  view
+  view,
+  initEventCount
 }: I_Props) => {
-  const scheduleUI = React.useContext(UIContext);
   const dateCellRef = React.useRef<HTMLDivElement>(null);
-  const [initMaxEventCount, setInitMaxEventCount] = React.useState<
-    number | null
-  >(null);
   const [maxEventCount, setMaxEventCount] = React.useState<number | null>(null);
 
   //------ functions ------//
-  const eventCount = React.useCallback(() => {
-    const cellH =
-      dateCellRef.current?.offsetHeight || eventH * 2 + gapH + cellPd; //保證至少eventCount=1
-    const updateMaxEventCount = Math.floor(
-      (cellH - cellPd * 2 - eventH) / (eventH + gapH)
-    );
-    return updateMaxEventCount <= 1 ? 1 : updateMaxEventCount;
-  }, [dateCellRef]);
-
-  const handleEventCount = React.useCallback(() => {
-    const updateMaxEventCount = eventCount();
-    setMaxEventCount(updateMaxEventCount);
-    if (!initMaxEventCount) setInitMaxEventCount(updateMaxEventCount);
-  }, [initMaxEventCount]);
-
-  // ------- useEffect ------- //
-  // monitor window for eventCount shown
   React.useEffect(() => {
-    handleEventCount();
-  }, [scheduleUI.monthCount]);
+    setMaxEventCount(initEventCount);
+  }, [initEventCount]);
 
   // TODO feat: resize
   // React.useEffect(() => {
@@ -89,11 +69,7 @@ const WeekRow = ({
   ));
 
   return (
-    <DivSTY
-      key={`wk-${idx}`}
-      minCellH={minCellH}
-      className={`dateCell__row row-${idx}`}
-    >
+    <DivSTY key={`wk-${idx}`} minCellH={minCellH} className={`row-${idx}`}>
       <div className="dateCell__canvas">{rowShadow}</div>
       <div className="dateCell__content"> {row}</div>
     </DivSTY>

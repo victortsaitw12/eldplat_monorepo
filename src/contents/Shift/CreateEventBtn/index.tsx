@@ -1,9 +1,9 @@
 import React from "react";
 import { AddIcon } from "evergreen-ui";
 import { CreateEventBtnSTY } from "./style";
-import { UIContext } from "@contexts/scheduleContext/UIProvider";
-
 import { getDayStart, getDayEnd } from "../shift.util";
+
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
 const CreateEventBtn = ({
   cellTimestamp,
@@ -38,7 +38,7 @@ const CreateEventBtn = ({
         startDate={scheduleUI.startDate}
         value={cellTimestamp}
         onMouseDown={handleSelectStardDate.bind(null, cellTimestamp)}
-        className={`${selectType} cell__createEventBtn`}
+        className={`${selectType}`}
       >
         <AddIcon style={{ color: "#D5E2F1" }} />
       </CreateEventBtnSTY>

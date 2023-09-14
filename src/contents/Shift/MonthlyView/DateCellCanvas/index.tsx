@@ -29,15 +29,13 @@ const DateCellCanvas = ({
   };
 
   return (
-    <>
-      <CellSTY
-        className={`monthly-date cell dateCell ${
-          date.disabled ? "disabled" : ""
-        } ${checkDateSelected.call(null, date.timestamp) ? "highlight" : ""}  
+    <CellSTY
+      className={`monthly-date cell dateCell ${
+        date.disabled ? "disabled" : ""
+      } ${checkDateSelected.call(null, date.timestamp) ? "highlight" : ""}  
             ${checkDateStart.call(null, date.timestamp) ? "start" : ""}
             row-${rowIndex}`}
-      ></CellSTY>
-    </>
+    />
   );
 };
 

@@ -26,8 +26,6 @@ const DateCell = React.forwardRef(function DateCell({
   dateCellRef: React.RefObject<HTMLDivElement>;
 }) {
   const scheduleUI = React.useContext(UIContext);
-  // TODO: EventList (<= EventBars)
-  // TODO: remove DateCellCanvas
   const [eventCount, setEventCount] = React.useState<number>(0);
   const [singleRowExpand, setSingleRowExpand] = React.useState<number | null>(
     null

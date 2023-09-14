@@ -13,9 +13,13 @@ interface I_Props {
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   view: "monthly" | "daily";
+  containerRef: any;
 }
 
 const TotalMS = 1000 * 60 * 60 * 24;
+const eventH = 24; // (Icon)16px + 4px * 2  > (font)0.86rem + 4px * 2
+const gapH = 4;
+const cellPd = 8;
 const getGroupingArr = (arr: any[], num: number) => {
   const result = [];
   let groupedItem = [];
@@ -33,7 +37,8 @@ const MonthlyView = ({
   initialMonthFirst,
   setIsOpenDrawer,
   monthlyData,
-  view
+  view,
+  containerRef
 }: I_Props) => {
   const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
@@ -53,6 +58,16 @@ const MonthlyView = ({
       title: "新增"
     });
     setIsOpenDrawer(true);
+  };
+
+  const getInitEventCount = () => {
+    if (!containerRef.current || !dateArrByWk) return 1;
+    const initRowHeight =
+      containerRef.current?.offsetHeight / dateArrByWk.length;
+    const initEventCount = Math.floor(
+      (initRowHeight - (eventH * 2 + gapH * 2 + cellPd)) / (eventH + gapH)
+    );
+    return initEventCount;
   };
 
   // ------- useEffect ------- //
@@ -116,9 +131,10 @@ const MonthlyView = ({
 
   const dateArr = getDateArr();
   const dateArrByWk = getGroupingArr(dateArr, 7);
+  const initEventCount = getInitEventCount();
 
   return (
-    <MonthlySTY rows={dateArrByWk.length}>
+    <MonthlySTY>
       <MonthlyHeader />
       {dateArrByWk.map((dateArr, i) => (
         <WeekRow
@@ -128,6 +144,7 @@ const MonthlyView = ({
           setIsOpenDrawer={setIsOpenDrawer}
           monthlyData={monthlyData}
           view={view}
+          initEventCount={initEventCount}
         />
       ))}
     </MonthlySTY>
