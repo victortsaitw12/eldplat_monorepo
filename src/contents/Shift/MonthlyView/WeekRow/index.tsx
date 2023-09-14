@@ -1,6 +1,7 @@
 import React from "react";
 import { DivSTY } from "./style";
 import { MonthlyData, DateArrItem } from "../../shift.typing";
+import { eventH, gapH, cellPd } from "../../shift.util";
 
 import DateCell from "@contents/Shift/MonthlyView/DateCell";
 import DateCellCanvas from "@contents/Shift/MonthlyView/DateCellCanvas";
@@ -14,9 +15,6 @@ interface I_Props {
   initEventCount: number;
 }
 
-const eventH = 24; // (Icon)16px + 4px * 2  > (font)0.86rem + 4px * 2
-const gapH = 4;
-const cellPd = 8;
 const minCellH = eventH * 3 + gapH * 2 + cellPd;
 
 const WeekRow = ({
@@ -35,7 +33,7 @@ const WeekRow = ({
     setMaxEventCount(initEventCount);
   }, [initEventCount]);
 
-  // TODO feat: resize
+  // TODO: feat: resize
   // React.useEffect(() => {
   //   const handleResize = () => {
   //     const updateMaxEventCount = eventCount();

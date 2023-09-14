@@ -3,13 +3,11 @@ import { useRouter } from "next/router";
 import { DailyViewSTY } from "./style";
 import { MonthlyData, TimeItem } from "../shift.typing";
 import { WKDAY_LABEL } from "@contents/Shift/shift.data";
-import { getDayEnd } from "../shift.util";
+import { getDayEnd, TotalMS } from "../shift.util";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import EventBars from "@contents/Shift/EventBars";
 import TimeCell from "@contents/Shift/DailyView/TimeCell";
-
-const TotalMS = 1000 * 60 * 60 * 24;
 
 const DailyView = ({
   initialMonthFirst,

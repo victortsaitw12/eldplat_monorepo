@@ -1,9 +1,9 @@
 import React from "react";
 import { EventBarsSTY, EventBarSTY } from "./style";
-
 import { SCHD_TYPE } from "../shift.data";
-import { getDayStart } from "../shift.util";
+import { getDayStart, TotalMS } from "../shift.util";
 import { MonthlyData } from "../shift.typing";
+
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import EventBtn from "@contents/Shift/EventBtn";
 
@@ -13,8 +13,6 @@ interface I_Props {
   setIsOpenDrawer: (value: boolean) => void;
   cellWidth: number;
 }
-
-const TotalMS = 1000 * 60 * 60 * 24;
 
 const EventBars = ({
   cellTimestamp,

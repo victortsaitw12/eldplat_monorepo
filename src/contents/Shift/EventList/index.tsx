@@ -1,8 +1,9 @@
 import React from "react";
 import { EventListSTY, EventBtnSTY } from "./style";
-
 import { SCHD_TYPE } from "../shift.data";
 import { MonthlyData } from "../shift.typing";
+import { TotalMS } from "../shift.util";
+
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import EventBtn from "@contents/Shift/EventBtn";
 
@@ -13,8 +14,6 @@ interface I_Props {
   setEventCount: (value: number) => void;
   maxEventCount: number;
 }
-
-const TotalMS = 1000 * 60 * 60 * 24;
 
 // TODO: EventList (<= EventBars)
 const EventList = ({

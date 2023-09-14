@@ -40,7 +40,7 @@ export const DivSTY = styled.div<{ minCellH: number }>`
       position: absolute;
       top: 0;
       left: 0;
-      background: #fff;
+      background: ${({ theme }) => theme.color.N0};
       opacity: 0.5;
       z-index: 99;
       cursor: not-allowed;

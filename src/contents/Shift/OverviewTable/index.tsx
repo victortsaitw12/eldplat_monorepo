@@ -6,10 +6,8 @@ import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { TableSTY } from "./style";
 import { WKDAY_LABEL, EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
-import { getDayStart } from "../shift.util";
+import { getDayStart, TotalMS } from "../shift.util";
 import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
-
-const TotalMS = 1000 * 60 * 60 * 24;
 
 interface I_OverviewTable {
   data: DriverData[];

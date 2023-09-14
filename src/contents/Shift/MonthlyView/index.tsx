@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { MonthlySTY } from "./style";
-import { getTotalDays } from "../shift.util";
+import { getTotalDays, TotalMS, eventH, gapH, cellPd } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
@@ -16,10 +16,6 @@ interface I_Props {
   containerRef: any;
 }
 
-const TotalMS = 1000 * 60 * 60 * 24;
-const eventH = 24; // (Icon)16px + 4px * 2  > (font)0.86rem + 4px * 2
-const gapH = 4;
-const cellPd = 8;
 const getGroupingArr = (arr: any[], num: number) => {
   const result = [];
   let groupedItem = [];
