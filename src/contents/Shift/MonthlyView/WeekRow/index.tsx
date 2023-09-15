@@ -26,50 +26,40 @@ const WeekRow = ({
   initEventCount
 }: I_Props) => {
   const dateCellRef = React.useRef<HTMLDivElement>(null);
-  const [maxEventCount, setMaxEventCount] = React.useState<number | null>(null);
+  const [maxEventCount, setMaxEventCount] = React.useState<number | null>(
+    initEventCount
+  );
 
-  //------ functions ------//
   React.useEffect(() => {
     setMaxEventCount(initEventCount);
   }, [initEventCount]);
 
-  // TODO: feat: resize
-  // React.useEffect(() => {
-  //   const handleResize = () => {
-  //     const updateMaxEventCount = eventCount();
-  //     setMaxEventCount(updateMaxEventCount);
-  //     setInitMaxEventCount(updateMaxEventCount);
-  //   };
-  //   window.addEventListener("resize", debounce(handleResize, 250));
-  //   return () => {
-  //     window.removeEventListener("resize", debounce(handleResize, 250));
-  //   };
-  // }, []);
-
-  const row = dateArr.map((date, i) => (
-    <DateCell
-      key={`datecell-${i}`}
-      rowIndex={Math.floor(i / 7)}
-      date={date}
-      setIsOpenDrawer={setIsOpenDrawer}
-      monthlyData={monthlyData}
-      view={view}
-      maxEventCount={maxEventCount || 1}
-      dateCellRef={dateCellRef}
-    ></DateCell>
-  ));
-  const rowShadow = dateArr.map((date, i) => (
-    <DateCellCanvas
-      key={`datecell-${i}`}
-      rowIndex={Math.floor(i / 7)}
-      date={date}
-    />
-  ));
-
   return (
     <DivSTY key={`wk-${idx}`} minCellH={minCellH} className={`row-${idx}`}>
-      <div className="dateCell__canvas">{rowShadow}</div>
-      <div className="dateCell__content"> {row}</div>
+      <div className="dateCell__canvas">
+        {dateArr.map((date, i) => (
+          <DateCellCanvas
+            key={`datecell-${i}`}
+            rowIndex={Math.floor(i / 7)}
+            date={date}
+          />
+        ))}
+      </div>
+      <div className="dateCell__content">
+        {" "}
+        {dateArr.map((date, i) => (
+          <DateCell
+            key={`datecell-${i}`}
+            rowIndex={Math.floor(i / 7)}
+            date={date}
+            setIsOpenDrawer={setIsOpenDrawer}
+            monthlyData={monthlyData}
+            view={view}
+            maxEventCount={maxEventCount || 1}
+            dateCellRef={dateCellRef}
+          ></DateCell>
+        ))}
+      </div>
     </DivSTY>
   );
 };

@@ -66,6 +66,14 @@ const MonthlyView = ({
     return initEventCount;
   };
 
+  const getIsFitContentNeeded = () => {
+    const initRowHeight =
+      containerRef.current?.offsetHeight / dateArrByWk.length;
+    const minimumRowHeight = eventH * 2 + gapH * 2 + cellPd + eventH * 1;
+    if (initRowHeight < minimumRowHeight) return true;
+    return false;
+  };
+
   // ------- useEffect ------- //
   React.useEffect(() => {
     if (!scheduleUI.id) return;
@@ -80,6 +88,19 @@ const MonthlyView = ({
       document.removeEventListener("mouseup", renderCreateForm);
     };
   }, [scheduleUI.isSelect]);
+
+  // TODO: feat: resize
+  // React.useEffect(() => {
+  //   const handleResize = () => {
+  //     const updateMaxEventCount = eventCount();
+  //     setMaxEventCount(updateMaxEventCount);
+  //     setInitMaxEventCount(updateMaxEventCount);
+  //   };
+  //   window.addEventListener("resize", debounce(handleResize, 250));
+  //   return () => {
+  //     window.removeEventListener("resize", debounce(handleResize, 250));
+  //   };
+  // }, []);
 
   const getDateArr = React.useCallback(() => {
     const dateArr: DateArrItem[] = [];
@@ -130,8 +151,7 @@ const MonthlyView = ({
   const initEventCount = getInitEventCount();
 
   return (
-    <MonthlySTY>
-      <MonthlyHeader />
+    <MonthlySTY className={`${getIsFitContentNeeded() ? "fitContent" : ""}`}>
       {dateArrByWk.map((dateArr, i) => (
         <WeekRow
           key={`wk-${i}`}
