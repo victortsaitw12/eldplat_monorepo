@@ -33,10 +33,6 @@ const WeekRow = ({
     setMaxEventCount(fillAvailableEventCount);
   }, [fillAvailableEventCount]);
 
-  // React.useEffect(() => {
-  //   setMaxEventCount(initEventCount);
-  // }, [initEventCount]);
-
   return (
     <DivSTY key={`wk-${idx}`} minCellH={minCellH} className={`row-${idx}`}>
       <div className="dateCell__canvas">

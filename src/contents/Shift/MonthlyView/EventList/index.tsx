@@ -97,7 +97,7 @@ const EventList = ({
   React.useEffect(() => {
     const eventCount = placeholderEvents.length + shownEvents.length;
     setEventCount(eventCount);
-  }, [schdUI.monthCount]);
+  }, [schdUI.monthCount, monthlyData]);
 
   return (
     <EventListSTY
