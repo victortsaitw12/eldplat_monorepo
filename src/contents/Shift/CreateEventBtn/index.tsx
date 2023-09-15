@@ -5,15 +5,13 @@ import { getDayStart, getDayEnd } from "../shift.util";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 
-const CreateEventBtn = ({
-  cellTimestamp,
-  view,
-  selectType = ""
-}: {
+interface I_Props {
   cellTimestamp: number;
   selectType?: string;
   view: "monthly" | "daily";
-}) => {
+}
+
+const CreateEventBtn = ({ cellTimestamp, view, selectType = "" }: I_Props) => {
   const scheduleUI = React.useContext(UIContext);
 
   //------ functions ------//
@@ -35,12 +33,11 @@ const CreateEventBtn = ({
   return (
     <>
       <CreateEventBtnSTY
-        startDate={scheduleUI.startDate}
-        value={cellTimestamp}
+        isOpaque={cellTimestamp === scheduleUI.startDate?.valueOf()}
         onMouseDown={handleSelectStardDate.bind(null, cellTimestamp)}
         className={`${selectType}`}
       >
-        <AddIcon style={{ color: "#D5E2F1" }} />
+        <AddIcon />
       </CreateEventBtnSTY>
     </>
   );

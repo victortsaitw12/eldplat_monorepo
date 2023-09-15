@@ -1,8 +1,8 @@
 import React from "react";
 import { EventBarsSTY, EventBarSTY } from "./style";
-import { SCHD_TYPE } from "../shift.data";
-import { getDayStart, TotalMS } from "../shift.util";
-import { MonthlyData } from "../shift.typing";
+import { SCHD_TYPE } from "../../shift.data";
+import { getDayStart, TotalMS } from "../../shift.util";
+import { MonthlyData } from "../../shift.typing";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import EventBtn from "@contents/Shift/EventBtn";

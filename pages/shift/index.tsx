@@ -11,7 +11,7 @@ import {
   defaultPageInfo
 } from "@services/schedule/getAllDriverScheduleListFiltered";
 import MonthPicker from "@contents/Shift/MonthPicker";
-import TableTitle from "@components/Table/TableTitle";
+import TableTitle from "@contents/Shift/TableTitle";
 import OverviewTable from "@contents/Shift/OverviewTable";
 import ZoomBar from "@components/ZoomBar";
 import { EVENT_TYPE } from "@contents/Shift/shift.data";

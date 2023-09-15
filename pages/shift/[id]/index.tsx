@@ -12,7 +12,7 @@ import MonthPicker from "@contents/Shift/MonthPicker";
 import MonthlyView from "@contents/Shift/MonthlyView";
 import DrawerContent from "@contents/Shift/DrawerContent";
 import Tabs from "@components/Tabs";
-import TableTitle from "@components/Table/TableTitle";
+import TableTitle from "@contents/Shift/TableTitle";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
 import TotalLeaveDays from "@contents/Shift/TotalLeaveDays";

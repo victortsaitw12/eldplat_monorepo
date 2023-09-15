@@ -12,10 +12,10 @@ interface I_Props {
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   view: "monthly" | "daily";
-  initEventCount: number;
+  fillAvailableEventCount: number;
 }
 
-const minCellH = eventH * 3 + gapH * 2 + cellPd;
+const minCellH = eventH * 3 + gapH * 2 + cellPd * 2;
 
 const WeekRow = ({
   dateArr,
@@ -23,16 +23,19 @@ const WeekRow = ({
   setIsOpenDrawer,
   monthlyData,
   view,
-  initEventCount
+  fillAvailableEventCount
 }: I_Props) => {
-  const dateCellRef = React.useRef<HTMLDivElement>(null);
   const [maxEventCount, setMaxEventCount] = React.useState<number | null>(
-    initEventCount
+    fillAvailableEventCount
   );
 
   React.useEffect(() => {
-    setMaxEventCount(initEventCount);
-  }, [initEventCount]);
+    setMaxEventCount(fillAvailableEventCount);
+  }, [fillAvailableEventCount]);
+
+  // React.useEffect(() => {
+  //   setMaxEventCount(initEventCount);
+  // }, [initEventCount]);
 
   return (
     <DivSTY key={`wk-${idx}`} minCellH={minCellH} className={`row-${idx}`}>
@@ -46,7 +49,6 @@ const WeekRow = ({
         ))}
       </div>
       <div className="dateCell__content">
-        {" "}
         {dateArr.map((date, i) => (
           <DateCell
             key={`datecell-${i}`}
@@ -56,8 +58,7 @@ const WeekRow = ({
             monthlyData={monthlyData}
             view={view}
             maxEventCount={maxEventCount || 1}
-            dateCellRef={dateCellRef}
-          ></DateCell>
+          />
         ))}
       </div>
     </DivSTY>

@@ -1,4 +1,3 @@
-import { translation } from "./../../../src/contexts/i18n/lan";
 import styled from "styled-components";
 import { ShiftSTY } from "../style";
 

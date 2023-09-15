@@ -9,7 +9,7 @@ export const MonthlySTY = styled.div`
   display: flex;
   flex-direction: column;
   /* shared style in headerCells & dateCells */
-  &.fitContent {
+  &.h-fit {
     height: fit-content;
     margin-bottom: 68px;
   }

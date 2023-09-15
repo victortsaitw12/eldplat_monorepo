@@ -1,8 +1,8 @@
 import React from "react";
 import { EventListSTY, EventBtnSTY } from "./style";
-import { SCHD_TYPE } from "../shift.data";
-import { MonthlyData } from "../shift.typing";
-import { TotalMS } from "../shift.util";
+import { SCHD_TYPE } from "../../shift.data";
+import { MonthlyData } from "../../shift.typing";
+import { TotalMS } from "../../shift.util";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import EventBtn from "@contents/Shift/EventBtn";
@@ -15,7 +15,6 @@ interface I_Props {
   maxEventCount: number;
 }
 
-// TODO: EventList (<= EventBars)
 const EventList = ({
   cellTimestamp,
   monthlyData,
@@ -23,9 +22,7 @@ const EventList = ({
   setEventCount,
   maxEventCount
 }: I_Props) => {
-  //------ variables, states ------//
   const schdUI = React.useContext(UIContext);
-
   const placeholderEvents = React.useMemo(() => {
     if (new Date(cellTimestamp).getDay() === 0) return [];
     const cellDateStart = cellTimestamp;

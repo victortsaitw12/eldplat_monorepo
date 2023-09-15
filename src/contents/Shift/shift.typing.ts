@@ -35,6 +35,7 @@ export interface InsertData {
   check_Status: string;
 }
 
+// TODO: renameing: I_schedule
 export interface MonthlyData {
   drv_Schedule_No: string;
   driver_No: string;

@@ -6,7 +6,7 @@ import { WKDAY_LABEL } from "@contents/Shift/shift.data";
 import { getDayEnd, TotalMS } from "../shift.util";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import EventBars from "@contents/Shift/EventBars";
+import EventBars from "@contents/Shift/DailyView/EventBars";
 import TimeCell from "@contents/Shift/DailyView/TimeCell";
 
 const DailyView = ({

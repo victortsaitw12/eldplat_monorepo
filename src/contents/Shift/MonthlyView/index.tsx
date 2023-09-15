@@ -5,7 +5,6 @@ import { getTotalDays, TotalMS, eventH, gapH, cellPd } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import MonthlyHeader from "@contents/Shift/MonthlyView/MonthlyHeader";
 import WeekRow from "@contents/Shift/MonthlyView/WeekRow";
 
 interface I_Props {
@@ -13,7 +12,7 @@ interface I_Props {
   setIsOpenDrawer: (value: boolean) => void;
   monthlyData: MonthlyData[] | null;
   view: "monthly" | "daily";
-  containerRef: any;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 const getGroupingArr = (arr: any[], num: number) => {
@@ -56,19 +55,19 @@ const MonthlyView = ({
     setIsOpenDrawer(true);
   };
 
-  const getInitEventCount = () => {
+  const getFillAvailableEventCount = () => {
     if (!containerRef.current || !dateArrByWk) return 1;
     const initRowHeight =
       containerRef.current?.offsetHeight / dateArrByWk.length;
-    const initEventCount = Math.floor(
+    const fillAvailableEventCount = Math.floor(
       (initRowHeight - (eventH * 2 + gapH * 2 + cellPd)) / (eventH + gapH)
     );
-    return initEventCount;
+    return fillAvailableEventCount;
   };
 
   const getIsFitContentNeeded = () => {
     const initRowHeight =
-      containerRef.current?.offsetHeight / dateArrByWk.length;
+      (containerRef.current?.offsetHeight || 0) / dateArrByWk.length;
     const minimumRowHeight = eventH * 2 + gapH * 2 + cellPd + eventH * 1;
     if (initRowHeight < minimumRowHeight) return true;
     return false;
@@ -148,10 +147,10 @@ const MonthlyView = ({
 
   const dateArr = getDateArr();
   const dateArrByWk = getGroupingArr(dateArr, 7);
-  const initEventCount = getInitEventCount();
+  const fillAvailableEventCount = getFillAvailableEventCount();
 
   return (
-    <MonthlySTY className={`${getIsFitContentNeeded() ? "fitContent" : ""}`}>
+    <MonthlySTY className={`${getIsFitContentNeeded() ? "h-fit" : ""}`}>
       {dateArrByWk.map((dateArr, i) => (
         <WeekRow
           key={`wk-${i}`}
@@ -160,7 +159,7 @@ const MonthlyView = ({
           setIsOpenDrawer={setIsOpenDrawer}
           monthlyData={monthlyData}
           view={view}
-          initEventCount={initEventCount}
+          fillAvailableEventCount={fillAvailableEventCount}
         />
       ))}
     </MonthlySTY>
