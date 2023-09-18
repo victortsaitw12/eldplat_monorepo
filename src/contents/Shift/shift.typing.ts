@@ -35,6 +35,7 @@ export interface InsertData {
   check_Status: string;
 }
 
+// TODO: renameing: I_schedule
 export interface MonthlyData {
   drv_Schedule_No: string;
   driver_No: string;
@@ -130,8 +131,6 @@ export interface UItyping {
   setTimeframe: React.Dispatch<React.SetStateAction<number>>;
   mousePosition: any;
   setMousePosition: React.Dispatch<React.SetStateAction<any>>;
-  isMouseMenuBtn: boolean;
-  setIsMouseMenuBtn: React.Dispatch<React.SetStateAction<boolean>>;
   resetState: () => void;
   getEventStatusDrawer: (
     drv_Schedule_No: string,

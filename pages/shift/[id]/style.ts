@@ -1,4 +1,3 @@
-import { translation } from "./../../../src/contexts/i18n/lan";
 import styled from "styled-components";
 import { ShiftSTY } from "../style";
 
@@ -30,6 +29,7 @@ export const ViewIdSTY = styled(ShiftSTY)<{ isOpenDrawer?: boolean }>`
       overflow: hidden;
       overflow-y: scroll;
       padding: 0px 20px 20px 20px;
+
       &::-webkit-scrollbar {
         /* display: none; */
       }

@@ -9,4 +9,9 @@ export const CellSTY = styled.div`
   &:nth-child(7n + 1) {
     border-left: none;
   }
+  &.highlight {
+    background: ${({ theme }) => theme.color.N100};
+    position: relative;
+    z-index: 0;
+  }
 `;

@@ -1,44 +1,43 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { MonthlySTY, MouseMenuBtnSTY } from "./style";
-import { getTotalDays, debounce } from "../shift.util";
+import { MonthlySTY } from "./style";
+import { getTotalDays, TotalMS, eventH, gapH, cellPd } from "../shift.util";
 import { MonthlyData, DateArrItem } from "../shift.typing";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import DateCell from "@contents/Shift/DateCell";
-import DateCellCanvas from "@contents/Shift/DateCellCanvas";
+import WeekRow from "@contents/Shift/MonthlyView/WeekRow";
+
+interface I_Props {
+  initialMonthFirst: Date;
+  setIsOpenDrawer: (value: boolean) => void;
+  monthlyData: MonthlyData[] | null;
+  view: "monthly" | "daily";
+  containerRef: React.RefObject<HTMLDivElement>;
+}
+
+const getGroupingArr = (arr: any[], num: number) => {
+  const result = [];
+  let groupedItem = [];
+  for (let i = 0; i < arr.length; i++) {
+    groupedItem.push(arr[i]);
+    if ((i + 1) % num === 0) {
+      result.push(groupedItem);
+      groupedItem = [];
+    }
+  }
+  return result;
+};
 
 const MonthlyView = ({
   initialMonthFirst,
   setIsOpenDrawer,
   monthlyData,
-  view
-}: {
-  initialMonthFirst: Date;
-  setIsOpenDrawer: (value: boolean) => void;
-  monthlyData: MonthlyData[] | null;
-  view: "monthly" | "daily";
-}) => {
+  view,
+  containerRef
+}: I_Props) => {
   const scheduleUI = React.useContext(UIContext);
   const router = useRouter();
   scheduleUI.setId(router.query.id);
-  const dateCellRef = React.useRef<HTMLDivElement>(null);
-  const [initMaxEventCount, setInitMaxEventCount] = React.useState<
-    number | null
-  >(null);
-  const [maxEventCount, setMaxEventCount] = React.useState<number | null>(null);
-
-  //------ variables & constants ------//
-  const wkDays = ["日", "一", "二", "三", "四", "五", "六"];
-  const curMonthFirst: Date = new Date(
-    initialMonthFirst.getFullYear(),
-    initialMonthFirst.getMonth() + scheduleUI.monthCount,
-    1
-  );
-  const eventH = 24; // (Icon)16px + 4px * 2  > (font)0.86rem + 4px * 2
-  const gapH = 4;
-  const cellPd = 8;
-  const minCellH = eventH * 3 + gapH * 2 + cellPd;
 
   //------ functions ------//
   const initInsertData = () => {
@@ -46,6 +45,7 @@ const MonthlyView = ({
     updated.driver_no = scheduleUI.id;
     scheduleUI.setInsertData(updated);
   };
+
   const renderCreateForm = () => {
     scheduleUI.setIsSelect(false);
     scheduleUI.setDrawerType({
@@ -55,19 +55,23 @@ const MonthlyView = ({
     setIsOpenDrawer(true);
   };
 
-  const eventCount = React.useCallback(() => {
-    const cellH =
-      dateCellRef.current?.offsetHeight || eventH * 2 + gapH + cellPd; //保證至少eventCount=1
-    const updateMaxEventCount = Math.floor(
-      (cellH - cellPd * 2 - eventH) / (eventH + gapH)
+  const getFillAvailableEventCount = () => {
+    if (!containerRef.current || !dateArrByWk) return 1;
+    const initRowHeight =
+      containerRef.current?.offsetHeight / dateArrByWk.length;
+    const fillAvailableEventCount = Math.floor(
+      (initRowHeight - (eventH * 2 + gapH * 2 + cellPd)) / (eventH + gapH)
     );
-    return updateMaxEventCount <= 1 ? 1 : updateMaxEventCount;
-  }, [dateCellRef]);
-  const handleEventCount = React.useCallback(() => {
-    const updateMaxEventCount = eventCount();
-    setMaxEventCount(updateMaxEventCount);
-    if (!initMaxEventCount) setInitMaxEventCount(updateMaxEventCount);
-  }, [initMaxEventCount]);
+    return fillAvailableEventCount;
+  };
+
+  const getIsFitContentNeeded = () => {
+    const initRowHeight =
+      (containerRef.current?.offsetHeight || 0) / dateArrByWk.length;
+    const minimumRowHeight = eventH * 2 + gapH * 2 + cellPd + eventH * 1;
+    if (initRowHeight < minimumRowHeight) return true;
+    return false;
+  };
 
   // ------- useEffect ------- //
   React.useEffect(() => {
@@ -75,12 +79,16 @@ const MonthlyView = ({
     initInsertData();
   }, [scheduleUI.id]);
 
-  // monitor window for eventCount shown
+  // handle isSelect end
   React.useEffect(() => {
-    handleEventCount();
-  }, [scheduleUI.monthCount]);
+    if (scheduleUI.isSelect)
+      document.addEventListener("mouseup", renderCreateForm);
+    return () => {
+      document.removeEventListener("mouseup", renderCreateForm);
+    };
+  }, [scheduleUI.isSelect]);
 
-  // TODO feat: resize
+  // TODO: feat: resize
   // React.useEffect(() => {
   //   const handleResize = () => {
   //     const updateMaxEventCount = eventCount();
@@ -93,119 +101,67 @@ const MonthlyView = ({
   //   };
   // }, []);
 
-  // handle isSelect end
-  React.useEffect(() => {
-    if (scheduleUI.isSelect)
-      document.addEventListener("mouseup", renderCreateForm);
-    return () => {
-      document.removeEventListener("mouseup", renderCreateForm);
-    };
-  }, [scheduleUI.isSelect]);
+  const getDateArr = React.useCallback(() => {
+    const dateArr: DateArrItem[] = [];
+    const curMonthFirst: Date = new Date(
+      initialMonthFirst.getFullYear(),
+      initialMonthFirst.getMonth() + scheduleUI.monthCount,
+      1
+    );
+    // prev month
+    const lastSunday = new Date(
+      curMonthFirst.valueOf() - curMonthFirst.getDay() * TotalMS
+    );
 
-  //------ render ------//
-  const dateArr: Array<DateArrItem> = [];
-  // prev month
-  const lastSunday = new Date(
-    curMonthFirst.valueOf() - curMonthFirst.getDay() * 86400000
-  );
+    for (let i = 0; i < curMonthFirst.getDay(); i++) {
+      dateArr.push({
+        date: lastSunday.getDate() + i,
+        day: i,
+        timestamp: lastSunday.valueOf() + TotalMS * i,
+        disabled: true
+      });
+    }
+    // current month
+    for (let i = 0; i < getTotalDays(curMonthFirst); i++) {
+      dateArr.push({
+        date: i + 1,
+        day: (curMonthFirst.getDay() + i) % 7,
+        timestamp: curMonthFirst.valueOf() + TotalMS * i,
+        disabled: false
+      });
+    }
+    // next month
+    const curMonthLast = new Date(
+      curMonthFirst.valueOf() + (getTotalDays(curMonthFirst) - 1) * TotalMS
+    );
+    for (let i = 1; i <= 6; i++) {
+      dateArr.push({
+        date: i,
+        day: curMonthLast.getDay() + i,
+        timestamp: curMonthLast.valueOf() + TotalMS * i,
+        disabled: true
+      });
+    }
+    return dateArr;
+  }, [initialMonthFirst, scheduleUI.monthCount]);
 
-  for (let i = 0; i < curMonthFirst.getDay(); i++) {
-    dateArr.push({
-      date: lastSunday.getDate() + i,
-      day: i,
-      timestamp: lastSunday.valueOf() + 86400000 * i,
-      disabled: true
-    });
-  }
-  for (let i = 0; i < getTotalDays(curMonthFirst); i++) {
-    dateArr.push({
-      date: i + 1,
-      day: (curMonthFirst.getDay() + i) % 7,
-      timestamp: curMonthFirst.valueOf() + 86400000 * i,
-      disabled: false
-    });
-  }
-  // next month
-  const curMonthLast = new Date(
-    curMonthFirst.valueOf() + (getTotalDays(curMonthFirst) - 1) * 86400000
-  );
-  for (let i = 1; i <= 6; i++) {
-    dateArr.push({
-      date: i,
-      day: curMonthLast.getDay() + i,
-      timestamp: curMonthLast.valueOf() + 86400000 * i,
-      disabled: true
-    });
-  }
+  const dateArr = getDateArr();
+  const dateArrByWk = getGroupingArr(dateArr, 7);
+  const fillAvailableEventCount = getFillAvailableEventCount();
 
-  // separate rows
-  const renderRow = () => {
-    const rowArr = [];
-    let row = [];
-    let rowShadow = [];
-
-    for (let i = 0; i < dateArr.length; i++) {
-      row.push(
-        <DateCell
-          key={`datecell-${i}`}
-          rowIndex={Math.floor(i / 7)}
-          date={dateArr[i]}
+  return (
+    <MonthlySTY className={`${getIsFitContentNeeded() ? "h-fit" : ""}`}>
+      {dateArrByWk.map((dateArr, i) => (
+        <WeekRow
+          key={`wk-${i}`}
+          dateArr={dateArr}
+          idx={i}
           setIsOpenDrawer={setIsOpenDrawer}
           monthlyData={monthlyData}
           view={view}
-          maxEventCount={maxEventCount || 1}
-          dateCellRef={dateCellRef}
+          fillAvailableEventCount={fillAvailableEventCount}
         />
-      );
-      rowShadow.push(
-        <DateCellCanvas
-          key={`datecell-${i}`}
-          rowIndex={Math.floor(i / 7)}
-          date={dateArr[i]}
-        />
-      );
-      if (i % 7 === 6) {
-        const rowIndex = Math.floor(i / 7);
-        rowArr.push(
-          <div
-            key={`row-${rowIndex}`}
-            className={`dateCell__row row-${rowIndex}`}
-          >
-            <div className="dateCell__canvas">{rowShadow}</div>
-            <div className="dateCell__content"> {row}</div>
-          </div>
-        );
-        row = [];
-        rowShadow = [];
-      }
-    }
-    return rowArr;
-  };
-
-  return (
-    <MonthlySTY rows={dateArr.length / 7} minCellH={minCellH}>
-      <div className="headerCells">
-        {wkDays.map((item, i) => (
-          <div
-            key={`day-${i}`}
-            className={`cell headerCell ${i === 0 || i === 6 ? "weekend" : ""}`}
-          >
-            {item}
-          </div>
-        ))}
-      </div>
-      <div className="dateCells">{renderRow()}</div>
-      <div style={{ paddingBottom: "68px" }}> </div>
-      {scheduleUI.isMouseMenuBtn && (
-        <MouseMenuBtnSTY
-          style={{
-            top: scheduleUI.mousePosition.y,
-            left: scheduleUI.mousePosition.x
-          }}
-        >
-          Next Month View
-        </MouseMenuBtnSTY>
-      )}
+      ))}
     </MonthlySTY>
   );
 };

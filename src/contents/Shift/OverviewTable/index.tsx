@@ -6,7 +6,7 @@ import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { TableSTY } from "./style";
 import { WKDAY_LABEL, EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
-import { getDayStart } from "../shift.util";
+import { getDayStart, TotalMS } from "../shift.util";
 import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
 
 interface I_OverviewTable {
@@ -120,7 +120,7 @@ const OverviewTable = ({
     dateArr.push({
       date: i + 1,
       day: wkday,
-      timestamp: curMonthFirst.valueOf() + 86400000 * i
+      timestamp: curMonthFirst.valueOf() + TotalMS * i
     });
   }
 

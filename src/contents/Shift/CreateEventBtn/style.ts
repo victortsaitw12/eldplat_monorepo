@@ -1,12 +1,11 @@
 import styled from "styled-components";
+import { eventH } from "../shift.util";
 
 export const CreateEventBtnSTY = styled.button<{
-  startDate?: Date;
+  isOpaque?: boolean;
 }>`
-  min-height: ${({ theme }) =>
-    "calc(" + theme.fontSize.Heading200 + " + 4px * 2)"};
-  opacity: ${(props) =>
-    props.value === props.startDate?.valueOf() ? "1" : "0"};
+  min-height: ${eventH} px;
+  opacity: ${(props) => (props.isOpaque ? "1" : "0")};
   background: ${({ theme }) => theme.color.N100};
   border: none;
   border-radius: 4px;
@@ -15,5 +14,8 @@ export const CreateEventBtnSTY = styled.button<{
   cursor: pointer;
   &:hover {
     opacity: 1;
+  }
+  svg {
+    color: ${({ theme }) => theme.color.N300};
   }
 `;
