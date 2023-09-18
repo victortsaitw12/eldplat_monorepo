@@ -1,19 +1,17 @@
 import React from "react";
 import { AddIcon } from "evergreen-ui";
 import { CreateEventBtnSTY } from "./style";
-import { UIContext } from "@contexts/scheduleContext/UIProvider";
-
 import { getDayStart, getDayEnd } from "../shift.util";
 
-const CreateEventBtn = ({
-  cellTimestamp,
-  view,
-  selectType = ""
-}: {
+import { UIContext } from "@contexts/scheduleContext/UIProvider";
+
+interface I_Props {
   cellTimestamp: number;
   selectType?: string;
   view: "monthly" | "daily";
-}) => {
+}
+
+const CreateEventBtn = ({ cellTimestamp, view, selectType = "" }: I_Props) => {
   const scheduleUI = React.useContext(UIContext);
 
   //------ functions ------//
@@ -35,12 +33,11 @@ const CreateEventBtn = ({
   return (
     <>
       <CreateEventBtnSTY
-        startDate={scheduleUI.startDate}
-        value={cellTimestamp}
+        isOpaque={cellTimestamp === scheduleUI.startDate?.valueOf()}
         onMouseDown={handleSelectStardDate.bind(null, cellTimestamp)}
-        className={`${selectType} cell__createEventBtn`}
+        className={`${selectType}`}
       >
-        <AddIcon style={{ color: "#D5E2F1" }} />
+        <AddIcon />
       </CreateEventBtnSTY>
     </>
   );

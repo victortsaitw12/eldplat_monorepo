@@ -2,6 +2,10 @@
  1. CONSANTS
 ------------------- */
 export const MINUTE_INTERVAL = 15;
+export const TotalMS = 1000 * 60 * 60 * 24;
+export const eventH = 24; // (Icon)16px + 4px * 2  > (font)0.86rem + 4px * 2
+export const gapH = 4;
+export const cellPd = 8;
 
 /* -------------------
  2. GET STH (DATE OR NUMBER for javascript calculation)

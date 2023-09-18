@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import { DailyViewSTY } from "./style";
 import { MonthlyData, TimeItem } from "../shift.typing";
 import { WKDAY_LABEL } from "@contents/Shift/shift.data";
-import { getDayEnd } from "../shift.util";
+import { getDayEnd, TotalMS } from "../shift.util";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import EventBars from "@contents/Shift/EventBars";
-import TimeCell from "@contents/Shift/TimeCell";
+import EventBars from "@contents/Shift/DailyView/EventBars";
+import TimeCell from "@contents/Shift/DailyView/TimeCell";
 
 const DailyView = ({
   initialMonthFirst,
@@ -93,7 +93,7 @@ const DailyView = ({
     dateArr.push({
       date: i + 1,
       day: WKDAY_LABEL.get((curMonthFirst.getDay() + i) % 7),
-      timestamp: curMonthFirst.valueOf() + 86400000 * i
+      timestamp: curMonthFirst.valueOf() + TotalMS * i
     });
   }
 

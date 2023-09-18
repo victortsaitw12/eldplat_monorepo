@@ -12,14 +12,16 @@ import MonthPicker from "@contents/Shift/MonthPicker";
 import MonthlyView from "@contents/Shift/MonthlyView";
 import DrawerContent from "@contents/Shift/DrawerContent";
 import Tabs from "@components/Tabs";
-import TableTitle from "@components/Table/TableTitle";
+import TableTitle from "@contents/Shift/TableTitle";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
 import TotalLeaveDays from "@contents/Shift/TotalLeaveDays";
 import { getScheduleList } from "@services/schedule/getScheduleList";
+import MonthlyHeader from "@contents/Shift/MonthlyView/MonthlyHeader";
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const containerRef = React.useRef(null);
   const { id, cur } = router.query;
   const [monthlyData, setMonthlyData] = React.useState<MonthlyData[] | null>(
     null
@@ -62,6 +64,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     if (!id) return;
     fetchData();
   }, [id]);
+
   //------ render ------//
   const tableName = [
     <MonthPicker key="monthpicker" initialMonthFirst={initialMonthFirst} />,
@@ -98,16 +101,19 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               sub={[]}
               page={false}
             />
-            {view === "monthly" ? (
-              <div className="monthlyContainer">
+            {view === "monthly" && (
+              <div className="monthlyContainer" ref={containerRef}>
+                <MonthlyHeader />
                 <MonthlyView
                   monthlyData={monthlyData}
                   initialMonthFirst={initialMonthFirst}
                   setIsOpenDrawer={setIsOpenDrawer}
                   view={view}
+                  containerRef={containerRef}
                 />
               </div>
-            ) : (
+            )}
+            {view === "daily" && (
               <div className="dailyContainer">
                 <DailyView
                   monthlyData={monthlyData}

@@ -43,8 +43,6 @@ export const UIProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [timeframe, setTimeframe] = React.useState<number>(defaultTimeframe);
   const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
-  const [isMouseMenuBtn, setIsMouseMenuBtn] = React.useState(false);
-
   const resetState = React.useCallback((): void => {
     setIsSelect(false);
     setStartDate(null);
@@ -121,8 +119,6 @@ export const UIProvider = ({ children }: any) => {
     setTimeframe,
     mousePosition,
     setMousePosition,
-    isMouseMenuBtn,
-    setIsMouseMenuBtn,
     // function //
     resetState,
     getEventStatusDrawer,
