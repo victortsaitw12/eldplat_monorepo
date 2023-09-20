@@ -36,6 +36,7 @@ const TimeInput = ({ date, setDate, disabled = false, ...props }: I_Props) => {
     dayjs(date).hour() >= 12 ? 12 : 0
   );
   const dateBase = dayjs(date).startOf("day");
+  console.log("🍅 date", date);
 
   React.useEffect(() => {
     const updatedDate = dayjs(dateBase)
