@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
-import { Text } from "evergreen-ui";
+import { Text, toaster } from "evergreen-ui";
 //
 import { getLayout } from "@layout/MainLayout";
 import LoadingSpinner from "@components/LoadingSpinner";
@@ -309,6 +309,7 @@ const Page: NextPageWithLayout<never> = () => {
       return result;
     } catch (e: any) {
       console.log(e.message);
+      toaster.warning("發生錯誤，請再試一次");
     }
   };
 
@@ -317,6 +318,7 @@ const Page: NextPageWithLayout<never> = () => {
     const type =
       item.assignment_no.substring(0, 3) === "BAM" ? "editCar" : "editDriver";
     const result = await fetchEditData(item.assignment_no, type);
+    if (!result) return;
     setFirstDrawerOpen(type);
     const newResult = { ...result.dataList[0] };
     newResult["car_no"] = item.bus_day_number;
