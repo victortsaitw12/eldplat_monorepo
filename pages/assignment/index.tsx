@@ -100,7 +100,6 @@ const Page: NextPageWithLayout<never> = () => {
     }
   }
   useEffect(() => {
-    console.log("disabledAutoList", disabledAutoList);
     setData((oldData: Array<any>) => {
       if (!oldData) return oldData;
       const updateData = oldData.map((item) => {
@@ -129,7 +128,6 @@ const Page: NextPageWithLayout<never> = () => {
       return updateData;
     });
   }, [disabledAutoList]);
-  console.log("data!!!", data);
   const {
     initializeSubFilter,
     mainFilter,
@@ -161,7 +159,6 @@ const Page: NextPageWithLayout<never> = () => {
                 : router.push(
                     `/admin_orders/detail/${data.maintenance_quote_no}?type=1`
                   );
-              console.log("goToPageDetail");
             }}
           >
             {data.maintenance_quote_no || "--"}
@@ -299,29 +296,33 @@ const Page: NextPageWithLayout<never> = () => {
     fetchAssignData(false, nowTab, newPageInfo);
   };
 
-  // 打開派單編輯頁
-  const goToEditPageHandler = async (item: any) => {
-    console.log("item for EDIT : ", item);
-    if (item.assignment_no.substring(0, 3) === "BAM") {
-      const result = await getBusAssignmentInfo(item.assignment_no);
-      console.log("result for bus single assignment", result);
-      setFirstDrawerOpen("editCar");
-      const newResult = { ...result.dataList[0] };
-      newResult["plate"] = item.license_plate;
-      newResult["car_no"] = item.bus_day_number;
-      newResult["assign_type"] = "派車";
-      newResult["assignment_no"] = item.assignment_no;
-      setEditData(newResult);
-    } else {
-      const result = await getDriverAssignmentInfo(item.assignment_no);
-      console.log("result for driver single assignment", result);
-      setFirstDrawerOpen("editDriver");
-      const newResult = { ...result.dataList[0] };
-      newResult["car_no"] = item.bus_day_number;
-      newResult["assign_type"] = "派工";
-      newResult["assignment_no"] = item.assignment_no;
-      setEditData(newResult);
+  const fetchEditData = async (
+    assignment_no: string,
+    type: "editCar" | "editDriver"
+  ) => {
+    try {
+      const result =
+        type === "editCar"
+          ? await getBusAssignmentInfo(assignment_no)
+          : await getDriverAssignmentInfo(assignment_no);
+      if (result.statusCode !== "200") throw new Error(`${result.message}`);
+      return result;
+    } catch (e: any) {
+      console.log(e.message);
     }
+  };
+
+  // 打開派單編輯側欄
+  const goToEditPageHandler = async (item: any) => {
+    const type =
+      item.assignment_no.substring(0, 3) === "BAM" ? "editCar" : "editDriver";
+    const result = await fetchEditData(item.assignment_no, type);
+    setFirstDrawerOpen(type);
+    const newResult = { ...result.dataList[0] };
+    newResult["car_no"] = item.bus_day_number;
+    newResult["assignment_no"] = item.assignment_no;
+    if (type === "editCar") newResult["plate"] = item.license_plate;
+    setEditData(newResult);
   };
 
   // ⭐新增派車單: onChange
@@ -616,15 +617,15 @@ const Page: NextPageWithLayout<never> = () => {
 
   // TODO naming assignData => data
   // TODO naming subAssignData => subData
-  console.log("0️⃣assignData", data);
-  console.log("1️⃣orderInfo", orderInfo);
-  console.log("2️⃣showSecondTitle", showSecondTitle);
-  console.log("3️⃣carArr", carArr);
-  console.log("4️⃣manual_bus", createAssignData.manual_bus);
-  console.log("5️⃣createAssignData", createAssignData);
-  console.log("6️⃣subAssignData", subAssignData);
-  console.log("7️⃣orderIndex", orderIndex);
-  console.log("8️⃣firstDrawerOpen", firstDrawerOpen);
+  // console.log("0️⃣assignData", data);
+  // console.log("1️⃣orderInfo", orderInfo);
+  // console.log("2️⃣showSecondTitle", showSecondTitle);
+  // console.log("3️⃣carArr", carArr);
+  // console.log("4️⃣manual_bus", createAssignData.manual_bus);
+  // console.log("5️⃣createAssignData", createAssignData);
+  // console.log("6️⃣subAssignData", subAssignData);
+  // console.log("7️⃣orderIndex", orderIndex);
+  // console.log("8️⃣firstDrawerOpen", firstDrawerOpen);
   console.log("9️⃣editData", editData);
 
   return (

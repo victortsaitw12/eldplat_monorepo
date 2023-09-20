@@ -23,16 +23,13 @@ const customTheme = mergeTheme(defaultTheme, {
   }
 });
 
-const TimeInput = ({
-  date,
-  setDate,
-  disabled = false,
-  ...props
-}: {
+interface I_Props {
   date: string;
   setDate: (date: string) => void;
   disabled?: boolean;
-}) => {
+}
+
+const TimeInput = ({ date, setDate, disabled = false, ...props }: I_Props) => {
   const [hour, setHour] = React.useState<number>(dayjs(date).hour() % 12 || 0);
   const [minute, setMinute] = React.useState<number>(dayjs(date).minute() || 0);
   const [timeslot, setTimeslot] = React.useState<number>(
@@ -57,7 +54,7 @@ const TimeInput = ({
   const handleTimeslotChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTimeslot(parseInt(e.target.value));
   };
-  const hourOptions = () => {
+  const getHourOptions = () => {
     const options = [];
     let i = 0;
     while (i <= 12) {
@@ -81,7 +78,7 @@ const TimeInput = ({
     );
     return optionArr;
   };
-  const minOptions = () => {
+  const getMinOptions = () => {
     const arr = [];
     let i = 0;
     while (i < 60) {
@@ -97,7 +94,7 @@ const TimeInput = ({
     arr.push(<option>59</option>);
     return arr;
   };
-  const timeslotOptions = () => {
+  const getTimeslotOptions = () => {
     const options = [
       { value: 0, label: "AM" },
       { value: 12, label: "PM" }
@@ -111,6 +108,10 @@ const TimeInput = ({
     return arr;
   };
 
+  const hourOptions = getHourOptions();
+  const minOptions = getMinOptions();
+  const timeslotOptions = getTimeslotOptions();
+
   return (
     <ThemeProvider value={customTheme}>
       <Group className="startRow__time" style={{ gap: "8px" }}>
@@ -121,7 +122,7 @@ const TimeInput = ({
           onChange={handleHourChange}
           disabled={!date || disabled}
         >
-          {hourOptions()}
+          {hourOptions}
         </Select>
         <span style={{ lineHeight: "32px" }}>:</span>
         <Select
@@ -130,7 +131,7 @@ const TimeInput = ({
           onChange={handleMinuteChange}
           disabled={!date || disabled}
         >
-          {minOptions()}
+          {minOptions}
         </Select>
         <Select
           className="timepicker-time"
@@ -138,7 +139,7 @@ const TimeInput = ({
           onChange={handleTimeslotChange}
           disabled={!date || disabled}
         >
-          {timeslotOptions()}
+          {timeslotOptions}
         </Select>
       </Group>
     </ThemeProvider>

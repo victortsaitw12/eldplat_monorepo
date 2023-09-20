@@ -8,7 +8,8 @@ import {
   Pane,
   Paragraph,
   TextareaField,
-  Group
+  Group,
+  Spinner
 } from "evergreen-ui";
 
 //@layout
@@ -180,10 +181,7 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
     const newUpdateData = {
       assignment_no,
       bus_group,
-      bus_driver_no:
-        updateData.assign_type === "派車"
-          ? updateData.bus_no
-          : updateData.driver_no,
+      bus_driver_no: updateData.driver_no,
       task_start_time,
       task_end_time,
       remark
@@ -200,6 +198,13 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
 
   console.log("updateData in 派工", updateData);
 
+  // if (loading || !editData)
+  //   return (
+  //     <Pane>
+  //       <Spinner />
+  //     </Pane>
+  //   );
+
   return (
     <FormSTY>
       {/* 資訊小方塊 */}
@@ -208,10 +213,7 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
           <Paragraph>
             {dayjs(editData.task_start_time).format("YYYY/MM/DD")} {weekdayName}
           </Paragraph>
-          <Paragraph>
-            {" "}
-            第0{editData.car_no}車 {editData.assign_type}
-          </Paragraph>
+          <Paragraph> 第0{editData.car_no}車 派工</Paragraph>
         </Pane>
         <Paragraph>{editData.assignment_no}</Paragraph>
       </Pane>

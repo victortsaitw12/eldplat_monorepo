@@ -9,7 +9,8 @@ import {
   Paragraph,
   TextInputField,
   TextareaField,
-  Group
+  Group,
+  Spinner
 } from "evergreen-ui";
 
 //@layout
@@ -24,6 +25,7 @@ import { UpdateSingleAssignment } from "@services/assignment/UpdateSingleAssignm
 import { useRouter } from "next/router";
 
 //@components
+import TimeInput from "@components/Timepicker/TimeInput";
 
 interface I_AssignManualCreateProps {
   editData: any;
@@ -42,7 +44,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
       license_plate: ""
     }
   ]);
-  const [plateNo, setPlateNo] = useState<string>(editData.plate);
+  const [plateNo, setPlateNo] = useState<string>(editData.plate || null);
   const [weekdayName, setWeekdayName] = useState<string>("");
   const [updateData, setUpdateData] = useState<any>(editData);
 
@@ -64,8 +66,6 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
       Number(dayjs(editData.task_end_time).format("HH")) > 12 ? "pm" : "am"
   });
 
-  console.log("editData", editData);
-
   // 一進來先抓DDL和資料庫原本儲存的資料
   useEffect(() => {
     setLoading(true);
@@ -82,10 +82,6 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
       try {
         const res = await getAssignBusDDL();
         setBusGroupDDL([
-          // {
-          //   bus_group: editData.bus_group,
-          //   bus_group_name: editData.bus_group_name
-          // },
           { bus_group: "00", bus_group_name: "請選擇" },
           ...res.dataList[0].bus_group_options
         ]);
@@ -167,6 +163,11 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
   // 時間有變動時就將重組好的時間格式設回大物件
   useEffect(() => {
     const newData = { ...updateData };
+    console.log("🍅 updateData", updateData);
+    console.log("🍅 editData", editData);
+    console.log("🍅 task_start_time", editData.task_start_time);
+    console.log("🍅 dashDate", dashDate(editData.task_start_time));
+
     const newStartTime = `${dashDate(editData.task_start_time)}T${
       startTime.start_type === "pm"
         ? ((Number(startTime.start_hours) % 12) + 12)
@@ -199,10 +200,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
     const newUpdateData = {
       assignment_no,
       bus_group,
-      bus_driver_no:
-        updateData.assign_type === "派車"
-          ? updateData.bus_no
-          : updateData.driver_no,
+      bus_driver_no: updateData.bus_no,
       task_start_time,
       task_end_time,
       remark
@@ -219,6 +217,9 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
   console.log("🅰updateData", updateData);
 
   console.log("Number(startHour)", Number(startHour));
+
+  // if (loading || !editData) return <Pane><Spinner /></Pane>;
+
   return (
     <FormSTY>
       {/* 資訊小方塊 */}
@@ -227,9 +228,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
           <Paragraph>
             {dayjs(editData.task_start_time).format("YYYY/MM/DD")} {weekdayName}
           </Paragraph>
-          <Paragraph>
-            第0{editData.car_no}車 {editData.assign_type}
-          </Paragraph>
+          <Paragraph>第0{editData.car_no}車 派車</Paragraph>
         </Pane>
         <Paragraph>{editData.assignment_no}</Paragraph>
       </Pane>
@@ -288,13 +287,12 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
+        {/* <TimeInput date={} setDate={} /> */}
+
         <Group>
-          {" "}
           <Select
             name="start_hours"
-            onClick={(e: any) => {
-              handleTimeChange(e);
-            }}
+            onClick={handleTimeChange}
             defaultValue={startHour}
           >
             {hours.map((item: string) => (
@@ -306,9 +304,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
           <Text fontSize={20}> : </Text>
           <Select
             name="start_minutes"
-            onClick={(e: any) => {
-              handleTimeChange(e);
-            }}
+            onClick={handleTimeChange}
             defaultValue={startMinute}
           >
             {minutes().map((item: string) => (
