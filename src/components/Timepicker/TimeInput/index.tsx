@@ -43,7 +43,8 @@ const TimeInput = ({ date, setDate, disabled = false, ...props }: I_Props) => {
       .add(minute, "minute")
       .format("YYYY-MM-DD HH:mm");
     setDate(updatedDate);
-  }, [setDate, dateBase, hour, minute, timeslot]);
+  }, [hour, minute, timeslot]);
+
   //------ functions ------//
   const handleHourChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setHour(parseInt(e.target.value));

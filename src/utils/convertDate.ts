@@ -25,3 +25,9 @@ export const timeWithAPM = (date: string) => {
 export const dateDiff = (start_date: string | any, end_date: string | any) => {
   return dayjs(end_date).diff(start_date, "day");
 };
+
+export const getWeekName = (date: string) => {
+  const idx = dayjs(date).day();
+  const weekName = ["週日", "週一", "週二", "週三", "週四", "週五", "週六"];
+  return weekName[idx];
+};

@@ -18,7 +18,6 @@ import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
 import { hours, minutes } from "@services/assignment/mock_data";
 import { v4 as uuid } from "uuid";
 import dayjs from "dayjs";
-import { getOrderDates } from "@services/assignment/getOrderDates";
 import { Label } from "@components/Button/Primary";
 import { dashDate } from "@utils/convertDate";
 import { UpdateSingleAssignment } from "@services/assignment/UpdateSingleAssignment";
@@ -26,6 +25,7 @@ import { useRouter } from "next/router";
 
 //@components
 import TimeInput from "@components/Timepicker/TimeInput";
+import { getWeekName } from "@utils/convertDate";
 
 interface I_AssignManualCreateProps {
   editData: any;
@@ -45,26 +45,30 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
     }
   ]);
   const [plateNo, setPlateNo] = useState<string>(editData.plate || null);
-  const [weekdayName, setWeekdayName] = useState<string>("");
   const [updateData, setUpdateData] = useState<any>(editData);
 
   // 時間處理:
-  const startHour = dayjs(editData.task_start_time).format("hh");
-  const startMinute = dayjs(editData.task_start_time).format("mm");
-  const [startTime, setStartTime] = useState<any>({
-    start_hours: startHour,
-    start_minutes: startMinute,
-    start_type:
-      Number(dayjs(editData.task_start_time).format("HH")) > 12 ? "pm" : "am"
-  });
-  const endHour = dayjs(editData.task_end_time).format("hh");
-  const endMinute = dayjs(editData.task_end_time).format("mm");
-  const [endTime, setEndTime] = useState<any>({
-    end_hours: endHour,
-    end_minutes: endMinute,
-    end_type:
-      Number(dayjs(editData.task_end_time).format("HH")) > 12 ? "pm" : "am"
-  });
+  // const startHour = dayjs(editData.task_start_time).format("hh");
+  // const startMinute = dayjs(editData.task_start_time).format("mm");
+  // const [startTime, setStartTime] = useState<any>({
+  //   start_hours: startHour,
+  //   start_minutes: startMinute,
+  //   start_type:
+  //     Number(dayjs(editData.task_start_time).format("HH")) > 12 ? "pm" : "am"
+  // });
+  // const endHour = dayjs(editData.task_end_time).format("hh");
+  // const endMinute = dayjs(editData.task_end_time).format("mm");
+  // const [endTime, setEndTime] = useState<any>({
+  //   end_hours: endHour,
+  //   end_minutes: endMinute,
+  //   end_type:
+  //     Number(dayjs(editData.task_end_time).format("HH")) > 12 ? "pm" : "am"
+  // });
+
+  const dateStr = React.useMemo(
+    () => dayjs(editData.task_start_time).format("YYYY/MM/DD"),
+    [editData]
+  );
 
   // 一進來先抓DDL和資料庫原本儲存的資料
   useEffect(() => {
@@ -114,76 +118,66 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
     setPlateNo(result[0]?.license_plate);
   };
 
-  const weekday = async () => {
-    // 打API取得從起始日期到回程日期有的每一天日期和周幾
-    const result = await getOrderDates(
-      editData.task_start_date,
-      editData.task_end_date
-    );
-
-    setWeekdayName(result.dataList[0].order_date_options[0].order_weekday);
-    // const day = result.dataList[0].order_date_options.find((v) => {
-    //   return dayjs(v.order_date).format("YYYY/MM/DD") === orderItem.date;
-    // });
-  };
-  weekday();
-
   // 時間變動
-  const handleTimeChange = (e: any) => {
-    // START TIME
-    if (e.target.name === "start_hours") {
-      setStartTime((prev: any) => {
-        return { ...prev, start_hours: e.target.value };
-      });
-    } else if (e.target.name === "start_minutes") {
-      setStartTime((prev: any) => {
-        return { ...prev, start_minutes: e.target.value };
-      });
-    } else if (e.target.name === "start_type") {
-      setStartTime((prev: any) => {
-        return { ...prev, start_type: e.target.value };
-      });
-    }
-    // END TIME
-    if (e.target.name === "end_hours") {
-      setEndTime((prev: any) => {
-        return { ...prev, end_hours: e.target.value };
-      });
-    } else if (e.target.name === "end_minutes") {
-      setEndTime((prev: any) => {
-        return { ...prev, end_minutes: e.target.value };
-      });
-    } else if (e.target.name === "end_type") {
-      setEndTime((prev: any) => {
-        return { ...prev, end_type: e.target.value };
-      });
-    }
-  };
+  // const handleTimeChange = (e: any) => {
+  //   // START TIME
+  //   if (e.target.name === "start_hours") {
+  //     setStartTime((prev: any) => {
+  //       return { ...prev, start_hours: e.target.value };
+  //     });
+  //   } else if (e.target.name === "start_minutes") {
+  //     setStartTime((prev: any) => {
+  //       return { ...prev, start_minutes: e.target.value };
+  //     });
+  //   } else if (e.target.name === "start_type") {
+  //     setStartTime((prev: any) => {
+  //       return { ...prev, start_type: e.target.value };
+  //     });
+  //   }
+  //   // END TIME
+  //   if (e.target.name === "end_hours") {
+  //     setEndTime((prev: any) => {
+  //       return { ...prev, end_hours: e.target.value };
+  //     });
+  //   } else if (e.target.name === "end_minutes") {
+  //     setEndTime((prev: any) => {
+  //       return { ...prev, end_minutes: e.target.value };
+  //     });
+  //   } else if (e.target.name === "end_type") {
+  //     setEndTime((prev: any) => {
+  //       return { ...prev, end_type: e.target.value };
+  //     });
+  //   }
+  // };
 
+  const handleTimeChange = React.useCallback(
+    (type: "start" | "end", date: string) => {
+      const newTime = date; //"YYYY-MM-DD HH:mm"
+      const newData = { ...updateData };
+      newData[`task_${type}_time`] = newTime;
+      setUpdateData(newData);
+    },
+    []
+  );
   // 時間有變動時就將重組好的時間格式設回大物件
-  useEffect(() => {
-    const newData = { ...updateData };
-    console.log("🍅 updateData", updateData);
-    console.log("🍅 editData", editData);
-    console.log("🍅 task_start_time", editData.task_start_time);
-    console.log("🍅 dashDate", dashDate(editData.task_start_time));
-
-    const newStartTime = `${dashDate(editData.task_start_time)}T${
-      startTime.start_type === "pm"
-        ? ((Number(startTime.start_hours) % 12) + 12)
-            .toString()
-            .padStart(2, "0")
-        : ((Number(startTime.start_hours) % 12) + 0).toString().padStart(2, "0")
-    }:${startTime.start_minutes}`;
-    const newEndTime = `${dashDate(editData.task_end_time)}T${
-      endTime.end_type === "pm"
-        ? ((Number(endTime.end_hours) % 12) + 12).toString().padStart(2, "0")
-        : ((Number(endTime.end_hours) % 12) + 0).toString().padStart(2, "0")
-    }:${endTime.end_minutes}`;
-    newData["task_start_time"] = newStartTime;
-    newData["task_end_time"] = newEndTime;
-    setUpdateData(newData);
-  }, [editData, startTime, endTime]);
+  // useEffect(() => {
+  //   const newData = { ...updateData };
+  //   const newStartTime = `${dashDate(editData.task_start_time)}T${
+  //     startTime.start_type === "pm"
+  //       ? ((Number(startTime.start_hours) % 12) + 12)
+  //           .toString()
+  //           .padStart(2, "0")
+  //       : ((Number(startTime.start_hours) % 12) + 0).toString().padStart(2, "0")
+  //   }:${startTime.start_minutes}`;
+  //   const newEndTime = `${dashDate(editData.task_end_time)}T${
+  //     endTime.end_type === "pm"
+  //       ? ((Number(endTime.end_hours) % 12) + 12).toString().padStart(2, "0")
+  //       : ((Number(endTime.end_hours) % 12) + 0).toString().padStart(2, "0")
+  //   }:${endTime.end_minutes}`;
+  //   newData["task_start_time"] = newStartTime;
+  //   newData["task_end_time"] = newEndTime;
+  //   setUpdateData(newData);
+  // }, [editData, startTime, endTime]);
 
   // 時間以外的下拉變動
   const handleDataChange = (e: any) => {
@@ -216,7 +210,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
   };
   console.log("🅰updateData", updateData);
 
-  console.log("Number(startHour)", Number(startHour));
+  // console.log("Number(startHour)", Number(startHour));
 
   // if (loading || !editData) return <Pane><Spinner /></Pane>;
 
@@ -226,7 +220,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
       <Pane className="info-box">
         <Pane className="title">
           <Paragraph>
-            {dayjs(editData.task_start_time).format("YYYY/MM/DD")} {weekdayName}
+            {dateStr} {getWeekName(dateStr)}
           </Paragraph>
           <Paragraph>第0{editData.car_no}車 派車</Paragraph>
         </Pane>
@@ -287,9 +281,11 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        {/* <TimeInput date={} setDate={} /> */}
-
-        <Group>
+        <TimeInput
+          date={dateStr}
+          setDate={handleTimeChange.bind(null, "start")}
+        />
+        {/* <Group>
           <Select
             name="start_hours"
             onClick={handleTimeChange}
@@ -327,12 +323,12 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
             <option value="am">AM</option>
             <option value="pm">PM</option>
           </Select>
-        </Group>
+        </Group> */}
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <Group>
+        {/* <Group>
           {" "}
           <Select
             name="end_hours"
@@ -375,7 +371,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
             <option value="am">AM</option>
             <option value="pm">PM</option>
           </Select>
-        </Group>
+        </Group> */}
       </Pane>
 
       <TextareaField
