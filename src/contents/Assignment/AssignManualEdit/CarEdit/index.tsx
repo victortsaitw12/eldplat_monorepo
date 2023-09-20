@@ -45,7 +45,6 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
     () => dayjs(editData.task_start_time).format("YYYY-MM-DD HH:mm"),
     [editData]
   );
-  console.log("🍅 dateStr", dateStr);
 
   // 一進來先抓DDL和資料庫原本儲存的資料
   useEffect(() => {
