@@ -41,8 +41,13 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
   const [plateNo, setPlateNo] = useState<string>(editData.plate || null);
   const [updateData, setUpdateData] = useState<any>(editData);
 
-  const dateStr = React.useMemo(
+  const dateStrStart = React.useMemo(
     () => dayjs(editData.task_start_time).format("YYYY-MM-DD HH:mm"),
+    [editData]
+  );
+
+  const dateStrEnd = React.useMemo(
+    () => dayjs(editData.task_end_time).format("YYYY-MM-DD HH:mm"),
     [editData]
   );
 
@@ -143,7 +148,8 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
       <Pane className="info-box">
         <Pane className="title">
           <Paragraph>
-            {dayjs(dateStr).format("YYYY/MM/DD")} {getWeekName(dateStr)}
+            {dayjs(dateStrStart).format("YYYY/MM/DD")}{" "}
+            {getWeekName(dateStrStart)}
           </Paragraph>
           <Paragraph>第0{editData.car_no}車 派車</Paragraph>
         </Pane>
@@ -197,7 +203,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
         <TimeInput
-          date={dateStr}
+          date={dateStrStart}
           setDate={handleTimeChange.bind(null, "start")}
         />
       </Pane>
@@ -205,7 +211,7 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
         <TimeInput
-          date={dateStr}
+          date={dateStrEnd}
           setDate={handleTimeChange.bind(null, "end")}
         />
       </Pane>

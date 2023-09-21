@@ -83,7 +83,6 @@ function SecondCarAssignManualCreate({
 
   const handleBusGroupChange = async (bus_group: any) => {
     const res = await getAssignBusDDL(bus_group);
-    // setBusNameDDL(res.dataList[0].bus_options);
     setBusNameDDL([
       { bus_no: "", bus_name: "請選擇", license_plate: "" },
       ...res.dataList[0].bus_options
@@ -216,12 +215,7 @@ function SecondCarAssignManualCreate({
           </Select>
           <Select
             name="start_type"
-            // onClick={(e: any) => {
-            //   handleAssignmentCarChange(e);
-            // }}
-            onChange={(e: any) => {
-              handleAssignmentCarChange(e);
-            }}
+            onChange={handleAssignmentCarChange}
             ref={timeRef}
           >
             <option
