@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FormSTY } from "./style";
-//@sevices
 import {
   SelectField,
   Pane,
@@ -8,64 +6,68 @@ import {
   TextInputField,
   TextareaField
 } from "evergreen-ui";
+import { FormSTY } from "./style";
 
-//@layout
-import { I_ManualBus, I_ManualCreateType } from "@typings/assignment_type";
+import {
+  convertDateAndTimeFormat,
+  slashDate,
+  formatToDB
+} from "@utils/convertDate";
+import { I_ManualCreateType } from "@typings/assignment_type";
 import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
-import dayjs from "dayjs";
-
-//@components
 import TimeInput from "@components/Timepicker/TimeInput";
-import { formatToDB } from "@utils/convertDate";
 import Requred from "@components/Required";
 
 interface I_AssignManualCreateProps {
   handleAssignmentCarChange: (e: any) => void;
   createAssignData: I_ManualCreateType;
-  showSecondTitle: any;
+  secondDrawerInfo: any;
   data?: any;
   reloadData?: () => void;
 }
 
 function SecondCarAssignManualCreate({
   handleAssignmentCarChange,
-  showSecondTitle,
+  secondDrawerInfo,
   createAssignData
 }: I_AssignManualCreateProps) {
-  let defaultValue: I_ManualBus | null = null;
-  const dateStr = showSecondTitle.date;
-  const dateStrStart = React.useMemo(() => {
-    if (!defaultValue) return null;
-    return dayjs(defaultValue.task_start_time).format("YYYY-MM-DD HH:mm");
-  }, [defaultValue]);
-  const dateStrEnd = React.useMemo(() => {
-    if (!defaultValue) return null;
-    return dayjs(defaultValue.task_end_time).format("YYYY-MM-DD HH:mm");
-  }, [defaultValue]);
+  const foundAssignment = createAssignData?.manual_bus.filter((ele) => {
+    return (
+      `${slashDate(ele?.task_start_time || ele?.task_end_time)}-${
+        ele?.bus_day_number
+      }` === secondDrawerInfo.id
+    );
+  })[0];
 
-  if (createAssignData?.manual_bus) {
-    defaultValue = createAssignData?.manual_bus
-      .filter((ele) => {
-        return (
-          dayjs(ele?.task_start_time).format("YYYY/MM/DD") ==
-          dayjs(showSecondTitle.date).format("YYYY/MM/DD")
-        );
-      })
-      .filter((ele) => {
-        return ele?.bus_day_number == showSecondTitle.car;
-      })[0];
-  }
+  const curAssignment = {
+    bus_no: foundAssignment?.bus_no || "",
+    bus_day_number: secondDrawerInfo.car,
+    bus_group: foundAssignment?.bus_group || "",
+    task_start_time:
+      foundAssignment?.task_start_time ||
+      convertDateAndTimeFormat(secondDrawerInfo.date),
+    task_end_time:
+      foundAssignment?.task_end_time ||
+      convertDateAndTimeFormat(secondDrawerInfo.date),
+    remark: foundAssignment?.remark || "",
+    filled: false
+  };
+  console.log("🍅 createAssignData?.manual_bus", createAssignData?.manual_bus);
+  console.log("🍅 curAssignment", curAssignment);
+
+  const dateStr = secondDrawerInfo.date;
+  const dateStrStart = convertDateAndTimeFormat(curAssignment.task_start_time);
+  const dateStrEnd = convertDateAndTimeFormat(curAssignment.task_end_time);
 
   const [loading, setLoading] = useState(false);
-  const [busGroup, setBusGroup] = useState(defaultValue?.bus_group || "");
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
-    { bus_group: "00", bus_group_name: "請選擇" }
+    { bus_group: "", bus_group_name: "請選擇" }
   ]);
-  const [busNo, setBusNo] = useState(defaultValue?.bus_no || "");
+  const [busNo, setBusNo] = useState(curAssignment?.bus_no || "");
   const [busNameDDL, setBusNameDDL] = useState<any>([
-    { bus_no: "00", bus_name: "請選擇", license_plate: "" }
+    { bus_no: "", bus_name: "請選擇", license_plate: "" }
   ]);
-  const [plateNo, setPlateNo] = useState<string>("");
+  // const [plateNo, setPlateNo] = useState<string>("");
 
   useEffect(() => {
     setLoading(true);
@@ -84,8 +86,8 @@ function SecondCarAssignManualCreate({
       setLoading(false);
     };
     getbusData();
-    if (defaultValue && defaultValue?.bus_group) {
-      handleBusGroupChange(defaultValue?.bus_group);
+    if (curAssignment && curAssignment?.bus_group) {
+      fetchBusNameDDL(curAssignment?.bus_group);
     }
     setLoading(false);
   }, []);
@@ -104,9 +106,9 @@ function SecondCarAssignManualCreate({
   };
 
   const handleBusGroupChange = async (e: any) => {
+    setBusNo("");
     const bus_group = e.target.value;
     fetchBusNameDDL(bus_group);
-    setBusGroup(bus_group);
     const customEvent = {
       target: {
         name: "bus_group",
@@ -116,14 +118,18 @@ function SecondCarAssignManualCreate({
     handleAssignmentCarChange(customEvent);
   };
 
-  // TODO: fix=>this won't work
+  const plateNo = React.useMemo(() => {
+    const selected = busNameDDL.filter((item: any) => item.bus_no === busNo)[0];
+    return selected?.license_plate || "";
+  }, [busNameDDL, busNo]);
+
   const handleBusNameChange = (e: any) => {
     const bus_no = e.target.value;
-    const newDDL = [...busNameDDL];
-    const result = newDDL.filter((v) => {
-      return v.bus_no === e.target.value;
-    });
-    setPlateNo(result[0].license_plate);
+    // const newDDL = [...busNameDDL];
+    // const result = newDDL.filter((v) => {
+    //   return v.bus_no === e.target.value;
+    // });
+    // setPlateNo(result[0].license_plate);
     setBusNo(bus_no);
     const customEvent = {
       target: {
@@ -135,11 +141,12 @@ function SecondCarAssignManualCreate({
   };
 
   // TODO: prevent this is called until the client really change the time
+  // TODO: something wrong on timeslot change
   const handleTimeChange = (
     name: "task_start_time" | "task_end_time",
     v: any
   ) => {
-    const customEvent = {
+    const customEvent: any = {
       target: {
         name: name,
         value: formatToDB(v)
@@ -155,17 +162,16 @@ function SecondCarAssignManualCreate({
       <Pane className="info-box">
         <Pane className="title">
           <Paragraph>
-            {showSecondTitle?.date} {showSecondTitle?.day}
+            {secondDrawerInfo?.date} {secondDrawerInfo?.day}
           </Paragraph>
-          <Paragraph>{`第0${showSecondTitle.car}車 ${showSecondTitle.assignType}`}</Paragraph>
+          <Paragraph>{`第0${secondDrawerInfo.car}車 ${secondDrawerInfo.assignType}`}</Paragraph>
         </Pane>
       </Pane>
 
       <SelectField
         label={<Requred>車隊</Requred>}
         onChange={handleBusGroupChange}
-        defaultValue={busGroup}
-        value={busGroup}
+        value={curAssignment?.bus_group}
       >
         {busGroupDDL?.map(
           (item: { bus_group: string; bus_group_name: string }) => (
@@ -179,8 +185,7 @@ function SecondCarAssignManualCreate({
       <SelectField
         label={<Requred>車輛名稱</Requred>}
         onChange={handleBusNameChange}
-        defaultValue={busNo}
-        value={busNo}
+        value={curAssignment?.bus_no}
       >
         {busNameDDL?.map((item: any) => (
           <option key={item.bus_no} value={item.bus_no}>

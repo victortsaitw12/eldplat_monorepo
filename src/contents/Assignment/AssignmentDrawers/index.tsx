@@ -22,43 +22,80 @@ export type I_FirstDrawer =
   | "additionalCar"
   | "additionalDriver"
   | "";
+
 interface Props {
   firstDrawerOpen: I_FirstDrawer;
   setFirstDrawerOpen: (v: I_FirstDrawer) => void;
-  secondDrawerOpen: string;
-  setSecondDrawerOpen: (v: string) => void;
   orderInfo: I_ManualAssignType[];
-  assignData: any;
   refetch: any;
   setDisabledAutoList: any;
-  showSecondTitle: any;
-  setShowSecondTitle: (t: any) => void;
-  setPosition: (dayNum: number, carNum: number) => void;
-  createAssignData: I_ManualCreateType;
-  orderIndex?: number;
   editData: any;
-  handleAssignmentCarChange: (e: any) => void;
-  handleAssignmentDriverChange: (e: any) => void;
 }
+
+const defaultAssignData = {
+  quote_no: "",
+  manual_driver: [],
+  manual_bus: []
+};
 
 function AssignmentDrawers({
   firstDrawerOpen,
   setFirstDrawerOpen,
-  secondDrawerOpen,
-  setSecondDrawerOpen,
-  assignData,
   refetch,
   orderInfo,
   setDisabledAutoList,
-  showSecondTitle,
-  setShowSecondTitle,
-  setPosition,
-  createAssignData,
-  orderIndex,
-  editData,
-  handleAssignmentCarChange,
-  handleAssignmentDriverChange
+  editData
 }: Props) {
+  const [secondDrawerOpen, setSecondDrawerOpen] = React.useState<string>("");
+  const [secondDrawerInfo, setSecondDrawerInfo] = React.useState<any>();
+  const [createAssignData, setCreateAssignData] =
+    React.useState<I_ManualCreateType>(defaultAssignData);
+  const [orderIndex, setOrderIndex] = React.useState<number>(1);
+
+  // ⭐新增派車單: onChange
+  const handleAssignmentCarChange = (
+    e: React.ChangeEvent<HTMLInputElement> | any
+  ) => {
+    const newCreateAssignData = { ...createAssignData };
+    const newBusArr = [...newCreateAssignData.manual_bus];
+    const target = newBusArr[orderIndex];
+    const updatedTarget = {
+      ...target,
+      [e.target.name]: e.target.value,
+      bus_day_number: secondDrawerInfo.car
+    };
+
+    newBusArr[orderIndex] = updatedTarget;
+    newCreateAssignData.manual_bus = newBusArr;
+
+    newCreateAssignData["quote_no"] = orderInfo[0].quote_no;
+    setCreateAssignData(newCreateAssignData);
+  };
+
+  // ⭐新增派工單: onChange
+  const handleAssignmentDriverChange = (
+    e: React.ChangeEvent<HTMLInputElement> | any
+  ) => {
+    const newCreateAssignData = { ...createAssignData };
+    const newDriverArr = [...newCreateAssignData.manual_driver];
+    const target = newDriverArr[orderIndex];
+    const updatedTarget = {
+      ...target,
+      [e.target.name]: e.target.value,
+      bus_day_number: secondDrawerInfo.car
+    };
+
+    newDriverArr[orderIndex] = updatedTarget;
+    newCreateAssignData.manual_driver = newDriverArr;
+
+    newCreateAssignData["quote_no"] = orderInfo[0].quote_no;
+    setCreateAssignData(newCreateAssignData);
+  };
+
+  console.log("2️⃣secondDrawerInfo", secondDrawerInfo);
+  console.log("5️⃣createAssignData", createAssignData);
+  console.log("7️⃣orderIndex", orderIndex);
+
   const firstDrawerList = new Map([
     [
       "autoAssign",
@@ -80,16 +117,14 @@ function AssignmentDrawers({
         tabName: "手動派單",
         conponent: (
           <AssignManualCreate
-            assignData={assignData}
             refetch={refetch}
             secondDrawerOpen={secondDrawerOpen}
             setSecondDrawerOpen={setSecondDrawerOpen}
             orderInfo={orderInfo}
-            showSecondTitle={showSecondTitle}
-            setShowSecondTitle={setShowSecondTitle}
-            setPosition={setPosition}
+            secondDrawerInfo={secondDrawerInfo}
+            setSecondDrawerInfo={setSecondDrawerInfo}
             createAssignData={createAssignData}
-            orderIndex={orderIndex}
+            setOrderIndex={setOrderIndex}
           />
         )
       }
@@ -153,14 +188,14 @@ function AssignmentDrawers({
           {secondDrawerOpen === "派車" && (
             <SecondCarAssignManualCreate
               createAssignData={createAssignData}
-              showSecondTitle={showSecondTitle}
+              secondDrawerInfo={secondDrawerInfo}
               handleAssignmentCarChange={handleAssignmentCarChange}
             />
           )}
           {secondDrawerOpen === "派工" && (
             <SecondDriverAssignManualCreate
               createAssignData={createAssignData}
-              showSecondTitle={showSecondTitle}
+              secondDrawerInfo={secondDrawerInfo}
               handleAssignmentDriverChange={handleAssignmentDriverChange}
             />
           )}
