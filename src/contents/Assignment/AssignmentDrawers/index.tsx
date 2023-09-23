@@ -38,7 +38,6 @@ interface Props {
   orderIndex?: number;
   editData: any;
   handleAssignmentCarChange: (e: any) => void;
-  timeRef: any;
   handleAssignmentDriverChange: (e: any) => void;
 }
 
@@ -58,7 +57,6 @@ function AssignmentDrawers({
   orderIndex,
   editData,
   handleAssignmentCarChange,
-  timeRef,
   handleAssignmentDriverChange
 }: Props) {
   const firstDrawerList = new Map([
@@ -157,7 +155,6 @@ function AssignmentDrawers({
               createAssignData={createAssignData}
               showSecondTitle={showSecondTitle}
               handleAssignmentCarChange={handleAssignmentCarChange}
-              timeRef={timeRef}
             />
           )}
           {secondDrawerOpen === "派工" && (

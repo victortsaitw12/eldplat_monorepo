@@ -75,7 +75,6 @@ const Page: NextPageWithLayout<never> = () => {
     manual_driver: [],
     manual_bus: []
   });
-  const timeRef = useRef(null);
   const router = useRouter();
   const [startTime, setStartTime] = useState<any>({
     start_hours: "00",
@@ -337,83 +336,8 @@ const Page: NextPageWithLayout<never> = () => {
     const updatedTarget = {
       ...target,
       [e.target.name]: e.target.value,
-      bus_day_number: showSecondTitle.car,
-      task_start_time: `${dashDate(showSecondTitle.date)}T${
-        startTime.start_hours
-      }:${startTime.start_minutes}`,
-      task_end_time: `${dashDate(showSecondTitle.date)}T${endTime.end_hours}:${
-        endTime.end_minutes
-      }`
+      bus_day_number: showSecondTitle.car
     };
-    // 判斷變動到的是起始時間而不是其他下拉選項的話:
-    if (startTimeName.includes(e.target.name)) {
-      let newStartTime = updatedTarget.task_start_time;
-      if (e.target.name === "start_hours") {
-        setStartTime((prev: any) => {
-          return { ...prev, start_hours: e.target.value };
-        });
-        newStartTime = `${dashDate(showSecondTitle.date)}T${
-          startTime.start_type === "pm"
-            ? (Number(e.target.value) + 12).toString()
-            : e.target.value
-        }:${startTime.start_minutes}`;
-      } else if (e.target.name === "start_minutes") {
-        setStartTime((prev: any) => {
-          return { ...prev, start_minutes: e.target.value };
-        });
-
-        newStartTime = `${dashDate(showSecondTitle.date)}T${
-          startTime.start_type === "pm"
-            ? (Number(startTime.start_hours) + 12).toString()
-            : startTime.start_hours
-        }:${e.target.value}`;
-      } else if (e.target.name === "start_type") {
-        setStartTime((prev: any) => {
-          return { ...prev, start_type: e.target.value };
-        });
-        newStartTime = `${dashDate(showSecondTitle.date)}T${
-          e.target.value === "pm"
-            ? (Number(startTime.start_hours) + 12).toString()
-            : startTime.start_hours
-        }:${startTime.start_minutes}`;
-      }
-      updatedTarget.task_start_time = newStartTime;
-    }
-    // 判斷變動到的是截止時間而不是其他下拉選項的話:
-    if (endTimeName.includes(e.target.name)) {
-      let newEndTime = updatedTarget.task_end_time;
-      if (e.target.name === "end_hours") {
-        setEndTime((prev: any) => {
-          return { ...prev, end_hours: e.target.value };
-        });
-
-        newEndTime = `${dashDate(showSecondTitle.date)}T${
-          endTime.end_type === "pm"
-            ? (Number(e.target.value) + 12).toString()
-            : e.target.value
-        }:${endTime.end_minutes}`;
-      } else if (e.target.name === "end_minutes") {
-        setEndTime((prev: any) => {
-          return { ...prev, end_minutes: e.target.value };
-        });
-        newEndTime = `${dashDate(showSecondTitle.date)}T${
-          endTime.end_type === "pm"
-            ? (Number(endTime.end_hours) + 12).toString()
-            : endTime.end_hours
-        }:${e.target.value}`;
-      } else if (e.target.name === "end_type") {
-        setEndTime((prev: any) => {
-          return { ...prev, end_type: e.target.value };
-        });
-
-        newEndTime = `${dashDate(showSecondTitle.date)}T${
-          e.target.value === "pm"
-            ? (Number(endTime.end_hours) + 12).toString()
-            : endTime.end_hours
-        }:${endTime.end_minutes}`;
-      }
-      updatedTarget.task_end_time = newEndTime;
-    }
 
     // 設回原大物件
     newBusArr[orderIndex] = updatedTarget;
@@ -538,11 +462,11 @@ const Page: NextPageWithLayout<never> = () => {
   // console.log("2️⃣showSecondTitle", showSecondTitle);
   // console.log("3️⃣carArr", carArr);
   // console.log("4️⃣manual_bus", createAssignData.manual_bus);
-  // console.log("5️⃣createAssignData", createAssignData);
+  console.log("5️⃣createAssignData", createAssignData);
   // console.log("6️⃣subAssignData", subAssignData);
   // console.log("7️⃣orderIndex", orderIndex);
   // console.log("8️⃣firstDrawerOpen", firstDrawerOpen);
-  console.log("9️⃣editData", editData);
+  // console.log("9️⃣editData", editData);
 
   return (
     <BodySTY>
@@ -595,7 +519,6 @@ const Page: NextPageWithLayout<never> = () => {
           orderIndex={orderIndex}
           editData={editData}
           handleAssignmentCarChange={handleAssignmentCarChange}
-          timeRef={timeRef}
           handleAssignmentDriverChange={handleAssignmentDriverChange}
         />
       )}

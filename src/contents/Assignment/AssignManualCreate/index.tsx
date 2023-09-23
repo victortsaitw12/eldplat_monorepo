@@ -66,8 +66,6 @@ function AssignManualCreate({
     let carCounter = 0;
 
     // [...new Array(放數字)] 代表請產出一個有多少內容的陣列
-    console.log(orderInfo.return_date, orderInfo.departure_date, dayCount);
-
     const arr = [...new Array(dayCount)].reduce((acc, _, dayIdx) => {
       const data = {
         date: dayjs(orderInfo.departure_date)
@@ -163,7 +161,6 @@ function AssignManualCreate({
     const filledData = deepClone(createAssignData);
     filledData.manual_bus.map(
       (item: { bus_group: any; bus_no: any }, idx: string | number) => {
-        console.log("idx", idx);
         if (item?.bus_group && item?.bus_no) {
           filledData.manual_bus[idx]["filled"] = true;
         }
@@ -190,12 +187,12 @@ function AssignManualCreate({
     return (count + 1) * orderInfo[0]?.order_quantity;
   };
 
-  console.log("😊assignData", assignData);
-  console.log("😋orderInfo", orderInfo);
-  console.log("😴orderArr", orderArr);
-  console.log("😎createAssignData", createAssignData);
-  console.log("😪orderIndex", orderIndex);
-  console.log("😍dataFilled", dataFilled);
+  // console.log("😊assignData", assignData);
+  // console.log("😋orderInfo", orderInfo);
+  // console.log("😴orderArr", orderArr);
+  // console.log("😎createAssignData", createAssignData);
+  // console.log("😪orderIndex", orderIndex);
+  // console.log("😍dataFilled", dataFilled);
 
   return (
     <FormSTY onSubmit={asyncSubmitForm}>
@@ -247,8 +244,6 @@ function AssignManualCreate({
 
       {/* 派車派工小表格 */}
       {orderArr?.map((item: any, dateIdx: number) => {
-        console.log("💙item", item);
-
         return (
           <Pane key={dateIdx} className="assign-table">
             <Pane borderBottom="1px solid #D5E2F1" paddingY={6} paddingX={12}>
@@ -256,7 +251,6 @@ function AssignManualCreate({
             </Pane>
 
             {item.cars.map((v: any) => {
-              console.log("💛v", v);
               return (
                 <Pane
                   key={v.no}

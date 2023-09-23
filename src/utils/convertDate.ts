@@ -1,3 +1,4 @@
+import { formatToDBDate } from "./../contents/Shift/shift.util";
 import dayjs from "dayjs";
 
 // 把取回不好看的日期&時間變成 => 6/14/2023 22:00
@@ -30,4 +31,8 @@ export const getWeekName = (date: string) => {
   const idx = dayjs(date).day();
   const weekName = ["週日", "週一", "週二", "週三", "週四", "週五", "週六"];
   return weekName[idx];
+};
+
+export const formatToDB = (date: string) => {
+  return dayjs(date).format("YYYY-MM-DDThh:mm");
 };
