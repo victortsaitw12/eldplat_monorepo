@@ -3,7 +3,6 @@ import { FormSTY } from "./style";
 //@sevices
 import {
   SelectField,
-  Select,
   Pane,
   Paragraph,
   TextInputField,
@@ -18,6 +17,7 @@ import dayjs from "dayjs";
 //@components
 import TimeInput from "@components/Timepicker/TimeInput";
 import { formatToDB } from "@utils/convertDate";
+import Requred from "@components/Required";
 
 interface I_AssignManualCreateProps {
   handleAssignmentCarChange: (e: any) => void;
@@ -61,6 +61,7 @@ function SecondCarAssignManualCreate({
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
   ]);
+  const [busNo, setBusNo] = useState(defaultValue?.bus_no || "");
   const [busNameDDL, setBusNameDDL] = useState<any>([
     { bus_no: "00", bus_name: "請選擇", license_plate: "" }
   ]);
@@ -116,12 +117,21 @@ function SecondCarAssignManualCreate({
   };
 
   // TODO: fix=>this won't work
-  const handleCarPlate = (e: any) => {
+  const handleBusNameChange = (e: any) => {
+    const bus_no = e.target.value;
     const newDDL = [...busNameDDL];
     const result = newDDL.filter((v) => {
       return v.bus_no === e.target.value;
     });
     setPlateNo(result[0].license_plate);
+    setBusNo(bus_no);
+    const customEvent = {
+      target: {
+        name: "bus_no",
+        value: bus_no
+      }
+    };
+    handleAssignmentCarChange(customEvent);
   };
 
   // TODO: prevent this is called until the client really change the time
@@ -152,47 +162,31 @@ function SecondCarAssignManualCreate({
       </Pane>
 
       <SelectField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>車隊
-          </div>
-        }
+        label={<Requred>車隊</Requred>}
         onChange={handleBusGroupChange}
+        defaultValue={busGroup}
         value={busGroup}
       >
         {busGroupDDL?.map(
-          (item: { bus_group: string; bus_group_name: string }) => {
-            return (
-              <option key={item.bus_group} value={item.bus_group}>
-                {item.bus_group_name}
-              </option>
-            );
-          }
+          (item: { bus_group: string; bus_group_name: string }) => (
+            <option key={item.bus_group} value={item.bus_group}>
+              {item.bus_group_name}
+            </option>
+          )
         )}
       </SelectField>
 
       <SelectField
-        label={
-          <div>
-            <span style={{ color: "#D14343" }}>*</span>車輛名稱
-          </div>
-        }
-        name="bus_no"
-        onClick={(e: any) => {
-          handleCarPlate(e);
-        }}
-        onChange={(e: any) => {
-          handleAssignmentCarChange(e);
-        }}
-        value={defaultValue?.bus_no || ""}
+        label={<Requred>車輛名稱</Requred>}
+        onChange={handleBusNameChange}
+        defaultValue={busNo}
+        value={busNo}
       >
-        {busNameDDL?.map((item: any) => {
-          return (
-            <option key={item.bus_no} value={item.bus_no}>
-              {item.bus_name}
-            </option>
-          );
-        })}
+        {busNameDDL?.map((item: any) => (
+          <option key={item.bus_no} value={item.bus_no}>
+            {item.bus_name}
+          </option>
+        ))}
       </SelectField>
 
       <TextInputField label="車牌" placeholder={plateNo} disabled />
@@ -216,9 +210,7 @@ function SecondCarAssignManualCreate({
       <TextareaField
         label="備註"
         name="remark"
-        onChange={(e: any) => {
-          handleAssignmentCarChange(e);
-        }}
+        onChange={handleAssignmentCarChange}
         marginTop={16}
       />
     </FormSTY>
