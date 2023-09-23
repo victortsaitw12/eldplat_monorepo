@@ -57,6 +57,7 @@ function SecondCarAssignManualCreate({
   }
 
   const [loading, setLoading] = useState(false);
+  const [busGroup, setBusGroup] = useState(defaultValue?.bus_group || "");
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
   ]);
@@ -88,15 +89,33 @@ function SecondCarAssignManualCreate({
     setLoading(false);
   }, []);
 
-  // TODO: fix=>this won't work
-  const handleBusGroupChange = async (bus_group: any) => {
-    const res = await getAssignBusDDL(bus_group);
-    setBusNameDDL([
-      { bus_no: "", bus_name: "請選擇", license_plate: "" },
-      ...res.dataList[0].bus_options
-    ]);
+  const fetchBusNameDDL = async (bus_group: string) => {
+    try {
+      const res = await getAssignBusDDL(bus_group);
+      if (res.statusCode !== "200") throw new Error("failed");
+      setBusNameDDL([
+        { bus_no: "", bus_name: "請選擇", license_plate: "" },
+        ...res.dataList[0].bus_options
+      ]);
+    } catch (e: any) {
+      console.log(e.message);
+    }
   };
 
+  const handleBusGroupChange = async (e: any) => {
+    const bus_group = e.target.value;
+    fetchBusNameDDL(bus_group);
+    setBusGroup(bus_group);
+    const customEvent = {
+      target: {
+        name: "bus_group",
+        value: bus_group
+      }
+    };
+    handleAssignmentCarChange(customEvent);
+  };
+
+  // TODO: fix=>this won't work
   const handleCarPlate = (e: any) => {
     const newDDL = [...busNameDDL];
     const result = newDDL.filter((v) => {
@@ -138,14 +157,8 @@ function SecondCarAssignManualCreate({
             <span style={{ color: "#D14343" }}>*</span>車隊
           </div>
         }
-        name="bus_group"
-        onClick={(e: any) => {
-          handleBusGroupChange(e.target.value);
-        }}
-        onChange={(e: any) => {
-          handleAssignmentCarChange(e);
-        }}
-        value={defaultValue?.bus_group || ""}
+        onChange={handleBusGroupChange}
+        value={busGroup}
       >
         {busGroupDDL?.map(
           (item: { bus_group: string; bus_group_name: string }) => {
