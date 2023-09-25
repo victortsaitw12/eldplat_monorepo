@@ -52,8 +52,6 @@ function SecondCarAssignManualCreate({
     remark: foundAssignment?.remark || "",
     filled: false
   };
-  console.log("🍅 createAssignData?.manual_bus", createAssignData?.manual_bus);
-  console.log("🍅 curAssignment", curAssignment);
 
   const dateStr = secondDrawerInfo.date;
   const dateStrStart = convertDateAndTimeFormat(curAssignment.task_start_time);
@@ -81,7 +79,6 @@ function SecondCarAssignManualCreate({
         ]);
       } catch (e: any) {
         console.log("getQuotationByID Error:", e);
-        console.log(e);
       }
       setLoading(false);
     };
@@ -125,11 +122,6 @@ function SecondCarAssignManualCreate({
 
   const handleBusNameChange = (e: any) => {
     const bus_no = e.target.value;
-    // const newDDL = [...busNameDDL];
-    // const result = newDDL.filter((v) => {
-    //   return v.bus_no === e.target.value;
-    // });
-    // setPlateNo(result[0].license_plate);
     setBusNo(bus_no);
     const customEvent = {
       target: {

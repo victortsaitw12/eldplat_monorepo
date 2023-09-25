@@ -25,40 +25,39 @@ function SecondDriverAssignManualCreate({
   secondDrawerInfo,
   createAssignData
 }: I_AssignManualCreateProps) {
-  const defaultValue = React.useMemo(() => {
-    const editBusData = createAssignData?.manual_driver.filter((ele) => {
-      return (
-        slashDate(ele?.task_start_time) == slashDate(secondDrawerInfo.date) &&
-        ele?.bus_day_number == secondDrawerInfo.car
-      );
-    })[0];
+  const foundAssignment = createAssignData?.manual_driver.filter((ele) => {
     return (
-      editBusData || {
-        bus_no: "",
-        bus_day_number: secondDrawerInfo.car,
-        bus_group: "",
-        task_start_time: secondDrawerInfo.date,
-        task_end_time: secondDrawerInfo.date,
-        remark: "",
-        filled: false
-      }
+      `${slashDate(ele?.task_start_time || ele?.task_end_time)}-${
+        ele?.bus_day_number
+      }` === secondDrawerInfo.id
     );
-  }, [
-    secondDrawerInfo.car,
-    secondDrawerInfo.date,
-    createAssignData?.manual_driver
-  ]);
+  })[0];
+
+  const curAssignment = {
+    driver_no: foundAssignment?.driver_no || "",
+    bus_day_number: secondDrawerInfo.car,
+    bus_group: foundAssignment?.bus_group || "",
+    task_start_time:
+      foundAssignment?.task_start_time ||
+      convertDateAndTimeFormat(secondDrawerInfo.date),
+    task_end_time:
+      foundAssignment?.task_end_time ||
+      convertDateAndTimeFormat(secondDrawerInfo.date),
+    remark: foundAssignment?.remark || "",
+    filled: false
+  };
 
   const dateStr = secondDrawerInfo.date;
-  const dateStrStart = convertDateAndTimeFormat(defaultValue.task_start_time);
-  const dateStrEnd = convertDateAndTimeFormat(defaultValue.task_end_time);
+  const dateStrStart = convertDateAndTimeFormat(curAssignment.task_start_time);
+  const dateStrEnd = convertDateAndTimeFormat(curAssignment.task_end_time);
 
   const [loading, setLoading] = useState(false);
-  const [busGroup, setBusGroup] = useState("");
   const [busGroupDDL, setBusGroupDDL] = useState<any>([
     { bus_group: "00", bus_group_name: "請選擇" }
   ]);
-  const [driverNameDDL, setDriverNameDDL] = useState<any>(null);
+  const [driverNameDDL, setDriverNameDDL] = useState<any>([
+    { driver_no: "", user_name: "請選擇" }
+  ]);
 
   // TODO: prevent this is called until the client really change the time
   const handleTimeChange = (
@@ -87,13 +86,12 @@ function SecondDriverAssignManualCreate({
         ]);
       } catch (e: any) {
         console.log("getQuotationByID Error:", e);
-        console.log(e);
       }
       setLoading(false);
     };
     getDriverData();
-    if (defaultValue && defaultValue?.bus_group) {
-      handleBusGroupChange(defaultValue?.bus_group);
+    if (curAssignment && curAssignment?.bus_group) {
+      handleBusGroupChange(curAssignment?.bus_group);
     }
     setLoading(false);
   }, []);
@@ -127,7 +125,7 @@ function SecondDriverAssignManualCreate({
         onChange={(e: any) => {
           handleAssignmentDriverChange(e);
         }}
-        value={defaultValue?.bus_group}
+        value={curAssignment?.bus_group}
       >
         {busGroupDDL?.map(
           (item: { bus_group: string; bus_group_name: string }) => {
@@ -144,7 +142,7 @@ function SecondDriverAssignManualCreate({
         label={<Requred>駕駛</Requred>}
         name="driver_no"
         onChange={handleAssignmentDriverChange}
-        value={defaultValue?.driver_no}
+        value={curAssignment?.driver_no}
       >
         {driverNameDDL?.map((item: any) => {
           return (

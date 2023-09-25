@@ -9,7 +9,6 @@ import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import { mappingQueryData } from "@utils/mappingQueryData";
-import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { I_PageInfo } from "@components/PaginationField";
@@ -20,6 +19,7 @@ import AssignmentDrawers, {
   I_FirstDrawer
 } from "@contents/Assignment/AssignmentDrawers";
 import {
+  assignParser,
   assignPattern,
   getAllAssignments,
   defaultPageInfo
@@ -98,67 +98,6 @@ const Page: NextPageWithLayout<never> = () => {
     updateSubFilter
   } = useAssignmentStore();
   //
-
-  const assignParser = (data: any, key: string) => {
-    // if (key === "id") {
-    //   return {
-    //     label: data["customer_no"] || null,
-    //     value: data["customer_no"] || null
-    //   };
-    // }
-    if (key === "maintenance_quote_no") {
-      return {
-        label: (
-          <Text
-            style={{
-              cursor: "pointer"
-            }}
-            onClick={() => {
-              data.maintenance_quote_no.substring(0, 3) === "MTC"
-                ? router.push(
-                    `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
-                  )
-                : router.push(
-                    `/admin_orders/detail/${data.maintenance_quote_no}?type=1`
-                  );
-            }}
-          >
-            {data.maintenance_quote_no || "--"}
-          </Text>
-        ),
-        value: data.maintenance_quote_no || null
-      };
-    }
-    if (key === "task_start_time") {
-      return {
-        label:
-          data.task_start_time !== null
-            ? convertDateAndTimeFormat(data.task_start_time)
-            : "--",
-        value:
-          data.task_start_time !== null
-            ? convertDateAndTimeFormat(data.task_start_time)
-            : "--"
-      };
-    }
-    if (key === "task_end_time") {
-      return {
-        label:
-          data.task_end_time !== null
-            ? convertDateAndTimeFormat(data.task_end_time)
-            : "--",
-        value:
-          data.task_end_time !== null
-            ? convertDateAndTimeFormat(data.task_end_time)
-            : "--"
-      };
-    }
-
-    return {
-      label: data[key] || "--",
-      value: data[key] || null
-    };
-  };
 
   const fetchAssignData = async (
     isCanceled: boolean,
