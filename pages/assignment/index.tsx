@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
-import { useRouter } from "next/router";
 import { toaster } from "evergreen-ui";
 import { BodySTY } from "./style";
 
@@ -28,6 +27,7 @@ import {
   getBusAssignmentInfo,
   getDriverAssignmentInfo
 } from "@services/assignment/getAssignmentEdit";
+import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
 // ----- variables ----- //
 const mainFilterArray = [{ id: 1, label: "全部", value: "1" }];
@@ -52,12 +52,11 @@ const DUMMY_FILTER = [
 
 const Page: NextPageWithLayout<never> = () => {
   const [ordersData, setOrdersData] = useState<any>(null);
-  const [subAssignData, setSubAssignData] = useState<any[]>([]);
+  const [assignsData, setAssignsData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
   const [firstDrawerOpen, setFirstDrawerOpen] = useState<I_FirstDrawer>("");
   const [editData, setEditData] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<any>(null);
-  const router = useRouter();
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [disabledAutoList, setDisabledAutoList] = useState<string[]>([]);
 
@@ -71,9 +70,8 @@ const Page: NextPageWithLayout<never> = () => {
           newItem["auto_assign"] = {
             label: (
               <AutoAssignBtn
-                setFirstDrawerOpen={() => setFirstDrawerOpen("autoAssign")}
                 id={newItem.maintenance_quote_no.value}
-                setOrderInfo={setOrderInfo}
+                onBtnClick={handleAssignCreate.bind(null, "autoAssign")}
                 disabled={disabledAutoList.includes(
                   newItem.maintenance_quote_no.value
                 )}
@@ -120,11 +118,9 @@ const Page: NextPageWithLayout<never> = () => {
         }
         // ✅設定子列表的狀態
         const newSubData = ordersData.contentList.map(
-          (item: { assignments: any }) => {
-            return item.assignments;
-          }
+          (item: { assignments: any }) => item.assignments
         );
-        setSubAssignData(newSubData);
+        setAssignsData(newSubData);
         setPageInfo(ordersData.pageInfo);
 
         // ✅設定外層列表狀態
@@ -135,7 +131,6 @@ const Page: NextPageWithLayout<never> = () => {
         );
         const newData = [...assignData];
         newData.map((v, idx) => {
-          // const item_no = idx < 9 ? `000${idx + 1}` : `00${idx + 1}`;
           const item_no = (
             (pageInfo.page_Index - 1) * pageInfo.page_Size +
             idx +
@@ -159,9 +154,8 @@ const Page: NextPageWithLayout<never> = () => {
             v["auto_assign"] = {
               label: newSubData[idx].length === 0 && (
                 <AutoAssignBtn
-                  setFirstDrawerOpen={() => setFirstDrawerOpen("autoAssign")}
                   id={v.maintenance_quote_no.value}
-                  setOrderInfo={setOrderInfo}
+                  onBtnClick={handleAssignCreate.bind(null, "autoAssign")}
                   disabled={disabledAutoList.includes(
                     v.maintenance_quote_no.value
                   )}
@@ -173,8 +167,7 @@ const Page: NextPageWithLayout<never> = () => {
               label: newSubData[idx].length === 0 && (
                 <ManualAssignBtn
                   id={v.maintenance_quote_no.value}
-                  setFirstDrawerOpen={() => setFirstDrawerOpen("manualAssign")}
-                  setOrderInfo={setOrderInfo}
+                  onBtnClick={handleAssignCreate.bind(null, "manualAssign")}
                 />
               ),
               value: null
@@ -187,6 +180,19 @@ const Page: NextPageWithLayout<never> = () => {
         console.error("error in assignment list", err);
       });
   };
+
+  const fetchDrawerInfo = async (id: string) => {
+    try {
+      const res = await getOrderInfo(id);
+      const data = res.dataList;
+      setOrderInfo(data);
+      return true;
+    } catch (err) {
+      console.log("err of click the finish button", err);
+      return false;
+    }
+  };
+
   // 處理mainFilter
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
@@ -215,7 +221,7 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   // 打開派單編輯側欄
-  const goToEditPageHandler = async (item: any) => {
+  const handleAssignEdit = async (item: any) => {
     const type =
       item.assignment_no.substring(0, 3) === "BAM" ? "editCar" : "editDriver";
     const result = await fetchEditData(item.assignment_no, type);
@@ -228,6 +234,11 @@ const Page: NextPageWithLayout<never> = () => {
     setEditData(newResult);
   };
 
+  const handleAssignCreate = (type: I_FirstDrawer, id: string) => {
+    fetchDrawerInfo(id);
+    setFirstDrawerOpen(type);
+  };
+
   useEffect(() => {
     let isCanceled = false;
     fetchAssignData(isCanceled, nowTab);
@@ -236,16 +247,13 @@ const Page: NextPageWithLayout<never> = () => {
     };
   }, [nowTab]);
 
-  if (!ordersData) {
-    return <LoadingSpinner />;
-  }
-
-  // TODO naming subAssignData =>
-  console.log("0️⃣assignData", ordersData);
-  console.log("1️⃣orderInfo", orderInfo);
-  // console.log("6️⃣subAssignData", subAssignData);
+  // console.log("0️⃣ordersData", ordersData);
+  // console.log("1️⃣orderInfo", orderInfo);
+  // console.log("6️⃣assignsData", assignsData);
   // console.log("8️⃣firstDrawerOpen", firstDrawerOpen);
   // console.log("9️⃣editData", editData);
+
+  if (!ordersData) return <LoadingSpinner />;
 
   return (
     <BodySTY>
@@ -257,23 +265,17 @@ const Page: NextPageWithLayout<never> = () => {
       >
         <FilterWrapper
           updateFilter={updateSubFilter}
-          resetFilter={() => {
-            initializeSubFilter();
-          }}
+          resetFilter={initializeSubFilter}
           filter={subFilter}
         >
           <div style={{ color: "red", fontSize: "36px" }}></div>
           <AssignmentList
-            assignData={ordersData}
-            subAssignData={subAssignData}
-            goToCreatePage={() => {
-              setFirstDrawerOpen("manualAssign");
-            }}
-            goToEditPageHandler={goToEditPageHandler}
+            ordersData={ordersData}
+            assignsData={assignsData}
+            handleAssignCreate={handleAssignCreate}
+            handleAssignEdit={handleAssignEdit}
             pageInfo={pageInfo}
             onPageChange={upDatePageHandler}
-            setOrderInfo={setOrderInfo}
-            setFirstDrawerOpen={setFirstDrawerOpen}
           />
         </FilterWrapper>
       </TableWrapper>

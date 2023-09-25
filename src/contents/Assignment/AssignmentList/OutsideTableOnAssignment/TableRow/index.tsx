@@ -1,62 +1,51 @@
 import React, { useState } from "react";
-import { Pane, ChevronDownIcon, ChevronUpIcon } from "evergreen-ui";
+import { Pane, ChevronDownIcon, ChevronUpIcon, Spinner } from "evergreen-ui";
 
 import InsideTableOnAssignment from "../InsideTableOnAssignment";
 import { I_Data } from "..";
-import { getSubAssignmentTitle } from "@services/assignment/getAllAssignment";
+import { I_AssignData } from "@typings/assignment_type";
 import AdditionalVehicleBtn from "@contents/Assignment/AssignmentAdditional/AdditionalVehicleBtn";
 import AdditionalDriverBtn from "@contents/Assignment/AssignmentAdditional/AdditionalDriverBtn";
 import { StyledTr } from "./style";
 import { I_FirstDrawer } from "@contents/Assignment/AssignmentDrawers";
 
 interface I_TableRow {
-  idx: number;
-  item: any;
-  //   titles: Array<string | number | React.ReactNode> | any;
-  assignData: I_Data[];
-  subAssignData: any;
-  goToCreatePage?: () => void;
-  goToEditPage?: (item: any) => void;
+  orderData: I_Data;
+  assignData: I_AssignData[];
+  handleAssignCreate: (type: I_FirstDrawer, id: string) => void;
+  handleAssignEdit: (item: any) => void;
   viewItem?: (id: any, item: any) => void;
+  editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
-  setOrderInfo: (t: any) => void;
-  setFirstDrawerOpen: (v: I_FirstDrawer) => void;
 }
 
 const TableRow = ({
-  idx,
-  item,
+  orderData,
   assignData,
-  subAssignData,
-  goToCreatePage,
-  viewItem = (id, item) => {
-    console.log(id, item);
-  },
-  goToEditPage = (item: any) => {
-    console.log("EDIT");
-  },
-  deleteItem = (item) => {
-    console.log(item);
-  },
-  setOrderInfo,
-  setFirstDrawerOpen
+  handleAssignCreate,
+  handleAssignEdit
 }: I_TableRow) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const id = assignData[idx].maintenance_quote_no.value;
-  const titles = getSubAssignmentTitle();
+  const id = orderData.maintenance_quote_no.value;
+  const isOrderItem =
+    orderData.maintenance_quote_no.value.substring(0, 3) === "ORD";
+  const handleInsideTableOpen = () => setIsOpen(!isOpen);
 
-  const handleInsideTableOpen = () => {
-    setIsOpen(!isOpen);
-  };
+  if (!orderData)
+    return (
+      <tr>
+        <Spinner />
+      </tr>
+    );
 
   return (
     <>
       <tr>
-        {Object.keys(item).map((key) => {
+        {Object.keys(orderData).map((key) => {
           if (key === "id") return;
-          if (!item[key].label) {
+          if (!orderData[key]?.label) {
             return (
-              <td key={item.id + key}>
+              <td key={orderData.id + key}>
                 <span className="no-data">
                   <div />
                 </span>
@@ -64,21 +53,18 @@ const TableRow = ({
             );
           }
           return (
-            <>
-              <td key={item.id + key}>
-                <div className="data-row">
-                  <div>{item[key].label}</div>
-                </div>
-              </td>
-            </>
+            <td key={orderData.id + key}>
+              <div className="data-row">
+                <div>{orderData[key]?.label}</div>
+              </div>
+            </td>
           );
         })}
         <td>
           {isOpen ? (
             <ChevronUpIcon onClick={handleInsideTableOpen} cursor="pointer" />
           ) : (
-            (item.maintenance_quote_no.value.substring(0, 3) === "MTC" ||
-              subAssignData[idx].length !== 0) && (
+            (!isOrderItem || assignData.length !== 0) && (
               <ChevronDownIcon
                 onClick={handleInsideTableOpen}
                 cursor="pointer"
@@ -90,32 +76,23 @@ const TableRow = ({
       {isOpen && (
         <StyledTr>
           <td className="detailTable" colSpan={8}>
-            {item.maintenance_quote_no.value.substring(0, 3) === "ORD" && (
+            {isOrderItem && (
               <Pane className="additionalBtns">
                 <AdditionalVehicleBtn
                   id={id}
-                  setOrderInfo={setOrderInfo}
-                  setFirstDrawerOpen={() => setFirstDrawerOpen("additionalCar")}
+                  onBtnClick={handleAssignCreate.bind(null, "additionalCar")}
                 />
                 <AdditionalDriverBtn
                   id={id}
-                  setOrderInfo={setOrderInfo}
-                  setFirstDrawerOpen={() =>
-                    setFirstDrawerOpen("additionalDriver")
-                  }
+                  onBtnClick={handleAssignCreate.bind(null, "additionalDriver")}
                 />
               </Pane>
             )}
             <InsideTableOnAssignment
-              tableName="派單"
-              idx={idx}
-              titles={titles}
+              orderData={orderData}
               assignData={assignData}
-              subAssignData={subAssignData}
-              goToCreatePage={goToCreatePage}
-              deleteItem={deleteItem}
-              goToEditPage={goToEditPage}
-              viewItem={viewItem}
+              handleAssignEdit={handleAssignEdit}
+              isOrderItem={isOrderItem}
             />
           </td>
         </StyledTr>

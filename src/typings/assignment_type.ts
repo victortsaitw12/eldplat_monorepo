@@ -1,4 +1,4 @@
-export interface I_SubAssignData {
+export interface I_AssignData {
   [x: string]: any;
   assignment_no: string;
   bus_day_number: number;
