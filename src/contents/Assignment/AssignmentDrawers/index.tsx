@@ -14,7 +14,7 @@ import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 import SecondCarAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondCarManualCreate";
 import SecondDriverAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondDriverManualCreate";
 
-// ----- variables stateless ----- //
+// ----- stateless variables ----- //
 export type I_FirstDrawer =
   | "autoAssign"
   | "manualAssign"

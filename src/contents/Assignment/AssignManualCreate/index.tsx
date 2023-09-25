@@ -186,8 +186,8 @@ function AssignManualCreate({
     return (count + 1) * orderInfo[0]?.order_quantity;
   };
 
-  // console.log("😋orderInfo", orderInfo);
-  // console.log("😴orderArr", orderArr);
+  console.log("😋orderInfo", orderInfo);
+  console.log("😴orderArr", orderArr);
   // console.log("😎createAssignData", createAssignData);
   // console.log("😍dataFilled", dataFilled);
 

@@ -51,7 +51,7 @@ const DUMMY_FILTER = [
 ];
 
 const Page: NextPageWithLayout<never> = () => {
-  const [data, setData] = useState<any>(null);
+  const [ordersData, setOrdersData] = useState<any>(null);
   const [subAssignData, setSubAssignData] = useState<any[]>([]);
   const [nowTab, setNowTab] = useState("1");
   const [firstDrawerOpen, setFirstDrawerOpen] = useState<I_FirstDrawer>("");
@@ -62,7 +62,7 @@ const Page: NextPageWithLayout<never> = () => {
   const [disabledAutoList, setDisabledAutoList] = useState<string[]>([]);
 
   useEffect(() => {
-    setData((oldData: Array<any>) => {
+    setOrdersData((oldData: Array<any>) => {
       if (!oldData) return oldData;
       const updateData = oldData.map((item) => {
         const quoteNo = item.maintenance_quote_no.value;
@@ -106,7 +106,7 @@ const Page: NextPageWithLayout<never> = () => {
   ) => {
     //---------------------------------------------------------------
     getAllAssignments(pageInfo)
-      .then((data) => {
+      .then((ordersData) => {
         if (isCanceled) {
           console.log("canceled");
           return;
@@ -114,22 +114,22 @@ const Page: NextPageWithLayout<never> = () => {
         if (!subFilter) {
           localStorage.setItem(
             "assignmentInitFilter",
-            JSON.stringify(data.conditionList || DUMMY_FILTER)
+            JSON.stringify(ordersData.conditionList || DUMMY_FILTER)
           );
           initializeSubFilter();
         }
         // ✅設定子列表的狀態
-        const newSubData = data.contentList.map(
+        const newSubData = ordersData.contentList.map(
           (item: { assignments: any }) => {
             return item.assignments;
           }
         );
         setSubAssignData(newSubData);
-        setPageInfo(data.pageInfo);
+        setPageInfo(ordersData.pageInfo);
 
         // ✅設定外層列表狀態
         const assignData = mappingQueryData(
-          data.contentList,
+          ordersData.contentList,
           assignPattern,
           assignParser
         );
@@ -181,7 +181,7 @@ const Page: NextPageWithLayout<never> = () => {
             };
           }
         });
-        setData(newData);
+        setOrdersData(newData);
       })
       .catch((err) => {
         console.error("error in assignment list", err);
@@ -236,14 +236,13 @@ const Page: NextPageWithLayout<never> = () => {
     };
   }, [nowTab]);
 
-  if (!data) {
+  if (!ordersData) {
     return <LoadingSpinner />;
   }
 
-  // TODO naming assignData => data
-  // TODO naming subAssignData => subData
-  // console.log("0️⃣assignData", data);
-  // console.log("1️⃣orderInfo", orderInfo);
+  // TODO naming subAssignData =>
+  console.log("0️⃣assignData", ordersData);
+  console.log("1️⃣orderInfo", orderInfo);
   // console.log("6️⃣subAssignData", subAssignData);
   // console.log("8️⃣firstDrawerOpen", firstDrawerOpen);
   // console.log("9️⃣editData", editData);
@@ -265,7 +264,7 @@ const Page: NextPageWithLayout<never> = () => {
         >
           <div style={{ color: "red", fontSize: "36px" }}></div>
           <AssignmentList
-            assignData={data}
+            assignData={ordersData}
             subAssignData={subAssignData}
             goToCreatePage={() => {
               setFirstDrawerOpen("manualAssign");
