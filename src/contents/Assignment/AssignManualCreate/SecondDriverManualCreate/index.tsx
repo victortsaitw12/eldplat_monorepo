@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { SelectField, Pane, Paragraph, TextareaField } from "evergreen-ui";
+import {
+  SelectField,
+  Pane,
+  Paragraph,
+  TextareaField,
+  Spinner
+} from "evergreen-ui";
 import { FormSTY } from "./style";
 
 import {
@@ -13,7 +19,7 @@ import TimeInput from "@components/Timepicker/TimeInput";
 import Requred from "@components/Required";
 
 interface I_AssignManualCreateProps {
-  handleAssignmentDriverChange: (e: any) => void;
+  handleAssign: (e: any) => void;
   createAssignData: I_ManualCreateType;
   secondDrawerInfo: any;
   data?: any;
@@ -21,7 +27,7 @@ interface I_AssignManualCreateProps {
 }
 
 function SecondDriverAssignManualCreate({
-  handleAssignmentDriverChange,
+  handleAssign,
   secondDrawerInfo,
   createAssignData
 }: I_AssignManualCreateProps) {
@@ -71,7 +77,7 @@ function SecondDriverAssignManualCreate({
       }
     };
 
-    handleAssignmentDriverChange(customEvent);
+    handleAssign(customEvent);
   };
 
   useEffect(() => {
@@ -91,17 +97,35 @@ function SecondDriverAssignManualCreate({
     };
     getDriverData();
     if (curAssignment && curAssignment?.bus_group) {
-      handleBusGroupChange(curAssignment?.bus_group);
+      fetchDriverDDL(curAssignment?.bus_group);
     }
     setLoading(false);
   }, []);
 
-  const handleBusGroupChange = async (bus_group: any) => {
-    const res = await getAssignDriverDDL(bus_group);
-    setDriverNameDDL([
-      { driver_no: "", user_name: "請選擇" },
-      ...res.dataList[0].driver_options
-    ]);
+  const fetchDriverDDL = async (bus_group: string) => {
+    setLoading(true);
+    try {
+      const res = await getAssignDriverDDL(bus_group);
+      setDriverNameDDL([
+        { driver_no: "", user_name: "請選擇" },
+        ...res.dataList[0].driver_options
+      ]);
+    } catch (e) {
+      console.log(e);
+    }
+    setLoading(false);
+  };
+
+  const handleBusGroupChange = async (e: any) => {
+    const bus_group = e.target.value;
+    fetchDriverDDL(bus_group);
+    const customEvent = {
+      target: {
+        name: "bus_group",
+        value: bus_group
+      }
+    };
+    handleAssign(customEvent);
   };
 
   return (
@@ -119,12 +143,7 @@ function SecondDriverAssignManualCreate({
       <SelectField
         label={<Requred>車隊</Requred>}
         name="bus_group"
-        onClick={(e: any) => {
-          handleBusGroupChange(e.target.value);
-        }}
-        onChange={(e: any) => {
-          handleAssignmentDriverChange(e);
-        }}
+        onChange={handleBusGroupChange}
         value={curAssignment?.bus_group}
       >
         {busGroupDDL?.map(
@@ -141,7 +160,7 @@ function SecondDriverAssignManualCreate({
       <SelectField
         label={<Requred>駕駛</Requred>}
         name="driver_no"
-        onChange={handleAssignmentDriverChange}
+        onChange={handleAssign}
         value={curAssignment?.driver_no}
       >
         {driverNameDDL?.map((item: any) => {
@@ -172,9 +191,7 @@ function SecondDriverAssignManualCreate({
       <TextareaField
         label="備註"
         name="remark"
-        onChange={(e: any) => {
-          handleAssignmentDriverChange(e);
-        }}
+        onChange={handleAssign}
         marginTop={16}
       />
     </FormSTY>

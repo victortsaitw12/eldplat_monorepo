@@ -75,7 +75,7 @@ export const assignParser = (data: any, key: string) => {
     const labelElement = createElement(
       "a",
       {
-        style: { textDecoration: "none", cursor: "pointer", color: "inherit" },
+        className: "link",
         href:
           data.maintenance_quote_no.substring(0, 3) === "MTC"
             ? `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`

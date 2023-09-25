@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-import { Text, toaster } from "evergreen-ui";
+import { toaster } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 //

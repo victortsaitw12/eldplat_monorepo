@@ -19,7 +19,7 @@ import TimeInput from "@components/Timepicker/TimeInput";
 import Requred from "@components/Required";
 
 interface I_AssignManualCreateProps {
-  handleAssignmentCarChange: (e: any) => void;
+  handleAssign: (e: any) => void;
   createAssignData: I_ManualCreateType;
   secondDrawerInfo: any;
   data?: any;
@@ -27,7 +27,7 @@ interface I_AssignManualCreateProps {
 }
 
 function SecondCarAssignManualCreate({
-  handleAssignmentCarChange,
+  handleAssign,
   secondDrawerInfo,
   createAssignData
 }: I_AssignManualCreateProps) {
@@ -90,6 +90,7 @@ function SecondCarAssignManualCreate({
   }, []);
 
   const fetchBusNameDDL = async (bus_group: string) => {
+    setLoading(true);
     try {
       const res = await getAssignBusDDL(bus_group);
       if (res.statusCode !== "200") throw new Error("failed");
@@ -100,6 +101,7 @@ function SecondCarAssignManualCreate({
     } catch (e: any) {
       console.log(e.message);
     }
+    setLoading(false);
   };
 
   const handleBusGroupChange = async (e: any) => {
@@ -112,7 +114,7 @@ function SecondCarAssignManualCreate({
         value: bus_group
       }
     };
-    handleAssignmentCarChange(customEvent);
+    handleAssign(customEvent);
   };
 
   const plateNo = React.useMemo(() => {
@@ -129,7 +131,7 @@ function SecondCarAssignManualCreate({
         value: bus_no
       }
     };
-    handleAssignmentCarChange(customEvent);
+    handleAssign(customEvent);
   };
 
   // TODO: prevent this is called until the client really change the time
@@ -145,7 +147,7 @@ function SecondCarAssignManualCreate({
       }
     };
 
-    handleAssignmentCarChange(customEvent);
+    handleAssign(customEvent);
   };
 
   return (
@@ -207,7 +209,7 @@ function SecondCarAssignManualCreate({
       <TextareaField
         label="備註"
         name="remark"
-        onChange={handleAssignmentCarChange}
+        onChange={handleAssign}
         marginTop={16}
       />
     </FormSTY>

@@ -14,6 +14,7 @@ import AssignmentAdditional from "@contents/Assignment/AssignmentAdditional";
 import SecondCarAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondCarManualCreate";
 import SecondDriverAssignManualCreate from "@contents/Assignment/AssignManualCreate/SecondDriverManualCreate";
 
+// ----- variables stateless ----- //
 export type I_FirstDrawer =
   | "autoAssign"
   | "manualAssign"
@@ -38,6 +39,7 @@ const defaultAssignData = {
   manual_bus: []
 };
 
+// ----- React component ----- //
 function AssignmentDrawers({
   firstDrawerOpen,
   setFirstDrawerOpen,
@@ -52,50 +54,28 @@ function AssignmentDrawers({
     React.useState<I_ManualCreateType>(defaultAssignData);
   const [orderIndex, setOrderIndex] = React.useState<number>(1);
 
-  // ⭐新增派車單: onChange
-  const handleAssignmentCarChange = (
+  // console.log("2️⃣secondDrawerInfo", secondDrawerInfo);
+  // console.log("5️⃣createAssignData", createAssignData);
+  // console.log("7️⃣orderIndex", orderIndex);
+
+  // ----- function ----- //
+  const handleAssign = (
+    type: "manual_bus" | "manual_driver",
     e: React.ChangeEvent<HTMLInputElement> | any
   ) => {
-    const newCreateAssignData = { ...createAssignData };
-    const newBusArr = [...newCreateAssignData.manual_bus];
-    const target = newBusArr[orderIndex];
-    const updatedTarget = {
-      ...target,
+    const updatedData = { ...createAssignData };
+    const updatedSingleAssign = {
+      ...updatedData[type][orderIndex],
       [e.target.name]: e.target.value,
       bus_day_number: secondDrawerInfo.car
     };
 
-    newBusArr[orderIndex] = updatedTarget;
-    newCreateAssignData.manual_bus = newBusArr;
-
-    newCreateAssignData["quote_no"] = orderInfo[0].quote_no;
-    setCreateAssignData(newCreateAssignData);
+    updatedData[type][orderIndex] = updatedSingleAssign;
+    updatedData["quote_no"] = orderInfo[0].quote_no;
+    setCreateAssignData(updatedData);
   };
 
-  // ⭐新增派工單: onChange
-  const handleAssignmentDriverChange = (
-    e: React.ChangeEvent<HTMLInputElement> | any
-  ) => {
-    const newCreateAssignData = { ...createAssignData };
-    const newDriverArr = [...newCreateAssignData.manual_driver];
-    const target = newDriverArr[orderIndex];
-    const updatedTarget = {
-      ...target,
-      [e.target.name]: e.target.value,
-      bus_day_number: secondDrawerInfo.car
-    };
-
-    newDriverArr[orderIndex] = updatedTarget;
-    newCreateAssignData.manual_driver = newDriverArr;
-
-    newCreateAssignData["quote_no"] = orderInfo[0].quote_no;
-    setCreateAssignData(newCreateAssignData);
-  };
-
-  console.log("2️⃣secondDrawerInfo", secondDrawerInfo);
-  console.log("5️⃣createAssignData", createAssignData);
-  console.log("7️⃣orderIndex", orderIndex);
-
+  // ----- render ----- //
   const firstDrawerList = new Map([
     [
       "autoAssign",
@@ -185,18 +165,19 @@ function AssignmentDrawers({
           isTabShown={false}
           closeDrawer={setSecondDrawerOpen.bind(null, "")}
         >
+          {/* //TODO: don't unmount them, just hide  */}
           {secondDrawerOpen === "派車" && (
             <SecondCarAssignManualCreate
               createAssignData={createAssignData}
               secondDrawerInfo={secondDrawerInfo}
-              handleAssignmentCarChange={handleAssignmentCarChange}
+              handleAssign={handleAssign.bind(null, "manual_bus")}
             />
           )}
           {secondDrawerOpen === "派工" && (
             <SecondDriverAssignManualCreate
               createAssignData={createAssignData}
               secondDrawerInfo={secondDrawerInfo}
-              handleAssignmentDriverChange={handleAssignmentDriverChange}
+              handleAssign={handleAssign.bind(null, "manual_driver")}
             />
           )}
         </Drawer>
