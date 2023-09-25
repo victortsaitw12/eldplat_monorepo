@@ -25,13 +25,13 @@ const customTheme = mergeTheme(defaultTheme, {
 });
 
 const hourOptions = Array.from({ length: 24 }, (_, i) => (
-  <option key={`hour-${i}`} value={i.toString().padStart(2, "0")}>
+  <option key={`hour-${i}`} value={i}>
     {i.toString().padStart(2, "0")}
   </option>
 ));
 
 const minOptions = Array.from({ length: 60 }, (_, i) => (
-  <option key={`hour-${i}`} value={i.toString().padStart(2, "0")}>
+  <option key={`hour-${i}`} value={i}>
     {i.toString().padStart(2, "0")}
   </option>
 ));
@@ -54,10 +54,13 @@ const TimeInput = ({ date, setDate, disabled = false, ...props }: I_Props) => {
   const dateBase = dayjs(date).startOf("day");
 
   React.useEffect(() => {
-    if (hour === null || minute === null) return;
+    if (hour === null && minute === null) return;
+    const adjustedHour = hour === null ? 0 : hour;
+    const adjustedMin = minute === null ? 0 : minute;
+
     const updatedDate = dayjs(dateBase)
-      .add(hour % 24, "hour")
-      .add(minute, "minute")
+      .add(adjustedHour, "hour")
+      .add(adjustedMin, "minute")
       .format("YYYY-MM-DD HH:mm");
     setDate(updatedDate);
   }, [hour, minute]);
@@ -78,7 +81,7 @@ const TimeInput = ({ date, setDate, disabled = false, ...props }: I_Props) => {
           className="timepicker-time"
           value={hour === null ? "" : hour}
           onChange={handleHourChange}
-          disabled={!date || disabled || hour === null || minute === null}
+          disabled={!date || disabled}
         >
           <option value="" label="小時" disabled />
           {hourOptions}
@@ -88,7 +91,7 @@ const TimeInput = ({ date, setDate, disabled = false, ...props }: I_Props) => {
           className="timepicker-time"
           value={minute === null ? "" : minute}
           onChange={handleMinuteChange}
-          disabled={!date || disabled || hour === null || minute === null}
+          disabled={!date || disabled}
         >
           <option value="" label="分鐘" disabled />
           {minOptions}
