@@ -3,35 +3,17 @@ import { BodySTY } from "./style";
 import { PlusIcon } from "evergreen-ui";
 
 import { Label } from "@components/Button/Primary";
-import { getOrderInfo } from "@services/assignment/getOrderInfo";
 
 interface AdditionalDriverBtn_Type {
   id: string;
   disabled?: boolean;
-  setOrderInfo: (t: any) => void;
-  setFirstDrawerOpen: (v: string) => void;
+  onBtnClick: (id: string) => void;
 }
 const AdditionalDriverBtn = ({
   id,
   disabled,
-  setOrderInfo,
-  setFirstDrawerOpen
+  onBtnClick
 }: AdditionalDriverBtn_Type) => {
-  const [loading, setLoading] = React.useState<boolean>(false);
-
-  const renderAddDriver = () => {
-    setLoading(true);
-    try {
-      getOrderInfo(id).then((data) => {
-        console.log("data", data);
-        setOrderInfo(data.dataList);
-      });
-      setFirstDrawerOpen("additionalDriver");
-    } catch (err) {
-      console.log("err of click the finish button", err);
-    }
-    setLoading(false);
-  };
   return (
     <BodySTY>
       <Label
@@ -45,7 +27,7 @@ const AdditionalDriverBtn = ({
             派工
           </span>
         }
-        onClick={renderAddDriver}
+        onClick={onBtnClick.bind(null, id)}
         disabled={disabled}
       ></Label>
     </BodySTY>

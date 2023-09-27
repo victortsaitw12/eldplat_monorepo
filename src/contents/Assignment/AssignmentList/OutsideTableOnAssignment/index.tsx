@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { ErrorIcon } from "evergreen-ui";
+import React from "react";
 import { v4 as uuid } from "uuid";
-import { TableSTY, TableContainerSTY, StyledDot } from "./style";
+import { TableSTY, TableContainerSTY } from "./style";
 import TableRow from "./TableRow";
 import PaginationField, { I_PageInfo } from "@components/PaginationField";
 import LoadingSpinner from "@components/LoadingSpinner";
@@ -13,25 +12,23 @@ export interface I_labelValue {
   value: string;
 }
 export interface I_Data {
-  [key: string]: string | number | React.ReactNode | I_labelValue;
+  [key: string]: I_labelValue;
   maintenance_quote_no: I_labelValue;
 }
 
 interface I_Table {
   tableName: string | any;
   titles: Array<string | number | React.ReactNode> | any;
-  assignData: I_Data[];
-  subAssignData: any;
+  ordersData: I_Data[];
+  assignsData: any;
+  handleAssignCreate: (type: I_FirstDrawer, id: string) => void;
+  handleAssignEdit: (item: any) => void;
   onCheck?: (items: any) => void;
-  goToCreatePage?: () => void;
-  goToEditPage?: (item: any) => void;
   viewItem?: (id: any, item: any) => void;
-  // editItem?: (item: any) => void;
+  editItem?: (item: any) => void;
   deleteItem?: (item: any) => void;
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
-  setOrderInfo: (t: any) => void;
-  setFirstDrawerOpen: (v: I_FirstDrawer) => void;
 }
 
 export interface I_OpenTable {
@@ -44,24 +41,14 @@ Must provide id field in the Data Array
 function OutsideTableOnAssignment({
   tableName,
   titles,
-  assignData,
-  subAssignData,
-  goToCreatePage,
-  viewItem = (id, item) => {
-    console.log(id, item);
-  },
-  goToEditPage = (item: any) => {
-    console.log("EDIT");
-  },
-  deleteItem = (item) => {
-    console.log(item);
-  },
+  ordersData,
+  assignsData,
   pageInfo,
   onPageChange,
-  setOrderInfo,
-  setFirstDrawerOpen
+  handleAssignCreate,
+  handleAssignEdit
 }: I_Table) {
-  if (!assignData) return <LoadingSpinner />;
+  if (!ordersData) return <LoadingSpinner />;
   return (
     <TableContainerSTY className="TableContainerSTY">
       <div className="container-header">
@@ -89,22 +76,15 @@ function OutsideTableOnAssignment({
             </tr>
           </thead>
           <tbody>
-            {assignData.length !== 0 ? (
-              assignData.map((item: any, idx) => {
+            {ordersData.length !== 0 ? (
+              ordersData.map((item: any, idx) => {
                 return (
                   <TableRow
-                    // key={uuid()}
                     key={`outsideRow-${item.maintenance_quote_no.value}`}
-                    idx={idx}
-                    item={item}
-                    assignData={assignData}
-                    subAssignData={subAssignData}
-                    goToCreatePage={goToCreatePage}
-                    deleteItem={deleteItem}
-                    goToEditPage={goToEditPage}
-                    viewItem={viewItem}
-                    setOrderInfo={setOrderInfo}
-                    setFirstDrawerOpen={setFirstDrawerOpen}
+                    orderData={ordersData[idx]}
+                    assignData={assignsData[idx]}
+                    handleAssignCreate={handleAssignCreate}
+                    handleAssignEdit={handleAssignEdit}
                   />
                 );
               })
