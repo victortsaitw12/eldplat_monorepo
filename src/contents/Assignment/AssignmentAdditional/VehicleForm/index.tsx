@@ -72,9 +72,7 @@ function VehicleForm({
     const getbusData = async () => {
       setLoading(true);
       try {
-        // 取得 quote_no
         setValue("quote_no", orderInfo[0].quote_no);
-        // 取得可選日期
         const resDateDDL = await getAssignDateDDL(
           orderInfo[0].departure_date,
           orderInfo[0].return_date
@@ -83,7 +81,6 @@ function VehicleForm({
           { order_date: "", order_weekday: "請選擇" },
           ...resDateDDL.dataList[0].order_date_options
         ]);
-        // 取得車隊
         const res = await getAssignBusDDL();
         setBusGroupDDL([
           { bus_group: "00", bus_group_name: "請選擇" },
@@ -143,6 +140,11 @@ function VehicleForm({
     },
     [orderInfo]
   );
+
+  const handleTimeChange = (type: "start" | "end", v: any) => {
+    const updatedKey = type === "start" ? "task_start_time" : "task_end_time";
+    setValue(updatedKey, dayjs(v).format("YYYY-MM-DDTHH:mm"));
+  };
 
   const handleBusGroupChange = async (e: any) => {
     const res = await getAssignBusDDL(e.target.value);
@@ -205,12 +207,7 @@ function VehicleForm({
             <span style={{ color: "#D14343" }}>*</span>車隊
           </div>
         }
-        onClick={(e: any) => {
-          handleBusGroupChange(e);
-        }}
-        // onChange={(e: any) => {
-        //   handleAssignmentCarChange(e);
-        // }}
+        onClick={handleBusGroupChange}
         {...register("bus_group", {
           required: "必填"
         })}
@@ -233,12 +230,7 @@ function VehicleForm({
           </div>
         }
         hint={!dateBase ? "(請先選取車隊) " : " "}
-        // onClick={(e: any) => {
-        //   handleCarPlate(e);
-        // }}
-
         {...register("bus_driver_no", {
-          // API: bus_no vs driver_no 共用這個 "bus_driver_no"欄位
           required: "必填",
           onChange: (e: any) => {
             handleCarPlate(e);
@@ -260,9 +252,7 @@ function VehicleForm({
         <Paragraph>起始時間</Paragraph>
         <TimeInput
           date={dateBase}
-          setDate={(v) => {
-            setValue("task_start_time", dayjs(v).format("YYYY-MM-DDTHH:mm"));
-          }}
+          setDate={handleTimeChange.bind(null, "start")}
           {...register("task_start_time", {
             required: "必填"
           })}
@@ -273,9 +263,7 @@ function VehicleForm({
         <Paragraph>截止時間</Paragraph>
         <TimeInput
           date={dateBase}
-          setDate={(v) => {
-            setValue("task_end_time", dayjs(v).format("YYYY-MM-DDTHH:mm"));
-          }}
+          setDate={handleTimeChange.bind(null, "end")}
           {...register("task_end_time", {
             required: "必填"
           })}

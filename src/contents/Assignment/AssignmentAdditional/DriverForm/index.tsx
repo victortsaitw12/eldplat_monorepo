@@ -140,6 +140,10 @@ function DriverForm({
     },
     [orderInfo]
   );
+  const handleTimeChange = (type: "start" | "end", v: any) => {
+    const updatedKey = type === "start" ? "task_start_time" : "task_end_time";
+    setValue(updatedKey, dayjs(v).format("YYYY-MM-DDTHH:mm"));
+  };
 
   const handleBusGroupChange = async (e: any) => {
     const res = await getDayDriverNameDDL(
@@ -240,9 +244,7 @@ function DriverForm({
         <Paragraph>起始時間</Paragraph>
         <TimeInput
           date={dateBase}
-          setDate={(v) =>
-            setValue("task_start_time", dayjs(v).format("YYYY-MM-DDTHH:mm"))
-          }
+          setDate={handleTimeChange.bind(null, "start")}
           {...register("task_start_time", {
             required: "必填"
           })}
@@ -253,9 +255,7 @@ function DriverForm({
         <Paragraph>截止時間</Paragraph>
         <TimeInput
           date={dateBase}
-          setDate={(v) =>
-            setValue("task_end_time", dayjs(v).format("YYYY-MM-DDTHH:mm"))
-          }
+          setDate={handleTimeChange.bind(null, "end")}
           {...register("task_end_time", {
             required: "必填"
           })}

@@ -5,25 +5,21 @@ import { I_PageInfo } from "@components/PaginationField";
 import { I_FirstDrawer } from "@contents/Assignment/AssignmentDrawers";
 
 interface Props {
-  assignData: any;
-  subAssignData: any;
-  goToCreatePage: () => void;
-  goToEditPageHandler: (item: any) => void;
+  ordersData: any;
+  assignsData: any;
+  handleAssignEdit: (item: any) => void;
   pageInfo?: I_PageInfo;
   onPageChange?: (pageQuery: I_PageInfo) => void;
-  setOrderInfo: (t: any) => void;
-  setFirstDrawerOpen: (v: I_FirstDrawer) => void;
+  handleAssignCreate: (type: I_FirstDrawer, id: string) => void;
 }
 
 function AssignmentList({
-  assignData,
-  subAssignData,
-  goToCreatePage,
-  goToEditPageHandler,
+  ordersData,
+  assignsData,
+  handleAssignCreate,
+  handleAssignEdit,
   pageInfo,
-  onPageChange,
-  setOrderInfo,
-  setFirstDrawerOpen
+  onPageChange
 }: Props) {
   const assignmentTitle = getAssignmentTitle();
   return (
@@ -31,14 +27,12 @@ function AssignmentList({
       <OutsideTableOnAssignment
         tableName="派單"
         titles={assignmentTitle}
-        assignData={assignData}
-        subAssignData={subAssignData}
-        goToCreatePage={goToCreatePage}
-        goToEditPage={goToEditPageHandler}
+        ordersData={ordersData}
+        assignsData={assignsData}
         pageInfo={pageInfo}
         onPageChange={onPageChange}
-        setOrderInfo={setOrderInfo}
-        setFirstDrawerOpen={setFirstDrawerOpen}
+        handleAssignCreate={handleAssignCreate}
+        handleAssignEdit={handleAssignEdit}
       />
     </BodySTY>
   );

@@ -4,14 +4,12 @@ import React, { useState } from "react";
 interface I_EditBtn {
   setOptionIsOpen?: (t: any) => void;
   item: any;
-  goToEditPage?: (item: any) => void;
+  editItem?: (item: any) => void;
 }
 
 const EditBtn = ({
   item,
-  goToEditPage = (item: any) => {
-    console.log("EDIT");
-  }
+  editItem = () => console.log("item", item)
 }: I_EditBtn) => {
   const [optionIsOpen, setOptionIsOpen] = useState<boolean>(false);
   // console.log("item", item);
@@ -29,10 +27,9 @@ const EditBtn = ({
         <div className="table-row-option ">
           <button
             className="option-item"
-            onClick={(e) => {
-              console.log("按下編輯的e", e);
+            onClick={() => {
               setOptionIsOpen(false);
-              goToEditPage(item);
+              editItem(item);
             }}
           >
             <EditIcon size={14} />

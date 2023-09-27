@@ -1,4 +1,5 @@
 import API_Path from "./apiPath";
+import { createElement } from "react";
 import { convertDateAndTimeFormat } from "@utils/convertDate";
 import { PatternType } from "@utils/mappingQueryData";
 import { I_PageInfo } from "@components/PaginationField";
@@ -63,41 +64,57 @@ export const assignPattern: PatternType = {
   manual_assign: true
 };
 
-// 移進 /assignment 頁面 因為label裡面要裝有style跟onClick
-// export const assignParser = (data: any, key: string) => {
-//   // if (key === "id") {
-//   //   return {
-//   //     label: data["customer_no"] || null,
-//   //     value: data["customer_no"] || null
-//   //   };
-//   // }
-//   if (key === "task_start_time") {
-//     return {
-//       label:
-//         data.task_start_time !== null
-//           ? convertDateAndTimeFormat(data.task_start_time)
-//           : "--",
-//       value:
-//         data.task_start_time !== null
-//           ? convertDateAndTimeFormat(data.task_start_time)
-//           : "--"
-//     };
-//   }
-//   if (key === "task_end_time") {
-//     return {
-//       label:
-//         data.task_end_time !== null
-//           ? convertDateAndTimeFormat(data.task_end_time)
-//           : "--",
-//       value:
-//         data.task_end_time !== null
-//           ? convertDateAndTimeFormat(data.task_end_time)
-//           : "--"
-//     };
-//   }
+export const assignParser = (data: any, key: string) => {
+  // if (key === "id") {
+  //   return {
+  //     label: data["customer_no"] || null,
+  //     value: data["customer_no"] || null
+  //   };
+  // }
+  if (key === "maintenance_quote_no") {
+    const labelElement = createElement(
+      "a",
+      {
+        className: "link",
+        href:
+          data.maintenance_quote_no.substring(0, 3) === "MTC"
+            ? `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
+            : `/admin_orders/detail/${data.maintenance_quote_no}?type=1`
+      },
+      data.maintenance_quote_no || "--"
+    );
+    return {
+      label: labelElement,
+      value: data.maintenance_quote_no || null
+    };
+  }
+  if (key === "task_start_time") {
+    return {
+      label:
+        data.task_start_time !== null
+          ? convertDateAndTimeFormat(data.task_start_time)
+          : "--",
+      value:
+        data.task_start_time !== null
+          ? convertDateAndTimeFormat(data.task_start_time)
+          : "--"
+    };
+  }
+  if (key === "task_end_time") {
+    return {
+      label:
+        data.task_end_time !== null
+          ? convertDateAndTimeFormat(data.task_end_time)
+          : "--",
+      value:
+        data.task_end_time !== null
+          ? convertDateAndTimeFormat(data.task_end_time)
+          : "--"
+    };
+  }
 
-//   return {
-//     label: data[key] || "--",
-//     value: data[key] || null
-//   };
-// };
+  return {
+    label: data[key] || "--",
+    value: data[key] || null
+  };
+};
