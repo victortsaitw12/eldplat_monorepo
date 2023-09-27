@@ -34,5 +34,5 @@ export const getWeekName = (date: string) => {
 };
 
 export const formatToDB = (date: string) => {
-  return dayjs(date).format("YYYY-MM-DDThh:mm");
+  return dayjs(date).format("YYYY-MM-DDTHH:mm");
 };
