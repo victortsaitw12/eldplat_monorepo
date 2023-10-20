@@ -67,7 +67,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   const [locale, setLocale] = useState<string>(LOCALES.CHINESE);
   const [messages, setMessages] = useState<any>(null);
-
   const [pageType, setPageType] = useState<string>(
     router.pathname.replace("/", "")
   ); // 先預設是vendor頁的多國語page
@@ -85,19 +84,19 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   // }, [locale]);
 
   // 因為多國語系是抓message資料，所以一進來一定要先抓取api取到的JSON檔
-  useEffect(() => {
-    setMessages(langJSONData);
-  }, [langJSONData]);
-  const loadLocaleData = () => {
-    return langJSONData;
-  };
+  // useEffect(() => {
+  //   setMessages(langJSONData);
+  // }, [langJSONData]);
+  // const loadLocaleData = () => {
+  //   return langJSONData;
+  // };
 
-  useEffect(() => {
-    async function bootstrapApplication(locale: string) {
-      const mess = await loadLocaleData();
-      setMessages(mess);
-    }
-  }, [locale]);
+  // useEffect(() => {
+  //   async function bootstrapApplication(locale: string) {
+  //     const mess = await loadLocaleData();
+  //     setMessages(mess);
+  //   }
+  // }, [locale]);
 
   const getLayout = Component.getLayout || ((page: React.ReactNode) => page);
   return (
