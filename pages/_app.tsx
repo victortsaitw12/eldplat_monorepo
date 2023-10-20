@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { AppPropsWithLayout } from "next/app";
 import { ThemeProvider } from "styled-components";
+import { SessionProvider } from "next-auth/react";
+
 //
 import { I18Provider, LOCALES } from "@contexts/i18n";
 import theme from "@styles/theme";
@@ -63,7 +65,10 @@ function Loader() {
   ) : null;
 }
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps }
+}: AppPropsWithLayout) {
   const router = useRouter();
   const [locale, setLocale] = useState<string>(LOCALES.CHINESE);
   const [messages, setMessages] = useState<any>(null);
@@ -100,33 +105,35 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const getLayout = Component.getLayout || ((page: React.ReactNode) => page);
   return (
-    <main className={notoSans.className}>
-      <Loader />
-      <I18Provider locale={locale} messages={messages} defaultLocale="zh">
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          {getLayout(
-            <Component
-              {...pageProps}
-              locale={locale}
-              setLocale={setLocale}
-              setPageType={setPageType}
-            />,
-            {
-              ...pageProps,
-              locale: locale,
-              setLocale: setLocale,
-              breadcrumbs: (
-                <DynamicBreadcrumbs
-                  className="main-layout"
-                  splitEle={<span style={{ margin: "0 0.5rem" }}>/</span>}
-                  routes={getPageBreadCrumbs(router)}
-                />
-              )
-            }
-          )}
-        </ThemeProvider>
-      </I18Provider>
-    </main>
+    <SessionProvider session={session}>
+      <main className={notoSans.className}>
+        <Loader />
+        <I18Provider locale={locale} messages={messages} defaultLocale="zh">
+          <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            {getLayout(
+              <Component
+                {...pageProps}
+                locale={locale}
+                setLocale={setLocale}
+                setPageType={setPageType}
+              />,
+              {
+                ...pageProps,
+                locale: locale,
+                setLocale: setLocale,
+                breadcrumbs: (
+                  <DynamicBreadcrumbs
+                    className="main-layout"
+                    splitEle={<span style={{ margin: "0 0.5rem" }}>/</span>}
+                    routes={getPageBreadCrumbs(router)}
+                  />
+                )
+              }
+            )}
+          </ThemeProvider>
+        </I18Provider>
+      </main>
+    </SessionProvider>
   );
 }
