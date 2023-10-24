@@ -7,26 +7,18 @@ import styled from "styled-components";
 import { getLayout } from "@layout/QuoteLayout";
 import ButtonPrimaryRadius from "@components/Button/PrimaryRadius";
 
+// --- page --- //
 const Page: NextPageWithLayout<never> = () => {
   const { data: session } = useSession();
-  const [inputData, setInputData] = React.useState({
-    username: "",
-    password: ""
-  });
 
   console.log("🍅 session:", session);
-
-  const handleInputChange = (name: "username" | "password", value: string) => {
-    const updateInputData = { ...inputData };
-    inputData[name] = value;
-    setInputData(updateInputData);
-  };
+  // ok => console.log("🍅 inputData:", inputData);
 
   return (
     <ContainerSTY>
       <LoginStatus />
-      {!session && <LoginForm onInputChange={handleInputChange} />}
-      <LoginBtn />
+      <LoginBtn onClick={session ? signOut : signIn} />
+      {/* {session ? <LoginBtn onClick={signOut} /> : <LoginForm />} */}
     </ContainerSTY>
   );
 };
@@ -44,46 +36,59 @@ const LoginStatus = () => {
   );
 };
 
-interface I_UserInput {
-  username: string;
-  password: string;
-}
-const LoginForm = ({
-  onInputChange
-}: {
-  onInputChange: (name: "username" | "password", value: string) => void;
-}) => {
+const LoginBtn = ({ onClick }: { onClick: (v: any) => void }) => {
   const { data: session } = useSession();
+  const { data } = useSession();
+  // const { accessToken } = data;
 
   return (
     <ContainerSTY style={{ maxWidth: "280px", maxHeight: "100px" }}>
-      <TextInput
-        onChange={(e: any) =>
-          onInputChange.call(null, "username", e.target.value)
-        }
-        name="username"
-        placeholder="User Name"
-      />
-      <TextInput
-        onChange={(e: any) =>
-          onInputChange.call(null, "password", e.target.value)
-        }
-        name="password"
-        type="password"
-        placeholder="Password"
-      />
+      <ButtonPrimaryRadius onClick={(e: any) => onClick(e)}>
+        {session ? "Sign out" : "Sign in"}
+      </ButtonPrimaryRadius>
+      {/* <div>Access Token: {accessToken}</div> */}
     </ContainerSTY>
   );
 };
-const LoginBtn = () => {
-  const { data: session } = useSession();
+
+const LoginForm = () => {
+  const [inputData, setInputData] = React.useState({
+    username: "",
+    password: ""
+  });
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    console.log("🍅 called");
+    signIn("credentials", { ...inputData, redirect: false }); // !! missing in doc
+  };
+  const handleInputChange = (name: "username" | "password", value: string) => {
+    const updateInputData = { ...inputData };
+    updateInputData[name] = value;
+    setInputData(updateInputData);
+  };
 
   return (
-    <ContainerSTY style={{ maxWidth: "280px", maxHeight: "100px" }}>
-      <ButtonPrimaryRadius onClick={() => (session ? signOut() : signIn())}>
-        {session ? "Sign out" : "Sign in"}
-      </ButtonPrimaryRadius>
-    </ContainerSTY>
+    <>
+      <ContainerSTY style={{ maxWidth: "280px", maxHeight: "100px" }}>
+        <TextInput
+          onChange={(e: any) =>
+            handleInputChange.call(null, "username", e.target.value)
+          }
+          name="username"
+          placeholder="User Name"
+        />
+        <TextInput
+          onChange={(e: any) =>
+            handleInputChange.call(null, "password", e.target.value)
+          }
+          name="password"
+          type="password"
+          placeholder="Password"
+        />
+      </ContainerSTY>
+      <LoginBtn onClick={handleLogin} />
+    </>
   );
 };
 
@@ -98,6 +103,7 @@ const ContainerSTY = styled.div`
   gap: 20px;
 `;
 
+// --- SSR --- //
 // export const getServerSideProps: GetServerSideProps<Params> = async (
 //   context
 // ) => {
@@ -121,7 +127,10 @@ const ContainerSTY = styled.div`
 // };
 
 Page.getLayout = (page, layoutProps) =>
-  getLayout(page, { title: "使用者驗證管理", ...layoutProps });
+  getLayout(page, {
+    title: "前端開發用: 頁面測試 next-auth 存 session",
+    ...layoutProps
+  });
 
 export default Page;
 

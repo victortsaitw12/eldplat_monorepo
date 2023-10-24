@@ -4,52 +4,45 @@
 //   message: string
 // }
 
-const USERS = [
+export const USERS = [
   {
     id: "1",
     name: "A Train",
-    username: "atrain",
+    username: "train",
     password: "0000",
     email: "atrain@example.com"
   },
   {
     id: "2",
     name: "B Line",
-    username: "bline",
+    username: "line",
     password: "0000",
     email: "bline@example.com"
   },
   {
     id: "3",
-    name: "C What",
-    username: "cwhat",
+    name: "C Park",
+    username: "park",
     password: "0000",
     email: "cwhat@example.com"
   },
   {
     id: "4",
     name: "D Town",
-    username: "dtown",
+    username: "town",
     password: "0000",
     email: "dtown@example.com"
   }
 ];
 
-export default function handler(req, res) {
-  const { query, method } = req;
+export default async function handler(req, res) {
+  //const body = await req.json(); // TODO: check with Page router doc
   const { username, password } = req.body;
   const user = USERS.filter((user) => user.name === username);
   if (!user) {
-    console.log("🍅 User not found");
-    return res
-      .status(200)
-      .json({ user: null, message: "Failed to find the user." });
-  }
-  if (user.password === password) {
-    return res.status(200).json({ user: user });
+    return res.status(200).json({ user: null, message: "User not found." });
   } else {
-    return res
-      .status(200)
-      .json({ user: null, message: "Mismatched username and password" });
+    // not really authenticate user with password for now
+    return res.status(200).json({ user: user });
   }
 }
