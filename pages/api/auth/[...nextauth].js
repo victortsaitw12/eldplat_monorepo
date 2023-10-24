@@ -10,37 +10,43 @@ export const authOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET
+    }),
+    CredentialsProvider({
+      id: "password-login",
+      name: "credentials",
+      credentials: {
+        username: { label: "Username", type: "text", placeholder: "user name" },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "4-digit numbers"
+        }
+      },
+      // callback will be initiated when you try to login
+      async authorize(credentials, req) {
+        //check if email and password inputs are valid (42 21)
+
+        // authenticate user
+        console.log("🍅 authorize is called:", credentials, req);
+        return {
+          id: "2",
+          name: "B Line",
+          username: "line",
+          password: "0000",
+          email: "bline@example.com"
+        };
+        const res = await fetch("/api/test/login", {
+          method: "POST",
+          body: JSON.stringify(credentials)
+        });
+        const { user } = await res.json();
+        // If no error and we have user data, return it
+        if (!user) return null;
+
+        // Return null if user data could not be retrieved
+        return user;
+      }
     })
-    // CredentialsProvider({
-    //   id: "password-login",
-    //   name: "credentials",
-    //   credentials: {
-    //     username: { label: "Username", type: "text", placeholder: "user name" },
-    //     password: {
-    //       label: "Password",
-    //       type: "password",
-    //       placeholder: "4-digit numbers"
-    //     }
-    //   },
-    //   // callback will be initiated when you try to login
-    //   async authorize(credentials, req) {
-    //     //check if email and password inputs are valid (42 21)
-
-    //     // authenticate user
-    //     console.log("🍅 authorize is called:", credentials, req);
-
-    //     const res = await fetch("/api/test/login", {
-    //       method: "POST",
-    //       body: JSON.stringify(credentials)
-    //     });
-    //     const { user } = await res.json();
-    //     // If no error and we have user data, return it
-    //     if (!user) return null;
-
-    //     // Return null if user data could not be retrieved
-    //     return user;
-    //   }
-    // })
   ],
   session: {
     // The default is `"jwt"`, an encrypted JWT (JWE) stored in the session cookie.

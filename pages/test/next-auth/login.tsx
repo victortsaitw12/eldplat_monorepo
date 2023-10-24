@@ -18,7 +18,9 @@ const Page: NextPageWithLayout<never> = () => {
     <ContainerSTY>
       <LoginStatus />
       <LoginBtn onClick={session ? signOut : signIn} />
-      {/* {session ? <LoginBtn onClick={signOut} /> : <LoginForm />} */}
+      {/* <Divider />
+      <div>Credentials Authentication</div>
+      {session ? <LoginBtn onClick={signOut} /> : <LoginForm />} */}
     </ContainerSTY>
   );
 };
@@ -36,14 +38,20 @@ const LoginStatus = () => {
   );
 };
 
+const Divider = () => {
+  return <div style={{ width: "280px", borderBottom: "1px solid gray" }}></div>;
+};
+
 const LoginBtn = ({ onClick }: { onClick: (v: any) => void }) => {
   const { data: session } = useSession();
-  const { data } = useSession();
   // const { accessToken } = data;
 
   return (
     <ContainerSTY style={{ maxWidth: "280px", maxHeight: "100px" }}>
-      <ButtonPrimaryRadius onClick={(e: any) => onClick(e)}>
+      <ButtonPrimaryRadius
+        style={{ width: "280px" }}
+        onClick={(e: any) => onClick(e)}
+      >
         {session ? "Sign out" : "Sign in"}
       </ButtonPrimaryRadius>
       {/* <div>Access Token: {accessToken}</div> */}
@@ -59,7 +67,6 @@ const LoginForm = () => {
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    console.log("🍅 called");
     signIn("credentials", { ...inputData, redirect: false }); // !! missing in doc
   };
   const handleInputChange = (name: "username" | "password", value: string) => {

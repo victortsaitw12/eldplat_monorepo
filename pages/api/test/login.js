@@ -37,6 +37,7 @@ export const USERS = [
 
 export default async function handler(req, res) {
   //const body = await req.json(); // TODO: check with Page router doc
+  console.log("🍅 login API is called:", req);
   const { username, password } = req.body;
   const user = USERS.filter((user) => user.name === username);
   if (!user) {
