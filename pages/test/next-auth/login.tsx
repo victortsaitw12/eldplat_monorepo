@@ -12,6 +12,7 @@ const Page: NextPageWithLayout<never> = () => {
   const { data: session } = useSession();
 
   console.log("🍅 session:", session);
+
   // ok => console.log("🍅 inputData:", inputData);
 
   return (
@@ -31,9 +32,21 @@ const LoginStatus = () => {
 
   return (
     <ContainerSTY style={{ maxHeight: "100px", fontSize: "2rem" }}>
-      {session
-        ? `You are Signed in as ${session.user?.name}`
-        : "You are NOT signed in"}
+      <div>{`You are ${session ? "" : "NOT"} signed in`}</div>
+      {session ? (
+        <>
+          <div>
+            <small>session.user.name : </small>
+            {session?.user?.name || ""}
+          </div>
+          <div>
+            <small>session.user.email : </small>
+            {session?.user?.email || ""}
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
     </ContainerSTY>
   );
 };

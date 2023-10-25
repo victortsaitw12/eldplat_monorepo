@@ -6,28 +6,28 @@
 
 export const USERS = [
   {
-    id: "1",
+    userID: "USER2023001",
     name: "A Train",
     username: "train",
     password: "0000",
     email: "atrain@example.com"
   },
   {
-    id: "2",
+    userID: "oUSER2023002",
     name: "B Line",
     username: "line",
     password: "0000",
     email: "bline@example.com"
   },
   {
-    id: "3",
+    userID: "USER2023003",
     name: "C Park",
     username: "park",
     password: "0000",
     email: "cwhat@example.com"
   },
   {
-    id: "4",
+    userID: "USER2023004",
     name: "D Town",
     username: "town",
     password: "0000",
