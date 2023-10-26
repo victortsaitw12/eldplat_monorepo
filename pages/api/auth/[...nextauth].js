@@ -12,7 +12,7 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET
     }),
     CredentialsProvider({
-      id: "UniqueID",
+      id: "credentials",
       // TODO: name and credentials are related to gen the default form
       name: "credentials",
       type: "credentials",
@@ -82,10 +82,10 @@ export const authOptions = {
       // the profile object is the raw body of the HTTP POST submission.
       return true;
     },
-    // async redirect({ url, baseUrl }) {
-    //   // Redirects returned by this callback cancel the authentication flow
-    //   return baseUrl;
-    // },
+    async redirect({ url, baseUrl }) {
+      // Redirects returned by this callback cancel the authentication flow
+      return `${baseUrl}/test/next-auth`;
+    },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
@@ -109,6 +109,13 @@ export const authOptions = {
       // returned value will be encrypted, and it is stored in a cookie
       return token;
     }
+  },
+  pages: {
+    // signIn: "/login"
+    // signOut: "/auth/signout",
+    // error: "/auth/error",
+    // verifyRequest: "/auth/verify-request",
+    // newUser: "/auth/new-user"
   }
   //   jwt: {
   // The maximum age of the NextAuth.js issued JWT in seconds.

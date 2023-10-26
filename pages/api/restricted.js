@@ -13,5 +13,6 @@ export default async function handler(req, res) {
     res.send({
       error: "You must be signed in to view the protected content on this page."
     });
+    res.redirect(307, "/test/next-auth");
   }
 }
