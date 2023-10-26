@@ -22,22 +22,22 @@ const notoSans = Noto_Sans({
   weight: ["400", "600", "700", "800"]
 });
 
+// ⭐多國語系: 為了避免network錯誤，先註解掉
 // 看現在狀態是哪個語言則去抓哪個語言的json檔
-
-async function bootstrapApplication(locale: string) {
-  let mess: any;
-  switch (locale) {
-    case "en-us":
-      mess = await import("../compiled-lang/en.json");
-      break;
-    case "th-th":
-      mess = await import("../compiled-lang/th.json");
-      break;
-    default:
-      mess = await import("../compiled-lang/zh.json");
-  }
-  return mess;
-}
+// async function bootstrapApplication(locale: string) {
+//   let mess: any;
+//   switch (locale) {
+//     case "en-us":
+//       mess = await import("../compiled-lang/en.json");
+//       break;
+//     case "th-th":
+//       mess = await import("../compiled-lang/th.json");
+//       break;
+//     default:
+//       mess = await import("../compiled-lang/zh.json");
+//   }
+//   return mess;
+// }
 
 function Loader() {
   const [loading, setLoading] = useState(false);
