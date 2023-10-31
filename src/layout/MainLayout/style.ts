@@ -15,7 +15,7 @@ const ContainerSTY = styled.div`
   z-index: 2;
   .content {
     flex-grow: 1;
-    background-color: ${({ theme }) => theme.color.N300};
+    background-color: ${({ theme }) => theme.color.N0};
     overflow: auto;
   }
   overflow: auto;
