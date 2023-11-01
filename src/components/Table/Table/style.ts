@@ -18,7 +18,6 @@ export const TableSTY = styled.table`
   }
   td,
   th {
-    padding: 8px 10px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
@@ -32,7 +31,12 @@ export const TableSTY = styled.table`
   tr:last-child td {
     border-bottom: none;
   }
+  th {
+    padding-top: 12px;
+    padding-bottom: 9px;
+  }
   td {
+    padding: 5px 10px;
     a {
       text-decoration: dotted underline;
     }

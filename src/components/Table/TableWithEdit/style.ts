@@ -29,7 +29,6 @@ const TableContainerSTY = styled.div`
   }
   .container-pagination {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
     padding: 0px;
     gap: 8px;

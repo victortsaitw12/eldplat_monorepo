@@ -35,7 +35,12 @@ function Table({ titles, data }: I_Table) {
             <tr key={item.id + "-" + i}>
               {Object.keys(item).map((key) => {
                 if (key === "id") return;
-
+                if (key === "action")
+                  return (
+                    <td key={item.id + key}>
+                      <div className="action">{item.action}</div>
+                    </td>
+                  );
                 if (!item[key])
                   return (
                     <td key={item.id + key}>

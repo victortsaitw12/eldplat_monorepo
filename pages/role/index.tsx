@@ -1,24 +1,25 @@
 import React, { ReactNode, useState, useMemo } from "react";
 import { NextPageWithLayout } from "next";
+import { PlusIcon } from "evergreen-ui";
+import { useRouter } from "next/router";
+
 //
 import { getLayout } from "@layout/MainLayout";
 import TableWrapper from "@layout/TableWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-import { Pane } from "evergreen-ui";
 import RoleList from "@contents/Roles/RoleList";
 import { BodySTY } from "./style";
-import { useRouter } from "next/router";
-
-//@contexts
+import { getRoleList, I_RoleItem } from "@services/role/getRoleList";
 import { useRoleStore } from "@contexts/filter/roleStore";
+import { IconLeft } from "@components/Button/Primary";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   //
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "基本", value: "1" },
-      { id: 2, label: "車產", value: "2" }
+      { id: 1, label: "啟用", value: "1" },
+      { id: 2, label: "停用", value: "2" }
     ],
     []
   );
@@ -41,7 +42,33 @@ const Page: NextPageWithLayout<never> = () => {
     isDrawerOpen,
     setDrawerOpen
   } = useRoleStore();
-  //套用新版filter
+  const [data, setData] = React.useState<I_RoleItem[]>([]);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  //------ functions ------//
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getRoleList();
+      setData(result);
+    } catch (e: any) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+
+  const handleCreateRole = () => {};
+
+  // ------- useEffect ------- //
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const createBtn = (
+    <IconLeft text="新增角色" onClick={handleCreateRole}>
+      <PlusIcon size={14} />
+    </IconLeft>
+  );
 
   return (
     <BodySTY>
@@ -57,8 +84,9 @@ const Page: NextPageWithLayout<never> = () => {
             initializeSubFilter();
           }}
           filter={subFilter}
+          btns={createBtn}
         >
-          <RoleList />
+          <RoleList data={data} />
         </FilterWrapper>
       </TableWrapper>
       {/* Put your component here */}

@@ -12,8 +12,6 @@ export const BodySTY = styled.div`
     padding: 8px 12px;
     gap: 4px;
     width: 100%;
-    background: ${({ theme }) => theme.color.N200};
-    border-radius: 10px 10px 0 0;
     .subFilter-item {
       cursor: pointer;
       border: none;
@@ -24,7 +22,6 @@ export const BodySTY = styled.div`
       padding: 8px 16px;
       gap: 8px;
       height: 35px;
-      border-radius: 32px;
       .item-number {
         width: 1.2rem;
         height: 1.2rem;
@@ -51,7 +48,7 @@ export const BodySTY = styled.div`
     background: ${({ theme }) => theme.color.N0};
     /* Neutral/N400 */
     border: 1px solid ${({ theme }) => theme.color.N400};
-    border-radius: 32px;
+    border-radius: 4px;
     input {
       border: none;
     }
@@ -78,5 +75,14 @@ export const BodySTY = styled.div`
     background: #ffffff;
     //
     overflow: hidden;
+  }
+  .actionRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btns {
+    white-space: nowrap;
+    padding: 8px 12px;
   }
 `;

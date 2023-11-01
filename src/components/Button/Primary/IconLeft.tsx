@@ -22,7 +22,7 @@ const StyledButton = styled(Button)`
   justify-content: center;
   border: none;
   padding: 8px 16px;
-  border-radius: 32px;
+  border-radius: 4px;
   gap: 8px;
   color: ${({ theme }) => theme.color.N0};
   font-weight: ${({ theme }) => theme.fontWeight.Heading400};

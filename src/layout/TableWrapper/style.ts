@@ -9,11 +9,11 @@ const BodySTY = styled.div<{ isHide: any }>`
   overflow-y: hidden;
   display: ${({ isHide }) => (isHide ? "flex" : "flex")};
   flex-direction: column;
-  .filter-header {
+  .tabs-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 30px;
+    border-bottom: 1px solid ${({ theme }) => theme.color.N200};
   }
   &::-webkit-scrollbar {
     display: none;
@@ -26,7 +26,7 @@ const BodySTY = styled.div<{ isHide: any }>`
     display: flex;
   }
   & > .table-content {
-    border-radius: 10px 10px 0 0;
+    border-radius: 4px 4px 0 0;
     flex: 1;
     overflow: auto;
   }
@@ -36,7 +36,7 @@ const FilterItemSTY = styled.div<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 8px 12px;
+  padding: 8px 12px 0px 12px;
   border-radius: 10px 10px 0px 0px;
   background-color: ${({ isActive }) => (isActive ? "#fff" : "transparent")};
   > .require {
@@ -47,6 +47,10 @@ const FilterItemSTY = styled.div<{ isActive: boolean }>`
     font-size: 14px;
     font-weight: 600;
     margin-right: 0;
+    padding-bottom: 12px;
+  }
+  .active {
+    border-bottom: 3px solid ${({ theme }) => theme.color.B400};
   }
 `;
 
