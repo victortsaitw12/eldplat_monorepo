@@ -1,15 +1,15 @@
-import { theme } from "@styles/theme";
 import styled from "styled-components";
 
 export const DivSTY = styled.div`
   height: 100%;
   width: 100%;
-  border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.color.N300};
-  background: var(--neutral-n-0, #fff);
+  &.container {
+    border-radius: 4px;
+    border: 1px solid ${({ theme }) => theme.color.N300};
+    background: var(--neutral-n-0, #fff);
+    box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
+  }
 
-  /* Elevation / 1 */
-  box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
   .acc {
     &__title {
       display: flex;
@@ -24,15 +24,20 @@ export const DivSTY = styled.div`
       font-style: normal;
       font-weight: 600;
       line-height: normal;
+      &-btns {
+        display: flex;
+        padding: 8px 16px;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+      }
     }
-    &__control {
+
+    &__items {
       display: flex;
-      padding: 8px 16px;
-      align-items: center;
-      gap: 8px;
-      align-self: stretch;
+      flex-direction: column;
     }
-    &__parent {
+    &__item {
       display: flex;
       padding: 8px 32px 8px 16px;
       justify-content: space-between;
@@ -42,18 +47,21 @@ export const DivSTY = styled.div`
       :hover {
         background: ${({ theme }) => theme.color.N100};
       }
+      & > div {
+        display: flex;
+        gap: 8px;
+      }
+      svg {
+        fill: ${({ theme }) => theme.color.N600};
+      }
     }
-    &__content {
-      display: flex;
-      flex-direction: column;
-    }
-    &__child {
-      display: flex;
-      padding: 8px 32px 8px 64px;
-      justify-content: space-between;
-      align-items: center;
-      align-self: stretch;
-    }
+  }
+  .padIcon {
+    width: 16px;
+    height: 16px;
+  }
+  .padStart {
+    padding-left: 16px;
   }
   .hide {
     display: none;
