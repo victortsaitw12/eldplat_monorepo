@@ -1,18 +1,22 @@
 import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
+import { Pane } from "evergreen-ui";
+
 //
 import { getLayout } from "@layout/MainLayout";
-import { Pane } from "evergreen-ui";
 // import RoleEditForm from "@features/roles/RoleEditForm";
+import LoadingSpinner from "@components/LoadingSpinner";
+
 import { BodySTY } from "./style";
-import RoleDetail, { I_RoleDetail } from "@contents/Roles/RoleDetail";
-import { getRoleDetail } from "@services/role/getRoleDetail";
+import RoleDetail from "@contents/Roles/DetailPanel";
+import AuthPanel from "@contents/Roles/AuthPanel";
+import { getRoleDetail, I_RoleDetail } from "@services/role/getRoleDetail";
 //
 const isFullWidth = true;
 
 //
 const Page: NextPageWithLayout<never> = () => {
-  const [data, setData] = React.useState<I_RoleDetail[]>([]);
+  const [data, setData] = React.useState<I_RoleDetail>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   //------ functions ------//
@@ -40,8 +44,8 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <RoleDetail data={data} />
-      <div>權限</div>
+      <RoleDetail data={data.roleDetail} />
+      <AuthPanel data={data.authFunc} />
     </BodySTY>
   );
 };

@@ -1,4 +1,5 @@
 import API_Path from "./apiPath";
+import { I_RoleItem } from "./getRoleList";
 
 export const getRoleDetail = async () => {
   return DUMMY_DATA;
@@ -15,17 +16,17 @@ export const getRoleDetail = async () => {
 
 // ------- MOCK DATA ------- //
 const DUMMY_DATA = {
-  id: "1",
-  module_name: "車輛管理與營運模組",
-  role_name: "車管",
-  description: ["管理車輛狀況", "日常維護", "維修審核"],
+  roleDetail: {
+    id: "1",
+    module_name: "車輛管理與營運模組",
+    role_name: "車管",
+    description: ["管理車輛狀況", "日常維護", "維修審核"]
+  },
   authFunc: []
 };
 
 // ------- TYPING ------- //
 export interface I_RoleDetail {
-  id: string;
-  module_name: string;
-  role_name: string;
-  description: string[];
+  roleDetail: I_RoleItem;
+  authFunc: any[];
 }

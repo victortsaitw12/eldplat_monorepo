@@ -9,50 +9,57 @@ import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
 import PaginationField from "@components/PaginationField";
 import InfoBox from "@components/InfoBox";
+import Requred from "@components/Required";
+import LoadingSpinner from "@components/LoadingSpinner";
 
-const RoleDetail = ({ data }: I_Props) => {
+const DetailPanel = ({ data }: I_Props) => {
+  if (!data)
+    return (
+      <BodySTY>
+        <LoadingSpinner />
+      </BodySTY>
+    );
   //------ functions ------//
-
+  console.log("🈶 data:", data);
   // ------- render ------- //
   const dataFitInfoBox = [
     {
+      readonly: false,
+      req: false,
+      label: "模組",
       editEle: (
-        <SelectField label="模組" disabled>
+        <SelectField disabled>
           <option value="foo" selected>
-            車輛管理與營運模組{" "}
+            {data.module_name || "--"}
           </option>
         </SelectField>
       ),
-      readonly: false,
-      req: true
-      // value?: string | Array<string> | React.ReactNode,
-      // label?: string | React.ReactNode;
+
+      value: data.module_name || "--"
       // subLabel?: string | React.ReactNode;
       // inputType?: string;
     },
     {
-      editEle: <TextInputField label="角色名稱" placeholder="請輸入角色名稱" />,
       readonly: false,
-      req: true
-      // value?: string | Array<string> | React.ReactNode,
-      // label?: string | React.ReactNode;
-      // subLabel?: string | React.ReactNode;
-      // inputType?: string;
+      req: true,
+      label: "角色名稱",
+      editEle: (
+        <TextInputField className="required" placeholder="請輸入角色名稱" />
+      ),
+
+      value: data.role_name || "--"
     },
     {
+      readonly: false,
+      req: true,
+      label: "職責描述",
       editEle: (
         <TextInputField
-          label="職責描述"
-          // description="This is a description."
           placeholder="請輸入職責描述"
+          style={{ minHeight: "64px" }}
         />
       ),
-      readonly: false,
-      req: true
-      // value?: string | Array<string> | React.ReactNode,
-      // label?: string | React.ReactNode;
-      // subLabel?: string | React.ReactNode;
-      // inputType?: string;
+      value: data.description || "--"
     }
   ];
   return (
@@ -62,8 +69,8 @@ const RoleDetail = ({ data }: I_Props) => {
   );
 };
 
-export default RoleDetail;
+export default DetailPanel;
 
 interface I_Props {
-  data: I_RoleItem[];
+  data: I_RoleItem;
 }
