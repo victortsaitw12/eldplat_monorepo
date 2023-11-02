@@ -1,90 +1,22 @@
-import { useRouter } from "next/router";
-import {
-  SelectField,
-  TextInputField,
-  TextareaField,
-  Checkbox
-} from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { I_RoleItem } from "@services/role/getRoleList";
-import { IconLeft } from "@components/Button/Primary";
-import TableWithEdit from "@components/Table/TableWithEdit";
-import Table from "@components/Table/Table";
-import IconBtn from "@components/Button/IconBtn";
-import PaginationField from "@components/PaginationField";
+import { I_AuthFuncItem } from "@services/role/getRoleDetail";
 import InfoBox from "@components/InfoBox";
-import Requred from "@components/Required";
+import Checkbox from "@components/CheckBox";
 
-const AuthPanel = ({ data }: I_Props) => {
+const AuthPanel = ({ data, isEdit }: I_Props) => {
   //------ functions ------//
 
   // ------- render ------- //
-  const dataFitInfoBox = [
-    {
+  const dataFitInfoBox = data?.map((item) => {
+    return {
       readonly: false,
       req: false,
-      label: "使用者管理",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    },
-    {
-      readonly: false,
-      req: false,
-      label: "車輛管理",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    },
-    {
-      readonly: false,
-      req: false,
-      label: "維保管理",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    },
-    {
-      readonly: false,
-      req: false,
-      label: "駕駛管理",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    },
-    {
-      readonly: false,
-      req: false,
-      label: "任務管理",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    },
-    {
-      readonly: false,
-      req: false,
-      label: "訂單管理",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    },
-    {
-      readonly: false,
-      req: false,
-      label: "客戶管理",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    },
-    {
-      readonly: false,
-      req: false,
-      label: "供應商管理",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    },
-    {
-      readonly: false,
-      req: false,
-      label: "設定",
-      editEle: <AuthCheckbox />,
-      value: <AuthCheckbox />
-    }
-  ];
+      label: item.label,
+      editEle: <AuthCheckbox isEdit={isEdit} />,
+      value: <AuthCheckbox isEdit={isEdit} />
+    };
+  });
   return (
     <BodySTY>
       <InfoBox isEdit={true} infoData={dataFitInfoBox} infoTitle="權限" />
@@ -94,17 +26,18 @@ const AuthPanel = ({ data }: I_Props) => {
 
 export default AuthPanel;
 
-interface I_Props {
-  data: I_RoleItem[];
-}
-
-const AuthCheckbox = () => {
+const AuthCheckbox = ({ isEdit }: { isEdit: boolean }) => {
   return (
     <>
-      <Checkbox label="檢視" />
-      <Checkbox label="新增" />
-      <Checkbox label="編輯" />
-      <Checkbox label="封存" />
+      <Checkbox label="檢視" isLabelAfter />
+      <Checkbox label="新增" isLabelAfter />
+      <Checkbox label="編輯" isLabelAfter />
+      <Checkbox label="封存" isLabelAfter />
     </>
   );
 };
+
+interface I_Props {
+  data: I_AuthFuncItem[];
+  isEdit: boolean;
+}

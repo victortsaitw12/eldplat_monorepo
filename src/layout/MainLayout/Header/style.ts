@@ -6,7 +6,7 @@ const BodySTY = styled.div`
   background: ${({ theme }) => theme.color.N0};
   border-bottom: 1px solid ${({ theme }) => theme.color.N200};
   justify-content: space-between;
-  padding: 12px 20px 12px 0px;
+  padding: 12px 20px;
   .tool-container {
     display: flex;
     align-items: center;

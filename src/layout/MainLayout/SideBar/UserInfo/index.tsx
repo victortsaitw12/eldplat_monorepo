@@ -13,16 +13,9 @@ function Index(props: any) {
 
   return (
     <BodySTY {...props}>
-      <div className="title">{companyData?.company_name}</div>
       <div className="user-container">
         <div className="user-info">
           <Avatar src="/image/avatar1.jpg" name="portrait" size={44} />
-          {/* <Image
-            src="/image/avatar1.jpg"
-            alt="user avatar"
-            width={44}
-            height={44}
-          /> */}
           <div className="desp">
             <h4>{companyData?.administrator_name}</h4>
             <p>最高管理員</p>

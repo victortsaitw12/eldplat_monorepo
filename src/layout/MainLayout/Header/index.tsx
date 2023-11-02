@@ -67,22 +67,7 @@ const Header = ({ layoutProps }: any) => {
     <ThemeProvider value={theme}>
       <BodySTY>
         <div className="tool-container">
-          <ListIcon
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              if (layoutProps?.showMenu) {
-                layoutProps?.closeMenu();
-              } else {
-                layoutProps?.openMenu();
-              }
-            }}
-            color="#FFFFFF"
-            size={16}
-          />
           <Text className="header-title">{layoutProps?.breadcrumbs}</Text>
-          {/* <Button appearance="link">數據資料</Button>
-          <Button appearance="link">自動化</Button>
-          <Button appearance="link">對接口</Button> */}
         </div>
         <div className="plan-info">
           <NotificationsIcon

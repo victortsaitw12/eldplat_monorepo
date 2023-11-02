@@ -15,7 +15,9 @@ export const BodySTY = styled.div`
     li {
       display: flex;
       flex-direction: column;
-      align-items: flex-start !important; // TODO remove important after Sprint2
+      align-items: flex-start !important;
+      gap: 8px;
+      margin-bottom: 20px;
       .infoBox__label {
         width: 100%;
         flex: unset;
@@ -25,13 +27,6 @@ export const BodySTY = styled.div`
       .infoBox__value {
         width: 100%;
         flex: unset;
-      }
-      .required {
-        &::before {
-          content: "*";
-          color: red;
-          margin-right: 4px;
-        }
       }
     }
   }

@@ -9,6 +9,7 @@ interface Props extends CheckboxOwnProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   defaultChecked?: boolean;
+  isLabelAfter?: boolean;
 }
 const StyledCheckBox: BoxComponent<Props, "input"> = ({
   style,
@@ -17,12 +18,13 @@ const StyledCheckBox: BoxComponent<Props, "input"> = ({
   value,
   onChange,
   disabled,
-  defaultChecked
+  defaultChecked,
+  isLabelAfter = false
 }: Props) => {
   const [checked, setChecked] = React.useState(defaultChecked);
   return (
     <BodySTY style={style}>
-      <div className="checkbox-title">{label}</div>
+      {!isLabelAfter && <div className="checkbox-title">{label}</div>}
       <Checkbox
         checked={checked}
         name={name}
@@ -33,6 +35,7 @@ const StyledCheckBox: BoxComponent<Props, "input"> = ({
         }}
         disabled={disabled}
       />
+      {isLabelAfter && <div className="checkbox-title">{label}</div>}
     </BodySTY>
   );
 };

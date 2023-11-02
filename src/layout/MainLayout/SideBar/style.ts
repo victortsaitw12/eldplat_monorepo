@@ -23,7 +23,7 @@ export const BodySTY = styled.div`
     &::-webkit-scrollbar {
       display: none;
     }
-    & > .back_to {
+    & > .header {
       cursor: pointer;
       width: 100%;
       padding: 8px 12px;
@@ -33,11 +33,19 @@ export const BodySTY = styled.div`
       gap: 0.5rem;
       align-items: center;
       border-radius: 10px;
+      font-size: ${({ theme }) => theme.fontSize.Heading600};
       &:hover {
         background-color: #e2edff;
         color: ${({ theme }) => theme.color.B400};
       }
     }
+  }
+  .divider {
+    width: 200px;
+    height: 0px;
+    flex-shrink: 0;
+    stroke-width: 0.25;
+    stroke: ${({ theme }) => theme.color.N0};
   }
   .footer {
     position: absolute;
@@ -90,5 +98,9 @@ export const BodySTY = styled.div`
         color: ${({ theme }) => theme.color.N700};
       }
     }
+  }
+
+  .hide {
+    display: none;
   }
 `;

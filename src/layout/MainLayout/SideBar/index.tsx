@@ -1,18 +1,7 @@
 import React, { useEffect } from "react";
-import {
-  ChevronUpIcon,
-  ChevronDownIcon,
-  PanelTableIcon,
-  CalendarIcon,
-  GridViewIcon,
-  LayoutGridIcon,
-  PropertiesIcon,
-  TimelineAreaChartIcon,
-  GanttChartIcon,
-  ArrowLeftIcon
-} from "evergreen-ui";
 //
 import { BodySTY } from "./style";
+import Header from "./Header";
 import UserInfo from "./UserInfo";
 import MenuList from "./MenuList";
 import Search from "./Search";
@@ -21,6 +10,10 @@ import FooterItem from "./Footer/FooterItem";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { useRouter } from "next/router";
 import CompanyProvider from "@contexts/companyContext/companyProvider";
+import {
+  I_Company_Context,
+  CompanyContext
+} from "@contexts/companyContext/companyProvider";
 //
 interface Props {
   menuData: MenuDataType;
@@ -28,90 +21,51 @@ interface Props {
   isLoading?: boolean;
 }
 //
-function SideBar({ menuData, personalData, isLoading }: Props) {
+function SideBar({ menuData, isLoading }: Props) {
   const router = useRouter();
-  const [isPersonal, setIsPersonal] = React.useState(false);
-  useEffect(() => {
-    setIsPersonal(
-      router.asPath.indexOf("/driver") >= 0 ||
-        router.asPath.indexOf("/employee") >= 0 ||
-        router.asPath.indexOf("/role") >= 0 ||
-        router.asPath.indexOf("/company") >= 0
-    );
-  }, [router]);
+  const { companyData } = React.useContext<I_Company_Context>(CompanyContext);
+  const [isMeunFold, setIsMenuFold] = React.useState(false);
 
+  const handleRedirect = (url: string) => {
+    router.push(url);
+  };
+
+  const handleCloseMenu = () => {
+    setIsMenuFold((prev) => !prev);
+  };
   return (
     <CompanyProvider>
       <BodySTY>
-        <UserInfo
-          onClick={() => {
-            setIsPersonal(true);
-            router.push("/employee");
-          }}
-        />
+        <Header handleCloseMenu={handleCloseMenu} />
+        <Divider />
         <div className="container">
-          {isPersonal && (
-            <span
-              className="back_to"
-              onClick={() => {
-                setIsPersonal(false);
-                router.push("/");
-              }}
-            >
-              <ArrowLeftIcon size={16} />
-              返回公司首頁
-            </span>
-          )}
-          {!isPersonal && <Search />}
           {isLoading && <LoadingSpinner />}
-          {menuData && (
-            <MenuList menuData={!isPersonal ? menuData : personalData} />
-          )}
+          {menuData && <MenuList menuData={menuData} />}
         </div>
-        <div className="footer">
-          <button className="footer-button">
-            <p>新增欄位</p>
-            <div className="icon-container">
-              <ChevronUpIcon
-                size={16}
-                color="#567190"
-                className="open-button"
-              />
-              <ChevronDownIcon
-                size={16}
-                color="#567190"
-                className="close-button"
-              />
-            </div>
-          </button>
-          <div className="footer-list">
-            <FooterItem name="表格">
-              <PanelTableIcon size={16} color="#3670C9" />
-            </FooterItem>
-            <FooterItem name="日曆">
-              <CalendarIcon size={16} color="#D14343" />
-            </FooterItem>
-            <FooterItem name="卡片流">
-              <GridViewIcon size={16} color="#70B0FF" />
-            </FooterItem>
-            <FooterItem name="看板">
-              <LayoutGridIcon size={16} color="#FD8ADC" />
-            </FooterItem>
-            <FooterItem name="清單">
-              <PropertiesIcon size={16} color="#8F59EF" />
-            </FooterItem>
-            <FooterItem name="時間軸" isPro>
-              <TimelineAreaChartIcon size={16} color="#FF9D66" />
-            </FooterItem>
-            <FooterItem name="甘特圖 " isPro>
-              <GanttChartIcon size={16} color="#678AF7" />
-            </FooterItem>
-            <FooterItem name="自訂欄位" isPro />
-          </div>
-        </div>
+        <Divider />
+        <UserInfo onClick={handleRedirect.bind(null, "/employee")} />
       </BodySTY>
     </CompanyProvider>
   );
 }
 
 export default SideBar;
+
+const Divider = () => {
+  return (
+    <div className="divider">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="201"
+        height="2"
+        viewBox="0 0 201 2"
+        fill="none"
+      >
+        <path
+          d="M1 0.5C0.723858 0.5 0.5 0.723858 0.5 1C0.5 1.27614 0.723858 1.5 1 1.5V0.5ZM1 1.5H201V0.5H1V1.5Z"
+          fill="#718BAA"
+        />
+      </svg>
+    </div>
+  );
+};

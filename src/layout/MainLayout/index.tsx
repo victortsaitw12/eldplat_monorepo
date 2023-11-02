@@ -69,14 +69,7 @@ const MainLayout: FC<{
       <ContainerSTY>
         <Header
           layoutProps={{
-            ...layoutProps,
-            openMenu: () => {
-              setShowMenu(true);
-            },
-            closeMenu: () => {
-              setShowMenu(false);
-            },
-            showMenu: showMenu
+            ...layoutProps
           }}
         />
         <div className="content">{children}</div>

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { SelectField, TextInputField, TextareaField } from "evergreen-ui";
+import { Select, TextInput, Textarea } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { I_RoleItem } from "@services/role/getRoleList";
@@ -28,11 +28,11 @@ const DetailPanel = ({ data }: I_Props) => {
       req: false,
       label: "模組",
       editEle: (
-        <SelectField disabled>
+        <Select disabled>
           <option value="foo" selected>
             {data.module_name || "--"}
           </option>
-        </SelectField>
+        </Select>
       ),
 
       value: data.module_name || "--"
@@ -43,9 +43,7 @@ const DetailPanel = ({ data }: I_Props) => {
       readonly: false,
       req: true,
       label: "角色名稱",
-      editEle: (
-        <TextInputField className="required" placeholder="請輸入角色名稱" />
-      ),
+      editEle: <TextInput className="required" placeholder="請輸入角色名稱" />,
 
       value: data.role_name || "--"
     },
@@ -54,10 +52,7 @@ const DetailPanel = ({ data }: I_Props) => {
       req: true,
       label: "職責描述",
       editEle: (
-        <TextInputField
-          placeholder="請輸入職責描述"
-          style={{ minHeight: "64px" }}
-        />
+        <Textarea placeholder="請輸入職責描述" style={{ minHeight: "64px" }} />
       ),
       value: data.description || "--"
     }
