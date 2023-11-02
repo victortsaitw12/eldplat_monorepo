@@ -3,8 +3,6 @@ import { Tooltip, EditIcon } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { I_RoleItem } from "@services/role/getRoleList";
-import { IconLeft } from "@components/Button/Primary";
-import TableWithEdit from "@components/Table/TableWithEdit";
 import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
 import PaginationField from "@components/PaginationField";
@@ -53,16 +51,6 @@ const RoleList = ({ data }: I_Props) => {
     <BodySTY>
       <PaginationField />
       <Table titles={tableTitleArr} data={dataReorg} />
-      {/* <TableWithEdit
-        goToEditPage={(id, item) => {
-          router.push("/role/edit/USE002993");
-        }}
-        tableName=""
-        titles={tableTitleArr}
-        data={dataFitTable}
-        needCheckBox={false}
-        needCreateBtn={false}
-      /> */}
     </BodySTY>
   );
 };

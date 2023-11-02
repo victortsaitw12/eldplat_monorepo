@@ -89,7 +89,6 @@ const Page: NextPageWithLayout<never> = () => {
           <RoleList data={data} />
         </FilterWrapper>
       </TableWrapper>
-      {/* Put your component here */}
     </BodySTY>
   );
 };
