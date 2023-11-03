@@ -6,7 +6,6 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import { BodySTY, ContainerSTY } from "./style";
 import { getSideMenuBackend } from "@services/siderbar/getSideMenuBackend";
-import { getSideMenuPersonal } from "@services/siderbar/getSideMenuPersonal";
 //
 function mapping_menus(list: any, key: string) {
   // console.log("list", list);
@@ -35,16 +34,11 @@ const MainLayout: FC<{
   const [showMenu, setShowMenu] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
-  const [personalmenu, setPersonalmenu] = React.useState([]);
   const fetch_menus = async () => {
     setLoading(true);
     try {
       const res_menu = await getSideMenuBackend();
-      const res_personalmenu = await getSideMenuPersonal();
       setMenu(mapping_menus(res_menu.dataList, "menu"));
-      setPersonalmenu(
-        mapping_menus(res_personalmenu.dataList, "menu_personal")
-      );
     } catch (e: any) {
       console.log(e);
     }
@@ -61,17 +55,9 @@ const MainLayout: FC<{
         <title>管理者頁</title>
         <meta property="og:title" content="管理者頁" />
       </Head>
-      <SideBar
-        menuData={menu}
-        personalData={personalmenu}
-        isLoading={loading}
-      />
+      <SideBar menuData={menu} isLoading={loading} />
       <ContainerSTY>
-        <Header
-          layoutProps={{
-            ...layoutProps
-          }}
-        />
+        <Header layoutProps={{ ...layoutProps }} />
         <div className="content">{children}</div>
       </ContainerSTY>
     </BodySTY>

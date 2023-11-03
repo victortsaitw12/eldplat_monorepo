@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+
 //
 import { BodySTY } from "./style";
 import Header from "./Header";
@@ -14,14 +16,16 @@ import {
   I_Company_Context,
   CompanyContext
 } from "@contexts/companyContext/companyProvider";
+import LabelButton from "@components/Button/Primary/Label";
+
 //
 interface Props {
   menuData: MenuDataType;
-  personalData: MenuDataType;
   isLoading?: boolean;
 }
 //
 function SideBar({ menuData, isLoading }: Props) {
+  const { data: session } = useSession();
   const router = useRouter();
   const { companyData } = React.useContext<I_Company_Context>(CompanyContext);
   const [isMeunFold, setIsMenuFold] = React.useState(false);
@@ -33,6 +37,12 @@ function SideBar({ menuData, isLoading }: Props) {
   const handleCloseMenu = () => {
     setIsMenuFold((prev) => !prev);
   };
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    signIn("credentials", { ...inputData, redirect: false }); // !! missing in doc
+  };
+
   return (
     <CompanyProvider>
       <BodySTY>
