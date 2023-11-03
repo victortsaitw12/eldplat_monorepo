@@ -12,11 +12,14 @@ import ModalContent, {
   defaultPopContent
 } from "@contents/Org/ModalContent";
 import LoadingSpinner from "@components/LoadingSpinner";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Page: NextPageWithLayout<{
   locale: string;
   setPageType: (t: string) => void;
 }> = () => {
+  const { data: session } = useSession();
+
   const [data, setData] = React.useState([]);
   const [isDialogShown, setIsDialogShown] = React.useState(false);
   const [popContent, setPopContent] =
@@ -61,6 +64,7 @@ const Page: NextPageWithLayout<{
   };
 
   // ------- useEffect ------- //
+
   React.useEffect(() => {
     fetchData();
   }, []);
@@ -72,6 +76,8 @@ const Page: NextPageWithLayout<{
         <LoadingSpinner />
       </BodySTY>
     );
+
+  if (!session) return <div>Your're not signed in. redirect to login in</div>;
 
   return (
     <BodySTY>

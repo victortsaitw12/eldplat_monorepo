@@ -57,7 +57,10 @@ const Page: NextPageWithLayout<never> = () => {
     setIsLoading(false);
   };
 
-  const handleCreateRole = () => {};
+  const handleCreate = () => {
+    const id = "create";
+    router.push(`/role/detail/${id}?editPage=edit`);
+  };
 
   // ------- useEffect ------- //
   React.useEffect(() => {
@@ -65,7 +68,7 @@ const Page: NextPageWithLayout<never> = () => {
   }, []);
 
   const createBtn = (
-    <IconLeft text="新增角色" onClick={handleCreateRole}>
+    <IconLeft text="新增角色" onClick={handleCreate}>
       <PlusIcon size={14} />
     </IconLeft>
   );

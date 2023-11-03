@@ -3,7 +3,25 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   padding: 1rem;
   flex: 10;
-
+  /* Checkbox */
+  .authCheckSet {
+    display: flex;
+    width: 100%;
+    gap: 32px;
+    label {
+      width: 60px;
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+      font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+    }
+  }
+  .authCheckSet.isView {
+    label {
+      label {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
   /* infoBox */
   .info-title {
     width: 100%;

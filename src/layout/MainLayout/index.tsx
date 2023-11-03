@@ -26,6 +26,7 @@ function mapping_menus(list: any, key: string) {
     };
   });
 }
+
 //
 const MainLayout: FC<{
   children: ReactNode;
@@ -45,6 +46,10 @@ const MainLayout: FC<{
     setLoading(false);
   };
 
+  const handleToggleMenu = () => {
+    setShowMenu((prev) => !prev);
+  };
+
   React.useEffect(() => {
     fetch_menus();
   }, []);
@@ -55,7 +60,11 @@ const MainLayout: FC<{
         <title>管理者頁</title>
         <meta property="og:title" content="管理者頁" />
       </Head>
-      <SideBar menuData={menu} isLoading={loading} />
+      <SideBar
+        menuData={menu}
+        isLoading={loading}
+        onToggleMenu={handleToggleMenu}
+      />
       <ContainerSTY>
         <Header layoutProps={{ ...layoutProps }} />
         <div className="content">{children}</div>

@@ -10,6 +10,7 @@ interface Props extends CheckboxOwnProps {
   disabled?: boolean;
   defaultChecked?: boolean;
   isLabelAfter?: boolean;
+  showCheckbox?: boolean;
 }
 const StyledCheckBox: BoxComponent<Props, "input"> = ({
   style,

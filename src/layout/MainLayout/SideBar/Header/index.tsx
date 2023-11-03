@@ -9,9 +9,7 @@ import {
 
 function Index(props: any) {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
-  const handleBackTo = () => {
-    router.push("/");
-  };
+
   return (
     <BodySTY {...props}>
       <MenuIcon size={20} onClick={props.handleCloseMenu} />

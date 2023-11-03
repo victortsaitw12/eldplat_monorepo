@@ -7,7 +7,7 @@ export const BodySTY = styled.div`
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.color.N600};
+  background-color: ${({ theme }) => theme.color.N700};
   color: ${({ theme }) => theme.color.N0};
   .container {
     display: flex;

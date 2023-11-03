@@ -11,11 +11,12 @@ interface I_Table {
   data?: I_Data[];
   onCheck?: (items: any) => void;
   noData?: { text?: string; link?: string };
+  onView?: (items: any) => void;
 }
 /*
 Must provide id field in the Data Array
 */
-function Table({ titles, data }: I_Table) {
+function Table({ titles, data, onView }: I_Table) {
   if (!data) return <p>Loading</p>;
 
   return (
@@ -32,7 +33,10 @@ function Table({ titles, data }: I_Table) {
       <tbody>
         {data.map((item: any, i) => {
           return (
-            <tr key={item.id + "-" + i}>
+            <tr
+              key={item.id + "-" + i}
+              onClick={onView ? () => onView(item.id) : undefined}
+            >
               {Object.keys(item).map((key) => {
                 if (key === "id") return;
                 if (key === "action")

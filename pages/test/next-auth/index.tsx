@@ -10,11 +10,6 @@ import ButtonPrimaryRadius from "@components/Button/PrimaryRadius";
 // --- page --- //
 const Page: NextPageWithLayout<never> = () => {
   const { data: session } = useSession();
-
-  console.log("🍅 session:", session);
-
-  // ok => console.log("🍅 inputData:", inputData);
-
   return (
     <ContainerSTY>
       <LoginStatus />

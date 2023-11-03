@@ -19,7 +19,6 @@ const isFullWidth = true;
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-
   const [data, setData] = React.useState<I_RoleDetail>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isDialogShown, setIsDialogShown] = React.useState<boolean>(false);
@@ -36,8 +35,6 @@ const Page: NextPageWithLayout<never> = () => {
     setIsLoading(false);
   };
 
-  const handleCreateRole = () => {};
-
   const asyncSubmitForm = async (data: any) => {
     console.log("data", data);
   };
@@ -49,9 +46,9 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <>
-      <ControlBar />
+      <ControlBar isEdit={editPage === "edit"} />
       <BodySTY>
-        <RoleDetail data={data.roleDetail} />
+        <RoleDetail data={data.roleDetail} isEdit={editPage === "edit"} />
         {data && (
           <AuthPanel data={data.authFunc} isEdit={editPage === "edit"} />
         )}

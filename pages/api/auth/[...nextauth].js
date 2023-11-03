@@ -32,12 +32,8 @@ export const authOptions = {
       async authorize(credentials, req) {
         // always return user from frontend for now
         if (!req.body.email || !req.body.password) return null;
-        console.log("🍅 authorize");
         // TODO:　authenticate user: fetch API response
         const user = await getUser();
-
-        console.log("🍅 user");
-
         if (!user) return null;
         return user;
       }
@@ -72,8 +68,9 @@ export const authOptions = {
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
-      session.user.userID = token.userID;
-      session.user.authData = token.authData;
+      session.user.username = token.username;
+      session.user.role = token.role;
+      session.user.menuData = token.menuData;
       return session;
       // The session object is not persisted server side
       // only the session token, the user, and the expiry time is stored in the session table.
@@ -86,8 +83,9 @@ export const authOptions = {
 
       if (account) {
         token.accessToken = account.access_token;
-        token.userID = user.userID;
-        token.authData = user.authData;
+        token.username = user.username;
+        token.role = user.role;
+        token.menuData = user.menuData;
       }
       // returned value will be encrypted, and it is stored in a cookie
       return token;

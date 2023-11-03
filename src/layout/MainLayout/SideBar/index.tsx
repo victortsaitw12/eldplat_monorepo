@@ -22,9 +22,10 @@ import LabelButton from "@components/Button/Primary/Label";
 interface Props {
   menuData: MenuDataType;
   isLoading?: boolean;
+  onToggleMenu: () => void;
 }
 //
-function SideBar({ menuData, isLoading }: Props) {
+function SideBar({ isLoading, onToggleMenu }: Props) {
   const { data: session } = useSession();
   const router = useRouter();
   const { companyData } = React.useContext<I_Company_Context>(CompanyContext);
@@ -34,8 +35,8 @@ function SideBar({ menuData, isLoading }: Props) {
     router.push(url);
   };
 
-  const handleCloseMenu = () => {
-    setIsMenuFold((prev) => !prev);
+  const handleToggleMenu = () => {
+    // onToggleMenu();
   };
 
   const handleLogin = async (e: any) => {
@@ -43,14 +44,36 @@ function SideBar({ menuData, isLoading }: Props) {
     signIn("credentials", { ...inputData, redirect: false }); // !! missing in doc
   };
 
+  const mapping_menus = (list: any) => {
+    // console.log("list", list);
+    if (!list) return [];
+    return list.map((ele: any) => {
+      return {
+        name: ele?.menu_name,
+        url: ele?.path || null,
+        subList:
+          ele.sub_menu && ele.sub_menu.length > 0
+            ? ele.sub_menu.map((c: any) => {
+                return {
+                  name: c?.func_name || "--",
+                  url: c?.path || null,
+                  subList: null
+                };
+              })
+            : null
+      };
+    });
+  };
+
+  const menuData = mapping_menus(session?.user?.menuData.defaultMenu);
   return (
     <CompanyProvider>
       <BodySTY>
-        <Header handleCloseMenu={handleCloseMenu} />
+        <Header handleCloseMenu={handleToggleMenu} />
         <Divider />
         <div className="container">
           {isLoading && <LoadingSpinner />}
-          {menuData && <MenuList menuData={menuData} />}
+          <MenuList menuData={menuData} />
         </div>
         <Divider />
         <UserInfo onClick={handleRedirect.bind(null, "/employee")} />

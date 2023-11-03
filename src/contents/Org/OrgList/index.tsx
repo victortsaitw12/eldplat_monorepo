@@ -17,19 +17,40 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
       </DivSTY>
     );
 
+  const transformKeys = (data: any) => {
+    return data.map((item: any) => {
+      const transformedItem = {
+        id: item.org_no,
+        label: item.org_name,
+        org_tp: item.org_tp,
+        org_lvl: item.org_lvl,
+        org_enb: item.org_enb
+      };
+
+      if (item.sublayer && item.sublayer.length > 0) {
+        transformedItem.children = transformKeys(item.sublayer);
+      }
+
+      return transformedItem;
+    });
+  };
+  const dataFitAccordion = transformKeys(data);
+
   const getAccordion = (data: any[]) => {
-    return data.map((item: any, i: number) => (
-      <Accordion
-        key={`org-${i}`}
-        data={item}
-        isTop={true}
-        onCreate={onCreate}
-        onEdit={onEdit}
-      />
-    ));
+    return data.map((item: any, i: number) => {
+      return (
+        <Accordion
+          key={`org-${i}`}
+          data={item}
+          isTop={true}
+          onCreate={onCreate}
+          onEdit={onEdit}
+        />
+      );
+    });
   };
 
-  const orgAccordion = getAccordion(data);
+  const orgAccordion = getAccordion(dataFitAccordion);
 
   return (
     <DivSTY>

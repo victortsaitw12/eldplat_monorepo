@@ -19,7 +19,7 @@ const AuthPanel = ({ data, isEdit }: I_Props) => {
   });
   return (
     <BodySTY>
-      <InfoBox isEdit={true} infoData={dataFitInfoBox} infoTitle="權限" />
+      <InfoBox isEdit={isEdit} infoData={dataFitInfoBox} infoTitle="權限" />
     </BodySTY>
   );
 };
@@ -28,12 +28,12 @@ export default AuthPanel;
 
 const AuthCheckbox = ({ isEdit }: { isEdit: boolean }) => {
   return (
-    <>
+    <div className={`authCheckSet ${isEdit ? "" : "isView"}`}>
       <Checkbox label="檢視" isLabelAfter />
       <Checkbox label="新增" isLabelAfter />
       <Checkbox label="編輯" isLabelAfter />
       <Checkbox label="封存" isLabelAfter />
-    </>
+    </div>
   );
 };
 

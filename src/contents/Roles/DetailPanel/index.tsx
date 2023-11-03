@@ -1,18 +1,11 @@
-import { useRouter } from "next/router";
 import { Select, TextInput, Textarea } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { I_RoleItem } from "@services/role/getRoleList";
-import { IconLeft } from "@components/Button/Primary";
-import TableWithEdit from "@components/Table/TableWithEdit";
-import Table from "@components/Table/Table";
-import IconBtn from "@components/Button/IconBtn";
-import PaginationField from "@components/PaginationField";
 import InfoBox from "@components/InfoBox";
-import Requred from "@components/Required";
 import LoadingSpinner from "@components/LoadingSpinner";
 
-const DetailPanel = ({ data }: I_Props) => {
+const DetailPanel = ({ data, isEdit }: I_Props) => {
   if (!data)
     return (
       <BodySTY>
@@ -59,7 +52,7 @@ const DetailPanel = ({ data }: I_Props) => {
   ];
   return (
     <BodySTY>
-      <InfoBox isEdit={true} infoData={dataFitInfoBox} infoTitle="角色明細" />
+      <InfoBox isEdit={isEdit} infoData={dataFitInfoBox} infoTitle="角色明細" />
     </BodySTY>
   );
 };
@@ -68,4 +61,5 @@ export default DetailPanel;
 
 interface I_Props {
   data: I_RoleItem;
+  isEdit: boolean;
 }

@@ -17,8 +17,12 @@ const RoleList = ({ data }: I_Props) => {
     console.log("called");
   };
 
-  const handleEdit = () => {
-    return;
+  const handleView = (id: string) => {
+    router.push(`/role/detail/${id}?editPage=view`);
+  };
+
+  const handleEdit = (id: string) => {
+    router.push(`/role/detail/${id}?editPage=edit`);
   };
   // ------- render ------- //
   const dataFitTable = data.map((item, i) => {
@@ -38,7 +42,11 @@ const RoleList = ({ data }: I_Props) => {
       role_name: item["role_name"],
       description: descriptionToString,
       action: (
-        <IconBtn tip="編輯" type="edit" onClick={handleEdit} />
+        <IconBtn
+          tip="編輯"
+          type="edit"
+          onClick={handleEdit.bind(null, item.id)}
+        />
         // <Tooltip content="編輯">
         //   <EditIcon onClick={handleEdit} />
         // </Tooltip>
@@ -50,7 +58,7 @@ const RoleList = ({ data }: I_Props) => {
   return (
     <BodySTY>
       <PaginationField />
-      <Table titles={tableTitleArr} data={dataReorg} />
+      <Table titles={tableTitleArr} data={dataReorg} onView={handleView} />
     </BodySTY>
   );
 };

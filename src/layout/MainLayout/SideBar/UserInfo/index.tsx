@@ -13,7 +13,7 @@ import IconButton from "@components/Button/Secondary/IconLeft";
 function Index(props: any) {
   const { data: session } = useSession();
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
-
+  console.log("🍅 session", session);
   return (
     <BodySTY {...props}>
       {session && (
@@ -21,8 +21,8 @@ function Index(props: any) {
           <div className="user-info">
             <Avatar src="/image/avatar1.jpg" name="portrait" size={44} />
             <div className="desp">
-              <h4>{companyData?.administrator_name}</h4>
-              <p>最高管理員</p>
+              <h4>{session.user.username}</h4>
+              <p>{session.user.role}</p>
             </div>
           </div>
         </div>
