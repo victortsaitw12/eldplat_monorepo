@@ -1,7 +1,7 @@
-import { createUrlPath } from "@utils/createUrlPath";
+import { createUrlPath, getUrlPath } from "@utils/createUrlPath";
 
 const API_Path = {
-  getOrg: createUrlPath("SYS", "GetOrg") // read
+  getOrgList: getUrlPath("SYS", "Org", "GetOrgList") // read
 };
 
 export default API_Path;

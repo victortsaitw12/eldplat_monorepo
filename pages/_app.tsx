@@ -105,8 +105,8 @@ export default function App({
 
   const getLayout = Component.getLayout || ((page: React.ReactNode) => page);
   return (
-    <SessionProvider session={session}>
-      <main className={notoSans.className}>
+    <main className={notoSans.className}>
+      <SessionProvider session={session}>
         <Loader />
         <I18Provider locale={locale} messages={messages} defaultLocale="zh">
           <ThemeProvider theme={theme}>
@@ -133,7 +133,7 @@ export default function App({
             )}
           </ThemeProvider>
         </I18Provider>
-      </main>
-    </SessionProvider>
+      </SessionProvider>
+    </main>
   );
 }

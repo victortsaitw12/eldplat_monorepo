@@ -13,7 +13,6 @@ import IconButton from "@components/Button/Secondary/IconLeft";
 function Index(props: any) {
   const { data: session } = useSession();
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
-  console.log("🍅 session", session);
   return (
     <BodySTY {...props}>
       {session && (

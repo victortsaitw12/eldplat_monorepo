@@ -17,7 +17,6 @@ export const BodySTY = styled.div`
     padding-bottom: 74px;
     gap: 12px;
     flex-grow: 1;
-    border-top: 1px solid #d6e2f0;
     overflow-x: hidden;
     overflow-y: scroll;
     &::-webkit-scrollbar {
@@ -46,6 +45,7 @@ export const BodySTY = styled.div`
     flex-shrink: 0;
     stroke-width: 0.25;
     stroke: ${({ theme }) => theme.color.N0};
+    padding: 0 20px;
   }
   .footer {
     position: absolute;

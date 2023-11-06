@@ -39,11 +39,6 @@ function SideBar({ isLoading, onToggleMenu }: Props) {
     // onToggleMenu();
   };
 
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
-    signIn("credentials", { ...inputData, redirect: false }); // !! missing in doc
-  };
-
   const mapping_menus = (list: any) => {
     // console.log("list", list);
     if (!list) return [];

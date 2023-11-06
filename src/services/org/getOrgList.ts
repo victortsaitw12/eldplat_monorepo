@@ -1,16 +1,74 @@
 import API_Path from "./apiPath";
+import { preRequest } from "@utils/preRequest";
 
 export const getOrgList = async () => {
   return ContentList;
+  const userID = "admin";
+  const TK = preRequest();
+  const requestBody = {
+    x: "",
+    org_no: "o-0002",
+    page_info: {
+      page_Index: 1,
+      page_Size: 100,
+      orderby: "org_no",
+      arrangement: "ASC",
+      total: 0,
+      last_Page: 0
+    }
+  };
+  const res = await fetch(`${API_Path["getOrgList"]}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `basic ${TK}`,
+      UK: userID
+      // TK: TK
+    },
+    body: JSON.stringify(requestBody)
+  });
+  return await res.json();
+};
 
-  //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-  //     }
-  //   });
-  //   return await res.json();
+export const getTest = async () => {
+  const TK = preRequest();
+
+  const res = await fetch("https://ueldplat.api.liontravel.com/sys/api/chk", {
+    method: "GET",
+    headers: {
+      Authorization: `basic ${TK}`
+    }
+  });
+  return await res.json();
+};
+
+export const getTests = async () => {
+  const TK = preRequest();
+  const reqBody = {
+    x: "",
+    filter_needed: true,
+    //,"filter_custom": [
+    //    {
+    //        "customField": "module_name",
+    //        "customSQLColumn": "1"
+    //    }
+    //]
+    page_info: {
+      page_Index: 1,
+      page_Size: 10
+    }
+  };
+  const res = await fetch(
+    "https://ueldplat.api.liontravel.com/sys/api/V2/Account/GetAccountInfo",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `basic ${TK}`
+      },
+      body: JSON.stringify(reqBody)
+    }
+  );
+  return await res.json();
 };
 
 // ------- MOCK DATA ------- //

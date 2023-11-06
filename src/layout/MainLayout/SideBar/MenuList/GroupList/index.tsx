@@ -14,6 +14,7 @@ interface Props {
 //
 function Index({ menu }: Props) {
   const router = useRouter();
+  const currentUrl = router.asPath.split("/");
   const default_open =
     menu?.subList !== null &&
     menu?.subList &&
@@ -24,6 +25,10 @@ function Index({ menu }: Props) {
         }
       })
       .indexOf(router.asPath) >= 0;
+  // TODO update logic after paths are final
+  // console.log("🍅 subList", menu?.subList);
+  // console.log("🍅 asPath", router.asPath);
+
   const [openList, setOpenList] = useState(default_open);
   const isActive =
     router.asPath === menu.url ||
@@ -31,6 +36,7 @@ function Index({ menu }: Props) {
       menu.url !== "/" &&
       router.asPath.indexOf(menu.url) >= 0);
   const isDisabled = menu.url === null && !menu.subList;
+
   return (
     <BodySTY>
       <StyledButton

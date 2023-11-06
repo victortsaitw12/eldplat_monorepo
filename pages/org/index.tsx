@@ -5,7 +5,7 @@ import { BodySTY } from "./style";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 import { getLayout } from "@layout/MainLayout";
-import { getOrgList } from "@services/org/getOrgList";
+import { getOrgList, getTest } from "@services/org/getOrgList";
 import OrgList from "@contents/Org/OrgList";
 import ModalContent, {
   I_PopContent,
@@ -32,6 +32,17 @@ const Page: NextPageWithLayout<{
     try {
       const result = await getOrgList();
       setData(result);
+    } catch (e: any) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+
+  const fetchTest = async () => {
+    setIsLoading(true);
+    try {
+      const test = await getTest();
+      console.log("test:", test);
     } catch (e: any) {
       console.log(e);
     }
@@ -67,6 +78,10 @@ const Page: NextPageWithLayout<{
 
   React.useEffect(() => {
     fetchData();
+  }, []);
+
+  React.useEffect(() => {
+    fetchTest();
   }, []);
 
   // ------- render ------- //

@@ -15,12 +15,7 @@ interface Props {
 function Index({ menuData }: Props) {
   const { data: session } = useSession();
 
-  if (!session)
-    return (
-      <BodySTY>
-        <Skeleton />
-      </BodySTY>
-    );
+  if (!session) return <BodySTY></BodySTY>;
 
   return (
     <BodySTY>

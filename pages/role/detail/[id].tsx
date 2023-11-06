@@ -11,6 +11,8 @@ import RoleDetail from "@contents/Roles/DetailPanel";
 import AuthPanel from "@contents/Roles/AuthPanel";
 import { getRoleDetail, I_RoleDetail } from "@services/role/getRoleDetail";
 import ControlBar from "@contents/Roles/ControlBar";
+import LeavePageModal from "@components/Modal/LeavePageModal";
+import { useConfirmation } from "@hooks/useConfirmation";
 
 //
 const isFullWidth = true;
@@ -18,10 +20,13 @@ const isFullWidth = true;
 //
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const confirmation = useConfirmation();
+
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const [data, setData] = React.useState<I_RoleDetail>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isDialogShown, setIsDialogShown] = React.useState<boolean>(false);
+  const [isLeavePage, setIsLeavePage] = React.useState<boolean>(false);
+  const isEdit = editPage === "edit";
 
   //------ functions ------//
   const fetchData = async () => {
@@ -39,29 +44,52 @@ const Page: NextPageWithLayout<never> = () => {
     console.log("data", data);
   };
 
+  const handleNavigation = async (path: string) => {
+    if (isEdit && isLeavePage) {
+      // Show the modal and wait for user interaction
+      // const result = await confirmation.open();
+      setIsLeavePage(false);
+
+      // if (result) {
+      router.push(path);
+      // }
+      // } else {
+      // router.push(path);
+    }
+  };
+
+  const handleRouteChange = (url: string) => {
+    if (isLeavePage) {
+      // If the leave modal is shown, do not allow route change
+      setIsLeavePage(false);
+      return false;
+    }
+    return true;
+  };
+
   // ------- useEffect ------- //
   React.useEffect(() => {
     fetchData();
   }, []);
 
+  router.beforePopState(handleRouteChange);
+
   return (
     <>
-      <ControlBar isEdit={editPage === "edit"} />
+      <ControlBar
+        isEdit={editPage === "edit"}
+        handleNavigation={handleNavigation}
+      />
       <BodySTY>
         <RoleDetail data={data.roleDetail} isEdit={editPage === "edit"} />
         {data && (
           <AuthPanel data={data.authFunc} isEdit={editPage === "edit"} />
         )}
-        <Dialog
-          title="確定要離開嗎?"
-          isShown={isDialogShown}
-          onCloseComplete={() => setIsDialogShown(false)}
-          onConfirm={() => console.log("continue action")}
-          confirmLabel="確定"
-          cancelLabel="取消"
-        >
-          <div>如果您現在離開，將會遺失未儲存的資料。</div>
-        </Dialog>
+        <LeavePageModal
+          isShown={confirmation.isOpen}
+          onClose={() => setIsLeavePage(false)}
+          onConfirm={handleNavigation.bind(null, "/role")}
+        />
       </BodySTY>
     </>
   );

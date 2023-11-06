@@ -8,17 +8,20 @@ import SecondaryBtn from "@components/Button/Secondary/Label";
 
 interface I_Props {
   isEdit: boolean;
+  handleNavigation: (path: string) => void;
 }
 
-function ControlBar({ isEdit }: I_Props) {
+function ControlBar({ isEdit, handleNavigation }: I_Props) {
   const router = useRouter();
 
   //------ functions ------//
   const handleRedirectBack = () => {
-    router.push("/role");
+    handleNavigation("/role");
   };
 
   const handleCancel = () => {
+    handleNavigation("/role");
+
     console.log("cancel");
   };
   const handleSave = () => {

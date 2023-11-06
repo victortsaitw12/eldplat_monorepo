@@ -13,7 +13,6 @@ const DetailPanel = ({ data, isEdit }: I_Props) => {
       </BodySTY>
     );
   //------ functions ------//
-  console.log("🈶 data:", data);
   // ------- render ------- //
   const dataFitInfoBox = [
     {
