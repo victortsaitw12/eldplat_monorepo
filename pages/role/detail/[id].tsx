@@ -1,31 +1,23 @@
 import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-import { Pane, Group, Dialog, PlusIcon, EditIcon } from "evergreen-ui";
+import { BodySTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import LoadingSpinner from "@components/LoadingSpinner";
-import { BodySTY } from "./style";
 import RoleDetail from "@contents/Roles/DetailPanel";
 import AuthPanel from "@contents/Roles/AuthPanel";
 import { getRoleDetail, I_RoleDetail } from "@services/role/getRoleDetail";
 import ControlBar from "@contents/Roles/ControlBar";
-import LeavePageModal from "@components/Modal/LeavePageModal";
-import { useConfirmation } from "@hooks/useConfirmation";
+import { ModalContext } from "@contexts/ModalContext/ModalProvider";
 
-//
-const isFullWidth = true;
-
-//
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const confirmation = useConfirmation();
-
+  const modal = React.useContext(ModalContext);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const [data, setData] = React.useState<I_RoleDetail>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isLeavePage, setIsLeavePage] = React.useState<boolean>(false);
+
   const isEdit = editPage === "edit";
 
   //------ functions ------//
@@ -45,26 +37,7 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const handleNavigation = async (path: string) => {
-    if (isEdit && isLeavePage) {
-      // Show the modal and wait for user interaction
-      // const result = await confirmation.open();
-      setIsLeavePage(false);
-
-      // if (result) {
-      router.push(path);
-      // }
-      // } else {
-      // router.push(path);
-    }
-  };
-
-  const handleRouteChange = (url: string) => {
-    if (isLeavePage) {
-      // If the leave modal is shown, do not allow route change
-      setIsLeavePage(false);
-      return false;
-    }
-    return true;
+    router.push(path);
   };
 
   // ------- useEffect ------- //
@@ -72,7 +45,29 @@ const Page: NextPageWithLayout<never> = () => {
     fetchData();
   }, []);
 
-  router.beforePopState(handleRouteChange);
+  React.useEffect(() => {
+    if (!isEdit) return;
+
+    const handleRouteChange = (url: string) => {
+      console.log("🍅 before", modal);
+      modal.showLeavePageModal();
+      console.log("🍅 after");
+    };
+
+    router.beforePopState(({ url, as, options }) => {
+      if (modal.modalContent) {
+        // If there's a confirmation modal open, prevent the route change
+        return false;
+      }
+      return true;
+    });
+
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [isEdit]);
 
   return (
     <>
@@ -85,11 +80,6 @@ const Page: NextPageWithLayout<never> = () => {
         {data && (
           <AuthPanel data={data.authFunc} isEdit={editPage === "edit"} />
         )}
-        <LeavePageModal
-          isShown={confirmation.isOpen}
-          onClose={() => setIsLeavePage(false)}
-          onConfirm={handleNavigation.bind(null, "/role")}
-        />
       </BodySTY>
     </>
   );

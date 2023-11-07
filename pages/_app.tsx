@@ -14,6 +14,9 @@ import LoadingModal from "@components/LoadingModal";
 import LoadingSpinner from "@components/LoadingSpinner";
 import dynamic from "next/dynamic";
 import getPageBreadCrumbs from "@utils/getPageBreadCrumbs";
+import useConfirmation from "@hooks/useConfirmation";
+import { ModalProvider } from "@contexts/ModalContext/ModalProvider";
+
 const DynamicBreadcrumbs = dynamic(() => import("@components/Breadcrumbs"), {
   ssr: false
 });
@@ -107,32 +110,34 @@ export default function App({
   return (
     <main className={notoSans.className}>
       <SessionProvider session={session}>
-        <Loader />
-        <I18Provider locale={locale} messages={messages} defaultLocale="zh">
-          <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            {getLayout(
-              <Component
-                {...pageProps}
-                locale={locale}
-                setLocale={setLocale}
-                setPageType={setPageType}
-              />,
-              {
-                ...pageProps,
-                locale: locale,
-                setLocale: setLocale,
-                breadcrumbs: (
-                  <DynamicBreadcrumbs
-                    className="main-layout"
-                    splitEle={<span style={{ margin: "0 0.5rem" }}>/</span>}
-                    routes={getPageBreadCrumbs(router)}
-                  />
-                )
-              }
-            )}
-          </ThemeProvider>
-        </I18Provider>
+        <ModalProvider>
+          <Loader />
+          <I18Provider locale={locale} messages={messages} defaultLocale="zh">
+            <ThemeProvider theme={theme}>
+              <GlobalStyles />
+              {getLayout(
+                <Component
+                  {...pageProps}
+                  locale={locale}
+                  setLocale={setLocale}
+                  setPageType={setPageType}
+                />,
+                {
+                  ...pageProps,
+                  locale: locale,
+                  setLocale: setLocale,
+                  breadcrumbs: (
+                    <DynamicBreadcrumbs
+                      className="main-layout"
+                      splitEle={<span style={{ margin: "0 0.5rem" }}>/</span>}
+                      routes={getPageBreadCrumbs(router)}
+                    />
+                  )
+                }
+              )}
+            </ThemeProvider>
+          </I18Provider>
+        </ModalProvider>
       </SessionProvider>
     </main>
   );

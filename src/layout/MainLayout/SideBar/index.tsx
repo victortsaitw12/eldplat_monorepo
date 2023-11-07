@@ -67,7 +67,7 @@ function SideBar({ isLoading, onToggleMenu }: Props) {
         <Header handleCloseMenu={handleToggleMenu} />
         <Divider />
         <div className="container">
-          {isLoading && <LoadingSpinner />}
+          {isLoading && !menuData && <LoadingSpinner />}
           <MenuList menuData={menuData} />
         </div>
         <Divider />

@@ -1,19 +1,13 @@
-// useConfirmation.js
 import React from "react";
 
 export function useConfirmation() {
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const open = () => {
-    setIsOpen(true);
+  const confirmation = () => {
     return new Promise((resolve) => {
       const onConfirm = () => {
-        setIsOpen(false);
         resolve(true);
       };
 
       const onCancel = () => {
-        setIsOpen(false);
         resolve(false);
       };
 
@@ -21,5 +15,5 @@ export function useConfirmation() {
     });
   };
 
-  return { isOpen, open };
+  return { confirmation };
 }
