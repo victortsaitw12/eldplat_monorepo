@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import RoleList from "@contents/Roles/RoleList";
 import { BodySTY } from "./style";
@@ -75,7 +75,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <TableWrapper
+      <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
@@ -91,7 +91,7 @@ const Page: NextPageWithLayout<never> = () => {
         >
           <RoleList data={data} />
         </FilterWrapper>
-      </TableWrapper>
+      </TabsWrapper>
     </BodySTY>
   );
 };

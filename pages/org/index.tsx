@@ -122,6 +122,7 @@ export const getServerSideProps: GetServerSideProps<Params> = async (
     props: {}
   };
 };
+
 // Page.getLayout = getLayout;
 Page.getLayout = (page: React.ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });

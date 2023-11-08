@@ -9,8 +9,32 @@ import {
 } from "evergreen-ui";
 import { DivSTY } from "./style";
 
-import { I_CreateOrgReq } from "@services/org/createOrg";
-import { I_EditOrgReq } from "@services/org/updateOrg";
+//====== PREP DATA ======//
+export const getDataFitAccordion = (
+  data: any,
+  id: string,
+  label: string,
+  children: string
+) => {
+  return data.map((item: any) => {
+    const transformedItem: I_Accordion = {
+      id: item[id],
+      label: item[label],
+      itemInfo: { ...item }
+    };
+
+    if (item[children] && item[children].length > 0) {
+      transformedItem.children = getDataFitAccordion(
+        item[children],
+        id,
+        label,
+        children
+      );
+    }
+
+    return transformedItem;
+  });
+};
 
 //====== REACT COMPONENT ======//
 const Accordion = ({
@@ -32,7 +56,7 @@ const Accordion = ({
   // ------- render ------- //
 
   return (
-    <DivSTY className={`${className} ${customSTY || "acc"}`}>
+    <DivSTY className={`${className || ""} ${customSTY || "acc"}`}>
       {isTop && <AccordionControl customSTY={customSTY} onClick={setIsOpen} />}
       <div onClick={handleToggle}>
         <AccordionItem
@@ -111,12 +135,16 @@ const AccordionItem = ({
         <span>{itemData.label}</span>
       </div>
       <div className="acc__item-end">
-        <Tooltip content="新增下級">
-          <PlusIcon onClick={onCreate.bind(null, itemData)} />
-        </Tooltip>
-        <Tooltip content="編輯">
-          <EditIcon onClick={onEdit.bind(null, itemData)} />
-        </Tooltip>
+        {onCreate && (
+          <Tooltip content="新增下級">
+            <PlusIcon onClick={onCreate.bind(null, itemData)} />
+          </Tooltip>
+        )}
+        {onEdit && (
+          <Tooltip content="編輯">
+            <EditIcon onClick={onEdit.bind(null, itemData)} />
+          </Tooltip>
+        )}
       </div>
     </div>
   );
@@ -128,26 +156,26 @@ interface I_Props {
   customSTY?: string;
   isTop: boolean;
   data: I_Accordion;
-  onCreate: (item: any, e: any) => void;
-  onEdit: (item: any, e: any) => void;
+  onCreate?: (item: any, e: any) => void;
+  onEdit?: (item: any, e: any) => void;
 }
 
 interface I_ItemProps {
   customSTY?: string;
   itemData: I_ItemData;
-
   prefixIcon?: React.ReactNode;
-  onCreate: (item: any, e: any) => void;
-  onEdit: (item: any, e: any) => void;
+  onCreate?: (item: any, e: any) => void;
+  onEdit?: (item: any, e: any) => void;
 }
 
 export interface I_Accordion {
   id: string;
-  label: string;
+  label: string | React.ReactNode;
   children?: I_Accordion[];
+  itemInfo?: any;
 }
 
 interface I_ItemData {
   id: string;
-  label: string;
+  label: string | React.ReactNode;
 }

@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 //@layout
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import CustomerDetail from "@contents/Customer/CustomerDetail";
 //@services
 import { updateCustomer } from "@services/customer/updateCustomer";
@@ -52,7 +52,7 @@ const Page: NextPageWithLayout<{ customerId: string; editPage: string }> = ({
         setLoading(false);
       });
   }, [router]);
-  //TableWrapper
+  //TabsWrapper
   const changeMainFilterHandler = () => {
     console.log("changeMainFilterHandler");
   };
@@ -80,7 +80,7 @@ const Page: NextPageWithLayout<{ customerId: string; editPage: string }> = ({
   return (
     <RegionProvider>
       <BodySTY>
-        <TableWrapper
+        <TabsWrapper
           onChangeTab={changeMainFilterHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
@@ -104,7 +104,7 @@ const Page: NextPageWithLayout<{ customerId: string; editPage: string }> = ({
             customerDefaultData={customerDefaultData}
             options={options}
           />
-        </TableWrapper>
+        </TabsWrapper>
       </BodySTY>
     </RegionProvider>
   );

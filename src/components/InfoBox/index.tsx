@@ -147,7 +147,7 @@ function InfoBox({
   };
 
   return (
-    <InfoBoxSTY style={style}>
+    <InfoBoxSTY className="infoBox__container" style={style}>
       {infoTitle && <Text className="info-title">{infoTitle}</Text>}
       {r_switch_info(infoType)}
     </InfoBoxSTY>

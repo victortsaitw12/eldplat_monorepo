@@ -12,7 +12,7 @@ import LabelSecondaryButton from "@components/Button/Secondary/Label";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 
 //@content
 import AdminOrdersDetal from "@contents/AdminOrders/AdminOrdersDetail";
@@ -58,7 +58,7 @@ const Index: NextPageWithLayout<never> = ({
     () => [{ id: 1, label: "訂單內容", value: "order" }],
     []
   );
-  //TableWrapper
+  //TabsWrapper
   const changeMainFilterHandler = (value: string) => {
     console.log("changeMainFilterHandler", value);
     setNowTab(value);
@@ -106,7 +106,7 @@ const Index: NextPageWithLayout<never> = ({
       {!loading && orderData && (
         <>
           <Pane>
-            <TableWrapper
+            <TabsWrapper
               viewOnly={viewonly}
               isEdit={editPage}
               onChangeTab={(value) => changeMainFilterHandler(value)}
@@ -137,7 +137,7 @@ const Index: NextPageWithLayout<never> = ({
                 quoteType={p_quote_type}
                 orderData={orderData}
               />
-            </TableWrapper>
+            </TabsWrapper>
           </Pane>
         </>
       )}

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Pane, Spinner } from "evergreen-ui";
 //@layout
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 
 import EmployeeDetail from "@contents/Employee/EmployeeDetail";
 //@services
@@ -40,10 +40,10 @@ const Page: NextPageWithLayout<{ userId: string; editPage: string }> = ({
   useEffect(() => {
     updateMainFilter("1");
   }, []);
-  //TableWrapper
+  //TabsWrapper
   const changeMainFilterHandler = (value: string) => {
     console.log("changeMainFilterHandler", value);
-    //TableWrapper
+    //TabsWrapper
     setNowTab(value);
   };
 
@@ -139,7 +139,7 @@ const Page: NextPageWithLayout<{ userId: string; editPage: string }> = ({
   return (
     <RegionProvider>
       <BodySTY>
-        <TableWrapper
+        <TabsWrapper
           isEdit={false}
           // viewOnly={true}
           onChangeTab={changeMainFilterHandler}
@@ -164,7 +164,7 @@ const Page: NextPageWithLayout<{ userId: string; editPage: string }> = ({
               <Spinner />
             </Pane>
           )}
-        </TableWrapper>
+        </TabsWrapper>
       </BodySTY>
     </RegionProvider>
   );

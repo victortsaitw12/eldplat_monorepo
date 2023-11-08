@@ -28,7 +28,7 @@ interface Props {
   isHide?: boolean;
 }
 
-function TableWrapper({
+function TabsWrapper({
   optionsEle,
   children,
   mainFilterArray,
@@ -131,4 +131,4 @@ function TableWrapper({
   );
 }
 
-export default TableWrapper;
+export default TabsWrapper;

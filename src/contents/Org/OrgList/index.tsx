@@ -2,7 +2,10 @@ import React from "react";
 import { Pane } from "evergreen-ui";
 import { DivSTY } from "./style";
 
-import Accordion, { I_Accordion } from "@contents/Org/Accordion";
+import Accordion, {
+  getDataFitAccordion,
+  I_Accordion
+} from "@components/Accordion";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { I_CreateOrgReq } from "@services/org/createOrg";
 import { I_EditOrgReq } from "@services/org/updateOrg";
@@ -17,24 +20,12 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
       </DivSTY>
     );
 
-  const transformKeys = (data: any) => {
-    return data.map((item: any) => {
-      const transformedItem = {
-        id: item.org_no,
-        label: item.org_name,
-        org_tp: item.org_tp,
-        org_lvl: item.org_lvl,
-        org_enb: item.org_enb
-      };
-
-      if (item.sublayer && item.sublayer.length > 0) {
-        transformedItem.children = transformKeys(item.sublayer);
-      }
-
-      return transformedItem;
-    });
-  };
-  const dataFitAccordion = transformKeys(data);
+  const dataFitAccordion = getDataFitAccordion(
+    data,
+    "org_no",
+    "org_name",
+    "sublayer"
+  );
 
   const getAccordion = (data: any[]) => {
     return data.map((item: any, i: number) => {

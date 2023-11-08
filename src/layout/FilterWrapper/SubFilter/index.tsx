@@ -26,7 +26,7 @@ function SubFilter({
     <BodySTY>
       <Select onChange={(event) => alert(event.target.value)}>
         <option value="foo" selected>
-          車輛管理與營運模組
+          {label}
         </option>
       </Select>
       {/* <button

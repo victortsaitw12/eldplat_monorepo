@@ -3,7 +3,7 @@ import { BoxComponent, Checkbox, CheckboxOwnProps } from "evergreen-ui";
 import { BodySTY } from "./style";
 interface Props extends CheckboxOwnProps {
   style?: React.CSSProperties;
-  label: string;
+  label?: string;
   name?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
