@@ -6,6 +6,19 @@ export const BodySTY = styled.div`
   .acc {
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
   }
+  .accordion {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    label {
+      margin: 0;
+    }
+    &__label {
+    }
+    &__btns {
+    }
+  }
 
   /* infoBox */
   .info_content {

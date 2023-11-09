@@ -46,9 +46,8 @@ const AccordionItem = ({
   return (
     <>
       <div className="acc__item" onClick={handleToggle}>
-        {hasChildren &&
-          (isOpen || isTopLayer ? <CaretDownIcon /> : <CaretRightIcon />)}
-        <div>{itemData.label}</div>
+        {hasChildren && (isOpen ? <CaretDownIcon /> : <CaretRightIcon />)}
+        {itemData.label}
       </div>
       <div className={`acc__items ${isOpen ? "" : "hide"} padStart`}>
         {hasChildren && <Accordion data={itemData.children} />}

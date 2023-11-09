@@ -17,47 +17,28 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
     );
 
   //------ functions ------//
-  const getDataFitAccordion = (
-    data: any,
-    id: string,
-    label: string,
-    children: string
-  ) => {
-    return data.map((item: any) => {
-      const transformedItem: I_AccordionItem = {
-        id: item[id],
-        label: item[label],
-        itemInfo: { ...item }
+  const getDataFitAccordion = (data: any) => {
+    return data.map((item: any, i: number) => {
+      const prepItem: I_AccordionItem = {
+        label: (
+          <div className="accordion">
+            {!item.sublayer && (
+              <CheckboxField
+                item={{ value: `name-${i}` }}
+                toggleFuelValue={handleCheckItem}
+                checked={checkedList.includes(`name-${i}`)}
+              />
+            )}
+            <div className="accordion__label">{item["org_name"]}</div>
+          </div>
+        )
       };
 
-      if (item[children] && item[children].length > 0) {
-        transformedItem.children = getDataFitAccordion(
-          item[children],
-          id,
-          label,
-          children
-        );
+      if (item["sublayer"] && item["sublayer"].length > 0) {
+        prepItem.children = getDataFitAccordion(item["sublayer"]);
       }
 
-      return transformedItem;
-    });
-  };
-
-  const getAccordion = (data: any[]) => {
-    return data.map((item: any, i: number) => {
-      return (
-        <Accordion
-          key={`org-${i}`}
-          data={item}
-          prefixIcon={
-            <CheckboxField
-              item={{ value: `name-${i}` }}
-              toggleFuelValue={handleCheckItem}
-              checked={checkedList.includes(`name-${i}`)}
-            />
-          }
-        />
-      );
+      return prepItem;
     });
   };
 
@@ -72,20 +53,14 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
   };
 
   // ------- render ------- //
-  const dataFitAccordion = getDataFitAccordion(
-    data,
-    "org_no",
-    "org_name",
-    "sublayer"
-  );
-  const roleAccordion = getAccordion(dataFitAccordion);
+  const dataFitAccordion = getDataFitAccordion(data);
 
   const dataFitInfoBox = [
     {
       readonly: false,
       req: false,
       label: "",
-      editEle: <div>{roleAccordion}</div>,
+      editEle: <Accordion data={dataFitAccordion} isTopLayer={true} />,
       value: data.module_name || "--"
     }
   ];

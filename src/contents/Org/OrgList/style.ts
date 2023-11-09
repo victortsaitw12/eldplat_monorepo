@@ -22,25 +22,21 @@ export const DivSTY = styled.div`
     line-height: normal;
   }
   .accordion {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    /* &-btns {
-        display: flex;
-        padding: 8px 16px;
-        align-items: center;
-        gap: 8px;
-        align-self: stretch;
-      } */
+    align-items: center;
     &__label {
     }
     &__btns {
-      /* & > div {
-        display: flex;
-        gap: 8px;
-      }
+      display: flex;
+      padding: 8px 16px;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
       svg {
         fill: ${({ theme }) => theme.color.N600};
-      } */
+      }
     }
   }
 `;
