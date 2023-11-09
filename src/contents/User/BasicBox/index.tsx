@@ -12,7 +12,7 @@ import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { I_UserDetailItem } from "@services/user/getUserDetail";
 
-const BasicInfoPanel = ({ data, isEdit }: I_Props) => {
+const BasicInfoBox = ({ data, isEdit }: I_Props) => {
   if (!data)
     return (
       <BodySTY>
@@ -33,7 +33,7 @@ const BasicInfoPanel = ({ data, isEdit }: I_Props) => {
           ) : (
             <FileUploader
               browseOrDragText={() => {
-                return "Drag files here";
+                return "Upload";
               }}
             />
           )}
@@ -88,7 +88,7 @@ const BasicInfoPanel = ({ data, isEdit }: I_Props) => {
   );
 };
 
-export default BasicInfoPanel;
+export default BasicInfoBox;
 
 interface I_Props {
   data: I_UserDetailItem;

@@ -5,12 +5,12 @@ import { BodySTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import BasicInfoPanel from "@contents/User/BasicInfoPanel";
-import EmployeePanel from "@contents/User/EmployeePanel";
+import BasicInfoBox from "@contents/User/BasicBox";
+import EmployeeInfoBox from "@contents/User/EmployeeInfoBox";
 import { getUserDetail, I_UserDetailItem } from "@services/user/getUserDetail";
 import ControlBar from "@contents/User/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
-import RolePanel from "@contents/User/RolePanel";
+import RoleInfoBox from "@contents/User/RoleInfoBox";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -77,9 +77,9 @@ const Page: NextPageWithLayout<never> = () => {
         handleNavigation={handleNavigation}
       />
       <BodySTY>
-        <BasicInfoPanel data={data} isEdit={editPage === "edit"} />
-        <EmployeePanel data={data} isEdit={editPage === "edit"} />
-        <RolePanel data={data.role} isEdit={editPage === "edit"} />
+        <BasicInfoBox data={data} isEdit={editPage === "edit"} />
+        <EmployeeInfoBox data={data} isEdit={editPage === "edit"} />
+        <RoleInfoBox data={data.role} isEdit={editPage === "edit"} />
       </BodySTY>
     </>
   );

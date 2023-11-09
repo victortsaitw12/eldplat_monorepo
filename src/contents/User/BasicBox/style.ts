@@ -8,6 +8,9 @@ export const BodySTY = styled.div`
   .basic__firstName {
     max-width: 136px;
   }
+  .basic__photo {
+    max-height: 150px;
+  }
 
   /* infoBox */
   .info-title {

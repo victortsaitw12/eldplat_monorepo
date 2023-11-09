@@ -21,4 +21,26 @@ export const DivSTY = styled.div`
     font-weight: 600;
     line-height: normal;
   }
+  .accordion {
+    display: flex;
+    justify-content: space-between;
+    /* &-btns {
+        display: flex;
+        padding: 8px 16px;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+      } */
+    &__label {
+    }
+    &__btns {
+      /* & > div {
+        display: flex;
+        gap: 8px;
+      }
+      svg {
+        fill: ${({ theme }) => theme.color.N600};
+      } */
+    }
+  }
 `;
