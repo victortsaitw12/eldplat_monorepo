@@ -1,18 +1,14 @@
-import { Dialog } from "evergreen-ui";
-import { GetServerSideProps, NextPageWithLayout } from "next";
 import React from "react";
-import { BodySTY } from "./style";
+import { GetServerSideProps, NextPageWithLayout } from "next";
+import { useSession } from "next-auth/react";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+import { BodySTY } from "./style";
 
 import { getLayout } from "@layout/MainLayout";
 import { getOrgList, getTest } from "@services/org/getOrgList";
 import OrgList from "@contents/Org/OrgList";
-import ModalContent, {
-  I_PopContent,
-  defaultPopContent
-} from "@contents/Org/ModalContent";
+import FormModal, { I_ModalContent } from "@contents/Org/FormModal";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { useSession, signIn, signOut } from "next-auth/react";
 
 const Page: NextPageWithLayout<{
   locale: string;
@@ -21,9 +17,9 @@ const Page: NextPageWithLayout<{
   const { data: session } = useSession();
 
   const [data, setData] = React.useState([]);
-  const [isDialogShown, setIsDialogShown] = React.useState(false);
-  const [popContent, setPopContent] =
-    React.useState<I_PopContent>(defaultPopContent);
+  const [modalContent, setModalContent] = React.useState<I_ModalContent | null>(
+    null
+  );
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   //------ functions ------//
@@ -49,33 +45,27 @@ const Page: NextPageWithLayout<{
     setIsLoading(false);
   };
 
-  const handleRenderCreateModal = (item: any, e: any) => {
+  const handleRenderModal = (type: "create" | "edit", item: any, e: any) => {
     e.stopPropagation();
-    const createContent = {
-      title: "新增下級",
-      parentOrgId: "o-001",
-      parentName: item.label,
-      newOrgName: ""
+    console.log("🍅 item:", item);
+    const isCreate = type === "create";
+    const formContent = {
+      isCreate: isCreate,
+      parentName: isCreate ? item["org_name"] : "NEED parent_org_name",
+      orgName: isCreate ? "" : item["org_name"],
+      req: isCreate
+        ? {
+            org_no: item["org_no"],
+            org_name: "",
+            org_tp: item["org_tp"],
+            org_lvl: item["org_lvl"]
+          }
+        : { org_no: item["org_no"], org_name: item["org_name"], org_enb: true }
     };
-    setPopContent(createContent);
-    setIsDialogShown(true);
-  };
-
-  const handleRenderEditModal = (item: any, e: any) => {
-    e.stopPropagation();
-    const editContent = {
-      title: "編輯組織",
-      parentOrgId: "o-001",
-      parentName: "雄獅通運開發中",
-      newOrgName: item.label,
-      enabled: true
-    };
-    setPopContent(editContent);
-    setIsDialogShown(true);
+    setModalContent(formContent);
   };
 
   // ------- useEffect ------- //
-
   React.useEffect(() => {
     fetchData();
   }, []);
@@ -98,18 +88,12 @@ const Page: NextPageWithLayout<{
     <BodySTY>
       <OrgList
         data={data}
-        onCreate={handleRenderCreateModal}
-        onEdit={handleRenderEditModal}
+        onCreate={handleRenderModal.bind(null, "create")}
+        onEdit={handleRenderModal.bind(null, "edit")}
       />
-      <Dialog
-        title={popContent.title}
-        isShown={isDialogShown}
-        onCloseComplete={() => setIsDialogShown(false)}
-        confirmLabel="確定"
-        cancelLabel="取消"
-      >
-        <ModalContent popContent={popContent} />
-      </Dialog>
+      {modalContent && (
+        <FormModal content={modalContent} setModalContent={setModalContent} />
+      )}
     </BodySTY>
   );
 };

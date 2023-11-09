@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DivSTY = styled.div`
+export const FormSTY = styled.form`
   .modal {
     &__status {
       display: flex;

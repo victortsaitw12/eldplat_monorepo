@@ -1,6 +1,6 @@
 import API_Path from "./apiPath";
 
-export const createOrgList = async () => {
+export const createOrg = async ({ data }: I_CreateOrgReq) => {
   return DUMMY_ARR;
 
   //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
@@ -15,6 +15,8 @@ export const createOrgList = async () => {
 
 // ------- typing ------- //
 export interface I_CreateOrgReq {
-  parentOrg: string;
-  newOrgName: string;
+  org_no: string;
+  org_name: string;
+  org_tp: string;
+  org_lvl: number;
 }

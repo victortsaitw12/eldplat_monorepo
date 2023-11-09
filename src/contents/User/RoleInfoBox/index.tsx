@@ -22,7 +22,7 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
       const prepItem: I_AccordionItem = {
         label: (
           <div className="accordion">
-            {!item.sublayer && (
+            {isEdit && !item.sublayer && (
               <CheckboxField
                 item={{ value: `name-${i}` }}
                 toggleFuelValue={handleCheckItem}
@@ -61,7 +61,7 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
       req: false,
       label: "",
       editEle: <Accordion data={dataFitAccordion} isTopLayer={true} />,
-      value: data.module_name || "--"
+      value: <Accordion data={dataFitAccordion} isTopLayer={true} />
     }
   ];
 

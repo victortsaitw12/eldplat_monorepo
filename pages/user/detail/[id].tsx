@@ -5,7 +5,7 @@ import { BodySTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import BasicInfoBox from "@contents/User/BasicBox";
+import BasicInfoBox from "@contents/User/BasicInfoBox";
 import EmployeeInfoBox from "@contents/User/EmployeeInfoBox";
 import { getUserDetail, I_UserDetailItem } from "@services/user/getUserDetail";
 import ControlBar from "@contents/User/ControlBar";

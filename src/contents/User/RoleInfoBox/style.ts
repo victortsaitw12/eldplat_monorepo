@@ -4,7 +4,9 @@ export const BodySTY = styled.div`
   width: 275px;
   padding: 1rem;
   .acc {
-    border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+    &__btns {
+      display: none;
+    }
   }
   .accordion {
     width: 100%;

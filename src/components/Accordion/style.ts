@@ -11,28 +11,14 @@ export const DivSTY = styled.div`
 
   .acc {
     &__btns {
-    }
-    &__title {
-      display: flex;
       padding: 8px 16px;
-      align-items: center;
-      gap: 16px;
-      align-self: stretch;
-      background: ${({ theme }) => theme.color.N300};
-      color: ${({ theme }) => theme.color.N700};
-      font-family: Noto Sans;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
     }
-
     &__items {
       display: flex;
     }
     &__item {
       display: flex;
-      padding: 8px 32px 8px 16px;
+      padding: 4px 16px;
       align-items: center;
       align-self: stretch;
       cursor: pointer;
