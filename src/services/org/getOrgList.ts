@@ -1,9 +1,8 @@
 import API_Path from "./apiPath";
 import { preRequest } from "@utils/preRequest";
 
-export const getOrgList = async () => {
-  return ContentList;
-  const userID = "admin";
+// TODO MONDAY
+export const getOrgList = async (userID: any) => {
   const TK = preRequest();
   const requestBody = {
     x: "",
@@ -17,7 +16,7 @@ export const getOrgList = async () => {
       last_Page: 0
     }
   };
-  const res = await fetch(`${API_Path["getOrgList"]}`, {
+  const res = await fetch("/api/postData?url=getOrgList", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,52 +26,13 @@ export const getOrgList = async () => {
     },
     body: JSON.stringify(requestBody)
   });
-  return await res.json();
-};
-
-export const getTest = async () => {
-  const TK = preRequest();
-
-  const res = await fetch("https://ueldplat.api.liontravel.com/sys/api/chk", {
-    method: "GET",
-    headers: {
-      Authorization: `basic ${TK}`
-    }
-  });
-  return await res.json();
-};
-
-export const getTests = async () => {
-  const TK = preRequest();
-  const reqBody = {
-    x: "",
-    filter_needed: true,
-    //,"filter_custom": [
-    //    {
-    //        "customField": "module_name",
-    //        "customSQLColumn": "1"
-    //    }
-    //]
-    page_info: {
-      page_Index: 1,
-      page_Size: 10
-    }
-  };
-  const res = await fetch(
-    "https://ueldplat.api.liontravel.com/sys/api/V2/Account/GetAccountInfo",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `basic ${TK}`
-      },
-      body: JSON.stringify(reqBody)
-    }
-  );
-  return await res.json();
+  const result = await res.json();
+  console.log("🍅 result", result);
+  return result.data;
 };
 
 // ------- MOCK DATA ------- //
-const ContentList = [
+export const ContentList = [
   {
     org_no: "o-0002", //id
     org_name: "雄獅集團 with correct backend format", //label

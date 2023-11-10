@@ -2,6 +2,7 @@
 // http://uvehicle-api.eldplat.com/RPW/api/DownStream/GetGroupsData
 
 // ELDPLAT V1
+// TODO MONDAY change to NEXT_PUBLIC_PROD_ENDPOINT
 export function createUrlPath(microServiceName: string, apiName: string) {
   return `${process.env.NEXT_PUBLIC_PROD_ENDPOINT}/${microServiceName}/api/DownStream/${apiName}`;
   // FOR PRODUCTION AND DEVELOP (MAIN VS TESTING)

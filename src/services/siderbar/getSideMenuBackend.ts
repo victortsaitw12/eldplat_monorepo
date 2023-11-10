@@ -5,5 +5,6 @@ export const getSideMenuBackend = async () => {
       "Content-Type": "application/json"
     }
   });
+
   return res.json();
 };
