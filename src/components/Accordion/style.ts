@@ -10,54 +10,22 @@ export const DivSTY = styled.div`
   }
 
   .acc {
-    &__title {
-      display: flex;
+    &__btns {
       padding: 8px 16px;
-      align-items: center;
-      gap: 16px;
-      align-self: stretch;
-      background: ${({ theme }) => theme.color.N300};
-      color: ${({ theme }) => theme.color.N700};
-      font-family: Noto Sans;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
-      &-btns {
-        display: flex;
-        padding: 8px 16px;
-        align-items: center;
-        gap: 8px;
-        align-self: stretch;
-      }
     }
-
     &__items {
       display: flex;
-      flex-direction: column;
     }
     &__item {
       display: flex;
-      padding: 8px 32px 8px 16px;
-      justify-content: space-between;
+      padding: 4px 16px;
       align-items: center;
       align-self: stretch;
       cursor: pointer;
       :hover {
         background: ${({ theme }) => theme.color.N100};
       }
-      & > div {
-        display: flex;
-        gap: 8px;
-      }
-      svg {
-        fill: ${({ theme }) => theme.color.N600};
-      }
     }
-  }
-  .padIcon {
-    width: 16px;
-    height: 16px;
   }
   .padStart {
     padding-left: 16px;

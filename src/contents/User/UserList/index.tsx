@@ -23,7 +23,7 @@ const UserList = ({ data }: I_Props) => {
 
   //------ functions ------//
   const handleView = (id: string) => {
-    router.push(`/role/detail/[${id}]`);
+    router.push(`/user/detail/${id}`);
   };
 
   const handleEdit = (id: string) => {

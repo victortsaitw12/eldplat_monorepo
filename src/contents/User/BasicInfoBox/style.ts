@@ -3,10 +3,15 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   padding: 1rem;
   .basic__lastName {
+    flex: 1;
     max-width: 92px;
   }
   .basic__firstName {
+    flex: 2;
     max-width: 136px;
+  }
+  .basic__photo {
+    max-height: 150px;
   }
 
   /* infoBox */

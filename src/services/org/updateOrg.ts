@@ -1,6 +1,6 @@
 import API_Path from "./apiPath";
 
-export const updateOrgList = async () => {
+export const updateOrg = async () => {
   return true;
 
   //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
@@ -16,7 +16,7 @@ export const updateOrgList = async () => {
 // ------- typing ------- //
 
 export interface I_EditOrgReq {
-  parentOrg: string;
-  newOrgName: string;
-  enable: boolean;
+  org_no: string;
+  org_name: string;
+  org_enb: boolean;
 }

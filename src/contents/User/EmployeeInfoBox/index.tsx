@@ -5,7 +5,7 @@ import { I_UserDetailItem } from "@services/user/getUserDetail";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 
-const EmployeePanel = ({ data, isEdit }: I_Props) => {
+const EmployeeInfoBox = ({ data, isEdit }: I_Props) => {
   if (!data)
     return (
       <BodySTY>
@@ -54,7 +54,7 @@ const EmployeePanel = ({ data, isEdit }: I_Props) => {
   );
 };
 
-export default EmployeePanel;
+export default EmployeeInfoBox;
 
 interface I_Props {
   data: I_UserDetailItem;

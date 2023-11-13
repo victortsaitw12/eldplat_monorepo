@@ -21,4 +21,22 @@ export const DivSTY = styled.div`
     font-weight: 600;
     line-height: normal;
   }
+  .accordion {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__label {
+    }
+    &__btns {
+      display: flex;
+      padding: 8px 16px;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
+      svg {
+        fill: ${({ theme }) => theme.color.N600};
+      }
+    }
+  }
 `;

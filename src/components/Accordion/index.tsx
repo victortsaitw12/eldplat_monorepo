@@ -1,181 +1,77 @@
 import React from "react";
-import {
-  Button,
-  CaretRightIcon,
-  CaretDownIcon,
-  PlusIcon,
-  EditIcon,
-  Tooltip
-} from "evergreen-ui";
+import { Button, CaretRightIcon, CaretDownIcon } from "evergreen-ui";
 import { DivSTY } from "./style";
 
-//====== PREP DATA ======//
-export const getDataFitAccordion = (
-  data: any,
-  id: string,
-  label: string,
-  children: string
-) => {
-  return data.map((item: any) => {
-    const transformedItem: I_Accordion = {
-      id: item[id],
-      label: item[label],
-      itemInfo: { ...item }
-    };
-
-    if (item[children] && item[children].length > 0) {
-      transformedItem.children = getDataFitAccordion(
-        item[children],
-        id,
-        label,
-        children
-      );
-    }
-
-    return transformedItem;
-  });
-};
-
 //====== REACT COMPONENT ======//
-const Accordion = ({
-  className,
-  customSTY,
-  isTop,
-  data,
-  onCreate,
-  onEdit
-}: I_Props) => {
-  const [isOpen, setIsOpen] = React.useState(true);
-
-  //------ functions ------//
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
-  // ------- useEffect ------- //
-  // ------- render ------- //
+const Accordion = ({ data, isTopLayer = false }: I_Props) => {
+  const [isAllOpen, setIsAllOpen] = React.useState(true);
+  const [isAllFold, setIsAllFold] = React.useState(true);
 
   return (
-    <DivSTY className={`${className || ""} ${customSTY || "acc"}`}>
-      {isTop && <AccordionControl customSTY={customSTY} onClick={setIsOpen} />}
-      <div onClick={handleToggle}>
+    <DivSTY className="acc">
+      {isTopLayer && (
+        <div className="acc__btns">
+          <Button onClick={() => setIsAllFold(true)}>全部收合</Button>{" "}
+          <Button onClick={() => setIsAllOpen(true)}>全部展開</Button>
+        </div>
+      )}
+      {data.map((item: I_AccordionItem, i: number) => (
         <AccordionItem
-          customSTY={customSTY}
-          itemData={data}
-          prefixIcon={isOpen ? <CaretDownIcon /> : <CaretRightIcon />}
-          onCreate={onCreate}
-          onEdit={onEdit}
+          key={i}
+          itemData={item}
+          isTopLayer={isTopLayer}
+          isAllOpen={isAllOpen}
+          isAllFold={isAllFold}
         />
-      </div>
-
-      <div
-        className={`${customSTY || "acc"}__items ${
-          isOpen ? "" : "hide"
-        } padStart`}
-      >
-        {data.children &&
-          data.children.map((elem, i) => {
-            if (elem.children) {
-              return (
-                <Accordion
-                  key={`accordion-${i}`}
-                  isTop={false}
-                  data={elem}
-                  onCreate={onCreate}
-                  onEdit={onEdit}
-                />
-              );
-            } else {
-              return (
-                <AccordionItem
-                  key={`item-${i}`}
-                  customSTY={customSTY}
-                  itemData={elem}
-                  onCreate={onCreate}
-                  onEdit={onEdit}
-                />
-              );
-            }
-          })}
-      </div>
+      ))}
     </DivSTY>
   );
 };
 
 export default Accordion;
 
-const PadIcon = () => <svg className="padIcon"></svg>;
-
-const AccordionControl = ({
-  customSTY,
-  onClick
-}: {
-  customSTY?: string;
-  onClick: (v: boolean) => void;
-}) => {
-  return (
-    <div className={`${customSTY || "acc"}__title-btns`}>
-      <Button onClick={() => onClick(false)}>全部收合</Button>{" "}
-      <Button onClick={() => onClick(true)}>全部展開</Button>
-    </div>
-  );
-};
-
 const AccordionItem = ({
-  customSTY,
   itemData,
-  prefixIcon = <PadIcon />,
-  onCreate,
-  onEdit
+  isTopLayer = false,
+  isAllOpen,
+  isAllFold
 }: I_ItemProps) => {
+  const [isOpen, setIsOpen] = React.useState(true);
+  const hasChildren = itemData.children && itemData.children?.length > 0;
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className={`${customSTY || "acc"}__item`} id={itemData.id}>
-      <div className="acc__item-start">
-        <span>{prefixIcon}</span>
-        <span>{itemData.label}</span>
+    <>
+      <div className="acc__item" onClick={handleToggle}>
+        {hasChildren && (isOpen ? <CaretDownIcon /> : <CaretRightIcon />)}
+        {itemData.label}
       </div>
-      <div className="acc__item-end">
-        {onCreate && (
-          <Tooltip content="新增下級">
-            <PlusIcon onClick={onCreate.bind(null, itemData)} />
-          </Tooltip>
-        )}
-        {onEdit && (
-          <Tooltip content="編輯">
-            <EditIcon onClick={onEdit.bind(null, itemData)} />
-          </Tooltip>
-        )}
+      <div className={`acc__items ${isOpen ? "" : "hide"} padStart`}>
+        {hasChildren && <Accordion data={itemData.children} />}
       </div>
-    </div>
+    </>
   );
 };
+
+const PadStart = () => <div className="padStart"></div>;
 
 //====== OUTSIDE-REACT-DOM: TYPING ======//
 interface I_Props {
-  className?: string;
-  customSTY?: string;
-  isTop: boolean;
-  data: I_Accordion;
-  onCreate?: (item: any, e: any) => void;
-  onEdit?: (item: any, e: any) => void;
+  data: I_AccordionItem[];
+  isTopLayer?: boolean;
 }
 
 interface I_ItemProps {
-  customSTY?: string;
-  itemData: I_ItemData;
-  prefixIcon?: React.ReactNode;
-  onCreate?: (item: any, e: any) => void;
-  onEdit?: (item: any, e: any) => void;
+  itemData: I_AccordionItem;
+  isTopLayer?: boolean;
+  isAllOpen?: boolean;
+  isAllFold?: boolean;
 }
 
-export interface I_Accordion {
-  id: string;
+export interface I_AccordionItem {
   label: string | React.ReactNode;
-  children?: I_Accordion[];
-  itemInfo?: any;
-}
-
-interface I_ItemData {
-  id: string;
-  label: string | React.ReactNode;
+  children?: I_AccordionItem[];
 }
