@@ -8,7 +8,6 @@ export default async function handler(req, res) {
   const options = {
     method: req.method,
     headers: {
-      // ...req.headers,
       "Content-Type": "application/json",
       Authorization: `basic ${TK}`,
       TK: TK
@@ -18,23 +17,35 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(API_Path[apiName], options);
-    const ressult = await response.json();
-    console.log("🍅 >>>>>>>>>>>>>> DEBUG :", ressult);
+    const result = await response.json();
+    // console.log("🍅 >>>>>>>>>>>>>> DEBUG 1 :", result);
+    // console.log("🍅 >>>>>>>>>>>>>> DEBUG 2 res:", response);
+
+    const errMessage = "Failed to fetch data";
 
     // const debugMsg = getDebugMsg(response);
-    // throw new Error(result.msg);
-
+    if (response.status === 200) {
+      const errLog = getErrLog(req, response);
+      throw new Error(errMessage, {
+        cause: errLog
+      });
+    }
     res.status(200).json({ data: ContentList });
   } catch (err) {
-    res.status(500).send({ error: "failed to fetch dataaaaa" });
+    res.status(500).send({ error: err.message, cause: err.cause });
   }
 }
 
-const getDebugMsg = (res) => {
-  const debugMsg = {
-    statusCode: res.status,
-    apiUrl: res.url,
-    reqHeadeer: res.headers
+const getErrLog = (req, res) => {
+  const errLog = {
+    status: res.status,
+    method: req.method,
+    reqHeaders: {
+      port: req.headers["origin"],
+      host: req.headers["uk"]
+    },
+    url: res.url,
+    resHeaders: res.headers
   };
-  return debugMsg;
+  return errLog;
 };

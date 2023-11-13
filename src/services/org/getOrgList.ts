@@ -22,7 +22,6 @@ export const getOrgList = async (userID: any) => {
     body: JSON.stringify(requestBody)
   });
   const result = await res.json();
-  console.log("🍅 result", result);
   return result.data;
 };
 
