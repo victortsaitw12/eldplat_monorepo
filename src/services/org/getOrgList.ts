@@ -1,9 +1,7 @@
 import API_Path from "./apiPath";
-import { preRequest } from "@utils/preRequest";
 
 // TODO MONDAY
 export const getOrgList = async (userID: any) => {
-  const TK = preRequest();
   const requestBody = {
     x: "",
     org_no: "o-0002",
@@ -16,13 +14,10 @@ export const getOrgList = async (userID: any) => {
       last_Page: 0
     }
   };
-  const res = await fetch("/api/postData?url=getOrgList", {
+  const res = await fetch("/api/getData?url=getOrgList", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `basic ${TK}`,
       UK: userID
-      // TK: TK
     },
     body: JSON.stringify(requestBody)
   });

@@ -1,24 +1,26 @@
 import API_Path from "@services/org/apiPath";
+import { preRequest } from "@utils/preRequest";
 import { ContentList } from "@services/org/getOrgList";
 
-// TODO MONDAY
 export default async function handler(req, res) {
+  const TK = preRequest();
   const apiName = req.url.split("?url=").at(-1);
-  console.log("🍅 >>>>>>>>>>>>>> req :", req.url);
-  console.log("🍅 >>>>>>>>>>>>>> API_Path :", API_Path[apiName]);
+  const options = {
+    method: req.method,
+    headers: {
+      // ...req.headers,
+      "Content-Type": "application/json",
+      Authorization: `basic ${TK}`,
+      TK: TK
+    },
+    body: req.body
+  };
 
   try {
-    const response = await fetch(API_Path[apiName], {
-      method: "POST",
-      headers: req.headers,
-      body: req.body,
-      ...req
-    });
-    console.log("🍅 >>>>>>>>>>>>>> response :", response.url);
+    const response = await fetch(API_Path[apiName], options);
+    const ressult = await response.json();
+    console.log("🍅 >>>>>>>>>>>>>> DEBUG :", ressult);
 
-    // console.log("🍅🍅🍅 >>>>>>>>>>>>>>reponse:", response);
-    // const ressult = await response.json();
-    // console.log("🍅🍅🍅 >>>>>>>>>>>>>>ressult:", ressult);
     // const debugMsg = getDebugMsg(response);
     // throw new Error(result.msg);
 
