@@ -34,9 +34,8 @@ const Page: NextPageWithLayout<{
     setIsLoading(false);
   };
 
-  const handleRenderCreateModal = (item: any, e: any) => {
+  const handleRenderModal = (type: "create" | "edit", item: any, e: any) => {
     e.stopPropagation();
-    console.log("🍅 item:", item);
     const isCreate = type === "create";
     const formContent = {
       isCreate: isCreate,
@@ -92,7 +91,7 @@ export const getServerSideProps: GetServerSideProps<Params> = async (
   };
 };
 
-// Page.getLayout = getLayout;
 Page.getLayout = (page: React.ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
+
 export default Page;
