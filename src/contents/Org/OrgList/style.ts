@@ -34,6 +34,14 @@ export const DivSTY = styled.div`
       align-items: center;
       gap: 8px;
       align-self: stretch;
+      button {
+        border: none;
+        background: inherit;
+        cursor: pointer;
+        :hover {
+          background: ${({ theme }) => theme.color.N100};
+        }
+      }
       svg {
         fill: ${({ theme }) => theme.color.N600};
       }

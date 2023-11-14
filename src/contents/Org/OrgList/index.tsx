@@ -1,11 +1,9 @@
 import React from "react";
-import { Pane, Tooltip, PlusIcon, EditIcon } from "evergreen-ui";
+import { Tooltip, PlusIcon, EditIcon, IconButton } from "evergreen-ui";
 import { DivSTY } from "./style";
 
 import Accordion, { I_AccordionItem } from "@components/Accordion";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { I_CreateOrgReq } from "@services/org/createOrg";
-import { I_EditOrgReq } from "@services/org/updateOrg";
 
 //====== REACT COMPONENT ======//
 const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
@@ -25,10 +23,13 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
             <div className="accordion__label">{item["org_name"]}</div>
             <div className="accordion__btns">
               <Tooltip content="新增下級">
-                <PlusIcon onClick={onCreate.bind(null, item)} />
+                <IconButton
+                  icon={PlusIcon}
+                  onClick={onCreate.bind(null, item)}
+                />
               </Tooltip>
               <Tooltip content="編輯">
-                <EditIcon onClick={onEdit.bind(null, item)} />
+                <IconButton icon={EditIcon} onClick={onEdit.bind(null, item)} />
               </Tooltip>
             </div>
           </div>
@@ -36,7 +37,10 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
       };
 
       if (item["sublayer"] && item["sublayer"].length > 0) {
-        prepItem.children = getDataFitAccordion(item["sublayer"]);
+        const childData = item["sublayer"].map((childItem: any) => {
+          return { ...childItem, parent_org_name: item["org_name"] };
+        });
+        prepItem.children = getDataFitAccordion(childData);
       }
 
       return prepItem;
@@ -53,8 +57,6 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
 };
 
 export default OrgList;
-
-//====== OUTSIDE-REACT-DOM: FUNCTION ======//
 
 //====== OUTSIDE-REACT-DOM: TYPING ======//
 interface I_Props {

@@ -8,7 +8,6 @@ import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 
 const FormModal = ({ content, setModalContent }: I_Props) => {
   const isCreate = content.isCreate;
-  console.log(content);
   const defaultValues = isCreate
     ? {
         org_no: content.req.org_no,
@@ -17,6 +16,7 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
         org_lvl: content.req.org_lvl
       }
     : {
+        parent_org_name: content.parent_org_name,
         org_no: content.req.org_no,
         org_name: content.req.org_name,
         org_enb: content.req.org_enb
@@ -107,4 +107,5 @@ export interface I_ModalContent {
   orgName: string;
   org_enb?: boolean;
   req: any;
+  parent_org_name?: string;
 }

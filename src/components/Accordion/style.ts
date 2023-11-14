@@ -18,6 +18,7 @@ export const DivSTY = styled.div`
     }
     &__item {
       display: flex;
+      gap: 8px;
       padding: 4px 16px;
       align-items: center;
       align-self: stretch;
@@ -28,7 +29,7 @@ export const DivSTY = styled.div`
     }
   }
   .padStart {
-    padding-left: 16px;
+    padding-left: 24px;
   }
   .hide {
     display: none;

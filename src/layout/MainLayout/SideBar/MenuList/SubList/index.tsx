@@ -14,7 +14,6 @@ interface Props {
 }
 //
 function Index({ data }: Props) {
-  console.log("data", data);
   if (!data) {
     return <LoadingSpinner />;
   }
