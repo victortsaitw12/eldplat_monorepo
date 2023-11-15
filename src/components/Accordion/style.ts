@@ -5,13 +5,14 @@ export const DivSTY = styled.div`
   &.container {
     border-radius: 4px;
     border: 1px solid ${({ theme }) => theme.color.N300};
-    background: var(--neutral-n-0, #fff);
+    background: ${({ theme }) => theme.color.N40};
     box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
   }
-
   .acc {
     &__btns {
+      display: flex;
       padding: 8px 16px;
+      gap: 8px;
     }
     &__items {
       display: flex;
@@ -19,17 +20,17 @@ export const DivSTY = styled.div`
     &__item {
       display: flex;
       gap: 8px;
-      padding: 4px 16px;
       align-items: center;
       align-self: stretch;
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       cursor: pointer;
       :hover {
-        background: ${({ theme }) => theme.color.N100};
+        background: ${({ theme }) => theme.color.N40};
       }
     }
   }
   .padStart {
-    padding-left: 24px;
+    width: 16px;
   }
   .hide {
     display: none;

@@ -17,10 +17,15 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
 
   const getDataFitAccordion = (data: any) => {
     return data.map((item: any) => {
+      const labelStyle = (item["org_lvl"] % 5).toString();
       const prepItem: I_AccordionItem = {
         label: (
           <div className="accordion">
-            <div className="accordion__label">{item["org_name"]}</div>
+            <div
+              className={`accordion__label labelSty labelSty__${labelStyle}`}
+            >
+              {item["org_name"]}
+            </div>
             <div className="accordion__btns">
               <Tooltip content="新增下級">
                 <IconButton
@@ -28,10 +33,20 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
                   onClick={onCreate.bind(null, item)}
                 />
               </Tooltip>
-              <Tooltip content="編輯">
-                <IconButton icon={EditIcon} onClick={onEdit.bind(null, item)} />
-              </Tooltip>
+              {item["org_lvl"] !== 1 ? (
+                <Tooltip content="編輯">
+                  <IconButton
+                    icon={EditIcon}
+                    onClick={onEdit.bind(null, item)}
+                  />
+                </Tooltip>
+              ) : (
+                <IconButton disabled className="placeholder" />
+              )}
             </div>
+            <div
+              className={`shadowElem ${item["org_enb"] ? "" : "disabled"}`}
+            ></div>
           </div>
         )
       };

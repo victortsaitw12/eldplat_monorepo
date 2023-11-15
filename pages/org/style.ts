@@ -2,5 +2,5 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   display: flex;
-  margin: 10px;
+  margin: 20px;
 `;

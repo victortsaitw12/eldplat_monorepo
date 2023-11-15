@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const InfoBoxSTY = styled.div`
   width: 100%;
-  background: #ffffff;
+  background: ${({ theme }) => theme.color.N0};
   border-radius: 10px;
   padding: 35px 20px;
 
@@ -82,7 +82,7 @@ export const InfoBoxSTY = styled.div`
 
   .info-title {
     width: 100%;
-    background: ${({ theme }) => theme.color.N300};
+    background: ${({ theme }) => theme.color.N20};
     padding: 8px 16px;
     margin-bottom: 0;
   }

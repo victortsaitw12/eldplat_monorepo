@@ -3,15 +3,25 @@ import { Button, CaretRightIcon, CaretDownIcon } from "evergreen-ui";
 import { DivSTY } from "./style";
 
 //====== REACT COMPONENT ======//
-const Accordion = ({ data, isTopLayer = false }: I_Props) => {
-  const [isAllOpen, setIsAllOpen] = React.useState(true);
-  const [isAllFold, setIsAllFold] = React.useState(true);
+const Accordion = ({ data, isTopLayer = false, layerNum }: I_Props) => {
+  const [isAllOpen, setIsAllOpen] = React.useState(false);
+  const [isAllFold, setIsAllFold] = React.useState(false);
+
+  const subLayerNum = layerNum || 0;
+
+  React.useEffect(() => {
+    setIsAllOpen(false);
+  }, [isAllOpen]);
+
+  React.useEffect(() => {
+    setIsAllFold(false);
+  }, [isAllFold]);
 
   return (
     <DivSTY className="acc">
       {isTopLayer && (
         <div className="acc__btns">
-          <Button onClick={() => setIsAllFold(true)}>全部收合</Button>{" "}
+          <Button onClick={() => setIsAllFold(true)}>全部收合</Button>
           <Button onClick={() => setIsAllOpen(true)}>全部展開</Button>
         </div>
       )}
@@ -22,6 +32,7 @@ const Accordion = ({ data, isTopLayer = false }: I_Props) => {
           isTopLayer={isTopLayer}
           isAllOpen={isAllOpen}
           isAllFold={isAllFold}
+          layerNum={subLayerNum + 1}
         />
       ))}
     </DivSTY>
@@ -34,23 +45,45 @@ const AccordionItem = ({
   itemData,
   isTopLayer = false,
   isAllOpen,
-  isAllFold
+  isAllFold,
+  layerNum
 }: I_ItemProps) => {
-  const [isOpen, setIsOpen] = React.useState(true);
+  const [isOpen, setIsOpen] = React.useState<boolean>(isAllOpen || true);
   const hasChildren = itemData.children && itemData.children?.length > 0;
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
+  React.useEffect(() => {
+    if (!isAllOpen) return;
+    setIsOpen(true);
+  }, [isAllOpen]);
+
+  React.useEffect(() => {
+    if (!isAllFold) return;
+    setIsOpen(false);
+  }, [isAllFold]);
+
+  const padStartArray = Array.from({ length: layerNum || 0 }, (_, i) => (
+    <PadStart key={`layer-${i}`} />
+  ));
+
   return (
     <>
       <div className="acc__item" onClick={handleToggle}>
+        {padStartArray}
         {hasChildren && (isOpen ? <CaretDownIcon /> : <CaretRightIcon />)}
         {itemData.label}
       </div>
-      <div className={`acc__items ${isOpen ? "" : "hide"} padStart`}>
-        {hasChildren && <Accordion data={itemData.children} />}
+      <div
+        className={`acc__items ${isOpen ? "" : "hide"}   ${
+          isAllFold ? "hide" : ""
+        }`}
+      >
+        {hasChildren && (
+          <Accordion data={itemData.children} layerNum={(layerNum || 0) + 1} />
+        )}
       </div>
     </>
   );
@@ -62,6 +95,7 @@ const PadStart = () => <div className="padStart"></div>;
 interface I_Props {
   data: I_AccordionItem[];
   isTopLayer?: boolean;
+  layerNum?: number;
 }
 
 interface I_ItemProps {
@@ -69,6 +103,7 @@ interface I_ItemProps {
   isTopLayer?: boolean;
   isAllOpen?: boolean;
   isAllFold?: boolean;
+  layerNum?: number;
 }
 
 export interface I_AccordionItem {
