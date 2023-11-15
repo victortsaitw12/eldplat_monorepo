@@ -8,7 +8,6 @@ import { ContentList } from "@services/org/getOrgList";
 export default async function handler(req, res) {
   // TODO 11/16 make sure UK can be passed down
   // console.log("🍅 >>>>>>>>>>>>>> DEBUG:", req.getHeader("UK"));
-
   const TK = preRequest();
   const apiName = req.url.split("?url=").at(-1);
   const basicOptions = {

@@ -15,7 +15,7 @@ const Page: NextPageWithLayout<{
   setPageType: (t: string) => void;
 }> = () => {
   const { data: session } = useSession();
-  const userId = "admin";
+  const userId = "admin"; // TODO To be replaced
   const [data, setData] = React.useState([]);
   const [modalContent, setModalContent] = React.useState<I_ModalContent | null>(
     null

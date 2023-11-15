@@ -69,6 +69,7 @@ export const authOptions = {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
       session.user.username = token.username;
+      session.user.userID = token.userID;
       session.user.role = token.role;
       session.user.menuData = token.menuData;
       return session;

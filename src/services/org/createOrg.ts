@@ -1,16 +1,20 @@
 import API_Path from "./apiPath";
+import { useSession } from "next-auth/react";
 
-export const createOrg = async ({ data }: I_CreateOrgReq) => {
-  return DUMMY_ARR;
+export const createOrg = async ({ userID, data }: I_CreateOrgReq) => {
+  return DUMMY_DATA;
 
-  //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-  //     }
-  //   });
-  //   return await res.json();
+  const { data: session } = useSession();
+  const requestBody = {};
+  const res = await fetch("/api/getData?url=getOrgList", {
+    method: "POST",
+    headers: {
+      UK: userID
+    },
+    body: JSON.stringify(requestBody)
+  });
+  const result = await res.json();
+  return result.data;
 };
 
 // ------- typing ------- //
@@ -20,3 +24,12 @@ export interface I_CreateOrgReq {
   org_tp: string;
   org_lvl: number;
 }
+
+const DUMMY_DATA = {
+  StatusCode: "200",
+  Message: "用戶端要求成功",
+  DataList: [],
+  Result: true,
+  ResultString: "用戶端要求成功",
+  ResultInt: 0
+};

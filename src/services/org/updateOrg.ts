@@ -1,16 +1,18 @@
 import API_Path from "./apiPath";
 
-export const updateOrg = async () => {
-  return true;
+export const updateOrg = async (userId: string) => {
+  return DUMMY_DATA;
 
-  //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-  //     }
-  //   });
-  //   return await res.json();
+  const requestBody = {};
+  const res = await fetch("/api/getData?url=getOrgList", {
+    method: "POST",
+    headers: {
+      UK: userId
+    },
+    body: JSON.stringify(requestBody)
+  });
+  const result = await res.json();
+  return result.data;
 };
 
 // ------- typing ------- //
@@ -20,3 +22,12 @@ export interface I_EditOrgReq {
   org_name: string;
   org_enb: boolean;
 }
+
+const DUMMY_DATA = {
+  StatusCode: "200",
+  Message: "用戶端要求成功",
+  DataList: [],
+  Result: true,
+  ResultString: "用戶端要求成功",
+  ResultInt: 0
+};

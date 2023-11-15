@@ -7,6 +7,8 @@ import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 
 const FormModal = ({ content, setModalContent }: I_Props) => {
+  const [checked, setChecked] = React.useState(true);
+  const userId = "admin";
   const isCreate = content.isCreate;
   const defaultValues = isCreate
     ? {
@@ -16,7 +18,6 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
         org_lvl: content.req.org_lvl
       }
     : {
-        parent_org_name: content.parent_org_name,
         org_no: content.req.org_no,
         org_name: content.req.org_name,
         org_enb: content.req.org_enb
@@ -31,9 +32,9 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
 
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {
-    console.log("🔜create data:", data);
+    console.log("🔜 data:", data);
     try {
-      const res = isCreate ? await createOrg(data) : updateOrg();
+      const res = isCreate ? await createOrg(data) : await updateOrg(userId);
       if (res.StatusCode === "200") {
         setModalContent(null);
         toaster.success(`${res.Message}`, {
@@ -53,7 +54,7 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
   };
   const handleConfirm = () => {
     handleSubmit(asyncSubmitForm)();
-    setModalContent(null);
+    // setModalContent(null);
   };
 
   // ------- render ------- //
@@ -72,7 +73,7 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
         confirmLabel="確定"
         cancelLabel="取消"
       >
-        <TextInputField label="父層組織" value={content.parentName} />
+        <TextInputField label="父層組織" value={content.parentName} disabled />
         <TextInputField
           label="組織名稱"
           placeholder="請輸入組織名稱"
@@ -81,9 +82,16 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
           })}
         />
         {!content.isCreate && (
-          <Group className="modal__status">
-            <Switch height={16} name="status" checked={true} />
-            <span>啟用</span>
+          <Group style={{ display: "flex", gap: "8px" }}>
+            <Switch
+              height={16}
+              checked={checked}
+              {...register("org_enb", {
+                required: "不可空白",
+                onChange: (e) => setChecked(e.target.checked)
+              })}
+            />
+            <div>啟用</div>
           </Group>
         )}
       </Dialog>

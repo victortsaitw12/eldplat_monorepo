@@ -5,7 +5,7 @@ export const DivSTY = styled.div`
   width: 100%;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.color.N40};
-  background: var(--neutral-n-0, #fff);
+  background: ${({ theme }) => theme.color.N0};
   box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
   .shadowElem {
     position: absolute;
