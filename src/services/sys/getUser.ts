@@ -24,7 +24,6 @@ export const DUMMY_DATA = {
     userdefine: [],
     defaultMenu: [
       {
-        menu_no: "home",
         menu_name: "首頁",
         path: "/"
       },
@@ -33,7 +32,6 @@ export const DUMMY_DATA = {
         menu_name: "使用者管理",
         sub_menu: [
           {
-            module_no: "sys",
             fg_no: "org",
             func_no: "orgAdd",
             func_name: "組織設定",
@@ -51,36 +49,62 @@ export const DUMMY_DATA = {
             fg_no: "org",
             func_no: "orgAdd",
             func_name: "使用者列表",
-            path: "/user"
+            path: "/account"
           },
           {
             module_no: "sys",
             fg_no: "org",
             func_no: "orgAdd",
             func_name: "新增使用者",
-            path: "/user/create"
+            path: "/account/detail/create?editPage=edit"
           }
         ]
       },
       {
-        module_no: "sys",
-        fg_no: "org",
+        menu_no: "org",
         func_no: "orgAdd",
         menu_name: "車輛管理",
         sub_menu: []
       },
       {
-        module_no: "sys",
-        fg_no: "org",
+        menu_no: "org",
         func_no: "orgAdd",
         menu_name: "維保管理",
         sub_menu: []
       },
       {
-        module_no: "sys",
-        fg_no: "org",
+        menu_no: "org",
         func_no: "orgAdd",
         menu_name: "駕駛管理",
+        sub_menu: []
+      },
+      {
+        menu_no: "org",
+        func_no: "orgAdd",
+        menu_name: "任務管理",
+        sub_menu: []
+      },
+      {
+        menu_no: "org",
+        func_no: "orgAdd",
+        menu_name: "訂單管理",
+        sub_menu: []
+      },
+      {
+        menu_no: "org",
+        func_no: "orgAdd",
+        menu_name: "客戶管理",
+        sub_menu: []
+      },
+      {
+        menu_no: "org",
+        func_no: "orgAdd",
+        menu_name: "供應商管理",
+        sub_menu: []
+      },
+      {
+        menu_no: "orgAdd",
+        menu_name: "設定",
         sub_menu: []
       }
     ]

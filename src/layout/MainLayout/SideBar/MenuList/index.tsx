@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import { MenuDataType } from "src/mock-data/side-bar/data";
 import GroupList from "./GroupList";
 import { BodySTY } from "./style";
-import Skeleton from "@components/Skeleton";
 //
 interface Props {
   menuData: MenuDataType;

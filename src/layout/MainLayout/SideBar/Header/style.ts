@@ -1,13 +1,32 @@
 import styled from "styled-components";
 
-export const BodySTY = styled.div`
-  padding: 20px;
-  .title {
-    font-size: 18px;
-    font-weight: 600;
-    padding: 12px;
+export const DivSTY = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: ${({ theme }) => theme.fontSize.Heading600};
+  padding: 8px 12px;
+  border-radius: 10px;
+
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.color.N400};
   }
-  .user-container {
+
+  .header {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    &__icon {
+    }
+    &__title {
+      font-size: 18px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+  }
+
+  /* .user-container {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -30,7 +49,6 @@ export const BodySTY = styled.div`
       .desp {
         display: flex;
         flex-direction: column;
-        /* align-items: flex-start; */
         gap: 12px;
         h4 {
           font-size: 16px;
@@ -41,5 +59,5 @@ export const BodySTY = styled.div`
         }
       }
     }
-  }
+  } */
 `;

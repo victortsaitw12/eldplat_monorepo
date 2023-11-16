@@ -22,13 +22,13 @@ const breadcrumbs: I_routers = {
     { label: "角色權限", url: "/role" },
     { label: "檢視角色" }
   ],
-  "/user": [
+  "/account": [
     { label: "首頁", url: "/" },
-    { label: "使用者列表", url: "/user" }
+    { label: "使用者列表", url: "/account" }
   ],
-  "/user/detail/[id]": [
+  "/account/detail/[id]": [
     { label: "首頁", url: "/" },
-    { label: "使用者列表", url: "/user" },
+    { label: "使用者列表", url: "/account" },
     { label: "檢視使用者", url: "" }
   ],
   // ----------------------------------------------------------------------- V2 above

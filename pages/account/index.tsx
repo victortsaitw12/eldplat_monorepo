@@ -5,10 +5,10 @@ import { useRouter } from "next/router";
 
 import { getLayout } from "@layout/MainLayout";
 import FilterWrapper from "@layout/FilterWrapper";
-import UserList from "@contents/User/UserList";
+import UserList from "@contents/Account/UserList";
 import { BodySTY } from "./style";
-import { getUserList, I_UserItem } from "@services/user/getUserList";
-import { useUserStore } from "@contexts/filter/userStore";
+import { getUserList, I_UserItem } from "@services/account/getUserList";
+import { useUserStore } from "@contexts/filter/accountStore";
 import { IconLeft } from "@components/Button/Primary";
 
 const Page: NextPageWithLayout<never> = () => {
@@ -40,7 +40,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   const handleCreate = () => {
     const id = "create";
-    router.push(`/user/detail/${id}?editPage=edit`);
+    router.push(`/account/detail/${id}?editPage=edit`);
   };
 
   // ------- useEffect ------- //

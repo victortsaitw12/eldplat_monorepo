@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { MenuIcon } from "evergreen-ui";
 //
-import { BodySTY } from "./style";
+import { DivSTY } from "./style";
 import {
   I_Company_Context,
   CompanyContext
@@ -11,10 +11,12 @@ function Index(props: any) {
   const { companyData } = useContext<I_Company_Context>(CompanyContext);
 
   return (
-    <BodySTY {...props}>
-      <MenuIcon size={20} onClick={props.handleCloseMenu} />
-      <span className="title">{companyData?.company_name}</span>
-    </BodySTY>
+    <DivSTY {...props}>
+      <div className="header" onClick={props.handleCloseMenu}>
+        <MenuIcon className="header__icon" size={20} />
+        <span className="header__title text">{companyData?.company_name}</span>
+      </div>
+    </DivSTY>
   );
 }
 export default Index;

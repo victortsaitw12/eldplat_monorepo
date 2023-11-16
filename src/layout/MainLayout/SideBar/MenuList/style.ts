@@ -6,6 +6,7 @@ const BodySTY = styled.div`
   align-items: flex-start;
   padding: 0px;
   gap: 4px;
+  width: 100%;
 `;
 
 export { BodySTY };

@@ -5,12 +5,15 @@ import { BodySTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import BasicInfoBox from "@contents/User/BasicInfoBox";
-import EmployeeInfoBox from "@contents/User/EmployeeInfoBox";
-import { getUserDetail, I_UserDetailItem } from "@services/user/getUserDetail";
-import ControlBar from "@contents/User/ControlBar";
+import BasicInfoBox from "@contents/Account/BasicInfoBox";
+import EmployeeInfoBox from "@contents/Account/EmployeeInfoBox";
+import {
+  getUserDetail,
+  I_UserDetailItem
+} from "@services/account/getUserDetail";
+import ControlBar from "@contents/Account/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
-import RoleInfoBox from "@contents/User/RoleInfoBox";
+import RoleInfoBox from "@contents/Account/RoleInfoBox";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();

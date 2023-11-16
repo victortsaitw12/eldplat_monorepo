@@ -1,7 +1,7 @@
 import { Select, TextInput, Textarea } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { I_UserDetailItem } from "@services/user/getUserDetail";
+import { I_UserDetailItem } from "@services/account/getUserDetail";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 

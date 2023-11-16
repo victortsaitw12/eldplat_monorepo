@@ -1,8 +1,20 @@
 import React, { useContext } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { Avatar, LogOutIcon, LogInIcon } from "evergreen-ui";
+import {
+  Avatar,
+  LogOutIcon,
+  LogInIcon,
+  Popover,
+  Pane,
+  Group,
+  Button,
+  PersonIcon,
+  LockIcon,
+  Menu
+} from "evergreen-ui";
 //
 import { BodySTY } from "./style";
+
 import {
   I_Company_Context,
   CompanyContext
@@ -12,21 +24,51 @@ import IconButton from "@components/Button/Secondary/IconLeft";
 
 function Index(props: any) {
   const { data: session } = useSession();
-  const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const [isCardShow, setIsCardShow] = React.useState(false);
+  // const { companyData } = useContext<I_Company_Context>(CompanyContext);
+  const toggleCardShow = () => {
+    setIsCardShow((prev) => !prev);
+  };
+
   return (
-    <BodySTY {...props}>
+    <BodySTY {...props} className="user" onClick={toggleCardShow}>
       {session && (
-        <div className="user-container">
-          <div className="user-info">
-            <Avatar src="/image/avatar1.jpg" name="portrait" size={44} />
-            <div className="desp">
-              <h4>{session.user.username}</h4>
-              <p>{session.user.role}</p>
+        <Popover
+          content={
+            <Pane
+              width={200}
+              height={120}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+              className="user__popover"
+            >
+              <Menu>
+                <Menu.Item className="item" icon={PersonIcon}>
+                  個人設定
+                </Menu.Item>
+                <Menu.Item className="item" icon={LockIcon}>
+                  修改密碼
+                </Menu.Item>
+                <Menu.Item className="item" icon={LogOutIcon}>
+                  登出
+                </Menu.Item>
+              </Menu>
+            </Pane>
+          }
+        >
+          <button type="button" className="user__info">
+            <Avatar src="/image/avatar1.jpg" name="portrait" size={40} />
+            <div className="user__info-desp text">
+              <h4 className=" text">{session.user?.username}</h4>
+              <p className=" text">{session.user?.role}</p>
             </div>
-          </div>
-        </div>
+          </button>
+        </Popover>
       )}
-      {session ? (
+
+      {/* {session ? (
         <IconButton text="登出" onClick={signOut}>
           <LogOutIcon />
         </IconButton>
@@ -34,7 +76,7 @@ function Index(props: any) {
         <IconButton text="登入" onClick={signIn}>
           <LogInIcon />
         </IconButton>
-      )}
+      )} */}
     </BodySTY>
   );
 }
