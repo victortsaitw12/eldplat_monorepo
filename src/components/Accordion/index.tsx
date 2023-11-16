@@ -43,7 +43,6 @@ export default Accordion;
 
 const AccordionItem = ({
   itemData,
-  isTopLayer = false,
   isAllOpen,
   isAllFold,
   layerNum
@@ -81,8 +80,13 @@ const AccordionItem = ({
           isAllFold ? "hide" : ""
         }`}
       >
-        {hasChildren && (
-          <Accordion data={itemData.children} layerNum={(layerNum || 0) + 1} />
+        {hasChildren && itemData.children && (
+          <Accordion
+            data={itemData.children}
+            layerNum={(layerNum || 0) + 1}
+            isUnfold={isAllOpen}
+            isFold={isAllFold}
+          />
         )}
       </div>
     </>
@@ -96,6 +100,8 @@ interface I_Props {
   data: I_AccordionItem[];
   isTopLayer?: boolean;
   layerNum?: number;
+  isUnfold?: boolean;
+  isFold?: boolean;
 }
 
 interface I_ItemProps {
