@@ -3,26 +3,61 @@ import { Button, CaretRightIcon, CaretDownIcon } from "evergreen-ui";
 import { DivSTY } from "./style";
 
 //====== REACT COMPONENT ======//
-const Accordion = ({ data, isTopLayer = false, layerNum }: I_Props) => {
-  const [isAllOpen, setIsAllOpen] = React.useState(false);
-  const [isAllFold, setIsAllFold] = React.useState(false);
+const Accordion = ({
+  data,
+  isTopLayer = false,
+  layerNum,
+  isUnfold,
+  isFold
+}: I_Props) => {
+  const [isAllOpen, setIsAllOpen] = React.useState(isUnfold || false);
+  const [isAllFold, setIsAllFold] = React.useState(isFold || false);
 
   const subLayerNum = layerNum || 0;
 
+  const handleOpenAll = () => {
+    setIsAllOpen(true);
+    setIsAllFold(false);
+  };
+
+  const handleFoldAll = () => {
+    setIsAllFold(true);
+    setIsAllOpen(false);
+  };
+
   React.useEffect(() => {
+    if (!isAllOpen) return;
     setIsAllOpen(false);
   }, [isAllOpen]);
 
   React.useEffect(() => {
+    if (!isAllFold) return;
     setIsAllFold(false);
   }, [isAllFold]);
+
+  React.useEffect(() => {
+    if (isUnfold) {
+      setIsAllOpen(true);
+      setIsAllFold(false);
+    }
+  }, [isUnfold]);
+
+  React.useEffect(() => {
+    if (isFold) {
+      setIsAllFold(true);
+      setIsAllOpen(false);
+    }
+  }, [isFold]);
+
+  // console.log("🍅 isUnfold", subLayerNum, isUnfold);
+  // console.log("🍅 isFold", subLayerNum, isFold);
 
   return (
     <DivSTY className="acc">
       {isTopLayer && (
         <div className="acc__btns">
-          <Button onClick={() => setIsAllFold(true)}>全部收合</Button>
-          <Button onClick={() => setIsAllOpen(true)}>全部展開</Button>
+          <Button onClick={handleFoldAll}>全部收合</Button>
+          <Button onClick={handleOpenAll}>全部展開</Button>
         </div>
       )}
       {data.map((item: I_AccordionItem, i: number) => (
@@ -30,8 +65,8 @@ const Accordion = ({ data, isTopLayer = false, layerNum }: I_Props) => {
           key={i}
           itemData={item}
           isTopLayer={isTopLayer}
-          isAllOpen={isAllOpen}
-          isAllFold={isAllFold}
+          isUnfold={isAllOpen}
+          isFold={isAllFold}
           layerNum={subLayerNum + 1}
         />
       ))}
@@ -43,11 +78,11 @@ export default Accordion;
 
 const AccordionItem = ({
   itemData,
-  isAllOpen,
-  isAllFold,
+  isUnfold,
+  isFold,
   layerNum
 }: I_ItemProps) => {
-  const [isOpen, setIsOpen] = React.useState<boolean>(isAllOpen || true);
+  const [isOpen, setIsOpen] = React.useState<boolean>(isUnfold || true);
   const hasChildren = itemData.children && itemData.children?.length > 0;
 
   const handleToggle = () => {
@@ -55,14 +90,14 @@ const AccordionItem = ({
   };
 
   React.useEffect(() => {
-    if (!isAllOpen) return;
+    if (!isUnfold) return;
     setIsOpen(true);
-  }, [isAllOpen]);
+  }, [isUnfold]);
 
   React.useEffect(() => {
-    if (!isAllFold) return;
+    if (!isFold) return;
     setIsOpen(false);
-  }, [isAllFold]);
+  }, [isFold]);
 
   const padStartArray = Array.from({ length: layerNum || 0 }, (_, i) => (
     <PadStart key={`layer-${i}`} />
@@ -77,15 +112,15 @@ const AccordionItem = ({
       </div>
       <div
         className={`acc__items ${isOpen ? "" : "hide"}   ${
-          isAllFold ? "hide" : ""
+          isFold ? "hide" : ""
         }`}
       >
         {hasChildren && itemData.children && (
           <Accordion
             data={itemData.children}
             layerNum={(layerNum || 0) + 1}
-            isUnfold={isAllOpen}
-            isFold={isAllFold}
+            isUnfold={isUnfold}
+            isFold={isFold}
           />
         )}
       </div>
@@ -107,8 +142,8 @@ interface I_Props {
 interface I_ItemProps {
   itemData: I_AccordionItem;
   isTopLayer?: boolean;
-  isAllOpen?: boolean;
-  isAllFold?: boolean;
+  isUnfold?: boolean;
+  isFold?: boolean;
   layerNum?: number;
 }
 
