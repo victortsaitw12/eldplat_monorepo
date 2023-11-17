@@ -1,20 +1,18 @@
 import API_Path from "./apiPath";
-import { useSession } from "next-auth/react";
 
-export const createOrg = async ({ userID, data }: I_CreateOrgReq) => {
-  return DUMMY_DATA;
-
-  const { data: session } = useSession();
+export const createOrg = async (userID: string, data: I_CreateOrgReq) => {
+  const apiName = "createOrg";
+  const reqMethod = "POST";
+  const reqHeaders = { UK: userID };
   const requestBody = {};
-  const res = await fetch("/api/getData?url=getOrgList", {
-    method: "POST",
-    headers: {
-      UK: userID
-    },
+
+  const res = await fetch(`/api/getData?url=${apiName}`, {
+    method: reqMethod,
+    headers: reqHeaders,
     body: JSON.stringify(requestBody)
   });
   const result = await res.json();
-  return result.data;
+  return result.data || result.cause.resBody;
 };
 
 // ------- typing ------- //

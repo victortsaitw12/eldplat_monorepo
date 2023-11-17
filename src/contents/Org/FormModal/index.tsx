@@ -5,10 +5,11 @@ import { FormSTY } from "./style";
 
 import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
+import { fetchData } from "next-auth/client/_utils";
 
 const FormModal = ({ content, setModalContent }: I_Props) => {
   const [checked, setChecked] = React.useState(true);
-  const userId = "admin";
+  const userId = "admin"; //USR202302020002
   const isCreate = content.isCreate;
   const defaultValues = isCreate
     ? {
@@ -34,7 +35,10 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
   const asyncSubmitForm = async (data: any) => {
     console.log("🔜 data:", data);
     try {
-      const res = isCreate ? await createOrg(data) : await updateOrg(userId);
+      const res = isCreate
+        ? await createOrg(userId, data)
+        : await updateOrg(userId);
+
       if (res.StatusCode === "200") {
         setModalContent(null);
         toaster.success(`${res.Message}`, {
@@ -43,9 +47,8 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
       } else {
         throw new Error(`${res.Message}`);
       }
-    } catch (e: any) {
-      console.log(e);
-      toaster.warning(e.message);
+    } catch (err: any) {
+      toaster.warning(err.message);
     }
   };
 
