@@ -1,5 +1,5 @@
 import API_Path from "./apiPath";
-import { I_RoleItem } from "./getRoleList";
+import { I_RoleListItem } from "./getRoleList";
 
 export const getRoleDetail = async () => {
   return DUMMY_DATA;
@@ -17,68 +17,51 @@ export const getRoleDetail = async () => {
 // ------- MOCK DATA ------- //
 const DUMMY_DATA = {
   roleDetail: {
-    id: "1",
+    role_no: "1",
     module_name: "車輛管理與營運模組",
     role_name: "車管",
-    description: ["管理車輛狀況", "日常維護", "維修審核"]
+    description: "管理車輛狀況"
   },
-  authFunc: [
+  func_auth: [
     {
-      id: "user_auth",
-      label: "使用者管理3322",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
+      func_no: "org",
+      func_name: "組織設定",
+      func_enb: 1,
+      elements: [
+        { func_no: "org_create", func_name: "新增下級", func_enb: 1 },
+        { func_no: "org_edit", func_name: "編輯組織", func_enb: 1 }
+      ]
     },
     {
-      id: "user_auth",
-      label: "車輛管理",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
+      func_no: "role",
+      func_name: "角色設定",
+      func_enb: 0,
+      elements: [
+        { func_no: "role_create", func_name: "新增角色", func_enb: 0 },
+        { func_no: "role_edit", func_name: "編輯角色", func_enb: 0 }
+      ]
     },
     {
-      id: "user_auth",
-      label: "維保管理",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
-    },
-    {
-      id: "user_auth",
-      label: "駕駛管理",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
-    },
-    {
-      id: "user_auth",
-      label: "任務管理",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
-    },
-    {
-      id: "user_auth",
-      label: "訂單管理",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
-    },
-    {
-      id: "user_auth",
-      label: "客戶管理",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
-    },
-    {
-      id: "user_auth",
-      label: "供應商管理",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
-    },
-    {
-      id: "user_auth",
-      label: "設定",
-      dataAuth: [{ view: 1, create: 1, edit: 1, archive: 1 }]
+      func_no: "account",
+      func_name: "使用者列表",
+      func_enb: 1,
+      elements: [
+        { func_no: "account_create", func_name: "新增使用者", func_enb: 0 },
+        { func_no: "account_edit", func_name: "編輯使用者", func_enb: 1 }
+      ]
     }
   ]
 };
 
 // ------- TYPING ------- //
 export interface I_RoleDetail {
-  roleDetail: I_RoleItem;
+  roleDetail: I_RoleListItem;
   authFunc: any[];
 }
 
 export interface I_AuthFuncItem {
-  id: string;
-  label: string;
-  dataAuth: [{ view: 0 | 1; create: 0 | 1; edit: 0 | 1; archive: 0 | 1 }];
+  func_no: "account";
+  func_name: "使用者列表";
+  func_enb: 1;
+  elements: any[];
 }

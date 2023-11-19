@@ -13,9 +13,9 @@ import { ModalContext } from "@contexts/ModalContext/ModalProvider";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const modal = React.useContext(ModalContext);
+  const modalUI = React.useContext(ModalContext);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-  const [data, setData] = React.useState<I_RoleDetail>({});
+  const [data, setData] = React.useState<I_RoleDetail | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const isEdit = editPage === "edit";
@@ -49,13 +49,13 @@ const Page: NextPageWithLayout<never> = () => {
     if (!isEdit) return;
 
     const handleRouteChange = (url: string) => {
-      console.log("🍅 before", modal);
-      modal.showLeavePageModal();
+      console.log("🍅 before", modalUI);
+      modalUI.showLeavePageModal();
       console.log("🍅 after");
     };
 
     router.beforePopState(({ url, as, options }) => {
-      if (modal.modalContent) {
+      if (modalUI.modalContent) {
         // If there's a confirmation modal open, prevent the route change
         return false;
       }
@@ -76,9 +76,11 @@ const Page: NextPageWithLayout<never> = () => {
         handleNavigation={handleNavigation}
       />
       <BodySTY>
-        <RoleDetail data={data.roleDetail} isEdit={editPage === "edit"} />
         {data && (
-          <AuthPanel data={data.authFunc} isEdit={editPage === "edit"} />
+          <>
+            <RoleDetail data={data.roleDetail} isEdit={editPage === "edit"} />
+            <AuthPanel data={data.func_auth} isEdit={editPage === "edit"} />
+          </>
         )}
       </BodySTY>
     </>
