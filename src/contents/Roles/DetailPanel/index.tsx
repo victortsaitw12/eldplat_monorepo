@@ -1,7 +1,7 @@
 import { Select, TextInput, Textarea } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { I_RoleItem } from "@services/role/getRoleList";
+import { I_RoleListItem } from "@services/role/getRoleList";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 
@@ -46,7 +46,7 @@ const DetailPanel = ({ data, isEdit }: I_Props) => {
       editEle: (
         <Textarea placeholder="請輸入職責描述" style={{ minHeight: "64px" }} />
       ),
-      value: data.description || "--"
+      value: data.role_desc || "--"
     }
   ];
   return (
@@ -59,6 +59,6 @@ const DetailPanel = ({ data, isEdit }: I_Props) => {
 export default DetailPanel;
 
 interface I_Props {
-  data: I_RoleItem;
+  data: I_RoleListItem;
   isEdit: boolean;
 }

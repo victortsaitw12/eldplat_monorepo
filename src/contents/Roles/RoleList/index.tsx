@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Tooltip, EditIcon } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { I_RoleItem } from "@services/role/getRoleList";
+import { I_RoleListItem } from "@services/role/getRoleList";
 import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
 import PaginationField from "@components/PaginationField";
@@ -36,7 +36,7 @@ const RoleList = ({ data }: I_Props) => {
         <IconBtn
           tip="編輯"
           type="edit"
-          onClick={handleEdit.bind(null, item.id)}
+          onClick={handleEdit.bind(null, item.role_no)}
         />
         // <Tooltip content="編輯">
         //   <EditIcon onClick={handleEdit} />
@@ -57,5 +57,5 @@ const RoleList = ({ data }: I_Props) => {
 export default RoleList;
 
 interface I_Props {
-  data: I_RoleItem[];
+  data: I_RoleListItem[];
 }

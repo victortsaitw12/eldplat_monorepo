@@ -7,7 +7,7 @@ import { BodySTY } from "./style";
 import { getLayout } from "@layout/MainLayout";
 import RoleDetail from "@contents/Roles/DetailPanel";
 import AuthPanel from "@contents/Roles/AuthPanel";
-import { getRoleDetail, I_RoleDetail } from "@services/role/getRoleDetail";
+import { getOneRole, I_RoleDetail } from "@services/role/getOneRole";
 import ControlBar from "@contents/Roles/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
 
@@ -15,7 +15,7 @@ const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const modalUI = React.useContext(ModalContext);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-  const [data, setData] = React.useState<I_RoleDetail | null>(null);
+  const [data, setData] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const isEdit = editPage === "edit";
@@ -24,8 +24,8 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const result = await getRoleDetail();
-      setData(result);
+      const result = await getOneRole();
+      setData(result.DataList[0]);
     } catch (e: any) {
       console.log(e);
     }
@@ -49,9 +49,9 @@ const Page: NextPageWithLayout<never> = () => {
     if (!isEdit) return;
 
     const handleRouteChange = (url: string) => {
-      console.log("🍅 before", modalUI);
+      console.log(" before", modalUI);
       modalUI.showLeavePageModal();
-      console.log("🍅 after");
+      console.log(" after");
     };
 
     router.beforePopState(({ url, as, options }) => {
@@ -78,7 +78,7 @@ const Page: NextPageWithLayout<never> = () => {
       <BodySTY>
         {data && (
           <>
-            <RoleDetail data={data.roleDetail} isEdit={editPage === "edit"} />
+            <RoleDetail data={data} isEdit={editPage === "edit"} />
             <AuthPanel data={data.func_auth} isEdit={editPage === "edit"} />
           </>
         )}

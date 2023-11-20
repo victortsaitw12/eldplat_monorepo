@@ -10,7 +10,7 @@ import { BodySTY } from "./style";
 
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { I_UserDetailItem } from "@services/account/getUserDetail";
+import { I_UserDetailItem } from "@services/account/getOneAccount";
 
 const BasicInfoBox = ({ data, isEdit }: I_Props) => {
   if (!data)
