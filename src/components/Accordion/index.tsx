@@ -50,9 +50,6 @@ const Accordion = ({
     }
   }, [isFold]);
 
-  // console.log("🍅 isUnfold", subLayerNum, isUnfold);
-  // console.log("🍅 isFold", subLayerNum, isFold);
-
   return (
     <DivSTY className={`acc ${className}`}>
       {isTopLayer && (
@@ -138,6 +135,7 @@ interface I_Props {
   layerNum?: number;
   isUnfold?: boolean;
   isFold?: boolean;
+  className?: string;
 }
 
 interface I_ItemProps {

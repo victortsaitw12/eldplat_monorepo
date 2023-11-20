@@ -29,16 +29,10 @@ const LoginStatus = () => {
     <ContainerSTY style={{ maxHeight: "100px", fontSize: "2rem" }}>
       <div>{`You are ${session ? "" : "NOT"} signed in`}</div>
       {session ? (
-        <>
-          <div>
-            <small>session.user.name : </small>
-            {session?.user?.name || ""}
-          </div>
-          <div>
-            <small>session.user.email : </small>
-            {session?.user?.email || ""}
-          </div>
-        </>
+        <div>
+          <small>session.user.name : </small>
+          {session?.user?.username || ""}
+        </div>
       ) : (
         <></>
       )}

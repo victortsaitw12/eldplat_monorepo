@@ -1,7 +1,7 @@
 import API_Path from "./apiPath";
 import { I_UserItem } from "./getUserList";
 
-export const getUserDetail = async () => {
+export const getOneAccount = async () => {
   return DUMMY_DATA.DataList[0];
 
   //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
@@ -39,7 +39,7 @@ const DUMMY_DATA: I_responseBody = {
       creorgno: "o",
       creid: "admin",
       credt: "2023-08-11T09:24:53",
-      role: [
+      account_role: [
         {
           org_no: "o-0002", //id
           org_name: "車產模組", //label
@@ -187,7 +187,22 @@ export interface I_UserDetailItem {
   creorgno: string;
   creid: string;
   credt: string;
-  role: any[];
+  account_role: I_AccountRole[];
+}
+
+export interface I_AccountRole {
+  module_no: string;
+  module_name: string;
+  // role_no: string;
+  // role_name: string;
+  // role_desc: string;
+  roles: I_RoleItem[];
+}
+
+export interface I_RoleItem {
+  role_no: string;
+  role_name: string;
+  is_select: boolean;
 }
 
 // TODO 統一引用 import {I_PageInfo} from "@components/PaginationField"

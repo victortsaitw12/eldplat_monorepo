@@ -62,7 +62,7 @@ const TableSTY = styled.table`
   }
 
   tbody {
-    background-color: ${({ theme }) => theme.color.N75};
+    background-color: ${({ theme }) => theme.color.N400};
   }
 
   td,
