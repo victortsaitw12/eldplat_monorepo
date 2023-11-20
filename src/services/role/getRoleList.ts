@@ -1,11 +1,12 @@
-import { StringMappingType } from "typescript";
-import API_Path from "./apiPath";
+export const getRoleList = async (userID: string) => {
+  // return DUMMY_DATA;
+  const apiName = "getRoleList";
+  const reqMethod = "POST";
+  const reqHeaders = { UK: userID };
 
-export const getRoleList = async () => {
-  return DUMMY_DATA;
   const requestBody = {
     x: "",
-    role_name: "平台管理員",
+    role_name: "平台管理員", //TODO ask backend if this is really needed
     creorgno: "o-0001",
     filter: [
       {
@@ -26,14 +27,13 @@ export const getRoleList = async () => {
     }
   };
 
-  //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-  //     }
-  //   });
-  //   return await res.json();
+  const res = await fetch(`/api/getData?url=${apiName}`, {
+    method: reqMethod,
+    headers: reqHeaders,
+    body: JSON.stringify(requestBody)
+  });
+  const result = await res.json();
+  return result.data;
 };
 
 // ------- MOCK DATA ------- //

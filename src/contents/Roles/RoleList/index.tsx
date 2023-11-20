@@ -48,8 +48,12 @@ const RoleList = ({ data }: I_Props) => {
 
   return (
     <BodySTY>
-      <PaginationField />
-      <Table titles={tableTitleArr} data={dataFitTable} onView={handleView} />
+      <Table
+        titles={tableTitleArr}
+        data={dataFitTable}
+        onView={handleView}
+        headNode={<PaginationField />}
+      />
     </BodySTY>
   );
 };

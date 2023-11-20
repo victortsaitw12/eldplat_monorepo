@@ -4,7 +4,14 @@ import styled from "styled-components";
 export const DivSTY = styled.div`
   border: 1px solid ${({ theme }) => theme.color.N40};
   border-radius: 4px;
+  header {
+    padding: 6px 20px;
+  }
+  footer {
+    padding: 6px 20px;
+  }
 `;
+
 // 表格本身
 export const TableSTY = styled.table`
   /* width: 100%; */
@@ -14,10 +21,23 @@ export const TableSTY = styled.table`
   border-radius: 4px;
   border-spacing: 0px;
   overflow: hidden;
-
+  /* action buttons */
+  .action {
+    div {
+      button {
+        border-radius: 4px;
+        background: ${({ theme }) => theme.color.N20};
+        svg {
+        }
+      }
+    }
+  }
   thead tr {
     background-color: ${({ theme }) => theme.color.N0};
     text-align: left;
+    color: ${({ theme }) => theme.color.N400};
+    font-weight: ${({ theme }) => theme.fontWeight.Heading400};
+    font-size: ${({ theme }) => theme.fontSize.Headline400};
   }
   tr:hover {
     background-color: #f9fafc;
@@ -38,11 +58,13 @@ export const TableSTY = styled.table`
     border-bottom: none;
   }
   th {
-    padding-top: 12px;
-    padding-bottom: 9px;
+    padding: 12px 20px 9px 20px;
   }
   td {
-    padding: 5px 10px;
+    padding: 5px 20px;
+    color: ${({ theme }) => theme.color.N500};
+    font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+    /* font-size: ${({ theme }) => theme.fontSize.Paragraph300}; */
     a {
       text-decoration: dotted underline;
     }
@@ -70,7 +92,7 @@ export const TableSTY = styled.table`
         width: 100px;
         height: 100px;
         margin-bottom: 15px;
-        border-radius: 10px;
+        border-radius: 4px;
         overflow: hidden;
         box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
       }

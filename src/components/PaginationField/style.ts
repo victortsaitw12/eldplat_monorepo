@@ -7,8 +7,6 @@ export const BodySTY = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 0px 8px;
-
   .pageTotal {
     font-size: ${({ theme }) => theme.fontSize.Paragraph100};
     font-weight: ${({ theme }) => theme.fontWeight.Paragraph100};
