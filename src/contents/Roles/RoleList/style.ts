@@ -24,7 +24,6 @@ export const BodySTY = styled.div`
     /* align text in header and content */
     td,
     th {
-      padding-inline-start: 10px;
       span {
         justify-content: flex-start;
       }

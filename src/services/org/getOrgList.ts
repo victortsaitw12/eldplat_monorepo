@@ -1,4 +1,4 @@
-export const getOrgList = async (userID: any) => {
+export const getOrgList = async (userID: string) => {
   const apiName = "getOrgList";
   const reqMethod = "POST";
   const reqHeaders = { UK: userID };
