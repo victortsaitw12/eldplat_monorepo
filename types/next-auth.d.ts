@@ -8,7 +8,10 @@ declare module "next-auth" {
     user: {
       username: string;
       role: string;
-      menuData: any[];
+      menuData: {
+        userdefine: any[];
+        defaultMenu: any[];
+      };
     };
   }
 }
