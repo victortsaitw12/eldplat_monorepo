@@ -9,7 +9,7 @@ import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import RoleList from "@contents/Roles/RoleList";
 import { BodySTY } from "./style";
-import { getRoleList, I_RoleItem } from "@services/role/getRoleList";
+import { getRoleList, I_RoleListItem } from "@services/role/getRoleList";
 import { useRoleStore } from "@contexts/filter/roleStore";
 import { IconLeft } from "@components/Button/Primary";
 
@@ -42,7 +42,7 @@ const Page: NextPageWithLayout<never> = () => {
     isDrawerOpen,
     setDrawerOpen
   } = useRoleStore();
-  const [data, setData] = React.useState<I_RoleItem[]>([]);
+  const [data, setData] = React.useState<I_RoleListItem[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   //------ functions ------//
@@ -50,7 +50,7 @@ const Page: NextPageWithLayout<never> = () => {
     setIsLoading(true);
     try {
       const result = await getRoleList();
-      setData(result);
+      setData(result.ContentList);
     } catch (e: any) {
       console.log(e);
     }
