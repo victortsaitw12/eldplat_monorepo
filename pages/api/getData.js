@@ -2,6 +2,7 @@ import API_Path from "@services/apiPath";
 import { preRequest } from "@utils/preRequest";
 
 export default async function handler(req, res) {
+  const UK = req.headers.uk;
   const TK = await preRequest();
   const apiName = req.url.split("?url=").at(-1);
   const getOptions = {
@@ -9,6 +10,7 @@ export default async function handler(req, res) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `basic ${TK}`,
+      UK: UK,
       TK: TK
     }
   };

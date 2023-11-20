@@ -2,6 +2,7 @@ import React, { ReactNode, useState, useMemo } from "react";
 import { NextPageWithLayout } from "next";
 import { PlusIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 //
 import { getLayout } from "@layout/MainLayout";
@@ -42,14 +43,19 @@ const Page: NextPageWithLayout<never> = () => {
     isDrawerOpen,
     setDrawerOpen
   } = useRoleStore();
+  const { data: session } = useSession();
   const [data, setData] = React.useState<I_RoleListItem[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
+    // get userID from session after login api
+    // const userID = session.userID
+    const userID = "USR202302020002";
     try {
-      const result = await getRoleList();
+      const result = await getRoleList(userID);
+      console.log("🍅 result:", result);
       setData(result.ContentList);
     } catch (e: any) {
       console.log(e);

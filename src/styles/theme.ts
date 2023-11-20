@@ -110,7 +110,17 @@ const fontSize = {
   Heading600: "1.28rem",
   Heading700: "1.43rem",
   Heading800: "1.71rem",
-  Heading900: "2.28rem"
+  Heading900: "2.28rem",
+
+  Headline100: "0.71rem",
+  Headline200: "0.86rem",
+  Headline300: "0.86rem",
+  Headline400: "1rem",
+  Headline500: "1.14rem",
+  Headline600: "1.28rem",
+  Headline700: "1.43rem",
+  Headline800: "1.71rem",
+  Headline900: "2.28rem"
 };
 
 const fontWeight = {
@@ -127,7 +137,15 @@ const fontWeight = {
   Heading600: "600",
   Heading700: "600",
   Heading800: "600",
-  Heading900: "600"
+  Heading900: "600",
+
+  Headline300: "500", //medium
+  Headline400: "600", //semibold
+  Headline500: "600", //semibold
+  Headline600: "600", //semibold
+  Headline700: "600", //semibold
+  Headline800: "600", //semibold
+  Headline900: "600" //semibold
 };
 
 const theme = {
