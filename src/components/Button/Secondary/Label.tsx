@@ -19,8 +19,8 @@ const StyledButton = styled(Button)`
   padding: 8px 16px;
   color: ${({ theme }) => theme.color.N700};
   font-weight: ${({ theme }) => theme.fontWeight.Paragraph100};
-  border: none;
-  border-radius: 32px;
+  border: 1px solid ${({ theme }) => theme.color.N60};
+  border-radius: 4px;
   gap: 8px;
   background: ${({ theme }) => theme.color.N0};
   transition: all 0.3s;

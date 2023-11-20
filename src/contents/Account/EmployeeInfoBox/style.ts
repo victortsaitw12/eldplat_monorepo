@@ -9,7 +9,6 @@ export const BodySTY = styled.div`
   }
   .info-title {
     width: 100%;
-    background: ${({ theme }) => theme.color.N300};
     padding: 8px 16px;
   }
   ul {

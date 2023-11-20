@@ -8,6 +8,11 @@ export const BodySTY = styled.div`
       display: none;
     }
   }
+  .acc {
+    &__item {
+      padding: 8px 0px;
+    }
+  }
   .accordion {
     width: 100%;
     display: flex;
@@ -28,7 +33,6 @@ export const BodySTY = styled.div`
   }
   .info-title {
     width: 100%;
-    background: ${({ theme }) => theme.color.N300};
     padding: 8px 16px;
   }
   ul {

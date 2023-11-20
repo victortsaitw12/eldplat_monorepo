@@ -15,6 +15,7 @@ export const InfoBoxSTY = styled.div`
     font-weight: 600;
     color: #567190;
     margin-bottom: 30px;
+    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
   }
   & ul {
     margin: 0;
@@ -75,7 +76,7 @@ export const InfoBoxSTY = styled.div`
   /* --- V2 --- */
   width: 100%;
   height: fit-content;
-  border: 1px solid ${({ theme }) => theme.color.N300};
+  border: 1px solid ${({ theme }) => theme.color.N40};
   border-radius: 4px;
   padding: 0;
   box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);

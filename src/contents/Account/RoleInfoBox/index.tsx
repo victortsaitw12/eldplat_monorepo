@@ -60,8 +60,8 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
       readonly: false,
       req: false,
       label: "",
-      editEle: <Accordion data={dataFitAccordion} isTopLayer={true} />,
-      value: <Accordion data={dataFitAccordion} isTopLayer={true} />
+      editEle: <Accordion data={dataFitAccordion} isTopLayer={false} />,
+      value: <Accordion data={dataFitAccordion} isTopLayer={false} />
     }
   ];
 

@@ -9,7 +9,6 @@ import { fetchData } from "next-auth/client/_utils";
 
 const FormModal = ({ content, setModalContent }: I_Props) => {
   const [checked, setChecked] = React.useState(true);
-  const userId = "admin"; //USR202302020002
   const isCreate = content.isCreate;
   const defaultValues = isCreate
     ? {
@@ -33,6 +32,9 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
 
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {
+    // const userId = session.user.userID
+    const userId = "admin"; //USR202302020002
+
     console.log("🔜 data:", data);
     try {
       const res = isCreate

@@ -6,6 +6,8 @@ import Accordion, { I_AccordionItem } from "@components/Accordion";
 import { Switch } from "evergreen-ui";
 
 const AuthPanel = ({ data, isEdit }: I_Props) => {
+  console.log("🍅 data", data);
+
   //------ functions ------//
   const getDataFitAccordion = (data: any) => {
     return data.map((item: any) => {
@@ -26,7 +28,7 @@ const AuthPanel = ({ data, isEdit }: I_Props) => {
               </div>
             ) : (
               <div className="accordion__item">
-                <div className="accordion__label">{item["func_name"]}</div>
+                <div className="accordion__label">{item["func_no"]}</div>
                 <Switch checked={item["func_enb"]} />
               </div>
             )}

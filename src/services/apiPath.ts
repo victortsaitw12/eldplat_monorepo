@@ -5,7 +5,10 @@ const API_Path = {
   getOrgList: getUrlPath("sys", "Org", "GetOrgList"),
   createOrg: getUrlPath("sys", "Org", "CreateOrg"),
   updateOrg: getUrlPath("sys", "Org", "UpdateOrg"),
-  getRoleList: getUrlPath("sys", "Role", "GetRoleList")
+  getRoleList: getUrlPath("sys", "Role", "GetRoleList"),
+  getOneRole: getUrlPath("sys", "Role", "GetOneRole"),
+  createRole: getUrlPath("sys", "Role", "CreateRole"),
+  updateRole: getUrlPath("sys", "Org", "UpdateRole")
 };
 
 export default API_Path;

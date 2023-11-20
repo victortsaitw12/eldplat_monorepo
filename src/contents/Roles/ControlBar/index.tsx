@@ -9,23 +9,27 @@ import SecondaryBtn from "@components/Button/Secondary/Label";
 interface I_Props {
   isEdit: boolean;
   handleNavigation: (path: string) => void;
+  handleEdit: () => void;
 }
 
-function ControlBar({ isEdit, handleNavigation }: I_Props) {
+function ControlBar({ isEdit, handleNavigation, handleEdit }: I_Props) {
   const router = useRouter();
 
   //------ functions ------//
-  const handleRedirectBack = () => {
+  const handleRedirectBack = (e: any) => {
+    e.prevenDefault();
     handleNavigation("/role");
   };
 
-  const handleCancel = () => {
+  const handleCancel = (e: any) => {
+    e.prevenDefault();
     handleNavigation("/role");
 
     console.log("cancel");
   };
+
   const handleSave = () => {
-    console.log("cancel");
+    console.log();
   };
 
   //------ render ------//
@@ -34,13 +38,17 @@ function ControlBar({ isEdit, handleNavigation }: I_Props) {
     <DivSTY className="controlRow">
       {isEdit ? (
         <Group>
-          <SecondaryBtn text="取消" onClick={handleCancel} />
-          <PrimaryBtn text="儲存" onClick={handleSave} />
+          <SecondaryBtn text="取消" type="button" onClick={handleCancel} />
+          <PrimaryBtn text="儲存" type="submit" />
         </Group>
       ) : (
         <Group>
-          <SecondaryBtn text="回列表" onClick={handleRedirectBack} />
-          <PrimaryBtn text="編輯" onClick={handleSave}>
+          <SecondaryBtn
+            text="回列表"
+            type="button"
+            onClick={handleRedirectBack}
+          />
+          <PrimaryBtn text="編輯" type="button" onClick={handleEdit}>
             <EditIcon size={14} />
           </PrimaryBtn>
         </Group>

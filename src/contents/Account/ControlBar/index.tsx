@@ -33,17 +33,17 @@ function ControlBar({ isEdit, handleNavigation }: I_Props) {
   return (
     <DivSTY className="controlRow">
       {isEdit ? (
-        <Group>
+        <div className="actionRow">
           <SecondaryBtn text="取消" onClick={handleCancel} />
           <PrimaryBtn text="儲存" onClick={handleSave} />
-        </Group>
+        </div>
       ) : (
-        <Group>
+        <div className="actionRow">
           <SecondaryBtn text="回列表" onClick={handleRedirectBack} />
           <PrimaryBtn text="編輯" onClick={handleSave}>
             <EditIcon size={14} />
           </PrimaryBtn>
-        </Group>
+        </div>
       )}
     </DivSTY>
   );

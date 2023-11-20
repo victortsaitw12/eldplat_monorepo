@@ -1,4 +1,5 @@
-import { Select, TextInput, Textarea } from "evergreen-ui";
+import React from "react";
+import { Select, TextInput, Textarea, Switch } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { I_RoleListItem } from "@services/role/getRoleList";
@@ -6,6 +7,8 @@ import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 
 const DetailPanel = ({ data, isEdit }: I_Props) => {
+  const [isEnabled, setIsEnabled] = React.useState(true);
+
   if (!data)
     return (
       <BodySTY>
@@ -28,15 +31,12 @@ const DetailPanel = ({ data, isEdit }: I_Props) => {
       ),
 
       value: data.module_name || "--"
-      // subLabel?: string | React.ReactNode;
-      // inputType?: string;
     },
     {
       readonly: false,
       req: true,
       label: "角色名稱",
       editEle: <TextInput className="required" placeholder="請輸入角色名稱" />,
-
       value: data.role_name || "--"
     },
     {
@@ -47,6 +47,27 @@ const DetailPanel = ({ data, isEdit }: I_Props) => {
         <Textarea placeholder="請輸入職責描述" style={{ minHeight: "64px" }} />
       ),
       value: data.role_desc || "--"
+    },
+    {
+      readonly: false,
+      req: true,
+      label: "啟用",
+      editEle: (
+        <div>
+          <Switch
+            checked={isEnabled}
+            onChange={(e) => setIsEnabled(e.target.checked)}
+          />
+          <span>啟用</span>
+        </div>
+      ),
+      value:
+        (
+          <Switch
+            checked={isEnabled}
+            onChange={(e) => setIsEnabled(e.target.checked)}
+          />
+        ) || "--"
     }
   ];
   return (
