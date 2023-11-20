@@ -55,15 +55,61 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
   // ------- render ------- //
   const dataFitAccordion = getDataFitAccordion(data);
 
-  const dataFitInfoBox = [
-    {
+  const dataFitInfoBox = data.map((item) => {
+    return {
       readonly: false,
       req: false,
       label: "",
-      editEle: <Accordion data={dataFitAccordion} isTopLayer={false} />,
-      value: <Accordion data={dataFitAccordion} isTopLayer={false} />
-    }
-  ];
+      editEle: (
+        <Accordion data={getDataFitAccordion([item])} isTopLayer={false} />
+      ),
+      value: (
+        <div className="role--view">
+          <div className="module">{item.org_name}</div>
+          <div className="role">
+            {
+              item.sublayer.filter((elem: any) => {
+                // TODO HERE
+                console.log("");
+                return elem.org_enb === true;
+              }).org_name
+            }
+          </div>
+        </div>
+      )
+    };
+  });
+
+  // [
+  //   {
+  //     readonly: false,
+  //     req: false,
+  //     label: "",
+  //     editEle: <Accordion data={dataFitAccordion} isTopLayer={false} />,
+  //     value: <Accordion data={dataFitAccordion} isTopLayer={false} />
+  //   },
+  //   {
+  //     readonly: false,
+  //     req: false,
+  //     label: "",
+  //     editEle: <Accordion data={dataFitAccordion} isTopLayer={false} />,
+  //     value: <Accordion data={dataFitAccordion} isTopLayer={false} />
+  //   },
+  //   {
+  //     readonly: false,
+  //     req: false,
+  //     label: "",
+  //     editEle: <Accordion data={dataFitAccordion} isTopLayer={false} />,
+  //     value: <Accordion data={dataFitAccordion} isTopLayer={false} />
+  //   },
+  //   {
+  //     readonly: false,
+  //     req: false,
+  //     label: "",
+  //     editEle: <Accordion data={dataFitAccordion} isTopLayer={false} />,
+  //     value: <Accordion data={dataFitAccordion} isTopLayer={false} />
+  //   },
+  // ];
 
   return (
     <BodySTY className="role">

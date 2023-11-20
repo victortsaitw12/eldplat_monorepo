@@ -27,6 +27,16 @@ export const BodySTY = styled.div`
     }
   }
 
+  .role--view {
+    padding: 6px 16px;
+    .module {
+      font-size: ${({ theme }) => theme.fontSize.Headline500};
+      font-weight: ${({ theme }) => theme.fontWeight.Headline500};
+    }
+    .role {
+    }
+  }
+
   /* infoBox */
   .info_content {
     padding: 0;
