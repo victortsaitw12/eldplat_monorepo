@@ -9,20 +9,18 @@ interface PropsType {
 }
 
 function Form(props: PropsType) {
-  const [company, setCompany] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // await signIn("credentials", { username: "jsmith", password: "1234" })
-    await signIn("credentials", {
-      companyNo: "lionTravel",
-      username: "atrain",
-      password: "password.current",
-      redirect: true,
-      callbackUrl: props.callbackUrl ?? "/test/next-auth"
-    });
+    // await signIn("credentials", {
+    //   eamil: "test@liontravel.com",
+    //   password: "password.current"
+    //   // redirect: true,
+    //   // callbackUrl: props.callbackUrl ?? "/test/next-auth"
+    // });
   };
 
   // 隨時抓取輸入的帳號和密碼並存入狀態

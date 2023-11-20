@@ -1,6 +1,6 @@
 import { BodySTY } from "./style";
 
-import { I_AuthFuncItem } from "@services/role/getRoleDetail";
+import { I_AuthFuncItem } from "@services/role/getOneRole";
 import InfoBox from "@components/InfoBox";
 import Accordion, { I_AccordionItem } from "@components/Accordion";
 import { Switch } from "evergreen-ui";

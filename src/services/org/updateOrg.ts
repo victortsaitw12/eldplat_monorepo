@@ -1,18 +1,16 @@
-import API_Path from "./apiPath";
+export const updateOrg = async (userID: string, data: I_EditOrgReq) => {
+  const apiName = "updateOrg";
+  const reqMethod = "POST";
+  const reqHeaders = { UK: userID };
+  const requestBody = data;
 
-export const updateOrg = async (userId: string) => {
-  return DUMMY_DATA;
-
-  const requestBody = {};
-  const res = await fetch("/api/getData?url=getOrgList", {
-    method: "POST",
-    headers: {
-      UK: userId
-    },
+  const res = await fetch(`/api/getData?url=${apiName}`, {
+    method: reqMethod,
+    headers: reqHeaders,
     body: JSON.stringify(requestBody)
   });
   const result = await res.json();
-  return result.data;
+  return result.data || result.cause.resBody;
 };
 
 // ------- typing ------- //

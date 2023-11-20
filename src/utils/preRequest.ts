@@ -15,20 +15,43 @@ const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 const apiSecret = process.env.NEXT_PUBLIC_API_SECRET;
 const salt = process.env.NEXT_PUBLIC_GUID_1;
 
-export function preRequest() {
-  //guid().toString().replace('-','');
-  // TODO: ask Rebo if this is an assigned constant string?
-
+export async function preRequest() {
   dayjs.extend(utc);
   const dateStr = dayjs.utc().format("HHmmss");
-  // TODO: ask Rebo/Jamie if this can just use dayjs
 
   if (!salt || !apiKey) return null;
 
   const computeStr = salt + apiKey + apiSecret + dateStr;
+
   // Use the CryptoJS script you imported
   const hash = CryptoJS.MD5(computeStr).toString();
 
   const checksum = hash + salt;
-  return checksum;
+
+  const getTocken = async () => {
+    const url = "https://uauth.api.liontravel.com/v2/token/generator";
+    const requestBody = {
+      ApiKey: apiKey,
+      ApiSecret: apiSecret,
+      Checksum: checksum
+    };
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody)
+      });
+      const result = await res.json();
+      if (!result.Data) throw new Error(result.rDesc);
+      return result.Data.AccessToken.split(" ")[1];
+    } catch (err: any) {
+      // TODO error handling
+      console.log(err.message);
+    }
+  };
+
+  const accessToken = await getTocken();
+  return accessToken;
 }

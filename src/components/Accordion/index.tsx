@@ -8,7 +8,8 @@ const Accordion = ({
   isTopLayer = false,
   layerNum,
   isUnfold,
-  isFold
+  isFold,
+  className
 }: I_Props) => {
   const [isAllOpen, setIsAllOpen] = React.useState(isUnfold || false);
   const [isAllFold, setIsAllFold] = React.useState(isFold || false);
@@ -49,11 +50,8 @@ const Accordion = ({
     }
   }, [isFold]);
 
-  // console.log("🍅 isUnfold", subLayerNum, isUnfold);
-  // console.log("🍅 isFold", subLayerNum, isFold);
-
   return (
-    <DivSTY className="acc">
+    <DivSTY className={`acc ${className}`}>
       {isTopLayer && (
         <div className="acc__btns">
           <Button onClick={handleFoldAll}>全部收合</Button>
@@ -137,6 +135,7 @@ interface I_Props {
   layerNum?: number;
   isUnfold?: boolean;
   isFold?: boolean;
+  className?: string;
 }
 
 interface I_ItemProps {

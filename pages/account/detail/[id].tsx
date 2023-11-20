@@ -8,18 +8,19 @@ import { getLayout } from "@layout/MainLayout";
 import BasicInfoBox from "@contents/Account/BasicInfoBox";
 import EmployeeInfoBox from "@contents/Account/EmployeeInfoBox";
 import {
-  getUserDetail,
+  getOneAccount,
   I_UserDetailItem
-} from "@services/account/getUserDetail";
+} from "@services/account/getOneAccount";
 import ControlBar from "@contents/Account/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
 import RoleInfoBox from "@contents/Account/RoleInfoBox";
+import LoadingSpinner from "@components/LoadingSpinner";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const modal = React.useContext(ModalContext);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-  const [data, setData] = React.useState<I_UserDetailItem>({});
+  const [data, setData] = React.useState<I_UserDetailItem | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const isEdit = editPage === "edit";
@@ -28,7 +29,7 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const result = await getUserDetail();
+      const result = await getOneAccount();
       setData(result);
     } catch (e: any) {
       console.log(e);
@@ -80,9 +81,18 @@ const Page: NextPageWithLayout<never> = () => {
         handleNavigation={handleNavigation}
       />
       <BodySTY>
-        <BasicInfoBox data={data} isEdit={editPage === "edit"} />
-        <EmployeeInfoBox data={data} isEdit={editPage === "edit"} />
-        <RoleInfoBox data={data.role} isEdit={editPage === "edit"} />
+        {data ? (
+          <>
+            <BasicInfoBox data={data} isEdit={editPage === "edit"} />
+            <EmployeeInfoBox data={data} isEdit={editPage === "edit"} />
+            <RoleInfoBox
+              data={data.account_role}
+              isEdit={editPage === "edit"}
+            />
+          </>
+        ) : (
+          <LoadingSpinner />
+        )}
       </BodySTY>
     </>
   );

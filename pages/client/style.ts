@@ -10,7 +10,7 @@ export const BodySTY = styled.div`
     justify-content: center;
     padding: 32px 0px;
     width: 100%;
-    background-color: ${({ theme }) => theme.color.N75};
+    background-color: ${({ theme }) => theme.color.N400};
     > .header-container {
       width: 1030px;
       display: flex;

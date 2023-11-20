@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import { getLayout } from "@layout/MainLayout";
 import FilterWrapper from "@layout/FilterWrapper";
-import UserList from "@contents/Account/UserList";
+import AccountList from "@contents/Account/AccountList";
 import { BodySTY } from "./style";
 import { getUserList, I_UserItem } from "@services/account/getUserList";
 import { useUserStore } from "@contexts/filter/accountStore";
@@ -62,7 +62,7 @@ const Page: NextPageWithLayout<never> = () => {
         filter={subFilter}
         btns={createBtn}
       >
-        <UserList data={data} />
+        <AccountList data={data} />
       </FilterWrapper>
     </BodySTY>
   );

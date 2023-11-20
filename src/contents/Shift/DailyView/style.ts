@@ -18,7 +18,7 @@ export const DailyViewSTY = styled.div<{ cellWidth?: number }>`
     height: 32px;
     min-width: min-content;
     width: 100%;
-    background: ${({ theme }) => theme.color.N75};
+    background: ${({ theme }) => theme.color.N400};
     border: 1px solid ${({ theme }) => theme.color.N300};
     border-radius: 5px 5px 0px 0px;
     border-bottom: 1px solid ${({ theme }) => theme.color.N300};
