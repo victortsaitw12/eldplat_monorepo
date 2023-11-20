@@ -18,16 +18,11 @@ import FilterWrapper from "@layout/FilterWrapper";
 import { I_PageInfo } from "@components/PaginationField";
 import { useRouter } from "next/router";
 import FirstNameIcon from "@components/FirstNameIcon";
-
-const mainFilterArray = [
-  { id: 1, label: "啟用", value: "1" },
-  { id: 2, label: "停用", value: "2" }
-];
+import Checkbox from "@components/CheckBox";
+import IconBtn from "@components/Button/IconBtn";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
-  const [isDrawerFullWidth, setIsDrawerFullWidth] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [nowTab, setNowTab] = useState(
@@ -36,109 +31,60 @@ const Page: NextPageWithLayout<never> = () => {
   const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
   React.useEffect(() => {
     let isCanceled = false;
-    fetchDriverData(isCanceled, nowTab, pageInfo);
+    fetchDriverData(isCanceled, pageInfo);
     return () => {
       isCanceled = true;
     };
   }, [nowTab]);
 
   const fetchDriverData = React.useCallback(
-    async (
-      isCanceled: boolean,
-      mainFilter = "1",
-      pageQuery = defaultPageInfo
-    ) => {
-      getAllDriver(subFilter, mainFilter, pageQuery).then((res) => {
-        const driverData = mappingQueryData(
-          res.contentList || [],
-          driverPattern,
-          driverParser
-        );
-        const getPageInfo = { ...res.pageInfo };
-        console.log("res:", res);
-        console.log("res.contentList: ", res.contentList);
-        console.log("driverData: ", driverData);
+    async (isCanceled: boolean, pageQuery = defaultPageInfo) => {
+      try {
+        const res = await getAllDriver(subFilter, pageQuery);
+        const { ContentList: driverData, PageInfo } = res;
+
+        const getPageInfo = { ...PageInfo };
         setPageInfo(getPageInfo);
+
         if (isCanceled) return;
 
         if (!subFilter) {
+          const conditionList = res.ConditionList;
           localStorage.setItem(
             "driverInitFilter",
-            JSON.stringify(res.conditionList)
+            JSON.stringify(conditionList)
           );
           initializeSubFilter();
         }
-        setData(driverData);
-      });
+
+        const dataFitTable = data.map((item: Array<object>, i: number) => {
+          return {
+            id: item["account_no"],
+            checkbox: <Checkbox value={item["account_name"]} />,
+            account_name: item["account_name"],
+            org_name: item["org_name"],
+            role_name_o: item["role_name_o"],
+            invt_sts: <InvitSatus value={item["invt_sts"]} />,
+            action: (
+              <IconBtn
+                tip="編輯"
+                type="edit"
+                onClick={handleEdit.bind(null, item.account_no)}
+              />
+              // <Tooltip content="編輯">
+              //   <EditIcon onClick={handleEdit} />
+              // </Tooltip>
+            )
+          };
+        });
+        setData(dataHandler(driverData));
+      } catch (error) {
+        console.error("Error fetching driver data:", error);
+        // 可以進行錯誤處理，例如顯示錯誤訊息給使用者
+      }
     },
     []
   );
-  // ordered data pattern
-  const driverPattern = {
-    id: true,
-    user_Name: true,
-    user_Email: true,
-    carteam: true,
-    car: true,
-    group_Name: true,
-    loginCount: true,
-    first_Login: true,
-    invt_Status: true
-  };
-
-  const driverParser = (data: any, key: string): { label: any; value: any } => {
-    if (key === "id") {
-      return {
-        label: data["driver_No"] || null,
-        value: data["driver_No"] || null
-      };
-    }
-    if (key === "user_Name") {
-      return {
-        label:
-          (
-            <UserSTY>
-              <FirstNameIcon text={data["user_First_Name"].slice(0, 1)} />
-              <Link
-                href={{
-                  pathname: "/driver/detail/[id]",
-                  query: { id: data["driver_No"], editPage: "view" }
-                }}
-              >
-                {data["user_First_Name"].concat(data["user_Name"])}
-              </Link>
-            </UserSTY>
-          ) || "--",
-        value: data["user_Name"] || null
-      };
-    }
-    if (key === "invt_Status") {
-      return {
-        label:
-          (
-            <div
-              style={{
-                padding: "8px 12px",
-                borderRadius: "10px",
-                background: "#F8FAFF",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px"
-              }}
-            >
-              <StyledDot value={data["invt_Status"] as string} />
-              <div>{data["invt_Status"]}</div>
-            </div>
-          ) || "--",
-        value: data["invt_Status"] || null
-      };
-    }
-    return {
-      label: data[key] || "--",
-      value: data[key] || null
-    };
-  };
 
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
@@ -148,71 +94,40 @@ const Page: NextPageWithLayout<never> = () => {
     });
   };
 
-  const handleOpenSearch = () => {
-    setIsOpenDrawer((prev) => !prev);
-  };
-
   const handleDeleteDriver = (id: string) => {
     updateDriverStatus(id, "2").then(() => {
-      fetchDriverData(false, nowTab);
+      fetchDriverData(false);
     });
   };
   const handleRecoverDriver = (id: string) => {
     updateDriverStatus(id, "1").then(() => {
-      fetchDriverData(false, nowTab);
+      fetchDriverData(false);
     });
   };
   const handlePageChange = React.useCallback(
     (pageQuery: I_PageInfo) => {
-      fetchDriverData(false, nowTab, pageQuery);
+      fetchDriverData(false, pageQuery);
     },
     [fetchDriverData, nowTab]
   );
   return (
-    <BodySTY isOpenDrawer={isOpenDrawer}>
-      <TabsWrapper
-        isHide={isDrawerFullWidth}
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={nowTab}
-        mainFilterArray={mainFilterArray}
-        viewOnly={true}
+    <BodySTY>
+      <FilterWrapper
+        updateFilter={updateSubFilter}
+        resetFilter={() => {
+          initializeSubFilter();
+        }}
+        filter={subFilter}
       >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={() => {
-            initializeSubFilter();
-          }}
-          filter={subFilter}
-        >
-          <DriverList
-            listType={nowTab}
-            driverData={data}
-            pageInfo={pageInfo}
-            goToCreatePage={handleOpenSearch}
-            handleDeleteDriver={handleDeleteDriver}
-            handleRecoverDriver={handleRecoverDriver}
-            handlePageChange={handlePageChange}
-          />
-        </FilterWrapper>
-      </TabsWrapper>
-      {isOpenDrawer && (
-        <Drawer
-          tabName={["新增駕駛"]}
-          closeDrawer={() => {
-            setIsOpenDrawer(false);
-            setIsDrawerFullWidth(false);
-          }}
-          isFullScreen={isDrawerFullWidth}
-          toggleFullScreenDrawer={() => {
-            setIsDrawerFullWidth(!isDrawerFullWidth);
-          }}
-        >
-          <SearchEmployee
-            closeSearch={setIsOpenDrawer.bind(null, false)}
-            refetch={fetchDriverData}
-          />
-        </Drawer>
-      )}
+        <DriverList
+          listType={nowTab}
+          driverData={data}
+          pageInfo={pageInfo}
+          handleDeleteDriver={handleDeleteDriver}
+          handleRecoverDriver={handleRecoverDriver}
+          handlePageChange={handlePageChange}
+        />
+      </FilterWrapper>
     </BodySTY>
   );
 };

@@ -4,6 +4,7 @@ import { I_PageInfo } from "@components/PaginationField";
 export const defaultPageInfo: I_PageInfo = {
   page_Index: 1,
   page_Size: 10,
+  orderby: null,
   arrangement: "desc",
   total: 0,
   last_Page: 0
@@ -42,46 +43,11 @@ export interface I_GetDriverListRes {
   };
 }
 
-// ------- MOCK DATA ------- //
-const DUMMY_DATA = {
-  StatusCode: "200",
-  Message: "用戶端要求成功",
-  ContentList: [
-    {
-      driver_no: "1",
-      driver_name: "鍾俊儀",
-      english_name: "JUN-YI  ZHONG",
-      team_name: "第一車隊",
-      region: "北北基"
-    },
-    {
-      driver_no: "2",
-      driver_name: "梁哲青",
-      english_name: "ZHE-QING  LIANG",
-      team_name: "第一車隊",
-      region: "北北基"
-    },
-    {
-      driver_no: "3",
-      driver_name: "謝榮瑤",
-      english_name: "JUNG-YAO  HSIEH",
-      team_name: "第二車隊",
-      region: "桃園"
-    },
-  ],
-  ConditionList: [],
-  PageInfo: {
-    page_Index: 1,
-    page_Size: 1000,
-    arrangement: "desc",
-    total: 2,
-    last_Page: 1
-  }
-};
 
 // 取得所有駕駛資料 QueryDriverList
 export const getAllDriver = async (
   filter: { [key: string]: any } = {},
+  driverStatus = "1",
   pageQuery = defaultPageInfo
 ) => {
   const driverFilter = [];
@@ -106,13 +72,22 @@ export const getAllDriver = async (
       filters: driverFilter,
       filter_Needed: true,
       pageInfo: pageQuery,
+      driver_status: driverStatus //1: 啟用 2:停用
     })
   });
-  // return res.json();
-  return DUMMY_DATA;
+  return res.json();
 };
 
 export const getDriverTitle = () => {
-  const DUMMY_TITLES = ["駕駛姓名", "英文姓名", "車隊", "派駐區域"];
+  const DUMMY_TITLES = [
+    "姓名",
+    "E-MAIL",
+    "車隊",
+    "指定車輛",
+    "群組",
+    "登入次數",
+    "加入時間",
+    "加入狀態"
+  ];
   return DUMMY_TITLES;
 };
