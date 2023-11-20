@@ -43,7 +43,7 @@ const AccountList = ({ data }: I_Props) => {
         <IconBtn
           tip="編輯"
           type="edit"
-          onClick={handleEdit.bind(null, item.id)}
+          onClick={handleEdit.bind(null, item.account_no)}
         />
         // <Tooltip content="編輯">
         //   <EditIcon onClick={handleEdit} />

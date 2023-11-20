@@ -29,6 +29,9 @@ function Index(props: any) {
   const toggleCardShow = () => {
     setIsCardShow((prev) => !prev);
   };
+  const handleSignout = () => {
+    signOut();
+  };
 
   return (
     <BodySTY {...props} className="user" onClick={toggleCardShow}>
@@ -54,7 +57,7 @@ function Index(props: any) {
                 <Menu.Item
                   className="item"
                   icon={LogOutIcon}
-                  onSelect={signOut}
+                  onSelect={handleSignout}
                 >
                   登出
                 </Menu.Item>

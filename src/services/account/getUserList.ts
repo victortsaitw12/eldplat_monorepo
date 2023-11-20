@@ -20,6 +20,7 @@ const DUMMY_DATA: I_responseBody = {
   Message: "用戶端要求成功",
   ContentList: [
     {
+      account_no: "123",
       account_name: "AdminSystem",
       role_name_o: "車公司管理員",
       org_name: "平台",
@@ -29,6 +30,7 @@ const DUMMY_DATA: I_responseBody = {
       invt_sts: "03"
     },
     {
+      account_no: "123",
       account_name: "王鈞樺",
       role_name_o: "車公司管理員",
       org_name: "交通事業處",
@@ -38,6 +40,7 @@ const DUMMY_DATA: I_responseBody = {
       invt_sts: "01"
     },
     {
+      account_no: "123",
       account_name: "張友承",
       role_name_o: "權限模組-平台管理員",
       org_name: "商業互動設計組",
@@ -47,6 +50,7 @@ const DUMMY_DATA: I_responseBody = {
       invt_sts: "03"
     },
     {
+      account_no: "123",
       account_name: "黃學承",
       role_name_o: "車管模組-平台管理員",
       org_name: "多元發展部",
@@ -75,6 +79,7 @@ export interface I_responseBody {
   PageInfo: I_PageInfo;
 }
 export interface I_UserItem {
+  account_no: string;
   account_name: string;
   role_name_o: string;
   org_name: string;
