@@ -51,7 +51,11 @@ function Index(props: any) {
                 <Menu.Item className="item" icon={LockIcon}>
                   修改密碼
                 </Menu.Item>
-                <Menu.Item className="item" icon={LogOutIcon}>
+                <Menu.Item
+                  className="item"
+                  icon={LogOutIcon}
+                  onSelect={signOut}
+                >
                   登出
                 </Menu.Item>
               </Menu>
@@ -68,7 +72,9 @@ function Index(props: any) {
         </Popover>
       )}
 
-      {/* {session ? (
+      {/*
+      // TODO to be removed after feat: Log in/ Log out
+       {session ? (
         <IconButton text="登出" onClick={signOut}>
           <LogOutIcon />
         </IconButton>

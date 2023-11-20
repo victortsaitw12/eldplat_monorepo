@@ -37,7 +37,7 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
     try {
       const res = isCreate
         ? await createOrg(userId, data)
-        : await updateOrg(userId);
+        : await updateOrg(userId, data);
 
       if (res.StatusCode === "200") {
         setModalContent(null);

@@ -1,16 +1,22 @@
 import styled from "styled-components";
 
+// container
+export const DivSTY = styled.div`
+  border: 1px solid ${({ theme }) => theme.color.N40};
+  border-radius: 4px;
+`;
 // 表格本身
 export const TableSTY = styled.table`
   /* width: 100%; */
   min-width: 100%;
-  border: 1px solid ${({ theme }) => theme.color.N300};
+  border: 1px solid ${({ theme }) => theme.color.N40};
   /* border-collapse: collapse; */
   border-radius: 4px;
   border-spacing: 0px;
   overflow: hidden;
+
   thead tr {
-    background-color: ${({ theme }) => theme.color.N50};
+    background-color: ${({ theme }) => theme.color.N0};
     text-align: left;
   }
   tr:hover {
@@ -21,7 +27,7 @@ export const TableSTY = styled.table`
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
-    border-bottom: 1px solid ${({ theme }) => theme.color.N300};
+    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
     span {
       display: flex;
       justify-content: center;

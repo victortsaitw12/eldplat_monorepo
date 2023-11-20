@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       result?.StatusCode !== "200"
     ) {
       const errMsg = result.Message;
-      const errLog = getErrLog(req, response, result);
+      const errLog = await getErrLog(req, response, result);
       throw new Error(errMsg, { data: result, cause: errLog });
     }
 
@@ -47,6 +47,7 @@ const getErrLog = (req, res, result) => {
       port: req.headers["origin"],
       host: req.headers["uk"]
     },
+    reqBody: req.body,
     url: res.url,
     resHeaders: res.headers,
     resBody: result

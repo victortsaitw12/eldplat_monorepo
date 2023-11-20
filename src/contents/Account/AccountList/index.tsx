@@ -18,7 +18,7 @@ const tableTitleArr = [
   ""
 ];
 
-const UserList = ({ data }: I_Props) => {
+const AccountList = ({ data }: I_Props) => {
   const router = useRouter();
 
   //------ functions ------//
@@ -33,7 +33,7 @@ const UserList = ({ data }: I_Props) => {
   // ------- render ------- //
   const dataFitTable = data.map((item, i) => {
     return {
-      // id:  item["id"],
+      id: item["account_no"],
       checkbox: <Checkbox value={item["account_name"]} />,
       account_name: item["account_name"],
       org_name: item["org_name"],
@@ -54,13 +54,17 @@ const UserList = ({ data }: I_Props) => {
 
   return (
     <BodySTY>
-      <PaginationField />
-      <Table titles={tableTitleArr} data={dataFitTable} onView={handleView} />
+      <Table
+        titles={tableTitleArr}
+        data={dataFitTable}
+        onView={handleView}
+        headNode={<PaginationField />}
+      />
     </BodySTY>
   );
 };
 
-export default UserList;
+export default AccountList;
 
 interface I_Props {
   data: I_UserItem[];

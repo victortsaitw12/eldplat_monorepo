@@ -1,10 +1,8 @@
-import API_Path from "./apiPath";
-
 export const createOrg = async (userID: string, data: I_CreateOrgReq) => {
   const apiName = "createOrg";
   const reqMethod = "POST";
   const reqHeaders = { UK: userID };
-  const requestBody = {};
+  const requestBody = data;
 
   const res = await fetch(`/api/getData?url=${apiName}`, {
     method: reqMethod,
