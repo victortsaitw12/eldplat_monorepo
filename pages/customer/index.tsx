@@ -15,7 +15,7 @@ import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
 import { getCreateCustomerOptions } from "@services/customer/getCreateCustomerOptions";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
@@ -131,7 +131,7 @@ const Page: NextPageWithLayout<never> = () => {
   return (
     <RegionProvider>
       <BodySTY>
-        <TableWrapper
+        <TabsWrapper
           isHide={isDrawerFullWidth}
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
@@ -159,7 +159,7 @@ const Page: NextPageWithLayout<never> = () => {
               pageInfo={pageInfo}
             />
           </FilterWrapper>
-        </TableWrapper>
+        </TabsWrapper>
         {isDrawerOpen && (
           <Drawer
             tabName={["新增客戶"]}

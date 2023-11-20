@@ -19,7 +19,7 @@ import { useDriverStore } from "@contexts/filter/driverStore";
 import { getDriverById } from "@services/driver/getDriverById";
 import { updateDriver } from "@services/driver/updateDriver";
 import DriverDetail from "@contents/Driver/Detail";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 
 //
 const mainFilterArray = [
@@ -116,7 +116,7 @@ const Page: NextPageWithLayout<
   return (
     <BodySTY>
       {(!isLoading && driverData && (
-        <TableWrapper
+        <TabsWrapper
           onChangeTab={switchTabHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
@@ -138,7 +138,7 @@ const Page: NextPageWithLayout<
             refetch={refetch}
             driverNo={driverNo}
           />
-        </TableWrapper>
+        </TabsWrapper>
       )) || (
         <Pane
           display="flex"

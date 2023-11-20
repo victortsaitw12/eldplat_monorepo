@@ -5,7 +5,7 @@ import { BodySTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
@@ -257,7 +257,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <TableWrapper
+      <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
@@ -278,7 +278,7 @@ const Page: NextPageWithLayout<never> = () => {
             onPageChange={upDatePageHandler}
           />
         </FilterWrapper>
-      </TableWrapper>
+      </TabsWrapper>
       {firstDrawerOpen !== "" && (
         <AssignmentDrawers
           firstDrawerOpen={firstDrawerOpen}

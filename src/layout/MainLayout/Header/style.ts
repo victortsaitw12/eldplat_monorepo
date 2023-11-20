@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 const BodySTY = styled.div`
+  height: 40px;
   display: flex;
-  /* background-color: #e2ecf7; */
-  background: ${({ theme }) => theme.color.N500};
+  background: ${({ theme }) => theme.color.N0};
+  border-bottom: 1px solid ${({ theme }) => theme.color.N200};
   justify-content: space-between;
   padding: 12px 20px;
   .tool-container {
@@ -25,7 +26,7 @@ const BodySTY = styled.div`
     gap: 10px;
 
     svg:not(.notification) {
-      fill: ${({ theme }) => theme.color.N0};
+      fill: ${({ theme }) => theme.color.N700};
     }
     select {
       background-color: transparent;
@@ -35,9 +36,6 @@ const BodySTY = styled.div`
       &:hover {
         background-color: transparent;
       }
-      /* &:focus {
-        outline: none;
-      } */
       option {
         border-radius: 32px;
         color: ${({ theme }) => theme.color.N800};
@@ -47,11 +45,11 @@ const BodySTY = styled.div`
   .breadcrumbs.main-layout {
     .breadcrumbs-item {
       & > * {
-        color: ${({ theme }) => theme.color.N0};
+        color: ${({ theme }) => theme.color.N500};
         opacity: 0.5;
       }
       .breadcrumbs__route {
-        color: ${({ theme }) => theme.color.N0};
+        color: ${({ theme }) => theme.color.N500};
         &:hover {
           opacity: 1;
         }

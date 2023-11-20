@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import signIn from "next-auth";
 import LoginInput from "../../../components/LoginInput";
 import Button from "@components/Button/Primary/Label";
 import { BodySTY } from "./style";
@@ -8,8 +9,21 @@ interface PropsType {
 }
 
 function Form(props: PropsType) {
-  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // await signIn("credentials", { username: "jsmith", password: "1234" })
+    await signIn("credentials", {
+      companyNo: "lionTravel",
+      username: "atrain",
+      password: "password.current",
+      redirect: true,
+      callbackUrl: props.callbackUrl ?? "/test/next-auth"
+    });
+  };
 
   // 隨時抓取輸入的帳號和密碼並存入狀態
 
@@ -17,9 +31,20 @@ function Form(props: PropsType) {
     <BodySTY>
       <LoginInput
         type="text"
-        inputName="account"
-        icon="person"
-        titleId="login_account"
+        inputName="company"
+        icon=""
+        titleId="company"
+        className="account-input"
+        onChangeCallback={(e) => {
+          e.preventDefault();
+          setEmail(e.target.value);
+        }}
+      />
+      <LoginInput
+        type="text"
+        inputName="username"
+        icon=""
+        titleId="username"
         className="account-input"
         onChangeCallback={(e) => {
           e.preventDefault();
@@ -30,8 +55,8 @@ function Form(props: PropsType) {
         <LoginInput
           type="password"
           inputName="password"
-          titleId="login_password"
-          icon="key"
+          titleId="password"
+          icon=""
           onChangeCallback={(e) => {
             e.preventDefault();
             setPassword(e.target.value);

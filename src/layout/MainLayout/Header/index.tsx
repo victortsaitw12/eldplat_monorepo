@@ -67,33 +67,18 @@ const Header = ({ layoutProps }: any) => {
     <ThemeProvider value={theme}>
       <BodySTY>
         <div className="tool-container">
-          <ListIcon
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              if (layoutProps?.showMenu) {
-                layoutProps?.closeMenu();
-              } else {
-                layoutProps?.openMenu();
-              }
-            }}
-            color="#FFFFFF"
-            size={16}
-          />
           <Text className="header-title">{layoutProps?.breadcrumbs}</Text>
-          {/* <Button appearance="link">數據資料</Button>
-          <Button appearance="link">自動化</Button>
-          <Button appearance="link">對接口</Button> */}
         </div>
         <div className="plan-info">
           <NotificationsIcon
             className="notification"
-            color="#FAC86B"
+            // color="#FAC86B"
             size={16}
           />
-          <StyledButton>使用期限還剩{30}天</StyledButton>
-          <MoonIcon color="#91A9C5" size={16} />
+          {/* <StyledButton>使用期限還剩{30}天</StyledButton> */}
+          {/* <MoonIcon color="#91A9C5" size={16} /> */}
           <HelpIcon color="#91A9C5" size={16} />
-          <Select
+          {/* <Select
             width={100}
             onChange={handleLangChange}
             style={{ padding: "4px 4px" }}
@@ -101,7 +86,7 @@ const Header = ({ layoutProps }: any) => {
             <option value="zh-tw">繁體中文</option>
             <option value="en-us">英語</option>
             <option value="th-th">日語</option>
-          </Select>
+          </Select> */}
         </div>
       </BodySTY>
     </ThemeProvider>

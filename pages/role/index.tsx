@@ -1,24 +1,25 @@
 import React, { ReactNode, useState, useMemo } from "react";
 import { NextPageWithLayout } from "next";
-//
-import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
-import FilterWrapper from "@layout/FilterWrapper";
-import { Pane } from "evergreen-ui";
-import RoleList from "@contents/Roles/RoleList";
-import { BodySTY } from "./style";
+import { PlusIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
 
-//@contexts
+//
+import { getLayout } from "@layout/MainLayout";
+import TabsWrapper from "@layout/TabsWrapper";
+import FilterWrapper from "@layout/FilterWrapper";
+import RoleList from "@contents/Roles/RoleList";
+import { BodySTY } from "./style";
+import { getRoleList, I_RoleListItem } from "@services/role/getRoleList";
 import { useRoleStore } from "@contexts/filter/roleStore";
+import { IconLeft } from "@components/Button/Primary";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   //
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "基本", value: "1" },
-      { id: 2, label: "車產", value: "2" }
+      { id: 1, label: "啟用", value: "1" },
+      { id: 2, label: "停用", value: "2" }
     ],
     []
   );
@@ -41,11 +42,40 @@ const Page: NextPageWithLayout<never> = () => {
     isDrawerOpen,
     setDrawerOpen
   } = useRoleStore();
-  //套用新版filter
+  const [data, setData] = React.useState<I_RoleListItem[]>([]);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  //------ functions ------//
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getRoleList();
+      setData(result.ContentList);
+    } catch (e: any) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+
+  const handleCreate = () => {
+    const id = "create";
+    router.push(`/role/detail/${id}?editPage=edit`);
+  };
+
+  // ------- useEffect ------- //
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const createBtn = (
+    <IconLeft text="新增角色" onClick={handleCreate}>
+      <PlusIcon size={14} />
+    </IconLeft>
+  );
 
   return (
     <BodySTY>
-      <TableWrapper
+      <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
@@ -57,11 +87,11 @@ const Page: NextPageWithLayout<never> = () => {
             initializeSubFilter();
           }}
           filter={subFilter}
+          btns={createBtn}
         >
-          <RoleList />
+          <RoleList data={data} />
         </FilterWrapper>
-      </TableWrapper>
-      {/* Put your component here */}
+      </TabsWrapper>
     </BodySTY>
   );
 };

@@ -10,7 +10,7 @@ import { updateBus } from "@services/bus/updateBus";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 import { ParsedUrlQuery } from "querystring";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import { useBusStore } from "@contexts/filter/busStore";
 import LoadingSpinner from "@components/LoadingSpinner";
 import BusDetail from "@contents/Bus/BusDetail";
@@ -91,7 +91,7 @@ const Page: NextPageWithLayout<
   }
   return (
     <BodySTY>
-      <TableWrapper
+      <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
@@ -114,7 +114,7 @@ const Page: NextPageWithLayout<
           busOptions={options}
           fetchDDL={fetchDDL}
         />
-      </TableWrapper>
+      </TabsWrapper>
     </BodySTY>
   );
 };

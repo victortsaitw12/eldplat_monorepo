@@ -16,7 +16,7 @@ import OverviewTable from "@contents/Shift/OverviewTable";
 import ZoomBar from "@components/ZoomBar";
 import { EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import { I_PageInfo } from "@components/PaginationField";
 
@@ -112,7 +112,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
         <Head>
           <title>駕駛排班總覽</title>
         </Head>
-        <TableWrapper
+        <TabsWrapper
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
@@ -155,7 +155,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
               </div>
             </Pane>
           </FilterWrapper>
-        </TableWrapper>
+        </TabsWrapper>
       </ShiftSTY>
     </UIProvider>
   );

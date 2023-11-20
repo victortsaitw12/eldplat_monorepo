@@ -7,7 +7,7 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 //@contents
 import AdminOrdersList from "@contents/AdminOrders/AdminOrdersList";
@@ -267,7 +267,7 @@ const Page: NextPageWithLayout<{
     <BodySTY>
       {!isFullWidth ? (
         <>
-          <TableWrapper
+          <TabsWrapper
             viewOnly={true}
             isHide={isDrawerFullWidth}
             onChangeTab={changeMainFilterHandler}
@@ -292,7 +292,7 @@ const Page: NextPageWithLayout<{
                 handlePageChange={handlePageChange}
               ></AdminOrdersList>
             </FilterWrapper>
-          </TableWrapper>
+          </TabsWrapper>
           {isDrawerOpen && (
             <Drawer
               tabName={["新增詢價單"]}

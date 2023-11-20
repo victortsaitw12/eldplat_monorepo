@@ -8,7 +8,7 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 
 //@services
@@ -44,7 +44,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id, editPage }) => {
     ],
     []
   );
-  //TableWrapper
+  //TabsWrapper
   const changeMainFilterHandler = (value: string) => {
     console.log("changeMainFilterHandler", value);
     setNowTab(value);
@@ -93,7 +93,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id, editPage }) => {
     <RegionProvider>
       <BodySTY>
         {!loading && oldVendorData && (
-          <TableWrapper
+          <TabsWrapper
             isEdit={editPage}
             onChangeTab={(value) => changeMainFilterHandler(value)}
             mainFilter={nowTab}
@@ -131,7 +131,7 @@ const Index: NextPageWithLayout<never> = ({ vendor_id, editPage }) => {
               // </FilterWrapper>
               <VendorSubPoint isEdit={editPage} />
             )}
-          </TableWrapper>
+          </TabsWrapper>
         )}
       </BodySTY>
     </RegionProvider>

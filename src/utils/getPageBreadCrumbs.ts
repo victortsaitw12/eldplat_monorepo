@@ -8,7 +8,31 @@ interface I_routers {
 }
 
 const breadcrumbs: I_routers = {
-  "/": [{ label: "入門", url: "/" }],
+  "/": [{ label: "首頁", url: "/" }],
+  "/org": [
+    { label: "首頁", url: "/" },
+    { label: "組織設定", url: "/org" }
+  ],
+  "/role": [
+    { label: "首頁", url: "/" },
+    { label: "角色權限", url: "/role" }
+  ],
+  "/role/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "角色權限", url: "/role" },
+    { label: "檢視角色" }
+  ],
+  "/account": [
+    { label: "首頁", url: "/" },
+    { label: "使用者列表", url: "/account" }
+  ],
+  "/account/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "使用者列表", url: "/account" },
+    { label: "檢視使用者", url: "" }
+  ],
+  // ----------------------------------------------------------------------- V2 above
+  // ----------------------------------------------------------------------- V1 bellow
   "/bus": [
     { label: "首頁", url: "/" },
     { label: "車輛清單", url: "/bus" }
@@ -80,10 +104,10 @@ const breadcrumbs: I_routers = {
     { label: "公司設定", url: "/company" },
     { label: "編輯", url: "" }
   ],
-  "/role": [
-    { label: "入門", url: "/" },
-    { label: "群組設定", url: "/role" }
-  ],
+  // "/role": [
+  //   { label: "入門", url: "/" },
+  //   { label: "群組設定", url: "/role" }
+  // ],
   "/role/edit/[id]": [
     { label: "入門", url: "/" },
     { label: "群組設定", url: "/role" },

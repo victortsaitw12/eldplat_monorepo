@@ -13,7 +13,7 @@ import { getLayout } from "@layout/MainLayout";
 import DriverList from "@contents/Driver/DriverList";
 import { BodySTY, StyledDot, UserSTY } from "./style";
 import Drawer from "@components/Drawer";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import { I_PageInfo } from "@components/PaginationField";
 import { useRouter } from "next/router";
@@ -170,7 +170,7 @@ const Page: NextPageWithLayout<never> = () => {
   );
   return (
     <BodySTY isOpenDrawer={isOpenDrawer}>
-      <TableWrapper
+      <TabsWrapper
         isHide={isDrawerFullWidth}
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
@@ -194,7 +194,7 @@ const Page: NextPageWithLayout<never> = () => {
             handlePageChange={handlePageChange}
           />
         </FilterWrapper>
-      </TableWrapper>
+      </TabsWrapper>
       {isOpenDrawer && (
         <Drawer
           tabName={["新增駕駛"]}

@@ -6,7 +6,6 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import { BodySTY, ContainerSTY } from "./style";
 import { getSideMenuBackend } from "@services/siderbar/getSideMenuBackend";
-import { getSideMenuPersonal } from "@services/siderbar/getSideMenuPersonal";
 //
 function mapping_menus(list: any, key: string) {
   // console.log("list", list);
@@ -27,6 +26,7 @@ function mapping_menus(list: any, key: string) {
     };
   });
 }
+
 //
 const MainLayout: FC<{
   children: ReactNode;
@@ -35,20 +35,19 @@ const MainLayout: FC<{
   const [showMenu, setShowMenu] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
-  const [personalmenu, setPersonalmenu] = React.useState([]);
   const fetch_menus = async () => {
     setLoading(true);
     try {
       const res_menu = await getSideMenuBackend();
-      const res_personalmenu = await getSideMenuPersonal();
       setMenu(mapping_menus(res_menu.dataList, "menu"));
-      setPersonalmenu(
-        mapping_menus(res_personalmenu.dataList, "menu_personal")
-      );
     } catch (e: any) {
       console.log(e);
     }
     setLoading(false);
+  };
+
+  const handleToggleMenu = () => {
+    setShowMenu((prev) => !prev);
   };
 
   React.useEffect(() => {
@@ -63,22 +62,11 @@ const MainLayout: FC<{
       </Head>
       <SideBar
         menuData={menu}
-        personalData={personalmenu}
         isLoading={loading}
+        onToggleMenu={handleToggleMenu}
       />
       <ContainerSTY>
-        <Header
-          layoutProps={{
-            ...layoutProps,
-            openMenu: () => {
-              setShowMenu(true);
-            },
-            closeMenu: () => {
-              setShowMenu(false);
-            },
-            showMenu: showMenu
-          }}
-        />
+        <Header layoutProps={{ ...layoutProps }} />
         <div className="content">{children}</div>
       </ContainerSTY>
     </BodySTY>

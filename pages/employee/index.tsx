@@ -12,7 +12,7 @@ import EmployeeList from "@contents/Employee/EmployeeList";
 import { BodySTY } from "./style";
 import Drawer from "@components/Drawer";
 import FilterWrapper from "@layout/FilterWrapper";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
@@ -126,7 +126,7 @@ const Page: NextPageWithLayout<never> = () => {
   return (
     <RegionProvider>
       <BodySTY>
-        <TableWrapper
+        <TabsWrapper
           onChangeTab={changeMainFilterHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
@@ -153,7 +153,7 @@ const Page: NextPageWithLayout<never> = () => {
               handlePageChange={updatePageHandler}
             />
           </FilterWrapper>
-        </TableWrapper>
+        </TabsWrapper>
         {isDrawerOpen && (
           <Drawer
             tabName={["新增員工"]}

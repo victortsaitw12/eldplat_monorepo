@@ -28,7 +28,7 @@ interface Props {
   isHide?: boolean;
 }
 
-function TableWrapper({
+function TabsWrapper({
   optionsEle,
   children,
   mainFilterArray,
@@ -46,7 +46,7 @@ function TableWrapper({
 }: Props) {
   return (
     <BodySTY isHide={isHide}>
-      <div className="filter-header">
+      <div className="tabs-header">
         <div className="tab-container">
           {mainFilterArray.map((item) => {
             return (
@@ -58,8 +58,12 @@ function TableWrapper({
                 isActive={item.value === mainFilter}
               >
                 {item.require && <div className="require">*</div>}
-                <span>{item.label}</span>
-                {item.value === mainFilter && <ChevronDownIcon />}
+                <span
+                  className={`${item.value === mainFilter ? "active" : ""}`}
+                >
+                  {item.label}
+                </span>
+                {/* {item.value === mainFilter && <ChevronDownIcon />} */}
               </FilterItemSTY>
             );
           })}
@@ -127,4 +131,4 @@ function TableWrapper({
   );
 }
 
-export default TableWrapper;
+export default TabsWrapper;

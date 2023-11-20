@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 export const InfoBoxSTY = styled.div`
   width: 100%;
-  /* min-height: 224px; */
-  background: #ffffff;
+  background: ${({ theme }) => theme.color.N0};
   border-radius: 10px;
-  /* overflow: auto; */
   padding: 35px 20px;
+
   h4 {
     color: ${({ theme }) => theme.color.N700};
   }
@@ -73,4 +72,28 @@ export const InfoBoxSTY = styled.div`
       }
     }
   }
+  /* --- V2 --- */
+  width: 100%;
+  height: fit-content;
+  border: 1px solid ${({ theme }) => theme.color.N300};
+  border-radius: 4px;
+  padding: 0;
+  box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
+
+  .info-title {
+    width: 100%;
+    background: ${({ theme }) => theme.color.N20};
+    padding: 8px 16px;
+    margin-bottom: 0;
+  }
+  ul {
+    li {
+      .infoBox__label {
+      }
+      .infoBox__value {
+      }
+    }
+  }
+
+  /* --- V2 --- */
 `;

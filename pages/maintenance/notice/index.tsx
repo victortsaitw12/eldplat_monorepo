@@ -6,7 +6,7 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import MaintenanceNoticeList from "@contents/maintenance/Notice/NoticeList";
@@ -144,7 +144,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <TableWrapper
+      <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
@@ -170,7 +170,7 @@ const Page: NextPageWithLayout<never> = () => {
             setReminderNo={setReminderNo}
           />
         </FilterWrapper>
-      </TableWrapper>
+      </TabsWrapper>
       {isDrawerOpen && (
         <Drawer
           tabName={["新增維保計畫"]}

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
-  /* width: 600px; */
-  height: calc(100% - 20px);
   margin: 10px;
 `;

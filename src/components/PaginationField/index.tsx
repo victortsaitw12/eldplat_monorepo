@@ -86,36 +86,32 @@ function PaginationField({
 
   return (
     <BodySTY>
-      <div className="container-pagination">
-        <span>
-          第{startItem}-{endItem}筆, 共{totalItems}筆
-        </span>
-        <div className="actions">
-          <IconButton
-            icon={ChevronLeftIcon}
-            onClick={(event: any) => handlePrevPage(event)}
-            style={{
-              minHeight: "24px",
-              minWidth: "24px",
-              width: "24px",
-              height: "24px"
-            }}
-            disabled={pageInfo.page_Index === 1 || undefined}
-          />
-          <IconButton
-            icon={ChevronRightIcon}
-            onClick={(event: any) => handleNextPage(event)}
-            style={{
-              minHeight: "24px",
-              minWidth: "24px",
-              width: "24px",
-              height: "24px"
-            }}
-            disabled={pageInfo.page_Index === pageInfo.last_Page || undefined}
-          />
-        </div>
+      <div className="pageTotal">共 {totalItems} 筆</div>
+      <div className="actions">
+        <IconButton
+          icon={ChevronLeftIcon}
+          onClick={(event: any) => handlePrevPage(event)}
+          style={{
+            minHeight: "24px",
+            minWidth: "24px",
+            width: "24px",
+            height: "24px"
+          }}
+          disabled={pageInfo.page_Index === 1 || undefined}
+        />
+        <span className="actions__page">{pageInfo?.page_Index}</span>
+        <IconButton
+          icon={ChevronRightIcon}
+          onClick={(event: any) => handleNextPage(event)}
+          style={{
+            minHeight: "24px",
+            minWidth: "24px",
+            width: "24px",
+            height: "24px"
+          }}
+          disabled={pageInfo.page_Index === pageInfo.last_Page || undefined}
+        />
         <div>
-          <span>每頁筆數</span>
           <Select
             defaultValue={10}
             style={{ marginLeft: "8px", height: "24px" }}
@@ -123,7 +119,7 @@ function PaginationField({
           >
             {pageSizeOption.map((item: number, i) => (
               <option key={`items-${i}`} value={item}>
-                {item}
+                {item}筆/頁
               </option>
             ))}
           </Select>

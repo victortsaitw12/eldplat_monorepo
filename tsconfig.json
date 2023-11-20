@@ -37,7 +37,8 @@
     "additional.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/*.js"
+    "pages/api/*.js",
+    "pages/api/org/*.js"
   ],
   "exclude": ["node_modules"]
 }
