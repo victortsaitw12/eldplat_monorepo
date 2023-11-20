@@ -25,14 +25,13 @@ const RoleList = ({ data }: I_Props) => {
     router.push(`/role/detail/${id}?editPage=edit`);
   };
   // ------- render ------- //
-
-  const dataReorg = data.map((item, i) => {
-    const descriptionToString = item["description"].join(", ");
+  const dataFitTable = data.map((item, i) => {
+    // const descriptionToString = item["description"].join(", ");
     return {
-      id: item["id"],
+      id: item["role_no"],
       module_name: item["module_name"],
       role_name: item["role_name"],
-      description: descriptionToString,
+      role_desc: item["role_desc"],
       action: (
         <IconBtn
           tip="編輯"
@@ -50,7 +49,7 @@ const RoleList = ({ data }: I_Props) => {
   return (
     <BodySTY>
       <PaginationField />
-      <Table titles={tableTitleArr} data={dataReorg} onView={handleView} />
+      <Table titles={tableTitleArr} data={dataFitTable} onView={handleView} />
     </BodySTY>
   );
 };

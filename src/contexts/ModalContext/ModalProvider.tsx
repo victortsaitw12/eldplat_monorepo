@@ -2,7 +2,7 @@ import React from "react";
 import LeavePageModal from "@components/Modal/LeavePageModal";
 import { useConfirmation } from "@hooks/useConfirmation";
 
-let defaultModal: any;
+const defaultModal: any = null;
 export const ModalContext = React.createContext(defaultModal);
 
 export function ModalProvider({ children }: { children: any }) {
@@ -24,7 +24,7 @@ export function ModalProvider({ children }: { children: any }) {
     );
   };
 
-  const modal = {
+  const modalStore = {
     showLeavePageModal,
     onConfirm,
     onCancel
@@ -32,7 +32,7 @@ export function ModalProvider({ children }: { children: any }) {
 
   // ------- useEffect ------- //
   return (
-    <ModalContext.Provider value={{ modal }}>
+    <ModalContext.Provider value={modalStore}>
       {children}
       {modalContent}
     </ModalContext.Provider>

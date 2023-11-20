@@ -1,7 +1,7 @@
 import React from "react";
 import { BodySTY } from "./style";
 
-import { I_RoleItem } from "@services/role/getRoleList";
+import { I_RoleListItem } from "@services/role/getRoleList";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 import Accordion, { I_AccordionItem } from "@components/Accordion";
@@ -75,6 +75,6 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
 export default RoleInfoBox;
 
 interface I_Props {
-  data: I_RoleItem;
+  data: I_RoleListItem;
   isEdit: boolean;
 }
