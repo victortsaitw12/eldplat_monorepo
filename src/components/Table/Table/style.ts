@@ -38,10 +38,15 @@ export const TableSTY = styled.table`
     color: ${({ theme }) => theme.color.N400};
     font-weight: ${({ theme }) => theme.fontWeight.Heading400};
     font-size: ${({ theme }) => theme.fontSize.Headline400};
+    pointer-events: none;
   }
-  tr:hover {
-    background-color: #f9fafc;
+  tbody tr {
+    cursor: pointer;
+    &:hover {
+      background-color: #f9fafc;
+    }
   }
+
   td,
   th {
     text-align: left;
