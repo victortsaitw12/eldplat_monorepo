@@ -2,7 +2,7 @@ import API_Path from "./apiPath";
 import { I_UserItem } from "./getUserList";
 
 export const getOneAccount = async () => {
-  return DUMMY_DATA.DataList[0];
+  return DUMMY_DATA;
 
   //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
   //     method: "POST",
@@ -160,13 +160,13 @@ const DUMMY_DATA: I_responseBody = {
 export interface I_responseBody {
   StatusCode: string;
   Message: string;
-  DataList: I_UserDetailItem[];
+  DataList: I_AccountDetailItem[];
   Result: boolean;
   ResultString: string;
   ResultInt: number;
 }
 
-export interface I_UserDetailItem {
+export interface I_AccountDetailItem {
   image?: string;
   account_no: string;
   account_pw: string;
@@ -191,18 +191,16 @@ export interface I_UserDetailItem {
 }
 
 export interface I_AccountRole {
-  module_no: string;
-  module_name: string;
-  // role_no: string;
-  // role_name: string;
-  // role_desc: string;
-  roles: I_RoleItem[];
+  org_no: string;
+  org_name: string;
+  org_enb: boolean;
+  sublayer: I_RoleItem[];
 }
 
 export interface I_RoleItem {
-  role_no: string;
-  role_name: string;
-  is_select: boolean;
+  org_no: string;
+  org_name: string;
+  org_enb: boolean;
 }
 
 // TODO 統一引用 import {I_PageInfo} from "@components/PaginationField"

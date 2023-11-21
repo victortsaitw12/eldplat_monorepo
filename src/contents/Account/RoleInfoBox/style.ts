@@ -27,13 +27,18 @@ export const BodySTY = styled.div`
     }
   }
 
-  .role--view {
+  .roles--view {
+    display: flex;
+    gap: 8px;
     padding: 6px 16px;
-    .module {
+    .roles__module {
+      min-width: 80px;
       font-size: ${({ theme }) => theme.fontSize.Headline500};
       font-weight: ${({ theme }) => theme.fontWeight.Headline500};
     }
-    .role {
+    .roles__role {
+      display: flex;
+      gap: 8px;
     }
   }
 

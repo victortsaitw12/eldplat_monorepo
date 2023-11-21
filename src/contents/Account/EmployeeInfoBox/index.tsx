@@ -45,7 +45,16 @@ const EmployeeInfoBox = ({ data, isEdit }: I_Props) => {
       label: "職稱",
       editEle: <TextInput placeholder="請輸入職稱" />,
       value: data.account_no || "--"
-    }
+    },
+    isEdit
+      ? {}
+      : {
+          readonly: false,
+          req: true,
+          label: "帳號狀態",
+          editEle: "",
+          value: data.invt_sts || "--"
+        }
   ];
   return (
     <BodySTY className="employee">

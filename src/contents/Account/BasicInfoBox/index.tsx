@@ -3,14 +3,15 @@ import {
   TextInput,
   Textarea,
   FileUploader,
-  FileCard
+  FileCard,
+  PersonIcon
 } from "evergreen-ui";
 import Image from "next/image";
 import { BodySTY } from "./style";
 
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { I_UserDetailItem } from "@services/account/getOneAccount";
+import { I_AccountDetailItem } from "@services/account/getOneAccount";
 
 const BasicInfoBox = ({ data, isEdit }: I_Props) => {
   if (!data)
@@ -45,7 +46,9 @@ const BasicInfoBox = ({ data, isEdit }: I_Props) => {
           {data.image ? (
             <Image src="" width={120} height={150} alt="Picture of the user" />
           ) : (
-            <FileCard name="upload" />
+            <div className="basic__image">
+              <PersonIcon />
+            </div>
           )}
         </div>
       )
@@ -91,6 +94,6 @@ const BasicInfoBox = ({ data, isEdit }: I_Props) => {
 export default BasicInfoBox;
 
 interface I_Props {
-  data: I_UserDetailItem;
+  data: I_AccountDetailItem;
   isEdit: boolean;
 }

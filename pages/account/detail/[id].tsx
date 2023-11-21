@@ -9,7 +9,7 @@ import BasicInfoBox from "@contents/Account/BasicInfoBox";
 import EmployeeInfoBox from "@contents/Account/EmployeeInfoBox";
 import {
   getOneAccount,
-  I_UserDetailItem
+  I_AccountDetailItem
 } from "@services/account/getOneAccount";
 import ControlBar from "@contents/Account/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
@@ -20,7 +20,7 @@ const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const modal = React.useContext(ModalContext);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-  const [data, setData] = React.useState<I_UserDetailItem | null>(null);
+  const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const isEdit = editPage === "edit";
@@ -29,7 +29,8 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const result = await getOneAccount();
+      const res = await getOneAccount();
+      const result = res.DataList[0];
       setData(result);
     } catch (e: any) {
       console.log(e);
