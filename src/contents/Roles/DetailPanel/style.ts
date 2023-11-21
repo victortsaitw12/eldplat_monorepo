@@ -3,11 +3,16 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   width: 275px;
   padding: 1rem;
+  .disabled {
+    select {
+      background: ${({ theme }) => theme.color.N20};
+      color: ${({ theme }) => theme.color.N80};
+    }
+  }
 
   /* infoBox */
   .info-title {
     width: 100%;
-    background: ${({ theme }) => theme.color.N300};
     padding: 8px 16px;
   }
   ul {

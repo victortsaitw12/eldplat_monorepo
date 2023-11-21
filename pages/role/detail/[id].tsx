@@ -232,8 +232,16 @@ const Page: NextPageWithLayout<never> = () => {
       <BodySTY>
         {data && (
           <>
-            <DetailPanel data={data} isEdit={editPage === "edit"} />
-            <AuthPanel data={data.func_auth} isEdit={editPage === "edit"} />
+            <DetailPanel
+              data={data}
+              isEdit={editPage === "edit"}
+              isCreate={isCreate}
+            />
+            <AuthPanel
+              data={data.func_auth}
+              isEdit={editPage === "edit"}
+              isCreate={isCreate}
+            />
           </>
         )}
       </BodySTY>
@@ -243,3 +251,63 @@ const Page: NextPageWithLayout<never> = () => {
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;
+
+// ===== VARIABLES NOT IN RENDERS ===== //
+const defaultData = {
+  role_name: "", //角色名稱
+  role_desc: "", // 職責敘述
+  role_tp: "O", //????
+  module_no: "bus", // Eldplat only has bus for now
+  creorgno: "o-0001", //from session
+  func_auth: [
+    {
+      fg_no: "org",
+      func_no: "org",
+      func_name: "組織設定",
+      module_no: "org",
+      func_element: [
+        {
+          element_no: "btnAdd",
+          element_name: "新增下級",
+          element_default: "1"
+        },
+        {
+          element_no: "btnEdit",
+          element_name: "編輯組織",
+          element_default: "2"
+        }
+      ]
+    },
+    {
+      fg_no: "bus",
+      func_no: "bus",
+      // func_name: "bus",
+      module_no: "bus",
+      func_element: [
+        {
+          element_no: "btnAdd",
+          element_default: "1"
+        },
+        {
+          element_no: "btnEdit",
+          element_default: "2"
+        }
+      ]
+    },
+    {
+      fg_no: "account",
+      func_no: "org",
+      module_no: "sys",
+      func_element: [
+        {
+          element_no: "btnAdd",
+          element_default: "1"
+        },
+        {
+          element_no: "btnEdit",
+          element_default: "2"
+        }
+      ]
+    }
+  ]
+};

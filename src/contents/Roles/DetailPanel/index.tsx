@@ -6,7 +6,7 @@ import { I_RoleListItem } from "@services/role/getRoleList";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 
-const DetailPanel = ({ data, isEdit }: I_Props) => {
+const DetailPanel = ({ data, isEdit, isCreate }: I_Props) => {
   const [isEnabled, setIsEnabled] = React.useState(true);
 
   if (!data)
@@ -23,13 +23,12 @@ const DetailPanel = ({ data, isEdit }: I_Props) => {
       req: false,
       label: "模組",
       editEle: (
-        <Select disabled>
+        <Select disabled className={`${"disabled"}`}>
           <option value="foo" selected>
             {data.module_name || "--"}
           </option>
         </Select>
       ),
-
       value: data.module_name || "--"
     },
     {
@@ -48,27 +47,29 @@ const DetailPanel = ({ data, isEdit }: I_Props) => {
       ),
       value: data.role_desc || "--"
     },
-    {
-      readonly: false,
-      req: true,
-      label: "啟用",
-      editEle: (
-        <div>
-          <Switch
-            checked={isEnabled}
-            onChange={(e) => setIsEnabled(e.target.checked)}
-          />
-          <span>啟用</span>
-        </div>
-      ),
-      value:
-        (
-          <Switch
-            checked={isEnabled}
-            onChange={(e) => setIsEnabled(e.target.checked)}
-          />
-        ) || "--"
-    }
+    isCreate
+      ? {}
+      : {
+          readonly: false,
+          req: true,
+          label: "啟用",
+          editEle: (
+            <div>
+              <Switch
+                checked={isEnabled}
+                onChange={(e) => setIsEnabled(e.target.checked)}
+              />
+              <span>啟用</span>
+            </div>
+          ),
+          value:
+            (
+              <Switch
+                checked={isEnabled}
+                onChange={(e) => setIsEnabled(e.target.checked)}
+              />
+            ) || "--"
+        }
   ];
   return (
     <BodySTY>
@@ -82,4 +83,5 @@ export default DetailPanel;
 interface I_Props {
   data: I_RoleListItem;
   isEdit: boolean;
+  isCreate: boolean;
 }

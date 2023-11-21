@@ -30,8 +30,45 @@ const DUMMY_DATA = {
       module_name: "車管系統",
       func_auth: [
         {
+          fg_no: "org",
+          func_no: "org",
+          func_name: "組織設定",
+          module_no: "org",
+          func_element: [
+            {
+              element_no: "btnAdd",
+              element_name: "新增下級",
+              element_default: "1"
+            },
+            {
+              element_no: "btnEdit",
+              element_name: "編輯組織",
+              element_default: "2"
+            }
+          ]
+        },
+        {
+          fg_no: "role",
+          func_no: "role",
+          func_name: "角色權限",
+          module_no: "role",
+          func_element: [
+            {
+              element_no: "btnAdd",
+              element_name: "新增角色",
+              element_default: "1"
+            },
+            {
+              element_no: "btnEdit",
+              element_name: "編輯角色",
+              element_default: "2"
+            }
+          ]
+        },
+        {
           fg_no: "bus",
           func_no: "bus",
+          func_name: "車輛列表",
           module_no: "bus",
           func_element: [
             {
@@ -54,6 +91,7 @@ const DUMMY_DATA = {
         {
           fg_no: "customer",
           func_no: "customer",
+          func_name: "客戶列表",
           module_no: "bus",
           func_element: [
             {
@@ -69,79 +107,6 @@ const DUMMY_DATA = {
             {
               element_no: "btnView",
               element_name: "檢視客戶",
-              element_default: "3"
-            }
-          ]
-        },
-        {
-          fg_no: "driver",
-          func_no: "driver",
-          module_no: "bus",
-          func_element: [
-            {
-              element_no: "btnAdd",
-              element_name: "新增駕駛",
-              element_default: "3"
-            },
-            {
-              element_no: "btnEdit",
-              element_name: "編輯駕駛",
-              element_default: "3"
-            }
-          ]
-        },
-        {
-          fg_no: "drover",
-          func_no: "driver",
-          module_no: "bus",
-          func_element: [
-            {
-              element_no: "btnView",
-              element_name: "檢視駕駛",
-              element_default: "3"
-            }
-          ]
-        },
-        {
-          fg_no: "account",
-          func_no: "org",
-          module_no: "sys",
-          func_element: [
-            {
-              element_no: "btnAdd",
-              element_name: "新增組織",
-              element_default: "3"
-            },
-            {
-              element_no: "btnEdit",
-              element_name: "編輯組織",
-              element_default: "3"
-            },
-            {
-              element_no: "btnView",
-              element_name: "檢視組織",
-              element_default: "3"
-            }
-          ]
-        },
-        {
-          fg_no: "account",
-          func_no: "role",
-          module_no: "sys",
-          func_element: [
-            {
-              element_no: "btnAdd",
-              element_name: "新增帳號",
-              element_default: "3"
-            },
-            {
-              element_no: "btnEdit",
-              element_name: "編輯角色",
-              element_default: "3"
-            },
-            {
-              element_no: "btnView",
-              element_name: "檢視角色",
               element_default: "3"
             }
           ]
@@ -176,12 +141,13 @@ export interface I_RoleDetail {
 export interface I_AuthFuncItem {
   fg_no: string;
   func_no: string;
+  func_name: string;
   module_no: string;
-  func_element: [
-    {
-      element_no: string;
-      element_name: string;
-      element_default: string;
-    }
-  ];
+  func_element: I_AuthFuncElement[];
+}
+
+interface I_AuthFuncElement {
+  element_no: string;
+  element_name: string;
+  element_default: string;
 }
