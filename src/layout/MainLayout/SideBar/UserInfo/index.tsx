@@ -74,10 +74,8 @@ function Index(props: any) {
           </button>
         </Popover>
       )}
-
-      {/*
-      // TODO to be removed after feat: Log in/ Log out
-       {session ? (
+      {/* // TODO to be removed after feat: Log in/ Log out */}
+      {/* {session ? (
         <IconButton text="登出" onClick={signOut}>
           <LogOutIcon />
         </IconButton>

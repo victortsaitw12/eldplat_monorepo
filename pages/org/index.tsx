@@ -3,6 +3,7 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useSession } from "next-auth/react";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { BodySTY } from "./style";
+import { useRouter } from "next/router";
 
 import { getLayout } from "@layout/MainLayout";
 import { getOrgList } from "@services/org/getOrgList";
@@ -14,6 +15,7 @@ const Page: NextPageWithLayout<{
   locale: string;
   setPageType: (t: string) => void;
 }> = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const userId = "admin"; // TODO To be replaced
   const [data, setData] = React.useState([]);
@@ -57,6 +59,10 @@ const Page: NextPageWithLayout<{
   React.useEffect(() => {
     fetchData();
   }, []);
+  React.useEffect(() => {
+    if (session) return;
+    if (!session) router.push("/login");
+  }, [session]);
 
   // ------- render ------- //
   if (isLoading)
@@ -65,8 +71,6 @@ const Page: NextPageWithLayout<{
         <LoadingSpinner />
       </BodySTY>
     );
-
-  if (!session) return <div>Your're not signed in. redirect to login in</div>;
 
   return (
     <BodySTY>

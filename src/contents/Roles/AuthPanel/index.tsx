@@ -16,36 +16,6 @@ const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
   console.log("🍅 data", data);
 
   //------ functions ------//
-  // const getDataFitAccordion = (data: any) => {
-  //   if (typeof data == "I_AuthFuncItem[]") {
-  //     data as I_AuthFuncItem[];
-  //   }
-  //   return data.map((item: I_AuthFuncItem | I_AuthFuncElement) => {
-  //     const isParent = item["func_name"] ? true : false;
-  //     const prepItem: I_AccordionItem = {
-  //       label: (
-  //         <div className="accordion">
-  //           <div className="accordion__label">
-  //             {isParent ? item["func_name"] : item["element_name"]}
-  //           </div>
-  //           <div className="accordion__value">
-  //             {isParent ? (
-  //               <Switch onChange={handleChange} />
-  //             ) : (
-  //               <RadioOptions name={item["element_no"]} />
-  //             )}
-  //           </div>
-  //         </div>
-  //       )
-  //     };
-
-  //     if (item["func_element"] && item["func_element"].length > 0) {
-  //       prepItem.children = getDataFitAccordion(item["func_element"]);
-  //     }
-
-  //     return prepItem;
-  //   });
-  // };
 
   // ------- render ------- //
   const dataFitInfoBox = data.map((item: I_AuthFuncItem) => {
