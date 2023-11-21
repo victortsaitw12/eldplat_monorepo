@@ -3,27 +3,44 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   padding: 1rem;
   flex: 10;
-  .accordion {
+  .disabled {
+    background: ${({ theme }) => theme.color.N40};
+  }
+  .authFunc {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding: 8px 16px;
-    &__label {
-      flex: 1;
-      align-self: center;
-    }
-    &__value {
-      flex: 2;
+    flex-direction: column;
+    &__title {
+      width: 100%;
       display: flex;
-      justify-content: flex-end;
-      & > div {
+      justify-content: space-between;
+    }
+    &__contents {
+      display: flex;
+      flex-direction: column;
+      .authFunc__element {
         display: flex;
-        gap: 32px;
+        .label {
+          padding-left: 16px;
+        }
+        .value > div {
+          gap: 32px;
+          display: flex;
+        }
       }
     }
-  }
-  .acc__item {
-    padding: 8px 16px;
+    &__item {
+      padding: 8px 16px;
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      .label {
+        flex: 1;
+      }
+      .value {
+        flex: 2;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
   }
 
   /* infoBox */

@@ -1,6 +1,11 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Switch, RadioGroup } from "evergreen-ui";
+import {
+  Switch,
+  RadioGroup,
+  CaretDownIcon,
+  CaretRightIcon
+} from "evergreen-ui";
 import { BodySTY, FuncValSTY } from "./style";
 
 import { I_AuthFuncItem, I_AuthFuncElement } from "@services/role/getOneRole";
@@ -10,41 +15,37 @@ import Accordion, { I_AccordionItem } from "@components/Accordion";
 const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
   console.log("🍅 data", data);
 
-  const handleChange = (value: string) => {
-    console.log("🍅 v:", value);
-  };
-
   //------ functions ------//
-  const getDataFitAccordion = (data: any) => {
-    if (typeof data == "I_AuthFuncItem[]") {
-      data as I_AuthFuncItem[];
-    }
-    return data.map((item: I_AuthFuncItem | I_AuthFuncElement) => {
-      const isParent = item["func_name"] ? true : false;
-      const prepItem: I_AccordionItem = {
-        label: (
-          <div className="accordion">
-            <div className="accordion__label">
-              {isParent ? item["func_name"] : item["element_name"]}
-            </div>
-            <div className="accordion__value">
-              {isParent ? (
-                <Switch onChange={handleChange} />
-              ) : (
-                <RadioOptions name={item["element_no"]} />
-              )}
-            </div>
-          </div>
-        )
-      };
+  // const getDataFitAccordion = (data: any) => {
+  //   if (typeof data == "I_AuthFuncItem[]") {
+  //     data as I_AuthFuncItem[];
+  //   }
+  //   return data.map((item: I_AuthFuncItem | I_AuthFuncElement) => {
+  //     const isParent = item["func_name"] ? true : false;
+  //     const prepItem: I_AccordionItem = {
+  //       label: (
+  //         <div className="accordion">
+  //           <div className="accordion__label">
+  //             {isParent ? item["func_name"] : item["element_name"]}
+  //           </div>
+  //           <div className="accordion__value">
+  //             {isParent ? (
+  //               <Switch onChange={handleChange} />
+  //             ) : (
+  //               <RadioOptions name={item["element_no"]} />
+  //             )}
+  //           </div>
+  //         </div>
+  //       )
+  //     };
 
-      if (item["func_element"] && item["func_element"].length > 0) {
-        prepItem.children = getDataFitAccordion(item["func_element"]);
-      }
+  //     if (item["func_element"] && item["func_element"].length > 0) {
+  //       prepItem.children = getDataFitAccordion(item["func_element"]);
+  //     }
 
-      return prepItem;
-    });
-  };
+  //     return prepItem;
+  //   });
+  // };
 
   // ------- render ------- //
   const dataFitInfoBox = data.map((item: I_AuthFuncItem) => {
@@ -53,7 +54,8 @@ const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
       req: false,
       label: "",
       editEle: (
-        <Accordion data={getDataFitAccordion([item])} isTopLayer={false} />
+        <AutnFuncModule data={item} />
+        // <Accordion data={getDataFitAccordion([item])} isTopLayer={false} />
       ),
       value: (
         <div className="roles--view">
@@ -76,44 +78,75 @@ const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
   );
 };
 
-const AutnFuncModule = (data: I_AutnFuncItem) => {
-  const [isOpen, setIsOpen] = React.useState<boolean>(isUnfold || true);
+const AutnFuncModule = ({ data }: { data: I_AuthFuncItem }) => {
+  const [isOpen, setIsOpen] = React.useState<boolean>(true);
+  const [isEnabled, setIsEnabled] = React.useState<boolean>(true);
+
+  const handleValueChange = (value: string) => {
+    console.log("🍅 v:", value);
+  };
+
+  const handleEnabled = (value: string) => {
+    setIsEnabled((prev) => !prev);
+  };
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <>
-      <div className="acc__item" onClick={handleToggle}>
-        {padStartArray}
-        {isOpen ? <CaretDownIcon /> : <CaretRightIcon />}
-        {itemData.label}
+    <div className="authFunc">
+      <div className="authFunc__title authFunc__item" onClick={handleToggle}>
+        <div className="label">
+          {isOpen ? <CaretDownIcon /> : <CaretRightIcon />}
+          {data.func_name}{" "}
+        </div>
+        <Switch
+          className="value"
+          checked={isEnabled}
+          onChange={handleEnabled}
+        />
       </div>
       <div
-        className={`acc__items ${isOpen ? "" : "hide"}   ${
-          isFold ? "hide" : ""
+        className={`authFunc__contents ${isOpen ? "" : "hide"} ${
+          isEnabled ? "" : "disabled"
         }`}
       >
-        {hasChildren && itemData.children && (
-          <Accordion
-            data={itemData.children}
-            layerNum={(layerNum || 0) + 1}
-            isUnfold={isUnfold}
-            isFold={isFold}
-          />
-        )}
+        {data.func_element.map((elem: I_AuthFuncElement, i: number) => (
+          <div
+            className={"authFunc__element authFunc__item"}
+            key={`funcElem-${i}`}
+          >
+            <div className="label">{elem.element_name}</div>
+            <div className="value">
+              <RadioOptions
+                name={elem.element_no}
+                onChange={handleValueChange}
+              />
+            </div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 
-const RadioOptions = (name: string) => {
+const RadioOptions = ({
+  name,
+  onChange
+}: {
+  name: string;
+  onChange: (v: string) => void;
+}) => {
   const [value, setValue] = React.useState("1");
   const [options] = React.useState([
     { label: "顯示並可用", value: "1" },
     { label: "僅供檢視", value: "2" },
     { label: "不顯示", value: "3" }
   ]);
+
+  React.useEffect(() => {
+    onChange(value);
+  }, [value, onChange]);
   return (
     <RadioGroup
       label=""

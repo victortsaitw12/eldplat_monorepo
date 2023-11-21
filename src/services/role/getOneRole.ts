@@ -143,7 +143,7 @@ export interface I_AuthFuncItem {
   func_no: string;
   func_name: string;
   module_no: string;
-  func_element: I_AuthFuncItem[];
+  func_element: I_AuthFuncElement[];
 }
 
 export interface I_AuthFuncElement {
