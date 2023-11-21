@@ -64,10 +64,13 @@ const DetailPanel = ({ data, isEdit, isCreate }: I_Props) => {
           ),
           value:
             (
-              <Switch
-                checked={isEnabled}
-                onChange={(e) => setIsEnabled(e.target.checked)}
-              />
+              <>
+                <Switch
+                  checked={isEnabled}
+                  onChange={(e) => setIsEnabled(e.target.checked)}
+                />
+                <span>啟用</span>
+              </>
             ) || "--"
         }
   ];

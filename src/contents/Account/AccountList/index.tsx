@@ -23,11 +23,11 @@ const AccountList = ({ data }: I_Props) => {
 
   //------ functions ------//
   const handleView = (id: string) => {
-    router.push(`/user/detail/${id}`);
+    router.push(`/account/detail/${id}`);
   };
 
   const handleEdit = (id: string) => {
-    router.push(`/role/detail/${id}?editPage=edit`);
+    router.push(`/account/detail/${id}?editPage=edit`);
   };
 
   // ------- render ------- //
