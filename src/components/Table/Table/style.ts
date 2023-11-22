@@ -6,6 +6,7 @@ export const DivSTY = styled.div`
   border-radius: 4px;
   header {
     padding: 6px 20px;
+    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
   }
   footer {
     padding: 6px 20px;
@@ -16,9 +17,8 @@ export const DivSTY = styled.div`
 export const TableSTY = styled.table`
   /* width: 100%; */
   min-width: 100%;
-  border: 1px solid ${({ theme }) => theme.color.N40};
-  /* border-collapse: collapse; */
-  border-radius: 4px;
+  border-collapse: collapse;
+  /* border-radius: 4px; */
   border-spacing: 0px;
   overflow: hidden;
   /* action buttons */
@@ -35,15 +35,23 @@ export const TableSTY = styled.table`
   thead tr {
     background-color: ${({ theme }) => theme.color.N0};
     text-align: left;
-    color: ${({ theme }) => theme.color.N400};
+    color: ${({ theme }) => theme.color.N200};
     font-weight: ${({ theme }) => theme.fontWeight.Heading400};
     font-size: ${({ theme }) => theme.fontSize.Headline400};
     pointer-events: none;
+    /* border-bottom: 1px solid ${({ theme }) => theme.color.N40}; */
   }
   tbody tr {
     cursor: pointer;
     &:hover {
       background-color: #f9fafc;
+    }
+    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+    :first-child {
+      border-top: 1px solid ${({ theme }) => theme.color.N40};
+    }
+    :last-child {
+      border-bottom: none;
     }
   }
 
@@ -52,15 +60,11 @@ export const TableSTY = styled.table`
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
-    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
     span {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: flex-start;
     }
-  }
-  tr:last-child td {
-    border-bottom: none;
   }
   th {
     padding: 12px 20px 9px 20px;
