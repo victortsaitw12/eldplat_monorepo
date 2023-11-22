@@ -42,6 +42,14 @@ export interface I_GetDriverListRes {
   };
 }
 
+export interface I_DriverItem {
+  driver_no: string;
+  driver_name: string;
+  english_name: string;
+  team_name: string;
+  region: string;
+}
+
 // ------- MOCK DATA ------- //
 const DUMMY_DATA = {
   StatusCode: "200",
@@ -67,14 +75,50 @@ const DUMMY_DATA = {
       english_name: "JUNG-YAO  HSIEH",
       team_name: "第二車隊",
       region: "桃園"
-    },
+    }
   ],
-  ConditionList: [],
+  ConditionList: [
+    {
+      field_Name: "User_Name",
+      arrayConditions: ["like", "equal"],
+      displayType: "search",
+      dataType: "string",
+      label: "駕駛-名"
+    },
+    {
+      field_Name: "User_First_Name",
+      arrayConditions: ["like", "equal"],
+      displayType: "search",
+      dataType: "string",
+      label: "駕駛-姓"
+    },
+    {
+      field_Name: "Short_Schd_Date",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "月份"
+    },
+    {
+      field_Name: "Dsph_Area",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "區域"
+    },
+    {
+      field_Name: "Dsph_City",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "都市"
+    }
+  ],
   PageInfo: {
     page_Index: 1,
     page_Size: 1000,
     arrangement: "desc",
-    total: 2,
+    total: 3,
     last_Page: 1
   }
 };
@@ -105,7 +149,7 @@ export const getAllDriver = async (
     body: JSON.stringify({
       filters: driverFilter,
       filter_Needed: true,
-      pageInfo: pageQuery,
+      pageInfo: pageQuery
     })
   });
   // return res.json();

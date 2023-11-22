@@ -13,6 +13,32 @@ export const DriverListSTY = styled.div`
       left: 0;
     }
   }
+  th,
+  td {
+    > span {
+      justify-content: flex-start;
+    }
+
+    :first-child {
+      width: 5%;
+    }
+
+    :nth-child(2) {
+      width: 10%;
+    }
+
+    :nth-child(3) {
+      width: 20%;
+    }
+
+    :nth-child(4) {
+      width: 10%;
+    }
+
+    :last-child {
+      width: 5%;
+    }
+  }
   th {
     /* &:nth-child(7) > span {
       justify-content: flex-end !important;
@@ -23,9 +49,6 @@ export const DriverListSTY = styled.div`
     &:last-child > span {
       justify-content: center !important;
     } */
-    > span {
-      justify-content: flex-start;
-    }
   }
   td {
     /* &:nth-child(7) > div {
@@ -34,9 +57,6 @@ export const DriverListSTY = styled.div`
     &:nth-child(9) > div {
       justify-content: center !important;
     } */
-    > span {
-      justify-content: flex-start;
-    }
     /* 駕駛列表頁確認全部顯示，過長折行(先不用)
     .data-row {
       width: 6rem;
