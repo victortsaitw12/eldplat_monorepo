@@ -20,7 +20,7 @@ const breadcrumbs: I_routers = {
   "/role/detail/[id]": [
     { label: "首頁", url: "/" },
     { label: "角色權限", url: "/role" },
-    { label: "檢視角色" }
+    { label: "新增、檢視、編輯角色" }
   ],
   "/account": [
     { label: "首頁", url: "/" },

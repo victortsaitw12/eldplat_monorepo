@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
-import { getUser } from "@services/sys/getUser";
+import { login } from "@services/account/login";
+import { getMenu } from "@services/sys/getMenu";
 //CATCH-ALL ROUTE
 
 //All requests to /api/auth/* (signIn, callback, signOut, etc.) will automatically be handled
@@ -32,9 +33,19 @@ export const authOptions = {
       async authorize(credentials, req) {
         // always return user from frontend for now
         if (!req.body.email || !req.body.password) return null;
-        // TODO:　authenticate user: fetch API response
-        const user = await getUser();
-        if (!user) return null;
+        // const response = await login(req.body.email, req.body.password);
+        // if (response.StatusCode !== "200") return null;
+        // const result = response.DataList[0];
+        const user = {
+          account_no: "admin", //result.account_no
+          account_name: "Admin System", //result.account_name
+          role: "平台管理員 DUMMY",
+          //email: "user@gmail.com",
+          org_no: "o", //result.orgs[0].org_no
+          menuData: {}
+        };
+        const resMenu = await getMenu(user.account_no);
+        user.menuData = resMenu.DataList[0];
         return user;
       }
     })
@@ -68,9 +79,10 @@ export const authOptions = {
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
-      session.user.username = token.username;
-      session.user.userID = token.userID;
+      session.user.account_no = token.account_no;
+      session.user.account_name = token.account_name;
       session.user.role = token.role;
+      session.user.email = token.email;
       session.user.menuData = token.menuData;
       return session;
       // The session object is not persisted server side
@@ -84,7 +96,8 @@ export const authOptions = {
 
       if (account) {
         token.accessToken = account.access_token;
-        token.username = user.username;
+        token.account_no = user.account_no;
+        token.account_name = user.account_name;
         token.role = user.role;
         token.menuData = user.menuData;
       }

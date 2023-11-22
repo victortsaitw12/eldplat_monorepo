@@ -1,17 +1,30 @@
-// import { I_PageInfo } from "@components/PaginationField";
-import API_Path from "./apiPath";
-
-export const getUserList = async () => {
+export const getAccountList = async (userID: string) => {
   return DUMMY_DATA.ContentList;
 
-  //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-  //     }
-  //   });
-  //   return await res.json();
+  const apiName = "getAccountList";
+  const reqMethod = "POST";
+  const reqHeaders = { UK: userID };
+  const requestBody = {
+    x: "",
+    filter_needed: true,
+    // org_no: "o-0002", ??不用帶嗎?
+    page_info: {
+      page_Index: 1,
+      page_Size: 10,
+      orderby: "account_no",
+      arrangement: "ASC",
+      total: 0,
+      last_Page: 0
+    }
+  };
+
+  const res = await fetch(`/api/getData?url=${apiName}`, {
+    method: reqMethod,
+    headers: reqHeaders,
+    body: JSON.stringify(requestBody)
+  });
+  const result = await res.json();
+  return result.data.ContentList;
 };
 
 // ------- MOCK DATA ------- //

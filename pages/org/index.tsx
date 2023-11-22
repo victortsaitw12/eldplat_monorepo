@@ -17,7 +17,6 @@ const Page: NextPageWithLayout<{
 }> = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const userId = "admin"; // TODO To be replaced
   const [data, setData] = React.useState([]);
   const [modalContent, setModalContent] = React.useState<I_ModalContent | null>(
     null
@@ -27,6 +26,8 @@ const Page: NextPageWithLayout<{
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
+    const userId = "admin"; // TODO To be replaced
+
     try {
       const result = await getOrgList(userId);
       setData(result);
@@ -61,7 +62,8 @@ const Page: NextPageWithLayout<{
   }, []);
   React.useEffect(() => {
     if (session) return;
-    if (!session) router.push("/login");
+    // TODO return on first render
+    // if (!session) router.push("/login");
   }, [session]);
 
   // ------- render ------- //
@@ -80,7 +82,11 @@ const Page: NextPageWithLayout<{
         onEdit={handleRenderModal.bind(null, "edit")}
       />
       {modalContent && (
-        <FormModal content={modalContent} setModalContent={setModalContent} />
+        <FormModal
+          content={modalContent}
+          setModalContent={setModalContent}
+          refetch={fetchData}
+        />
       )}
     </BodySTY>
   );

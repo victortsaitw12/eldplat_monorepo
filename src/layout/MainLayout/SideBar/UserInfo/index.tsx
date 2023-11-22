@@ -68,22 +68,18 @@ function Index(props: any) {
           <button type="button" className="user__info">
             <Avatar src="/image/avatar1.jpg" name="portrait" size={40} />
             <div className="user__info-desp text">
-              <h4 className=" text">{session.user?.username}</h4>
+              <h4 className=" text">{session.user?.account_name}</h4>
               <p className=" text">{session.user?.role}</p>
             </div>
           </button>
         </Popover>
       )}
       {/* // TODO to be removed after feat: Log in/ Log out */}
-      {/* {session ? (
-        <IconButton text="登出" onClick={signOut}>
-          <LogOutIcon />
-        </IconButton>
-      ) : (
+      {!session && (
         <IconButton text="登入" onClick={signIn}>
           <LogInIcon />
         </IconButton>
-      )} */}
+      )}
     </BodySTY>
   );
 }

@@ -24,11 +24,13 @@ function Form(props: PropsType) {
 
   // --- functions --- //
   function checkEmail(value: string) {
+    if (value.length <= 0) return true;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value);
   }
 
-  function checkPassword(password) {
+  function checkPassword(password: string) {
+    if (password.length <= 0) return true;
     const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
     return passwordRegex.test(password);
   }
@@ -102,6 +104,10 @@ function Form(props: PropsType) {
         <div className="asst__forgetPW">
           <a className="material-icons">忘記密碼</a>
         </div>
+      </div>
+      <div>
+        <div>測試帳號: admin@gmail.com</div>
+        <div>測試密碼: 12345</div>
       </div>
       <Button text={"登入"} onClick={handleLogin} />
     </BodySTY>

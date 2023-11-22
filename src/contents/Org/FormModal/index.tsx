@@ -7,7 +7,7 @@ import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 import { fetchData } from "next-auth/client/_utils";
 
-const FormModal = ({ content, setModalContent }: I_Props) => {
+const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
   const [checked, setChecked] = React.useState(true);
   const isCreate = content.isCreate;
   const defaultValues = isCreate
@@ -43,6 +43,7 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
 
       if (res.StatusCode === "200") {
         setModalContent(null);
+        refetch();
         toaster.success(`${res.Message}`, {
           duration: 1.5
         });
@@ -112,6 +113,7 @@ export default FormModal;
 interface I_Props {
   content: I_ModalContent;
   setModalContent: (v: any) => void;
+  refetch: () => void;
 }
 
 export interface I_ModalContent {

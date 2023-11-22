@@ -2,7 +2,7 @@ import API_Path from "@services/apiPath";
 import { preRequest } from "@utils/preRequest";
 
 export default async function handler(req, res) {
-  const UK = req.headers.uk;
+  const UK = req.headers.uk || null;
   const TK = await preRequest();
   const apiName = req.url.split("?url=").at(-1);
   const getOptions = {
@@ -15,11 +15,14 @@ export default async function handler(req, res) {
     }
   };
   const options =
-    req.method === "GET" ? getOptions : { ...getOptions, body: req.body };
+    req.method === "GET" && req.body
+      ? getOptions
+      : { ...getOptions, body: req.body };
 
   try {
     const response = await fetch(API_Path[apiName], options);
     const result = await response.json();
+    console.log("🍅 req:", req.body);
 
     if (
       response.status !== 200 ||
@@ -30,8 +33,6 @@ export default async function handler(req, res) {
       const errLog = await getErrLog(req, response, result);
       throw new Error(errMsg, { data: result, cause: errLog });
     }
-
-    // TODO return result when backend API is available
     res.status(200).json({ data: result });
   } catch (err) {
     res.status(500).send({
