@@ -1,12 +1,18 @@
 import React, { ReactNode } from "react";
-import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
+import {
+  NextPageWithLayout,
+  GetServerSideProps,
+  InferGetServerSidePropsType
+} from "next";
 import { BodySTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
 import BasicInfoBox from "@contents/Account/BasicInfoBox";
 import EmployeeInfoBox from "@contents/Account/EmployeeInfoBox";
+import { ParsedUrlQuery } from "querystring";
+
 import {
   getOneAccount,
   I_AccountDetailItem
@@ -16,7 +22,7 @@ import { ModalContext } from "@contexts/ModalContext/ModalProvider";
 import RoleInfoBox from "@contents/Account/RoleInfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 
-const Page: NextPageWithLayout<never> = () => {
+const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
   const modal = React.useContext(ModalContext);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
@@ -98,6 +104,25 @@ const Page: NextPageWithLayout<never> = () => {
     </>
   );
 };
+
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  context
+) => {
+  const { params } = context;
+  return {
+    props: {
+      driverNo: params!.id
+    }
+  };
+};
+
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;
+
+interface Props {
+  driverNo: string;
+}
+interface Params extends ParsedUrlQuery {
+  id: string;
+}

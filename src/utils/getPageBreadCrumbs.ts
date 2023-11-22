@@ -28,8 +28,14 @@ const breadcrumbs: I_routers = {
   ],
   "/account/detail/[id]": [
     { label: "首頁", url: "/" },
-    { label: "使用者列表", url: "/account" },
+    { label: "使用者", url: "/account" },
     { label: "檢視、編輯使用者", url: "" }
+  ],
+
+  "/account/setting/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "個人設定", url: "/account/setting" },
+    { label: "修改密碼", url: "" }
   ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 bellow

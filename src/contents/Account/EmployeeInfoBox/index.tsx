@@ -1,7 +1,7 @@
 import { Select, TextInput, Textarea } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { I_UserDetailItem } from "@services/account/getOneAccount";
+import { I_AccountDetailItem } from "@services/account/getOneAccount";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 
@@ -66,6 +66,6 @@ const EmployeeInfoBox = ({ data, isEdit }: I_Props) => {
 export default EmployeeInfoBox;
 
 interface I_Props {
-  data: I_UserDetailItem;
+  data: I_AccountDetailItem;
   isEdit: boolean;
 }
