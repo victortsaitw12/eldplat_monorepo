@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { DivSTY } from "./style";
 import { TableSTY } from "./style";
+import NoResult from "@components/NoResult";
 
 export interface I_Data {
   [key: string]: string | number | React.ReactNode;
@@ -28,65 +29,71 @@ function Table({
   footerNode,
   className
 }: I_Table) {
-  if (!data) return <p>Loading</p>;
+  const hasData = data !== undefined && data !== null && data.length > 0;
 
   return (
-    <DivSTY className={`${className} container`}>
-      {headNode && <header>{headNode}</header>}
-      <TableSTY>
-        <thead>
-          <tr>
-            {titles.map((title, i) => (
-              <th key={i}>
-                <span>{title}</span>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item: any, i) => {
-            return (
-              <tr
-                key={item.id + "-" + i}
-                onClick={onView ? () => onView(item.id) : undefined}
-              >
-                {Object.keys(item).map((key) => {
-                  if (key === "id") return;
-                  if (key === "action")
+    <>
+      <DivSTY className={`${className} container`}>
+        {headNode && <header>{headNode}</header>}
+        <TableSTY>
+          <thead>
+            <tr>
+              {titles.map((title, i) => (
+                <th key={i}>
+                  <span>{title}</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((item: any, i) => {
+              return (
+                <tr
+                  key={item.id + "-" + i}
+                  onClick={onView ? () => onView(item.id) : undefined}
+                >
+                  {Object.keys(item).map((key) => {
+                    if (key === "id") return;
+                    if (key === "action")
+                      return (
+                        <td key={item.id + key}>
+                          <div className="action">{item.action}</div>
+                        </td>
+                      );
+                    if (!item[key])
+                      return (
+                        <td key={item.id + key}>
+                          <span className="no-data">
+                            <div />
+                          </span>
+                        </td>
+                      );
                     return (
                       <td key={item.id + key}>
-                        <div className="action">{item.action}</div>
-                      </td>
-                    );
-                  if (!item[key])
-                    return (
-                      <td key={item.id + key}>
-                        <span className="no-data">
-                          <div />
+                        <span>
+                          {key === "vendor_website" ? (
+                            <Link
+                              href={`${item.vendor_website}`}
+                              legacyBehavior
+                            >
+                              <a>{item.vendor_name}</a>
+                            </Link>
+                          ) : (
+                            item[key]
+                          )}
                         </span>
                       </td>
                     );
-                  return (
-                    <td key={item.id + key}>
-                      <span>
-                        {key === "vendor_website" ? (
-                          <Link href={`${item.vendor_website}`} legacyBehavior>
-                            <a>{item.vendor_name}</a>
-                          </Link>
-                        ) : (
-                          item[key]
-                        )}
-                      </span>
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </TableSTY>
-      {footerNode && <footer>{footerNode}</footer>}
-    </DivSTY>
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </TableSTY>
+        {footerNode && <footer>{footerNode}</footer>}
+      </DivSTY>
+      {hasData ? "" : <NoResult />}
+    </>
   );
 }
 
