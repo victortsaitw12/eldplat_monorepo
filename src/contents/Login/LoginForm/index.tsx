@@ -20,6 +20,7 @@ function Form(props: PropsType) {
     email: "",
     password: ""
   });
+  const [isPasswordHide, setIsPasswordHide] = useState(true);
 
   // --- functions --- //
   function checkEmail(value: string) {
@@ -31,6 +32,10 @@ function Form(props: PropsType) {
     const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
     return passwordRegex.test(password);
   }
+
+  const handleTogglePasswordHide = () => {
+    setIsPasswordHide((prev) => !prev);
+  };
 
   // 隨時抓取輸入的帳號和密碼並存入狀態
   const handleLogin = async (e: any) => {
@@ -64,7 +69,7 @@ function Form(props: PropsType) {
       />
       <div style={{ position: "relative" }}>
         <TextInputField
-          type="password"
+          type={`${isPasswordHide ? "password" : "text"}`}
           placeholder="請輸入您的密碼"
           label="密碼"
           value={inputData.password}
@@ -78,7 +83,17 @@ function Form(props: PropsType) {
             setInputData({ ...inputData, password: e.target.value })
           }
         />
-        <EyeOffIcon style={{ position: "absolute" }} />
+        {isPasswordHide ? (
+          <EyeOffIcon
+            style={{ position: "absolute" }}
+            onClick={handleTogglePasswordHide}
+          />
+        ) : (
+          <EyeOnIcon
+            style={{ position: "absolute" }}
+            onClick={handleTogglePasswordHide}
+          />
+        )}
       </div>
       <div className="asst">
         <div className="asst__storePW">

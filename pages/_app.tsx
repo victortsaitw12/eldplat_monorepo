@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import type { AppPropsWithLayout } from "next/app";
-import { ThemeProvider } from "styled-components";
+import { useRouter, Router } from "next/router";
+import { Noto_Sans } from "next/font/google";
+import dynamic from "next/dynamic";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "styled-components";
 
 //
+import { ModalProvider } from "@contexts/ModalContext/ModalProvider";
 import { I18Provider, LOCALES } from "@contexts/i18n";
 import theme from "@styles/theme";
 import { GlobalStyles } from "@styles/global";
 // import { getVendorsLang } from "@services/vendor/getAllVendors";
-import { useRouter, Router } from "next/router";
-import { Noto_Sans } from "next/font/google";
 import LoadingModal from "@components/LoadingModal";
 import LoadingSpinner from "@components/LoadingSpinner";
-import dynamic from "next/dynamic";
 import getPageBreadCrumbs from "@utils/getPageBreadCrumbs";
 // import useConfirmation from "@hooks/useConfirmation";
-import { ModalProvider } from "@contexts/ModalContext/ModalProvider";
 
 const DynamicBreadcrumbs = dynamic(() => import("@components/Breadcrumbs"), {
   ssr: false
