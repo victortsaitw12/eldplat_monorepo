@@ -22,7 +22,7 @@ export const LoadingSpinnerSTY = styled.div`
   }
   .msg {
     overflow: hidden;
-    color: var(--neutral-n-500, #8ea8c7);
+    color: ${({ theme }) => theme.color.N70};
     text-align: center;
     text-overflow: ellipsis;
 
