@@ -16,14 +16,22 @@ function Button(props: Props) {
 
 const StyledButton = styled(Button)`
   cursor: pointer;
+
+  border: 1px solid #b3bac5;
+  border-radius: 4px;
   padding: 8px 16px;
+  /* gap: 8px; */
+
   color: ${({ theme }) => theme.color.N700};
-  font-weight: ${({ theme }) => theme.fontWeight.Paragraph100};
-  border: none;
-  border-radius: 32px;
-  gap: 8px;
   background: ${({ theme }) => theme.color.N0};
+  font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+
   transition: all 0.3s;
+
+  > .text {
+    /* line-height: 1.2; */
+  }
+
   &:hover {
     color: ${({ theme }) => theme.color.N800};
   }
@@ -40,6 +48,7 @@ const StyledButton = styled(Button)`
   &:disabled {
     color: ${({ theme }) => theme.color.N500};
     background: ${({ theme }) => theme.color.N0};
+    cursor: not-allowed;
   }
 `;
 
