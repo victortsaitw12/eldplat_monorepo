@@ -8,6 +8,7 @@ import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import ControlBar from "@components/ControlBar";
 import InfoBox from "@components/InfoBox";
+import InfoCard from "@components/InfoCard";
 
 import Image from "next/image";
 import {
@@ -87,12 +88,7 @@ const Page: NextPageWithLayout<never> = () => {
         primaryDisable={true}
       />
       <BodySTY>
-        <InfoBox
-          isEdit={false}
-          infoData={DriverInFo}
-          infoTitle="基本資料"
-          infoType="profileImg"
-        />
+        <InfoCard isEdit={false} infoData={DriverInFo} infoTitle="基本資料" />
       </BodySTY>
     </>
   );
