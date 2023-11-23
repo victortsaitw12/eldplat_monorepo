@@ -33,76 +33,75 @@ const Page: NextPageWithLayout<never> = () => {
             fg_no: "org", // 組織
             func_no: "org",
             module_no: "sys",
-            func_element: [
-              {
-                element_no: "btnAdd",
-                element_default: "1"
-              },
-              {
-                element_no: "btnEdit",
-                element_default: "2"
-              }
-            ]
+            element_no: "btnAdd",
+            element_default: "1"
+          },
+          {
+            fg_no: "org", // 組織
+            func_no: "org",
+            module_no: "sys",
+            element_no: "btnEdit",
+            element_default: "2"
+          },
+
+          {
+            fg_no: "role", // 角色
+            func_no: "role",
+            module_no: "sys",
+
+            element_no: "btnAdd",
+            element_default: "1"
           },
           {
             fg_no: "role", // 角色
             func_no: "role",
             module_no: "sys",
-            func_element: [
-              {
-                element_no: "btnAdd",
-                element_default: "1"
-              },
-              {
-                element_no: "btnEdit",
-                element_default: "2"
-              }
-            ]
+            element_no: "btnEdit",
+            element_default: "2"
           },
           {
             fg_no: "account", // 使用者
             func_no: "org",
             module_no: "sys",
-            func_element: [
-              {
-                element_no: "btnAdd",
-                element_default: "1"
-              },
-              {
-                element_no: "btnEdit",
-                element_default: "2"
-              }
-            ]
+            element_no: "btnAdd",
+            element_default: "1"
+          },
+          {
+            fg_no: "account", // 使用者
+            func_no: "org",
+            module_no: "sys",
+            element_no: "btnEdit",
+            element_default: "2"
+          },
+
+          {
+            fg_no: "bus", // 車輛
+            func_no: "bus",
+            module_no: "bus",
+            element_no: "btnAdd",
+            element_default: "1"
           },
           {
             fg_no: "bus", // 車輛
             func_no: "bus",
             module_no: "bus",
-            func_element: [
-              {
-                element_no: "btnAdd",
-                element_default: "1"
-              },
-              {
-                element_no: "btnEdit",
-                element_default: "2"
-              }
-            ]
+            element_no: "btnEdit",
+            element_default: "2"
+          },
+
+          {
+            fg_no: "account", // 車輛
+            func_no: "org",
+            module_no: "sys",
+            element_no: "btnAdd",
+            element_default: "1"
           },
           {
             fg_no: "account", // 車輛
             func_no: "org",
             module_no: "sys",
-            func_element: [
-              {
-                element_no: "btnAdd",
-                element_default: "1"
-              },
-              {
-                element_no: "btnEdit",
-                element_default: "2"
-              }
-            ]
+            element_no: "btnEdit",
+            element_default: "2"
           }
         ]
       }
@@ -113,23 +112,7 @@ const Page: NextPageWithLayout<never> = () => {
         role_tp: "O",
         module_no: "bus",
         creorgno: "o-0001",
-        func_auth: [
-          {
-            fg_no: "bus",
-            func_no: "bus",
-            module_no: "bus",
-            func_element: [
-              {
-                element_no: "btnAdd",
-                element_default: "1"
-              },
-              {
-                element_no: "btnEdit",
-                element_default: "2"
-              }
-            ]
-          }
-        ]
+        func_auth: []
       };
   const {
     register,

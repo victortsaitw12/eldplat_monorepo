@@ -1,7 +1,7 @@
-export const getOrgList = async (userID: string) => {
+export const getOrgList = async (uk: string) => {
   const apiName = "getOrgList";
   const reqMethod = "POST";
-  const reqHeaders = { UK: userID };
+  const reqHeaders = { UK: uk };
   const requestBody = {
     x: "",
     org_no: "o-0002",

@@ -9,7 +9,7 @@ declare module "next-auth" {
       account_no: string;
       account_name: string;
       role: string;
-      email: string;
+      org_no: string;
       menuData: {
         userdefine: any[];
         defaultMenu: any[];

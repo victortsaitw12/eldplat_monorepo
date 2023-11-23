@@ -26,10 +26,12 @@ const Page: NextPageWithLayout<{
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-    const userId = "admin"; // TODO To be replaced
+    if (!session) return;
+    // TODO  const uk = session.user.account_no;
+    const uk = "admin";
 
     try {
-      const result = await getOrgList(userId);
+      const result = await getOrgList(uk);
       setData(result);
     } catch (e: any) {
       console.log(e);

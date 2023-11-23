@@ -8,13 +8,21 @@ export const getAccountList = async (userID: string) => {
     x: "",
     filter_needed: true,
     // org_no: "o-0002", ??不用帶嗎?
+    filter: [
+      // {
+      //   field_Name: "a.creorgno",
+      //   arrayConditions: "equal",
+      //   value: "o",
+      //   dataType: "string"
+      // }
+    ],
     page_info: {
       page_Index: 1,
-      page_Size: 10,
-      orderby: "account_no",
-      arrangement: "ASC",
-      total: 0,
-      last_Page: 0
+      page_Size: 10
+      // orderby: "account_no",
+      // arrangement: "ASC",
+      // total: 0,
+      // last_Page: 0
     }
   };
 
@@ -87,11 +95,11 @@ const DUMMY_DATA: I_responseBody = {
 export interface I_responseBody {
   StatusCode: string;
   Message: string;
-  ContentList: I_UserItem[];
+  ContentList: I_AccountItem[];
   ConditionList: any[];
   PageInfo: I_PageInfo;
 }
-export interface I_UserItem {
+export interface I_AccountItem {
   account_no: string;
   account_name: string;
   role_name_o: string;
@@ -106,7 +114,7 @@ export interface I_UserItem {
 export interface I_PageInfo {
   Page_Index: number;
   Page_Size: number;
-  Arrangement: string;
-  Total: number;
-  Last_Page: number;
+  Arrangement?: string;
+  Total?: number;
+  Last_Page?: number;
 }

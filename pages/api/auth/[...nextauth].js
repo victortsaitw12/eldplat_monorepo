@@ -38,7 +38,7 @@ export const authOptions = {
         // const result = response.DataList[0];
         const user = {
           account_no: "admin", //result.account_no
-          account_name: "Admin System", //result.account_name
+          account_name: "Admin Sys", //result.account_name
           role: "平台管理員 DUMMY",
           //email: "user@gmail.com",
           org_no: "o", //result.orgs[0].org_no
@@ -82,7 +82,7 @@ export const authOptions = {
       session.user.account_no = token.account_no;
       session.user.account_name = token.account_name;
       session.user.role = token.role;
-      session.user.email = token.email;
+      session.user.org_no = token.org_no;
       session.user.menuData = token.menuData;
       return session;
       // The session object is not persisted server side
@@ -99,6 +99,7 @@ export const authOptions = {
         token.account_no = user.account_no;
         token.account_name = user.account_name;
         token.role = user.role;
+        token.org_no = user.org_no;
         token.menuData = user.menuData;
       }
       // returned value will be encrypted, and it is stored in a cookie

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Tooltip, EditIcon } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { I_UserItem } from "@services/account/getUserList";
+import { I_UserItem } from "@services/account/getAccountList";
 import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
 import PaginationField from "@components/PaginationField";

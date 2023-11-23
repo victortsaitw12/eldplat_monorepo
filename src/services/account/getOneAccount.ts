@@ -1,159 +1,141 @@
-import API_Path from "./apiPath";
-import { I_UserItem } from "./getUserList";
-
-export const getOneAccount = async () => {
+export const getOneAccount = async (uk: string, reqBody) => {
   return DUMMY_DATA;
 
-  //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-  //     }
-  //   });
-  //   return await res.json();
+  const apiName = "getOneAccount";
+  const reqMethod = "POST";
+  const reqHeaders = { UK: uk };
+  const requestBody = reqBody;
+
+  const res = await fetch(`/api/getData?url=${apiName}`, {
+    method: reqMethod,
+    headers: reqHeaders,
+    body: JSON.stringify(requestBody)
+  });
+  const result = await res.json();
+  return result.data.ContentList;
 };
 
 // ------- MOCK DATA ------- //
 const DUMMY_DATA: I_responseBody = {
   StatusCode: "200",
   Message: "用戶端要求成功",
+  Result: true,
+  ResultInt: 0,
+  ResultString: "BaseDomain",
   DataList: [
     {
-      account_no: "admin",
-      account_pw: "12345",
-      account_enb: true,
-      account_del: false,
-      account_fname: "Admin",
-      account_lname: "System",
-      account_sex: "1",
-      account_country: "TW",
-      org_no: "o",
-      company_no: "company_no",
-      staff_no: "admin",
-      leave_fg: false,
-      invt_dt: "2023-08-11T09:24:53",
-      invt_send_count: 1,
-      invt_sts: "03",
-      join_dt: "2023-08-11T09:24:53",
-      creorgno: "o",
-      creid: "admin",
-      credt: "2023-08-11T09:24:53",
+      account_no: "USR202311090009",
+      account_fname: "ttt",
+      account_lname: "est",
+      org_no: "o-00020101",
+      org_name: "交通事業處",
+      staff_no: "",
+      job_title: "",
+      contact_no: "d7bee654-191a-4882-bbb3-d91831285558",
+      content_phone_tel_country_code1: "+886",
+      content_phone_tel1: "0987654321",
+      content_priv_email: "test123@gmail.com",
       account_role: [
         {
-          org_no: "o-0002", //id
-          org_name: "車產模組", //label
-          org_enb: true,
-          sublayer: [
+          module_no: "sys",
+          module_name: "平台管理",
+          roles: [
             {
-              org_no: "o-000201",
-              org_name: "最高管理員",
-              org_enb: true
+              role_no: "r-0001auth01",
+              role_name: "權限模組-平台管理員",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "主管",
-              org_enb: true
-            },
-            {
-              org_no: "o-000201",
-              org_name: "調度",
-              org_enb: true
-            },
-            {
-              org_no: "o-000201",
-              org_name: "一般使用者",
-              org_enb: true
+              role_no: "r-auth01",
+              role_name: "權限模組-系統管理員",
+              is_select: true
             }
           ]
         },
         {
-          org_no: "o-0002", //id
-          org_name: "人事模組", //label
-          org_enb: true,
-          sublayer: [
+          module_no: "bus",
+          module_name: "車管系統",
+          roles: [
             {
-              org_no: "o-000201",
-              org_name: "最高管理員",
-              org_enb: true
+              role_no: "r-0001bus01",
+              role_name: "車管模組-平台管理員",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "主管",
-              org_enb: true
+              role_no: "r-000201bus01",
+              role_name: "車公司管理員",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "調度",
-              org_enb: true
+              role_no: "r-000201bus02",
+              role_name: "駕駛",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "一般使用者",
-              org_enb: true
-            }
-          ]
-        },
-        {
-          org_no: "o-0002", //id
-          org_name: "訂單模組", //label
-          org_enb: true,
-          sublayer: [
-            {
-              org_no: "o-000201",
-              org_name: "最高管理員",
-              org_enb: true
+              role_no: "r-000201bus03",
+              role_name: "車管",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "主管",
-              org_enb: true
+              role_no: "r-000201bus04",
+              role_name: "調度",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "調度",
-              org_enb: true
+              role_no: "r-000201bus05",
+              role_name: "業務",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "一般使用者",
-              org_enb: true
-            }
-          ]
-        },
-        {
-          org_no: "o-0002", //id
-          org_name: "傳媒模組", //label
-          org_enb: true,
-          sublayer: [
-            {
-              org_no: "o-000201",
-              org_name: "最高管理員",
-              org_enb: true
+              role_no: "r-000201bus06",
+              role_name: "行銷",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "主管",
-              org_enb: true
+              role_no: "r-000201bus07",
+              role_name: "小客車駕駛",
+              is_select: false
             },
             {
-              org_no: "o-000201",
-              org_name: "調度",
-              org_enb: true
+              role_no: "r-bus01",
+              role_name: "車管模組-系統管理員",
+              is_select: true
             },
             {
-              org_no: "o-000201",
-              org_name: "一般使用者",
-              org_enb: true
+              role_no: "r-bus02",
+              role_name: "車管模組-駕駛",
+              is_select: true
+            },
+            {
+              role_no: "r-bus03",
+              role_name: "車管模組-車管",
+              is_select: false
+            },
+            {
+              role_no: "r-bus04",
+              role_name: "車管模組-調度",
+              is_select: false
+            },
+            {
+              role_no: "r-bus05",
+              role_name: "車管模組-業務",
+              is_select: false
+            },
+            {
+              role_no: "r-bus06",
+              role_name: "車管模組-行銷",
+              is_select: false
+            },
+            {
+              role_no: "r-bus07",
+              role_name: "車管模組-小客車駕駛",
+              is_select: false
             }
           ]
         }
       ]
     }
-  ],
-  Result: true,
-  ResultString: "BaseDomain",
-  ResultInt: 0
+  ]
 };
 
 // ------- TYPING ------- //
@@ -166,48 +148,34 @@ export interface I_responseBody {
   ResultInt: number;
 }
 
-export interface I_AccountDetailItem {
-  image?: string;
+export interface I_requestBody {
   account_no: string;
-  account_pw: string;
-  account_enb: boolean;
-  account_del: boolean;
+  creorgno: string;
+}
+
+export interface I_AccountDetailItem {
+  account_no: string;
   account_fname: string;
   account_lname: string;
-  account_sex: string;
-  account_country: string;
   org_no: string;
-  company_no: string;
+  org_name: string;
   staff_no: string;
-  leave_fg: boolean;
-  invt_dt: string;
-  invt_send_count: number;
-  invt_sts: string;
-  join_dt: string;
-  creorgno: string;
-  creid: string;
-  credt: string;
+  job_title: string;
+  contact_no: string;
+  content_phone_tel_country_code1: string;
+  content_phone_tel1: string;
+  content_priv_email: string;
   account_role: I_AccountRole[];
 }
 
 export interface I_AccountRole {
-  org_no: string;
-  org_name: string;
-  org_enb: boolean;
-  sublayer: I_RoleItem[];
+  module_no: string;
+  module_name: string;
+  roles: I_RoleItem[];
 }
 
 export interface I_RoleItem {
-  org_no: string;
-  org_name: string;
-  org_enb: boolean;
-}
-
-// TODO 統一引用 import {I_PageInfo} from "@components/PaginationField"
-export interface I_PageInfo {
-  Page_Index: number;
-  Page_Size: number;
-  Arrangement: string;
-  Total: number;
-  Last_Page: number;
+  role_no: string;
+  role_name: string;
+  is_select: boolean;
 }

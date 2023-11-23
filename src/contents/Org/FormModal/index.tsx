@@ -34,7 +34,6 @@ const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
   const asyncSubmitForm = async (data: any) => {
     // const userId = session.user.userID
     const userId = "admin"; //USR202302020002
-
     console.log("🔜 data:", data);
     try {
       const res = isCreate
