@@ -74,14 +74,14 @@ const BasicInfoBox = ({ data, isEdit }: I_Props) => {
       label: "手機",
       editEle: <TextInput className="required" placeholder="請輸入手機" />,
 
-      value: data.account_no || "--"
+      value: data.content_phone_tel1 || "--"
     },
     {
       readonly: false,
       req: true,
       label: "信箱",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />,
-      value: data.account_no || "--"
+      value: data.content_priv_email || "--"
     }
   ];
   return (

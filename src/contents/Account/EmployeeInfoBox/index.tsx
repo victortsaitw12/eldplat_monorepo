@@ -21,13 +21,13 @@ const EmployeeInfoBox = ({ data, isEdit }: I_Props) => {
       label: "隸屬組織",
       editEle: (
         <Select>
-          <option value="foo" selected>
-            {data.account_no || "--"}
+          <option value={data.org_no} selected>
+            {data.org_name || "--"}
           </option>
         </Select>
       ),
 
-      value: data.account_no || "--"
+      value: data.org_name || "--"
       // subLabel?: string | React.ReactNode;
       // inputType?: string;
     },
@@ -37,14 +37,14 @@ const EmployeeInfoBox = ({ data, isEdit }: I_Props) => {
       label: "員工編號",
       editEle: <TextInput className="required" placeholder="請輸入員工編號" />,
 
-      value: data.account_no || "--"
+      value: data.staff_no || "--"
     },
     {
       readonly: false,
       req: true,
       label: "職稱",
       editEle: <TextInput placeholder="請輸入職稱" />,
-      value: data.account_no || "--"
+      value: data.job_title || "--"
     },
     isEdit
       ? {}

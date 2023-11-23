@@ -1,5 +1,5 @@
 export const getOneAccount = async (uk: string, reqBody) => {
-  return DUMMY_DATA;
+  // return DUMMY_DATA;
 
   const apiName = "getOneAccount";
   const reqMethod = "POST";
@@ -12,7 +12,7 @@ export const getOneAccount = async (uk: string, reqBody) => {
     body: JSON.stringify(requestBody)
   });
   const result = await res.json();
-  return result.data.ContentList;
+  return result.data;
 };
 
 // ------- MOCK DATA ------- //
@@ -138,6 +138,75 @@ const DUMMY_DATA: I_responseBody = {
   ]
 };
 
+export const DUMMY_DATA_CREATE = {
+  account_no: "USR202302020002",
+  account_fname: "王",
+  account_lname: "鈞樺",
+  org_no: "o-00020101",
+  org_name: "交通事業處",
+  staff_no: "USR202302020002",
+  job_title: "",
+  invt_sts: "01",
+  contact_no: "4948111e-71dd-4a99-8a14-ee9c74e666a7",
+  content_phone_tel_country_code1: "+886",
+  content_phone_tel1: "0912345678",
+  content_priv_email: "user@gamil.com",
+  account_role: [
+    {
+      module_no: "bus",
+      module_name: "車產模組",
+      roles: [
+        {
+          role_no: "r-0001bus01",
+          role_name: "最高管理員",
+          is_select: false
+        },
+        {
+          role_no: "r-0001bus01",
+          role_name: "主管",
+          is_select: false
+        },
+        {
+          role_no: "r-bus01",
+          role_name: "調度",
+          is_select: false
+        },
+        {
+          role_no: "r-bus01",
+          role_name: "一般使用者",
+          is_select: false
+        }
+      ]
+    },
+    {
+      module_no: "bus",
+      module_name: "人事模組",
+      roles: [
+        {
+          role_no: "r-0001bus01",
+          role_name: "最高管理員",
+          is_select: false
+        },
+        {
+          role_no: "r-0001bus01",
+          role_name: "主管",
+          is_select: false
+        },
+        {
+          role_no: "r-bus01",
+          role_name: "調度",
+          is_select: false
+        },
+        {
+          role_no: "r-bus01",
+          role_name: "一般使用者",
+          is_select: false
+        }
+      ]
+    }
+  ]
+};
+
 // ------- TYPING ------- //
 export interface I_responseBody {
   StatusCode: string;
@@ -166,6 +235,7 @@ export interface I_AccountDetailItem {
   content_phone_tel1: string;
   content_priv_email: string;
   account_role: I_AccountRole[];
+  image?: string;
 }
 
 export interface I_AccountRole {

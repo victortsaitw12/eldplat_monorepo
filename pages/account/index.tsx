@@ -37,8 +37,17 @@ const Page: NextPageWithLayout<never> = () => {
     setIsLoading(true);
     if (!session) return;
     const uk = session.user.account_no;
+    const reqBody = {
+      x: "",
+      filter_needed: true,
+      filter: [],
+      page_info: {
+        page_Index: 1,
+        page_Size: 10
+      }
+    };
     try {
-      const result = await getAccountList(uk);
+      const result = await getAccountList(uk, reqBody);
       setData(result);
     } catch (e: any) {
       console.log(e);

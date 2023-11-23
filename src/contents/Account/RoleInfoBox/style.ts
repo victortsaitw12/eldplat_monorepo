@@ -57,7 +57,9 @@ export const BodySTY = styled.div`
       flex-direction: column;
       align-items: flex-start !important;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+
       .infoBox__label {
         width: 100%;
         flex: unset;

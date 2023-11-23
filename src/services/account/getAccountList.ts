@@ -1,5 +1,5 @@
-export const getAccountList = async (userID: string) => {
-  return DUMMY_DATA.ContentList;
+export const getAccountList = async (userID: string, reqBody: I_reqBody) => {
+  // return DUMMY_DATA.ContentList;
 
   const apiName = "getAccountList";
   const reqMethod = "POST";
@@ -98,6 +98,15 @@ export interface I_responseBody {
   ContentList: I_AccountItem[];
   ConditionList: any[];
   PageInfo: I_PageInfo;
+}
+export interface I_reqBody {
+  x: string;
+  filter_needed: boolean;
+  filter: any[];
+  page_info: {
+    page_Index: number;
+    page_Size: number;
+  };
 }
 export interface I_AccountItem {
   account_no: string;

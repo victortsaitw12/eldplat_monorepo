@@ -5,6 +5,7 @@ import {
   GetServerSideProps,
   InferGetServerSidePropsType
 } from "next";
+import { toaster } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { BodySTY } from "./style";
@@ -16,7 +17,8 @@ import EmployeeInfoBox from "@contents/Account/EmployeeInfoBox";
 import { ParsedUrlQuery } from "querystring";
 import {
   getOneAccount,
-  I_AccountDetailItem
+  I_AccountDetailItem,
+  DUMMY_DATA_CREATE
 } from "@services/account/getOneAccount";
 import { createAccount } from "@services/account/createAccount";
 import { updateAccount } from "@services/account/updateAccount";
@@ -30,10 +32,11 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const { data: session } = useSession();
   const modal = React.useContext(ModalContext);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
-  const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
+  const [data, setData] = React.useState<I_AccountDetailItem>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const isEdit = editPage === "edit";
+  console.log("🍅 id:", id);
   const isCreate = id === "create";
   const defaultValues = isCreate
     ? {
@@ -70,8 +73,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     defaultValues
   });
 
-  console.log("🍅 data", data);
-
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
@@ -81,7 +82,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       const reqBody = {
         account_no: id,
         creorgno: "o-0001"
-        // TODO pass from account list
       };
       const res = await getOneAccount(uk, reqBody);
       const result = res.DataList[0];
@@ -102,8 +102,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
         : await updateAccount(userId, data);
 
       if (res.StatusCode === "200") {
-        setModalContent(null);
-        refetch();
+        // refetch();
         toaster.success(`${res.Message}`, {
           duration: 1.5
         });
@@ -123,14 +122,26 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     handleSubmit(asyncSubmitForm)();
   };
 
+  const handleEdit = () => {
+    router.push({
+      pathname: "/account/detail/" + id,
+      query: { editPage: "edit" }
+    });
+  };
+
   // ------- useEffect ------- //
   React.useEffect(() => {
+    if (!session) return;
+    if (isCreate) return;
     fetchData();
-  }, []);
+  }, [session, isCreate]);
+
+  React.useEffect(() => {
+    if (isCreate) setData(DUMMY_DATA_CREATE);
+  }, [session]);
 
   React.useEffect(() => {
     if (!isEdit) return;
-
     const handleRouteChange = (url: string) => {
       console.log("🍅 before", modal);
       modal.showLeavePageModal();
@@ -152,14 +163,19 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     };
   }, [isEdit]);
 
+  const handleCancel = () => {
+    console.log("cancel");
+  };
+
   return (
     <>
       <ControlBar
         isEdit={editPage === "edit"}
         handleNavigation={handleNavigation}
+        handleEdit={handleEdit}
       />
       <BodySTY>
-        {data ? (
+        {isCreate || data ? (
           <>
             <BasicInfoBox data={data} isEdit={editPage === "edit"} />
             <EmployeeInfoBox data={data} isEdit={editPage === "edit"} />
@@ -182,7 +198,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   const { params } = context;
   return {
     props: {
-      driverNo: params!.id
+      id: params!.id
     }
   };
 };

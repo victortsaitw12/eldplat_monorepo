@@ -4,11 +4,9 @@ import { BodySTY } from "./style";
 import { I_AccountRole } from "@services/account/getOneAccount";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
-import Accordion, { I_AccordionItem } from "@components/Accordion";
-import CheckboxField from "@components/CheckboxField";
+import RoleModule from "./RoleModule";
 
 const RoleInfoBox = ({ data, isEdit }: I_Props) => {
-  const [checkedList, setCheckedList] = React.useState<string[]>([]);
   if (!data)
     return (
       <BodySTY>
@@ -17,58 +15,28 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
     );
 
   //------ functions ------//
-  const getDataFitAccordion = (data: any) => {
-    return data.map((item: any, i: number) => {
-      const prepItem: I_AccordionItem = {
-        label: (
-          <div className="accordion">
-            {isEdit && !item.sublayer && (
-              <CheckboxField
-                item={{ value: `name-${i}` }}
-                toggleFuelValue={handleCheckItem}
-                checked={checkedList.includes(`name-${i}`)}
-              />
-            )}
-            <div className="accordion__label">{item["org_name"]}</div>
-          </div>
-        )
-      };
 
-      if (item["sublayer"] && item["sublayer"].length > 0) {
-        prepItem.children = getDataFitAccordion(item["sublayer"]);
-      }
-
-      return prepItem;
-    });
-  };
-
-  const handleCheckItem = (id: string) => {
-    setCheckedList((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item) => item !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
+  const handleRoleChange = () => {
+    console.log("role change");
   };
 
   // ------- render ------- //
-  const dataFitInfoBox = data.map((item) => {
+  const dataFitInfoBox = data.map((item, i: number) => {
     return {
       readonly: false,
       req: false,
       label: "",
-      editEle: (
-        <Accordion data={getDataFitAccordion([item])} isTopLayer={false} />
-      ),
+      editEle: <RoleModule data={item} onChange={handleRoleChange} />,
       value: (
         <div className="roles--view">
-          <div className="roles__module">{item.org_name}</div>
+          <div className="roles__module">{item.module_name}</div>
           <div className="roles__role">
-            {item.sublayer
-              .filter((elem: any) => elem.org_enb === true)
+            {item.roles
+              .filter((elem: any) => elem.is_select === true)
               .map((elem: any, i: number) => (
-                <div key={`role-${i}`}>{elem.org_name}</div>
+                <div key={`role-${i}`} data-id={elem.role_no}>
+                  {elem.role_name}
+                </div>
               ))}
           </div>
         </div>

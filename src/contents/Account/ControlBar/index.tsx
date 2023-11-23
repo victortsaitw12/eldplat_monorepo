@@ -9,18 +9,19 @@ import SecondaryBtn from "@components/Button/Secondary/Label";
 interface I_Props {
   isEdit: boolean;
   handleNavigation: (path: string) => void;
+  handleEdit: () => void;
 }
 
-function ControlBar({ isEdit, handleNavigation }: I_Props) {
+function ControlBar({ isEdit, handleNavigation, handleEdit }: I_Props) {
   const router = useRouter();
 
   //------ functions ------//
   const handleRedirectBack = () => {
-    handleNavigation("/role");
+    handleNavigation("/account");
   };
 
   const handleCancel = () => {
-    handleNavigation("/role");
+    handleNavigation("/account");
 
     console.log("cancel");
   };
@@ -40,7 +41,7 @@ function ControlBar({ isEdit, handleNavigation }: I_Props) {
       ) : (
         <div className="actionRow">
           <SecondaryBtn text="回列表" onClick={handleRedirectBack} />
-          <PrimaryBtn text="編輯" onClick={handleSave}>
+          <PrimaryBtn text="編輯" onClick={handleEdit}>
             <EditIcon size={14} />
           </PrimaryBtn>
         </div>

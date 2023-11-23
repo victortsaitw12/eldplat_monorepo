@@ -22,6 +22,8 @@ const Page: NextPageWithLayout<{
     null
   );
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isInitialRenderEnd, setIsInitialRenderEnd] =
+    React.useState<boolean>(false);
 
   //------ functions ------//
   const fetchData = async () => {
@@ -60,13 +62,20 @@ const Page: NextPageWithLayout<{
 
   // ------- useEffect ------- //
   React.useEffect(() => {
+    if (!session) return;
     fetchData();
-  }, []);
-  React.useEffect(() => {
-    if (session) return;
-    // TODO return on first render
-    // if (!session) router.push("/login");
   }, [session]);
+
+  // React.useEffect(() => {
+  //   if (!session) router.push("/login");
+  // }, [router]);
+
+  // React.useEffect(() => {
+  //   if (!session) return;
+  //   setIsInitialRenderEnd((prev) => !prev);
+  // }, [session]);
+
+  console.log("🍅 session:", session);
 
   // ------- render ------- //
   if (isLoading)
