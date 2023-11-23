@@ -6,6 +6,9 @@ export const BodySTY = styled.div`
   .disabled {
     background: ${({ theme }) => theme.color.N40};
   }
+  .hide {
+    display: none;
+  }
   .authFunc {
     width: 100%;
     display: flex;
@@ -14,6 +17,20 @@ export const BodySTY = styled.div`
       width: 100%;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      .label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .toggleBtn {
+        cursor: pointer;
+        padding: 10px;
+        /* svg {
+          height: 16px;
+          width: 16px;
+        } */
+      }
     }
     &__contents {
       display: flex;
@@ -21,7 +38,9 @@ export const BodySTY = styled.div`
       .authFunc__element {
         display: flex;
         .label {
-          padding-left: 16px;
+          padding-left: 100px;
+        }
+        .value {
         }
         .value > div {
           gap: 32px;
@@ -30,6 +49,9 @@ export const BodySTY = styled.div`
       }
     }
     &__item {
+      height: 52px;
+      align-items: center;
+      display: flex;
       padding: 8px 16px;
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       .label {

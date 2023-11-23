@@ -34,6 +34,7 @@ const DUMMY_DATA = {
           func_no: "org",
           func_name: "組織設定",
           module_no: "org",
+          // module_enb: true,
           func_element: [
             {
               element_no: "btnAdd",

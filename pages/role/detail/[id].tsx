@@ -169,7 +169,7 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const handleEdit = () => {
-    setIsEdit((prev) => !prev);
+    router.push(`/role/detail/${router.query.id}?editPage=edit`);
   };
 
   // ------- useEffect ------- //

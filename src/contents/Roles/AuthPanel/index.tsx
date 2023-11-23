@@ -4,7 +4,8 @@ import {
   Switch,
   RadioGroup,
   CaretDownIcon,
-  CaretRightIcon
+  CaretRightIcon,
+  IconButton
 } from "evergreen-ui";
 import { BodySTY, FuncValSTY } from "./style";
 
@@ -24,20 +25,21 @@ const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
       req: false,
       label: "",
       editEle: (
-        <AutnFuncModule data={item} />
+        <AutnFuncModule data={item} isEdit={true} />
         // <Accordion data={getDataFitAccordion([item])} isTopLayer={false} />
       ),
       value: (
-        <div className="roles--view">
-          <div className="roles__module">{item.func_name}</div>
-          <div className="roles__role">
-            {item.func_element
-              .filter((elem: any) => elem.org_enb === true)
-              .map((elem: any, i: number) => (
-                <div key={`role-${i}`}>{elem.element_name}</div>
-              ))}
-          </div>
-        </div>
+        <AutnFuncModule data={item} isEdit={false} />
+        // <div className="roles--view">
+        //   <div className="roles__module">{item.func_name}</div>
+        //   <div className="roles__role">
+        //     {item.func_element
+        //       .filter((elem: any) => elem.org_enb === true)
+        //       .map((elem: any, i: number) => (
+        //         <div key={`role-${i}`}>{elem.element_name}</div>
+        //       ))}
+        //   </div>
+        // </div>
       )
     };
   });
@@ -48,10 +50,16 @@ const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
   );
 };
 
-const AutnFuncModule = ({ data }: { data: I_AuthFuncItem }) => {
+const AutnFuncModule = ({
+  data,
+  isEdit
+}: {
+  data: I_AuthFuncItem;
+  isEdit: boolean;
+}) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
   const [isEnabled, setIsEnabled] = React.useState<boolean>(true);
-
+  // TODO data.module_enb
   const handleValueChange = (value: string) => {
     console.log("🍅 v:", value);
   };
@@ -65,15 +73,24 @@ const AutnFuncModule = ({ data }: { data: I_AuthFuncItem }) => {
   };
   return (
     <div className="authFunc">
-      <div className="authFunc__title authFunc__item" onClick={handleToggle}>
+      <div className="authFunc__title authFunc__item">
         <div className="label">
-          {isOpen ? <CaretDownIcon /> : <CaretRightIcon />}
+          {isOpen ? (
+            <div className="toggleBtn" onClick={handleToggle}>
+              <CaretDownIcon />
+            </div>
+          ) : (
+            <div className="toggleBtn" onClick={handleToggle}>
+              <CaretRightIcon />
+            </div>
+          )}
           {data.func_name}{" "}
         </div>
         <Switch
           className="value"
           checked={isEnabled}
           onChange={handleEnabled}
+          disabled={!isEdit}
         />
       </div>
       <div
@@ -88,10 +105,15 @@ const AutnFuncModule = ({ data }: { data: I_AuthFuncItem }) => {
           >
             <div className="label">{elem.element_name}</div>
             <div className="value">
-              <RadioOptions
-                name={elem.element_no}
-                onChange={handleValueChange}
-              />
+              {isEdit ? (
+                <RadioOptions
+                  value={elem.element_default}
+                  name={elem.element_no}
+                  onChange={handleValueChange}
+                />
+              ) : (
+                authFuncViewValue.get(elem.element_default)
+              )}
             </div>
           </div>
         ))}
@@ -100,14 +122,22 @@ const AutnFuncModule = ({ data }: { data: I_AuthFuncItem }) => {
   );
 };
 
+const authFuncViewValue = new Map([
+  ["1", "顯示並可用"],
+  ["2", "僅供檢視"],
+  ["3", "不顯示"]
+]);
+
 const RadioOptions = ({
+  value,
   name,
   onChange
 }: {
+  value: string;
   name: string;
   onChange: (v: string) => void;
 }) => {
-  const [value, setValue] = React.useState("1");
+  const [newValue, setNewValue] = React.useState(value);
   const [options] = React.useState([
     { label: "顯示並可用", value: "1" },
     { label: "僅供檢視", value: "2" },
@@ -115,15 +145,15 @@ const RadioOptions = ({
   ]);
 
   React.useEffect(() => {
-    onChange(value);
-  }, [value, onChange]);
+    onChange(newValue);
+  }, [newValue, onChange]);
   return (
     <RadioGroup
       label=""
       value={value}
       size={16}
       options={options}
-      onChange={(event) => setValue(event.target.value)}
+      onChange={(event) => setNewValue(event.target.value)}
     />
   );
 };
