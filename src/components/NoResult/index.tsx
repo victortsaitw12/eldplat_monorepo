@@ -2,7 +2,7 @@ import React from "react";
 import { NoResultSTY } from "./style";
 import { SearchIcon } from "evergreen-ui";
 
-export default function LoadingSpinner() {
+export default function NoResult() {
   return (
     <NoResultSTY>
       <div className="search">

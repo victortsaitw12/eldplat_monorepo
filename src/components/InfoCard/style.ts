@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const InfoCardSTY = styled.div`
   width: 100%;
   height: fit-content;
+  min-height: 177px;
   padding: 0;
   background: ${({ theme }) => theme.color.N0};
   border: 1px solid ${({ theme }) => theme.color.N40};
@@ -13,6 +14,8 @@ export const InfoCardSTY = styled.div`
     display: inline-block;
     width: 100%;
     padding: 8px 16px;
+    border-radius: 4px 4px 0 0;
+    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
     font-size: 16px;
     font-weight: 600;
     color: ${({ theme }) => theme.color.N300};
@@ -27,29 +30,106 @@ export const InfoCardSTY = styled.div`
   }
 
   .content {
-    //純文字
-    .column {
-      .item {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        margin-bottom: 20px;
-        .req {
-          color: ${({ theme }) => theme.color.R400};
-        }
+    padding: 20px;
+    border-radius: 0 0 4px 4px;
 
-        & > div {
+    display: flex;
+    gap: 40px;
+
+    .user__photo {
+    }
+
+    .col {
+      flex-grow: 1;
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .row {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+
+        .item {
           display: flex;
-          flex: 3;
-          margin-bottom: 0;
-          gap: 10px;
-          & > div {
-            width: 100%;
+          flex-direction: column;
+          justify-content: flex-start;
+          gap: 8px;
+
+          font-size: 14px;
+          margin-bottom: 20px;
+          color: ${({ theme }) => theme.color.N800};
+
+          .label {
+            color: ${({ theme }) => theme.color.N300};
+
+            &.bold {
+              font-weight: 600;
+              color: ${({ theme }) => theme.color.N700};
+            }
+
+            .req {
+              color: ${({ theme }) => theme.color.R400};
+            }
+          }
+          .value {
+            color: ${({ theme }) => theme.color.N300};
+
+            .select-wrapper {
+              width: 90%;
+              max-width: 240px;
+              select {
+                font-size: 16px;
+              }
+            }
+
+            .create-button {
+              padding: 4px 8px;
+            }
+
+            .inline-alert {
+              div {
+                margin-right: 4px;
+              }
+            }
+
+            .upload-button {
+              gap: 8px;
+            }
+
+            .comment-textarea {
+              textarea {
+                font-size: 14px;
+              }
+
+              .hint {
+                text-align: right;
+                font-size: 12px;
+              }
+            }
           }
         }
-        .infoCard__label {
+
+        .fb-100 {
+          flex-basis: 100%;
         }
-        .infoCard__value {
+        .fb-50 {
+          flex-basis: 50%;
+        }
+        .fb-33 {
+          flex-basis: 100% / 3;
+        }
+        .fb-25 {
+          flex-basis: 25%;
+        }
+
+        .m-0 {
+          margin: 0;
+        }
+
+        .gap-0 {
+          gap: 0;
         }
       }
     }
