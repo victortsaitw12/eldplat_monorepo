@@ -16,7 +16,7 @@ const Page: NextPageWithLayout<{
   setPageType: (t: string) => void;
 }> = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [data, setData] = React.useState([]);
   const [modalContent, setModalContent] = React.useState<I_ModalContent | null>(
     null
@@ -66,19 +66,14 @@ const Page: NextPageWithLayout<{
     fetchData();
   }, [session]);
 
-  // React.useEffect(() => {
-  //   if (!session) router.push("/login");
-  // }, [router]);
-
-  // React.useEffect(() => {
-  //   if (!session) return;
-  //   setIsInitialRenderEnd((prev) => !prev);
-  // }, [session]);
+  React.useEffect(() => {
+    if (status !== "authenticated") router.push("/login");
+  }, [router]);
 
   console.log("🍅 session:", session);
 
   // ------- render ------- //
-  if (isLoading)
+  if (isLoading || !session)
     return (
       <BodySTY>
         <LoadingSpinner />
