@@ -79,34 +79,15 @@ export const InfoCardSTY = styled.div`
             .select-wrapper {
               width: 90%;
               max-width: 240px;
+
               select {
                 font-size: 16px;
+                color: ${({ theme }) => theme.color.N100};
               }
             }
 
             .create-button {
               padding: 4px 8px;
-            }
-
-            .inline-alert {
-              div {
-                margin-right: 4px;
-              }
-            }
-
-            .upload-button {
-              gap: 8px;
-            }
-
-            .comment-textarea {
-              textarea {
-                font-size: 14px;
-              }
-
-              .hint {
-                text-align: right;
-                font-size: 12px;
-              }
             }
           }
         }

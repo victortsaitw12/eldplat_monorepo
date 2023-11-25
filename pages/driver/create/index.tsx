@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 import ControlBar from "@components/ControlBar";
 import InfoCard from "@components/InfoCard";
 import SecondaryButton from "@components/Button/Secondary/IconLeft";
+import CustomTextArea from "@components/CustomTextArea";
+import NewUploader from "@components/NewUploader";
+import CustomTextInputField from "@components/CustomTextInputField";
 
 import {
   Select,
@@ -19,7 +22,7 @@ import {
   SmallPlusIcon,
   Pane,
   InlineAlert,
-  ExportIcon
+  TextInputField
 } from "evergreen-ui";
 
 const Page: NextPageWithLayout<never> = () => {
@@ -47,9 +50,6 @@ const Page: NextPageWithLayout<never> = () => {
             請選擇
           </option>
         </Select>
-      ),
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
       )
     },
     {
@@ -57,10 +57,7 @@ const Page: NextPageWithLayout<never> = () => {
       readonly: false,
       req: false,
       label: "英文姓名",
-      value: "--",
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
-      )
+      value: "--"
     },
     {
       listClassName: "fb-50",
@@ -151,10 +148,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "員工編號",
       bold: false,
-      value: "--",
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
-      )
+      value: "--"
     },
     {
       listClassName: "fb-50",
@@ -162,10 +156,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "隸屬組織",
       bold: false,
-      value: "--",
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
-      )
+      value: "--"
     },
     {
       listClassName: "fb-100",
@@ -249,9 +240,6 @@ const Page: NextPageWithLayout<never> = () => {
         <SecondaryButton text="新增標籤" className={"create-button"}>
           <SmallPlusIcon />
         </SecondaryButton>
-      ),
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
       )
     }
   ];
@@ -269,9 +257,6 @@ const Page: NextPageWithLayout<never> = () => {
             請選擇
           </option>
         </Select>
-      ),
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
       )
     },
     {
@@ -286,9 +271,6 @@ const Page: NextPageWithLayout<never> = () => {
             請選擇
           </option>
         </Select>
-      ),
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
       )
     },
     {
@@ -297,23 +279,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: true,
       label: "附件/相關檔案",
       bold: true,
-      value: (
-        <>
-          <InlineAlert
-            intent="none"
-            marginBottom={8}
-            className={"inline-alert"}
-          >
-            檔案格式僅接受.png、.jpg、.jpeg、pdf 格式，且每個檔案大小不得大於5MB
-          </InlineAlert>{" "}
-          <SecondaryButton text="上傳檔案" className={"upload-button"}>
-            <ExportIcon />
-          </SecondaryButton>
-        </>
-      ),
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
-      )
+      value: <NewUploader />
     }
   ];
 
@@ -324,15 +290,85 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "備註",
       bold: true,
+      value: <CustomTextArea placeholder={"請輸入備註"} />
+    }
+  ];
+
+  const TrainingInFo = [
+    {
+      listClassName: "fb-50",
+      readonly: false,
+      req: false,
+      label: "項目名稱",
+      bold: true,
       value: (
-        <Pane className="comment-textarea">
-          <Textarea placeholder="請輸入備註" />
-          <p className="hint">0/50</p>
-        </Pane>
-      ),
-      editEle: (
-        <TextInput className="required basic__lastName" placeholder="姓氏" />
+        <Select className={"select-wrapper"} disabled>
+          <option value="foo" selected>
+            請選擇
+          </option>
+        </Select>
       )
+    },
+    {
+      listClassName: "fb-50",
+      readonly: false,
+      req: true,
+      label: "培訓人",
+      bold: true,
+      value: (
+        <CustomTextInputField
+          className="input"
+          // isInvalid={true}
+          placeholder="請輸入培訓人姓名"
+          // validationMessage="不可輸入符號"
+        />
+      )
+    },
+    {
+      listClassName: "fb-50",
+      readonly: false,
+      req: true,
+      label: "訓練期間",
+      bold: true,
+      value: (
+        <CustomTextInputField
+          className="input"
+          // isInvalid={true}
+          placeholder="請輸入訓練期間"
+          // validationMessage="不可輸入符號"
+        />
+      )
+    },
+    {
+      listClassName: "fb-50",
+      readonly: false,
+      req: true,
+      label: "訓練通過日期",
+      bold: true,
+      value: (
+        <CustomTextInputField
+          className="input"
+          // isInvalid={true}
+          placeholder="請輸入訓練通過日期"
+          // validationMessage="不可輸入符號"
+        />
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "說明",
+      bold: true,
+      value: <CustomTextArea placeholder="請輸入說明" />
+    },
+    {
+      listClassName: "fb-100 m-0",
+      readonly: false,
+      req: false,
+      label: "附件/相關檔案",
+      bold: true,
+      value: <NewUploader />
     }
   ];
 
@@ -369,6 +405,11 @@ const Page: NextPageWithLayout<never> = () => {
         </Pane>
         <Pane className={"main-column"}>
           <InfoCard isEdit={false} infoData={CommentInFo} infoTitle="備註" />
+          <InfoCard
+            isEdit={false}
+            infoData={TrainingInFo}
+            infoTitle="教育訓練"
+          />
         </Pane>
       </BodySTY>
     </>
