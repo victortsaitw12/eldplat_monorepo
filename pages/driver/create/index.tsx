@@ -12,6 +12,7 @@ import SecondaryButton from "@components/Button/Secondary/IconLeft";
 import CustomTextArea from "@components/CustomTextArea";
 import NewUploader from "@components/NewUploader";
 import CustomTextInputField from "@components/CustomTextInputField";
+import CustomDatePicker from "@components/CustomDatePicker";
 
 import {
   Select,
@@ -22,7 +23,8 @@ import {
   SmallPlusIcon,
   Pane,
   InlineAlert,
-  TextInputField
+  TextInputField,
+  toaster
 } from "evergreen-ui";
 
 const Page: NextPageWithLayout<never> = () => {
@@ -330,14 +332,15 @@ const Page: NextPageWithLayout<never> = () => {
       req: true,
       label: "訓練期間",
       bold: true,
-      value: (
-        <CustomTextInputField
-          className="input"
-          // isInvalid={true}
-          placeholder="請輸入訓練期間"
-          // validationMessage="不可輸入符號"
-        />
-      )
+      value: <CustomDatePicker />
+      // value: (
+      //   <CustomTextInputField
+      //     className="input"
+      //     // isInvalid={true}
+      //     placeholder="請輸入訓練期間"
+      //     // validationMessage="不可輸入符號"
+      //   />
+      // )
     },
     {
       listClassName: "fb-50",
