@@ -1,4 +1,5 @@
 import React from "react";
+import { UseFormRegister } from "react-hook-form";
 import { Select, TextInput, Textarea, Switch } from "evergreen-ui";
 import { BodySTY } from "./style";
 
@@ -6,7 +7,7 @@ import { I_RoleListItem } from "@services/role/getRoleList";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 
-const DetailPanel = ({ data, isEdit, isCreate }: I_Props) => {
+const DetailPanel = ({ data, isEdit, isCreate, register }: I_Props) => {
   const [isEnabled, setIsEnabled] = React.useState(true);
 
   if (!data)
@@ -35,7 +36,13 @@ const DetailPanel = ({ data, isEdit, isCreate }: I_Props) => {
       readonly: false,
       req: true,
       label: "角色名稱",
-      editEle: <TextInput className="required" placeholder="請輸入角色名稱" />,
+      editEle: (
+        <TextInput
+          className="required"
+          placeholder="請輸入角色名稱"
+          {...register("role_name", { required: "必填" })}
+        />
+      ),
       value: data.role_name || "--"
     },
     {
@@ -43,7 +50,11 @@ const DetailPanel = ({ data, isEdit, isCreate }: I_Props) => {
       req: true,
       label: "職責描述",
       editEle: (
-        <Textarea placeholder="請輸入職責描述" style={{ minHeight: "64px" }} />
+        <Textarea
+          placeholder="請輸入職責描述"
+          style={{ minHeight: "64px" }}
+          {...register("role_desc", { required: "必填" })}
+        />
       ),
       value: data.role_desc || "--"
     },
@@ -87,4 +98,5 @@ interface I_Props {
   data: I_RoleListItem;
   isEdit: boolean;
   isCreate: boolean;
+  register: UseFormRegister<any>;
 }

@@ -39,6 +39,7 @@ export interface I_FuncAuthReq {
   element_default: string;
 }
 
+// ------- dummy data ------- //
 const DUMMY_DATA = {
   StatusCode: "200",
   Message: "用戶端要求成功",
@@ -46,4 +47,13 @@ const DUMMY_DATA = {
   Result: true,
   ResultString: "用戶端要求成功",
   ResultInt: 0
+};
+
+export const defaultUpdateValues = {
+  role_name: "",
+  role_desc: "",
+  role_tp: "",
+  module_no: "",
+  creorgno: "",
+  func_auth: []
 };

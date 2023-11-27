@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { toaster } from "evergreen-ui";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { BodySTY } from "./style";
@@ -11,108 +12,36 @@ import { createRole } from "@services/role/createRole";
 import { updateRole } from "@services/role/updateRole";
 import DetailPanel from "@contents/Roles/DetailPanel";
 import AuthPanel from "@contents/Roles/AuthPanel";
-import { getOneRole, I_RoleDetail } from "@services/role/getOneRole";
+import { getOneRole, I_AuthFuncItem } from "@services/role/getOneRole";
+import { defaultCreatValues } from "@services/role/createRole";
+import { defaultUpdateValues } from "@services/role/updateRole";
 import ControlBar from "@contents/Roles/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const isCreate = router.query.id === "create";
   const modalUI = React.useContext(ModalContext);
   const [data, setData] = React.useState<any>(null);
   const defaultValues = isCreate
-    ? {
-        role_name: "",
-        role_desc: "",
-        role_tp: "",
-        module_no: "",
-        creorgno: "",
-        func_auth: [
-          {
-            fg_no: "org", // 組織
-            func_no: "org",
-            module_no: "sys",
-            element_no: "btnAdd",
-            element_default: "1"
-          },
-          {
-            fg_no: "org", // 組織
-            func_no: "org",
-            module_no: "sys",
-            element_no: "btnEdit",
-            element_default: "2"
-          },
-
-          {
-            fg_no: "role", // 角色
-            func_no: "role",
-            module_no: "sys",
-
-            element_no: "btnAdd",
-            element_default: "1"
-          },
-          {
-            fg_no: "role", // 角色
-            func_no: "role",
-            module_no: "sys",
-            element_no: "btnEdit",
-            element_default: "2"
-          },
-          {
-            fg_no: "account", // 使用者
-            func_no: "org",
-            module_no: "sys",
-            element_no: "btnAdd",
-            element_default: "1"
-          },
-          {
-            fg_no: "account", // 使用者
-            func_no: "org",
-            module_no: "sys",
-            element_no: "btnEdit",
-            element_default: "2"
-          },
-
-          {
-            fg_no: "bus", // 車輛
-            func_no: "bus",
-            module_no: "bus",
-            element_no: "btnAdd",
-            element_default: "1"
-          },
-          {
-            fg_no: "bus", // 車輛
-            func_no: "bus",
-            module_no: "bus",
-            element_no: "btnEdit",
-            element_default: "2"
-          },
-
-          {
-            fg_no: "account", // 車輛
-            func_no: "org",
-            module_no: "sys",
-            element_no: "btnAdd",
-            element_default: "1"
-          },
-          {
-            fg_no: "account", // 車輛
-            func_no: "org",
-            module_no: "sys",
-            element_no: "btnEdit",
-            element_default: "2"
-          }
-        ]
-      }
+    ? defaultCreatValues
     : {
-        role_no: "r-000201bus08",
-        role_name: "組織角色1",
-        role_desc: "這是敘述",
-        role_tp: "O",
-        module_no: "bus",
-        creorgno: "o-0001",
-        func_auth: []
+        role_no: data?.role_no || "",
+        role_name: data?.role_name || "",
+        role_desc: data?.role_desc || "",
+        role_tp: "O", //TODO ????
+        module_no: data?.module_no || "",
+        creorgno: session?.user.org_no || "",
+        func_auth: data?.func_auth.map((module: I_AuthFuncItem) => {
+          return {
+            fg_no: module.fg_no,
+            func_no: module.func_no,
+            module_no: module.module_no,
+            element_no: module.func_element[0].element_no
+          };
+        })
       };
   const {
     register,
@@ -128,10 +57,14 @@ const Page: NextPageWithLayout<never> = () => {
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-    // const
-    const userID = "USR202302020002";
+    if (!session) return;
+    const uk = session?.user.account_no;
+    const data = {
+      role_no: router.query.id,
+      creorgno: session.user.org_no
+    };
     try {
-      const result = await getOneRole(userID);
+      const result = await getOneRole(uk, data);
       setData(result.DataList[0]);
     } catch (e: any) {
       console.log(e);
@@ -141,12 +74,12 @@ const Page: NextPageWithLayout<never> = () => {
 
   const asyncSubmitForm = async (data: any) => {
     console.log("🔜 data:", data);
-    //const userID=session.user.userID
-    const userID = "USR202302020002";
+    if (!session) return;
+    const uk = session.user.account_no;
     try {
       const res = isCreate
-        ? await createRole(userID, data)
-        : await updateRole(userID, data);
+        ? await createRole(uk, data)
+        : await updateRole(uk, data);
 
       if (res.StatusCode === "200") {
         toaster.success(`${res.Message}`, {
@@ -177,6 +110,7 @@ const Page: NextPageWithLayout<never> = () => {
     fetchData();
   }, []);
 
+  // TODO write a url state in ModalProvider
   React.useEffect(() => {
     if (!isEdit) return;
 
@@ -219,11 +153,13 @@ const Page: NextPageWithLayout<never> = () => {
               data={data}
               isEdit={editPage === "edit"}
               isCreate={isCreate}
+              register={register}
             />
             <AuthPanel
               data={data.func_auth}
               isEdit={editPage === "edit"}
               isCreate={isCreate}
+              register={register}
             />
           </>
         )}
@@ -234,63 +170,3 @@ const Page: NextPageWithLayout<never> = () => {
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;
-
-// ===== VARIABLES NOT IN RENDERS ===== //
-const defaultData = {
-  role_name: "", //角色名稱
-  role_desc: "", // 職責敘述
-  role_tp: "O", //????
-  module_no: "bus", // Eldplat only has bus for now
-  creorgno: "o-0001", //from session
-  func_auth: [
-    {
-      fg_no: "org",
-      func_no: "org",
-      func_name: "組織設定",
-      module_no: "org",
-      func_element: [
-        {
-          element_no: "btnAdd",
-          element_name: "新增下級",
-          element_default: "1"
-        },
-        {
-          element_no: "btnEdit",
-          element_name: "編輯組織",
-          element_default: "2"
-        }
-      ]
-    },
-    {
-      fg_no: "bus",
-      func_no: "bus",
-      // func_name: "bus",
-      module_no: "bus",
-      func_element: [
-        {
-          element_no: "btnAdd",
-          element_default: "1"
-        },
-        {
-          element_no: "btnEdit",
-          element_default: "2"
-        }
-      ]
-    },
-    {
-      fg_no: "account",
-      func_no: "org",
-      module_no: "sys",
-      func_element: [
-        {
-          element_no: "btnAdd",
-          element_default: "1"
-        },
-        {
-          element_no: "btnEdit",
-          element_default: "2"
-        }
-      ]
-    }
-  ]
-};

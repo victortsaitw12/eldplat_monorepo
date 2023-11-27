@@ -1,11 +1,10 @@
-export const getOneRole = async (userID: string) => {
+export const getOneRole = async (uk: string, data: I_RoleReq) => {
   const apiName = "getOneRole";
   const reqMethod = "POST";
-  const reqHeaders = { UK: userID };
-  const requestBody = {
-    role_no: "r-000201bus08",
-    creorgno: "o-0001"
-  };
+  const reqHeaders = { UK: uk };
+  const requestBody = data;
+
+  if (data.role_no === "create") return DUMMY_DATA;
 
   const res = await fetch(`/api/getData?url=${apiName}`, {
     method: reqMethod,
@@ -13,8 +12,8 @@ export const getOneRole = async (userID: string) => {
     body: JSON.stringify(requestBody)
   });
   const result = await res.json();
-  return DUMMY_DATA;
-  // return result.data;
+  // return DUMMY_DATA;
+  return result.data;
 };
 
 // ------- MOCK DATA ------- //
@@ -23,11 +22,12 @@ const DUMMY_DATA = {
   Message: "用戶端要求成功",
   DataList: [
     {
-      role_no: "r-000201bus08",
-      role_name: "組織角色1",
-      role_enb: true,
-      role_desc: "這是敘述",
-      module_name: "車管系統",
+      // role_no: "",
+      role_name: "",
+      // role_enb: true,
+      role_tp: "O", //???
+      role_desc: "",
+      module_name: "車輛管理與營運模組",
       func_auth: [
         {
           fg_no: "org",
@@ -44,7 +44,7 @@ const DUMMY_DATA = {
             {
               element_no: "btnEdit",
               element_name: "編輯組織",
-              element_default: "2"
+              element_default: "1"
             }
           ]
         },
@@ -62,7 +62,7 @@ const DUMMY_DATA = {
             {
               element_no: "btnEdit",
               element_name: "編輯角色",
-              element_default: "2"
+              element_default: "1"
             }
           ]
         },
@@ -80,12 +80,12 @@ const DUMMY_DATA = {
             {
               element_no: "btnEdit",
               element_name: "編輯車輛",
-              element_default: "2"
+              element_default: "1"
             },
             {
               element_no: "btnView",
               element_name: "檢視車輛",
-              element_default: "3"
+              element_default: "1"
             }
           ]
         },
@@ -98,17 +98,17 @@ const DUMMY_DATA = {
             {
               element_no: "btnAdd",
               element_name: "新增客戶",
-              element_default: "3"
+              element_default: "1"
             },
             {
               element_no: "btnEdit",
               element_name: "編輯客戶",
-              element_default: "3"
+              element_default: "1"
             },
             {
               element_no: "btnView",
               element_name: "檢視客戶",
-              element_default: "3"
+              element_default: "1"
             }
           ]
         }
@@ -121,6 +121,10 @@ const DUMMY_DATA = {
 };
 
 // ------- TYPING ------- //
+export interface I_RoleReq {
+  role_no: string;
+  creorgno: string;
+}
 export interface I_RoleRes {
   StatusCode: string;
   Message: string;
