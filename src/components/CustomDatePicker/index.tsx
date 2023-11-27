@@ -1,8 +1,4 @@
-import {
-  TextInputField,
-  TextInputFieldProps,
-  CalendarIcon
-} from "evergreen-ui";
+import { CalendarIcon } from "evergreen-ui";
 import { BodySTY } from "./style";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,10 +10,10 @@ function CustomDatePicker(props: any) {
     <BodySTY>
       <DatePicker
         selected={startDate}
-        onChange={(date) => setStartDate(date)}
+        onChange={(date) => date && setStartDate(date)}
         className="date-picker"
       />
-      <CalendarIcon className="icon"/>
+      <CalendarIcon className="icon" />
     </BodySTY>
   );
 }
