@@ -55,7 +55,6 @@ const Page: NextPageWithLayout<never> = () => {
     const userID = "USR202302020002";
     try {
       const result = await getRoleList(userID);
-      console.log("🍅 result:", result);
       setData(result.ContentList);
     } catch (e: any) {
       console.log(e);

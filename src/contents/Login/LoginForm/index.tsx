@@ -106,7 +106,7 @@ function Form(props: PropsType) {
         </div>
       </div>
       <div>
-        <div>測試帳號: admin@gmail.com</div>
+        <div>測試帳號: user@gmail.com</div>
         <div>測試密碼: 12345</div>
       </div>
       <Button text={"登入"} onClick={handleLogin} />

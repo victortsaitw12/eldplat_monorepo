@@ -31,7 +31,6 @@ const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = React.useState<I_AccountItem[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  console.log("🍅 /accountLsit", data);
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);

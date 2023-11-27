@@ -67,10 +67,8 @@ const Page: NextPageWithLayout<{
   }, [session]);
 
   React.useEffect(() => {
-    if (status !== "authenticated") router.push("/login");
-  }, [router]);
-
-  console.log("🍅 session:", session);
+    if (status === "unauthenticated") router.push("/login");
+  }, [status]);
 
   // ------- render ------- //
   if (isLoading || !session)

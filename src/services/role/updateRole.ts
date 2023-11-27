@@ -1,4 +1,4 @@
-export const updateRole = async (userID: string, data: I_EditOrgReq) => {
+export const updateRole = async (userID: string, data: I_UpdateRoleReq) => {
   const apiName = "updateRole";
   const reqMethod = "POST";
   const reqHeaders = { UK: userID };
@@ -14,11 +14,29 @@ export const updateRole = async (userID: string, data: I_EditOrgReq) => {
 };
 
 // ------- typing ------- //
+export interface I_UpdateRoleRes {
+  StatusCode: string;
+  Message: string;
+  DataList: any[];
+  Result: true;
+  ResultString: string;
+  ResultInt: number;
+}
+export interface I_UpdateRoleReq {
+  role_name: string;
+  role_desc: string;
+  role_tp: string;
+  module_no: string;
+  creorgno: string;
+  func_auth: I_FuncAuthReq[];
+}
 
-export interface I_EditOrgReq {
-  org_no: string;
-  org_name: string;
-  org_enb: boolean;
+export interface I_FuncAuthReq {
+  fg_no: string;
+  func_no: string;
+  module_no: string;
+  element_no: string;
+  element_default: string;
 }
 
 const DUMMY_DATA = {

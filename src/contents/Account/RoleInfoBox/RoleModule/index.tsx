@@ -21,7 +21,7 @@ const RoleModule = ({ data, onChange }: I_Props) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
 
   const handleValueChange = (value: string) => {
-    console.log("🍅 v:", value);
+    console.log("v:", value);
   };
 
   const handleCheckItem = (id: string) => {

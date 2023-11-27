@@ -2,6 +2,8 @@ import API_Path from "@services/apiPath";
 import { preRequest } from "@utils/preRequest";
 
 export default async function handler(req, res) {
+  // console.log("req.url from getData >>>>>>:", req.url);
+
   const UK = req.headers.uk || null;
   const TK = await preRequest();
   const apiName = req.url.split("?url=").at(-1);
@@ -22,7 +24,9 @@ export default async function handler(req, res) {
   try {
     const response = await fetch(API_Path[apiName], options);
     const result = await response.json();
-    console.log("🍅 req:", req.body);
+    console.log("response.url from getData >>>>>>:", response.url);
+    // console.log("response.status from getData >>>>>>:", response.status);
+    console.log("response.body from getData >>>>>>:", response.body);
 
     if (
       response.status !== 200 ||

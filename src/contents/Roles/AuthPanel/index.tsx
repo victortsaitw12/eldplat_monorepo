@@ -14,8 +14,6 @@ import InfoBox from "@components/InfoBox";
 import Accordion, { I_AccordionItem } from "@components/Accordion";
 
 const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
-  console.log("🍅 data", data);
-
   //------ functions ------//
 
   // ------- render ------- //
@@ -61,7 +59,7 @@ const AutnFuncModule = ({
   const [isEnabled, setIsEnabled] = React.useState<boolean>(true);
   // TODO data.module_enb
   const handleValueChange = (value: string) => {
-    console.log("🍅 v:", value);
+    console.log("v:", value);
   };
 
   const handleEnabled = (value: string) => {

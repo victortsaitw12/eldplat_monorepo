@@ -35,9 +35,9 @@ const AccountList = ({ data }: I_Props) => {
     return {
       id: item["account_no"],
       checkbox: <Checkbox value={item["account_name"]} />,
-      account_name: item["account_name"],
-      org_name: item["org_name"],
-      role_name_o: item["role_name_o"],
+      account_name: item["account_name"] || "--",
+      org_name: item["org_name"] || "--",
+      role_name_m: item["role_name_m"] || "--",
       invt_sts: <InvitSatus value={item["invt_sts"]} />,
       action: (
         <IconBtn

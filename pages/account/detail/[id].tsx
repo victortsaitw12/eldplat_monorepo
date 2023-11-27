@@ -36,7 +36,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const isEdit = editPage === "edit";
-  console.log("🍅 id:", id);
   const isCreate = id === "create";
   const defaultValues = isCreate
     ? {
@@ -94,11 +93,12 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   const asyncSubmitForm = async (data: any) => {
     // const userId = session.user.userID
-    const userId = "admin"; //USR202302020002
+    if (!session) return;
+    const uk = session.user.account_no;
     console.log("🔜 data:", data);
     try {
       const res = isCreate
-        ? await createAccount(userId, data)
+        ? await createAccount(uk, data)
         : await updateAccount(userId, data);
 
       if (res.StatusCode === "200") {
@@ -143,9 +143,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   React.useEffect(() => {
     if (!isEdit) return;
     const handleRouteChange = (url: string) => {
-      console.log("🍅 before", modal);
       modal.showLeavePageModal();
-      console.log("🍅 after");
     };
 
     router.beforePopState(({ url, as, options }) => {

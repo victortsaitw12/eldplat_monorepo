@@ -15,7 +15,6 @@ export const authOptions = {
     // }),
     CredentialsProvider({
       id: "credentials",
-      // TODO: name and credentials are related to gen the default form
       name: "credentials",
       type: "credentials",
       credentials: {
@@ -31,20 +30,29 @@ export const authOptions = {
         }
       },
       async authorize(credentials, req) {
-        // always return user from frontend for now
         if (!req.body.email || !req.body.password) return null;
-        // const response = await login(req.body.email, req.body.password);
-        // if (response.StatusCode !== "200") return null;
-        // const result = response.DataList[0];
+
+        const resLogin = await login(req.body.email, req.body.password);
+        if (resLogin.StatusCode !== "200") {
+          // console.log("DEBUG: >>>>> Login Error:", resLogin);
+          return null;
+        }
+
+        const result = resLogin.DataList[0];
+
         const user = {
-          account_no: "admin", //result.account_no
-          account_name: "Admin Sys", //result.account_name
-          role: "平台管理員 DUMMY",
+          account_no: result.account_no, //"admin"
+          account_name: result.account_name, //"Admin Sys"
+          role: "--role--",
           //email: "user@gmail.com",
-          org_no: "o", //result.orgs[0].org_no
+          org_no: result.orgs[0].org_no, //"o"
           menuData: {}
         };
-        const resMenu = await getMenu(user.account_no);
+        const resMenu = await getMenu(user.account_no, user.org_no);
+        if (resMenu.StatusCode !== "200") {
+          // console.log("DEBUG: >>>>> getMenu Error:", resMenu);
+          return null;
+        }
         user.menuData = resMenu.DataList[0];
         return user;
       }
@@ -78,6 +86,7 @@ export const authOptions = {
     // },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
+
       session.accessToken = token.accessToken;
       session.user.account_no = token.account_no;
       session.user.account_name = token.account_name;

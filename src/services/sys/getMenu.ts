@@ -1,24 +1,29 @@
-export const getMenu = async (userId: string) => {
-  return DUMMY_DATA;
-
+export const getMenu = async (userId: string, creorgno: string) => {
+  // return DUMMY_DATA;
   const apiName = "getMenu";
   const reqMethod = "POST";
   const reqHeaders = { UK: userId };
+  const requestBody = {
+    creorgno: creorgno
+  };
+  // console.log("🍅 apiName from getMenu:", apiName);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_DEV_ENDPOINT}/api/getData?url=${apiName}`,
     {
       method: reqMethod,
-      headers: reqHeaders
+      headers: reqHeaders,
+      body: JSON.stringify(requestBody)
     }
   );
+
   const result = await res.json();
   return result.data;
 };
 
 // ------- MOCK DATA ------- //
 export const DUMMY_DATA = {
-  StatusCode: "500",
+  StatusCode: "200",
   Message: "內部伺服器錯誤",
   DataList: [
     {
@@ -51,13 +56,6 @@ export const DUMMY_DATA = {
               func_no: "orgAdd",
               func_name: "使用者列表",
               path: "/account"
-            },
-            {
-              module_no: "sys",
-              fg_no: "org",
-              func_no: "orgAdd",
-              func_name: "新增使用者",
-              path: "/account/detail/create?editPage=edit"
             }
           ]
         },
