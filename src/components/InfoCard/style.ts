@@ -36,6 +36,8 @@ export const InfoCardSTY = styled.div`
     display: flex;
     gap: 40px;
 
+    overflow: visible;
+
     .user__photo {
     }
 
