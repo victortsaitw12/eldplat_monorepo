@@ -3,7 +3,6 @@ import { RadioGroup } from "evergreen-ui";
 
 const RadioOptions = ({
   value,
-  name,
   onChange
 }: {
   value: string;

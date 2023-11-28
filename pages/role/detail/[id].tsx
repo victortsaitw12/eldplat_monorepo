@@ -3,7 +3,7 @@ import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { toaster } from "evergreen-ui";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { BodySTY } from "./style";
 
 //
@@ -12,11 +12,12 @@ import { createRole } from "@services/role/createRole";
 import { updateRole } from "@services/role/updateRole";
 import DetailPanel from "@contents/Roles/DetailPanel";
 import AuthPanel from "@contents/Roles/AuthPanel";
-import { getOneRole, I_RoleDetail } from "@services/role/getOneRole";
+import { getOneRole, I_RoleDetail, I_RoleReq } from "@services/role/getOneRole";
 import { defaultCreatValues, I_CreateRoleReq } from "@services/role/createRole";
 import { defaultUpdateValues } from "@services/role/updateRole";
 import ControlBar from "@contents/Roles/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
+import { string } from "zod";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const Page: NextPageWithLayout<never> = () => {
   const isCreate = router.query.id === "create";
   const modalUI = React.useContext(ModalContext);
   const [data, setData] = React.useState<any>(null);
+
   const defaultValues = {
     role_no: data?.role_no || "",
     role_name: data?.role_name || "",
@@ -32,21 +34,23 @@ const Page: NextPageWithLayout<never> = () => {
     role_tp: "O",
     module_no: data?.module_no || "",
     creorgno: session?.user.org_no || "",
-    func_auth: getFlattenAuthDataArr(data)
+    func_auth: data?.func_auth || []
   };
 
   const {
     register,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors }
   } = useForm({
     defaultValues
   });
 
+  console.log("🔜 defaultValues:", defaultValues);
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
-
-  console.log("🍅 123");
 
   //------ functions ------//
   const fetchData = async () => {
@@ -58,7 +62,7 @@ const Page: NextPageWithLayout<never> = () => {
       creorgno: session.user.org_no
     };
     try {
-      const result = await getOneRole(uk, data);
+      const result = await getOneRole(uk, data as I_RoleReq);
       setData(result.DataList[0]);
     } catch (e: any) {
       console.log(e);
@@ -154,6 +158,8 @@ const Page: NextPageWithLayout<never> = () => {
               isEdit={editPage === "edit"}
               isCreate={isCreate}
               register={register}
+              control={control}
+              setValue={setValue}
             />
           </>
         )}
