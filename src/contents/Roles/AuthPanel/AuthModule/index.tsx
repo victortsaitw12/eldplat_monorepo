@@ -14,29 +14,21 @@ import RadioGroupList from "@components/RadioGroupList";
 
 const AuthModule = ({
   data,
-  isEdit
+  isEdit,
+  index
 }: {
   data: I_AuthFuncItem;
   isEdit: boolean;
+  index?: number;
 }) => {
-  const defaultAuthDataValues = data.func_element.map((item) => {
-    return {
-      fg_no: data.fg_no,
-      func_no: data.func_no,
-      module_no: data.module_no,
-      element_no: item.element_no,
-      element_default: item.element_default
-    };
-  });
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
   const [isEnabled, setIsEnabled] = React.useState<boolean>(true);
-  const [authDataValues, setAuthDataValues] = React.useState<
-    I_FuncAuthElemReq[]
-  >(defaultAuthDataValues);
+  const [authDataValues, setAuthDataValues] =
+    React.useState<I_FuncAuthElemReq[]>(null);
 
   // TODO data.module_enb
   const handleValueChange = (value: string) => {
-    setAuthDataValues();
+    setAuthDataValues(value);
     return;
     // console.log("v:", value);
   };
@@ -52,16 +44,10 @@ const AuthModule = ({
     <DivSTY className="authFunc">
       <div className="authFunc__title authFunc__item">
         <div className="label">
-          {isOpen ? (
-            <div className="toggleBtn" onClick={handleToggle}>
-              <CaretDownIcon />
-            </div>
-          ) : (
-            <div className="toggleBtn" onClick={handleToggle}>
-              <CaretRightIcon />
-            </div>
-          )}
-          {data.func_name}{" "}
+          <div className="toggleBtn" onClick={handleToggle}>
+            {isOpen ? <CaretDownIcon /> : <CaretRightIcon />}
+          </div>
+          {data.func_name}
         </div>
         <Switch
           className="value"

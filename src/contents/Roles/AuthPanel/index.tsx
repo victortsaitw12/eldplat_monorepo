@@ -1,5 +1,5 @@
 import React from "react";
-import { UseFormRegister } from "react-hook-form";
+import { useForm, SubmitHandler, UseFormRegister } from "react-hook-form";
 import { BodySTY } from "./style";
 
 import { I_AuthFuncItem, I_AuthFuncElement } from "@services/role/getOneRole";
@@ -7,18 +7,12 @@ import { I_FuncAuthElemReq } from "@services/role/createRole";
 import InfoBox from "@components/InfoBox";
 import AutnModule from "./AuthModule";
 
-const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
-  console.log("✨ data:", data);
-  console.log("✨ flatten data:", flatten(data));
+const AuthPanel = ({ data, isEdit, isCreate, register }: I_Props) => {
+  const [authData, setAuthData] = React.useState<I_FuncAuthElemReq[]>([]);
 
-  const [authData, setAuthData] = React.useState<I_FuncAuthElemReq[]>(
-    flatten(data)
-  );
-
-  const funcAuth = [];
   //------ functions ------//
-
   const handleAuthFuncModuleChange = (v: I_FuncAuthElemReq) => {
+    // check
     const updateAuthData = [...authData];
     const checkAuthDataExist = (
       arr: I_FuncAuthElemReq[],
@@ -39,12 +33,12 @@ const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
   };
 
   // ------- render ------- //
-  const dataFitInfoBox = data.map((item: I_AuthFuncItem) => {
+  const dataFitInfoBox = data.map((item: I_AuthFuncItem, i: number) => {
     return {
       readonly: false,
       req: false,
       label: "",
-      editEle: <AutnModule data={item} isEdit={true} />,
+      editEle: <AutnModule data={item} isEdit={true} index={i} />,
       value: <AutnModule data={item} isEdit={false} />
     };
   });
@@ -63,22 +57,3 @@ interface I_Props {
   isCreate: boolean;
   register: UseFormRegister<any>;
 }
-
-// ===== FUNCTION NOT IN RENDERS ===== //
-const flatten = (nestArr: any[]) => {
-  const result: any[] = [];
-  nestArr.map((item) => {
-    if (item.func_element)
-      item.func_element.forEach((elem: any) => {
-        const flattenObj = {
-          fg_no: item.fg_no,
-          func_no: item.func_no,
-          module_no: item.module_no,
-          element_no: elem.element_no,
-          element_default: elem.element_default
-        };
-        result.push(flattenObj);
-      });
-  });
-  return result;
-};

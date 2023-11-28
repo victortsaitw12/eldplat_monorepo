@@ -12,8 +12,8 @@ import { createRole } from "@services/role/createRole";
 import { updateRole } from "@services/role/updateRole";
 import DetailPanel from "@contents/Roles/DetailPanel";
 import AuthPanel from "@contents/Roles/AuthPanel";
-import { getOneRole, I_AuthFuncItem } from "@services/role/getOneRole";
-import { defaultCreatValues } from "@services/role/createRole";
+import { getOneRole, I_RoleDetail } from "@services/role/getOneRole";
+import { defaultCreatValues, I_CreateRoleReq } from "@services/role/createRole";
 import { defaultUpdateValues } from "@services/role/updateRole";
 import ControlBar from "@contents/Roles/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
@@ -25,24 +25,26 @@ const Page: NextPageWithLayout<never> = () => {
   const isCreate = router.query.id === "create";
   const modalUI = React.useContext(ModalContext);
   const [data, setData] = React.useState<any>(null);
-  const defaultValues = isCreate
-    ? defaultCreatValues
-    : {
-        role_no: data?.role_no || "",
-        role_name: data?.role_name || "",
-        role_desc: data?.role_desc || "",
-        role_tp: "O", //TODO ????
-        module_no: data?.module_no || "",
-        creorgno: session?.user.org_no || "",
-        func_auth: data?.func_auth.map((module: I_AuthFuncItem) => {
-          return {
-            fg_no: module.fg_no,
-            func_no: module.func_no,
-            module_no: module.module_no,
-            element_no: module.func_element[0].element_no
-          };
-        })
+  const defaultValues = {
+    role_no: data?.role_no || "",
+    role_name: data?.role_name || "",
+    role_desc: data?.role_desc || "",
+    role_tp: "O",
+    module_no: data?.module_no || "",
+    creorgno: session?.user.org_no || "",
+    func_auth: getFlattenAuthDataArr(data)
+  };
+  const defaultAuthDataArr = data?.func_auth.map((item) => {
+    item.func_element.map((elem) => {
+      return {
+        fg_no: item.fg_no,
+        func_no: item.func_no,
+        module_no: item.module_no,
+        element_no: elem.element_no,
+        element_default: elem.element_default
       };
+    });
+  });
   const {
     register,
     handleSubmit,
@@ -170,3 +172,19 @@ const Page: NextPageWithLayout<never> = () => {
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;
+
+// ===== FUNCTION NOT IN RENDERS ===== //
+const getFlattenAuthDataArr = (data: I_RoleDetail) => {
+  const result = data?.func_auth.map((item) => {
+    item.func_element.map((elem) => {
+      return {
+        fg_no: item.fg_no,
+        func_no: item.func_no,
+        module_no: item.module_no,
+        element_no: elem.element_no,
+        element_default: elem.element_default
+      };
+    });
+  });
+  return result;
+};
