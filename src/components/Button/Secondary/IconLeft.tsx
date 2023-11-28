@@ -20,13 +20,18 @@ const StyledButton = styled(Button)`
   display: flex;
   align-items: center;
   padding: 8px 16px;
-  color: ${({ theme }) => theme.color.N700};
+  color: ${({ theme }) => theme.color.N300};
   font-weight: ${({ theme }) => theme.fontWeight.Paragraph100};
-  border: none;
-  border-radius: 32px;
-  gap: 8px;
+  border: 1px solid ${({ theme }) => theme.color.N60};
+  border-radius: 4px;
+  gap: 2px;
   background: ${({ theme }) => theme.color.N0};
   transition: all 0.3s;
+
+  p {
+    line-height: 16px;
+  }
+
   &:hover {
     color: ${({ theme }) => theme.color.N800};
   }

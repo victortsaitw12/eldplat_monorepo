@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import { Text, UnorderedList, ListItem, Pane } from "evergreen-ui";
+import { Text, UnorderedList, ListItem, Pane, FileCard } from "evergreen-ui";
 import { InfoBoxSTY } from "./style";
 import Checkbox from "@components/CheckBox";
 
@@ -148,7 +148,7 @@ function InfoBox({
 
   return (
     <InfoBoxSTY className="infoBox__container" style={style}>
-      {infoTitle && <Text className="info-title">{infoTitle}</Text>}
+      {infoTitle && <Text className="info_title">{infoTitle}</Text>}
       {r_switch_info(infoType)}
     </InfoBoxSTY>
   );

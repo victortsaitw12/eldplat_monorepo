@@ -37,8 +37,17 @@ const breadcrumbs: I_routers = {
     { label: "個人設定", url: "/account/setting" },
     { label: "修改密碼", url: "" }
   ],
+  "/driver": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" }
+  ],
+  "/driver/create": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "新增駕駛", url: "/create" }
+  ],
   // ----------------------------------------------------------------------- V2 above
-  // ----------------------------------------------------------------------- V1 bellow
+  // ----------------------------------------------------------------------- V1 below
   "/bus": [
     { label: "首頁", url: "/" },
     { label: "車輛清單", url: "/bus" }
@@ -138,10 +147,10 @@ const breadcrumbs: I_routers = {
     { label: "駕駛設定", url: "/driver" },
     { label: "詳情", url: "/" }
   ],
-  "/driver": [
-    { label: "入門", url: "/" },
-    { label: "駕駛設定", url: "/driver" }
-  ]
+  // "/driver": [
+  //   { label: "入門", url: "/" },
+  //   { label: "駕駛設定", url: "/driver" }
+  // ]
 };
 
 const vendorsBreadcrumbs: I_routers = {

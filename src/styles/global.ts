@@ -52,7 +52,7 @@ html, body {
 
 
 .react-datepicker-popper {
-  z-index:99;
+  /* z-index:99;
       .react-datepicker {
         .react-datepicker__triangle {
           display:none;
@@ -90,15 +90,15 @@ html, body {
             }
           }
         }
-      }
+      } */
 }
 input[type="time"],input[type="date"]{
-  position: relative;
+  /* position: relative; */
 }
 input[type="time"]::-webkit-calendar-picker-indicator,
 input[type="date"]::-webkit-calendar-picker-indicator {
   /* background: transparent; */
-  background-position: 99% 50%;
+  /* background-position: 99% 50%;
   background-size: 1rem;
   bottom: 0;
   color: transparent;
@@ -108,6 +108,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   left: 0;
   right: 0;
   top: 0;
-  width: auto;
+  width: auto; */
 }
 `;

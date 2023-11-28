@@ -47,8 +47,8 @@ export const BodySTY = styled.div`
     gap: 8px;
     /* Neutral/N0 */
     background: ${({ theme }) => theme.color.N0};
-    /* Neutral/N400 */
-    border: 1px solid ${({ theme }) => theme.color.N400};
+    /* Neutral/N50 */
+    border: 1px solid ${({ theme }) => theme.color.N50};
     border-radius: 4px;
     input {
       border: none;

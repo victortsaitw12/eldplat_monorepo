@@ -13,7 +13,7 @@ import {
 export const defaultPageInfo: I_PageInfo = {
   page_Index: 1,
   page_Size: 10,
-  orderby: null,
+  // orderby: null,
   arrangement: "desc",
   total: 0,
   last_Page: 0
@@ -28,8 +28,9 @@ interface I_PaginationField {
 export interface I_PageInfo {
   page_Index: number; //1
   page_Size: number; //10
-  arrangement?: "desc" | "asc"; //"desc"
-  orderby?: string | null; //null
+  // arrangement?: "desc" | "asc"; //"desc"
+  arrangement?: string; //"desc"
+  // orderby?: string | null; //null
   total?: number; //5
   last_Page?: number; //1
 }
