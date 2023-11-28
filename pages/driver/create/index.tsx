@@ -332,7 +332,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: true,
       label: "訓練期間",
       bold: true,
-      value: <CustomDatePicker />
+      value: <CustomDatePicker placeholder="請輸入訓練期間" isRange/>
       // value: (
       //   <CustomTextInputField
       //     className="input"
