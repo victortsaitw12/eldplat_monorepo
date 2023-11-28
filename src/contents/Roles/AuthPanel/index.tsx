@@ -3,17 +3,40 @@ import { UseFormRegister } from "react-hook-form";
 import { BodySTY } from "./style";
 
 import { I_AuthFuncItem, I_AuthFuncElement } from "@services/role/getOneRole";
+import { I_FuncAuthElemReq } from "@services/role/createRole";
 import InfoBox from "@components/InfoBox";
-import AutnFuncModule from "./AutnFuncModule";
+import AutnModule from "./AuthModule";
 
 const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
   console.log("✨ data:", data);
   console.log("✨ flatten data:", flatten(data));
 
-  const [authData, setAuthData] = React.useState(flatten(data));
+  const [authData, setAuthData] = React.useState<I_FuncAuthElemReq[]>(
+    flatten(data)
+  );
 
   const funcAuth = [];
   //------ functions ------//
+
+  const handleAuthFuncModuleChange = (v: I_FuncAuthElemReq) => {
+    const updateAuthData = [...authData];
+    const checkAuthDataExist = (
+      arr: I_FuncAuthElemReq[],
+      obj: I_FuncAuthElemReq
+    ) => {
+      const isObjExistInArr = arr.indexOf(obj) !== -1;
+      const arrValueWithoutElemDefault = Array.from(arr, (item) =>
+        Object.values(item)
+      );
+      const CompositStr = arrValueWithoutElemDefault.toString();
+      if (isObjExistInArr) {
+        updateAuthData.filter();
+      } else {
+        updateAuthData.push(obj);
+      }
+    };
+    setAuthData(updateAuthData);
+  };
 
   // ------- render ------- //
   const dataFitInfoBox = data.map((item: I_AuthFuncItem) => {
@@ -21,8 +44,8 @@ const AuthPanel = ({ data, isEdit, isCreate }: I_Props) => {
       readonly: false,
       req: false,
       label: "",
-      editEle: <AutnFuncModule data={item} isEdit={true} />,
-      value: <AutnFuncModule data={item} isEdit={false} />
+      editEle: <AutnModule data={item} isEdit={true} />,
+      value: <AutnModule data={item} isEdit={false} />
     };
   });
   return (

@@ -4,6 +4,7 @@ export const getOneRole = async (uk: string, data: I_RoleReq) => {
   const reqHeaders = { UK: uk };
   const requestBody = data;
 
+  // TODO Need an role_no="create" ish for createRole
   if (data.role_no === "create") return DUMMY_DATA;
 
   const res = await fetch(`/api/getData?url=${apiName}`, {
@@ -22,10 +23,10 @@ const DUMMY_DATA = {
   Message: "用戶端要求成功",
   DataList: [
     {
-      // role_no: "",
+      role_no: "bus", //FOR CREATE
       role_name: "",
       // role_enb: true,
-      role_tp: "O", //???
+      role_tp: "O", //an useless pendix
       role_desc: "",
       module_name: "車輛管理與營運模組",
       func_auth: [
@@ -34,7 +35,6 @@ const DUMMY_DATA = {
           func_no: "org",
           func_name: "組織設定",
           module_no: "org",
-          // module_enb: true,
           func_element: [
             {
               element_no: "btnAdd",

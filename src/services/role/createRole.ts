@@ -67,6 +67,7 @@ export const defaultCreatValues = {
       fg_no: "role", // 角色
       func_no: "role",
       module_no: "sys",
+
       element_no: "btnAdd",
       element_default: "1"
     },
