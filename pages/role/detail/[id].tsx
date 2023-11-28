@@ -34,17 +34,7 @@ const Page: NextPageWithLayout<never> = () => {
     creorgno: session?.user.org_no || "",
     func_auth: getFlattenAuthDataArr(data)
   };
-  const defaultAuthDataArr = data?.func_auth.map((item) => {
-    item.func_element.map((elem) => {
-      return {
-        fg_no: item.fg_no,
-        func_no: item.func_no,
-        module_no: item.module_no,
-        element_no: elem.element_no,
-        element_default: elem.element_default
-      };
-    });
-  });
+
   const {
     register,
     handleSubmit,
@@ -55,6 +45,8 @@ const Page: NextPageWithLayout<never> = () => {
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
+
+  console.log("🍅 123");
 
   //------ functions ------//
   const fetchData = async () => {

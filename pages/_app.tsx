@@ -110,10 +110,10 @@ export default function App({
   return (
     <main className={notoSans.className}>
       <SessionProvider session={session}>
-        <ModalProvider>
-          <Loader />
-          <I18Provider locale={locale} messages={messages} defaultLocale="zh">
-            <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <ModalProvider>
+            <Loader />
+            <I18Provider locale={locale} messages={messages} defaultLocale="zh">
               <GlobalStyles />
               {getLayout(
                 <Component
@@ -135,9 +135,9 @@ export default function App({
                   )
                 }
               )}
-            </ThemeProvider>
-          </I18Provider>
-        </ModalProvider>
+            </I18Provider>
+          </ModalProvider>
+        </ThemeProvider>
       </SessionProvider>
     </main>
   );

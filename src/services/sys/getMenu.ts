@@ -6,7 +6,6 @@ export const getMenu = async (userId: string, creorgno: string) => {
   const requestBody = {
     creorgno: creorgno
   };
-  // console.log("🍅 apiName from getMenu:", apiName);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_DEV_ENDPOINT}/api/getData?url=${apiName}`,
