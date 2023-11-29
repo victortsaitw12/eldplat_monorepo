@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { DriverListSTY } from "./style";
-import { TableSTY } from "./style";
 
 import { getDriverTitle } from "@services/driver/getAllDrivers";
 import TableWithEdit from "@components/Table/TableWithEdit";

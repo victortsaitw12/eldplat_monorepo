@@ -4,7 +4,13 @@ import { SessionProvider } from "next-auth/react";
 const defaultModal: any = null;
 export const AuthContext = React.createContext(defaultModal);
 
-export function AuthProvider({ children }: { children: any }) {
+export function AuthProvider({
+  children,
+  session
+}: {
+  children: any;
+  session: any;
+}) {
   // TODO 把session寫進去 _app
   // ref: https://next-auth.js.org/getting-started/example
   //------ functions ------//

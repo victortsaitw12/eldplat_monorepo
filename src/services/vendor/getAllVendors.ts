@@ -4,12 +4,12 @@ import { I_PageInfo } from "@components/PaginationField";
 // status:"1"啟用 "2"停用
 // codeType:供應商分類
 export const defaultPageInfo: I_PageInfo = {
-  page_Index: 1,
-  page_Size: 10,
-  orderby: "vendor_no",
-  arrangement: "desc",
-  total: 0,
-  last_Page: 0
+  Page_Index: 1,
+  Page_Size: 10,
+  Orderby: "vendor_no",
+  Arrangement: "desc",
+  Total: 0,
+  Last_Page: 0
 };
 export const getAllVendors = async (
   filter: { [key: string]: any } = {},

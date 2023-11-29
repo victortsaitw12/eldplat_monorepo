@@ -29,27 +29,17 @@ const BasicInfoBox = ({ data, isEdit }: I_Props) => {
       label: "",
       editEle: (
         <div className="basic__photo">
-          {data.image ? (
-            <Image src="" width={120} height={150} alt="Picture of the user" />
-          ) : (
-            <FileUploader
-              browseOrDragText={() => {
-                return "Upload";
-              }}
-            />
-          )}
+          <FileUploader
+            browseOrDragText={() => {
+              return "Upload";
+            }}
+          />
         </div>
       ),
 
       value: (
         <div className="basic__photo">
-          {data.image ? (
-            <Image src="" width={120} height={150} alt="Picture of the user" />
-          ) : (
-            <div className="basic__image">
-              <PersonIcon />
-            </div>
-          )}
+          <Image src="" width={120} height={150} alt="Picture of the user" />
         </div>
       )
     },
