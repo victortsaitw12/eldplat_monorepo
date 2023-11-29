@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { NewUploaderSTY } from "./style";
-import { Textarea, Pane, InlineAlert, ExportIcon, toaster } from "evergreen-ui";
+import {
+  Pane,
+  InlineAlert,
+  ExportIcon,
+  toaster,
+  PaperclipIcon,
+  SmallTickIcon,
+  TrashIcon
+} from "evergreen-ui";
 import SecondaryButton from "@components/Button/Secondary/IconLeft";
 
 // interface I_NewUploader {}
@@ -17,6 +25,21 @@ const NewUploader = () => {
       >
         <ExportIcon />
       </SecondaryButton>
+      <div className="uploaded-files">
+        <span className="title">檔案</span>
+        <Pane className="content-wrapper">
+          <span className="icon">
+            <PaperclipIcon />
+          </span>
+          <span className="file-name">檔案名稱.pdf</span>
+          <button className="check">
+            <SmallTickIcon color="success" />
+          </button>
+          <button className="delete" >
+            <TrashIcon size={16}/>
+          </button>
+        </Pane>
+      </div>
     </NewUploaderSTY>
   );
 };
