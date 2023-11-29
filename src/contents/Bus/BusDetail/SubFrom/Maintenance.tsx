@@ -16,7 +16,7 @@ import {
   busMaintenaceParser,
   busMaintenacePattern
 } from "@services/bus/getMaintenanceByFilter";
-import { PageInfoType } from "@services/type";
+import { I_PageInfo } from "@components/PaginationField";
 import { mappingQueryData } from "@utils/mappingQueryData";
 //
 interface Props {
@@ -62,18 +62,18 @@ function Maintenance({
   busId
 }: Props) {
   const [busMaintenanceData, setBusMaintenanceData] = useState<any>(null);
-  const [pageInfo, setPageInfo] = useState<PageInfoType>({
-    arrangement: "desc",
-    orderby: null,
-    page_Index: 1,
-    page_Size: 10,
-    last_Page: 10
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>({
+    Arrangement: "desc",
+    Orderby: null,
+    Page_Index: 1,
+    Page_Size: 10,
+    Last_Page: 10
   });
   const router = useRouter();
   async function fetchMaintenanceData(
     isCanceled: boolean,
     busId: string,
-    pageInfo: PageInfoType
+    pageInfo: I_PageInfo
   ) {
     getMaintenanceByFilter(busId, pageInfo).then((res) => {
       if (isCanceled) {

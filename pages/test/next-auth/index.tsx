@@ -31,7 +31,7 @@ const LoginStatus = () => {
       {session ? (
         <div>
           <small>session.user.name : </small>
-          {session?.user?.username || ""}
+          {session?.user?.account_name || ""}
         </div>
       ) : (
         <></>

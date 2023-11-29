@@ -17,8 +17,8 @@ export const getAccountList = async (userID: string, reqBody: I_reqBody) => {
       // }
     ],
     page_info: {
-      page_Index: 1,
-      page_Size: 10
+      Page_Index: 1,
+      Page_Size: 10
       // orderby: "account_no",
       // arrangement: "ASC",
       // total: 0,
@@ -104,8 +104,8 @@ export interface I_reqBody {
   filter_needed: boolean;
   filter: any[];
   page_info: {
-    page_Index: number;
-    page_Size: number;
+    Page_Index: number;
+    Page_Size: number;
   };
 }
 export interface I_AccountItem {

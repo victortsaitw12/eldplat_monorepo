@@ -41,8 +41,8 @@ const Page: NextPageWithLayout<never> = () => {
       filter_needed: true,
       filter: [],
       page_info: {
-        page_Index: 1,
-        page_Size: 10
+        Page_Index: 1,
+        Page_Size: 10
       }
     };
     try {

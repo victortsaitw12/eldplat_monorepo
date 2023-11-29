@@ -1,4 +1,4 @@
-export const createRole = async (userID: string, data: I_CreateOrgReq) => {
+export const createRole = async (userID: string, data: I_CreateRoleReq) => {
   const apiName = "createRole";
   const reqMethod = "POST";
   const reqHeaders = { UK: userID };

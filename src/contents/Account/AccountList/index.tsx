@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Tooltip, EditIcon } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { I_UserItem } from "@services/account/getAccountList";
+import { I_AccountItem } from "@services/account/getAccountList";
 import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
 import PaginationField from "@components/PaginationField";
@@ -67,5 +67,5 @@ const AccountList = ({ data }: I_Props) => {
 export default AccountList;
 
 interface I_Props {
-  data: I_UserItem[];
+  data: I_AccountItem[];
 }

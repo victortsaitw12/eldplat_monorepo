@@ -58,12 +58,13 @@ const AuthModule = ({ data, isEdit, index, control, setValue }: I_Props) => {
         {fields.map((elem, i: number) => (
           <div
             className={"authFunc__element authFunc__item"}
-            key={`funcElem-${i}`}
+            // key={`funcElem-${i}`}
+            key={elem.id}
           >
             {/* <div className="label">{elem.element_name}</div> */}
             <div className="label">label</div>
             <div className="value">
-              {isEdit ? (
+              {/* {isEdit ? (
                 <RadioOptions
                   value={elem.element_default}
                   // value="1"
@@ -79,7 +80,7 @@ const AuthModule = ({ data, isEdit, index, control, setValue }: I_Props) => {
                 />
               ) : (
                 authFuncViewValue.get(elem.element_default)
-              )}
+              )} */}
             </div>
           </div>
         ))}

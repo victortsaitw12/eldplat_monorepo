@@ -18,12 +18,12 @@ export const getRoleList = async (userID: string) => {
     ],
     filter_needed: true,
     page_info: {
-      page_Index: 1,
-      page_Size: 10,
-      orderby: "role_no",
-      arrangement: "ASC",
-      total: 0,
-      last_Page: 0
+      Page_Index: 1,
+      Page_Size: 10,
+      Orderby: "role_no",
+      Arrangement: "ASC",
+      Total: 0,
+      Last_Page: 0
     }
   };
 
@@ -116,12 +116,12 @@ export interface I_GetRoleListReq {
   ];
   filter_needed: boolean;
   page_info: {
-    page_Index: number;
-    page_Size: number;
-    orderby: string;
-    arrangement: string;
-    total: number;
-    last_Page: number;
+    Page_Index: number;
+    Page_Size: number;
+    Orderby: string;
+    Arrangement: string;
+    Total: number;
+    Last_Page: number;
   };
 }
 

@@ -76,7 +76,7 @@ function Index(props: any) {
       )}
       {/* // TODO to be removed after feat: Log in/ Log out */}
       {!session && (
-        <IconButton text="登入" onClick={signIn}>
+        <IconButton text="登入" onClick={() => signIn()}>
           <LogInIcon />
         </IconButton>
       )}
