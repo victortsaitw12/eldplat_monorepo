@@ -24,7 +24,11 @@ export const NewUploaderSTY = styled.div`
     .content-wrapper {
       padding: 10px;
       display: flex;
-      gap: 4px;
+      /* gap: 0px; */
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      &:last-child {
+        border-bottom: none;
+      }
 
       .icon {
         flex-basis: 20px;
@@ -34,14 +38,18 @@ export const NewUploaderSTY = styled.div`
         font-size: 16px;
       }
       .check {
-        flex-basis: 20px;
+        /* flex-basis: 20px; */
       }
       .delete {
         flex-basis: 36px;
+        color: ${({ theme }) => theme.color.N200};
       }
       button {
         border: none;
         background-color: #fff;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }
