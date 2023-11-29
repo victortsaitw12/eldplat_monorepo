@@ -13,6 +13,7 @@ import CustomTextArea from "@components/CustomTextArea";
 import NewUploader from "@components/NewUploader";
 import CustomTextInputField from "@components/CustomTextInputField";
 import CustomDatePicker from "@components/CustomDatePicker";
+import TagGenerator from "@components/TagGenerator";
 
 import {
   Select,
@@ -238,11 +239,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "",
       bold: false,
-      value: (
-        <SecondaryButton text="新增標籤" className={"create-button"}>
-          <SmallPlusIcon />
-        </SecondaryButton>
-      )
+      value: <TagGenerator />
     }
   ];
 

@@ -88,9 +88,6 @@ export const InfoCardSTY = styled.div`
               }
             }
 
-            .create-button {
-              padding: 4px 8px;
-            }
           }
         }
 
