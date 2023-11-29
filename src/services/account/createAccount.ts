@@ -1,4 +1,4 @@
-export const createAccount = async (uk: string, data: I_requestBody) => {
+export const createAccount = async (uk: string, data: I_ReqBody) => {
   return DUMMY_DATA.DataList;
 
   const apiName = "CreateAccount";
@@ -25,7 +25,7 @@ export const createAccount = async (uk: string, data: I_requestBody) => {
 };
 
 // ------- MOCK DATA ------- //
-const DUMMY_DATA: I_responseBody = {
+const DUMMY_DATA: I_ResBody = {
   StatusCode: "200",
   Message: "用戶端要求成功",
   DataList: [],
@@ -35,7 +35,7 @@ const DUMMY_DATA: I_responseBody = {
 };
 
 // ------- TYPING ------- //
-export interface I_responseBody {
+export interface I_ResBody {
   StatusCode: string;
   Message: string;
   DataList: any[];
@@ -43,7 +43,7 @@ export interface I_responseBody {
   ResultString: string;
   ResultInt: number;
 }
-export interface I_requestBody {
+export interface I_ReqBody {
   account_fname: string;
   account_lname: string;
   org_no: string;

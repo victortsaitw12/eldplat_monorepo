@@ -1,4 +1,4 @@
-export const getOneAccount = async (uk: string, reqBody) => {
+export const getOneAccount = async (uk: string, reqBody: I_ReqBody) => {
   // return DUMMY_DATA;
 
   const apiName = "getOneAccount";
@@ -15,8 +15,51 @@ export const getOneAccount = async (uk: string, reqBody) => {
   return result.data;
 };
 
+// ------- TYPING ------- //
+export interface I_ResBody {
+  StatusCode: string;
+  Message: string;
+  DataList: I_AccountDetailItem[];
+  Result: boolean;
+  ResultString: string;
+  ResultInt: number;
+}
+
+export interface I_ReqBody {
+  account_no: string;
+  creorgno: string;
+}
+
+export interface I_AccountDetailItem {
+  account_no: string;
+  account_fname: string;
+  account_lname: string;
+  org_no: string;
+  org_name: string;
+  staff_no: string;
+  job_title: string;
+  invt_sts: string;
+  contact_no: string;
+  content_phone_tel_country_code1: string;
+  content_phone_tel1: string;
+  content_priv_email: string;
+  account_role: I_AccountRole[];
+}
+
+export interface I_AccountRole {
+  module_no: string;
+  module_name: string;
+  roles: I_RoleItem[];
+}
+
+export interface I_RoleItem {
+  role_no: string;
+  role_name: string;
+  is_select: boolean;
+}
+
 // ------- MOCK DATA ------- //
-const DUMMY_DATA: I_responseBody = {
+const DUMMY_DATA = {
   StatusCode: "200",
   Message: "用戶端要求成功",
   Result: true,
@@ -206,46 +249,3 @@ export const DUMMY_DATA_CREATE = {
     }
   ]
 };
-
-// ------- TYPING ------- //
-export interface I_responseBody {
-  StatusCode: string;
-  Message: string;
-  DataList: I_AccountDetailItem[];
-  Result: boolean;
-  ResultString: string;
-  ResultInt: number;
-}
-
-export interface I_requestBody {
-  account_no: string;
-  creorgno: string;
-}
-
-export interface I_AccountDetailItem {
-  account_no: string;
-  account_fname: string;
-  account_lname: string;
-  org_no: string;
-  org_name: string;
-  staff_no: string;
-  job_title: string;
-  contact_no: string;
-  content_phone_tel_country_code1: string;
-  content_phone_tel1: string;
-  content_priv_email: string;
-  account_role: I_AccountRole[];
-  image?: string;
-}
-
-export interface I_AccountRole {
-  module_no: string;
-  module_name: string;
-  roles: I_RoleItem[];
-}
-
-export interface I_RoleItem {
-  role_no: string;
-  role_name: string;
-  is_select: boolean;
-}

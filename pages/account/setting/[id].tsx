@@ -30,12 +30,19 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const handleCancel = (path: string) => {
     console.log("handleCancel");
   };
+  const handleEdit = () => {
+    console.log("handleEdit");
+  };
 
   // ------- useEffect ------- //
 
   return (
     <>
-      <ControlBar isEdit={true} handleNavigation={handleSave} />
+      <ControlBar
+        isEdit={true}
+        handleNavigation={handleSave}
+        handleEdit={handleEdit}
+      />
       <BodySTY>
         <ChangeePasswordInfoBox />
       </BodySTY>
