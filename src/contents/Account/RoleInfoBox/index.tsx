@@ -1,7 +1,7 @@
 import React from "react";
 import { BodySTY } from "./style";
 
-import { I_AccountRole } from "@services/account/getOneAccount";
+import { I_AccountRole, I_RoleItem } from "@services/account/getOneAccount";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 import RoleModule from "./RoleModule";
@@ -20,8 +20,19 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
     console.log("role change");
   };
 
+  const getRoles = (data: I_RoleItem[]) => {
+    const selectedRoles = data.filter((elem: any) => elem.is_select === true);
+    if (selectedRoles.length === 0) return "--";
+    const roles = selectedRoles.map((elem: any, i: number) => (
+      <div key={`role-${i}`} data-id={elem.role_no}>
+        {elem.role_name}
+      </div>
+    ));
+    return roles;
+  };
+
   // ------- render ------- //
-  const dataFitInfoBox = data.map((item, i: number) => {
+  const dataFitInfoBox = data.map((item) => {
     return {
       readonly: false,
       req: false,
@@ -30,15 +41,7 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
       value: (
         <div className="roles--view">
           <div className="roles__module">{item.module_name}</div>
-          <div className="roles__role">
-            {item.roles
-              .filter((elem: any) => elem.is_select === true)
-              .map((elem: any, i: number) => (
-                <div key={`role-${i}`} data-id={elem.role_no}>
-                  {elem.role_name}
-                </div>
-              ))}
-          </div>
+          <div className="roles__role">{getRoles(item.roles)}</div>
         </div>
       )
     };
