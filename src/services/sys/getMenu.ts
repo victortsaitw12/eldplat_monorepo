@@ -8,7 +8,11 @@ export const getMenu = async (userId: string, creorgno: string) => {
   };
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_DEV_ENDPOINT}/api/getData?url=${apiName}`,
+    `${
+      process.env.NODE_ENV === "production"
+        ? process.env.NEXT_PUBLIC_PROD_ENDPOINT
+        : process.env.NEXT_PUBLIC_DEV_ENDPOINT
+    }/api/getData?url=${apiName}`,
     {
       method: reqMethod,
       headers: reqHeaders,
