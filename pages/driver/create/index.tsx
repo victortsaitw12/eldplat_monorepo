@@ -14,6 +14,8 @@ import NewUploader from "@components/NewUploader";
 import CustomTextInputField from "@components/CustomTextInputField";
 import CustomDatePicker from "@components/CustomDatePicker";
 import TagGenerator from "@components/TagGenerator";
+import Uploader from "@components/Uploader";
+import StarRate from "@components/StarRate";
 
 import {
   Select,
@@ -273,6 +275,7 @@ const Page: NextPageWithLayout<never> = () => {
       label: "附件/相關檔案",
       bold: true,
       value: <NewUploader />
+      // value: <Uploader label="123"/>
     }
   ];
 
