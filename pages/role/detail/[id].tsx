@@ -152,7 +152,7 @@ const Page: NextPageWithLayout<never> = () => {
               register={register}
               control={control}
               setValue={setValue}
-              errors={errors}
+              // errors={errors}
             />
           </>
         )}
