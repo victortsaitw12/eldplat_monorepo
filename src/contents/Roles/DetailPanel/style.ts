@@ -32,6 +32,9 @@ export const BodySTY = styled.div`
       .infoBox__value {
         width: 100%;
         flex: unset;
+        input {
+          width: 100%;
+        }
       }
     }
   }

@@ -20,7 +20,6 @@ const AuthModule = ({ data, isEdit, index, control, setValue }: I_Props) => {
     control,
     name: `func_auth.${index}.func_element`
   });
-  console.log("fields:", fields);
   // TODO data.module_enb
   const handleValueChange = (value: string) => {
     return;

@@ -8,14 +8,7 @@ import { I_FuncAuthElemReq } from "@services/role/createRole";
 import InfoBox from "@components/InfoBox";
 import AutnModule from "./AuthModule";
 
-const AuthPanel = ({
-  data,
-  isEdit,
-  isCreate,
-  register,
-  control,
-  setValue
-}: I_Props) => {
+const AuthPanel = ({ data, isEdit, register, control, setValue }: I_Props) => {
   //------ functions ------//
 
   // ------- render ------- //
@@ -55,7 +48,6 @@ export default AuthPanel;
 interface I_Props {
   data: I_AuthFuncItem[];
   isEdit: boolean;
-  isCreate: boolean;
   register: UseFormRegister<any>;
   control: any;
   setValue: UseFormSetValue<any>;

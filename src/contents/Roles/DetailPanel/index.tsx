@@ -1,13 +1,21 @@
 import React from "react";
-import { UseFormRegister } from "react-hook-form";
-import { Select, TextInput, Textarea, Switch } from "evergreen-ui";
+import {
+  UseFormRegister,
+  FieldErrors,
+  UseFormGetValues,
+  UseFormSetValue,
+  Control
+} from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { Select, TextInput, Textarea, Switch, Text, Pane } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { I_RoleListItem } from "@services/role/getRoleList";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
+import { textValidation, emailValidation } from "@utils/inputValidation";
 
-const DetailPanel = ({ data, isEdit, isCreate, register }: I_Props) => {
+const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
   const [isEnabled, setIsEnabled] = React.useState(true);
 
   if (!data)
@@ -37,23 +45,35 @@ const DetailPanel = ({ data, isEdit, isCreate, register }: I_Props) => {
       req: true,
       label: "角色名稱",
       editEle: (
-        <TextInput
-          className="required"
-          placeholder="請輸入角色名稱"
-          {...register("role_name", { required: "必填" })}
-        />
+        <Pane>
+          <TextInput
+            className="required"
+            placeholder="請輸入角色名稱"
+            {...register("role_name", {
+              required: "必填欄位，不可輸入符號",
+              validate: textValidation
+            })}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="role_name"
+            render={({ message }) => (
+              <Text className="input-error">{message}</Text>
+            )}
+          />
+        </Pane>
       ),
       value: data.role_name || "--"
     },
     {
       readonly: false,
-      req: true,
+      req: false,
       label: "職責描述",
       editEle: (
         <Textarea
           placeholder="請輸入職責描述"
           style={{ minHeight: "64px" }}
-          {...register("role_desc", { required: "必填" })}
+          {...register("role_desc", { required: false })}
         />
       ),
       value: data.role_desc || "--"
@@ -99,4 +119,5 @@ interface I_Props {
   isEdit: boolean;
   isCreate: boolean;
   register: UseFormRegister<any>;
+  errors: FieldErrors;
 }

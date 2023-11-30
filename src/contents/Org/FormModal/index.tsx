@@ -61,7 +61,6 @@ const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
   };
   const handleConfirm = () => {
     handleSubmit(asyncSubmitForm)();
-    // setModalContent(null);
   };
 
   // ------- render ------- //

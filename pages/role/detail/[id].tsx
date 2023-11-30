@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { toaster } from "evergreen-ui";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
-import { BodySTY } from "./style";
+import { DivSTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
@@ -21,22 +21,14 @@ import { string } from "zod";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const { data: session } = useSession();
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const isCreate = router.query.id === "create";
+  const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  const { data: session } = useSession();
   const modalUI = React.useContext(ModalContext);
   const [data, setData] = React.useState<any>(null);
-
-  const defaultValues = {
-    role_no: data?.role_no || "",
-    role_name: data?.role_name || "",
-    role_desc: data?.role_desc || "",
-    role_tp: "O",
-    module_no: data?.module_no || "",
-    creorgno: session?.user.org_no || "",
-    func_auth: data?.func_auth || []
-  };
-
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
+  const defaultValues = getDefaultValues(data, session);
   const {
     register,
     handleSubmit,
@@ -47,20 +39,17 @@ const Page: NextPageWithLayout<never> = () => {
     defaultValues
   });
 
-  console.log("🔜 defaultValues:", defaultValues);
-
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
-
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
     if (!session) return;
     const uk = session?.user.account_no;
-    const data = {
-      role_no: router.query.id,
+    const createData = {
       creorgno: session.user.org_no
     };
+    const data = isCreate
+      ? createData
+      : { ...createData, role_no: router.query.id };
     try {
       const result = await getOneRole(uk, data as I_RoleReq);
       setData(result.DataList[0]);
@@ -71,32 +60,30 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const asyncSubmitForm = async (data: any) => {
+    console.log("🍅 call asyncSubmitForm");
+
     console.log("🔜 data:", data);
     if (!session) return;
     const uk = session.user.account_no;
-    try {
-      const res = isCreate
-        ? await createRole(uk, data)
-        : await updateRole(uk, data);
+    // try {
+    //   const res = isCreate
+    //     ? await createRole(uk, data)
+    //     : await updateRole(uk, data);
 
-      if (res.StatusCode === "200") {
-        toaster.success(`${res.Message}`, {
-          duration: 1.5
-        });
-      } else {
-        throw new Error(`${res.Message}`);
-      }
-    } catch (err: any) {
-      toaster.warning(err.message);
-    }
+    //   if (res.StatusCode === "200") {
+    //     toaster.success(`${res.Message}`, {
+    //       duration: 1.5
+    //     });
+    //   } else {
+    //     throw new Error(`${res.Message}`);
+    //   }
+    // } catch (err: any) {
+    //   toaster.warning(err.message);
+    // }
   };
 
   const handleNavigation = async (path: string) => {
     router.push(path);
-  };
-
-  const handleSave = () => {
-    handleSubmit(asyncSubmitForm)();
   };
 
   const handleEdit = () => {
@@ -135,16 +122,18 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <form
-      onSubmit={handleSubmit((data) => {
-        asyncSubmitForm({ ...data });
-      })}
+      onSubmit={handleSubmit(asyncSubmitForm)}
+      // onSubmit={(e: any) => {
+      //   e.preventDefault();
+      //   console.log("🍅 onSubmit");
+      // }}
     >
       <ControlBar
         isEdit={editPage === "edit"}
         handleNavigation={handleNavigation}
         handleEdit={handleEdit}
       />
-      <BodySTY>
+      <DivSTY>
         {data && (
           <>
             <DetailPanel
@@ -152,18 +141,19 @@ const Page: NextPageWithLayout<never> = () => {
               isEdit={editPage === "edit"}
               isCreate={isCreate}
               register={register}
+              errors={errors}
             />
             <AuthPanel
               data={data.func_auth}
               isEdit={editPage === "edit"}
-              isCreate={isCreate}
               register={register}
               control={control}
               setValue={setValue}
+              errors={errors}
             />
           </>
         )}
-      </BodySTY>
+      </DivSTY>
     </form>
   );
 };
@@ -172,6 +162,27 @@ Page.getLayout = (page: ReactNode, layoutProps: any) =>
 export default Page;
 
 // ===== FUNCTION NOT IN RENDERS ===== //
+const getDefaultValues = (data: I_RoleDetail, session: any) => {
+  if (!session || !data)
+    return {
+      role_no: "",
+      role_name: "",
+      role_desc: "",
+      role_tp: "O",
+      module_no: "",
+      creorgno: "",
+      func_auth: []
+    };
+  return {
+    role_no: data.role_no || "",
+    role_name: data.role_name || "",
+    role_desc: data.role_desc || "",
+    role_tp: "O",
+    module_no: data.module_no || "",
+    creorgno: session?.user.org_no || "",
+    func_auth: data.func_auth || []
+  };
+};
 const getFlattenAuthDataArr = (data: I_RoleDetail) => {
   const result = data?.func_auth.map((item) => {
     item.func_element.map((elem) => {

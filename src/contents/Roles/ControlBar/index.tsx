@@ -6,12 +6,6 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import SecondaryBtn from "@components/Button/Secondary/Label";
 
-interface I_Props {
-  isEdit: boolean;
-  handleNavigation: (path: string) => void;
-  handleEdit: () => void;
-}
-
 function ControlBar({ isEdit, handleNavigation, handleEdit }: I_Props) {
   const router = useRouter();
 
@@ -26,10 +20,6 @@ function ControlBar({ isEdit, handleNavigation, handleEdit }: I_Props) {
     handleNavigation("/role");
 
     console.log("cancel");
-  };
-
-  const handleSave = () => {
-    console.log();
   };
 
   //------ render ------//
@@ -58,3 +48,10 @@ function ControlBar({ isEdit, handleNavigation, handleEdit }: I_Props) {
 }
 
 export default ControlBar;
+
+//====== OUTSIDE-REACT-DOM: TYPING ======//
+interface I_Props {
+  isEdit: boolean;
+  handleNavigation: (path: string) => void;
+  handleEdit: () => void;
+}

@@ -8,6 +8,7 @@ const API_Path = {
   // 角色 role
   getRoleList: getUrlPath("sys", "Role", "GetRoleList"),
   getOneRole: getUrlPath("sys", "Role", "GetOneRole"),
+  getRoleCreateOptions: getUrlPath("sys", "Role", "GetRoleCreateOptions"),
   createRole: getUrlPath("sys", "Role", "CreateRole"),
   updateRole: getUrlPath("sys", "Role", "UpdateRole"),
   // 使用者 account
