@@ -27,19 +27,19 @@ const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
   //------ functions ------//
   // ------- render ------- //
   const dataFitInfoBox = [
-    {
-      readonly: false,
-      req: false,
-      label: "模組",
-      editEle: (
-        <Select disabled className={`${"disabled"}`}>
-          <option value="foo" selected>
-            {data.module_name || "--"}
-          </option>
-        </Select>
-      ),
-      value: data.module_name || "--"
-    },
+    // {
+    //   readonly: false,
+    //   req: false,
+    //   label: "模組",
+    //   editEle: (
+    //     <Select disabled className={`${"disabled"}`}>
+    //       <option value="foo" selected>
+    //         {data.module_name || "--"}
+    //       </option>
+    //     </Select>
+    //   ),
+    //   value: data.module_name || "--"
+    // },
     {
       readonly: false,
       req: true,

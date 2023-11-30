@@ -1,9 +1,10 @@
 import React, { ReactNode } from "react";
-import { NextPageWithLayout } from "next";
+import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { toaster } from "evergreen-ui";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { DivSTY } from "./style";
 
 //
@@ -28,7 +29,7 @@ const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
-  const defaultValues = getDefaultValues(data, session);
+  const defaultValues = getDefaultValues(data);
   const {
     register,
     handleSubmit,
@@ -38,6 +39,7 @@ const Page: NextPageWithLayout<never> = () => {
   } = useForm({
     defaultValues
   });
+  console.log("🍅 defaultValues", defaultValues);
 
   //------ functions ------//
   const fetchData = async () => {
@@ -67,8 +69,8 @@ const Page: NextPageWithLayout<never> = () => {
     const uk = session.user.account_no;
     // try {
     //   const res = isCreate
-    //     ? await createRole(uk, data)
-    //     : await updateRole(uk, data);
+    //     ? await createRole(uk, {...data,creorgno: session?.user.org_no})
+    //     : await updateRole(uk,{...data,creorgno: session?.user.org_no});
 
     //   if (res.StatusCode === "200") {
     //     toaster.success(`${res.Message}`, {
@@ -118,15 +120,16 @@ const Page: NextPageWithLayout<never> = () => {
     return () => {
       router.events.off("routeChangeStart", handleRouteChange);
     };
-  }, [isEdit]);
+  }, [router]);
 
   return (
     <form
-      onSubmit={handleSubmit(asyncSubmitForm)}
-      // onSubmit={(e: any) => {
-      //   e.preventDefault();
-      //   console.log("🍅 onSubmit");
-      // }}
+      onSubmit={handleSubmit((data) => {
+        console.log("called");
+        asyncSubmitForm({
+          ...data
+        });
+      })}
     >
       <ControlBar
         isEdit={editPage === "edit"}
@@ -157,30 +160,41 @@ const Page: NextPageWithLayout<never> = () => {
     </form>
   );
 };
+
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  context
+) => {
+  const { params, query } = context;
+  return {
+    props: {
+      editPage: query.editPage == "edit",
+      id: params!.id
+    }
+  };
+};
+
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;
 
 // ===== FUNCTION NOT IN RENDERS ===== //
-const getDefaultValues = (data: I_RoleDetail, session: any) => {
-  if (!session || !data)
+const getDefaultValues = (data: I_RoleDetail) => {
+  if (!data)
     return {
-      role_no: "",
-      role_name: "",
-      role_desc: "",
-      role_tp: "O",
-      module_no: "",
-      creorgno: "",
-      func_auth: []
+      // role_no: "",
+      role_name: ""
+      // role_desc: "",
+      // role_tp: "O",
+      // module_no: "bus"
+      // func_auth: []
     };
   return {
-    role_no: data.role_no || "",
-    role_name: data.role_name || "",
-    role_desc: data.role_desc || "",
-    role_tp: "O",
-    module_no: data.module_no || "",
-    creorgno: session?.user.org_no || "",
-    func_auth: data.func_auth || []
+    // role_no: data.role_no || "",
+    role_name: data.role_name || ""
+    // role_desc: data.role_desc || "",
+    // role_tp: "O",
+    // module_no: data.module_no || "bus"
+    // func_auth: data.func_auth || []
   };
 };
 const getFlattenAuthDataArr = (data: I_RoleDetail) => {
@@ -197,3 +211,7 @@ const getFlattenAuthDataArr = (data: I_RoleDetail) => {
   });
   return result;
 };
+
+interface Props {
+  id: string;
+}
