@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useRef } from "react";
 import { NewUploaderSTY } from "./style";
 import {
   Pane,
@@ -15,9 +15,13 @@ import {
 import SecondaryButton from "@components/Button/Secondary/IconLeft";
 
 const DUMMY_FILES = [
-  { name: "檔案1", url: "www.google.com", id: "1" },
-  { name: "檔案2", url: "www.google.com", id: "2" },
-  { name: "檔案3", url: "www.google.com", id: "3" }
+  { name: "檔案1.png", url: "www.google.com", id: "1" },
+  { name: "檔案2.jpg", url: "www.google.com", id: "2" },
+  {
+    name: "檔案3檔案3檔案3檔案3檔案3檔案3檔案3檔案3檔案3.pdf",
+    url: "www.google.com",
+    id: "3"
+  }
 ];
 
 interface I_File {
@@ -27,53 +31,81 @@ interface I_File {
 }
 
 interface I_NewUploader {
-  uploadedFiles?: I_File[];
+  existedFiles?: I_File[];
+  isMultiple?: boolean;
+  maxSize?: number;
 }
 
 const NewUploader = (props: I_NewUploader) => {
-  const { uploadedFiles } = props;
+  const [files, setFiles] = useState<File[] | null>(null);
+  const { existedFiles = null, isMultiple = false, maxSize = 5 } = props;
+  const hiddenFileInput = useRef<any>(null);
 
-  const acceptedMimeTypes = [MimeType.jpeg, MimeType.pdf];
-  const maxFiles = 5;
-  const maxSizeInBytes = 50 * 1024 ** 2; // 50 MB
-  const [files, setFiles] = useState<Array<any>>([]);
-  const [fileRejections, setFileRejections] = useState<Array<any>>([]);
-  const values = useMemo(
-    () => [
-      ...files,
-      ...fileRejections.map((fileRejection) => fileRejection.file)
-    ],
-    [files, fileRejections]
-  );
-  const handleRemove = useCallback(
-    (file: any) => {
-      const updatedFiles = files.filter(
-        (existingFile) => existingFile !== file
-      );
-      const updatedFileRejections = fileRejections.filter(
-        (fileRejection) => fileRejection.file !== file
-      );
+  // const maxFiles = 5;
+  const maxSizeInBytes = maxSize * 1024 ** 2; // 5 MB
 
-      // Call rebaseFiles to ensure accepted + rejected files are in sync (some might have previously been
-      // rejected for being over the file count limit, but might be under the limit now!)
-      const { accepted, rejected } = rebaseFiles(
-        [
-          ...updatedFiles,
-          ...updatedFileRejections.map((fileRejection) => fileRejection.file)
-        ],
-        { acceptedMimeTypes, maxFiles, maxSizeInBytes }
-      );
+  function isFileSizeValid(size: number): boolean {
+    return size <= maxSizeInBytes;
+  }
 
-      setFiles(accepted);
-      setFileRejections(rejected);
-    },
-    [acceptedMimeTypes, files, fileRejections, maxFiles, maxSizeInBytes]
-  );
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const uploadedFiles = e.target.files;
 
-  const fileCountOverLimit = files.length + fileRejections.length - maxFiles;
-  const fileCountError = `You can upload up to 5 files. Please remove ${fileCountOverLimit} ${
-    fileCountOverLimit === 1 ? "file" : "files"
-  }.`;
+    let isValid = true;
+
+    if (uploadedFiles) {
+      for (const file of uploadedFiles) {
+        if (!isFileSizeValid(file.size)) {
+          isValid = false;
+          break;
+        }
+      }
+
+      if (isValid) {
+        setFiles(uploadedFiles);
+      } else {
+        toaster.danger("檔案太大或格式不符");
+      }
+    }
+  };
+
+  const handleClickUpload = () => {
+    hiddenFileInput.current?.click();
+  };
+
+  const handleRemove = (file: File, fileArray: File[]) => {
+    const updatedFileArray: File[] = [...fileArray].filter(
+      (item) => item !== file
+    );
+    setFiles(updatedFileArray);
+  };
+
+  const handleUpload = async () => {
+    if (files) {
+      setStatus("uploading");
+
+      const formData = new FormData();
+
+      [...files].forEach((file) => {
+        formData.append("files", file);
+      });
+
+      try {
+        const result = await fetch("https://httpbin.org/post", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await result.json();
+
+        console.log(data);
+        setStatus("success");
+      } catch (error) {
+        console.error(error);
+        setStatus("fail");
+      }
+    }
+  };
 
   return (
     <NewUploaderSTY>
@@ -83,29 +115,61 @@ const NewUploader = (props: I_NewUploader) => {
       <SecondaryButton
         text="上傳檔案"
         className={"upload-button"}
-        onClick={() => toaster.danger("檔案太大或格式不符")}
+        onClick={handleClickUpload}
       >
         <ExportIcon />
       </SecondaryButton>
-      <div className="uploaded-files">
-        <span className="title">檔案</span>
-        {DUMMY_FILES.map((file: any) => {
-          return (
-            <Pane className="content-wrapper" key={file.id}>
-              <span className="icon">
-                <PaperclipIcon />
-              </span>
-              <span className="file-name">{file.name}.pdf</span>
-              <span className="check">
-                <SmallTickIcon color="success" />
-              </span>
-              <button className="delete">
-                <TrashIcon size={16} />
-              </button>
-            </Pane>
-          );
-        })}
-      </div>
+      <input
+        ref={hiddenFileInput}
+        type="file"
+        multiple={isMultiple}
+        accept=".png, .jpg, .jpeg, .pdf"
+        onChange={handleFileChange}
+      />
+      {(existedFiles || files) && (
+        <div className="uploaded-files">
+          <span className="title">檔案</span>
+          {existedFiles &&
+            existedFiles.map((file: any) => {
+              return (
+                <Pane className="content-wrapper existed" key={file.id}>
+                  <span className="icon">
+                    <PaperclipIcon />
+                  </span>
+                  <span className="file-name">{file.name}</span>
+                  <button
+                    className="delete"
+                    onClick={() => handleRemove(file, existedFiles)}
+                  >
+                    <TrashIcon size={16} />
+                  </button>
+                </Pane>
+              );
+            })}
+
+          {files &&
+            Array.from(files).map((file) => {
+              return (
+                <Pane className="content-wrapper " key={file.name}>
+                  <span className="icon">
+                    <PaperclipIcon />
+                  </span>
+                  <span className="file-name">{file.name}</span>
+                  <span className="check">
+                    <SmallTickIcon color="success" />
+                  </span>
+
+                  <button
+                    className="delete"
+                    onClick={() => handleRemove(file, files)}
+                  >
+                    <TrashIcon size={16} />
+                  </button>
+                </Pane>
+              );
+            })}
+        </div>
+      )}
     </NewUploaderSTY>
   );
 };

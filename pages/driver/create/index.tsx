@@ -350,7 +350,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "附件/相關檔案",
       bold: true,
-      value: <NewUploader />
+      value: <NewUploader isMultiple={true}/>
     }
   ];
 

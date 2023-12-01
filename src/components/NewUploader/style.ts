@@ -11,6 +11,10 @@ export const NewUploaderSTY = styled.div`
     gap: 8px;
   }
 
+  input[type="file"] {
+    display: none;
+  }
+
   .uploaded-files {
     margin-top: 8px;
     border: 1px solid ${({ theme }) => theme.color.N40};
@@ -24,24 +28,35 @@ export const NewUploaderSTY = styled.div`
     .content-wrapper {
       padding: 10px;
       display: flex;
-      /* gap: 0px; */
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+
       &:last-child {
         border-bottom: none;
       }
 
+      &.existed {
+        color: ${({ theme }) => theme.color.B400};
+      }
+
       .icon {
         flex-basis: 20px;
+        flex-shrink: 0;
       }
       .file-name {
         flex-grow: 1;
         font-size: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .check {
-        /* flex-basis: 20px; */
+        flex-basis: 20px;
+        flex-shrink: 0;
       }
       .delete {
         flex-basis: 36px;
+        flex-shrink: 0;
+
         color: ${({ theme }) => theme.color.N200};
       }
       button {
