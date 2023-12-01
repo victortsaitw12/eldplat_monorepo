@@ -6,6 +6,7 @@ module.exports = {
     styledComponents: true
   },
   eslint: {
-    ignoreDuringBuilds: true
+    // dirs: ["pages"]
+    // ignoreDuringBuilds: true
   }
 };
