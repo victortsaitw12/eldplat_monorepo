@@ -1,7 +1,7 @@
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { getCustomerTitle } from "@services/customer/getAllCustomers";
 import { BodySTY } from "./style";
-import { PageInfoType } from "@services/type";
+import { I_PageInfo } from "@components/PaginationField";
 
 interface Props {
   listType: string;
@@ -11,8 +11,8 @@ interface Props {
   recoverItemHandler: (id: string) => void;
   goToEditPageHandler: (id: string) => void;
   goToDetailPage: (id: string) => void;
-  upDatePageHandler?: (pageInfo: PageInfoType) => void;
-  pageInfo: PageInfoType;
+  upDatePageHandler?: (pageInfo: I_PageInfo) => void;
+  pageInfo: I_PageInfo;
 }
 
 function CustomerList({

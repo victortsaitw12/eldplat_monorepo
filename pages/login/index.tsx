@@ -7,6 +7,7 @@ import LoginError from "../../src/contents/Login/LoginError";
 import { BodySTY } from "./style";
 import LanguageSelect from "../../src/components/LanguageSelect";
 import { login } from "@services/auth/login";
+import { getLayout } from "@layout/LoginLayout";
 
 interface LoginProps {
   locale?: string;
@@ -37,12 +38,17 @@ const LoginPage = ({ locale = "zh", setLocale }: LoginProps) => {
 
   return (
     <BodySTY>
-      <LoginHeader />
-      <LanguageSelect setLocale={setLocale} />
-      <LoginError message={loginError} visible={errorVisible} />
-      <LoginForm login={loginHandler} />
+      <div className="wrapper">
+        <LoginHeader />
+        {/* <LanguageSelect setLocale={setLocale} /> */}
+        <LoginError message={loginError} visible={errorVisible} />
+        <LoginForm login={loginHandler} />
+      </div>
     </BodySTY>
   );
 };
+
+LoginPage.getLayout = (page: React.ReactNode, layoutProps: any) =>
+  getLayout(page, { ...layoutProps });
 
 export default LoginPage;

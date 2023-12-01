@@ -1,19 +1,20 @@
 import React from "react";
 import { TextInputField, Switch, Group, toaster, Dialog } from "evergreen-ui";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSession } from "next-auth/react";
 import { FormSTY } from "./style";
 
 import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
-import { fetchData } from "next-auth/client/_utils";
+// import { fetchData } from "next-auth/client/_utils";
 
-const FormModal = ({ content, setModalContent }: I_Props) => {
+const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
+  const { data: session } = useSession();
   const [checked, setChecked] = React.useState(true);
-  const userId = "admin"; //USR202302020002
   const isCreate = content.isCreate;
   const defaultValues = isCreate
     ? {
-        org_no: content.req.org_no,
+        porg_no: content.req.org_no,
         org_name: "",
         org_tp: content.req.org_tp,
         org_lvl: content.req.org_lvl
@@ -33,14 +34,17 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
 
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {
+    if (!session) return;
+    const uk = session.user.account_no;
     console.log("🔜 data:", data);
     try {
       const res = isCreate
-        ? await createOrg(userId, data)
-        : await updateOrg(userId, data);
+        ? await createOrg(uk, data)
+        : await updateOrg(uk, data);
 
       if (res.StatusCode === "200") {
         setModalContent(null);
+        refetch();
         toaster.success(`${res.Message}`, {
           duration: 1.5
         });
@@ -57,7 +61,6 @@ const FormModal = ({ content, setModalContent }: I_Props) => {
   };
   const handleConfirm = () => {
     handleSubmit(asyncSubmitForm)();
-    // setModalContent(null);
   };
 
   // ------- render ------- //
@@ -110,6 +113,7 @@ export default FormModal;
 interface I_Props {
   content: I_ModalContent;
   setModalContent: (v: any) => void;
+  refetch: () => void;
 }
 
 export interface I_ModalContent {

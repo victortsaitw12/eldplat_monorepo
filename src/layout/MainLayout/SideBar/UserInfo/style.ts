@@ -29,9 +29,7 @@ export const BodySTY = styled.div`
       background: inherit;
       color: inherit;
       border: none;
-      padding: 8px 12px;
       cursor: pointer;
-
       img {
         border-radius: 16px;
       }

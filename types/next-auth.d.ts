@@ -6,8 +6,10 @@ declare module "next-auth" {
    */
   interface Session {
     user: {
-      username: string;
+      account_no: string;
+      account_name: string;
       role: string;
+      org_no: string;
       menuData: {
         userdefine: any[];
         defaultMenu: any[];

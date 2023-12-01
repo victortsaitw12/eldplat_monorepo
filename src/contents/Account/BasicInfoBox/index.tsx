@@ -3,14 +3,15 @@ import {
   TextInput,
   Textarea,
   FileUploader,
-  FileCard
+  FileCard,
+  PersonIcon
 } from "evergreen-ui";
 import Image from "next/image";
 import { BodySTY } from "./style";
 
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { I_UserDetailItem } from "@services/account/getOneAccount";
+import { I_AccountDetailItem } from "@services/account/getOneAccount";
 
 const BasicInfoBox = ({ data, isEdit }: I_Props) => {
   if (!data)
@@ -28,25 +29,17 @@ const BasicInfoBox = ({ data, isEdit }: I_Props) => {
       label: "",
       editEle: (
         <div className="basic__photo">
-          {data.image ? (
-            <Image src="" width={120} height={150} alt="Picture of the user" />
-          ) : (
-            <FileUploader
-              browseOrDragText={() => {
-                return "Upload";
-              }}
-            />
-          )}
+          <FileUploader
+            browseOrDragText={() => {
+              return "Upload";
+            }}
+          />
         </div>
       ),
 
       value: (
         <div className="basic__photo">
-          {data.image ? (
-            <Image src="" width={120} height={150} alt="Picture of the user" />
-          ) : (
-            <FileCard name="upload" />
-          )}
+          <Image src="" width={120} height={150} alt="Picture of the user" />
         </div>
       )
     },
@@ -71,14 +64,14 @@ const BasicInfoBox = ({ data, isEdit }: I_Props) => {
       label: "手機",
       editEle: <TextInput className="required" placeholder="請輸入手機" />,
 
-      value: data.account_no || "--"
+      value: data.content_phone_tel1 || "--"
     },
     {
       readonly: false,
       req: true,
       label: "信箱",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />,
-      value: data.account_no || "--"
+      value: data.content_priv_email || "--"
     }
   ];
   return (
@@ -91,6 +84,6 @@ const BasicInfoBox = ({ data, isEdit }: I_Props) => {
 export default BasicInfoBox;
 
 interface I_Props {
-  data: I_UserDetailItem;
+  data: I_AccountDetailItem;
   isEdit: boolean;
 }

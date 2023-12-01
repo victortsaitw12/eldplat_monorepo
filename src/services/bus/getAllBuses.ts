@@ -1,9 +1,9 @@
 import API_Path from "./apiPath";
 import { PatternType } from "@utils/mappingQueryData";
-import { PageInfoType } from "../type";
+import { I_PageInfo } from "@components/PaginationField";
 
 export const getAllBuses = async (
-  pageInfo: PageInfoType,
+  pageInfo: I_PageInfo,
   filter: { [key: string]: any } = {},
   bus_status = "1"
 ) => {

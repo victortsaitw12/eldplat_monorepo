@@ -3,6 +3,7 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useSession } from "next-auth/react";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { BodySTY } from "./style";
+import { useRouter } from "next/router";
 
 import { getLayout } from "@layout/MainLayout";
 import { getOrgList } from "@services/org/getOrgList";
@@ -14,19 +15,25 @@ const Page: NextPageWithLayout<{
   locale: string;
   setPageType: (t: string) => void;
 }> = () => {
-  const { data: session } = useSession();
-  const userId = "admin"; // TODO To be replaced
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [data, setData] = React.useState([]);
   const [modalContent, setModalContent] = React.useState<I_ModalContent | null>(
     null
   );
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isInitialRenderEnd, setIsInitialRenderEnd] =
+    React.useState<boolean>(false);
 
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
+    if (!session) return;
+    // TODO  const uk = session.user.account_no;
+    const uk = "admin";
+
     try {
-      const result = await getOrgList(userId);
+      const result = await getOrgList(uk);
       setData(result);
     } catch (e: any) {
       console.log(e);
@@ -55,18 +62,21 @@ const Page: NextPageWithLayout<{
 
   // ------- useEffect ------- //
   React.useEffect(() => {
+    if (!session) return;
     fetchData();
-  }, []);
+  }, [session]);
+
+  React.useEffect(() => {
+    if (status === "unauthenticated") router.push("/login");
+  }, [status]);
 
   // ------- render ------- //
-  if (isLoading)
+  if (isLoading || !session)
     return (
       <BodySTY>
         <LoadingSpinner />
       </BodySTY>
     );
-
-  if (!session) return <div>Your're not signed in. redirect to login in</div>;
 
   return (
     <BodySTY>
@@ -76,7 +86,11 @@ const Page: NextPageWithLayout<{
         onEdit={handleRenderModal.bind(null, "edit")}
       />
       {modalContent && (
-        <FormModal content={modalContent} setModalContent={setModalContent} />
+        <FormModal
+          content={modalContent}
+          setModalContent={setModalContent}
+          refetch={fetchData}
+        />
       )}
     </BodySTY>
   );

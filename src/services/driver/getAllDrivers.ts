@@ -2,11 +2,11 @@ import API_Path from "./apiPath";
 import { I_PageInfo } from "@components/PaginationField";
 
 export const defaultPageInfo: I_PageInfo = {
-  page_Index: 1,
-  page_Size: 10,
-  arrangement: "desc",
-  total: 0,
-  last_Page: 0
+  Page_Index: 1,
+  Page_Size: 10,
+  Arrangement: "desc",
+  Total: 0,
+  Last_Page: 0
 };
 
 export interface I_GetDriverListRes {
@@ -34,11 +34,11 @@ export interface I_GetDriverListRes {
   ];
   ConditionList: [];
   PageInfo: {
-    page_Index: number;
-    page_Size: number;
-    arrangement: string;
-    total: number;
-    last_Page: number;
+    Page_Index: number;
+    Page_Size: number;
+    Arrangement: string;
+    Total: number;
+    Last_Page: number;
   };
 }
 
@@ -115,11 +115,11 @@ const DUMMY_DATA = {
     }
   ],
   PageInfo: {
-    page_Index: 1,
-    page_Size: 1000,
-    arrangement: "desc",
-    total: 3,
-    last_Page: 1
+    Page_Index: 1,
+    Page_Size: 1000,
+    Arrangement: "desc",
+    Total: 3,
+    Last_Page: 1
   }
 };
 

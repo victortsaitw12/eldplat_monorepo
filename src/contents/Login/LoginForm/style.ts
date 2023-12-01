@@ -1,11 +1,32 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  // 密碼input大區塊
-  transition: all 0.5s;
   display: flex;
+  width: 454px;
+  padding: 48px;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  gap: 32px;
+  background: ${({ theme }) => theme.color.N0};
+  .asst {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    &__storePW {
+      display: flex;
+      .checkbox-title {
+        flex: 10;
+      }
+    }
+    &__forgetPW {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   .all-password {
     position: relative;
     .forgot-password {

@@ -1,13 +1,14 @@
 import React from "react";
 import LeavePageModal from "@components/Modal/LeavePageModal";
-import { useConfirmation } from "@hooks/useConfirmation";
+import { useRouter } from "next/router";
 
 const defaultModal: any = null;
 export const ModalContext = React.createContext(defaultModal);
 
 export function ModalProvider({ children }: { children: any }) {
+  const router = useRouter();
   const [modalContent, setModalContent] = React.useState<any>(null);
-  const { confirmation } = useConfirmation();
+  const [url, setUrl] = React.useState("");
 
   //------ functions ------//
   const onCancel = () => {
@@ -15,10 +16,11 @@ export function ModalProvider({ children }: { children: any }) {
   };
 
   const onConfirm = () => {
-    console.log("onConfirm");
+    router.push(url);
   };
 
-  const showLeavePageModal = () => {
+  const showLeavePageModal = (url: string) => {
+    setUrl(url);
     setModalContent(
       <LeavePageModal onCancel={onCancel} onConfirm={onConfirm} />
     );

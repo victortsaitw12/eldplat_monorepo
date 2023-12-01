@@ -1,10 +1,11 @@
 import { PatternType } from "@utils/mappingQueryData";
 import API_Path from "./apiPath";
-import { PageInfoType } from "@services/type";
+import { I_PageInfo } from "@components/PaginationField";
+
 import { createElement } from "react";
 // 取得員工資料
 export const getAllEmployees = async (
-  pageInfo: PageInfoType,
+  pageInfo: I_PageInfo,
   filter: { [key: string]: any } = {},
   user_status = "1"
 ) => {
