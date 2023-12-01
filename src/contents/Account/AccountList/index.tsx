@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Tooltip, EditIcon } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { I_UserItem } from "@services/account/getUserList";
+import { I_AccountItem } from "@services/account/getAccountList";
 import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
 import PaginationField from "@components/PaginationField";
@@ -23,11 +23,11 @@ const AccountList = ({ data }: I_Props) => {
 
   //------ functions ------//
   const handleView = (id: string) => {
-    router.push(`/user/detail/${id}`);
+    router.push(`/account/detail/${id}`);
   };
 
   const handleEdit = (id: string) => {
-    router.push(`/role/detail/${id}?editPage=edit`);
+    router.push(`/account/detail/${id}?editPage=edit`);
   };
 
   // ------- render ------- //
@@ -35,9 +35,9 @@ const AccountList = ({ data }: I_Props) => {
     return {
       id: item["account_no"],
       checkbox: <Checkbox value={item["account_name"]} />,
-      account_name: item["account_name"],
-      org_name: item["org_name"],
-      role_name_o: item["role_name_o"],
+      account_name: item["account_name"] || "--",
+      org_name: item["org_name"] || "--",
+      role_name_m: item["role_name_m"] || "--",
       invt_sts: <InvitSatus value={item["invt_sts"]} />,
       action: (
         <IconBtn
@@ -67,5 +67,5 @@ const AccountList = ({ data }: I_Props) => {
 export default AccountList;
 
 interface I_Props {
-  data: I_UserItem[];
+  data: I_AccountItem[];
 }

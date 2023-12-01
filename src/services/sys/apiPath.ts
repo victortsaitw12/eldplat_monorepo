@@ -1,5 +1,3 @@
-import { createUrlPath2 } from "@utils/createUrlPath";
-
 //sys/api/V2/DataAuthResult/GetDataAuthResultList
 //car/api/V2/Bus/GetBusList
 const API_Path = {

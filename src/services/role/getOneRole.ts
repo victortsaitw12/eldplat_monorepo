@@ -1,82 +1,46 @@
-import API_Path from "./apiPath";
-import { I_RoleListItem } from "./getRoleList";
-
-export const getOneRole = async () => {
-  return DUMMY_DATA;
-
-  //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-  //     }
-  //   });
-  //   return await res.json();
+export const getOneRole = async (uk: string, data: I_RoleReq) => {
+  // return DUMMY_DATA;
+  const apiName = "getOneRole";
+  const reqMethod = "POST";
+  const reqHeaders = { UK: uk };
+  const requestBody = data;
+  const res = await fetch(`/api/getData?url=${apiName}`, {
+    method: reqMethod,
+    headers: reqHeaders,
+    body: JSON.stringify(requestBody)
+  });
+  const result = await res.json();
+  return result.data;
 };
 
 // ------- MOCK DATA ------- //
-const DUMMY_DATA_old = {
-  roleDetail: {
-    role_no: "1",
-    module_name: "車輛管理與營運模組",
-    role_name: "車管",
-    description: "管理車輛狀況"
-  },
-  func_auth: [
-    {
-      func_no: "org",
-      func_name: "組織設定",
-      func_enb: 1,
-      elements: [
-        { func_no: "org_create", func_name: "新增下級", func_enb: 1 },
-        { func_no: "org_edit", func_name: "編輯組織", func_enb: 1 }
-      ]
-    },
-    {
-      func_no: "role",
-      func_name: "角色設定",
-      func_enb: 0,
-      elements: [
-        { func_no: "role_create", func_name: "新增角色", func_enb: 0 },
-        { func_no: "role_edit", func_name: "編輯角色", func_enb: 0 }
-      ]
-    },
-    {
-      func_no: "account",
-      func_name: "使用者列表",
-      func_enb: 1,
-      elements: [
-        { func_no: "account_create", func_name: "新增使用者", func_enb: 0 },
-        { func_no: "account_edit", func_name: "編輯使用者", func_enb: 1 }
-      ]
-    }
-  ]
-};
 const DUMMY_DATA = {
   StatusCode: "200",
   Message: "用戶端要求成功",
   DataList: [
     {
-      role_no: "r-000201bus08",
-      role_name: "組織角色1",
+      role_no: "r-0002sys01",
+      role_name: "權限管理員",
       role_enb: true,
-      role_desc: "這是敘述",
-      module_name: "車管系統",
+      role_desc: "雄獅集團權限管理員",
+      module_no: "sys",
+      module_name: "平台管理",
       func_auth: [
         {
           fg_no: "bus",
           func_no: "bus",
+          func_name: "車輛管理設定",
           module_no: "bus",
           func_element: [
             {
               element_no: "btnAdd",
               element_name: "新增車輛",
-              element_default: "1"
+              element_default: "3"
             },
             {
               element_no: "btnEdit",
               element_name: "編輯車輛",
-              element_default: "2"
+              element_default: "3"
             },
             {
               element_no: "btnView",
@@ -88,6 +52,7 @@ const DUMMY_DATA = {
         {
           fg_no: "customer",
           func_no: "customer",
+          func_name: "客戶管理設定",
           module_no: "bus",
           func_element: [
             {
@@ -110,6 +75,7 @@ const DUMMY_DATA = {
         {
           fg_no: "driver",
           func_no: "driver",
+          func_name: "駕駛管理設定",
           module_no: "bus",
           func_element: [
             {
@@ -139,6 +105,7 @@ const DUMMY_DATA = {
         {
           fg_no: "account",
           func_no: "org",
+          func_name: "組織設定",
           module_no: "sys",
           func_element: [
             {
@@ -161,12 +128,13 @@ const DUMMY_DATA = {
         {
           fg_no: "account",
           func_no: "role",
+          func_name: "角色設定",
           module_no: "sys",
           func_element: [
             {
               element_no: "btnAdd",
               element_name: "新增帳號",
-              element_default: "3"
+              element_default: "1"
             },
             {
               element_no: "btnEdit",
@@ -189,6 +157,10 @@ const DUMMY_DATA = {
 };
 
 // ------- TYPING ------- //
+export interface I_RoleReq {
+  role_no: string;
+  creorgno?: string;
+}
 export interface I_RoleRes {
   StatusCode: string;
   Message: string;
@@ -203,6 +175,7 @@ export interface I_RoleDetail {
   role_name: string;
   role_enb: boolean;
   role_desc: string;
+  module_no: string;
   module_name: string;
   func_auth: I_AuthFuncItem[];
 }
@@ -210,17 +183,13 @@ export interface I_RoleDetail {
 export interface I_AuthFuncItem {
   fg_no: string;
   func_no: string;
+  func_name: string;
   module_no: string;
-  func_element: [
-    {
-      element_no: string;
-      element_name: string;
-      element_default: string;
-    }
-  ];
+  func_element: I_AuthFuncElement[];
+}
 
-  // func_no: "account";
-  // func_name: "使用者列表";
-  // func_enb: 1;
-  // elements: any[];
+export interface I_AuthFuncElement {
+  element_no: string;
+  element_name: string;
+  element_default: string;
 }

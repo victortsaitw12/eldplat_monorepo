@@ -1,9 +1,10 @@
 import { PatternType } from "@utils/mappingQueryData";
 import { createElement } from "react";
 import API_Path from "./apiPath";
-import { PageInfoType } from "@services/type";
+import { I_PageInfo } from "@components/PaginationField";
+
 export const getAllCustomers = async (
-  pageInfo: PageInfoType,
+  pageInfo: I_PageInfo,
   filter: { [key: string]: any } = {},
   customer_status = "1"
 ) => {

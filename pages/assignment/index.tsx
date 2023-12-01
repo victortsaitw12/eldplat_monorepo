@@ -132,7 +132,7 @@ const Page: NextPageWithLayout<never> = () => {
         const newData = [...assignData];
         newData.map((v, idx) => {
           const item_no = (
-            (pageInfo.page_Index - 1) * pageInfo.page_Size +
+            (pageInfo.Page_Index - 1) * pageInfo.Page_Size +
             idx +
             1
           )

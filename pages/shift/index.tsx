@@ -77,8 +77,8 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   const handlePageChange = React.useCallback(
     (pageQuery: I_PageInfo) => {
       if (
-        pageInfo.page_Index === pageQuery.page_Index &&
-        pageInfo.page_Size === pageQuery.page_Size
+        pageInfo.Page_Index === pageQuery.Page_Index &&
+        pageInfo.Page_Size === pageQuery.Page_Size
       )
         return;
 

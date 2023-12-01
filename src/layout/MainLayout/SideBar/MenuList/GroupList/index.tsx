@@ -36,9 +36,6 @@ function Index({ menu }: Props) {
         }
       })
       .indexOf(router.asPath) >= 0;
-  // TODO update logic after paths are final
-  // console.log("🍅 subList", menu?.subList);
-  // console.log("🍅 asPath", router.asPath);
 
   const [openList, setOpenList] = useState(default_open);
   const isActive =

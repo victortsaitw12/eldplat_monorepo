@@ -17,7 +17,7 @@ import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
-import { PageInfoType } from "@services/type";
+import { I_PageInfo } from "@components/PaginationField";
 
 //
 const mainFilterArray = [
@@ -91,12 +91,12 @@ const Page: NextPageWithLayout<never> = () => {
     (router?.query?.status as string) || "1"
   );
   const [options, setOptions] = useState<any>(null);
-  const [pageInfo, setPageInfo] = useState<PageInfoType>({
-    arrangement: "desc",
-    orderby: null,
-    page_Index: 1,
-    page_Size: 10,
-    last_Page: 10
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>({
+    Arrangement: "desc",
+    Orderby: null,
+    Page_Index: 1,
+    Page_Size: 10,
+    Last_Page: 10
   });
 
   const {
@@ -111,7 +111,7 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchBusData = async (
     isCanceled: boolean,
     mainFilter = "1",
-    pageInfo: PageInfoType
+    pageInfo: I_PageInfo
   ) => {
     getAllBuses(pageInfo, subFilter, mainFilter).then((res) => {
       const busesData = mappingQueryData(
@@ -151,7 +151,7 @@ const Page: NextPageWithLayout<never> = () => {
     };
   }, [nowTab]);
   //
-  const upDatePageHandler = (newPageInfo: PageInfoType) => {
+  const upDatePageHandler = (newPageInfo: I_PageInfo) => {
     fetchBusData(false, nowTab, newPageInfo);
   };
   const goToEditPageHandler = (id: string, item: any) => {

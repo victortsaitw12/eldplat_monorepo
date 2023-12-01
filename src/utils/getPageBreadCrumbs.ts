@@ -20,7 +20,7 @@ const breadcrumbs: I_routers = {
   "/role/detail/[id]": [
     { label: "首頁", url: "/" },
     { label: "角色權限", url: "/role" },
-    { label: "檢視角色" }
+    { label: "新增、檢視、編輯角色" }
   ],
   "/account": [
     { label: "首頁", url: "/" },
@@ -28,8 +28,14 @@ const breadcrumbs: I_routers = {
   ],
   "/account/detail/[id]": [
     { label: "首頁", url: "/" },
-    { label: "使用者列表", url: "/account" },
-    { label: "檢視使用者", url: "" }
+    { label: "使用者", url: "/account" },
+    { label: "檢視、編輯使用者", url: "" }
+  ],
+
+  "/account/setting/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "個人設定", url: "/account/setting" },
+    { label: "修改密碼", url: "" }
   ],
   "/driver": [
     { label: "首頁", url: "/" },

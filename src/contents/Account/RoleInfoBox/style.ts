@@ -8,6 +8,11 @@ export const BodySTY = styled.div`
       display: none;
     }
   }
+  .acc {
+    &__item {
+      padding: 8px 0px;
+    }
+  }
   .accordion {
     width: 100%;
     display: flex;
@@ -22,13 +27,27 @@ export const BodySTY = styled.div`
     }
   }
 
+  .roles--view {
+    display: flex;
+    gap: 8px;
+    padding: 6px 16px;
+    .roles__module {
+      min-width: 80px;
+      font-size: ${({ theme }) => theme.fontSize.Headline500};
+      font-weight: ${({ theme }) => theme.fontWeight.Headline500};
+    }
+    .roles__role {
+      display: flex;
+      gap: 8px;
+    }
+  }
+
   /* infoBox */
   .info_content {
     padding: 0;
   }
   .info-title {
     width: 100%;
-    background: ${({ theme }) => theme.color.N300};
     padding: 8px 16px;
   }
   ul {
@@ -38,7 +57,9 @@ export const BodySTY = styled.div`
       flex-direction: column;
       align-items: flex-start !important;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+
       .infoBox__label {
         width: 100%;
         flex: unset;

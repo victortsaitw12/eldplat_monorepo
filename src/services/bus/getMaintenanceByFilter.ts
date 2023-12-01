@@ -1,9 +1,9 @@
-import { PageInfoType } from "@services/type";
+import { I_PageInfo } from "@components/PaginationField";
 import API_Path from "./apiPath";
 import { PatternType } from "@utils/mappingQueryData";
 export const getMaintenanceByFilter = async (
   bus_no: string,
-  pageInfo: PageInfoType
+  pageInfo: I_PageInfo
 ) => {
   console.log("pageInfo", pageInfo);
   const url = new URL(API_Path["getMaintenanceByFilter"]);

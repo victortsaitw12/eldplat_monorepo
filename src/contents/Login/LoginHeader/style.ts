@@ -19,7 +19,9 @@ export const BodySTY = styled.div`
 
   // 歡迎字樣
   p {
-    font-size: 50px;
-    font-weight: 700;
+    font-size: ${({ theme }) => theme.fontSize.Headline900};
+    font-weight: ${({ theme }) => theme.fontWeight.Headline900};
+    color: ${({ theme }) => theme.color.N200};
+    text-align: center;
   }
 `;

@@ -2,7 +2,8 @@ import TableWithEdit from "@components/Table/TableWithEdit";
 import { getBusTitle } from "@services/bus/getAllBuses";
 import { BodySTY } from "./style";
 import StatusIcon from "@components/StatusIcon";
-import { PageInfoType } from "@services/type";
+import { I_PageInfo } from "@components/PaginationField";
+
 interface Props {
   listType: string;
   busData: any;
@@ -18,8 +19,8 @@ interface Props {
     item: { [key: string]: { value: any; label: any } }
   ) => void;
 
-  upDatePageHandler?: (pageInfo: PageInfoType) => void;
-  pageInfo: PageInfoType;
+  upDatePageHandler?: (pageInfo: I_PageInfo) => void;
+  pageInfo: I_PageInfo;
 }
 
 function BusList({

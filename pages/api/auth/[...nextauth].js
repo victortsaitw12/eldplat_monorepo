@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
-import { getUser } from "@services/sys/getUser";
+import { login } from "@services/account/login";
+import { getMenu } from "@services/sys/getMenu";
 //CATCH-ALL ROUTE
 
 //All requests to /api/auth/* (signIn, callback, signOut, etc.) will automatically be handled
@@ -14,7 +15,6 @@ export const authOptions = {
     // }),
     CredentialsProvider({
       id: "credentials",
-      // TODO: name and credentials are related to gen the default form
       name: "credentials",
       type: "credentials",
       credentials: {
@@ -30,11 +30,30 @@ export const authOptions = {
         }
       },
       async authorize(credentials, req) {
-        // always return user from frontend for now
         if (!req.body.email || !req.body.password) return null;
-        // TODO:　authenticate user: fetch API response
-        const user = await getUser();
-        if (!user) return null;
+
+        const resLogin = await login(req.body.email, req.body.password);
+        if (resLogin.StatusCode !== "200") {
+          // console.log("DEBUG: >>>>> Login Error:", resLogin);
+          return null;
+        }
+
+        const result = resLogin.DataList[0];
+
+        const user = {
+          account_no: result.account_no, //"admin"
+          account_name: result.account_name, //"Admin Sys"
+          role: "--role--",
+          //email: "user@gmail.com",
+          org_no: result.orgs[0].org_no, //"o"
+          menuData: {}
+        };
+        const resMenu = await getMenu(user.account_no, user.org_no);
+        if (resMenu.StatusCode !== "200") {
+          // console.log("DEBUG: >>>>> getMenu Error:", resMenu);
+          return null;
+        }
+        user.menuData = resMenu.DataList[0];
         return user;
       }
     })
@@ -67,10 +86,12 @@ export const authOptions = {
     // },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
+
       session.accessToken = token.accessToken;
-      session.user.username = token.username;
-      session.user.userID = token.userID;
+      session.user.account_no = token.account_no;
+      session.user.account_name = token.account_name;
       session.user.role = token.role;
+      session.user.org_no = token.org_no;
       session.user.menuData = token.menuData;
       return session;
       // The session object is not persisted server side
@@ -84,8 +105,10 @@ export const authOptions = {
 
       if (account) {
         token.accessToken = account.access_token;
-        token.username = user.username;
+        token.account_no = user.account_no;
+        token.account_name = user.account_name;
         token.role = user.role;
+        token.org_no = user.org_no;
         token.menuData = user.menuData;
       }
       // returned value will be encrypted, and it is stored in a cookie
@@ -93,7 +116,7 @@ export const authOptions = {
     }
   },
   pages: {
-    // signIn: "/login"
+    signIn: "/login"
     // signOut: "/auth/signout",
     // error: "/auth/error",
     // verifyRequest: "/auth/verify-request",

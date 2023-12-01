@@ -12,20 +12,15 @@ function LoginHeader() {
         <title>平台登入</title>
         <meta property="og:title" content="平台登入" />
       </Head>
-      <div className="lion-logo">
+      {/* <div className="lion-logo">
         <Image
           src="/images/lion-logo.png"
           width={180}
           height={180}
           alt="lionLogo"
         />
-      </div>
-      <p>
-        <FormattedMessage id="login_welcome" />
-      </p>
-      <p>
-        <FormattedMessage id="login_guest" />
-      </p>
+      </div> */}
+      <p>登入</p>
     </BodySTY>
   );
 }

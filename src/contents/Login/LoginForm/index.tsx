@@ -1,77 +1,115 @@
 import React, { useState } from "react";
-import signIn from "next-auth";
+import { signIn } from "next-auth/react";
+import { TextInput, TextInputField, EyeOffIcon, EyeOnIcon } from "evergreen-ui";
+import { useRouter } from "next/router";
+
 import LoginInput from "../../../components/LoginInput";
 import Button from "@components/Button/Primary/Label";
 import { BodySTY } from "./style";
+import Checkbox from "@components/Checkbox";
 //
 interface PropsType {
   login: (email: string, password: string) => void;
 }
 
 function Form(props: PropsType) {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [inputData, setInputData] = React.useState({
+    email: "",
+    password: ""
+  });
+  const [isPasswordHide, setIsPasswordHide] = useState(true);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // await signIn("credentials", { username: "jsmith", password: "1234" })
-    // await signIn("credentials", {
-    //   eamil: "test@liontravel.com",
-    //   password: "password.current"
-    //   // redirect: true,
-    //   // callbackUrl: props.callbackUrl ?? "/test/next-auth"
-    // });
+  // --- functions --- //
+  function checkEmail(value: string) {
+    if (value.length <= 0) return true;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  }
+
+  function checkPassword(password: string) {
+    if (password.length <= 0) return true;
+    const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
+    return passwordRegex.test(password);
+  }
+
+  const handleTogglePasswordHide = () => {
+    setIsPasswordHide((prev) => !prev);
   };
 
   // 隨時抓取輸入的帳號和密碼並存入狀態
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    const result = await signIn("credentials", {
+      ...inputData,
+      redirect: false
+    });
+    if (result?.error) {
+      console.log(result.error);
+    } else {
+      console.log("Login success!");
+      router.push("/");
+    }
+  };
 
   return (
     <BodySTY>
-      <LoginInput
-        type="text"
-        inputName="company"
-        icon=""
-        titleId="company"
-        className="account-input"
-        onChangeCallback={(e) => {
-          e.preventDefault();
-          setEmail(e.target.value);
-        }}
+      <TextInputField
+        type="email"
+        placeholder="example@mail.com"
+        label="帳號"
+        value={inputData.email}
+        isInvalid={!checkEmail(inputData.email)}
+        validationMessage={
+          !checkEmail(inputData.email) ? "格式錯誤" : undefined
+        }
+        onChange={(e: any) =>
+          setInputData({ ...inputData, email: e.target.value })
+        }
       />
-      <LoginInput
-        type="text"
-        inputName="username"
-        icon=""
-        titleId="username"
-        className="account-input"
-        onChangeCallback={(e) => {
-          e.preventDefault();
-          setEmail(e.target.value);
-        }}
-      />
-      <div className="all-password">
-        <LoginInput
-          type="password"
-          inputName="password"
-          titleId="password"
-          icon=""
-          onChangeCallback={(e) => {
-            e.preventDefault();
-            setPassword(e.target.value);
-          }}
+      <div style={{ position: "relative" }}>
+        <TextInputField
+          type={`${isPasswordHide ? "password" : "text"}`}
+          placeholder="請輸入您的密碼"
+          label="密碼"
+          value={inputData.password}
+          isInvalid={!checkPassword(inputData.password)}
+          validationMessage={
+            !checkPassword(inputData.password)
+              ? "至少4位英數字不含特殊符號"
+              : undefined
+          }
+          onChange={(e: any) =>
+            setInputData({ ...inputData, password: e.target.value })
+          }
         />
-        <div className="forgot-password">
-          <span className="material-icons">help</span>
-          <button>Forget Password</button>
+        {isPasswordHide ? (
+          <EyeOffIcon
+            style={{ position: "absolute" }}
+            onClick={handleTogglePasswordHide}
+          />
+        ) : (
+          <EyeOnIcon
+            style={{ position: "absolute" }}
+            onClick={handleTogglePasswordHide}
+          />
+        )}
+      </div>
+      <div className="asst">
+        <div className="asst__storePW">
+          <Checkbox label="記住密碼" isLabelAfter />
+        </div>
+        <div className="asst__forgetPW">
+          <a className="material-icons">忘記密碼</a>
         </div>
       </div>
-      <Button
-        text={"登入"}
-        onClick={(e) => {
-          e.preventDefault();
-          props.login(email, password);
-        }}
-      />
+      <div>
+        <div>測試帳號: user@gmail.com</div>
+        <div>測試密碼: 12345</div>
+      </div>
+      <Button text={"登入"} onClick={handleLogin} />
     </BodySTY>
   );
 }

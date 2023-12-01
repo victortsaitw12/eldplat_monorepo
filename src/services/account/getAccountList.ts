@@ -1,17 +1,38 @@
-// import { I_PageInfo } from "@components/PaginationField";
-import API_Path from "./apiPath";
+export const getAccountList = async (userID: string, reqBody: I_reqBody) => {
+  // return DUMMY_DATA.ContentList;
 
-export const getUserList = async () => {
-  return DUMMY_DATA.ContentList;
+  const apiName = "getAccountList";
+  const reqMethod = "POST";
+  const reqHeaders = { UK: userID };
+  const requestBody = {
+    x: "",
+    filter_needed: true,
+    // org_no: "o-0002", ??不用帶嗎?
+    filter: [
+      // {
+      //   field_Name: "a.creorgno",
+      //   arrayConditions: "equal",
+      //   value: "o",
+      //   dataType: "string"
+      // }
+    ],
+    page_info: {
+      Page_Index: 1,
+      Page_Size: 10
+      // orderby: "account_no",
+      // arrangement: "ASC",
+      // total: 0,
+      // last_Page: 0
+    }
+  };
 
-  //   const res = await fetch(`${API_Path["getOrg"]}?driver_no=${id}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-  //     }
-  //   });
-  //   return await res.json();
+  const res = await fetch(`/api/getData?url=${apiName}`, {
+    method: reqMethod,
+    headers: reqHeaders,
+    body: JSON.stringify(requestBody)
+  });
+  const result = await res.json();
+  return result.data.ContentList;
 };
 
 // ------- MOCK DATA ------- //
@@ -74,11 +95,20 @@ const DUMMY_DATA: I_responseBody = {
 export interface I_responseBody {
   StatusCode: string;
   Message: string;
-  ContentList: I_UserItem[];
+  ContentList: I_AccountItem[];
   ConditionList: any[];
   PageInfo: I_PageInfo;
 }
-export interface I_UserItem {
+export interface I_reqBody {
+  x: string;
+  filter_needed: boolean;
+  filter: any[];
+  page_info: {
+    Page_Index: number;
+    Page_Size: number;
+  };
+}
+export interface I_AccountItem {
   account_no: string;
   account_name: string;
   role_name_o: string;
@@ -93,7 +123,7 @@ export interface I_UserItem {
 export interface I_PageInfo {
   Page_Index: number;
   Page_Size: number;
-  Arrangement: string;
-  Total: number;
-  Last_Page: number;
+  Arrangement?: string;
+  Total?: number;
+  Last_Page?: number;
 }

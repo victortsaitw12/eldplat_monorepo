@@ -11,6 +11,7 @@ import {
   Select
 } from "evergreen-ui";
 import React from "react";
+import Head from "next/head";
 import { BodySTY, StyledButton } from "./style";
 const theme = mergeTheme(defaultTheme, {
   components: {
