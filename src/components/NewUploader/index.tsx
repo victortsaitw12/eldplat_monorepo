@@ -36,8 +36,8 @@ const NewUploader = (props: I_NewUploader) => {
   const acceptedMimeTypes = [MimeType.jpeg, MimeType.pdf];
   const maxFiles = 5;
   const maxSizeInBytes = 50 * 1024 ** 2; // 50 MB
-  const [files, setFiles] = useState([]);
-  const [fileRejections, setFileRejections] = useState([]);
+  const [files, setFiles] = useState<Array<any>>([]);
+  const [fileRejections, setFileRejections] = useState<Array<any>>([]);
   const values = useMemo(
     () => [
       ...files,
