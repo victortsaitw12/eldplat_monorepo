@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { NewUploaderSTY } from "./style";
 import {
   Pane,
@@ -8,30 +8,17 @@ import {
   PaperclipIcon,
   SmallTickIcon,
   TrashIcon,
-  MimeType,
-  rebaseFiles,
-  FileRejectionReason
 } from "evergreen-ui";
 import SecondaryButton from "@components/Button/Secondary/IconLeft";
 
-const DUMMY_FILES = [
-  { name: "檔案1.png", url: "www.google.com", id: "1" },
-  { name: "檔案2.jpg", url: "www.google.com", id: "2" },
-  {
-    name: "檔案3檔案3檔案3檔案3檔案3檔案3檔案3檔案3檔案3.pdf",
-    url: "www.google.com",
-    id: "3"
-  }
-];
-
-interface I_File {
-  name: string;
-  url: string;
-  id: string;
-}
+// const DUMMY_FILES: File[] = [
+//   new File([], "fakeImage1.jpg", { type: "image/jpeg" }),
+//   new File([], "fakeImage2.png", { type: "image/png" }),
+//   new File([], "fakeDocument1.pdf", { type: "application/pdf" })
+// ];
 
 interface I_NewUploader {
-  existedFiles?: I_File[];
+  existedFiles?: File[];
   isMultiple?: boolean;
   maxSize?: number;
 }
@@ -54,7 +41,9 @@ const NewUploader = (props: I_NewUploader) => {
     let isValid = true;
 
     if (uploadedFiles) {
-      for (const file of uploadedFiles) {
+      const uploadedFilesArray = Array.from(uploadedFiles);
+
+      for (const file of uploadedFilesArray) {
         if (!isFileSizeValid(file.size)) {
           isValid = false;
           break;
@@ -62,7 +51,7 @@ const NewUploader = (props: I_NewUploader) => {
       }
 
       if (isValid) {
-        setFiles(uploadedFiles);
+        setFiles(uploadedFilesArray);
       } else {
         toaster.danger("檔案太大或格式不符");
       }
@@ -80,32 +69,6 @@ const NewUploader = (props: I_NewUploader) => {
     setFiles(updatedFileArray);
   };
 
-  const handleUpload = async () => {
-    if (files) {
-      setStatus("uploading");
-
-      const formData = new FormData();
-
-      [...files].forEach((file) => {
-        formData.append("files", file);
-      });
-
-      try {
-        const result = await fetch("https://httpbin.org/post", {
-          method: "POST",
-          body: formData
-        });
-
-        const data = await result.json();
-
-        console.log(data);
-        setStatus("success");
-      } catch (error) {
-        console.error(error);
-        setStatus("fail");
-      }
-    }
-  };
 
   return (
     <NewUploaderSTY>
