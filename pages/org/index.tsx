@@ -6,10 +6,16 @@ import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 
 import { getLayout } from "@layout/MainLayout";
-import { getOrgList } from "@services/org/getOrgList";
+import {
+  getOrgList,
+  defaultPageInfo,
+  I_OrgList,
+  DUMMY_ORG_LIST
+} from "@services/org/getOrgList";
 import OrgList from "@contents/Org/OrgList";
 import FormModal, { I_ModalContent } from "@contents/Org/FormModal";
 import LoadingSpinner from "@components/LoadingSpinner";
+import { I_PageInfo } from "@components/PaginationField";
 
 const Page: NextPageWithLayout<{
   locale: string;
@@ -17,24 +23,29 @@ const Page: NextPageWithLayout<{
 }> = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<I_OrgList[]>([]);
   const [modalContent, setModalContent] = React.useState<I_ModalContent | null>(
     null
   );
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isInitialRenderEnd, setIsInitialRenderEnd] =
     React.useState<boolean>(false);
+  const [pageInfo, setPageInfo] = React.useState<I_PageInfo>(defaultPageInfo);
+  const [testStatus, setTestStatus] = React.useState<number>(0);
 
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
     if (!session) return;
-    // TODO  const uk = session.user.account_no;
-    const uk = "admin";
-
+    const uk = session.user.account_no;
     try {
-      const result = await getOrgList(uk);
-      setData(result);
+      // const result = await getOrgList(uk);
+      // const data = result.ContentList;
+      // const pageInfo = result.PageInfo;
+      const data = DUMMY_ORG_LIST.ContentList;
+      const pageInfo = DUMMY_ORG_LIST.PageInfo;
+      setData(data);
+      setPageInfo(pageInfo);
     } catch (e: any) {
       console.log(e);
     }
@@ -58,6 +69,34 @@ const Page: NextPageWithLayout<{
         : { org_no: item["org_no"], org_name: item["org_name"], org_enb: true }
     };
     setModalContent(formContent);
+  };
+
+  const handleCreateDummy = (v: I_OrgList) => {
+    setData((prev) => [...prev, v]);
+    setModalContent(null);
+  };
+
+  const handleEditDummy = (v: I_OrgList) => {
+    console.log("🍅 new org name:", v.org_name);
+    const updatedData = [...data];
+
+    const result = updatedData[0].sublayer.map((item) => {
+      if (item["org_no"] === v["org_no"]) {
+        const updateName = v.org_name;
+        const updateItem = { ...item, org_name: updateName };
+        return updateItem;
+      } else {
+        return item;
+      }
+    });
+
+    const editedData = [...data];
+    editedData[0].sublayer = result;
+
+    console.log("🍅 updatedData", editedData);
+
+    setData(editedData);
+    setModalContent(null);
   };
 
   // ------- useEffect ------- //
@@ -90,6 +129,8 @@ const Page: NextPageWithLayout<{
           content={modalContent}
           setModalContent={setModalContent}
           refetch={fetchData}
+          handleCreateDummy={handleCreateDummy}
+          handleEditDummy={handleEditDummy}
         />
       )}
     </BodySTY>

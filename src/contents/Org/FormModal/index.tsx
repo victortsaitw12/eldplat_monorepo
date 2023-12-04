@@ -8,14 +8,20 @@ import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 // import { fetchData } from "next-auth/client/_utils";
 
-const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
+const FormModal = ({
+  content,
+  setModalContent,
+  refetch,
+  handleCreateDummy,
+  handleEditDummy
+}: I_Props) => {
   const { data: session } = useSession();
   const [checked, setChecked] = React.useState(true);
   const isCreate = content.isCreate;
   const defaultValues = isCreate
     ? {
         porg_no: content.req.org_no,
-        org_name: "",
+        org_name: "前端測試新增組織", // ""
         org_tp: content.req.org_tp,
         org_lvl: content.req.org_lvl
       }
@@ -27,6 +33,7 @@ const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors }
   } = useForm({
     defaultValues
@@ -60,7 +67,10 @@ const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
     setModalContent(null);
   };
   const handleConfirm = () => {
-    handleSubmit(asyncSubmitForm)();
+    const data = getValues();
+    console.log("🔜 data:", data);
+    isCreate ? handleCreateDummy(data) : handleEditDummy(data);
+    // handleSubmit(asyncSubmitForm)();
   };
 
   // ------- render ------- //
@@ -114,6 +124,8 @@ interface I_Props {
   content: I_ModalContent;
   setModalContent: (v: any) => void;
   refetch: () => void;
+  handleCreateDummy: (v: any) => void;
+  handleEditDummy: (v: any) => void;
 }
 
 export interface I_ModalContent {

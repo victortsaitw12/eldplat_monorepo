@@ -4,6 +4,7 @@ import { DivSTY } from "./style";
 
 import Accordion, { I_AccordionItem } from "@components/Accordion";
 import LoadingSpinner from "@components/LoadingSpinner";
+import { I_OrgList } from "@services/org/getOrgList";
 
 //====== REACT COMPONENT ======//
 const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
@@ -75,7 +76,7 @@ export default OrgList;
 
 //====== OUTSIDE-REACT-DOM: TYPING ======//
 interface I_Props {
-  data?: I_AccordionItem[];
+  data?: I_OrgList[];
   onCreate: (id: string, e: any) => void;
   onEdit: (id: string, e: any) => void;
 }
