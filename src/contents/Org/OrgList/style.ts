@@ -11,6 +11,8 @@ export const DivSTY = styled.div`
     position: absolute;
   }
   .disabled {
+    width: 100%;
+    position: absolute;
     background: ${({ theme }) => theme.color.N40};
   }
   .labelSty {

@@ -97,7 +97,7 @@ export const DUMMY_ORG_LIST = {
                       org_name: "大中巴業務組",
                       org_tp: "D",
                       org_lvl: 5,
-                      org_enb: true,
+                      org_enb: false,
                       sublayer: []
                     },
                     {
