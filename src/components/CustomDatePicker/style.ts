@@ -194,7 +194,7 @@ export const BodySTY = styled.div`
 
   .icon {
     position: absolute;
-    right: 42px;
+    left: 215px;
     top: 8px;
   }
 `;
