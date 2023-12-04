@@ -13,6 +13,9 @@ import CustomTextArea from "@components/CustomTextArea";
 import NewUploader from "@components/NewUploader";
 import CustomTextInputField from "@components/CustomTextInputField";
 import CustomDatePicker from "@components/CustomDatePicker";
+import TagGenerator from "@components/TagGenerator";
+import Uploader from "@components/Uploader";
+import StarRate from "@components/StarRate";
 
 import {
   Select,
@@ -238,11 +241,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "",
       bold: false,
-      value: (
-        <SecondaryButton text="新增標籤" className={"create-button"}>
-          <SmallPlusIcon />
-        </SecondaryButton>
-      )
+      value: <TagGenerator />
     }
   ];
 
@@ -267,13 +266,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: true,
       label: "有效期限",
       bold: true,
-      value: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      value: <CustomDatePicker placeholder="請輸入有效期限" />
     },
     {
       listClassName: "fb-100 m-0",
@@ -282,6 +275,7 @@ const Page: NextPageWithLayout<never> = () => {
       label: "附件/相關檔案",
       bold: true,
       value: <NewUploader />
+      // value: <Uploader label="123"/>
     }
   ];
 
@@ -332,15 +326,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: true,
       label: "訓練期間",
       bold: true,
-      value: <CustomDatePicker placeholder="請輸入訓練期間" isRange/>
-      // value: (
-      //   <CustomTextInputField
-      //     className="input"
-      //     // isInvalid={true}
-      //     placeholder="請輸入訓練期間"
-      //     // validationMessage="不可輸入符號"
-      //   />
-      // )
+      value: <CustomDatePicker placeholder="請輸入訓練期間" isRange />
     },
     {
       listClassName: "fb-50",
@@ -348,14 +334,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: true,
       label: "訓練通過日期",
       bold: true,
-      value: (
-        <CustomTextInputField
-          className="input"
-          // isInvalid={true}
-          placeholder="請輸入訓練通過日期"
-          // validationMessage="不可輸入符號"
-        />
-      )
+      value: <CustomDatePicker placeholder="請輸入訓練期間" />
     },
     {
       listClassName: "fb-100",
@@ -363,7 +342,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "說明",
       bold: true,
-      value: <CustomTextArea placeholder="請輸入說明" />
+      value: <CustomTextArea placeholder="請輸入訓練通過日期" />
     },
     {
       listClassName: "fb-100 m-0",
@@ -371,7 +350,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "附件/相關檔案",
       bold: true,
-      value: <NewUploader />
+      value: <NewUploader isMultiple={true}/>
     }
   ];
 
