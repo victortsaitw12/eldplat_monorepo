@@ -1,18 +1,12 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GithubProvider from "next-auth/providers/github";
 import { login } from "@services/account/login";
 import { getMenu } from "@services/sys/getMenu";
-//CATCH-ALL ROUTE
+import { DUMMY_USER } from "@services/account/login";
 
 //All requests to /api/auth/* (signIn, callback, signOut, etc.) will automatically be handled
 export const authOptions = {
-  // Configure one or more authentication providers
   providers: [
-    // GithubProvider({
-    //   clientId: process.env.GITHUB_ID,
-    //   clientSecret: process.env.GITHUB_SECRET
-    // }),
     CredentialsProvider({
       id: "credentials",
       name: "credentials",
@@ -31,30 +25,21 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         if (!req.body.email || !req.body.password) return null;
-
-        const resLogin = await login(req.body.email, req.body.password);
-        if (resLogin.StatusCode !== "200") {
-          // console.log("DEBUG: >>>>> Login Error:", resLogin);
-          return null;
-        }
-
-        const result = resLogin.DataList[0];
-
-        const user = {
-          account_no: result.account_no, //"admin"
-          account_name: result.account_name, //"Admin Sys"
-          role: "--role--",
-          //email: "user@gmail.com",
-          org_no: result.orgs[0].org_no, //"o"
-          menuData: {}
-        };
-        const resMenu = await getMenu(user.account_no, user.org_no);
-        if (resMenu.StatusCode !== "200") {
-          // console.log("DEBUG: >>>>> getMenu Error:", resMenu);
-          return null;
-        }
-        user.menuData = resMenu.DataList[0];
-        return user;
+        // TODO comment out for 12/28 demo
+        // const resLogin = await login(req.body.email, req.body.password);
+        // if (resLogin.StatusCode !== "200") return null;
+        // const result = resLogin.DataList[0];
+        // const user = {
+        //   account_no: result.account_no, //"admin"
+        //   account_name: result.account_name, //"Admin Sys"
+        //   role: "--role--",
+        //   org_no: result.orgs[0].org_no, //"o"
+        //   menuData: {}
+        // };
+        // const resMenu = await getMenu(user.account_no, user.org_no);
+        // if (resMenu.StatusCode !== "200") return null;
+        // user.menuData = resMenu.DataList[0];
+        return DUMMY_USER;
       }
     })
   ],
