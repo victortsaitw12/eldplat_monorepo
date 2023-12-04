@@ -1,3 +1,5 @@
+import { DUMMY_MENU } from "@services/sys/getMenu";
+
 export const login = async (email: string, password: string) => {
   // return DUMMY_DATA;
   const apiName = "login";
@@ -42,4 +44,13 @@ const DUMMY_DATA = {
   Result: true,
   ResultString: "BaseDomain",
   ResultInt: 0
+};
+
+// for 2023/11/28 Demo, directly return the following data for session
+export const DUMMY_USER = {
+  account_no: "USR202302020002",
+  account_name: "王鈞樺",
+  role: "--role--",
+  org_no: "o-00020101",
+  menuData: DUMMY_MENU
 };
