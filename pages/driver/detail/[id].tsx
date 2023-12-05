@@ -20,14 +20,14 @@ import { getDriverById } from "@services/driver/getDriverById";
 import { updateDriver } from "@services/driver/updateDriver";
 import DriverDetail from "@contents/Driver/Detail";
 import TabsWrapper from "@layout/TabsWrapper";
+import ProfileBar from "@components/ProfileBar";
 
-//
 const mainFilterArray = [
   { id: 1, label: "駕駛資訊", value: "1" },
   { id: 2, label: "駕駛證照", value: "2" },
-  { id: 3, label: "健康紀錄", value: "3" }
+  { id: 3, label: "健康紀錄", value: "3" },
+  { id: 4, label: "修改紀錄", value: "4" }
 ];
-//
 
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -109,55 +109,55 @@ const Page: NextPageWithLayout<
     }
     setIsLoading(false);
   };
+
   const onCancelHandler = () => {
     router.push("/driver");
   };
 
+  const renderContent = (
+    <TabsWrapper
+      onChangeTab={switchTabHandler}
+      mainFilter={mainFilter}
+      mainFilterArray={mainFilterArray}
+      isEdit={isEdit}
+      onSave={() => submitRef.current?.click()}
+      onEdit={() => setIsEdit(true)}
+      onClose={onCancelHandler}
+    >
+      <DriverDetail
+        isEdit={isEdit}
+        submitRef={submitRef}
+        asyncSubmitForm={asyncSubmitForm}
+        driverData={driverData}
+        formType={mainFilter}
+        refetch={refetch}
+        driverNo={driverNo}
+      />
+    </TabsWrapper>
+  );
+
+  const renderLoadingSpinner = (
+    <Pane
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      height={400}
+      style={{ padding: 5 }}
+    >
+      <Spinner />
+    </Pane>
+  );
+
   return (
     <BodySTY>
-      {(!isLoading && driverData && (
-        <TabsWrapper
-          onChangeTab={switchTabHandler}
-          mainFilter={mainFilter}
-          mainFilterArray={mainFilterArray}
-          isEdit={isEdit}
-          onSave={() => {
-            submitRef.current?.click();
-          }}
-          onEdit={() => {
-            setIsEdit(true);
-          }}
-          onClose={onCancelHandler}
-        >
-          <DriverDetail
-            isEdit={isEdit}
-            submitRef={submitRef}
-            asyncSubmitForm={asyncSubmitForm}
-            driverData={driverData}
-            formType={mainFilter}
-            refetch={refetch}
-            driverNo={driverNo}
-          />
-        </TabsWrapper>
-      )) || (
-        <Pane
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height={400}
-          style={{ padding: 5 }}
-        >
-          <Spinner />
-        </Pane>
-      )}
+      <ProfileBar data={driverData} />
+      {!isLoading && driverData ? renderContent : renderLoadingSpinner}
       <LightBox
         title="確定要離開嗎?"
         isOpen={isLightOpen}
-        handleCloseLightBox={() => {
-          setLightOpen((prev) => false);
-        }}
+        handleCloseLightBox={() => setLightOpen((prev) => false)}
       >
-        如果你現在離開 ，將會遺失未儲存的資料。
+        如果你現在離開，將會遺失未儲存的資料。
         <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
           <LabelSecondaryButton
             style={{

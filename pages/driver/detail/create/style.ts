@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DivSTY = styled.div`
+const BodySTY = styled.div`
   height: calc(100% - 20px);
   display: flex;
   flex-wrap: wrap;
@@ -27,3 +27,5 @@ export const DivSTY = styled.div`
     }
   }
 `;
+
+export { BodySTY };

@@ -7,7 +7,7 @@ import {
   toaster,
   PaperclipIcon,
   SmallTickIcon,
-  TrashIcon,
+  TrashIcon
 } from "evergreen-ui";
 import SecondaryButton from "@components/Button/Secondary/IconLeft";
 
@@ -21,11 +21,17 @@ interface I_NewUploader {
   existedFiles?: File[];
   isMultiple?: boolean;
   maxSize?: number;
+  isEditable?: boolean;
 }
 
 const NewUploader = (props: I_NewUploader) => {
   const [files, setFiles] = useState<File[] | null>(null);
-  const { existedFiles = null, isMultiple = false, maxSize = 5 } = props;
+  const {
+    existedFiles = null,
+    isMultiple = false,
+    maxSize = 5,
+    isEditable = false
+  } = props;
   const hiddenFileInput = useRef<any>(null);
 
   // const maxFiles = 5;
@@ -69,19 +75,26 @@ const NewUploader = (props: I_NewUploader) => {
     setFiles(updatedFileArray);
   };
 
-
   return (
     <NewUploaderSTY>
-      <InlineAlert intent="none" marginBottom={8} className={"inline-alert"}>
-        檔案格式僅接受.png、.jpg、.jpeg、pdf 格式，且每個檔案大小不得大於5MB
-      </InlineAlert>
-      <SecondaryButton
-        text="上傳檔案"
-        className={"upload-button"}
-        onClick={handleClickUpload}
-      >
-        <ExportIcon />
-      </SecondaryButton>
+      {isEditable && (
+        <>
+          <InlineAlert
+            intent="none"
+            marginBottom={8}
+            className={"inline-alert"}
+          >
+            檔案格式僅接受.png、.jpg、.jpeg、pdf 格式，且每個檔案大小不得大於5MB
+          </InlineAlert>
+          <SecondaryButton
+            text="上傳檔案"
+            className={"upload-button"}
+            onClick={handleClickUpload}
+          >
+            <ExportIcon />
+          </SecondaryButton>
+        </>
+      )}
       <input
         ref={hiddenFileInput}
         type="file"
