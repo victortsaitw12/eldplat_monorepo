@@ -36,6 +36,8 @@ export const InfoCardSTY = styled.div`
     display: flex;
     gap: 40px;
 
+    overflow: visible;
+
     .user__photo {
     }
 
@@ -86,9 +88,6 @@ export const InfoCardSTY = styled.div`
               }
             }
 
-            .create-button {
-              padding: 4px 8px;
-            }
           }
         }
 
