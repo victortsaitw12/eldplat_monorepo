@@ -7,7 +7,7 @@ import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
 import PaginationField from "@components/PaginationField";
 
-const tableTitleArr = ["模組", "角色名稱", "職責描述", ""];
+const tableTitleArr = ["模組", "角色名稱", "職責描述", "狀態", ""];
 
 const RoleList = ({ data }: I_Props) => {
   const router = useRouter();
@@ -32,6 +32,7 @@ const RoleList = ({ data }: I_Props) => {
       module_name: item["module_name"],
       role_name: item["role_name"],
       role_desc: item["role_desc"],
+      role_enb: item["role_enb"] ? "啟用" : "停用",
       action: (
         <IconBtn
           tip="編輯"

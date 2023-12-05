@@ -70,7 +70,7 @@ function Table({
                       );
                     return (
                       <td key={item.id + key}>
-                        <span>
+                        <div>
                           {key === "vendor_website" ? (
                             <Link
                               href={`${item.vendor_website}`}
@@ -81,7 +81,7 @@ function Table({
                           ) : (
                             item[key]
                           )}
-                        </span>
+                        </div>
                       </td>
                     );
                   })}

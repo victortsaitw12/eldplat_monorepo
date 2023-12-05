@@ -13,6 +13,8 @@ import { BodySTY } from "./style";
 import { getRoleList, I_RoleListItem } from "@services/role/getRoleList";
 import { useRoleStore } from "@contexts/filter/roleStore";
 import { IconLeft } from "@components/Button/Primary";
+import { DUMMY_RoleList } from "@services/role/getRoleList";
+import { I_PageInfo, defaultPageInfo } from "@components/PaginationField";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -43,19 +45,23 @@ const Page: NextPageWithLayout<never> = () => {
     isDrawerOpen,
     setDrawerOpen
   } = useRoleStore();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [data, setData] = React.useState<I_RoleListItem[]>([]);
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   //------ functions ------//
   const fetchData = async () => {
+    if (!session) return;
     setIsLoading(true);
-    // get userID from session after login api
-    // const userID = session.userID
-    const userID = "USR202302020002";
+    const uk = session?.user.account_no;
     try {
-      const result = await getRoleList(userID);
-      setData(result.ContentList);
+      // const result = await getRoleList(uk);
+      // const data = result.ResultList;
+      const data = DUMMY_RoleList.ResultList;
+      const pageInfo = DUMMY_RoleList.PageInfo;
+
+      setData(data);
     } catch (e: any) {
       console.log(e);
     }
@@ -69,9 +75,15 @@ const Page: NextPageWithLayout<never> = () => {
 
   // ------- useEffect ------- //
   React.useEffect(() => {
+    if (!session) return;
     fetchData();
-  }, []);
+  }, [session]);
 
+  React.useEffect(() => {
+    if (status === "unauthenticated") router.push("/login");
+  }, [status]);
+
+  // ------- render ------- //
   const createBtn = (
     <IconLeft text="新增角色" onClick={handleCreate}>
       <PlusIcon size={14} />
@@ -80,23 +92,23 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <TabsWrapper
+      {/* <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
         viewOnly={true}
+      > */}
+      <FilterWrapper
+        updateFilter={updateSubFilter}
+        resetFilter={() => {
+          initializeSubFilter();
+        }}
+        filter={subFilter}
+        btns={createBtn}
       >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={() => {
-            initializeSubFilter();
-          }}
-          filter={subFilter}
-          btns={createBtn}
-        >
-          <RoleList data={data} />
-        </FilterWrapper>
-      </TabsWrapper>
+        <RoleList data={data} />
+      </FilterWrapper>
+      {/* </TabsWrapper> */}
     </BodySTY>
   );
 };

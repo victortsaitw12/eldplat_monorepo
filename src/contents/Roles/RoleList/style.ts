@@ -15,8 +15,16 @@ export const BodySTY = styled.div`
 
     tbody {
       tr {
+        position: relative;
         td {
+          max-width: 24ch;
           span {
+          }
+          div {
+            max-width: 24ch;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
