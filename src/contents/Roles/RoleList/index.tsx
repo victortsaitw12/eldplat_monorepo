@@ -5,11 +5,11 @@ import { BodySTY } from "./style";
 import { I_RoleListItem } from "@services/role/getRoleList";
 import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
-import PaginationField from "@components/PaginationField";
+import PaginationField, { I_PageInfo } from "@components/PaginationField";
 
 const tableTitleArr = ["模組", "角色名稱", "職責描述", "狀態", ""];
 
-const RoleList = ({ data }: I_Props) => {
+const RoleList = ({ data, pageInfo }: I_Props) => {
   const router = useRouter();
 
   //------ functions ------//
@@ -53,7 +53,7 @@ const RoleList = ({ data }: I_Props) => {
         titles={tableTitleArr}
         data={dataFitTable}
         onView={handleView}
-        headNode={<PaginationField />}
+        headNode={<PaginationField pageInfo={pageInfo} />}
       />
     </BodySTY>
   );
@@ -63,4 +63,5 @@ export default RoleList;
 
 interface I_Props {
   data: I_RoleListItem[];
+  pageInfo: I_PageInfo;
 }

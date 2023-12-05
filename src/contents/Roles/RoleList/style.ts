@@ -2,6 +2,13 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   padding: 1rem;
+  height: 100%;
+  position: relative;
+  .container {
+    max-height: 100%;
+    position: relative;
+    overflow-y: auto;
+  }
   table {
     /* basic structure */
     thead {

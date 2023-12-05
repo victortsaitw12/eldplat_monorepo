@@ -33,7 +33,7 @@ function Table({
 
   return (
     <>
-      <DivSTY className={`${className} container`}>
+      <DivSTY className={`${className || ""} container`}>
         {headNode && <header>{headNode}</header>}
         <TableSTY>
           <thead>

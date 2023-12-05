@@ -60,8 +60,16 @@ const Page: NextPageWithLayout<never> = () => {
       // const data = result.ResultList;
       const data = DUMMY_RoleList.ResultList;
       const pageInfo = DUMMY_RoleList.PageInfo;
-
       setData(data);
+      setPageInfo(pageInfo);
+
+      if (!subFilter) {
+        localStorage.setItem(
+          "roleInitFilter",
+          JSON.stringify(DUMMY_RoleList.ConditionList)
+        );
+        initializeSubFilter();
+      }
     } catch (e: any) {
       console.log(e);
     }
@@ -72,6 +80,19 @@ const Page: NextPageWithLayout<never> = () => {
     const id = "create";
     router.push(`/role/detail/${id}?editPage=edit`);
   };
+
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      if (
+        pageInfo.Page_Index === pageQuery.Page_Index &&
+        pageInfo.Page_Size === pageQuery.Page_Size
+      )
+        return;
+
+      fetchData(subFilter, pageQuery);
+    },
+    [fetchData]
+  );
 
   // ------- useEffect ------- //
   React.useEffect(() => {
@@ -106,7 +127,7 @@ const Page: NextPageWithLayout<never> = () => {
         filter={subFilter}
         btns={createBtn}
       >
-        <RoleList data={data} />
+        <RoleList data={data} pageInfo={pageInfo} />
       </FilterWrapper>
       {/* </TabsWrapper> */}
     </BodySTY>
