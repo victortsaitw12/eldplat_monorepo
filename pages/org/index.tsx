@@ -77,7 +77,6 @@ const Page: NextPageWithLayout<{
   };
 
   const handleEditDummy = (v: I_OrgList) => {
-    console.log("🍅 new org name:", v.org_name);
     const updatedData = [...data];
 
     const result = updatedData[0].sublayer.map((item) => {
@@ -92,8 +91,6 @@ const Page: NextPageWithLayout<{
 
     const editedData = [...data];
     editedData[0].sublayer = result;
-
-    console.log("🍅 updatedData", editedData);
 
     setData(editedData);
     setModalContent(null);

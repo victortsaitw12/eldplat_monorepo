@@ -13,9 +13,15 @@ import { createRole } from "@services/role/createRole";
 import { updateRole } from "@services/role/updateRole";
 import DetailPanel from "@contents/Roles/DetailPanel";
 import AuthPanel from "@contents/Roles/AuthPanel";
-import { getOneRole, I_RoleDetail, I_RoleReq } from "@services/role/getOneRole";
-import { defaultCreatValues, I_CreateRoleReq } from "@services/role/createRole";
-import { defaultUpdateValues } from "@services/role/updateRole";
+import {
+  getOneRole,
+  I_RoleDetail,
+  I_RoleReq,
+  DUMMY_ONE_ROLE_CREATE,
+  DUMMY_ONE_ROLE
+} from "@services/role/getOneRole";
+import { I_CreateRoleReq, DUMMY_CREATE_ROLE } from "@services/role/createRole";
+import { DUMMY_UPDATE_ROLE } from "@services/role/updateRole";
 import ControlBar from "@contents/Roles/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
 import { string } from "zod";
@@ -29,7 +35,24 @@ const Page: NextPageWithLayout<never> = () => {
   const [data, setData] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
-  const defaultValues = getDefaultValues(data);
+  const defaultValues = isCreate
+    ? {
+        role_name: data?.role_name || "",
+        role_desc: data?.role_desc || "",
+        role_tp: data?.role_tp || "O",
+        module_no: data?.module_no || "bus",
+        creorgno: session?.user.org_no,
+        func_auth: data?.func_auth || []
+      }
+    : {
+        role_no: data?.role_no || "",
+        role_name: data?.role_name || "",
+        role_desc: data?.role_desc || "",
+        role_tp: data?.role_tp || "O",
+        module_no: data?.module_no || "bus",
+        creorgno: session?.user.org_no,
+        func_auth: data?.func_auth || []
+      };
   const {
     register,
     handleSubmit,
@@ -39,7 +62,8 @@ const Page: NextPageWithLayout<never> = () => {
   } = useForm({
     defaultValues
   });
-  console.log("🍅 defaultValues", defaultValues);
+
+  console.log("🍅 defaultValues:", defaultValues);
 
   //------ functions ------//
   const fetchData = async () => {
@@ -53,8 +77,11 @@ const Page: NextPageWithLayout<never> = () => {
       ? createData
       : { ...createData, role_no: router.query.id };
     try {
-      const result = await getOneRole(uk, data as I_RoleReq);
-      setData(result.DataList[0]);
+      // const result = await getOneRole(uk, data as I_RoleReq);
+      const createDummy = DUMMY_ONE_ROLE_CREATE.ResultList[0];
+      const editDummy = DUMMY_ONE_ROLE.ResultList[0];
+
+      setData(isCreate ? createDummy : editDummy);
     } catch (e: any) {
       console.log(e);
     }
@@ -62,8 +89,6 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const asyncSubmitForm = async (data: any) => {
-    console.log("🍅 call asyncSubmitForm");
-
     console.log("🔜 data:", data);
     if (!session) return;
     const uk = session.user.account_no;
@@ -94,33 +119,9 @@ const Page: NextPageWithLayout<never> = () => {
 
   // ------- useEffect ------- //
   React.useEffect(() => {
+    if (!session) return;
     fetchData();
-  }, []);
-
-  // TODO write a url state in ModalProvider
-  React.useEffect(() => {
-    if (!isEdit) return;
-
-    const handleRouteChange = (url: string) => {
-      console.log(" before", modalUI);
-      modalUI.showLeavePageModal();
-      console.log(" after");
-    };
-
-    router.beforePopState(({ url, as, options }) => {
-      if (modalUI.modalContent) {
-        // If there's a confirmation modal open, prevent the route change
-        return false;
-      }
-      return true;
-    });
-
-    router.events.on("routeChangeStart", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [router]);
+  }, [session]);
 
   return (
     <form
@@ -178,25 +179,7 @@ Page.getLayout = (page: ReactNode, layoutProps: any) =>
 export default Page;
 
 // ===== FUNCTION NOT IN RENDERS ===== //
-const getDefaultValues = (data: I_RoleDetail) => {
-  if (!data)
-    return {
-      // role_no: "",
-      role_name: ""
-      // role_desc: "",
-      // role_tp: "O",
-      // module_no: "bus"
-      // func_auth: []
-    };
-  return {
-    // role_no: data.role_no || "",
-    role_name: data.role_name || ""
-    // role_desc: data.role_desc || "",
-    // role_tp: "O",
-    // module_no: data.module_no || "bus"
-    // func_auth: data.func_auth || []
-  };
-};
+
 const getFlattenAuthDataArr = (data: I_RoleDetail) => {
   const result = data?.func_auth.map((item) => {
     item.func_element.map((elem) => {

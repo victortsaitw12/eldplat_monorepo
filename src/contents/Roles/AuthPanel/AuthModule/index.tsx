@@ -5,15 +5,23 @@ import {
   CaretDownIcon,
   CaretRightIcon
 } from "evergreen-ui";
-import { useFieldArray } from "react-hook-form";
+import { Control, useFieldArray, UseFormRegister } from "react-hook-form";
 import { UseFormSetValue } from "react-hook-form/dist/types/form";
 import { DivSTY } from "./style";
 
 import { I_AuthFuncItem, I_AuthFuncElement } from "@services/role/getOneRole";
 import RadioOptions from "../RadioOptions";
 import RadioGroupList from "@components/RadioGroupList";
+import Radio from "@components/HookForm/Radio";
 
-const AuthModule = ({ data, isEdit, index, control, setValue }: I_Props) => {
+const AuthModule = ({
+  data,
+  isEdit,
+  index,
+  register,
+  control,
+  setValue
+}: I_Props) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
   const [isEnabled, setIsEnabled] = React.useState<boolean>(true);
   const { fields } = useFieldArray({
@@ -24,6 +32,8 @@ const AuthModule = ({ data, isEdit, index, control, setValue }: I_Props) => {
   const handleValueChange = (value: string) => {
     return;
   };
+
+  console.log("🍅 fields:", fields);
 
   const handleEnabled = () => {
     setIsEnabled((prev) => !prev);
@@ -53,36 +63,54 @@ const AuthModule = ({ data, isEdit, index, control, setValue }: I_Props) => {
           isEnabled ? "" : "disabled"
         }`}
       >
-        {/* {data.func_element.map((elem: I_AuthFuncElement, i: number) => ( */}
-        {fields.map((elem, i: number) => (
-          <div
-            className={"authFunc__element authFunc__item"}
-            // key={`funcElem-${i}`}
-            key={elem.id}
-          >
-            {/* <div className="label">{elem.element_name}</div> */}
-            <div className="label">label</div>
-            <div className="value">
-              {/* {isEdit ? (
-                <RadioOptions
-                  value={elem.element_default}
-                  // value="1"
-                  // name={elem.element_no}
-                  name={`func_auth.${index}.func_element.${i}.element_default`}
-                  // onChange={handleValueChange}
-                  onChange={(value) =>
-                    setValue(
-                      `func_auth.${index}.func_element.${i}.element_default`,
-                      value
-                    )
-                  }
-                />
-              ) : (
-                authFuncViewValue.get(elem.element_default)
-              )} */}
-            </div>
-          </div>
-        ))}
+        {isEdit &&
+          fields.map((field, i) => {
+            console.log("🍅 field:", field);
+            return (
+              <div
+                className={"authFunc__element authFunc__item"}
+                key={`funcElem-${i}`}
+              >
+                {/* <div className="label">{field.element_name}</div> */}
+                <div className="value">
+                  <Radio
+                    key={`func_auth.${index}.func_element.${i}.element_default`}
+                    control={control}
+                    name={`func_auth.${index}.func_element.${i}.element_default`}
+                    isDisabled={!isEdit}
+                    options={[
+                      {
+                        value: "1",
+                        label: "顯示並可用"
+                      },
+                      {
+                        value: "2",
+                        label: "僅供檢視"
+                      },
+                      {
+                        value: "3",
+                        label: "不顯示"
+                      }
+                    ]}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        {!isEdit &&
+          data.func_element.map((elem: I_AuthFuncElement, i: number) => {
+            return (
+              <div
+                className={"authFunc__element authFunc__item"}
+                key={`funcElem-${i}`}
+              >
+                <div className="label">{elem.element_name}</div>
+                <div className="value">
+                  {authFuncViewValue.get(elem.element_default)}
+                </div>
+              </div>
+            );
+          })}
       </div>
     </DivSTY>
   );
@@ -94,7 +122,8 @@ interface I_Props {
   data: I_AuthFuncItem;
   isEdit: boolean;
   index?: number;
-  control: any;
+  register: UseFormRegister<any>;
+  control: Control<any>;
   setValue: UseFormSetValue<any>;
 }
 

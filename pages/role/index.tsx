@@ -89,7 +89,7 @@ const Page: NextPageWithLayout<never> = () => {
       )
         return;
 
-      fetchData(subFilter, pageQuery);
+      // fetchData(subFilter, pageQuery);
     },
     [fetchData]
   );

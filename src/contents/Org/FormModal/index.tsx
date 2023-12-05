@@ -40,7 +40,6 @@ const FormModal = ({
   } = useForm({
     defaultValues
   });
-  console.log("🍅 errors:", errors);
 
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {

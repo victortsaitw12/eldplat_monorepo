@@ -6,7 +6,7 @@ import { BodySTY } from "./style";
 import { I_AuthFuncItem, I_AuthFuncElement } from "@services/role/getOneRole";
 import { I_FuncAuthElemReq } from "@services/role/createRole";
 import InfoBox from "@components/InfoBox";
-import AutnModule from "./AuthModule";
+import AuthModule from "./AuthModule";
 
 const AuthPanel = ({ data, isEdit, register, control, setValue }: I_Props) => {
   //------ functions ------//
@@ -18,18 +18,20 @@ const AuthPanel = ({ data, isEdit, register, control, setValue }: I_Props) => {
       req: false,
       label: "",
       editEle: (
-        <AutnModule
+        <AuthModule
           data={item}
           isEdit={true}
           index={i}
+          register={register}
           control={control}
           setValue={setValue}
         />
       ),
       value: (
-        <AutnModule
+        <AuthModule
           data={item}
           isEdit={false}
+          register={register}
           control={control}
           setValue={setValue}
         />
