@@ -32,7 +32,8 @@ const AuthModule = ({
   const handleValueChange = (value: string) => {
     return;
   };
-
+  console.log("🍅 index:", index);
+  console.log("🍅 name:", `func_auth.${index}.func_element`);
   console.log("🍅 fields:", fields);
 
   const handleEnabled = () => {
@@ -64,39 +65,47 @@ const AuthModule = ({
         }`}
       >
         {isEdit &&
-          fields.map((field, i) => {
-            console.log("🍅 field:", field);
-            return (
-              <div
-                className={"authFunc__element authFunc__item"}
-                key={`funcElem-${i}`}
-              >
-                {/* <div className="label">{field.element_name}</div> */}
-                <div className="value">
-                  <Radio
-                    key={`func_auth.${index}.func_element.${i}.element_default`}
-                    control={control}
-                    name={`func_auth.${index}.func_element.${i}.element_default`}
-                    isDisabled={!isEdit}
-                    options={[
-                      {
-                        value: "1",
-                        label: "顯示並可用"
-                      },
-                      {
-                        value: "2",
-                        label: "僅供檢視"
-                      },
-                      {
-                        value: "3",
-                        label: "不顯示"
-                      }
-                    ]}
-                  />
-                </div>
-              </div>
-            );
-          })}
+          fields.map(
+            (field, i) => (
+              <input
+                key={field.id} // important to include key with field's id
+                {...register(
+                  `func_auth[${index}].func_element.${i}.element_default`
+                )}
+              />
+            )
+            // console.log("🍅 field:", field);
+            // return (
+            //   <div
+            //     className={"authFunc__element authFunc__item"}
+            //     key={`funcElem-${i}`}
+            //   >
+            //     {/* <div className="label">{field.element_name}</div> */}
+            //     <div className="value">
+            //       <Radio
+            //         key={`func_auth.${index}.func_element.${i}.element_default`}
+            //         control={control}
+            //         name={`func_auth.${index}.func_element.${i}.element_default`}
+            //         isDisabled={!isEdit}
+            //         options={[
+            //           {
+            //             value: "1",
+            //             label: "顯示並可用"
+            //           },
+            //           {
+            //             value: "2",
+            //             label: "僅供檢視"
+            //           },
+            //           {
+            //             value: "3",
+            //             label: "不顯示"
+            //           }
+            //         ]}
+            //       />
+            //     </div>
+            //   </div>
+            // );
+          )}
         {!isEdit &&
           data.func_element.map((elem: I_AuthFuncElement, i: number) => {
             return (

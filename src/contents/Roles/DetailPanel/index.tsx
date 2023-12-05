@@ -86,13 +86,13 @@ const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
           req: true,
           label: "啟用",
           editEle: (
-            <div>
+            <>
               <Switch
                 checked={isEnabled}
                 onChange={(e) => setIsEnabled(e.target.checked)}
               />
               <span>啟用</span>
-            </div>
+            </>
           ),
           value:
             (
@@ -100,6 +100,7 @@ const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
                 <Switch
                   checked={isEnabled}
                   onChange={(e) => setIsEnabled(e.target.checked)}
+                  disabled
                 />
                 <span>啟用</span>
               </>
