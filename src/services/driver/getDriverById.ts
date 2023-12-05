@@ -52,9 +52,9 @@ const DUMMY_DATA = {
     dsph_area: "03",
     dsph_area_name: "北北基",
     dsph_group: "03",
-    dsph_group_name: "第三車隊",
+    dsph_group_name: "第一車隊",
     working_hours_code: "01",
-    working_hours_name: "一例一休"
+    working_hours_name: "八週變形工時"
   },
   language: [
     {

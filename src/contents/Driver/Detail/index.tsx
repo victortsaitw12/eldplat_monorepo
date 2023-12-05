@@ -57,28 +57,32 @@ function DriverDetail(props: Props) {
     driverNo
   } = props;
 
+  const driverInfo = driverData.info;
+
+  console.log("driverInfo", driverInfo);
+
   const BasicInFo = [
     {
-      listClassName: "fb-100",
+      listClassName: "fb-50",
       readonly: false,
       req: true,
       label: "駕駛姓名",
-      bold: true,
-      value: "--"
+      bold: false,
+      value: driverInfo.user_name
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "英文姓名",
-      value: "--"
+      value: "CHUN-YI ZHONG"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "國籍",
-      value: "--",
+      value: driverInfo.driver_country_name,
       editEle: <TextInput className="required" placeholder="請輸入手機" />
     },
     {
@@ -86,7 +90,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "身分證字號",
-      value: "--",
+      value: "E123456789",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     },
     {
@@ -94,7 +98,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "性別",
-      value: "--",
+      value: "男",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     },
     {
@@ -102,7 +106,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "生日",
-      value: "--",
+      value: "1977-01-01",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     },
     {
@@ -110,7 +114,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "語言",
-      value: "--",
+      value: "中文/英文",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     },
     {
@@ -118,7 +122,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "身高",
-      value: "--",
+      value: "180 cm",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     },
     {
@@ -126,7 +130,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "體重",
-      value: "--",
+      value: "75 kg",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     },
     {
@@ -134,7 +138,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "手機",
-      value: "--",
+      value: driverInfo.user_phone,
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     },
     {
@@ -142,7 +146,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "學歷",
-      value: "--",
+      value: "大學",
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     },
     {
@@ -150,7 +154,7 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "信箱",
-      value: "--",
+      value: driverInfo.user_email,
       editEle: <TextInput className="required" placeholder="請輸入信箱" />
     }
   ];
@@ -162,7 +166,7 @@ function DriverDetail(props: Props) {
       req: false,
       label: "員工編號",
       bold: false,
-      value: "--"
+      value: driverInfo.user_no
     },
     {
       listClassName: "fb-50",
@@ -170,76 +174,76 @@ function DriverDetail(props: Props) {
       req: false,
       label: "隸屬組織",
       bold: false,
-      value: "--"
+      value: "大中巴業務組/選項B"
     },
     {
-      listClassName: "fb-100",
+      listClassName: "fb-50",
       readonly: false,
       req: false,
       bold: false,
       label: "入職日期",
-      value: "--",
+      value: "2000-03-10",
       editEle: <TextInput className="required" placeholder="請輸入手機" />
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: true,
-      bold: true,
+      bold: false,
       label: "派駐區域",
-      value: (
+      value: driverInfo.dsph_area_name,
+      editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
             請選擇
           </option>
         </Select>
-      ),
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      )
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: true,
-      bold: true,
+      bold: false,
       label: "車隊",
-      value: (
+      value: driverInfo.dsph_group_name,
+      editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
             請選擇
           </option>
         </Select>
-      ),
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      )
     },
     {
-      listClassName: "fb-50 m-0",
+      listClassName: "fb-50",
       readonly: false,
       req: true,
-      bold: true,
+      bold: false,
       label: "排班設定",
-      value: (
+      value: driverInfo.working_hours_name,
+      editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
             請選擇
           </option>
         </Select>
-      ),
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      )
     },
     {
       listClassName: "fb-50 m-0",
       readonly: false,
       req: false,
-      bold: true,
+      bold: false,
       label: "駕駛分級",
-      value: (
+      value: "S級",
+      editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
             請選擇
           </option>
         </Select>
-      ),
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      )
     }
   ];
 
@@ -250,7 +254,8 @@ function DriverDetail(props: Props) {
       req: false,
       label: "",
       bold: false,
-      value: <TagGenerator />
+      value: "接受跨夜行程",
+      editEle: <TagGenerator />
     }
   ];
 
@@ -380,15 +385,8 @@ function DriverDetail(props: Props) {
       <Pane className={"main-column"}>
         <InfoCard isEdit={false} infoData={EmployeeInFo} infoTitle="職員資料" />
         <InfoCard isEdit={false} infoData={TagInFo} infoTitle="標籤" />
-      </Pane>
-      <Pane className={"main-column"}>
-        <InfoCard isEdit={false} infoData={LicenseInFo} infoTitle="駕照" />
-        <SecondaryButton text="新增其他證照" className={"create-more-button"}>
-          <SmallPlusIcon />
-        </SecondaryButton>
-      </Pane>
-      <Pane className={"main-column"}>
         <InfoCard isEdit={false} infoData={CommentInFo} infoTitle="備註" />
+        <InfoCard isEdit={false} infoData={LicenseInFo} infoTitle="駕照" />
         <InfoCard isEdit={false} infoData={TrainingInFo} infoTitle="教育訓練" />
       </Pane>
     </DivSTY>
