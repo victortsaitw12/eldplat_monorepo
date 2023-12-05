@@ -176,35 +176,21 @@ export const DUMMY_RoleList = {
       arrayConditions: ["like", "equal"],
       displayType: "search",
       dataType: "string",
-      label: "駕駛-名"
-    },
-    {
-      field_Name: "User_First_Name",
-      arrayConditions: ["like", "equal"],
-      displayType: "search",
-      dataType: "string",
-      label: "駕駛-姓"
+      label: "角色名稱、職責描述..."
     },
     {
       field_Name: "Short_Schd_Date",
       arrayConditions: ["like", "equal"],
       displayType: "fix",
       dataType: "string",
-      label: "月份"
+      label: "模組"
     },
     {
       field_Name: "Dsph_Area",
       arrayConditions: ["like", "equal"],
       displayType: "fix",
       dataType: "string",
-      label: "區域"
-    },
-    {
-      field_Name: "Dsph_City",
-      arrayConditions: ["like", "equal"],
-      displayType: "fix",
-      dataType: "string",
-      label: "都市"
+      label: "狀態"
     }
   ],
   PageInfo: {

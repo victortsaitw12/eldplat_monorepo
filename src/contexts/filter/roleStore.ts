@@ -29,7 +29,15 @@ export const useRoleStore = create<StateTypes>((set) => ({
       arrayConditions: ["like", "equal"],
       displayType: "fix",
       dataType: "string",
-      label: "默認篩選",
+      label: "模組",
+      value: ""
+    },
+    Role_Input3: {
+      field_Name: "Role_Input2",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "預設",
       value: ""
     }
   },

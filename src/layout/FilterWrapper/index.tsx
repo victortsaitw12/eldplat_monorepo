@@ -1,4 +1,4 @@
-import { SettingsIcon, SearchIcon, Select } from "evergreen-ui";
+import { FilterIcon, SearchIcon, Select, Button } from "evergreen-ui";
 import React, { useState } from "react";
 import { countActiveFilter } from "@utils/countActiveFilter";
 import { BodySTY } from "./style";
@@ -74,7 +74,7 @@ function FilterWrapper({
             }
             return buttonList;
           }, [])}
-          <button
+          <Button
             className="subFilter-item"
             onClick={() => {
               setActiveSubFilter("");
@@ -86,10 +86,10 @@ function FilterWrapper({
                 <span>{activeSubFilterCount}</span>
               </div>
             ) : (
-              <SettingsIcon />
+              <FilterIcon />
             )}
-            <span>過濾器</span>
-          </button>
+            <span>篩選器</span>
+          </Button>
           {activeSubFilterCount > 0 && (
             <button
               className="subFilter-item clear"

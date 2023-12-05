@@ -24,7 +24,10 @@ function SubFilter({
   const [filterValue, setFilterValue] = useState<string | null>(null);
   return (
     <BodySTY>
-      <Select onChange={(event) => alert(event.target.value)}>
+      <Select
+        onChange={(event) => alert(event.target.value)}
+        className="subFilter-select"
+      >
         <option value="foo" selected>
           {label}
         </option>
