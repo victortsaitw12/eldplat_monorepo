@@ -7,6 +7,7 @@ import { FormSTY } from "./style";
 import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 import { textValidation } from "@utils/hookFormValidation";
+import CustomTextInputField from "@components/CustomTextInputField";
 // import { fetchData } from "next-auth/client/_utils";
 
 const FormModal = ({
@@ -92,32 +93,39 @@ const FormModal = ({
         confirmLabel="確定"
         cancelLabel="取消"
       >
-        <TextInputField label="父層組織" value={content.parentName} disabled />
-        <TextInputField
-          label="組織名稱"
-          placeholder="請輸入組織名稱"
-          {...register("org_name", {
-            required: "不可輸入特殊符號",
-            validate: textValidation
-          })}
-          isInvalid={!!errors.org_name}
-        />
-        {errors.org_name && (
-          <div className="input-error">{errors.org_name?.message}</div>
-        )}
-        {!content.isCreate && (
-          <Group style={{ display: "flex", gap: "8px" }}>
-            <Switch
-              height={16}
-              checked={checked}
-              {...register("org_enb", {
-                required: "不可空白",
-                onChange: (e) => setChecked(e.target.checked)
-              })}
-            />
-            <div>啟用</div>
-          </Group>
-        )}
+        <div className="modal__container">
+          <TextInputField
+            label="父層組織"
+            value={content.parentName}
+            disabled
+          />
+          <CustomTextInputField
+            label="組織名稱"
+            placeholder="請輸入組織名稱"
+            {...register("org_name", {
+              required: "不可輸入特殊符號",
+              validate: textValidation
+            })}
+            isInvalid={!!errors.org_name}
+            hint={errors.org_name?.message}
+          />
+          {!content.isCreate && (
+            <Group
+              style={{ display: "flex", gap: "8px", marginTop: "24px" }}
+              className="switch"
+            >
+              <Switch
+                height={16}
+                checked={checked}
+                {...register("org_enb", {
+                  required: "不可空白",
+                  onChange: (e) => setChecked(e.target.checked)
+                })}
+              />
+              <div>啟用</div>
+            </Group>
+          )}
+        </div>
       </Dialog>
     </FormSTY>
   );
