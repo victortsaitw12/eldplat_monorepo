@@ -6,6 +6,7 @@ import { FormSTY } from "./style";
 
 import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
+import { textValidation } from "@utils/hookFormValidation";
 // import { fetchData } from "next-auth/client/_utils";
 
 const FormModal = ({
@@ -38,29 +39,32 @@ const FormModal = ({
   } = useForm({
     defaultValues
   });
+  console.log("🍅 errors:", errors);
 
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {
-    if (!session) return;
-    const uk = session.user.account_no;
-    console.log("🔜 data:", data);
-    try {
-      const res = isCreate
-        ? await createOrg(uk, data)
-        : await updateOrg(uk, data);
+    isCreate ? handleCreateDummy(data) : handleEditDummy(data);
+    // TODO
+    // if (!session) return;
+    // const uk = session.user.account_no;
+    // console.log("🔜 data:", data);
+    // try {
+    //   const res = isCreate
+    //     ? await createOrg(uk, data)
+    //     : await updateOrg(uk, data);
 
-      if (res.StatusCode === "200") {
-        setModalContent(null);
-        refetch();
-        toaster.success(`${res.Message}`, {
-          duration: 1.5
-        });
-      } else {
-        throw new Error(`${res.Message}`);
-      }
-    } catch (err: any) {
-      toaster.warning(err.message);
-    }
+    //   if (res.StatusCode === "200") {
+    //     setModalContent(null);
+    //     refetch();
+    //     toaster.success(`${res.Message}`, {
+    //       duration: 1.5
+    //     });
+    //   } else {
+    //     throw new Error(`${res.Message}`);
+    //   }
+    // } catch (err: any) {
+    //   toaster.warning(err.message);
+    // }
   };
 
   const handleCancel = () => {
@@ -69,8 +73,7 @@ const FormModal = ({
   const handleConfirm = () => {
     const data = getValues();
     console.log("🔜 data:", data);
-    isCreate ? handleCreateDummy(data) : handleEditDummy(data);
-    // handleSubmit(asyncSubmitForm)();
+    handleSubmit(asyncSubmitForm)();
   };
 
   // ------- render ------- //
@@ -94,9 +97,14 @@ const FormModal = ({
           label="組織名稱"
           placeholder="請輸入組織名稱"
           {...register("org_name", {
-            required: "不可空白"
+            required: "不可輸入特殊符號",
+            validate: textValidation
           })}
+          isInvalid={!!errors.org_name}
         />
+        {errors.org_name && (
+          <div className="input-error">{errors.org_name?.message}</div>
+        )}
         {!content.isCreate && (
           <Group style={{ display: "flex", gap: "8px" }}>
             <Switch
