@@ -2,17 +2,10 @@ import React, { ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { toaster } from "evergreen-ui";
-import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { DivSTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import { createRole } from "@services/role/createRole";
-import { updateRole } from "@services/role/updateRole";
-import DetailPanel from "@contents/Roles/DetailPanel";
-import AuthPanel from "@contents/Roles/AuthPanel";
 import {
   getOneRole,
   I_RoleDetail,
@@ -23,47 +16,15 @@ import {
 import { I_CreateRoleReq, DUMMY_CREATE_ROLE } from "@services/role/createRole";
 import { DUMMY_UPDATE_ROLE } from "@services/role/updateRole";
 import ControlBar from "@contents/Roles/ControlBar";
-import { ModalContext } from "@contexts/ModalContext/ModalProvider";
-import { string } from "zod";
+import RoleDetail from "@contents/Roles/RoleDetail";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const isCreate = router.query.id === "create";
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
   const { data: session } = useSession();
-  const modalUI = React.useContext(ModalContext);
   const [data, setData] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
-  const defaultValues = isCreate
-    ? {
-        role_name: data?.role_name || "",
-        role_desc: data?.role_desc || "",
-        role_tp: data?.role_tp || "O",
-        module_no: data?.module_no || "bus",
-        creorgno: session?.user.org_no,
-        func_auth: data?.func_auth || []
-      }
-    : {
-        role_no: data?.role_no || "",
-        role_name: data?.role_name || "",
-        role_desc: data?.role_desc || "",
-        role_tp: data?.role_tp || "O",
-        module_no: data?.module_no || "bus",
-        creorgno: session?.user.org_no,
-        func_auth: data?.func_auth || []
-      };
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors }
-  } = useForm({
-    defaultValues
-  });
-
-  console.log("🍅 defaultValues:", defaultValues);
 
   //------ functions ------//
   const fetchData = async () => {
@@ -123,42 +84,23 @@ const Page: NextPageWithLayout<never> = () => {
     fetchData();
   }, [session]);
 
+  // React.useEffect(() => {
+  //   if (data) {
+  //     Object.entries(data).forEach(([key, value]) => {
+  //       setValue(key, value);
+  //     });
+  //   }
+  // }, [data, setValue]);
+
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        console.log("called");
-        asyncSubmitForm({
-          ...data
-        });
-      })}
-    >
+    <>
       <ControlBar
         isEdit={editPage === "edit"}
         handleNavigation={handleNavigation}
         handleEdit={handleEdit}
       />
-      <DivSTY>
-        {data && (
-          <>
-            <DetailPanel
-              data={data}
-              isEdit={editPage === "edit"}
-              isCreate={isCreate}
-              register={register}
-              errors={errors}
-            />
-            <AuthPanel
-              data={data.func_auth}
-              isEdit={editPage === "edit"}
-              register={register}
-              control={control}
-              setValue={setValue}
-              // errors={errors}
-            />
-          </>
-        )}
-      </DivSTY>
-    </form>
+      {data && <RoleDetail data={data} asyncSubmitForm={asyncSubmitForm} />}
+    </>
   );
 };
 

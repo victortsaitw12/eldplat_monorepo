@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DivSTY = styled.div`
+export const FormSTY = styled.form`
   display: flex;
   /* width: 600px; */
   height: calc(100% - 20px);

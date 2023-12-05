@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler, UseFormRegister } from "react-hook-form";
 import { UseFormSetValue } from "react-hook-form/dist/types/form";
+import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 
 import { I_AuthFuncItem, I_AuthFuncElement } from "@services/role/getOneRole";
@@ -8,7 +9,11 @@ import { I_FuncAuthElemReq } from "@services/role/createRole";
 import InfoBox from "@components/InfoBox";
 import AuthModule from "./AuthModule";
 
-const AuthPanel = ({ data, isEdit, register, control, setValue }: I_Props) => {
+const AuthPanel = ({ data, register, control, setValue }: I_Props) => {
+  const router = useRouter();
+  const { editPage } = router.query;
+  const isEdit = editPage === "edit";
+
   //------ functions ------//
 
   // ------- render ------- //
@@ -49,7 +54,6 @@ export default AuthPanel;
 
 interface I_Props {
   data: I_AuthFuncItem[];
-  isEdit: boolean;
   register: UseFormRegister<any>;
   control: any;
   setValue: UseFormSetValue<any>;

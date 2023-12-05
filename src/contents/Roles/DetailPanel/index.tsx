@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import {
   UseFormRegister,
   FieldErrors,
@@ -17,7 +18,11 @@ import { textValidation, emailValidation } from "@utils/inputValidation";
 import CustomTextArea from "@components/CustomTextArea";
 import CustomTextInput from "@components/CustomTextInput";
 
-const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
+const DetailPanel = ({ data, register, errors }: I_Props) => {
+  const router = useRouter();
+  const { editPage } = router.query;
+  const isCreate = router.query.id === "create";
+  const isEdit = editPage === "edit";
   const [isEnabled, setIsEnabled] = React.useState(true);
 
   if (!data)
@@ -118,8 +123,6 @@ export default DetailPanel;
 
 interface I_Props {
   data: I_RoleListItem;
-  isEdit: boolean;
-  isCreate: boolean;
   register: UseFormRegister<any>;
   errors: FieldErrors;
 }
