@@ -9,10 +9,10 @@ import {
   I_AuthFuncElement,
   I_RoleDetail
 } from "@services/role/getOneRole";
-import DetailPanel from "../DetailPanel";
+import DetailPanel from "./DetailPanel";
 import AuthPanel from "../AuthPanel";
 
-const RoleDetail = ({ data, asyncSubmitForm }: I_Props) => {
+const RoleDetail = ({ submitRef, data, asyncSubmitForm }: I_Props) => {
   const { data: session } = useSession();
   const router = useRouter();
   const isCreate = router.query.id === "create";
@@ -20,7 +20,7 @@ const RoleDetail = ({ data, asyncSubmitForm }: I_Props) => {
   const createValues = {
     role_name: data?.role_name || "",
     role_desc: data?.role_desc || "",
-    role_tp: data?.role_tp || "O",
+    role_tp: "O",
     module_no: data?.module_no || "bus",
     creorgno: session?.user.org_no,
     func_auth: data?.func_auth || []
@@ -50,6 +50,9 @@ const RoleDetail = ({ data, asyncSubmitForm }: I_Props) => {
         setValue={setValue}
         // errors={errors}
       />
+      <button style={{ display: "none" }} ref={submitRef} type="submit">
+        發送表單
+      </button>
     </FormSTY>
   );
 };
@@ -57,6 +60,7 @@ const RoleDetail = ({ data, asyncSubmitForm }: I_Props) => {
 export default RoleDetail;
 
 interface I_Props {
+  submitRef: React.RefObject<HTMLButtonElement>;
   data: I_RoleDetail;
   asyncSubmitForm: (data: any) => Promise<void>;
 }

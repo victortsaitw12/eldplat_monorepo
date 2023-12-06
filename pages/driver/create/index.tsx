@@ -350,7 +350,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "附件/相關檔案",
       bold: true,
-      value: <NewUploader isMultiple={true}/>
+      value: <NewUploader isMultiple={true} />
     }
   ];
 
@@ -359,7 +359,7 @@ const Page: NextPageWithLayout<never> = () => {
       <ControlBar
         // isEdit={editPage === "edit"}
         isEdit={true}
-        handleNavigation={handleNavigation}
+        onSave={handleNavigation.bind(null, "/driver")}
         primaryDisable={true}
       />
       <BodySTY>

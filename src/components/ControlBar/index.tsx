@@ -1,39 +1,22 @@
-import { Group, EditIcon } from "evergreen-ui";
+import { EditIcon } from "evergreen-ui";
 import React from "react";
-import { useRouter } from "next/router";
 import { DivSTY } from "./style";
-import LoadingSpinner from "@components/LoadingSpinner";
 import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import SecondaryBtn from "@components/Button/Secondary/Label";
-import { on } from "events";
 
 interface I_Props {
   isEdit: boolean;
   onCancel?: () => void;
-  onEdit?: () => void;
-  onSave?: () => void;
+  onConfirm?: () => void;
   primaryDisable: boolean;
 }
 
-function ControlBar({
-  isEdit,
-  onCancel,
-  onEdit,
-  onSave,
-  primaryDisable
-}: I_Props) {
-  const router = useRouter();
-
+function ControlBar({ isEdit, onCancel, onConfirm, primaryDisable }: I_Props) {
   const handleCancel = () => {
-    if (isEdit) return;
     onCancel && onCancel();
   };
-  const handleSave = () => {
-    onSave && onSave();
-  };
-
-  const handleEdit = () => {
-    onEdit && onEdit();
+  const handleConfirm = () => {
+    onConfirm && onConfirm();
   };
 
   const buttonStates = {
@@ -41,14 +24,14 @@ function ControlBar({
       secondaryBtnText: "取消",
       secondaryBtnOnClick: handleCancel,
       primaryBtnText: "儲存",
-      primaryBtnOnClick: handleSave,
+      primaryBtnOnClick: handleConfirm,
       primaryBtnIcon: ""
     },
     isView: {
       secondaryBtnText: "回列表",
       secondaryBtnOnClick: handleCancel,
       primaryBtnText: "編輯",
-      primaryBtnOnClick: handleEdit,
+      primaryBtnOnClick: handleConfirm,
       primaryBtnIcon: <EditIcon size={14} />
     }
   };

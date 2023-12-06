@@ -60,9 +60,18 @@ const Page: NextPageWithLayout<never> = () => {
       // const data = result.ResultList;
       const data = DUMMY_RoleList.ResultList;
       const pageInfo = DUMMY_RoleList.PageInfo;
-      setData(data);
-      setPageInfo(pageInfo);
 
+      const isUpdatedDataAfterCreate = localStorage.getItem("roleCreateData");
+      if (isUpdatedDataAfterCreate) {
+        setData([JSON.parse(isUpdatedDataAfterCreate), ...data]);
+        setPageInfo({
+          ...pageInfo,
+          Total: pageInfo.Total + 1
+        });
+      } else {
+        setData(data);
+        setPageInfo(pageInfo);
+      }
       if (!subFilter) {
         localStorage.setItem(
           "roleInitFilter",
@@ -103,6 +112,10 @@ const Page: NextPageWithLayout<never> = () => {
   React.useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
   }, [status]);
+
+  React.useEffect(() => {
+    localStorage.removeItem("roleCreateData");
+  }, [router]);
 
   // ------- render ------- //
   const createBtn = (

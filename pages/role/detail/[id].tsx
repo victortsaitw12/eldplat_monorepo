@@ -18,11 +18,13 @@ import { DUMMY_UPDATE_ROLE } from "@services/role/updateRole";
 import ControlBar from "@components/ControlBar";
 import RoleDetail from "@contents/Roles/RoleDetail";
 
-const Page: NextPageWithLayout<never> = () => {
+const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
   const isCreate = router.query.id === "create";
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  const { editPage } = router.query;
   const { data: session } = useSession();
+  const submitRef = React.useRef<HTMLButtonElement | null>(null);
+  const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
   const [data, setData] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -51,8 +53,12 @@ const Page: NextPageWithLayout<never> = () => {
 
   const asyncSubmitForm = async (data: any) => {
     console.log("🔜 data:", data);
+    localStorage.setItem(
+      "roleCreateData",
+      JSON.stringify({ ...data, id: "create", module_name: "車管系統" })
+    );
     if (!session) return;
-    const uk = session.user.account_no;
+    // const uk = session.user.account_no;
     // try {
     //   const res = isCreate
     //     ? await createRole(uk, {...data,creorgno: session?.user.org_no})
@@ -70,12 +76,35 @@ const Page: NextPageWithLayout<never> = () => {
     // }
   };
 
-  const handleNavigation = async (path: string) => {
-    router.push(path);
+  const handleCancel = async () => {
+    if (!isEdit) {
+      router.push("/role");
+    } else {
+      setIsEdit(false);
+      router.push(`/role/detail/${id}?editPage=view`, undefined, {
+        shallow: true
+      });
+    }
   };
 
-  const handleEdit = () => {
-    router.push(`/role/detail/${router.query.id}?editPage=edit`);
+  const handleConfirm = () => {
+    if (isCreate) {
+      submitRef.current && submitRef.current.click();
+      router.push("/role");
+    }
+    if (isEdit) {
+      // TODO submit form after 12/28
+      submitRef.current && submitRef.current.click();
+      setIsEdit(false);
+      router.push(`/role/detail/${id}?editPage=view`, undefined, {
+        shallow: true
+      });
+    } else {
+      setIsEdit(true);
+      router.push(`/role/detail/${id}?editPage=edit`, undefined, {
+        shallow: true
+      });
+    }
   };
 
   // ------- useEffect ------- //
@@ -87,11 +116,19 @@ const Page: NextPageWithLayout<never> = () => {
   return (
     <>
       <ControlBar
-        isEdit={editPage === "edit"}
-        handleNavigation={handleNavigation}
-        handleEdit={handleEdit}
+        isEdit={isEdit}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+        primaryDisable={false}
       />
-      {data && <RoleDetail data={data} asyncSubmitForm={asyncSubmitForm} />}
+      {data && (
+        <RoleDetail
+          submitRef={submitRef}
+          isEdit={isEdit}
+          data={data}
+          asyncSubmitForm={asyncSubmitForm}
+        />
+      )}
     </>
   );
 };
