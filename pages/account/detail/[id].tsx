@@ -17,7 +17,8 @@ import {
   I_AccountDetailItem,
   I_AccountRole,
   I_RoleItem,
-  DUMMY_DATA_CREATE
+  DUMMY_DATA_CREATE,
+  DUMMY_ONE_ACCOUNT
 } from "@services/account/getOneAccount";
 import {
   createAccount,
@@ -27,7 +28,7 @@ import {
   updateAccount,
   I_ReqBody as I_UpdateReqBody
 } from "@services/account/updateAccount";
-import ControlBar from "@contents/Account/ControlBar";
+import ControlBar from "@components/ControlBar";
 import { ModalContext } from "@contexts/ModalContext/ModalProvider";
 import RoleInfoBox from "@contents/Account/RoleInfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
@@ -87,9 +88,9 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
         account_no: id,
         creorgno: "o-0001"
       };
-      const res = await getOneAccount(uk, reqBody);
-      const result = res.DataList[0];
-      setData(result);
+      // const res = await getOneAccount(uk, reqBody);
+      // const result = res.ResoutList[0];
+      setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
     } catch (e: any) {
       console.log(e);
     }
@@ -123,11 +124,11 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     router.push(path);
   };
 
-  const handleCreate = () => {
+  const handleCancel = () => {
     handleSubmit(asyncSubmitForm)();
   };
 
-  const handleEdit = () => {
+  const handleConfirm = () => {
     router.push({
       pathname: "/account/detail/" + id,
       query: { editPage: "edit" }
@@ -145,37 +146,13 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     if (isCreate) setData(DUMMY_DATA_CREATE);
   }, [session]);
 
-  React.useEffect(() => {
-    if (!isEdit) return;
-    const handleRouteChange = (url: string) => {
-      modal.showLeavePageModal();
-    };
-
-    router.beforePopState(({ url, as, options }) => {
-      if (modal.modalContent) {
-        // If there's a confirmation modal open, prevent the route change
-        return false;
-      }
-      return true;
-    });
-
-    router.events.on("routeChangeStart", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [isEdit]);
-
-  const handleCancel = () => {
-    console.log("cancel");
-  };
-
   return (
     <>
       <ControlBar
         isEdit={editPage === "edit"}
-        handleNavigation={handleNavigation}
-        handleEdit={handleEdit}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+        primaryDisable={false}
       />
       <BodySTY>
         {isCreate ||
