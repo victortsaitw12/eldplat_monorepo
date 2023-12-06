@@ -10,7 +10,8 @@ import AccountList from "@contents/Account/AccountList";
 import { BodySTY } from "./style";
 import {
   getAccountList,
-  I_AccountItem
+  I_AccountItem,
+  DUMMY_ACC_LIST
 } from "@services/account/getAccountList";
 import { useUserStore } from "@contexts/filter/accountStore";
 import { IconLeft } from "@components/Button/Primary";
@@ -46,8 +47,9 @@ const Page: NextPageWithLayout<never> = () => {
       }
     };
     try {
-      const result = await getAccountList(uk, reqBody);
-      setData(result);
+      // const result = await getAccountList(uk, reqBody);
+      // setData(result.ResultList);
+      setData(DUMMY_ACC_LIST.ResultList);
     } catch (e: any) {
       console.log(e);
     }
