@@ -38,8 +38,31 @@ const Page: NextPageWithLayout<never> = () => {
     console.log("hello");
   }, []);
 
-  const handleNavigation = async (path: string) => {
-    router.push(path);
+  const handleCancel = async () => {
+    if (!isEdit) router.push("/role");
+    setIsEdit(false);
+    router.push(`/role/detail/${id}?editPage=view`, undefined, {
+      shallow: true
+    });
+  };
+
+  const handleConfirm = () => {
+    if (isCreate) {
+      submitRef.current && submitRef.current.click();
+      router.push("/role");
+    }
+    if (isEdit) {
+      submitRef.current && submitRef.current.click();
+      setIsEdit(false);
+      router.push(`/role/detail/${id}?editPage=view`, undefined, {
+        shallow: true
+      });
+    } else {
+      setIsEdit(true);
+      router.push(`/role/detail/${id}?editPage=edit`, undefined, {
+        shallow: true
+      });
+    }
   };
 
   const BasicInFo = [
@@ -359,7 +382,8 @@ const Page: NextPageWithLayout<never> = () => {
       <ControlBar
         // isEdit={editPage === "edit"}
         isEdit={true}
-        onSave={handleNavigation.bind(null, "/driver")}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
         primaryDisable={true}
       />
       <BodySTY>

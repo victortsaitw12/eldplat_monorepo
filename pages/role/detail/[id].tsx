@@ -77,14 +77,11 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleCancel = async () => {
-    if (!isEdit) {
-      router.push("/role");
-    } else {
-      setIsEdit(false);
-      router.push(`/role/detail/${id}?editPage=view`, undefined, {
-        shallow: true
-      });
-    }
+    if (!isEdit) router.push("/role");
+    setIsEdit(false);
+    router.push(`/role/detail/${id}?editPage=view`, undefined, {
+      shallow: true
+    });
   };
 
   const handleConfirm = () => {
@@ -93,7 +90,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       router.push("/role");
     }
     if (isEdit) {
-      // TODO submit form after 12/28
       submitRef.current && submitRef.current.click();
       setIsEdit(false);
       router.push(`/role/detail/${id}?editPage=view`, undefined, {
