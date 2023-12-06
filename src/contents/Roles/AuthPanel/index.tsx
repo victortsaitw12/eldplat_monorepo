@@ -5,6 +5,7 @@ import {
   UseFormSetValue,
   UseFormGetValues
 } from "react-hook-form/dist/types/form";
+import { Select } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
 
@@ -27,6 +28,49 @@ const AuthPanel = ({
   //------ functions ------//
 
   // ------- render ------- //
+  const controlBar = {
+    readonly: false,
+    req: false,
+    label: "",
+    editEle: (
+      <div className="authPanel__control">
+        <div className="group">
+          <Select onChange={(event) => alert(event.target.value)}>
+            {data.map((item, i) => (
+              <option key={`module-${i}`} value="foo" selected>
+                {item.func_name}
+              </option>
+            ))}
+          </Select>
+          <Select onChange={(event) => alert(event.target.value)}>
+            <option value="foo" selected>
+              元件
+            </option>
+            <option value="bar">新增</option>
+            <option value="bar">編輯</option>
+            <option value="bar">檢視</option>
+          </Select>
+        </div>
+      </div>
+    ),
+    value: (
+      <div className="authPanel__control">
+        <Select onChange={(event) => alert(event.target.value)}>
+          <option value="foo" selected>
+            功能
+          </option>
+          <option value="bar">功能1</option>
+        </Select>
+        <Select onChange={(event) => alert(event.target.value)}>
+          <option value="foo" selected>
+            元件
+          </option>
+          <option value="bar">元件2</option>
+        </Select>
+      </div>
+    )
+  };
+
   const dataFitInfoBox = data.map((item: I_AuthFuncItem, i: number) => {
     return {
       readonly: false,
@@ -57,7 +101,11 @@ const AuthPanel = ({
   });
   return (
     <BodySTY>
-      <InfoBox isEdit={isEdit} infoData={dataFitInfoBox} infoTitle="權限" />
+      <InfoBox
+        isEdit={isEdit}
+        infoData={[controlBar, ...dataFitInfoBox]}
+        infoTitle="權限"
+      />
     </BodySTY>
   );
 };

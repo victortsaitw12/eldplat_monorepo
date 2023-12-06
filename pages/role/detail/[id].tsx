@@ -17,8 +17,10 @@ import { I_CreateRoleReq, DUMMY_CREATE_ROLE } from "@services/role/createRole";
 import { DUMMY_UPDATE_ROLE } from "@services/role/updateRole";
 import ControlBar from "@components/ControlBar";
 import RoleDetail from "@contents/Roles/RoleDetail";
+import { useModal } from "@contexts/ModalContext/ModalProvider";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
+  const { showLeavePageModal } = useModal();
   const router = useRouter();
   const isCreate = router.query.id === "create";
   const { editPage } = router.query;
@@ -76,12 +78,17 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     // }
   };
 
+  const handleChangeRoute = (path: string) => {
+    showLeavePageModal(path);
+  };
+
   const handleCancel = async () => {
-    if (!isEdit) router.push("/role");
-    setIsEdit(false);
-    router.push(`/role/detail/${id}?editPage=view`, undefined, {
-      shallow: true
-    });
+    handleChangeRoute("/role");
+    // if (!isEdit) router.push("/role");
+    // setIsEdit(false);
+    // router.push(`/role/detail/${id}?editPage=view`, undefined, {
+    //   shallow: true
+    // });
   };
 
   const handleConfirm = () => {

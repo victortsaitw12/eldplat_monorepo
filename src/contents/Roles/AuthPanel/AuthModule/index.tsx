@@ -3,7 +3,8 @@ import {
   Switch,
   RadioGroup,
   CaretDownIcon,
-  CaretRightIcon
+  CaretRightIcon,
+  Select
 } from "evergreen-ui";
 import {
   Control,

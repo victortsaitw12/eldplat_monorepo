@@ -32,37 +32,39 @@ import {
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
 
   React.useEffect(() => {
     console.log("hello");
   }, []);
 
   const handleCancel = async () => {
-    if (!isEdit) router.push("/role");
-    setIsEdit(false);
-    router.push(`/role/detail/${id}?editPage=view`, undefined, {
-      shallow: true
-    });
+    // if (!isEdit) router.push("/role");
+    // setIsEdit(false);
+    // router.push(`/role/detail/${id}?editPage=view`, undefined, {
+    //   shallow: true
+    // });
   };
 
   const handleConfirm = () => {
-    if (isCreate) {
-      submitRef.current && submitRef.current.click();
-      router.push("/role");
-    }
-    if (isEdit) {
-      submitRef.current && submitRef.current.click();
-      setIsEdit(false);
-      router.push(`/role/detail/${id}?editPage=view`, undefined, {
-        shallow: true
-      });
-    } else {
-      setIsEdit(true);
-      router.push(`/role/detail/${id}?editPage=edit`, undefined, {
-        shallow: true
-      });
-    }
+    // if (isCreate) {
+    //   submitRef.current && submitRef.current.click();
+    //   router.push("/role");
+    // }
+    // if (isEdit) {
+    //   submitRef.current && submitRef.current.click();
+    //   setIsEdit(false);
+    //   router.push(`/role/detail/${id}?editPage=view`, undefined, {
+    //     shallow: true
+    //   });
+    // } else {
+    //   setIsEdit(true);
+    //   router.push(`/role/detail/${id}?editPage=edit`, undefined, {
+    //     shallow: true
+    //   });
+    // }
   };
 
   const BasicInFo = [
