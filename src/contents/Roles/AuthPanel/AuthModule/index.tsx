@@ -122,11 +122,10 @@ const AuthModule = ({
                     isDisabled={
                       !isEdit || isAuthFuncElemDisabled(field.element_default)
                     }
-                    options={[
-                      { value: "1", label: "顯示並可用" },
-                      { value: "2", label: "僅供檢視" },
-                      { value: "3", label: "不顯示" }
-                    ]}
+                    options={Array.from(
+                      authFuncViewValue,
+                      ([value, label]) => ({ value, label })
+                    )}
                   />
                 </div>
               </div>
