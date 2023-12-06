@@ -4,7 +4,7 @@ import { DivSTY } from "./style";
 
 import { UpdateDriverInfoPayload } from "../driver.type";
 import DriverInfo from "@contents/Driver/Detail/DriverInfo";
-import LicensesList from "@contents/Driver/Detail/LicensesList";
+import TrainingList from "@contents/Driver/Detail/TrainingList";
 import HealthRecords from "@contents/Driver/Detail/HealthRecords";
 import InfoCard from "@components/InfoCard";
 import { Select, TextInput, SmallPlusIcon, Pane } from "evergreen-ui";
@@ -14,6 +14,8 @@ import NewUploader from "@components/NewUploader";
 import CustomTextInputField from "@components/CustomTextInputField";
 import CustomDatePicker from "@components/CustomDatePicker";
 import TagGenerator from "@components/TagGenerator";
+import { DUMMY_TAG_DATA, DUMMY_COMMENT_DATA } from "../detail.data";
+import FileCard from "@components/FileCard";
 
 interface Props {
   isEdit: boolean;
@@ -59,7 +61,15 @@ function DriverDetail(props: Props) {
 
   const driverInfo = driverData.info;
 
-  console.log("driverInfo", driverInfo);
+  const tagList = (
+    <ul className="tag-wrapper">
+      {DUMMY_TAG_DATA.map((tag) => (
+        <li key={tag.value} className="tag">
+          {tag.label}
+        </li>
+      ))}
+    </ul>
+  );
 
   const BasicInFo = [
     {
@@ -254,41 +264,8 @@ function DriverDetail(props: Props) {
       req: false,
       label: "",
       bold: false,
-      value: "接受跨夜行程",
-      editEle: <TagGenerator />
-    }
-  ];
-
-  const LicenseInFo = [
-    {
-      listClassName: "fb-100",
-      readonly: false,
-      req: true,
-      label: "駕照種類",
-      bold: true,
-      value: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
-    },
-    {
-      listClassName: "fb-100",
-      readonly: false,
-      req: true,
-      label: "有效期限",
-      bold: true,
-      value: <CustomDatePicker placeholder="請輸入有效期限" />
-    },
-    {
-      listClassName: "fb-100 m-0",
-      readonly: false,
-      req: true,
-      label: "附件/相關檔案",
-      bold: true,
-      value: <NewUploader isEditable={true} />
+      value: tagList,
+      editEle: <TagGenerator data={DUMMY_TAG_DATA} />
     }
   ];
 
@@ -299,19 +276,23 @@ function DriverDetail(props: Props) {
       req: false,
       label: "備註",
       bold: true,
-      value: <CustomTextArea placeholder={"請輸入備註"} />
+      value: <p>{DUMMY_COMMENT_DATA}</p>,
+      editEle: (
+        <CustomTextArea placeholder={"請輸入備註"} data={DUMMY_COMMENT_DATA} />
+      )
     }
   ];
 
-  const TrainingInFo = [
+  const LicenseInFo = [
     {
       listClassName: "fb-50",
       readonly: false,
-      req: false,
-      label: "項目名稱",
+      req: true,
+      label: "駕照種類",
       bold: true,
-      value: (
-        <Select className={"select-wrapper"} disabled>
+      value: "大客車職業駕駛執照",
+      editEle: (
+        <Select className={"select-wrapper"}>
           <option value="foo" selected>
             請選擇
           </option>
@@ -322,48 +303,40 @@ function DriverDetail(props: Props) {
       listClassName: "fb-50",
       readonly: false,
       req: true,
-      label: "培訓人",
+      label: "有效期限",
       bold: true,
-      value: (
-        <CustomTextInputField
-          className="input"
-          // isInvalid={true}
-          placeholder="請輸入培訓人姓名"
-          // validationMessage="不可輸入符號"
-        />
-      )
+      value: "2023-12-31",
+      editEle: <CustomDatePicker placeholder="請輸入有效期限" />
     },
     {
-      listClassName: "fb-50",
+      listClassName: "fb-50 m-0",
       readonly: false,
       req: true,
-      label: "訓練期間",
+      label: "附件/相關檔案",
       bold: true,
-      value: <CustomDatePicker placeholder="請輸入訓練期間" isRange />
-    },
+      value: <FileCard />,
+      editEle: <NewUploader isEditable={true} />
+    }
+  ];
+
+  const TrainingInFo = [
     {
-      listClassName: "fb-50",
+      listClassName: "fb-50 m-0",
       readonly: false,
       req: true,
       label: "訓練通過日期",
       bold: true,
-      value: <CustomDatePicker placeholder="請輸入訓練期間" />
+      value: "2023-12-31",
+      editEle: <CustomDatePicker placeholder="請輸入訓練期間" />
     },
     {
-      listClassName: "fb-100",
-      readonly: false,
-      req: false,
-      label: "說明",
-      bold: true,
-      value: <CustomTextArea placeholder="請輸入訓練通過日期" />
-    },
-    {
-      listClassName: "fb-100 m-0",
+      listClassName: "fb-50 m-0",
       readonly: false,
       req: false,
       label: "附件/相關檔案",
       bold: true,
-      value: <NewUploader isMultiple={true} isEditable={true} />
+      value: <FileCard />,
+      editEle: <NewUploader isMultiple={true} isEditable={true} />
     }
   ];
 
@@ -379,16 +352,35 @@ function DriverDetail(props: Props) {
 
   return (
     <DivSTY>
-      <Pane className={"main-column"}>
-        <InfoCard isEdit={false} infoData={BasicInFo} infoTitle="基本資料" />
-      </Pane>
-      <Pane className={"main-column"}>
-        <InfoCard isEdit={false} infoData={EmployeeInFo} infoTitle="職員資料" />
-        <InfoCard isEdit={false} infoData={TagInFo} infoTitle="標籤" />
-        <InfoCard isEdit={false} infoData={CommentInFo} infoTitle="備註" />
-        <InfoCard isEdit={false} infoData={LicenseInFo} infoTitle="駕照" />
-        <InfoCard isEdit={false} infoData={TrainingInFo} infoTitle="教育訓練" />
-      </Pane>
+      {visibleForm === "1" && (
+        <>
+          <Pane className={"main-column"}>
+            <InfoCard
+              isEdit={false}
+              infoData={BasicInFo}
+              infoTitle="基本資料"
+            />
+          </Pane>
+          <Pane className={"main-column"}>
+            <InfoCard
+              isEdit={false}
+              infoData={EmployeeInFo}
+              infoTitle="職員資料"
+            />
+            <InfoCard isEdit={false} infoData={TagInFo} infoTitle="標籤" />
+            <InfoCard isEdit={false} infoData={CommentInFo} infoTitle="備註" />
+            <InfoCard isEdit={false} infoData={LicenseInFo} infoTitle="駕照" />
+            <InfoCard
+              isEdit={false}
+              infoData={TrainingInFo}
+              infoTitle="華語領隊人員執業證"
+            />
+          </Pane>
+        </>
+      )}
+      {visibleForm === "2" && (
+        <TrainingList driverNo={driverNo} userName={"123"} isEdit={isEdit} />
+      )}
     </DivSTY>
   );
 

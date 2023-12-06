@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const InfoCardSTY = styled.div`
   width: 100%;
   height: fit-content;
-  min-height: 177px;
   padding: 0;
   background: ${({ theme }) => theme.color.N0};
   border: 1px solid ${({ theme }) => theme.color.N40};
@@ -76,7 +75,7 @@ export const InfoCardSTY = styled.div`
             }
           }
           .value {
-            color: ${({ theme }) => theme.color.N300};
+            color: ${({ theme }) => theme.color.N800};
 
             .select-wrapper {
               width: 90%;

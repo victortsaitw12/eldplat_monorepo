@@ -64,7 +64,7 @@ function InfoCard({
                   className={`item ${item.listClassName}`}
                   key={InfoCardId}
                 >
-                  <Pane className={`label ${item.bold ? "bold" : ""}`}>
+                  <Pane className={`label ${item.bold && isEdit ? "bold" : ""}`}>
                     {item.req && isEdit && <span className="req">*</span>}
                     <span>{item.label}</span>
                   </Pane>

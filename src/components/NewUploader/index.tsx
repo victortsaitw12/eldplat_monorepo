@@ -1,21 +1,16 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { NewUploaderSTY } from "./style";
 import {
-  Pane,
   InlineAlert,
   ExportIcon,
   toaster,
   PaperclipIcon,
   SmallTickIcon,
-  TrashIcon
+  TrashIcon,
+  Pane
 } from "evergreen-ui";
 import SecondaryButton from "@components/Button/Secondary/IconLeft";
-
-// const DUMMY_FILES: File[] = [
-//   new File([], "fakeImage1.jpg", { type: "image/jpeg" }),
-//   new File([], "fakeImage2.png", { type: "image/png" }),
-//   new File([], "fakeDocument1.pdf", { type: "application/pdf" })
-// ];
+import FileCard from "@components/FileCard";
 
 interface I_NewUploader {
   existedFiles?: File[];
@@ -77,24 +72,16 @@ const NewUploader = (props: I_NewUploader) => {
 
   return (
     <NewUploaderSTY>
-      {isEditable && (
-        <>
-          <InlineAlert
-            intent="none"
-            marginBottom={8}
-            className={"inline-alert"}
-          >
-            檔案格式僅接受.png、.jpg、.jpeg、pdf 格式，且每個檔案大小不得大於5MB
-          </InlineAlert>
-          <SecondaryButton
-            text="上傳檔案"
-            className={"upload-button"}
-            onClick={handleClickUpload}
-          >
-            <ExportIcon />
-          </SecondaryButton>
-        </>
-      )}
+      <InlineAlert intent="none" marginBottom={8} className={"inline-alert"}>
+        檔案格式僅接受.png、.jpg、.jpeg、pdf 格式，且每個檔案大小不得大於5MB
+      </InlineAlert>
+      <SecondaryButton
+        text="上傳檔案"
+        className={"upload-button"}
+        onClick={handleClickUpload}
+      >
+        <ExportIcon />
+      </SecondaryButton>
       <input
         ref={hiddenFileInput}
         type="file"
@@ -103,26 +90,7 @@ const NewUploader = (props: I_NewUploader) => {
         onChange={handleFileChange}
       />
       {(existedFiles || files) && (
-        <div className="uploaded-files">
-          <span className="title">檔案</span>
-          {existedFiles &&
-            existedFiles.map((file: any) => {
-              return (
-                <Pane className="content-wrapper existed" key={file.id}>
-                  <span className="icon">
-                    <PaperclipIcon />
-                  </span>
-                  <span className="file-name">{file.name}</span>
-                  <button
-                    className="delete"
-                    onClick={() => handleRemove(file, existedFiles)}
-                  >
-                    <TrashIcon size={16} />
-                  </button>
-                </Pane>
-              );
-            })}
-
+        <FileCard existedFiles={existedFiles}>
           {files &&
             Array.from(files).map((file) => {
               return (
@@ -134,7 +102,6 @@ const NewUploader = (props: I_NewUploader) => {
                   <span className="check">
                     <SmallTickIcon color="success" />
                   </span>
-
                   <button
                     className="delete"
                     onClick={() => handleRemove(file, files)}
@@ -144,7 +111,7 @@ const NewUploader = (props: I_NewUploader) => {
                 </Pane>
               );
             })}
-        </div>
+        </FileCard>
       )}
     </NewUploaderSTY>
   );

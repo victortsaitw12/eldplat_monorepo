@@ -15,15 +15,23 @@ import {
   defaultPageInfo
 } from "@services/driver/getLicenseById";
 
+import Table from "@components/Table/Table";
+import FilterWrapper from "@layout/FilterWrapper";
+import LoadingSpinner from "@components/LoadingSpinner";
+import PaginationField from "@components/PaginationField";
+import { useDriverStore } from "@contexts/filter/driverStore";
+import Checkbox from "@components/CheckBox";
+import IconBtn from "@components/Button/IconBtn";
+
 const table_title = [
-  "證照種類",
-  "證照名稱",
-  "發照單位",
-  "發照日期",
-  "有效日期",
-  "下次審驗日期",
-  "證照檔案"
+  <Checkbox key={"driver"} />,
+  "項目名稱",
+  "訓練期間",
+  "訓練通過日期",
+  "培訓人",
+  "說明"
 ];
+
 interface Props {
   isEdit: boolean;
   userName: string;
@@ -47,6 +55,7 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
     licn_examine_date: true,
     licn_link: true
   };
+
   const driverParser = (
     data: any,
     key: string
@@ -100,6 +109,7 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
     }
     return { label: data[key], value: data[key] } || <div>--</div>;
   };
+
   const orderedLicensesData = mappingQueryData(
     licensesData || [],
     driverPattern,
@@ -124,12 +134,14 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
   const handleConfirm = () => {
     if (btnRef.current) btnRef.current.click();
   };
+
   const handlePageChange = React.useCallback(
     (pageQuery: I_PageInfo) => {
       fetchLicenseData(pageQuery);
     },
     [driverNo]
   );
+
   const asyncSubmitCreateForm = async (data: any) => {
     const type = 0;
     //type: 0 = 新增，2 = 更新，3 = 刪除
@@ -145,6 +157,7 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
       toaster.warning(e.message);
     }
   };
+
   const asyncSubmitEditForm = async (data: any) => {
     const type = 2;
     //type: 0 = 新增，2 = 更新，3 = 刪除
@@ -181,21 +194,74 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
       });
     }
   };
+
   const fetchLicenseData = async (pageQuery = defaultPageInfo) => {
     const { licenses, pageInfo } = await getLicenseById(driverNo, pageQuery);
-    const IDLicences = licenses.map((item: any) => {
+    console.log("licenses", licenses);
+    console.log("pageInfo", pageInfo);
+    
+
+    const IDLicenses = licenses.map((item: any) => {
       return { ...item, id: { label: item.no, value: item.no } };
     });
-    setLicensesData(IDLicences);
+
+    if (!subFilter) {
+      localStorage.setItem("driverInitFilter", JSON.stringify(licenses));
+      initializeSubFilter();
+    }
+    setLicensesData(IDLicenses);
     setPageInfo(pageInfo);
   };
+
   React.useEffect(() => {
     fetchLicenseData();
   }, [driverNo]);
 
+  const handleView = () => {
+    console.log("handle view");
+  };
+
+  const handleTableEdit = () => {
+    console.log("edit");
+  };
+
+  const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
+
+  const changeKey = (data: Array<I_License>) => {
+    return data.map((item: I_License) => {
+      return {
+        id: item["driver_no"],
+        checkbox: <Checkbox value={item["driver_no"]} />,
+        licn_name: item["licn_name"],
+        licn_duration: item["licn_duration"],
+        licn_passdate: item["licn_passdate"],
+        trainer_name: item["trainer_name"],
+        description: item["description"],
+        action: <IconBtn tip="編輯" type="edit" onClick={handleTableEdit} />
+      };
+    });
+  };
+
+  const modifiedData = licensesData ? changeKey(licensesData) : undefined;
+
   return (
     <DivSTY>
-      {orderedLicensesData && (
+      <FilterWrapper
+        updateFilter={updateSubFilter}
+        resetFilter={() => {
+          initializeSubFilter();
+        }}
+        filter={subFilter}
+      >
+        <Table
+          titles={table_title}
+          data={modifiedData}
+          onView={handleView}
+          headNode={<PaginationField pageInfo={pageInfo} />}
+        />
+      </FilterWrapper>
+
+      {/* {orderedLicensesData && (
         <TableWithEdit
           tableName=""
           cleanTableName={userName}
@@ -209,7 +275,7 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
           pageInfo={pageInfo}
           onPageChange={handlePageChange}
         />
-      )}
+      )} */}
 
       {isLightBoxOpen && (
         <Pane>

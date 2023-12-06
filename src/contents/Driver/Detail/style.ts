@@ -25,5 +25,30 @@ export const DivSTY = styled.div`
       line-height: 127px;
       height: 127px;
     }
+
+    .tag-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+
+      .tag {
+        height: 27px;
+        border-radius: 4px;
+        padding: 4px 8px;
+        background-color: ${({ theme }) => theme.color.B100};
+        color: ${({ theme }) => theme.color.N200};
+        text-align: center;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
+    p{
+      font-size: 16px;
+      color: ${({ theme }) => theme.color.N800};
+    }
   }
 `;
