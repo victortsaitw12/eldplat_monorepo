@@ -5,40 +5,50 @@ import { DivSTY } from "./style";
 import LoadingSpinner from "@components/LoadingSpinner";
 import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import SecondaryBtn from "@components/Button/Secondary/Label";
+import { on } from "events";
 
 interface I_Props {
   isEdit: boolean;
-  handleNavigation: (path: string) => void;
+  onCancel?: () => void;
+  onEdit?: () => void;
+  onSave?: () => void;
   primaryDisable: boolean;
 }
 
-function ControlBar({ isEdit, handleNavigation, primaryDisable }: I_Props) {
+function ControlBar({
+  isEdit,
+  onCancel,
+  onEdit,
+  onSave,
+  primaryDisable
+}: I_Props) {
   const router = useRouter();
 
-  const handleRedirectBack = () => {
-    handleNavigation("/role");
-  };
-
   const handleCancel = () => {
-    handleNavigation("/role");
-
-    console.log("cancel");
+    if (isEdit) return;
+    onCancel && onCancel();
   };
   const handleSave = () => {
-    console.log("cancel");
+    onSave && onSave();
+  };
+
+  const handleEdit = () => {
+    onEdit && onEdit();
   };
 
   const buttonStates = {
     isEdit: {
       secondaryBtnText: "取消",
+      secondaryBtnOnClick: handleCancel,
       primaryBtnText: "儲存",
       primaryBtnOnClick: handleSave,
       primaryBtnIcon: ""
     },
     isView: {
       secondaryBtnText: "回列表",
+      secondaryBtnOnClick: handleCancel,
       primaryBtnText: "編輯",
-      primaryBtnOnClick: handleSave,
+      primaryBtnOnClick: handleEdit,
       primaryBtnIcon: <EditIcon size={14} />
     }
   };

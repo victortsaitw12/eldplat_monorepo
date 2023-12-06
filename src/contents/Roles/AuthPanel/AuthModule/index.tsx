@@ -44,6 +44,11 @@ const AuthModule = ({
 
   const handleEnabled = () => {
     setIsEnabled((prev) => !prev);
+    if (isEnabled) {
+      for (let i = 0; i < fields.length; i++) {
+        setValue(`func_auth.${index}.func_element.${i}.element_default`, "3");
+      }
+    }
   };
 
   const handleToggle = () => {
@@ -62,16 +67,6 @@ const AuthModule = ({
     control,
     name: `func_auth.${index}.func_element`
   });
-
-  const test = () => {
-    console.log("🍅 getValues:", getValues());
-  };
-
-  // remember initialAuthFuncAuthorizations
-  const initialAuthFuncAuthorizations = React.useMemo(() => {
-    return isAuthFuncDisabled(data.func_element);
-  }, [data]);
-  console.log(`🍅 ${index} data:`, data);
 
   React.useEffect(() => {
     const result = isAuthFuncDisabled(currentFunElement);
@@ -101,10 +96,10 @@ const AuthModule = ({
         className={`authFunc__contents ${isOpen ? "" : "hide"} ${
           isEnabled ? "" : "disabled"
         }`}
-        onClick={test}
       >
         {isEdit &&
-          fields.map((field, i) => {
+          fields.map((field: any, i) => {
+            console.log("🍅 field", field);
             return (
               <div
                 className={`authFunc__element authFunc__item ${

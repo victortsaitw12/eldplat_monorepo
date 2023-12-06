@@ -15,7 +15,7 @@ import {
 } from "@services/role/getOneRole";
 import { I_CreateRoleReq, DUMMY_CREATE_ROLE } from "@services/role/createRole";
 import { DUMMY_UPDATE_ROLE } from "@services/role/updateRole";
-import ControlBar from "@contents/Roles/ControlBar";
+import ControlBar from "@components/ControlBar";
 import RoleDetail from "@contents/Roles/RoleDetail";
 
 const Page: NextPageWithLayout<never> = () => {
@@ -83,14 +83,6 @@ const Page: NextPageWithLayout<never> = () => {
     if (!session) return;
     fetchData();
   }, [session]);
-
-  // React.useEffect(() => {
-  //   if (data) {
-  //     Object.entries(data).forEach(([key, value]) => {
-  //       setValue(key, value);
-  //     });
-  //   }
-  // }, [data, setValue]);
 
   return (
     <>
