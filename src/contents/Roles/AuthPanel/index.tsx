@@ -9,7 +9,13 @@ import { I_FuncAuthElemReq } from "@services/role/createRole";
 import InfoBox from "@components/InfoBox";
 import AuthModule from "./AuthModule";
 
-const AuthPanel = ({ data, register, control, setValue }: I_Props) => {
+const AuthPanel = ({
+  data,
+  register,
+  control,
+  setValue,
+  getValues
+}: I_Props) => {
   const router = useRouter();
   const { editPage } = router.query;
   const isEdit = editPage === "edit";
@@ -28,6 +34,7 @@ const AuthPanel = ({ data, register, control, setValue }: I_Props) => {
           isEdit={true}
           index={i}
           register={register}
+          getValues={getValues}
           control={control}
           setValue={setValue}
         />
@@ -37,6 +44,7 @@ const AuthPanel = ({ data, register, control, setValue }: I_Props) => {
           data={item}
           isEdit={false}
           register={register}
+          getValues={getValues}
           control={control}
           setValue={setValue}
         />

@@ -39,12 +39,11 @@ const RoleDetail = ({ data, asyncSubmitForm }: I_Props) => {
     formState: { errors }
   } = useForm({ defaultValues: defaultValues });
 
-  console.log("🍅 getValues:", getValues());
-  console.log("🍅 get...:", getValues("func_auth.0"));
   return (
     <FormSTY onSubmit={handleSubmit((data) => asyncSubmitForm({ ...data }))}>
       <DetailPanel data={data} register={register} errors={errors} />
       <AuthPanel
+        getValues={getValues}
         data={data.func_auth}
         register={register}
         control={control}
