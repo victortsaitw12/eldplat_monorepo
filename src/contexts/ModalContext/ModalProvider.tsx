@@ -15,10 +15,7 @@ export function ModalProvider({ children }: { children: any }) {
   };
 
   const handleRedirect = (url: string) => {
-    // change route to url
-    console.log("🍅 url", url);
     router.push(url);
-    //close modal
     setModalContent(null);
   };
 

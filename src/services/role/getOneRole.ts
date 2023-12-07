@@ -99,17 +99,17 @@ export const DUMMY_ONE_ROLE_CREATE = {
             {
               element_no: "btnAdd",
               element_name: "新增組織",
-              element_default: "3"
+              element_default: "1"
             },
             {
               element_no: "btnEdit",
               element_name: "編輯組織",
-              element_default: "3"
+              element_default: "1"
             },
             {
               element_no: "btnView",
               element_name: "檢視組織",
-              element_default: "2"
+              element_default: "1"
             }
           ]
         },
@@ -122,7 +122,7 @@ export const DUMMY_ONE_ROLE_CREATE = {
             {
               element_no: "btnAdd",
               element_name: "新增角色",
-              element_default: "3"
+              element_default: "1"
             },
             {
               element_no: "btnEdit",

@@ -33,38 +33,38 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-    if (!session) return;
-    const uk = session?.user.account_no;
-    const createData = {
-      creorgno: session.user.org_no
-    };
-    const data = isCreate
-      ? createData
-      : { ...createData, role_no: router.query.id };
-    try {
-      // const result = await getOneRole(uk, data as I_RoleReq);
-      const createDummy = DUMMY_ONE_ROLE_CREATE.ResultList[0];
-      const editDummy = DUMMY_ONE_ROLE.ResultList[0];
-
-      setData(isCreate ? createDummy : editDummy);
-    } catch (e: any) {
-      console.log(e);
-    }
+    const createDummy = DUMMY_ONE_ROLE_CREATE.ResultList[0];
+    const editedDummy = localStorage.getItem("roleEditData");
+    const editDummy = editedDummy ? editedDummy : DUMMY_ONE_ROLE.ResultList[0];
+    setData(isCreate ? createDummy : editDummy);
+    // if (!session) return;
+    // const uk = session?.user.account_no;
+    // const createData = {
+    //   creorgno: session.user.org_no
+    // };
+    // const data = isCreate
+    //   ? createData
+    //   : { ...createData, role_no: router.query.id };
+    // try {
+    //   const result = await getOneRole(uk, data as I_RoleReq);
+    //   setData(result.ResultList[0]);
+    // } catch (e: any) {
+    //   console.log(e);
+    // }
     setIsLoading(false);
   };
 
   const asyncSubmitForm = async (data: any) => {
-    console.log("🔜 data:", data);
-    localStorage.setItem(
-      "roleCreateData",
-      JSON.stringify({ ...data, id: "create", module_name: "車管系統" })
-    );
+    // console.log("🔜 data:", data);
     if (isCreate) {
+      localStorage.setItem(
+        "roleCreateData",
+        JSON.stringify({ ...data, id: "create", module_name: "車管系統" })
+      );
       router.push("/role");
-      return;
     } else {
+      localStorage.setItem("roleEditData", JSON.stringify({ ...data }));
       router.push(`/role/detail/${id}?editPage=view`);
-      return;
     }
     // if (!session) return;
     // const uk = session.user.account_no;
@@ -127,10 +127,15 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     fetchData();
   }, [session]);
 
+  React.useEffect(() => {
+    if (isEdit) return;
+    localStorage.removeItem("roleEditData");
+  }, [router]);
+
   return (
     <>
       <ControlBar
-        isEdit={!isCreate && isEdit}
+        isEdit={isEdit}
         onCancel={handleCancel}
         onConfirm={handleConfirm}
         primaryDisable={false}

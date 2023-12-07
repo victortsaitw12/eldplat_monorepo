@@ -28,7 +28,11 @@ const RoleDetail = ({ data, isEdit, asyncSubmitForm, submitRef }: I_Props) => {
 
   const defaultValues = isCreate
     ? createValues
-    : { ...createValues, role_no: data?.role_no || "" };
+    : {
+        ...createValues,
+        role_no: data?.role_no || "",
+        role_enb: data?.role_enb || ""
+      };
 
   const {
     register,
@@ -41,7 +45,13 @@ const RoleDetail = ({ data, isEdit, asyncSubmitForm, submitRef }: I_Props) => {
 
   return (
     <FormSTY onSubmit={handleSubmit((data) => asyncSubmitForm({ ...data }))}>
-      <DetailPanel data={data} register={register} errors={errors} />
+      <DetailPanel
+        data={data}
+        register={register}
+        errors={errors}
+        getValues={getValues}
+        control={control}
+      />
       <AuthPanel
         getValues={getValues}
         data={data.func_auth}
