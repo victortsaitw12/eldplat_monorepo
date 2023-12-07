@@ -5,7 +5,7 @@ import {
   FieldErrors,
   UseFormGetValues,
   UseFormSetValue,
-  Control
+  Controller
 } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { Select, TextInput, Textarea, Switch, Text, Pane } from "evergreen-ui";
@@ -18,7 +18,13 @@ import { textValidation, emailValidation } from "@utils/inputValidation";
 import CustomTextArea from "@components/CustomTextArea";
 import CustomTextInput from "@components/CustomTextInput";
 
-const DetailPanel = ({ data, register, errors }: I_Props) => {
+const DetailPanel = ({
+  data,
+  register,
+  errors,
+  getValues,
+  control
+}: I_Props) => {
   const router = useRouter();
   const { editPage } = router.query;
   const isCreate = router.query.id === "create";
@@ -91,13 +97,17 @@ const DetailPanel = ({ data, register, errors }: I_Props) => {
           req: true,
           label: "啟用",
           editEle: (
-            <>
-              <Switch
-                checked={isEnabled}
-                onChange={(e) => setIsEnabled(e.target.checked)}
-              />
-              <span>啟用</span>
-            </>
+            <Controller
+              control={control}
+              name="role_enb"
+              render={({ field: { onChange, value, ref } }) => (
+                <>
+                  {" "}
+                  <Switch checked={value} onChange={onChange} />
+                  <span>啟用</span>
+                </>
+              )}
+            ></Controller>
           ),
           value:
             (
@@ -125,4 +135,6 @@ interface I_Props {
   data: I_RoleListItem;
   register: UseFormRegister<any>;
   errors: FieldErrors;
+  getValues: UseFormGetValues<any>;
+  control: any;
 }

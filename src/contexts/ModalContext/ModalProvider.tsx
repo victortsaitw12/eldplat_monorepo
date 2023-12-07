@@ -14,7 +14,7 @@ export function ModalProvider({ children }: { children: any }) {
     setModalContent(null);
   };
 
-  const handleRouteChange = (url: string) => {
+  const handleRedirect = (url: string) => {
     router.push(url);
     setModalContent(null);
   };
@@ -23,14 +23,14 @@ export function ModalProvider({ children }: { children: any }) {
     setModalContent(
       <LeavePageModal
         onCancel={handleCancel}
-        onConfirm={handleRouteChange.bind(null, url)}
+        onConfirm={handleRedirect.bind(null, url)}
       />
     );
   };
 
   const modalStore = {
     showLeavePageModal,
-    handleRouteChange,
+    handleRedirect,
     handleCancel
   };
 

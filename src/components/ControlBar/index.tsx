@@ -22,16 +22,12 @@ function ControlBar({ isEdit, onCancel, onConfirm, primaryDisable }: I_Props) {
   const buttonStates = {
     isEdit: {
       secondaryBtnText: "取消",
-      secondaryBtnOnClick: handleCancel,
       primaryBtnText: "儲存",
-      primaryBtnOnClick: handleConfirm,
       primaryBtnIcon: ""
     },
     isView: {
       secondaryBtnText: "回列表",
-      secondaryBtnOnClick: handleCancel,
       primaryBtnText: "編輯",
-      primaryBtnOnClick: handleConfirm,
       primaryBtnIcon: <EditIcon size={14} />
     }
   };
@@ -47,7 +43,7 @@ function ControlBar({ isEdit, onCancel, onConfirm, primaryDisable }: I_Props) {
         />
         <PrimaryBtn
           text={currentState.primaryBtnText}
-          onClick={currentState.primaryBtnOnClick}
+          onClick={handleConfirm}
           disabled={primaryDisable}
         >
           {currentState.primaryBtnIcon && currentState.primaryBtnIcon}

@@ -33,33 +33,40 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-    if (!session) return;
-    const uk = session?.user.account_no;
-    const createData = {
-      creorgno: session.user.org_no
-    };
-    const data = isCreate
-      ? createData
-      : { ...createData, role_no: router.query.id };
-    try {
-      // const result = await getOneRole(uk, data as I_RoleReq);
-      const createDummy = DUMMY_ONE_ROLE_CREATE.ResultList[0];
-      const editDummy = DUMMY_ONE_ROLE.ResultList[0];
-
-      setData(isCreate ? createDummy : editDummy);
-    } catch (e: any) {
-      console.log(e);
-    }
+    const createDummy = DUMMY_ONE_ROLE_CREATE.ResultList[0];
+    const editedDummy = localStorage.getItem("roleEditData");
+    const editDummy = editedDummy ? editedDummy : DUMMY_ONE_ROLE.ResultList[0];
+    setData(isCreate ? createDummy : editDummy);
+    // if (!session) return;
+    // const uk = session?.user.account_no;
+    // const createData = {
+    //   creorgno: session.user.org_no
+    // };
+    // const data = isCreate
+    //   ? createData
+    //   : { ...createData, role_no: router.query.id };
+    // try {
+    //   const result = await getOneRole(uk, data as I_RoleReq);
+    //   setData(result.ResultList[0]);
+    // } catch (e: any) {
+    //   console.log(e);
+    // }
     setIsLoading(false);
   };
 
   const asyncSubmitForm = async (data: any) => {
-    console.log("🔜 data:", data);
-    localStorage.setItem(
-      "roleCreateData",
-      JSON.stringify({ ...data, id: "create", module_name: "車管系統" })
-    );
-    if (!session) return;
+    // console.log("🔜 data:", data);
+    if (isCreate) {
+      localStorage.setItem(
+        "roleCreateData",
+        JSON.stringify({ ...data, id: "create", module_name: "車管系統" })
+      );
+      router.push("/role");
+    } else {
+      localStorage.setItem("roleEditData", JSON.stringify({ ...data }));
+      router.push(`/role/detail/${id}?editPage=view`);
+    }
+    // if (!session) return;
     // const uk = session.user.account_no;
     // try {
     //   const res = isCreate
@@ -83,29 +90,34 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleCancel = async () => {
+    // onCreate
+    if (isCreate) {
+      handleChangeRoute("/role");
+      return;
+    }
     // onView
-    if (!isEdit) handleChangeRoute("/role");
-    // onEdit
-    setIsEdit(false);
-    handleChangeRoute(`/role/detail/${id}?editPage=view`);
+    if (!isEdit) {
+      handleChangeRoute("/role");
+    } else {
+      // onEdit
+      setIsEdit(false);
+      handleChangeRoute(`/role/detail/${id}?editPage=view`);
+    }
   };
 
   const handleConfirm = () => {
+    // onCreate
     if (isCreate) {
       submitRef.current && submitRef.current.click();
-      router.push("/role");
+      return;
     }
     if (isEdit) {
       submitRef.current && submitRef.current.click();
       setIsEdit(false);
-      router.push(`/role/detail/${id}?editPage=view`, undefined, {
-        shallow: true
-      });
+      router.push(`/role/detail/${id}?editPage=view`);
     } else {
       setIsEdit(true);
-      router.push(`/role/detail/${id}?editPage=edit`, undefined, {
-        shallow: true
-      });
+      router.push(`/role/detail/${id}?editPage=edit`);
     }
   };
 
@@ -114,6 +126,11 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     if (!session) return;
     fetchData();
   }, [session]);
+
+  React.useEffect(() => {
+    if (isEdit) return;
+    localStorage.removeItem("roleEditData");
+  }, [router]);
 
   return (
     <>
