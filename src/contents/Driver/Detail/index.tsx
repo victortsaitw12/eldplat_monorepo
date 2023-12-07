@@ -16,6 +16,7 @@ import CustomDatePicker from "@components/CustomDatePicker";
 import TagGenerator from "@components/TagGenerator";
 import { DUMMY_TAG_DATA, DUMMY_COMMENT_DATA } from "../detail.data";
 import FileCard from "@components/FileCard";
+import EditHistory from "@contents/Driver/Detail/EditHistory";
 
 interface Props {
   isEdit: boolean;
@@ -384,6 +385,10 @@ function DriverDetail(props: Props) {
 
       {visibleForm === "3" && (
         <HealthRecords userNo={driverData.info.user_no} userName={"123"} />
+      )}
+
+      {visibleForm === "4" && (
+        <EditHistory userNo={driverData.info.user_no} userName={"123"} />
       )}
     </DivSTY>
   );

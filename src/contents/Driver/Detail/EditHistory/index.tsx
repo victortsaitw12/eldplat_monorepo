@@ -1,7 +1,5 @@
-import { I_Health_TYPE } from "@typings/employee_type";
 import Table from "@components/Table/Table";
 import PaginationField from "@components/PaginationField/";
-import { Heading, Pane, DocumentIcon, CogIcon, Tooltip } from "evergreen-ui";
 import React, { useState } from "react";
 import { BodySTY } from "./style";
 
@@ -13,6 +11,40 @@ import { useDriverStore } from "@contexts/filter/driverStore";
 
 const table_title = ["修改說明", "修改人員", "修改時間"];
 
+interface I_EditHistory {
+  edit_no: string;
+  description: string;
+  editor: string;
+  edit_time: string;
+}
+
+const MOCK_DATA: I_EditHistory[] = [
+  {
+    edit_no: "1",
+    description: "根據現況調整，更新該駕駛之標籤內容。",
+    editor: "簡翰婷",
+    edit_time: "2022-11-13 14:00"
+  },
+  {
+    edit_no: "2",
+    description: "駕照更新期限已至，補上最新有效期限之駕照。",
+    editor: "簡翰婷",
+    edit_time: "2022-11-13 14:00"
+  },
+  {
+    edit_no: "3",
+    description: "因應規定，參與新人訓練之紀錄。",
+    editor: "林筠紹",
+    edit_time: "2022-11-11 13:40"
+  },
+  {
+    edit_no: "4",
+    description: "新增該駕駛帳號",
+    editor: "王薇翔",
+    edit_time: "2022-11-11 10:30"
+  }
+];
+
 function HealthRecords({
   userNo,
   userName
@@ -20,27 +52,20 @@ function HealthRecords({
   userNo: string;
   userName: string;
 }) {
-  const [editData, setEditData] = useState<I_Health_TYPE | any>([]);
+  const [editData, setEditData] = useState<I_EditHistory | any>([]);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
-
-  interface I_Healths {
-    health_no: string;
-    heal_date: string;
-    heal_name: string;
-    description: string;
-    next_date: string;
-  }
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const { healths, pageInfo } = await getHealthById(userNo);
+      // const { editHistory, pageInfo } = await getHealthById(userNo);
 
       if (!subFilter) {
-        localStorage.setItem("driverInitFilter", JSON.stringify(healths));
+        // localStorage.setItem("driverInitFilter", JSON.stringify(editHistory));
         initializeSubFilter();
       }
 
-      setHealthData(healths);
+      // setEditData(editHistory);
+      setEditData(MOCK_DATA);
       setPageInfo(pageInfo);
     };
 
@@ -53,19 +78,18 @@ function HealthRecords({
     console.log("handle view");
   };
 
-  const changeKey = (data: Array<I_Healths>) => {
-    return data.map((item: I_Healths) => {
+  const changeKey = (data: Array<I_EditHistory>) => {
+    return data.map((item: I_EditHistory) => {
       return {
-        id: item["health_no"],
-        heal_date: item["heal_date"],
-        heal_name: item["heal_name"],
+        id: item["edit_no"],
         description: item["description"],
-        next_date: item["next_date"]
+        editor: item["editor"],
+        edit_time: item["edit_time"]
       };
     });
   };
 
-  const modifiedData = healthData ? changeKey(healthData) : undefined;
+  const modifiedData = editData ? changeKey(editData) : undefined;
 
   return (
     <BodySTY>
