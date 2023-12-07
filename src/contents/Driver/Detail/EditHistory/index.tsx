@@ -11,26 +11,17 @@ import { mappingQueryData } from "@utils/mappingQueryData";
 import FilterWrapper from "@layout/FilterWrapper";
 import { useDriverStore } from "@contexts/filter/driverStore";
 
-const table_title = ["項目名稱", "健檢日期", "說明", "下次健檢日"];
+const table_title = ["修改說明", "修改人員", "修改時間"];
 
-function EditHistory({
+function HealthRecords({
   userNo,
   userName
 }: {
   userNo: string;
   userName: string;
 }) {
-  const [healthData, setHealthData] = useState<I_Healths | any>([]);
+  const [editData, setEditData] = useState<I_Health_TYPE | any>([]);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
-
-  // interface DataDetail {
-  //   id: string;
-  //   heal_date: string;
-  //   heal_typ: string;
-  //   heal_agency: string;
-  //   heal_status: string;
-  //   heal_link: any;
-  // }
 
   interface I_Healths {
     health_no: string;
@@ -54,7 +45,6 @@ function EditHistory({
     };
 
     fetchData();
-
   }, [userNo]);
 
   const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
@@ -93,22 +83,8 @@ function EditHistory({
           headNode={<PaginationField pageInfo={pageInfo} />}
         />
       </FilterWrapper>
-
-      {/* <Pane className="health-title container-header">
-        <div className="container-header-left">{userName}</div>
-      </Pane>
-      <Pane className="health-title-right">
-        <PaginationField />
-      </Pane>
-      {healthData.length !== 0 ? (
-        <Table titles={table_title} data={orderedTableData} />
-      ) : ( 
-        <div style={{ textAlign: "center" }}>
-          目前無資料，請至員工設定頁面編輯
-        </div>
-      )} */}
     </BodySTY>
   );
 }
 
-export default EditHistory;
+export default HealthRecords;

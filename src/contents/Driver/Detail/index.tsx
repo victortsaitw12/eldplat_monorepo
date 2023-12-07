@@ -381,6 +381,10 @@ function DriverDetail(props: Props) {
       {visibleForm === "2" && (
         <TrainingList driverNo={driverNo} userName={"123"} isEdit={isEdit} />
       )}
+
+      {visibleForm === "3" && (
+        <HealthRecords userNo={driverData.info.user_no} userName={"123"} />
+      )}
     </DivSTY>
   );
 
