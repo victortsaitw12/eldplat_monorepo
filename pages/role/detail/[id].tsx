@@ -59,7 +59,14 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       "roleCreateData",
       JSON.stringify({ ...data, id: "create", module_name: "車管系統" })
     );
-    if (!session) return;
+    if (isCreate) {
+      router.push("/role");
+      return;
+    } else {
+      router.push(`/role/detail/${id}?editPage=view`);
+      return;
+    }
+    // if (!session) return;
     // const uk = session.user.account_no;
     // try {
     //   const res = isCreate
@@ -83,29 +90,34 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleCancel = async () => {
+    // onCreate
+    if (isCreate) {
+      handleChangeRoute("/role");
+      return;
+    }
     // onView
-    if (!isEdit) handleChangeRoute("/role");
-    // onEdit
-    setIsEdit(false);
-    handleChangeRoute(`/role/detail/${id}?editPage=view`);
+    if (!isEdit) {
+      handleChangeRoute("/role");
+    } else {
+      // onEdit
+      setIsEdit(false);
+      handleChangeRoute(`/role/detail/${id}?editPage=view`);
+    }
   };
 
   const handleConfirm = () => {
+    // onCreate
     if (isCreate) {
       submitRef.current && submitRef.current.click();
-      router.push("/role");
+      return;
     }
     if (isEdit) {
       submitRef.current && submitRef.current.click();
       setIsEdit(false);
-      router.push(`/role/detail/${id}?editPage=view`, undefined, {
-        shallow: true
-      });
+      router.push(`/role/detail/${id}?editPage=view`);
     } else {
       setIsEdit(true);
-      router.push(`/role/detail/${id}?editPage=edit`, undefined, {
-        shallow: true
-      });
+      router.push(`/role/detail/${id}?editPage=edit`);
     }
   };
 
@@ -118,7 +130,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   return (
     <>
       <ControlBar
-        isEdit={isEdit}
+        isEdit={!isCreate && isEdit}
         onCancel={handleCancel}
         onConfirm={handleConfirm}
         primaryDisable={false}
