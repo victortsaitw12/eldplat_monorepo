@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import {
   UseFormRegister,
   FieldErrors,
@@ -14,8 +15,14 @@ import { I_RoleListItem } from "@services/role/getRoleList";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 import { textValidation, emailValidation } from "@utils/inputValidation";
+import CustomTextArea from "@components/CustomTextArea";
+import CustomTextInput from "@components/CustomTextInput";
 
-const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
+const DetailPanel = ({ data, register, errors }: I_Props) => {
+  const router = useRouter();
+  const { editPage } = router.query;
+  const isCreate = router.query.id === "create";
+  const isEdit = editPage === "edit";
   const [isEnabled, setIsEnabled] = React.useState(true);
 
   if (!data)
@@ -27,26 +34,26 @@ const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
   //------ functions ------//
   // ------- render ------- //
   const dataFitInfoBox = [
-    // {
-    //   readonly: false,
-    //   req: false,
-    //   label: "模組",
-    //   editEle: (
-    //     <Select disabled className={`${"disabled"}`}>
-    //       <option value="foo" selected>
-    //         {data.module_name || "--"}
-    //       </option>
-    //     </Select>
-    //   ),
-    //   value: data.module_name || "--"
-    // },
+    {
+      readonly: false,
+      req: false,
+      label: "模組",
+      editEle: (
+        <Select disabled className={`${"disabled"}`}>
+          <option value="foo" selected>
+            {data.module_name || "--"}
+          </option>
+        </Select>
+      ),
+      value: data.module_name || "--"
+    },
     {
       readonly: false,
       req: true,
       label: "角色名稱",
       editEle: (
         <Pane>
-          <TextInput
+          <CustomTextInput
             className="required"
             placeholder="請輸入角色名稱"
             {...register("role_name", {
@@ -70,9 +77,8 @@ const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
       req: false,
       label: "職責描述",
       editEle: (
-        <Textarea
+        <CustomTextArea
           placeholder="請輸入職責描述"
-          style={{ minHeight: "64px" }}
           {...register("role_desc", { required: false })}
         />
       ),
@@ -85,13 +91,13 @@ const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
           req: true,
           label: "啟用",
           editEle: (
-            <div>
+            <>
               <Switch
                 checked={isEnabled}
                 onChange={(e) => setIsEnabled(e.target.checked)}
               />
               <span>啟用</span>
-            </div>
+            </>
           ),
           value:
             (
@@ -99,6 +105,7 @@ const DetailPanel = ({ data, isEdit, isCreate, register, errors }: I_Props) => {
                 <Switch
                   checked={isEnabled}
                   onChange={(e) => setIsEnabled(e.target.checked)}
+                  disabled
                 />
                 <span>啟用</span>
               </>
@@ -116,8 +123,6 @@ export default DetailPanel;
 
 interface I_Props {
   data: I_RoleListItem;
-  isEdit: boolean;
-  isCreate: boolean;
   register: UseFormRegister<any>;
   errors: FieldErrors;
 }

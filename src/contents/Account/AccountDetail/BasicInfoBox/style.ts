@@ -2,6 +2,28 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   padding: 1rem;
+  height: 100%;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  &__photo {
+    width: 120px;
+    height: 150px;
+  }
+  &__data {
+  }
+  ul {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    column-gap: 40px;
+  }
+  ul :first-child {
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
+  }
+  ul :not(:first-child) {
+    grid-column: 2/ 4;
+  }
   .basic__lastName {
     flex: 1;
     max-width: 92px;
@@ -50,14 +72,18 @@ export const BodySTY = styled.div`
           width: 100%;
           max-height: 19px;
           flex: unset;
-          font-size: ${({ theme }) => theme.fontSize.Heading400};
-          font-weight: ${({ theme }) => theme.fontWeight.Heading400};
+          color: ${({ theme }) => theme.color.N300};
+          font-size: ${({ theme }) => theme.fontSize.Paragraph200};
+          font-weight: ${({ theme }) => theme.fontWeight.Paragraph200};
         }
         .infoBox__value {
           width: 100%;
           max-width: 240px;
           max-height: 38px;
           flex: unset;
+          color: ${({ theme }) => theme.color.N800};
+          font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+          font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
         }
       }
     }

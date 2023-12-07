@@ -4,6 +4,7 @@ import { DivSTY } from "./style";
 
 import Accordion, { I_AccordionItem } from "@components/Accordion";
 import LoadingSpinner from "@components/LoadingSpinner";
+import { I_OrgList } from "@services/org/getOrgList";
 
 //====== REACT COMPONENT ======//
 const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
@@ -18,36 +19,41 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
   const getDataFitAccordion = (data: any) => {
     return data.map((item: any) => {
       const labelStyle = (item["org_lvl"] % 5).toString();
+      const padingNumber = item["org_lvl"] * 16;
       const prepItem: I_AccordionItem = {
         label: (
-          <div className="accordion">
-            <div
-              className={`accordion__label labelSty labelSty__${labelStyle}`}
-            >
-              {item["org_name"]}
-            </div>
-            <div className="accordion__btns">
-              <Tooltip content="新增下級">
-                <IconButton
-                  icon={PlusIcon}
-                  onClick={onCreate.bind(null, item)}
-                />
-              </Tooltip>
-              {item["org_lvl"] !== 1 ? (
-                <Tooltip content="編輯">
+          <>
+            <div className={"accordion"}>
+              <div
+                className={`accordion__label labelSty labelSty__${labelStyle}`}
+              >
+                {item["org_name"]}
+              </div>
+              <div className="accordion__btns">
+                <Tooltip content="新增下級">
                   <IconButton
-                    icon={EditIcon}
-                    onClick={onEdit.bind(null, item)}
+                    icon={PlusIcon}
+                    onClick={onCreate.bind(null, item)}
+                    disabled={!item["org_enb"]}
                   />
                 </Tooltip>
-              ) : (
-                <IconButton disabled className="placeholder" />
-              )}
+                {item["org_lvl"] !== 1 ? (
+                  <Tooltip content="編輯">
+                    <IconButton
+                      icon={EditIcon}
+                      onClick={onEdit.bind(null, item)}
+                      disabled={!item["org_enb"]}
+                    />
+                  </Tooltip>
+                ) : (
+                  <IconButton disabled className="placeholder" />
+                )}
+              </div>
             </div>
             <div
-              className={`shadowElem ${item["org_enb"] ? "" : "disabled"}`}
+              className={` ${item["org_enb"] === false ? "disabled" : ""}`}
             ></div>
-          </div>
+          </>
         )
       };
 
@@ -75,7 +81,7 @@ export default OrgList;
 
 //====== OUTSIDE-REACT-DOM: TYPING ======//
 interface I_Props {
-  data?: I_AccordionItem[];
+  data?: I_OrgList[];
   onCreate: (id: string, e: any) => void;
   onEdit: (id: string, e: any) => void;
 }

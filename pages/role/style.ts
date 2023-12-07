@@ -5,4 +5,7 @@ export const BodySTY = styled.div`
   /* width: 600px; */
   height: calc(100% - 20px);
   margin: 10px;
+  .children-container {
+    overflow-y: scroll;
+  }
 `;

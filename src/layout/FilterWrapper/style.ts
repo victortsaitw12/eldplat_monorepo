@@ -11,11 +11,12 @@ export const BodySTY = styled.div`
     display: flex;
     align-items: center;
     padding: 8px 12px;
-    gap: 4px;
+    gap: 16px;
     width: 100%;
+
     .subFilter-item {
       cursor: pointer;
-      border: none;
+      /* border: 1px solid ${({ theme }) => theme.color.N400}; */
       background: none;
       display: flex;
       flex-direction: row;
@@ -23,6 +24,7 @@ export const BodySTY = styled.div`
       padding: 8px 16px;
       gap: 8px;
       height: 35px;
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
       .item-number {
         width: 1.2rem;
         height: 1.2rem;
@@ -51,6 +53,7 @@ export const BodySTY = styled.div`
     border: 1px solid ${({ theme }) => theme.color.N50};
     border-radius: 4px;
     input {
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
       border: none;
     }
     input:focus {

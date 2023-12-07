@@ -35,7 +35,8 @@ export interface I_AccountDetailItem {
   account_fname: string;
   account_lname: string;
   org_no: string;
-  org_name: string;
+  org_name: string[];
+  porg_name: string;
   staff_no: string;
   job_title: string;
   invt_sts: string;
@@ -59,95 +60,47 @@ export interface I_RoleItem {
 }
 
 // ------- MOCK DATA ------- //
-const DUMMY_DATA = {
+export const DUMMY_ONE_ACCOUNT = {
   StatusCode: "200",
   Message: "用戶端要求成功",
   Result: true,
   ResultInt: 0,
   ResultString: "BaseDomain",
-  DataList: [
+  ResultList: [
     {
-      account_no: "USR202311090009",
-      account_fname: "ttt",
-      account_lname: "est",
-      org_no: "o-00020101",
-      org_name: "交通事業處",
-      staff_no: "",
-      job_title: "",
-      contact_no: "d7bee654-191a-4882-bbb3-d91831285558",
+      account_no: "007217",
+      account_fname: "張",
+      account_lname: "友承",
+      org_no: "o-00010101",
+      org_name: ["多元發展部", "商業互動設計組"],
+      porg_no: "o-000101",
+      porg_name: "雄獅集團",
+      staff_no: "007217",
+      job_title: "專案管理師",
+      invt_sts: "03",
+      contact_no: "4948531e-71dd-4a99-8a14-ee9c74e99988",
       content_phone_tel_country_code1: "+886",
-      content_phone_tel1: "0987654321",
-      content_priv_email: "test123@gmail.com",
+      content_phone_tel1: "0924680000",
+      content_priv_email: "7217@gmail.com",
       account_role: [
-        {
-          module_no: "sys",
-          module_name: "平台管理",
-          roles: [
-            {
-              role_no: "r-0001auth01",
-              role_name: "權限模組-平台管理員",
-              is_select: false
-            },
-            {
-              role_no: "r-auth01",
-              role_name: "權限模組-系統管理員",
-              is_select: true
-            }
-          ]
-        },
         {
           module_no: "bus",
           module_name: "車管系統",
           roles: [
             {
               role_no: "r-0001bus01",
-              role_name: "車管模組-平台管理員",
-              is_select: false
-            },
-            {
-              role_no: "r-000201bus01",
-              role_name: "車公司管理員",
-              is_select: false
-            },
-            {
-              role_no: "r-000201bus02",
-              role_name: "駕駛",
-              is_select: false
-            },
-            {
-              role_no: "r-000201bus03",
-              role_name: "車管",
-              is_select: false
-            },
-            {
-              role_no: "r-000201bus04",
-              role_name: "調度",
-              is_select: false
-            },
-            {
-              role_no: "r-000201bus05",
-              role_name: "業務",
-              is_select: false
-            },
-            {
-              role_no: "r-000201bus06",
-              role_name: "行銷",
-              is_select: false
-            },
-            {
-              role_no: "r-000201bus07",
-              role_name: "小客車駕駛",
-              is_select: false
+              role_name: "車管管理員",
+              is_select: true
             },
             {
               role_no: "r-bus01",
-              role_name: "車管模組-系統管理員",
+              role_name: "車管模組-管理員",
               is_select: true
             },
             {
               role_no: "r-bus02",
               role_name: "車管模組-駕駛",
-              is_select: true
+              is_select: false
             },
             {
               role_no: "r-bus03",
@@ -157,7 +110,7 @@ const DUMMY_DATA = {
             {
               role_no: "r-bus04",
               role_name: "車管模組-調度",
-              is_select: false
+              is_select: true
             },
             {
               role_no: "r-bus05",
@@ -175,6 +128,22 @@ const DUMMY_DATA = {
               is_select: false
             }
           ]
+        },
+        {
+          module_no: "sys",
+          module_name: "平台管理",
+          roles: [
+            {
+              role_no: "r-0001sys01",
+              role_name: "權限管理員",
+              is_select: false
+            },
+            {
+              role_no: "r-sys01",
+              role_name: "權限模組-管理員",
+              is_select: false
+            }
+          ]
         }
       ]
     }
@@ -182,68 +151,78 @@ const DUMMY_DATA = {
 };
 
 export const DUMMY_DATA_CREATE = {
-  account_no: "USR202302020002",
-  account_fname: "王",
-  account_lname: "鈞樺",
-  org_no: "o-00020101",
-  org_name: "交通事業處",
-  staff_no: "USR202302020002",
-  job_title: "",
-  invt_sts: "01",
-  contact_no: "4948111e-71dd-4a99-8a14-ee9c74e666a7",
-  content_phone_tel_country_code1: "+886",
-  content_phone_tel1: "0912345678",
-  content_priv_email: "user@gamil.com",
-  account_role: [
+  StatusCode: "200",
+  Message: "用戶端要求成功",
+  Result: true,
+  ResultInt: 0,
+  ResultString: "BaseDomain",
+  ResultList: [
     {
-      module_no: "bus",
-      module_name: "車產模組",
-      roles: [
+      account_no: "USR202302020002",
+      account_fname: "王",
+      account_lname: "鈞樺",
+      org_no: "o-00020101",
+      org_name: ["多元發展部", "交通事業處"],
+      porg_name: "雄獅集團",
+      staff_no: "USR202302020002",
+      job_title: "",
+      invt_sts: "01",
+      contact_no: "4948111e-71dd-4a99-8a14-ee9c74e666a7",
+      content_phone_tel_country_code1: "+886",
+      content_phone_tel1: "0912345678",
+      content_priv_email: "user@gamil.com",
+      account_role: [
         {
-          role_no: "r-0001bus01",
-          role_name: "最高管理員",
-          is_select: false
+          module_no: "bus",
+          module_name: "車產模組",
+          roles: [
+            {
+              role_no: "r-0001bus01",
+              role_name: "最高管理員",
+              is_select: false
+            },
+            {
+              role_no: "r-0001bus01",
+              role_name: "主管",
+              is_select: false
+            },
+            {
+              role_no: "r-bus01",
+              role_name: "調度",
+              is_select: false
+            },
+            {
+              role_no: "r-bus01",
+              role_name: "一般使用者",
+              is_select: false
+            }
+          ]
         },
         {
-          role_no: "r-0001bus01",
-          role_name: "主管",
-          is_select: false
-        },
-        {
-          role_no: "r-bus01",
-          role_name: "調度",
-          is_select: false
-        },
-        {
-          role_no: "r-bus01",
-          role_name: "一般使用者",
-          is_select: false
-        }
-      ]
-    },
-    {
-      module_no: "bus",
-      module_name: "人事模組",
-      roles: [
-        {
-          role_no: "r-0001bus01",
-          role_name: "最高管理員",
-          is_select: false
-        },
-        {
-          role_no: "r-0001bus01",
-          role_name: "主管",
-          is_select: false
-        },
-        {
-          role_no: "r-bus01",
-          role_name: "調度",
-          is_select: false
-        },
-        {
-          role_no: "r-bus01",
-          role_name: "一般使用者",
-          is_select: false
+          module_no: "bus",
+          module_name: "人事模組",
+          roles: [
+            {
+              role_no: "r-0001bus01",
+              role_name: "最高管理員",
+              is_select: false
+            },
+            {
+              role_no: "r-0001bus01",
+              role_name: "主管",
+              is_select: false
+            },
+            {
+              role_no: "r-bus01",
+              role_name: "調度",
+              is_select: false
+            },
+            {
+              role_no: "r-bus01",
+              role_name: "一般使用者",
+              is_select: false
+            }
+          ]
         }
       ]
     }

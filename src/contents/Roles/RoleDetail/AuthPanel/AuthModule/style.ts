@@ -11,7 +11,6 @@ export const DivSTY = styled.div`
   .authFunc {
     width: 100%;
     display: flex;
-    justify-content: flex-start;
     flex-direction: column;
     &__title {
       width: 100%;

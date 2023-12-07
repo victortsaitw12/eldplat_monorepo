@@ -32,14 +32,23 @@ import {
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
 
   React.useEffect(() => {
     console.log("hello");
   }, []);
 
-  const handleNavigation = async (path: string) => {
-    router.push(path);
+  const handleCancel = async () => {
+    // onView
+    // onEdit
+  };
+
+  const handleConfirm = () => {
+    // onCreate
+    // onEdit
+    // onView
   };
 
   const BasicInFo = [
@@ -350,7 +359,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "附件/相關檔案",
       bold: true,
-      value: <NewUploader isMultiple={true}/>
+      value: <NewUploader isMultiple={true} />
     }
   ];
 
@@ -359,7 +368,8 @@ const Page: NextPageWithLayout<never> = () => {
       <ControlBar
         // isEdit={editPage === "edit"}
         isEdit={true}
-        handleNavigation={handleNavigation}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
         primaryDisable={true}
       />
       <BodySTY>

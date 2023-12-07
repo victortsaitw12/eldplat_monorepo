@@ -21,7 +21,7 @@ export interface I_CreateOrgReq {
   org_lvl: number;
 }
 
-const DUMMY_DATA = {
+const DUMMY_RES = {
   StatusCode: "200",
   Message: "用戶端要求成功",
   DataList: [],
@@ -29,3 +29,21 @@ const DUMMY_DATA = {
   ResultString: "用戶端要求成功",
   ResultInt: 0
 };
+
+const DUMMY_REQ = {
+  porg_no: "o-0002010201",
+  org_name: "前端測試新增組織",
+  org_tp: "D",
+  org_lvl: 4
+};
+
+const DUMMY_NEW_ORG = {
+  org_no: "o-000204",
+  org_name: "前端測試新增組織",
+  org_tp: "G",
+  org_lvl: 2,
+  org_enb: true,
+  sublayer: []
+};
+
+// ------- DUMMY ------- //

@@ -8,28 +8,30 @@ export const ModalContext = React.createContext(defaultModal);
 export function ModalProvider({ children }: { children: any }) {
   const router = useRouter();
   const [modalContent, setModalContent] = React.useState<any>(null);
-  const [url, setUrl] = React.useState("");
 
   //------ functions ------//
-  const onCancel = () => {
+  const handleCancel = () => {
     setModalContent(null);
   };
 
-  const onConfirm = () => {
+  const handleRouteChange = (url: string) => {
     router.push(url);
+    setModalContent(null);
   };
 
   const showLeavePageModal = (url: string) => {
-    setUrl(url);
     setModalContent(
-      <LeavePageModal onCancel={onCancel} onConfirm={onConfirm} />
+      <LeavePageModal
+        onCancel={handleCancel}
+        onConfirm={handleRouteChange.bind(null, url)}
+      />
     );
   };
 
   const modalStore = {
     showLeavePageModal,
-    onConfirm,
-    onCancel
+    handleRouteChange,
+    handleCancel
   };
 
   // ------- useEffect ------- //
@@ -40,3 +42,11 @@ export function ModalProvider({ children }: { children: any }) {
     </ModalContext.Provider>
   );
 }
+
+export const useModal = () => {
+  const context = React.useContext(ModalContext);
+  if (context === undefined) {
+    throw new Error("useModal must be used within a ModalProvider");
+  }
+  return context;
+};

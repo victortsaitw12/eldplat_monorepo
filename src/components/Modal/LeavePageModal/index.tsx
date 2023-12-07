@@ -2,8 +2,8 @@ import React from "react";
 import { Dialog } from "evergreen-ui";
 
 const LeavePageModal = ({
-  title = "確定要離開嗎？",
-  message = "如果您現在離開，將會遺失未儲存的資料。",
+  title = "您將會遺失未儲存的資料",
+  message = "確定要離開嗎？",
   onCancel,
   onConfirm
 }: I_Prop) => {
@@ -13,7 +13,7 @@ const LeavePageModal = ({
       title={title}
       onCloseComplete={onCancel}
       onConfirm={onConfirm}
-      confirmLabel="確定"
+      confirmLabel="確定離開"
       cancelLabel="取消"
     >
       {message}
