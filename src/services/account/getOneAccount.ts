@@ -35,7 +35,8 @@ export interface I_AccountDetailItem {
   account_fname: string;
   account_lname: string;
   org_no: string;
-  org_name: string;
+  org_name: string[];
+  porg_name: string;
   staff_no: string;
   job_title: string;
   invt_sts: string;
@@ -71,11 +72,11 @@ export const DUMMY_ONE_ACCOUNT = {
       account_fname: "張",
       account_lname: "友承",
       org_no: "o-00010101",
-      org_name: "商業互動設計組",
+      org_name: ["多元發展部", "商業互動設計組"],
       porg_no: "o-000101",
-      porg_name: "多元發展部",
+      porg_name: "雄獅集團",
       staff_no: "007217",
-      job_title: "",
+      job_title: "專案管理師",
       invt_sts: "03",
       contact_no: "4948531e-71dd-4a99-8a14-ee9c74e99988",
       content_phone_tel_country_code1: "+886",
@@ -89,27 +90,12 @@ export const DUMMY_ONE_ACCOUNT = {
             {
               role_no: "r-0001bus01",
               role_name: "車管管理員",
-              is_select: false
-            },
-            {
-              role_no: "r-0001bus01",
-              role_name: "車管管理員",
-              is_select: false
+              is_select: true
             },
             {
               role_no: "r-bus01",
               role_name: "車管模組-管理員",
-              is_select: false
-            },
-            {
-              role_no: "r-bus01",
-              role_name: "車管模組-管理員",
-              is_select: false
-            },
-            {
-              role_no: "r-bus02",
-              role_name: "車管模組-駕駛",
-              is_select: false
+              is_select: true
             },
             {
               role_no: "r-bus02",
@@ -122,24 +108,9 @@ export const DUMMY_ONE_ACCOUNT = {
               is_select: false
             },
             {
-              role_no: "r-bus03",
-              role_name: "車管模組-車管",
-              is_select: false
-            },
-            {
               role_no: "r-bus04",
               role_name: "車管模組-調度",
-              is_select: false
-            },
-            {
-              role_no: "r-bus04",
-              role_name: "車管模組-調度",
-              is_select: false
-            },
-            {
-              role_no: "r-bus05",
-              role_name: "車管模組-業務",
-              is_select: false
+              is_select: true
             },
             {
               role_no: "r-bus05",
@@ -149,16 +120,6 @@ export const DUMMY_ONE_ACCOUNT = {
             {
               role_no: "r-bus06",
               role_name: "車管模組-行銷",
-              is_select: false
-            },
-            {
-              role_no: "r-bus06",
-              role_name: "車管模組-行銷",
-              is_select: false
-            },
-            {
-              role_no: "r-bus07",
-              role_name: "車管模組-小客車駕駛",
               is_select: false
             },
             {
@@ -178,16 +139,6 @@ export const DUMMY_ONE_ACCOUNT = {
               is_select: false
             },
             {
-              role_no: "r-0001sys01",
-              role_name: "權限管理員",
-              is_select: false
-            },
-            {
-              role_no: "r-sys01",
-              role_name: "權限模組-管理員",
-              is_select: false
-            },
-            {
               role_no: "r-sys01",
               role_name: "權限模組-管理員",
               is_select: false
@@ -200,68 +151,78 @@ export const DUMMY_ONE_ACCOUNT = {
 };
 
 export const DUMMY_DATA_CREATE = {
-  account_no: "USR202302020002",
-  account_fname: "王",
-  account_lname: "鈞樺",
-  org_no: "o-00020101",
-  org_name: "交通事業處",
-  staff_no: "USR202302020002",
-  job_title: "",
-  invt_sts: "01",
-  contact_no: "4948111e-71dd-4a99-8a14-ee9c74e666a7",
-  content_phone_tel_country_code1: "+886",
-  content_phone_tel1: "0912345678",
-  content_priv_email: "user@gamil.com",
-  account_role: [
+  StatusCode: "200",
+  Message: "用戶端要求成功",
+  Result: true,
+  ResultInt: 0,
+  ResultString: "BaseDomain",
+  ResultList: [
     {
-      module_no: "bus",
-      module_name: "車產模組",
-      roles: [
+      account_no: "USR202302020002",
+      account_fname: "王",
+      account_lname: "鈞樺",
+      org_no: "o-00020101",
+      org_name: ["多元發展部", "交通事業處"],
+      porg_name: "雄獅集團",
+      staff_no: "USR202302020002",
+      job_title: "",
+      invt_sts: "01",
+      contact_no: "4948111e-71dd-4a99-8a14-ee9c74e666a7",
+      content_phone_tel_country_code1: "+886",
+      content_phone_tel1: "0912345678",
+      content_priv_email: "user@gamil.com",
+      account_role: [
         {
-          role_no: "r-0001bus01",
-          role_name: "最高管理員",
-          is_select: false
+          module_no: "bus",
+          module_name: "車產模組",
+          roles: [
+            {
+              role_no: "r-0001bus01",
+              role_name: "最高管理員",
+              is_select: false
+            },
+            {
+              role_no: "r-0001bus01",
+              role_name: "主管",
+              is_select: false
+            },
+            {
+              role_no: "r-bus01",
+              role_name: "調度",
+              is_select: false
+            },
+            {
+              role_no: "r-bus01",
+              role_name: "一般使用者",
+              is_select: false
+            }
+          ]
         },
         {
-          role_no: "r-0001bus01",
-          role_name: "主管",
-          is_select: false
-        },
-        {
-          role_no: "r-bus01",
-          role_name: "調度",
-          is_select: false
-        },
-        {
-          role_no: "r-bus01",
-          role_name: "一般使用者",
-          is_select: false
-        }
-      ]
-    },
-    {
-      module_no: "bus",
-      module_name: "人事模組",
-      roles: [
-        {
-          role_no: "r-0001bus01",
-          role_name: "最高管理員",
-          is_select: false
-        },
-        {
-          role_no: "r-0001bus01",
-          role_name: "主管",
-          is_select: false
-        },
-        {
-          role_no: "r-bus01",
-          role_name: "調度",
-          is_select: false
-        },
-        {
-          role_no: "r-bus01",
-          role_name: "一般使用者",
-          is_select: false
+          module_no: "bus",
+          module_name: "人事模組",
+          roles: [
+            {
+              role_no: "r-0001bus01",
+              role_name: "最高管理員",
+              is_select: false
+            },
+            {
+              role_no: "r-0001bus01",
+              role_name: "主管",
+              is_select: false
+            },
+            {
+              role_no: "r-bus01",
+              role_name: "調度",
+              is_select: false
+            },
+            {
+              role_no: "r-bus01",
+              role_name: "一般使用者",
+              is_select: false
+            }
+          ]
         }
       ]
     }

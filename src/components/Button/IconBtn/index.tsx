@@ -37,7 +37,7 @@ const IconBtn = ({ tip, type, onClick }: I_Props) => {
 interface I_Props {
   tip: string;
   type?: "create" | "edit" | "delete" | "more";
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
   customIcon?: React.ReactNode;
 }
 

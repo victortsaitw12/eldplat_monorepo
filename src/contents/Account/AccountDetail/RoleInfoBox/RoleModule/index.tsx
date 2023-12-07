@@ -11,12 +11,7 @@ import { I_AccountRole, I_RoleItem } from "@services/account/getOneAccount";
 import CheckboxField from "@components/CheckboxField";
 import { DivSTY } from "./style";
 
-interface I_Props {
-  data: I_AccountRole;
-  onChange: (v: any) => void;
-}
-
-const RoleModule = ({ data, onChange }: I_Props) => {
+const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
   const [checkedList, setCheckedList] = React.useState<string[]>([]);
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
 
@@ -42,6 +37,8 @@ const RoleModule = ({ data, onChange }: I_Props) => {
     onChange(checkedList);
   }, [checkedList]);
 
+  console.log("🍅 data:", data);
+
   return (
     <DivSTY>
       <div className="roles__module row" onClick={handleToggle}>
@@ -58,9 +55,10 @@ const RoleModule = ({ data, onChange }: I_Props) => {
         {data.roles.map((elem: I_RoleItem, i: number) => (
           <div className={"role_element row"} key={`funcElem-${i}`}>
             <CheckboxField
-              item={{ value: `name-${i}` }}
+              item={{ value: elem.role_no }}
               toggleFuelValue={handleCheckItem}
               checked={checkedList.includes(`name-${i}`)}
+              disabled={!isEdit}
             />
             <div className="text">{elem.role_name}</div>{" "}
           </div>
@@ -71,3 +69,9 @@ const RoleModule = ({ data, onChange }: I_Props) => {
 };
 
 export default RoleModule;
+
+interface I_Props {
+  data: I_AccountRole;
+  onChange: (v: any) => void;
+  isEdit: boolean;
+}

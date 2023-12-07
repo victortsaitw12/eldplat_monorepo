@@ -83,12 +83,11 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleCancel = async () => {
-    handleChangeRoute("/role");
-    // if (!isEdit) router.push("/role");
-    // setIsEdit(false);
-    // router.push(`/role/detail/${id}?editPage=view`, undefined, {
-    //   shallow: true
-    // });
+    // onView
+    if (!isEdit) handleChangeRoute("/role");
+    // onEdit
+    setIsEdit(false);
+    handleChangeRoute(`/role/detail/${id}?editPage=view`);
   };
 
   const handleConfirm = () => {
@@ -126,10 +125,10 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       />
       {data && (
         <RoleDetail
-          submitRef={submitRef}
-          isEdit={isEdit}
           data={data}
+          isEdit={isEdit}
           asyncSubmitForm={asyncSubmitForm}
+          submitRef={submitRef}
         />
       )}
     </>
@@ -153,7 +152,6 @@ Page.getLayout = (page: ReactNode, layoutProps: any) =>
 export default Page;
 
 // ===== FUNCTION NOT IN RENDERS ===== //
-
 const getFlattenAuthDataArr = (data: I_RoleDetail) => {
   const result = data?.func_auth.map((item) => {
     item.func_element.map((elem) => {

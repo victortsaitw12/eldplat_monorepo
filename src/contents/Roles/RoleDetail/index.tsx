@@ -12,7 +12,7 @@ import {
 import DetailPanel from "./DetailPanel";
 import AuthPanel from "../AuthPanel";
 
-const RoleDetail = ({ submitRef, data, isEdit, asyncSubmitForm }: I_Props) => {
+const RoleDetail = ({ data, isEdit, asyncSubmitForm, submitRef }: I_Props) => {
   const { data: session } = useSession();
   const router = useRouter();
   const isCreate = router.query.id === "create";
@@ -60,8 +60,8 @@ const RoleDetail = ({ submitRef, data, isEdit, asyncSubmitForm }: I_Props) => {
 export default RoleDetail;
 
 interface I_Props {
-  submitRef: React.RefObject<HTMLButtonElement>;
   data: I_RoleDetail;
-  asyncSubmitForm: (data: any) => Promise<void>;
   isEdit: boolean;
+  asyncSubmitForm: (data: any) => Promise<void>;
+  submitRef: React.RefObject<HTMLButtonElement>;
 }

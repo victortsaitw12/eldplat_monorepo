@@ -131,7 +131,7 @@ export interface I_reqBody {
 export interface I_AccountItem {
   account_no: string;
   account_name: string;
-  role_name_o: string;
+  role_name: string;
   org_name: string;
   content_phone_tel1: string;
   content_phone_tel2: string;
