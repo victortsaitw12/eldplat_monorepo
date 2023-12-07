@@ -197,9 +197,6 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
 
   const fetchLicenseData = async (pageQuery = defaultPageInfo) => {
     const { licenses, pageInfo } = await getLicenseById(driverNo, pageQuery);
-    console.log("licenses", licenses);
-    console.log("pageInfo", pageInfo);
-    
 
     const IDLicenses = licenses.map((item: any) => {
       return { ...item, id: { label: item.no, value: item.no } };
@@ -277,7 +274,7 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
         />
       )} */}
 
-      {isLightBoxOpen && (
+      {/* {isLightBoxOpen && (
         <Pane>
           <Dialog
             isShown={isLightBoxOpen}
@@ -304,7 +301,7 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
             )}
           </Dialog>
         </Pane>
-      )}
+      )} */}
     </DivSTY>
   );
 }
