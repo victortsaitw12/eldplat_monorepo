@@ -36,7 +36,7 @@ function DriverList({
   const router = useRouter();
 
   const handleView = (id: string) => {
-    router.push(`/driver/detail/${id}`);
+    router.push(`/driver/detail/${id}?editPage=view`);
   };
 
   const changeKey = (data: Array<I_DriverItem>) => {

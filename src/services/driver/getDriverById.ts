@@ -56,7 +56,7 @@ const DUMMY_DATA = {
     working_hours_code: "01",
     working_hours_name: "八週變形工時"
   },
-  language: [
+  languages: [
     {
       user_no: "USR202305240008",
       language: "05",

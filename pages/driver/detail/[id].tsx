@@ -20,11 +20,15 @@ import { getDriverById } from "@services/driver/getDriverById";
 import { updateDriver } from "@services/driver/updateDriver";
 import DriverDetail from "@contents/Driver/Detail";
 import TabsWrapper from "@layout/TabsWrapper";
-import ProfileBar from "@components/ProfileBar";
+import DataOverview from "@components/DataOverview";
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import SecondaryBtn from "@components/Button/Secondary/Label";
+import ControlBar from "@components/ControlBar";
+import ButtonSet from "@components/ButtonSet";
 
 const mainFilterArray = [
-  { id: 1, label: "駕駛資訊", value: "1" },
-  { id: 2, label: "駕駛證照", value: "2" },
+  { id: 1, label: "基本資料", value: "1" },
+  { id: 2, label: "教育訓練", value: "2" },
   { id: 3, label: "健康紀錄", value: "3" },
   { id: 4, label: "修改紀錄", value: "4" }
 ];
@@ -148,9 +152,19 @@ const Page: NextPageWithLayout<
     </Pane>
   );
 
+  const handleNavigation = () => {
+    console.log("navigation");
+  };
+
   return (
     <BodySTY>
-      <ProfileBar data={driverData} />
+      <DataOverview data={driverData}>
+        <ButtonSet
+          isEdit={true}
+          handleNavigation={handleNavigation}
+          primaryDisable={true}
+        />
+      </DataOverview>
       {!isLoading && driverData ? renderContent : renderLoadingSpinner}
       <LightBox
         title="確定要離開嗎?"
