@@ -26,6 +26,7 @@ import {
 import ControlBar from "@components/ControlBar";
 import AccountDetail from "@contents/Account/AccountDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
+import ButtonSet from "@components/ButtonSet";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
@@ -130,12 +131,13 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   return (
     <>
-      <ControlBar
-        isEdit={editPage === "edit"}
-        onCancel={handleCancel}
-        onConfirm={handleConfirm}
-        primaryDisable={false}
-      />
+      <ControlBar hasShadow={true}>
+        <ButtonSet
+          isEdit={editPage === "edit"}
+          secondaryBtnOnClick={handleCancel}
+          primaryBtnOnClick={handleConfirm}
+        />
+      </ControlBar>
       {data && (
         <AccountDetail
           data={data}
