@@ -20,6 +20,7 @@ export const DivSTY = styled.div`
       display: flex;
       padding: 8px 64px;
       gap: 12px;
+      align-items: center;
     }
   }
   .row {

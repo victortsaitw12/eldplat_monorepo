@@ -1,6 +1,12 @@
 import React from "react";
 import { BodySTY } from "./style";
 
+import {
+  FieldErrors,
+  UseFormRegister,
+  Control,
+  UseFormSetValue
+} from "react-hook-form";
 import { I_AccountRole, I_RoleItem } from "@services/account/getOneAccount";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
@@ -15,7 +21,6 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
     );
 
   //------ functions ------//
-
   const handleRoleChange = () => {
     console.log("role change");
   };
@@ -37,12 +42,11 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
       readonly: false,
       req: false,
       label: "",
-      editEle: <RoleModule data={item} onChange={handleRoleChange} />,
+      editEle: (
+        <RoleModule data={item} onChange={handleRoleChange} isEdit={isEdit} />
+      ),
       value: (
-        <div className="roles--view">
-          <div className="roles__module">{item.module_name}</div>
-          <div className="roles__role">{getRoles(item.roles)}</div>
-        </div>
+        <RoleModule data={item} onChange={handleRoleChange} isEdit={isEdit} />
       )
     };
   });
@@ -59,4 +63,8 @@ export default RoleInfoBox;
 interface I_Props {
   data: I_AccountRole[];
   isEdit: boolean;
+  register: UseFormRegister<any>;
+  errors: FieldErrors;
+  control: Control<any>;
+  setValue: UseFormSetValue<any>;
 }

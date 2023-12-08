@@ -15,24 +15,7 @@ interface StateTypes {
 }
 
 export const useRoleStore = create<StateTypes>((set) => ({
-  subFilter: {
-    Role_Input: {
-      field_Name: "Role_Input",
-      arrayConditions: ["like", "equal"],
-      displayType: "search",
-      dataType: "string",
-      label: "名稱",
-      value: ""
-    },
-    Role_Input2: {
-      field_Name: "Role_Input2",
-      arrayConditions: ["like", "equal"],
-      displayType: "fix",
-      dataType: "string",
-      label: "默認篩選",
-      value: ""
-    }
-  },
+  subFilter: null,
   mainFilter: "",
   selectedForm: "",
   isDrawerOpen: false,

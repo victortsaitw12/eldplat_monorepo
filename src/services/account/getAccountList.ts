@@ -32,53 +32,73 @@ export const getAccountList = async (userID: string, reqBody: I_reqBody) => {
     body: JSON.stringify(requestBody)
   });
   const result = await res.json();
-  return result.data.ContentList;
+  return result.data;
 };
 
 // ------- MOCK DATA ------- //
-const DUMMY_DATA: I_responseBody = {
+export const DUMMY_ACC_LIST: I_responseBody = {
   StatusCode: "200",
   Message: "用戶端要求成功",
-  ContentList: [
+  ResultList: [
     {
-      account_no: "123",
-      account_name: "AdminSystem",
-      role_name_o: "車公司管理員",
-      org_name: "平台",
-      content_phone_tel1: "0924128699",
-      content_phone_tel2: "",
-      role_name_m: "車管模組-系統管理員",
+      account_no: "007217",
+      account_name: "張友承",
+      role_name: "",
+      org_name: "多元發展部 / 商業互動設計組",
+      content_phone_tel1: "0924680000",
+      content_phone_tel2: "0987654321",
+      role_name_m: "",
       invt_sts: "03"
     },
     {
-      account_no: "123",
+      account_no: "008367",
+      account_name: "黃學承",
+      role_name: "",
+      org_name: "雄獅資訊 / 多元發展部",
+      content_phone_tel1: "0913579000",
+      content_phone_tel2: "0922222222",
+      role_name_m: "車管管理員,權限管理員",
+      invt_sts: "03"
+    },
+    {
+      account_no: "admin",
+      account_name: "AdminSystem",
+      role_name: "",
+      org_name: " / 平台",
+      content_phone_tel1: "0987654321",
+      content_phone_tel2: "",
+      role_name_m: "車管模組-管理員,權限模組-管理員",
+      invt_sts: "03"
+    },
+    {
+      account_no: "USR202302020002",
       account_name: "王鈞樺",
-      role_name_o: "車公司管理員",
-      org_name: "交通事業處",
-      content_phone_tel1: "0911234567",
-      content_phone_tel2: "0911234567",
-      role_name_m: "車管模組-系統管理員",
+      role_name: "",
+      org_name: "平台 / 雄獅集團",
+      content_phone_tel1: "0912345678",
+      content_phone_tel2: "0912345678",
+      role_name_m: "車管管理員,權限管理員",
+      invt_sts: "03"
+    },
+    {
+      account_no: "USR202311290001",
+      account_name: "tttest",
+      role_name: "",
+      org_name: "雄獅通運 1122測試 / 交通事業處123",
+      content_phone_tel1: "0912341234",
+      content_phone_tel2: "",
+      role_name_m: "車管管理員,權限管理員",
       invt_sts: "01"
     },
     {
-      account_no: "123",
-      account_name: "張友承",
-      role_name_o: "權限模組-平台管理員",
-      org_name: "商業互動設計組",
-      content_phone_tel1: "",
+      account_no: "USR202311290002",
+      account_name: "tttest",
+      role_name: "",
+      org_name: "雄獅通運 1122測試 / 交通事業處123",
+      content_phone_tel1: "0912341234",
       content_phone_tel2: "",
-      role_name_m: "權限模組-系統管理員",
-      invt_sts: "03"
-    },
-    {
-      account_no: "123",
-      account_name: "黃學承",
-      role_name_o: "車管模組-平台管理員",
-      org_name: "多元發展部",
-      content_phone_tel1: "",
-      content_phone_tel2: "",
-      role_name_m: "車管模組-系統管理員",
-      invt_sts: "02"
+      role_name_m: "車管管理員,權限管理員",
+      invt_sts: "01"
     }
   ],
   ConditionList: [],
@@ -86,7 +106,7 @@ const DUMMY_DATA: I_responseBody = {
     Page_Index: 1,
     Page_Size: 10,
     Arrangement: "desc",
-    Total: 5,
+    Total: 6,
     Last_Page: 1
   }
 };
@@ -95,7 +115,7 @@ const DUMMY_DATA: I_responseBody = {
 export interface I_responseBody {
   StatusCode: string;
   Message: string;
-  ContentList: I_AccountItem[];
+  ResultList: I_AccountItem[];
   ConditionList: any[];
   PageInfo: I_PageInfo;
 }
@@ -111,7 +131,7 @@ export interface I_reqBody {
 export interface I_AccountItem {
   account_no: string;
   account_name: string;
-  role_name_o: string;
+  role_name: string;
   org_name: string;
   content_phone_tel1: string;
   content_phone_tel2: string;

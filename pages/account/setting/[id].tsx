@@ -16,9 +16,6 @@ import {
   I_AccountDetailItem
 } from "@services/account/getOneAccount";
 import ControlBar from "@contents/Account/ControlBar";
-import { ModalContext } from "@contexts/ModalContext/ModalProvider";
-import RoleInfoBox from "@contents/Account/RoleInfoBox";
-import LoadingSpinner from "@components/LoadingSpinner";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
