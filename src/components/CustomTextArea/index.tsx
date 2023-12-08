@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextareaFieldSTY } from "./style";
 import { Textarea, Pane } from "evergreen-ui";
 
 interface I_CustomTextArea {
   placeholder: string;
+  data?: string;
 }
 const CustomTextArea = (props: I_CustomTextArea) => {
-  const { placeholder = "請輸入內容" } = props;
+  const { placeholder = "請輸入內容", data } = props;
   const [value, setValue] = useState("");
   const hintLength = value.trim().length;
 
@@ -15,6 +16,10 @@ const CustomTextArea = (props: I_CustomTextArea) => {
       setValue(e.target.value);
     }
   };
+
+  useEffect(() => {
+    data && setValue(data);
+  }, [data]);
 
   return (
     <TextareaFieldSTY>

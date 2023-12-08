@@ -18,7 +18,7 @@ const TagGenerator: React.FC<Props> = ({ data }) => {
   const [renderedTags, setRenderedTags] = useState<I_Tag[]>([]);
 
   useEffect(() => {
-    // editData && setSelectedOptions(editData);
+    data && setRenderedTags(data);
   }, [data]);
 
   const clickCreateHandler = () => {

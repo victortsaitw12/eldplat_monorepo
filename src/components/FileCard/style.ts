@@ -1,29 +1,13 @@
 import styled from "styled-components";
 
-export const NewUploaderSTY = styled.div`
-  .inline-alert {
-    div {
-      margin-right: 4px;
-    }
-    span {
-      line-height: 1.2;
-    }
-  }
-
-  .upload-button {
-    gap: 8px;
-  }
-
-  input[type="file"] {
-    display: none;
-  }
-
+export const FileCardSTY = styled.div`
   .uploaded-files {
     margin-top: 8px;
     border: 1px solid ${({ theme }) => theme.color.N40};
     box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
     border-radius: 4px;
-    width: 346px;
+    width: 100%;
+    max-width: 346px;
 
     .title {
     }

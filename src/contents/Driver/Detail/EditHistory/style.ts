@@ -5,5 +5,13 @@ export const BodySTY = styled.div`
 
   td {
     height: 46px;
+
+    &:nth-child(2){
+      width: 140px;
+    }
+
+    &:last-child {
+      width: 140px;
+    }
   }
 `;

@@ -35,7 +35,7 @@ export interface I_InfoCardProps {
 
 function InfoCard({
   style,
-  isEdit,
+  isEdit = false,
   infoTitle,
   infoData,
   infoType,
@@ -60,12 +60,19 @@ function InfoCard({
           <UnorderedList className="row">
             {infoData &&
               infoData.map((item) => (
-                <ListItem className={`item ${item.listClassName}`} key={InfoCardId}>
-                  <Pane className={`label ${item.bold ? "bold" : ""}`}>
-                    {item.req && <span className="req">*</span>}
+                <ListItem
+                  className={`item ${item.listClassName}`}
+                  key={InfoCardId}
+                >
+                  <Pane
+                    className={`label ${item.bold && isEdit ? "bold" : ""}`}
+                  >
+                    {item.req && isEdit && <span className="req">*</span>}
                     <span>{item.label}</span>
                   </Pane>
-                  <Pane className="value">{item.value}</Pane>
+                  <Pane className="value">
+                    {isEdit && item.editEle ? item.editEle : item.value}
+                  </Pane>
                 </ListItem>
               ))}
           </UnorderedList>

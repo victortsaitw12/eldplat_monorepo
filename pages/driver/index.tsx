@@ -104,10 +104,7 @@ const Page: NextPageWithLayout<never> = () => {
     </BodySTY>
   );
 };
-/*
 
-      
-*/
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;

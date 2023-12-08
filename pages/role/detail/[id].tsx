@@ -3,6 +3,7 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+import { Button } from "evergreen-ui";
 
 //
 import { getLayout } from "@layout/MainLayout";
@@ -18,7 +19,7 @@ import { DUMMY_UPDATE_ROLE } from "@services/role/updateRole";
 import ControlBar from "@components/ControlBar";
 import RoleDetail from "@contents/Roles/RoleDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
-import { Button } from "evergreen-ui";
+import ButtonSet from "@components/ButtonSet";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
@@ -87,17 +88,17 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleChangeRoute = (path: string) => {
-    // showLeavePageModal(path);
+    showLeavePageModal(path);
     // example for showModal
-    const modalContent = {
-      title: "標題(唯一必填)",
-      children: <div>內文元件或文字</div>,
-      onConfirm: () => router.push(path),
-      onCancel: () => router.push(path),
-      customBtns: <Button>自訂按鈕</Button>
-    };
+    // const modalContent = {
+    //   title: "標題(唯一必填)",
+    //   children: <div>內文元件或文字</div>,
+    //   onConfirm: () => router.push(path),
+    //   onCancel: () => router.push(path),
+    //   customBtns: <Button>自訂按鈕</Button>
+    // };
 
-    showModal(modalContent);
+    // showModal(modalContent);
   };
 
   const handleCancel = async () => {
@@ -145,12 +146,13 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   return (
     <>
-      <ControlBar
-        isEdit={isEdit}
-        onCancel={handleCancel}
-        onConfirm={handleConfirm}
-        primaryDisable={false}
-      />
+      <ControlBar hasShadow={true}>
+        <ButtonSet
+          isEdit={editPage === "edit"}
+          secondaryBtnOnClick={handleCancel}
+          primaryBtnOnClick={handleConfirm}
+        />
+      </ControlBar>
       {data && (
         <RoleDetail
           data={data}

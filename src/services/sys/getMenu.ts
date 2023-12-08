@@ -162,7 +162,7 @@ export const DUMMY_MENU = {
           func_no: "bus",
           func_name: "車輛管理設定",
           path: "/bus"
-        }
+        },
       ]
     },
     {
@@ -205,8 +205,15 @@ export const DUMMY_MENU = {
           module_no: "bus",
           fg_no: "driver",
           func_no: "driver",
+          func_name: "新增駕駛",
+          path: "/driver/detail/create"
+        },
+        {
+          module_no: "bus",
+          fg_no: "driver",
+          func_no: "driver",
           func_name: "駕駛管理設定",
-          path: "/driver"
+          path: "/driver/management"
         }
       ]
     },
