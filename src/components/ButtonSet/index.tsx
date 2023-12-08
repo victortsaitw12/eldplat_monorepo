@@ -7,57 +7,34 @@ import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import SecondaryBtn from "@components/Button/Secondary/Label";
 
 interface I_Props {
-  isEdit: boolean;
-  handleNavigation: (path: string) => void;
-  primaryDisable: boolean;
+  isEdit?: boolean;
+  secondaryBtnOnClick?: () => void;
+  secondaryBtnText?: string;
+  primaryBtnOnClick?: () => void;
+  primaryBtnText?: string;
+  primaryDisable?: boolean;
 }
 
-function ButtonSet({ isEdit, handleNavigation, primaryDisable }: I_Props) {
+function ButtonSet({
+  isEdit,
+  secondaryBtnOnClick,
+  secondaryBtnText = "取消",
+  primaryBtnOnClick,
+  primaryBtnText = "儲存",
+  primaryDisable
+}: I_Props) {
   const router = useRouter();
 
-  const handleRedirectBack = () => {
-    handleNavigation("/role");
-  };
-
-  const handleCancel = () => {
-    console.log("cancel");
-  };
-  const handleSave = () => {
-    console.log("save");
-  };
-
-  const buttonStates = {
-    isEdit: {
-      secondaryBtnText: "取消",
-      primaryBtnText: "儲存",
-      primaryBtnOnClick: handleSave,
-      primaryBtnIcon: ""
-    },
-    isView: {
-      secondaryBtnText: "回列表",
-      primaryBtnText: "編輯",
-      primaryBtnOnClick: handleSave,
-      primaryBtnIcon: <EditIcon size={14} />
-    }
-  };
-
-  const currentState = isEdit ? buttonStates.isEdit : buttonStates.isView;
-
   return (
-    <DivSTY className="controlRow">
-      <>
-        <SecondaryBtn
-          text={currentState.secondaryBtnText}
-          onClick={handleCancel}
-        />
-        <PrimaryBtn
-          text={currentState.primaryBtnText}
-          onClick={currentState.primaryBtnOnClick}
-          disabled={primaryDisable}
-        >
-          {currentState.primaryBtnIcon && currentState.primaryBtnIcon}
-        </PrimaryBtn>
-      </>
+    <DivSTY>
+      <SecondaryBtn text={secondaryBtnText} onClick={secondaryBtnOnClick} />
+      <PrimaryBtn
+        text={primaryBtnText}
+        onClick={primaryBtnOnClick}
+        disabled={primaryDisable}
+      >
+        {!isEdit && <EditIcon size={14} />}
+      </PrimaryBtn>
     </DivSTY>
   );
 }
