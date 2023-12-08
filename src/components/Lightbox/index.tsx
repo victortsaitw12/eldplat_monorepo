@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { LightBoxBlock } from "./style";
+import { LightBoxBlock, ButtonSetSTY } from "./style";
+
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import SecondaryBtn from "@components/Button/Secondary/Label";
 
 export interface I_LightBoxProps {
   title?: string;
   children?: React.ReactNode;
   onConfirm?: () => void;
   onCancel?: () => void;
+  customBtns?: string | React.ReactNode;
   wrapperStyle?: React.CSSProperties;
   isOpen: boolean;
   handleCloseLightBox?: () => void;
@@ -17,6 +21,7 @@ function LightBox({
   children,
   onConfirm,
   onCancel,
+  customBtns,
   wrapperStyle,
   isOpen, // intent to be removed if only be used in ModalProvider (always true)
   handleCloseLightBox // intent to be replaced by onConfirm and onCancel
@@ -37,7 +42,20 @@ function LightBox({
           </div>
         </div>
         <div className="content">{children}</div>
-        <ControlBar />
+
+        <ButtonSetSTY>
+          {customBtns ? (
+            customBtns
+          ) : (
+            <>
+              <SecondaryBtn
+                text="取消"
+                onClick={onCancel || handleCloseLightBox}
+              />
+              <PrimaryBtn text="確定" onClick={onConfirm} />
+            </>
+          )}
+        </ButtonSetSTY>
       </div>
     </LightBoxBlock>,
     document.getElementById("overlay-root") as HTMLElement

@@ -18,10 +18,11 @@ import { DUMMY_UPDATE_ROLE } from "@services/role/updateRole";
 import ControlBar from "@components/ControlBar";
 import RoleDetail from "@contents/Roles/RoleDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
+import { Button } from "evergreen-ui";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
-  const { showLeavePageModal, showModal } = useModal();
   const router = useRouter();
+  const { showLeavePageModal, showModal } = useModal();
   const isCreate = router.query.id === "create";
   const { editPage } = router.query;
   const { data: session } = useSession();
@@ -90,9 +91,10 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     // example for showModal
     const modalContent = {
       title: "標題(唯一必填)",
-      children: <div>內文元件或文字(選填)</div>,
+      children: <div>內文元件或文字</div>,
       onConfirm: () => router.push(path),
-      onCancel: () => router.push(path)
+      onCancel: () => router.push(path),
+      customBtns: <Button>自訂按鈕</Button>
     };
 
     showModal(modalContent);

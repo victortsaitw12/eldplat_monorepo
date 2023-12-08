@@ -48,3 +48,13 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
     }
   }
 `;
+
+export const ButtonSetSTY = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 12px 20px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  background: ${({ theme }) => theme.color.N0};
+`;

@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, GetServerSideProps } from "next";
-
 import { toaster } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 
@@ -42,23 +41,25 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-    if (!session) return;
-    try {
-      // const uk = session.user.account_no;
-      // const reqBody = {
-      //   account_no: id,
-      //   creorgno: session.user.org_no
-      // };
-      // const res = await getOneAccount(uk, reqBody);
-      // const result = res.ResoutList[0];
-      if (isCreate) {
-        setData(DUMMY_DATA_CREATE.ResultList[0]);
-      } else {
-        setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
-      }
-    } catch (e: any) {
-      console.log(e);
+
+    if (isCreate) {
+      setData(DUMMY_DATA_CREATE.ResultList[0]);
+    } else {
+      setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
     }
+
+    // if (!session) return;
+    // try {
+    // const uk = session.user.account_no;
+    // const reqBody = {
+    //   account_no: id,
+    //   creorgno: session.user.org_no
+    // };
+    // const res = await getOneAccount(uk, reqBody);
+    // const result = res.ResoutList[0];
+    // } catch (e: any) {
+    //   console.log(e);
+    // }
     setIsLoading(false);
   };
 

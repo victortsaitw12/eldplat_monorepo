@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import LightBox from "@components/LightBox";
+import LightBox from "@components/Lightbox";
 import LeavePageModal from "@components/Modal/LeavePageModal";
 
 const defaultModal: any = null;
@@ -37,12 +37,13 @@ export function ModalProvider({ children }: { children: any }) {
   };
 
   const showModal = (content: I_Content) => {
-    const { title, children, onCancel, onConfirm } = content;
+    const { title, children, onCancel, onConfirm, customBtns } = content;
     setModalContent(
       <LightBox
         title={title}
         onCancel={handleCancel.bind(null, onCancel)}
         onConfirm={handleConfirm.bind(null, onConfirm)}
+        customBtns={customBtns}
         isOpen={true}
       >
         {children}
@@ -79,4 +80,5 @@ interface I_Content {
   children?: string | React.ReactNode;
   onCancel?: () => void;
   onConfirm?: () => void;
+  customBtns?: string | React.ReactNode;
 }
