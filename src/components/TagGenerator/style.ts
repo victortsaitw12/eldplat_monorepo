@@ -4,7 +4,8 @@ export const BodySTY = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  align-items: center;
+  align-items: flex-start;
+  min-height: calc(177px - 35px - 20px - 20px);
 
   .tag {
     height: 27px;

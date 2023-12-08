@@ -84,3 +84,19 @@ export const HISTORY_DATA = [
     備註: "新增駕駛"
   }
 ];
+
+export const DUMMY_TAG_DATA = [
+  {
+    label: "接受跨夜行程",
+    value: "01"
+  },
+  {
+    label: "擅長跑山路",
+    value: "02"
+  },
+  {
+    label: "老家在台東",
+    value: "03"
+  }
+];
+export const DUMMY_COMMENT_DATA = "我是備註~~~";
