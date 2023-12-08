@@ -152,19 +152,31 @@ const Page: NextPageWithLayout<
     </Pane>
   );
 
-  const handleNavigation = () => {
-    console.log("navigation");
+  const handleEdit = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=edit`);
   };
+
+  const handleView = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=view`);
+  };
+
+  useEffect(() => {
+    setIsEdit( editPage === "edit" ? true : false);
+  }, [editPage]);
 
   return (
     <BodySTY>
-      <DataOverview data={driverData}>
+      <ControlBar>
+        <DataOverview data={driverData} />
         <ButtonSet
-          isEdit={true}
-          handleNavigation={handleNavigation}
-          primaryDisable={true}
+          isEdit={false}
+          primaryDisable={false}
+          secondaryBtnText={"回列表"}
+          secondaryBtnOnClick={handleView}
+          primaryBtnOnClick={handleEdit}
+          primaryBtnText={"編輯"}
         />
-      </DataOverview>
+      </ControlBar>
       {!isLoading && driverData ? renderContent : renderLoadingSpinner}
       <LightBox
         title="確定要離開嗎?"
