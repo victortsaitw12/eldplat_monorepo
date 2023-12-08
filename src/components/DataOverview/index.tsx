@@ -9,9 +9,10 @@ import Image from "next/image";
 interface I_Props {
   isEdit?: boolean;
   data?: any;
+  children?: any;
 }
 
-function ProfileBar({ isEdit = false, data }: I_Props) {
+function DataOverview({ isEdit = false, data, children }: I_Props) {
   const router = useRouter();
 
   if (!data) return <p>Loading</p>;
@@ -30,7 +31,7 @@ function ProfileBar({ isEdit = false, data }: I_Props) {
           <div className="row g-12">
             <span className="headline">{data.info.user_name}</span>
             <span className="headline">JUN-YI ZHONG</span>
-            <span>🏳️‍⚧️ {data.info.driver_country_name}</span> 
+            <span>🏳️‍🌈 {data.info.driver_country_name}</span>
           </div>
           <div className="row g-4 paragraph">
             <span>{data.info.dsph_group_name}</span>
@@ -43,9 +44,9 @@ function ProfileBar({ isEdit = false, data }: I_Props) {
           </div>
         </div>
       </div>
-      <div className={"insert-node"}>btns</div>
+      <div className={"insert-node"}>{children}</div>
     </DivSTY>
   );
 }
 
-export default ProfileBar;
+export default DataOverview;
