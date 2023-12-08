@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   position: relative;
+  .subFilter-select {
+    select {
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+    }
+  }
   .filter-button {
     cursor: pointer;
     border: none;

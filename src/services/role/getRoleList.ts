@@ -1,8 +1,8 @@
-export const getRoleList = async (userID: string) => {
+export const getRoleList = async (uk: string) => {
   // return DUMMY_DATA;
   const apiName = "getRoleList";
   const reqMethod = "POST";
-  const reqHeaders = { UK: userID };
+  const reqHeaders = { UK: uk };
 
   const requestBody = {
     x: "",
@@ -37,49 +37,176 @@ export const getRoleList = async (userID: string) => {
 };
 
 // ------- MOCK DATA ------- //
-const DUMMY_DATA = {
+export const DUMMY_RoleList = {
   StatusCode: "200",
   Message: "用戶端要求成功",
-  ContentList: [
+  ResultList: [
     {
-      module_no: "sys",
-      module_name: "平台管理",
-      role_no: "r-0001auth01",
-      role_name: "權限模組-平台管理員",
-      role_desc: "權限模組-平台管理員"
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus01",
+      role_name: "車管模組-管理員",
+      role_desc: "車管模組-管理員",
+      role_enb: true
     },
     {
       module_no: "bus",
       module_name: "車管系統",
-      role_no: "r-0001bus01",
-      role_name: "車管模組-平台管理員",
-      role_desc: "車管模組-平台管理員"
+      role_no: "r-bus01",
+      role_name: "車管模組-管理員",
+      role_desc: "超過一行的呈現方式，超過一行的呈現方式，超過一行的呈現方式",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus02",
+      role_name: "車管模組-駕駛",
+      role_desc: "車管模組-駕駛",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus02",
+      role_name: "車管模組-駕駛",
+      role_desc: "車管模組-駕駛",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus03",
+      role_name: "車管模組-車管",
+      role_desc: "車管模組-車管",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus03",
+      role_name: "車管模組-車管",
+      role_desc: "車管模組-車管",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus04",
+      role_name: "車管模組-調度",
+      role_desc: "車管模組-調度",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus04",
+      role_name: "車管模組-調度",
+      role_desc: "車管模組-調度",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus05",
+      role_name: "車管模組-業務",
+      role_desc: "車管模組-業務",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus05",
+      role_name: "車管模組-業務",
+      role_desc: "車管模組-業務",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus06",
+      role_name: "車管模組-行銷",
+      role_desc: "車管模組-行銷",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus06",
+      role_name: "車管模組-行銷",
+      role_desc: "車管模組-行銷",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus07",
+      role_name: "車管模組-小客車駕駛",
+      role_desc: "車管模組-小客車駕駛",
+      role_enb: true
+    },
+    {
+      module_no: "bus",
+      module_name: "車管系統",
+      role_no: "r-bus07",
+      role_name: "車管模組-小客車駕駛",
+      role_desc: "車管模組-小客車駕駛",
+      role_enb: true
+    },
+    {
+      module_no: "sys",
+      module_name: "平台管理",
+      role_no: "r-sys01",
+      role_name: "權限模組-管理員",
+      role_desc: "權限模組-管理員",
+      role_enb: true
+    },
+    {
+      module_no: "sys",
+      module_name: "平台管理",
+      role_no: "r-sys01",
+      role_name: "權限模組-管理員",
+      role_desc: "權限模組-管理員",
+      role_enb: true
     }
   ],
-  ConditionList: [],
+  ConditionList: [
+    {
+      field_Name: "User_Name",
+      arrayConditions: ["like", "equal"],
+      displayType: "search",
+      dataType: "string",
+      label: "角色名稱、職責描述..."
+    },
+    {
+      field_Name: "Short_Schd_Date",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "模組"
+    },
+    {
+      field_Name: "Dsph_Area",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "狀態"
+    }
+  ],
   PageInfo: {
     Page_Index: 1,
     Page_Size: 1000,
     Arrangement: "desc",
-    Total: 2,
+    Total: 16,
     Last_Page: 1
   }
 };
-
-// [
-//   {
-//     id: "1",
-//     module_name: "車輛管理與營運模組",
-//     role_name: "車管",
-//     description: ["管理車輛狀況", "日常維護", "維修審核"]
-//   }
-// ];
 
 // ------- TYPING ------- //
 export interface I_RoleListRes {
   StatusCode: string;
   Message: string;
-  ContentList: I_RoleListItem[];
+  ResultList: I_RoleListItem[];
   ConditionList: [];
   PageInfo: {
     Page_Index: number;
@@ -96,6 +223,7 @@ export interface I_RoleListItem {
   role_no: string;
   role_name: string;
   role_desc: string;
+  role_enb: boolean;
   // id: string;
   // module_name: string;
   // role_name: string;

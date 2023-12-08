@@ -25,7 +25,7 @@ export const DivSTY = styled.div`
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       cursor: pointer;
       :hover {
-        background: ${({ theme }) => theme.color.N40};
+        background: ${({ theme }) => theme.color.N10};
       }
     }
   }

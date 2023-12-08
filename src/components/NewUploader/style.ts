@@ -5,6 +5,9 @@ export const NewUploaderSTY = styled.div`
     div {
       margin-right: 4px;
     }
+    span {
+      line-height: 1.2;
+    }
   }
 
   .upload-button {

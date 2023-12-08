@@ -31,9 +31,11 @@ function Table({
 }: I_Table) {
   const hasData = data !== undefined && data !== null && data.length > 0;
 
+  console.log("data", data);
+
   return (
     <>
-      <DivSTY className={`${className} container`}>
+      <DivSTY className={`${className || ""} container`}>
         {headNode && <header>{headNode}</header>}
         <TableSTY>
           <thead>
@@ -70,7 +72,7 @@ function Table({
                       );
                     return (
                       <td key={item.id + key}>
-                        <span>
+                        <div>
                           {key === "vendor_website" ? (
                             <Link
                               href={`${item.vendor_website}`}
@@ -81,7 +83,7 @@ function Table({
                           ) : (
                             item[key]
                           )}
-                        </span>
+                        </div>
                       </td>
                     );
                   })}

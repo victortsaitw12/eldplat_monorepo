@@ -6,16 +6,24 @@ import { FormSTY } from "./style";
 
 import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
+import { textValidation } from "@utils/hookFormValidation";
+import CustomTextInputField from "@components/CustomTextInputField";
 // import { fetchData } from "next-auth/client/_utils";
 
-const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
+const FormModal = ({
+  content,
+  setModalContent,
+  refetch,
+  handleCreateDummy,
+  handleEditDummy
+}: I_Props) => {
   const { data: session } = useSession();
   const [checked, setChecked] = React.useState(true);
   const isCreate = content.isCreate;
   const defaultValues = isCreate
     ? {
         porg_no: content.req.org_no,
-        org_name: "",
+        org_name: "前端測試新增組織", // ""
         org_tp: content.req.org_tp,
         org_lvl: content.req.org_lvl
       }
@@ -27,6 +35,7 @@ const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors }
   } = useForm({
     defaultValues
@@ -34,32 +43,36 @@ const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
 
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {
-    if (!session) return;
-    const uk = session.user.account_no;
-    console.log("🔜 data:", data);
-    try {
-      const res = isCreate
-        ? await createOrg(uk, data)
-        : await updateOrg(uk, data);
+    isCreate ? handleCreateDummy(data) : handleEditDummy(data);
+    // TODO
+    // if (!session) return;
+    // const uk = session.user.account_no;
+    // console.log("🔜 data:", data);
+    // try {
+    //   const res = isCreate
+    //     ? await createOrg(uk, data)
+    //     : await updateOrg(uk, data);
 
-      if (res.StatusCode === "200") {
-        setModalContent(null);
-        refetch();
-        toaster.success(`${res.Message}`, {
-          duration: 1.5
-        });
-      } else {
-        throw new Error(`${res.Message}`);
-      }
-    } catch (err: any) {
-      toaster.warning(err.message);
-    }
+    //   if (res.StatusCode === "200") {
+    //     setModalContent(null);
+    //     refetch();
+    //     toaster.success(`${res.Message}`, {
+    //       duration: 1.5
+    //     });
+    //   } else {
+    //     throw new Error(`${res.Message}`);
+    //   }
+    // } catch (err: any) {
+    //   toaster.warning(err.message);
+    // }
   };
 
   const handleCancel = () => {
     setModalContent(null);
   };
   const handleConfirm = () => {
+    const data = getValues();
+    console.log("🔜 data:", data);
     handleSubmit(asyncSubmitForm)();
   };
 
@@ -79,27 +92,39 @@ const FormModal = ({ content, setModalContent, refetch }: I_Props) => {
         confirmLabel="確定"
         cancelLabel="取消"
       >
-        <TextInputField label="父層組織" value={content.parentName} disabled />
-        <TextInputField
-          label="組織名稱"
-          placeholder="請輸入組織名稱"
-          {...register("org_name", {
-            required: "不可空白"
-          })}
-        />
-        {!content.isCreate && (
-          <Group style={{ display: "flex", gap: "8px" }}>
-            <Switch
-              height={16}
-              checked={checked}
-              {...register("org_enb", {
-                required: "不可空白",
-                onChange: (e) => setChecked(e.target.checked)
-              })}
-            />
-            <div>啟用</div>
-          </Group>
-        )}
+        <div className="modal__container">
+          <TextInputField
+            label="父層組織"
+            value={content.parentName}
+            disabled
+          />
+          <CustomTextInputField
+            label="組織名稱"
+            placeholder="請輸入組織名稱"
+            {...register("org_name", {
+              required: "不可輸入特殊符號",
+              validate: textValidation
+            })}
+            isInvalid={!!errors.org_name}
+            hint={errors.org_name?.message}
+          />
+          {!content.isCreate && (
+            <Group
+              style={{ display: "flex", gap: "8px", marginTop: "24px" }}
+              className="switch"
+            >
+              <Switch
+                height={16}
+                checked={checked}
+                {...register("org_enb", {
+                  required: "不可空白",
+                  onChange: (e) => setChecked(e.target.checked)
+                })}
+              />
+              <div>啟用</div>
+            </Group>
+          )}
+        </div>
       </Dialog>
     </FormSTY>
   );
@@ -114,6 +139,8 @@ interface I_Props {
   content: I_ModalContent;
   setModalContent: (v: any) => void;
   refetch: () => void;
+  handleCreateDummy: (v: any) => void;
+  handleEditDummy: (v: any) => void;
 }
 
 export interface I_ModalContent {

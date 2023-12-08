@@ -41,10 +41,20 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "駕駛列表", url: "/driver" }
   ],
-  "/driver/create": [
+  "/driver/detail/create": [
     { label: "首頁", url: "/" },
     { label: "駕駛列表", url: "/driver" },
-    { label: "新增駕駛", url: "/create" }
+    { label: "新增駕駛", url: "" }
+  ],
+  "/driver/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "檢視駕駛", url: "" }
+  ],
+  "/driver/management": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "駕駛管理設定", url: "" },
   ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
@@ -142,11 +152,11 @@ const breadcrumbs: I_routers = {
     { label: "員工設定", url: "/employee" },
     { label: "詳情", url: "/" }
   ],
-  "/driver/detail/[id]": [
-    { label: "入門", url: "/" },
-    { label: "駕駛設定", url: "/driver" },
-    { label: "詳情", url: "/" }
-  ],
+  // "/driver/detail/[id]": [
+  //   { label: "入門", url: "/" },
+  //   { label: "駕駛設定", url: "/driver" },
+  //   { label: "詳情", url: "/" }
+  // ],
   // "/driver": [
   //   { label: "入門", url: "/" },
   //   { label: "駕駛設定", url: "/driver" }
