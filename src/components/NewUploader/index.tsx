@@ -89,7 +89,9 @@ const NewUploader = (props: I_NewUploader) => {
         accept=".png, .jpg, .jpeg, .pdf"
         onChange={handleFileChange}
       />
-      {(existedFiles || files) && (
+
+      {/*🦭上方是為了切版展示，下方的邏輯才是正確的 */}
+      {existedFiles || files ? (
         <FileCard existedFiles={existedFiles}>
           {files &&
             Array.from(files).map((file) => {
@@ -112,7 +114,33 @@ const NewUploader = (props: I_NewUploader) => {
               );
             })}
         </FileCard>
+      ) : (
+        <FileCard />
       )}
+      {/* {(existedFiles || files) && (
+        <FileCard existedFiles={existedFiles}>
+          {files &&
+            Array.from(files).map((file) => {
+              return (
+                <Pane className="content-wrapper " key={file.name}>
+                  <span className="icon">
+                    <PaperclipIcon />
+                  </span>
+                  <span className="file-name">{file.name}</span>
+                  <span className="check">
+                    <SmallTickIcon color="success" />
+                  </span>
+                  <button
+                    className="delete"
+                    onClick={() => handleRemove(file, files)}
+                  >
+                    <TrashIcon size={16} />
+                  </button>
+                </Pane>
+              );
+            })}
+        </FileCard>
+      )} */}
     </NewUploaderSTY>
   );
 };

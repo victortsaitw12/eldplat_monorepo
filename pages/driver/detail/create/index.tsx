@@ -274,7 +274,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: true,
       label: "附件/相關檔案",
       bold: true,
-      value: <NewUploader isEditable={true}/>
+      value: <NewUploader isEditable={true} />
     }
   ];
 
@@ -349,17 +349,13 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "附件/相關檔案",
       bold: true,
-      value: <NewUploader isMultiple={true} isEditable={true}/>
+      value: <NewUploader isMultiple={true} isEditable={true} />
     }
   ];
 
   return (
     <>
-      <ControlBar
-        // isEdit={editPage === "edit"}
-        isEdit={true}
-        primaryDisable={true}
-      />
+      <ControlBar />
       <BodySTY>
         <Pane className={"main-column"}>
           <InfoCard
