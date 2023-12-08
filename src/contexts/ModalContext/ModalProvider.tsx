@@ -1,6 +1,8 @@
 import React from "react";
-import LeavePageModal from "@components/Modal/LeavePageModal";
 import { useRouter } from "next/router";
+
+import LightBox from "@components/LightBox";
+import LeavePageModal from "@components/Modal/LeavePageModal";
 
 const defaultModal: any = null;
 export const ModalContext = React.createContext(defaultModal);
@@ -10,8 +12,14 @@ export function ModalProvider({ children }: { children: any }) {
   const [modalContent, setModalContent] = React.useState<any>(null);
 
   //------ functions ------//
-  const handleCancel = () => {
+  const handleCancel = (onCancel?: () => void) => {
     setModalContent(null);
+    if (onCancel) onCancel();
+  };
+
+  const handleConfirm = (onConfirm?: () => void) => {
+    setModalContent(null);
+    if (onConfirm) onConfirm();
   };
 
   const handleRedirect = (url: string) => {
@@ -28,8 +36,23 @@ export function ModalProvider({ children }: { children: any }) {
     );
   };
 
+  const showModal = (content: I_Content) => {
+    const { title, children, onCancel, onConfirm } = content;
+    setModalContent(
+      <LightBox
+        title={title}
+        onCancel={handleCancel.bind(null, onCancel)}
+        onConfirm={handleConfirm.bind(null, onConfirm)}
+        isOpen={true}
+      >
+        {children}
+      </LightBox>
+    );
+  };
+
   const modalStore = {
     showLeavePageModal,
+    showModal,
     handleRedirect,
     handleCancel
   };
@@ -50,3 +73,10 @@ export const useModal = () => {
   }
   return context;
 };
+
+interface I_Content {
+  title: string;
+  children?: string | React.ReactNode;
+  onCancel?: () => void;
+  onConfirm?: () => void;
+}

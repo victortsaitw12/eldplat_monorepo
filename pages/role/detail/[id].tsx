@@ -20,7 +20,7 @@ import RoleDetail from "@contents/Roles/RoleDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
-  const { showLeavePageModal } = useModal();
+  const { showLeavePageModal, showModal } = useModal();
   const router = useRouter();
   const isCreate = router.query.id === "create";
   const { editPage } = router.query;
@@ -87,6 +87,15 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   const handleChangeRoute = (path: string) => {
     showLeavePageModal(path);
+    // example for showModal
+    // const modalContent = {
+    //   title: "標題(唯一必填)",
+    //   children: <div>內文元件或文字(選填)</div>,
+    //   onConfirm: () => router.push(path),
+    //   onCancel: () => router.push(path)
+    // };
+
+    // showModal(modalContent);
   };
 
   const handleCancel = async () => {

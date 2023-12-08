@@ -3,19 +3,23 @@ import { createPortal } from "react-dom";
 import { LightBoxBlock } from "./style";
 
 export interface I_LightBoxProps {
-  wrapperStyle?: React.CSSProperties;
-  title: string;
+  title?: string;
   children?: React.ReactNode;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  wrapperStyle?: React.CSSProperties;
   isOpen: boolean;
-  handleCloseLightBox: () => void;
+  handleCloseLightBox?: () => void;
 }
 
 function LightBox({
-  wrapperStyle,
   title,
   children,
-  isOpen,
-  handleCloseLightBox
+  onConfirm,
+  onCancel,
+  wrapperStyle,
+  isOpen, // intent to be removed if only be used in ModalProvider (always true)
+  handleCloseLightBox // intent to be replaced by onConfirm and onCancel
 }: I_LightBoxProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -24,11 +28,11 @@ function LightBox({
 
   if (!mounted) return null;
   return createPortal(
-    <LightBoxBlock isOpen={isOpen} onClick={handleCloseLightBox}>
+    <LightBoxBlock isOpen={isOpen} onClick={onCancel || handleCloseLightBox}>
       <div style={wrapperStyle} className="wrapper" onClick={stopPropagation}>
         <div className="titleWrap">
           <div className="title">{title}</div>
-          <div className="closeBtn" onClick={handleCloseLightBox}>
+          <div className="closeBtn" onClick={onCancel || handleCloseLightBox}>
             ×
           </div>
         </div>

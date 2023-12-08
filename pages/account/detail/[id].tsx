@@ -32,7 +32,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
   const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const { data: session } = useSession();
-  const { showLeavePageModal } = useModal();
+  const { showLeavePageModal, showModal } = useModal();
   const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -89,7 +89,14 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleChangeRoute = async (path: string) => {
-    showLeavePageModal(path);
+    const modalContent = {
+      title: "Leave Page?",
+      children: "Are you sure you want to leave this page?",
+      onConfirm: () => router.push(path)
+    };
+
+    showModal(modalContent);
+    // showLeavePageModal(path);
   };
 
   const handleCancel = () => {
