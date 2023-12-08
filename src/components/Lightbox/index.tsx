@@ -37,6 +37,7 @@ function LightBox({
           </div>
         </div>
         <div className="content">{children}</div>
+        <ControlBar />
       </div>
     </LightBoxBlock>,
     document.getElementById("overlay-root") as HTMLElement

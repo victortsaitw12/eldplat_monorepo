@@ -89,14 +89,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleChangeRoute = async (path: string) => {
-    const modalContent = {
-      title: "Leave Page?",
-      children: "Are you sure you want to leave this page?",
-      onConfirm: () => router.push(path)
-    };
-
-    showModal(modalContent);
-    // showLeavePageModal(path);
+    showLeavePageModal(path);
   };
 
   const handleCancel = () => {

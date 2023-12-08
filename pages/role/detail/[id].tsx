@@ -86,16 +86,16 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleChangeRoute = (path: string) => {
-    showLeavePageModal(path);
+    // showLeavePageModal(path);
     // example for showModal
-    // const modalContent = {
-    //   title: "標題(唯一必填)",
-    //   children: <div>內文元件或文字(選填)</div>,
-    //   onConfirm: () => router.push(path),
-    //   onCancel: () => router.push(path)
-    // };
+    const modalContent = {
+      title: "標題(唯一必填)",
+      children: <div>內文元件或文字(選填)</div>,
+      onConfirm: () => router.push(path),
+      onCancel: () => router.push(path)
+    };
 
-    // showModal(modalContent);
+    showModal(modalContent);
   };
 
   const handleCancel = async () => {
