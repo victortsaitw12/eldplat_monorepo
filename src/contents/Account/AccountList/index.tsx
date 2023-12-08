@@ -5,9 +5,9 @@ import { BodySTY } from "./style";
 import { I_AccountItem } from "@services/account/getAccountList";
 import Table from "@components/Table/Table";
 import IconBtn from "@components/Button/IconBtn";
-import PaginationField from "@components/PaginationField";
 import Checkbox from "@components/CheckBox";
 import InvitSatus from "./InvitSatus";
+import PaginationField, { I_PageInfo } from "@components/PaginationField";
 
 const tableTitleArr = [
   <Checkbox key="header__checkbox" />,
@@ -68,4 +68,5 @@ export default AccountList;
 
 interface I_Props {
   data: I_AccountItem[];
+  pageInfo: I_PageInfo;
 }

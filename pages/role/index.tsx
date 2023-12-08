@@ -54,14 +54,14 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchData = async () => {
     if (!session) return;
     setIsLoading(true);
-    const uk = session?.user.account_no;
     try {
+      // const uk = session?.user.account_no;
       // const result = await getRoleList(uk);
       // const data = result.ResultList;
       const data = DUMMY_RoleList.ResultList;
       const pageInfo = DUMMY_RoleList.PageInfo;
-
       const isUpdatedDataAfterCreate = localStorage.getItem("roleCreateData");
+
       if (isUpdatedDataAfterCreate) {
         setData([JSON.parse(isUpdatedDataAfterCreate), ...data]);
         setPageInfo({
@@ -72,6 +72,7 @@ const Page: NextPageWithLayout<never> = () => {
         setData(data);
         setPageInfo(pageInfo);
       }
+
       if (!subFilter) {
         localStorage.setItem(
           "roleInitFilter",

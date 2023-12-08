@@ -1,3 +1,5 @@
+import { I_PageInfo } from "@components/PaginationField";
+
 export const getAccountList = async (userID: string, reqBody: I_reqBody) => {
   // return DUMMY_DATA.ContentList;
 
@@ -137,13 +139,4 @@ export interface I_AccountItem {
   content_phone_tel2: string;
   role_name_m: string;
   invt_sts: string;
-}
-
-// TODO 統一引用 import {I_PageInfo} from "@components/PaginationField"
-export interface I_PageInfo {
-  Page_Index: number;
-  Page_Size: number;
-  Arrangement?: string;
-  Total?: number;
-  Last_Page?: number;
 }
