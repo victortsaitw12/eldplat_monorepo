@@ -47,7 +47,6 @@ const Page: NextPageWithLayout<never> = () => {
       <ControlBar
         // isEdit={editPage === "edit"}
         isEdit={true}
-        handleNavigation={handleNavigation}
         primaryDisable={true}
       />
       <BodySTY>
