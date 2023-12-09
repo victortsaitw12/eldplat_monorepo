@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, GetServerSideProps } from "next";
-
 import { toaster } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 
@@ -27,12 +26,13 @@ import {
 import ControlBar from "@components/ControlBar";
 import AccountDetail from "@contents/Account/AccountDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
+import ButtonSet from "@components/ButtonSet";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
   const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const { data: session } = useSession();
-  const { showLeavePageModal } = useModal();
+  const { showLeavePageModal, showModal } = useModal();
   const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -42,23 +42,25 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-    if (!session) return;
-    try {
-      // const uk = session.user.account_no;
-      // const reqBody = {
-      //   account_no: id,
-      //   creorgno: session.user.org_no
-      // };
-      // const res = await getOneAccount(uk, reqBody);
-      // const result = res.ResoutList[0];
-      if (isCreate) {
-        setData(DUMMY_DATA_CREATE.ResultList[0]);
-      } else {
-        setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
-      }
-    } catch (e: any) {
-      console.log(e);
+
+    if (isCreate) {
+      setData(DUMMY_DATA_CREATE.ResultList[0]);
+    } else {
+      setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
     }
+
+    // if (!session) return;
+    // try {
+    // const uk = session.user.account_no;
+    // const reqBody = {
+    //   account_no: id,
+    //   creorgno: session.user.org_no
+    // };
+    // const res = await getOneAccount(uk, reqBody);
+    // const result = res.ResoutList[0];
+    // } catch (e: any) {
+    //   console.log(e);
+    // }
     setIsLoading(false);
   };
 
@@ -129,12 +131,13 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   return (
     <>
-      <ControlBar
-        isEdit={editPage === "edit"}
-        onCancel={handleCancel}
-        onConfirm={handleConfirm}
-        primaryDisable={false}
-      />
+      <ControlBar hasShadow={true}>
+        <ButtonSet
+          isEdit={editPage === "edit"}
+          secondaryBtnOnClick={handleCancel}
+          primaryBtnOnClick={handleConfirm}
+        />
+      </ControlBar>
       {data && (
         <AccountDetail
           data={data}
