@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   position: relative;
-  width: 90%;
+  width: 100%;
   .react-datepicker-wrapper {
     width: 100%;
     .react-datepicker__input-container {
@@ -194,7 +194,7 @@ export const BodySTY = styled.div`
 
   .icon {
     position: absolute;
-    left: 215px;
+    left: calc(100% - 50px);
     top: 8px;
   }
 `;
