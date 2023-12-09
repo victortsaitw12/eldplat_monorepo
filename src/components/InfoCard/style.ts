@@ -41,7 +41,7 @@ export const InfoCardSTY = styled.div`
     }
 
     .col {
-      flex-grow: 1;
+      flex: 1;
 
       display: flex;
       flex-wrap: wrap;
