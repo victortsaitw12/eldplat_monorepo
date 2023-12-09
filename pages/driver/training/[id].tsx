@@ -8,21 +8,13 @@ import { useRouter } from "next/router";
 import { toaster, Pane, Spinner, Select } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import LightBox from "@components/Lightbox";
-import LabelSecondaryButton from "@components/Button/Secondary/Label";
-import LabelButton from "@components/Button/Primary/Label";
-
 import { I_DriverInfo } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import { getDriverById } from "@services/driver/getDriverById";
 import { updateDriver } from "@services/driver/updateDriver";
-import DriverDetail from "@contents/Driver/Detail";
-import TabsWrapper from "@layout/TabsWrapper";
 import DataOverview from "@components/DataOverview";
-import PrimaryBtn from "@components/Button/Primary/IconLeft";
-import SecondaryBtn from "@components/Button/Secondary/Label";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
 import InfoCard from "@components/InfoCard";
@@ -63,7 +55,7 @@ const Page: NextPageWithLayout<
     setIsEdit(editPage === "edit" || false);
   }, [editPage]);
 
-  const TrainingInFo = [
+  const TrainingViewInFo = [
     {
       listClassName: "fb-100",
       readonly: false,
@@ -115,7 +107,7 @@ const Page: NextPageWithLayout<
     {
       listClassName: "fb-100",
       readonly: false,
-      req: true,
+      req: false,
       label: "說明",
       bold: true,
       value: "由公司內部舉辦之新人訓練，凡加入本公司必須參加。",
@@ -129,12 +121,90 @@ const Page: NextPageWithLayout<
     {
       listClassName: "fb-100",
       readonly: false,
-      req: false,
+      req: true,
       label: "附件/相關檔案",
       bold: true,
       value: <FileCard />,
       editEle: <NewUploader isMultiple={true} isEditable={true} />
     }
+  ];
+
+  const TrainingEditInFo = [
+    [
+      {
+        listClassName: "fb-50",
+        readonly: false,
+        req: true,
+        label: "項目名稱",
+        bold: true,
+        value: "新人訓練",
+        editEle: (
+          <Select className={"select-wrapper"}>
+            <option value="foo" selected>
+              請選擇
+            </option>
+          </Select>
+        )
+      },
+      {
+        listClassName: "fb-50",
+        readonly: false,
+        req: true,
+        label: "培訓人",
+        bold: true,
+        value: "李禹晨",
+        editEle: <CustomTextInputField placeholder="請輸入培訓人姓名" />
+      },
+      {
+        listClassName: "fb-50",
+        readonly: false,
+        req: true,
+        label: "訓練期間",
+        bold: true,
+        value: "2023-01-01~ 2023-01-09",
+        editEle: (
+          <Select className={"select-wrapper"}>
+            <option value="foo" selected>
+              請選擇
+            </option>
+          </Select>
+        )
+      },
+      {
+        listClassName: "fb-50",
+        readonly: false,
+        req: true,
+        label: "訓練通過日期",
+        bold: true,
+        value: "2023-01-10",
+        editEle: <CustomDatePicker placeholder="請輸入訓練通過日期" />
+      },
+      {
+        listClassName: "fb-100",
+        readonly: false,
+        req: false,
+        label: "說明",
+        bold: true,
+        value: "由公司內部舉辦之新人訓練，凡加入本公司必須參加。",
+        editEle: (
+          <CustomTextArea
+            placeholder={"請輸入備註"}
+            data={"由公司內部舉辦之新人訓練，凡加入本公司必須參加。"}
+          />
+        )
+      }
+    ],
+    [
+      {
+        listClassName: "fb-100",
+        readonly: false,
+        req: true,
+        label: "附件/相關檔案",
+        bold: true,
+        value: <FileCard />,
+        editEle: <NewUploader isMultiple={true} isEditable={true} />
+      }
+    ]
   ];
 
   const handleEdit = () => {
@@ -147,8 +217,8 @@ const Page: NextPageWithLayout<
 
   return (
     <BodySTY>
-      <ControlBar>
-        <DataOverview data={driverData} />
+      <ControlBar flexEnd={isEdit ? true : false} hasShadow={isEdit ? true : false}>
+        {!isEdit && <DataOverview data={driverData} />}
         <ButtonSet
           isEdit={false}
           primaryDisable={false}
@@ -162,7 +232,7 @@ const Page: NextPageWithLayout<
         <Pane className={"main-column"}>
           <InfoCard
             isEdit={isEdit}
-            infoData={TrainingInFo}
+            infoData={isEdit ? TrainingEditInFo : TrainingViewInFo}
             infoTitle={"教育訓練"}
           />
         </Pane>
