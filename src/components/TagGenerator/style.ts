@@ -5,7 +5,6 @@ export const BodySTY = styled.div`
   flex-wrap: wrap;
   gap: 8px;
   align-items: flex-start;
-  min-height: calc(177px - 35px - 20px - 20px);
 
   .tag {
     height: 27px;
@@ -38,7 +37,8 @@ export const BodySTY = styled.div`
 
   .create-button {
     padding: 4px 8px;
-    width: 95px;
+    width: fit-content;
+    height: 27px;
   }
 
   .input {

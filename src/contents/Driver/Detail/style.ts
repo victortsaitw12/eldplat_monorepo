@@ -14,7 +14,14 @@ export const DivSTY = styled.div`
 
   .main-column {
     /* flex-basis: 570px; */
-    flex-basis: calc((100% - 20px) / 2);
+
+    &.fb-33 {
+      flex-basis: calc((100% - 20px) / 3);
+    }
+
+    &.fb-66 {
+      flex-basis: calc((100% - 20px) / 3 * 2);
+    }
 
     display: flex;
     flex-direction: column;
@@ -46,7 +53,7 @@ export const DivSTY = styled.div`
       }
     }
 
-    p{
+    p {
       font-size: 16px;
       color: ${({ theme }) => theme.color.N800};
     }

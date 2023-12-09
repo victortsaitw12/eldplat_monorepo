@@ -86,7 +86,6 @@ export const InfoCardSTY = styled.div`
                 color: ${({ theme }) => theme.color.N100};
               }
             }
-
           }
         }
 
@@ -96,11 +95,14 @@ export const InfoCardSTY = styled.div`
         .fb-50 {
           flex-basis: 50%;
         }
-        .fb-33 {
-          flex-basis: 100% / 3;
-        }
         .fb-25 {
           flex-basis: 25%;
+        }
+        .fb-66 {
+          flex-basis: calc(100% / 3 * 2);
+        }
+        .fb-33 {
+          flex-basis: calc(100% / 3);
         }
 
         .m-0 {

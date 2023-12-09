@@ -41,27 +41,6 @@ const FileCard = (props: I_FileCard) => {
         </Pane>
         {children}
       </div>
-      {/* {existedFiles && (
-        <div className="uploaded-files">
-          <span className="title">檔案</span>
-          {existedFiles.map((file: any) => {
-            return (
-              <Pane className="content-wrapper existed" key={file.id}>
-                <span className="icon">
-                  <PaperclipIcon />
-                </span>
-                <span className="file-name">{file.name}</span>
-                {isEdit && (
-                  <button className="delete" onClick={() => handleRemove()}>
-                    <TrashIcon size={16} />
-                  </button>
-                )}
-              </Pane>
-            );
-          })}
-          {children}
-        </div>
-      )} */}
     </FileCardSTY>
   );
 };

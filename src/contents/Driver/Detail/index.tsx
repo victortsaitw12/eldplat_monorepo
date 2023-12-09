@@ -93,86 +93,76 @@ function DriverDetail(props: Props) {
       readonly: false,
       req: false,
       label: "國籍",
-      value: driverInfo.driver_country_name,
-      editEle: <TextInput className="required" placeholder="請輸入手機" />
+      value: driverInfo.driver_country_name
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "身分證字號",
-      value: "E123456789",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "E123456789"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "性別",
-      value: "男",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "男"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "生日",
-      value: "1977-01-01",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "1977-01-01"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "語言",
-      value: "中文/英文",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "中文/英文"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "身高",
-      value: "180 cm",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "180 cm"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "體重",
-      value: "75 kg",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "75 kg"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "手機",
-      value: driverInfo.user_phone,
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: driverInfo.user_phone
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "學歷",
-      value: "大學",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "大學"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "信箱",
-      value: driverInfo.user_email,
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: driverInfo.user_email
     }
   ];
 
   const EmployeeInFo = [
     {
-      listClassName: "fb-50",
+      listClassName: "fb-33",
       readonly: false,
       req: false,
       label: "員工編號",
@@ -180,7 +170,7 @@ function DriverDetail(props: Props) {
       value: driverInfo.user_no
     },
     {
-      listClassName: "fb-50",
+      listClassName: "fb-66",
       readonly: false,
       req: false,
       label: "隸屬組織",
@@ -188,16 +178,15 @@ function DriverDetail(props: Props) {
       value: "大中巴業務組/選項B"
     },
     {
-      listClassName: "fb-50",
+      listClassName: "fb-33",
       readonly: false,
       req: false,
       bold: false,
       label: "入職日期",
-      value: "2000-03-10",
-      editEle: <TextInput className="required" placeholder="請輸入手機" />
+      value: "2000-03-10"
     },
     {
-      listClassName: "fb-50",
+      listClassName: "fb-66",
       readonly: false,
       req: true,
       bold: false,
@@ -212,7 +201,7 @@ function DriverDetail(props: Props) {
       )
     },
     {
-      listClassName: "fb-50",
+      listClassName: "fb-33",
       readonly: false,
       req: true,
       bold: false,
@@ -227,7 +216,7 @@ function DriverDetail(props: Props) {
       )
     },
     {
-      listClassName: "fb-50",
+      listClassName: "fb-66",
       readonly: false,
       req: true,
       bold: false,
@@ -242,7 +231,7 @@ function DriverDetail(props: Props) {
       )
     },
     {
-      listClassName: "fb-50 m-0",
+      listClassName: "fb-33 m-0",
       readonly: false,
       req: false,
       bold: false,
@@ -286,7 +275,7 @@ function DriverDetail(props: Props) {
 
   const LicenseInFo = [
     {
-      listClassName: "fb-50",
+      listClassName: "fb-33",
       readonly: false,
       req: true,
       label: "駕照種類",
@@ -301,28 +290,28 @@ function DriverDetail(props: Props) {
       )
     },
     {
-      listClassName: "fb-50",
-      readonly: false,
-      req: true,
-      label: "有效期限",
-      bold: true,
-      value: "2023-12-31",
-      editEle: <CustomDatePicker placeholder="請輸入有效期限" />
-    },
-    {
-      listClassName: "fb-50 m-0",
+      listClassName: "fb-66 m-0",
       readonly: false,
       req: true,
       label: "附件/相關檔案",
       bold: true,
       value: <FileCard />,
       editEle: <NewUploader isEditable={true} />
+    },
+    {
+      listClassName: "fb-66",
+      readonly: false,
+      req: true,
+      label: "有效期限",
+      bold: true,
+      value: "2023-12-31",
+      editEle: <CustomDatePicker placeholder="請輸入有效期限" />
     }
   ];
 
   const TrainingInFo = [
     {
-      listClassName: "fb-50 m-0",
+      listClassName: "fb-33 m-0",
       readonly: false,
       req: true,
       label: "訓練通過日期",
@@ -331,7 +320,7 @@ function DriverDetail(props: Props) {
       editEle: <CustomDatePicker placeholder="請輸入訓練期間" />
     },
     {
-      listClassName: "fb-50 m-0",
+      listClassName: "fb-66 m-0",
       readonly: false,
       req: false,
       label: "附件/相關檔案",
@@ -349,30 +338,28 @@ function DriverDetail(props: Props) {
     setVisibleForm(formType);
   }, [formType]);
 
-  console.log("driverData", driverData);
-
   return (
     <DivSTY>
       {visibleForm === "1" && (
         <>
-          <Pane className={"main-column"}>
+          <Pane className={"main-column fb-33"}>
             <InfoCard
-              isEdit={false}
+              isEdit={isEdit}
               infoData={BasicInFo}
               infoTitle="基本資料"
             />
           </Pane>
-          <Pane className={"main-column"}>
+          <Pane className={"main-column fb-66"}>
             <InfoCard
-              isEdit={false}
+              isEdit={isEdit}
               infoData={EmployeeInFo}
               infoTitle="職員資料"
             />
-            <InfoCard isEdit={false} infoData={TagInFo} infoTitle="標籤" />
-            <InfoCard isEdit={false} infoData={CommentInFo} infoTitle="備註" />
-            <InfoCard isEdit={false} infoData={LicenseInFo} infoTitle="駕照" />
+            <InfoCard isEdit={isEdit} infoData={TagInFo} infoTitle="標籤" />
+            <InfoCard isEdit={isEdit} infoData={CommentInFo} infoTitle="備註" />
+            <InfoCard isEdit={isEdit} infoData={LicenseInFo} infoTitle="駕照" />
             <InfoCard
-              isEdit={false}
+              isEdit={isEdit}
               infoData={TrainingInFo}
               infoTitle="華語領隊人員執業證"
             />

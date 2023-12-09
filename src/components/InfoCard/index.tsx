@@ -64,11 +64,15 @@ function InfoCard({
                   className={`item ${item.listClassName}`}
                   key={InfoCardId}
                 >
-                  <Pane className={`label ${item.bold && isEdit ? "bold" : ""}`}>
+                  <Pane
+                    className={`label ${item.bold && isEdit ? "bold" : ""}`}
+                  >
                     {item.req && isEdit && <span className="req">*</span>}
                     <span>{item.label}</span>
                   </Pane>
-                  <Pane className="value">{item.value}</Pane>
+                  <Pane className="value">
+                    {isEdit && item.editEle ? item.editEle : item.value}
+                  </Pane>
                 </ListItem>
               ))}
           </UnorderedList>
