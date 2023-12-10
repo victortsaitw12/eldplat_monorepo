@@ -27,7 +27,8 @@ const AuthModule = ({
   register,
   getValues,
   control,
-  setValue
+  setValue,
+  subFilter
 }: I_Props) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
   const [isEnabled, setIsEnabled] = React.useState<boolean>(true);
@@ -107,7 +108,7 @@ const AuthModule = ({
                   isAuthFuncElemDisabled(field.element_default)
                     ? "disabled"
                     : ""
-                }`}
+                } ${subFilter && field.element_no !== subFilter ? "hide" : ""}`}
                 key={`funcElem-${i}`}
               >
                 <div className="label">{field.element_name}</div>
@@ -161,6 +162,7 @@ interface I_Props {
   control: Control<any>;
   setValue: UseFormSetValue<any>;
   getValues: UseFormGetValues<any>;
+  subFilter: string;
 }
 
 // ===== VARIABLES NOT IN RENDERS ===== //
