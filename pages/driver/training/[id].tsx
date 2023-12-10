@@ -215,17 +215,24 @@ const Page: NextPageWithLayout<
     router.push(`/driver/training/${driverNo}?editPage=view`);
   };
 
+  const handleReturn = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=view`);
+  };
+
   return (
     <BodySTY>
-      <ControlBar flexEnd={isEdit ? true : false} hasShadow={isEdit ? true : false}>
+      <ControlBar
+        flexEnd={isEdit ? true : false}
+        hasShadow={isEdit ? true : false}
+      >
         {!isEdit && <DataOverview data={driverData} />}
         <ButtonSet
           isEdit={false}
           primaryDisable={false}
-          secondaryBtnText={"回列表"}
-          secondaryBtnOnClick={handleView}
-          primaryBtnOnClick={handleEdit}
-          primaryBtnText={"編輯"}
+          secondaryBtnText={isEdit ? "取消" : "回列表"}
+          secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+          primaryBtnText={isEdit ? "儲存" : "編輯"}
+          primaryBtnOnClick={isEdit ? handleView : handleEdit}
         />
       </ControlBar>
       {!isLoading && driverData ? (
