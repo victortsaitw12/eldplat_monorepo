@@ -18,7 +18,7 @@ const tableTitleArr = [
   ""
 ];
 
-const AccountList = ({ data }: I_Props) => {
+const AccountList = ({ data, pageInfo }: I_Props) => {
   const router = useRouter();
 
   //------ functions ------//
@@ -58,7 +58,7 @@ const AccountList = ({ data }: I_Props) => {
         titles={tableTitleArr}
         data={dataFitTable}
         onView={handleView}
-        headNode={<PaginationField />}
+        headNode={<PaginationField pageInfo={pageInfo} />}
       />
     </BodySTY>
   );

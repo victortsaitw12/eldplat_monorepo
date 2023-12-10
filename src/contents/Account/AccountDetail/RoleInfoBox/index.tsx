@@ -1,18 +1,27 @@
 import React from "react";
-import { BodySTY } from "./style";
-
 import {
   FieldErrors,
   UseFormRegister,
   Control,
-  UseFormSetValue
+  UseFormSetValue,
+  UseFormGetValues
 } from "react-hook-form";
+import { BodySTY } from "./style";
+
 import { I_AccountRole, I_RoleItem } from "@services/account/getOneAccount";
 import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 import RoleModule from "./RoleModule";
+import { getValue } from "evergreen-ui/types/theme";
 
-const RoleInfoBox = ({ data, isEdit }: I_Props) => {
+const RolePanel = ({
+  data,
+  isEdit,
+  register,
+  control,
+  setValue,
+  getValues
+}: I_Props) => {
   if (!data)
     return (
       <BodySTY>
@@ -21,8 +30,9 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
     );
 
   //------ functions ------//
-  const handleRoleChange = () => {
-    console.log("role change");
+  const handleRoleChange = (v: string[]) => {
+    const prev = getValues("account_role");
+    setValue("account_role", prev.concat(v));
   };
 
   const getRoles = (data: I_RoleItem[]) => {
@@ -43,10 +53,10 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
       req: false,
       label: "",
       editEle: (
-        <RoleModule data={item} onChange={handleRoleChange} isEdit={isEdit} />
+        <RoleModule data={item} onChange={handleRoleChange} isEdit={true} />
       ),
       value: (
-        <RoleModule data={item} onChange={handleRoleChange} isEdit={isEdit} />
+        <RoleModule data={item} onChange={handleRoleChange} isEdit={false} />
       )
     };
   });
@@ -58,13 +68,13 @@ const RoleInfoBox = ({ data, isEdit }: I_Props) => {
   );
 };
 
-export default RoleInfoBox;
+export default RolePanel;
 
 interface I_Props {
   data: I_AccountRole[];
   isEdit: boolean;
   register: UseFormRegister<any>;
-  errors: FieldErrors;
   control: Control<any>;
   setValue: UseFormSetValue<any>;
+  getValues: UseFormGetValues<any>;
 }

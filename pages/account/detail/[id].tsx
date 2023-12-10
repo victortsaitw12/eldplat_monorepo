@@ -13,7 +13,9 @@ import {
   I_AccountRole,
   I_RoleItem,
   DUMMY_DATA_CREATE,
-  DUMMY_ONE_ACCOUNT
+  DUMMY_ONE_ACCOUNT,
+  DUMMY_ROLE_NAME_MOUDULE_MAP,
+  DUMMY_ROLE_NAME_MAP
 } from "@services/account/getOneAccount";
 import {
   createAccount,
@@ -23,10 +25,15 @@ import {
   updateAccount,
   I_ReqBody as I_UpdateReqBody
 } from "@services/account/updateAccount";
+import {
+  DUMMY_ACC_DDL,
+  I_AccountDDLItem as I_DDL
+} from "@services/account/getAccountDDL";
 import ControlBar from "@components/ControlBar";
 import AccountDetail from "@contents/Account/AccountDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
 import ButtonSet from "@components/ButtonSet";
+import { get } from "lodash";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
@@ -35,6 +42,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const { showLeavePageModal, showModal } = useModal();
   const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
+  const [ddl, setDDL] = React.useState<I_DDL | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
   const isCreate = id === "create";
@@ -42,12 +50,13 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-
-    if (isCreate) {
-      setData(DUMMY_DATA_CREATE.ResultList[0]);
-    } else {
-      setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
-    }
+    const createDummy = DUMMY_DATA_CREATE.ResultList[0];
+    const editedDummy = localStorage.getItem("accEditData");
+    const editDummy = editedDummy
+      ? { ...DUMMY_ONE_ACCOUNT.ResultList[0], editedDummy }
+      : DUMMY_ONE_ACCOUNT.ResultList[0];
+    setData(isCreate ? createDummy : editDummy);
+    setDDL(DUMMY_ACC_DDL.ResultList[0]);
 
     // if (!session) return;
     // try {
@@ -64,13 +73,54 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     setIsLoading(false);
   };
 
+  // TODO: to be remve, just for DEMO
+  const getAccountName = (data: any) => {
+    return `${data.account_lname}${data.account_fname}`;
+  };
+
+  const getRoleNames = (data: any) => {
+    /* function that turn data.account_role = ["r-0001bus01","r-0001bus03", "r-0001sys04"] into  roles = [
+        { role_name_m: "車輛管理", role_name: ["最高管理員", "調度"] },
+        { role_name_m: "系統管理", role_name: ["一般使用者"] }
+      ]
+    */
+    // group data.account_role list by the items that trimed last 2 characters into new list of the last 2 characters
+    const groupedRoles = data.account_role.reduce((acc: any, item: string) => {
+      const role_no = item.slice(item.length - 2);
+      const module_no = item.slice(0, item.length - 2);
+      if (!acc[module_no]?.includes(role_no)) {
+        return {
+          ...acc,
+          [module_no]: [...(acc[module_no] || []), role_no]
+        };
+      }
+      return acc;
+    }, {});
+    console.log("🍅 groupedRoles:", groupedRoles);
+  };
+
   const asyncSubmitForm = async (data: any) => {
     console.log("🔜 data:", data);
-    localStorage.setItem(
-      "accountCreateData",
-      JSON.stringify({ ...data, id: "create" })
-    );
-    if (!session) return;
+    const account_name = getAccountName(data);
+    const roles = getRoleNames(data);
+    return;
+    if (isCreate) {
+      localStorage.setItem(
+        "accountCreateData",
+        JSON.stringify({
+          ...data,
+          id: "create",
+          account_name: account_name,
+          invt_sts: "03"
+        })
+      );
+      router.push("/account");
+    } else {
+      localStorage.setItem("accountEditData", JSON.stringify({ ...data }));
+      router.push(`/role/detail/${id}?editPage=view`);
+    }
+
+    // if (!session) return;
     // const uk = session.user.account_no;
     // try {
     //   const res = isCreate
@@ -95,31 +145,34 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleCancel = () => {
+    // onCreate
+    if (isCreate) {
+      handleChangeRoute("/account");
+      return;
+    }
     // onView
-    if (!isEdit) handleChangeRoute("/account");
-    // onEdit
-    setIsEdit(false);
-    handleChangeRoute(`/account/detail/${id}?editPage=view`);
+    if (!isEdit) {
+      handleChangeRoute("/account");
+    } else {
+      // onEdit
+      setIsEdit(false);
+      handleChangeRoute(`/account/detail/${id}?editPage=view`);
+    }
   };
 
   const handleConfirm = () => {
     // onCreate
     if (isCreate) {
       submitRef.current && submitRef.current.click();
-      router.push("/account");
+      return;
     }
-    // onEdit
     if (isEdit) {
       submitRef.current && submitRef.current.click();
       setIsEdit(false);
-      router.push(`/account/detail/${id}?editPage=view`, undefined, {
-        shallow: true
-      });
+      router.push(`/account/detail/${id}?editPage=view`);
     } else {
       setIsEdit(true);
-      router.push(`/account/detail/${id}?editPage=edit`, undefined, {
-        shallow: true
-      });
+      router.push(`/account/detail/${id}?editPage=edit`);
     }
   };
 
@@ -141,6 +194,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       {data && (
         <AccountDetail
           data={data}
+          ddl={ddl}
           isEdit={isEdit}
           asyncSubmitForm={asyncSubmitForm}
           submitRef={submitRef}

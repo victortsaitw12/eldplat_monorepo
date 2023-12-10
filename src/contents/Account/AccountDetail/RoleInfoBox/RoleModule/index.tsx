@@ -35,9 +35,7 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
 
   React.useEffect(() => {
     onChange(checkedList);
-  }, [checkedList]);
-
-  console.log("🍅 data:", data);
+  }, [checkedList, onChange]);
 
   return (
     <DivSTY>
@@ -57,7 +55,7 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
             <CheckboxField
               item={{ value: elem.role_no }}
               toggleFuelValue={handleCheckItem}
-              checked={checkedList.includes(`name-${i}`)}
+              checked={checkedList.includes(elem.role_no)}
               disabled={!isEdit}
             />
             <div className="text">{elem.role_name}</div>{" "}

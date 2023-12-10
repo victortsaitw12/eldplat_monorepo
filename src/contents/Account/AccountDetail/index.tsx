@@ -13,10 +13,12 @@ import EmployeeInfoBox from "./EmployeeInfoBox";
 import RoleInfoBox from "./RoleInfoBox";
 import { I_ReqBody as I_CreateReqBody } from "@services/account/createAccount";
 import { I_ReqBody as I_UpdateReqBody } from "@services/account/updateAccount";
+import { I_AccountDDLItem } from "@services/account/getAccountDDL";
 import { I_RoleItem } from "@services/account/getOneAccount";
 
 const AccountDetail = ({
   data,
+  ddl,
   isEdit,
   asyncSubmitForm,
   submitRef
@@ -62,10 +64,13 @@ const AccountDetail = ({
       />
       <EmployeeInfoBox
         data={data}
+        ddl={ddl}
         isEdit={isEdit}
         register={register}
         control={control}
         errors={errors}
+        setValue={setValue}
+        getValues={getValues}
       />
       <RoleInfoBox
         data={data.account_role}
@@ -73,6 +78,7 @@ const AccountDetail = ({
         register={register}
         control={control}
         setValue={setValue}
+        getValues={getValues}
         errors={errors}
       />
       <button style={{ display: "none" }} ref={submitRef} type="submit">
@@ -86,6 +92,7 @@ export default AccountDetail;
 
 interface I_Props {
   data: I_AccountDetailItem;
+  ddl: I_AccountDDLItem;
   isEdit: boolean;
   asyncSubmitForm: (data: any) => Promise<void>;
   submitRef: React.RefObject<HTMLButtonElement>;

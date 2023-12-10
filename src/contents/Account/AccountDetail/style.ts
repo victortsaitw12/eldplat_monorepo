@@ -12,4 +12,8 @@ export const FormSTY = styled.form`
     grid-row: 2/-1;
     width: 100%;
   }
+  .input-error {
+    color: red;
+    font-size: ${({ theme }) => theme.fontSize.Paragraph100};
+  }
 `;

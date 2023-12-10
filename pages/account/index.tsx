@@ -53,9 +53,15 @@ const Page: NextPageWithLayout<never> = () => {
       // setData(result.ResultList);
       const data = DUMMY_ACC_LIST.ResultList;
       const pageInfo = DUMMY_ACC_LIST.PageInfo;
-      const isUpdatedDataAfterCreate = localStorage.getItem("accCreateData");
-
+      const isUpdatedDataAfterCreate =
+        localStorage.getItem("accountCreateData");
       if (isUpdatedDataAfterCreate) {
+        console.log("🍅 isUpdatedDataAfterCreate:", isUpdatedDataAfterCreate);
+        console.log("🍅 JSON.parse:", JSON.parse(isUpdatedDataAfterCreate));
+        console.log("🍅 data:", [
+          JSON.parse(isUpdatedDataAfterCreate),
+          ...data
+        ]);
         setData([JSON.parse(isUpdatedDataAfterCreate), ...data]);
         setPageInfo({
           ...pageInfo,
@@ -87,7 +93,7 @@ const Page: NextPageWithLayout<never> = () => {
   }, [status]);
 
   React.useEffect(() => {
-    localStorage.removeItem("roleCreateData");
+    localStorage.removeItem("accountCreateData");
   }, [router]);
 
   const createBtn = (
