@@ -148,5 +148,5 @@ export interface I_AccountItem {
 
 export interface I_RoleName {
   role_name_m: string;
-  role_name: string;
+  role_name: string[];
 }

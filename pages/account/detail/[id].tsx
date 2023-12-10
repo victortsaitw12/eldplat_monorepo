@@ -79,12 +79,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const getRoleNames = (data: any) => {
-    /* function that turn data.account_role = ["r-0001bus01","r-0001bus03", "r-0001sys04"] into  roles = [
-        { role_name_m: "車輛管理", role_name: ["最高管理員", "調度"] },
-        { role_name_m: "系統管理", role_name: ["一般使用者"] }
-      ]
-    */
-    // group data.account_role list by the items that trimed last 2 characters into new list of the last 2 characters
     const groupedRoles = data.account_role.reduce((acc: any, item: string) => {
       const role_no = item.slice(item.length - 2);
       const module_no = item.slice(0, item.length - 2);
@@ -96,14 +90,22 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       }
       return acc;
     }, {});
-    console.log("🍅 groupedRoles:", groupedRoles);
+
+    const result = [];
+    for (const [key, value] of Object.entries(groupedRoles)) {
+      result.push({
+        role_name_m: DUMMY_ROLE_NAME_MOUDULE_MAP.get(key),
+        role_name: value.map((item: string) => DUMMY_ROLE_NAME_MAP.get(item))
+      });
+    }
+
+    return result;
   };
 
   const asyncSubmitForm = async (data: any) => {
     console.log("🔜 data:", data);
     const account_name = getAccountName(data);
     const roles = getRoleNames(data);
-    return;
     if (isCreate) {
       localStorage.setItem(
         "accountCreateData",
@@ -111,6 +113,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
           ...data,
           id: "create",
           account_name: account_name,
+          roles: roles,
           invt_sts: "03"
         })
       );
