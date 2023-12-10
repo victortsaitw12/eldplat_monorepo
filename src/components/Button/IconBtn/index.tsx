@@ -3,7 +3,8 @@ import {
   SmallPlusIcon,
   EditIcon,
   TrashIcon,
-  MoreIcon
+  MoreIcon,
+  EnvelopeIcon
 } from "evergreen-ui";
 import { DivSTY } from "./style";
 
@@ -19,11 +20,11 @@ const IconBtn = ({ tip, type, onClick }: I_Props) => {
     case "delete":
       btn = <TrashIcon onClick={onClick} />;
       break;
-    case "more":
-      btn = <MoreIcon onClick={onClick} />;
+    case "envelope":
+      btn = <EnvelopeIcon onClick={onClick} />;
       break;
     default:
-      btn = <MoreIcon onClick={onClick} />;
+      btn = <button type="button" />;
   }
   return (
     <DivSTY>
@@ -35,8 +36,8 @@ const IconBtn = ({ tip, type, onClick }: I_Props) => {
 };
 
 interface I_Props {
-  tip: string;
-  type?: "create" | "edit" | "delete" | "more";
+  tip?: string;
+  type?: "create" | "edit" | "delete" | "envelope";
   onClick?: (e?: any) => void;
   customIcon?: React.ReactNode;
 }

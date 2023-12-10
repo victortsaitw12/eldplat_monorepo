@@ -75,9 +75,9 @@ export const DUMMY_ONE_ACCOUNT = {
       account_no: "007217",
       account_fname: "張",
       account_lname: "友承",
-      org_no: ["o-00010101", "o-00010102"],
-      org_name: ["多元發展部", "商業互動設計組"],
-      porg_no: "o-000101",
+      org_no: ["o-00101", "o-0010101", "o-001010102"],
+      org_name: ["雄獅資訊", "多元發展部", "電商應用整合組"],
+      porg_no: "o-001",
       porg_name: "雄獅集團",
       staff_no: "007217",
       job_title: "專案管理師",
@@ -225,7 +225,8 @@ export const DUMMY_DATA_CREATE = {
 
 export const DUMMY_ROLE_NAME_MOUDULE_MAP = new Map([
   ["r-bus", "車輛管理"],
-  ["r-sys", "系統管理"]
+  ["r-sys", "系統管理"],
+  ["r-hr", "人事管理"]
 ]);
 
 export const DUMMY_ROLE_NAME_MAP = new Map([
@@ -233,4 +234,20 @@ export const DUMMY_ROLE_NAME_MAP = new Map([
   ["02", "主管"],
   ["03", "調度"],
   ["04", "一般使用者"]
+]);
+
+export const DUMMY_ORG_LIST = new Map([
+  ["o-001", "雄獅集團"],
+  ["o-00101", "雄獅資訊"],
+  ["o-0010101", "多元發展部"],
+  ["o-0010102", "創新發展部"],
+  ["o-0010103", "資通部"],
+  ["o-0010104", "營運部"],
+  ["o-001010101", "應用專案管理組"],
+  ["o-001010102", "電商應用整合組"],
+  ["o-001010103", "商業互動設計組"],
+  ["o-001010104", "通運應用整合組"],
+  ["o-001010105", "車管組"],
+  ["o-001010106", "調度組"],
+  ["o-001010107", "業務組"]
 ]);

@@ -1,12 +1,13 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, GetServerSideProps } from "next";
-import { toaster } from "evergreen-ui";
+import { Radio, toaster } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 
 //
 import { getLayout } from "@layout/MainLayout";
 import { ParsedUrlQuery } from "querystring";
+import { DUMMY_ACC_LIST } from "@services/account/getAccountList";
 import {
   getOneAccount,
   I_AccountDetailItem,
@@ -42,7 +43,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const { showLeavePageModal, showModal } = useModal();
   const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
-  const [ddl, setDDL] = React.useState<I_DDL | null>(null);
+  const [ddl, setDDL] = React.useState<I_DDL>(DUMMY_ACC_DDL.ResultList[0]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
   const isCreate = id === "create";
@@ -51,7 +52,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const fetchData = async () => {
     setIsLoading(true);
     const createDummy = DUMMY_DATA_CREATE.ResultList[0];
-    const editedDummy = localStorage.getItem("accEditData");
+    const editedDummy = localStorage.getItem("accountEditData");
     const editDummy = editedDummy
       ? { ...DUMMY_ONE_ACCOUNT.ResultList[0], editedDummy }
       : DUMMY_ONE_ACCOUNT.ResultList[0];
@@ -103,10 +104,19 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const asyncSubmitForm = async (data: any) => {
+    // check user
+
     console.log("🔜 data:", data);
     const account_name = getAccountName(data);
     const roles = getRoleNames(data);
     if (isCreate) {
+      const isUserExist = DUMMY_ACC_LIST.ResultList.find(
+        (item) => item.account_name === account_name
+      );
+      if (isUserExist) {
+        showModal(userExistModalContent);
+        return;
+      }
       localStorage.setItem(
         "accountCreateData",
         JSON.stringify({
@@ -228,3 +238,24 @@ interface Props {
 interface Params extends ParsedUrlQuery {
   id: string;
 }
+
+const userExistModalContent = {
+  title: "您先前已建立該使用者",
+  children: (
+    <div>
+      <div>是否前往編輯該使用者？</div>
+      <div>若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：</div>
+      <div>
+        <div>
+          <input type="radio" name="data" id="retrieve" />
+          使用以前的資料
+        </div>
+        <div>
+          <input type="radio" name="data" id="renewal" />
+          使用我剛剛填寫的資料
+        </div>
+      </div>
+    </div>
+  ),
+  customBtns: <ButtonSet primaryBtnText="前往編輯" />
+};

@@ -30,8 +30,10 @@ const AccountDetail = ({
   const createValues: I_CreateReqBody = {
     account_fname: data?.account_fname || "",
     account_lname: data?.account_lname || "",
-    org_no: data?.org_no || session?.user.org_no || "",
+    org_no: data?.org_no || [],
     creorgno: session?.user.org_no || "",
+    staff_no: data?.staff_no || "",
+    job_title: data?.job_title || "",
     content_phone_tel_country_code1:
       data?.content_phone_tel_country_code1 || "",
     content_phone_tel1: data?.content_phone_tel1 || "",
@@ -109,5 +111,6 @@ const getSelectedRoles = (data: I_AccountDetailItem) => {
   );
   if (selectedRoleList.length === 0) return [];
   const roleStrList = selectedRoleList.map((item) => item.role_no);
+  console.log("🍅", roleStrList);
   return roleStrList;
 };

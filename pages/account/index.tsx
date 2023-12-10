@@ -96,6 +96,10 @@ const Page: NextPageWithLayout<never> = () => {
     localStorage.removeItem("accountCreateData");
   }, [router]);
 
+  React.useEffect(() => {
+    localStorage.removeItem("accountEditData");
+  }, [router]);
+
   const createBtn = (
     <IconLeft text="新增使用者" onClick={handleCreate}>
       <PlusIcon size={14} />

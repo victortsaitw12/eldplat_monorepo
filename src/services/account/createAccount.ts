@@ -50,6 +50,8 @@ export interface I_ReqBody {
   account_lname: string;
   org_no: string[];
   creorgno: string;
+  staff_no: string;
+  job_title: string;
   content_phone_tel_country_code1: string;
   content_phone_tel1: string;
   content_priv_email: string;

@@ -45,12 +45,12 @@ export const DUMMY_ACC_LIST: I_responseBody = {
     {
       account_no: "007217",
       account_name: "張友承",
-      org_no: ["o-01", "o-0101", "o-010102"],
+      org_no: ["o-00101", "o-0010101", "o-001010102"],
       org_name: ["雄獅資訊", "多元發展部", "電商應用整合組"],
       content_phone_tel1: "0911000111",
       content_phone_tel2: "0911000222",
       roles: [
-        { role_name_m: "系統管理", role_name: ["主管", "管理員", "使用者"] },
+        { role_name_m: "系統管理", role_name: ["使用者"] },
         { role_name_m: "車輛管理", role_name: ["主管", "管理員", "使用者"] }
       ],
       invt_sts: "03"
@@ -64,7 +64,8 @@ export const DUMMY_ACC_LIST: I_responseBody = {
       content_phone_tel2: "0922000222",
       roles: [
         { role_name_m: "系統管理", role_name: ["主管", "管理員", "使用者"] },
-        { role_name_m: "車輛管理", role_name: ["主管", "管理員", "使用者"] }
+        { role_name_m: "車輛管理", role_name: ["使用者"] },
+        { role_name_m: "人事管理", role_name: ["管理員", "使用者"] }
       ],
       invt_sts: "03"
     },
@@ -76,8 +77,8 @@ export const DUMMY_ACC_LIST: I_responseBody = {
       content_phone_tel1: "0987654321",
       content_phone_tel2: "",
       roles: [
-        { role_name_m: "系統管理", role_name: ["主管", "管理員", "使用者"] },
-        { role_name_m: "車輛管理", role_name: ["主管", "管理員", "使用者"] }
+        { role_name_m: "系統管理", role_name: ["管理員", "使用者"] },
+        { role_name_m: "車輛管理", role_name: ["使用者"] }
       ],
       invt_sts: "03"
     },
@@ -89,10 +90,10 @@ export const DUMMY_ACC_LIST: I_responseBody = {
       content_phone_tel1: "0912341234",
       content_phone_tel2: "",
       roles: [
-        { role_name_m: "系統管理", role_name: ["主管", "管理員", "使用者"] },
-        { role_name_m: "車輛管理", role_name: ["主管", "管理員", "使用者"] }
+        { role_name_m: "系統管理", role_name: ["使用者"] },
+        { role_name_m: "車輛管理", role_name: ["使用者"] }
       ],
-      invt_sts: "01"
+      invt_sts: "02"
     },
     {
       account_no: "USR202311290001",
@@ -102,13 +103,35 @@ export const DUMMY_ACC_LIST: I_responseBody = {
       content_phone_tel1: "0912341234",
       content_phone_tel2: "",
       roles: [
-        { role_name_m: "系統管理", role_name: ["主管", "管理員", "使用者"] },
-        { role_name_m: "車輛管理", role_name: ["主管", "管理員", "使用者"] }
+        { role_name_m: "系統管理", role_name: ["使用者"] },
+        { role_name_m: "車輛管理", role_name: ["使用者"] }
       ],
       invt_sts: "01"
     }
   ],
-  ConditionList: [],
+  ConditionList: [
+    {
+      field_Name: "account_name",
+      arrayConditions: ["like", "equal"],
+      displayType: "search",
+      dataType: "string",
+      label: "使用者姓名"
+    },
+    {
+      field_Name: "role_name_m",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "平台角色"
+    },
+    {
+      field_Name: "invt_sts",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "帳號狀態"
+    }
+  ],
   PageInfo: {
     Page_Index: 1,
     Page_Size: 10,

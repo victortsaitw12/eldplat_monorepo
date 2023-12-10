@@ -1,4 +1,5 @@
 import { I_KeyValue } from "./getOneAccount";
+import { DUMMY_ORG_LIST } from "@services/account/getOneAccount";
 export const getDDL = async (uk: string, reqBody: I_ReqBody) => {
   // return DUMMY_DATA;
 
@@ -41,32 +42,9 @@ export const DUMMY_ACC_DDL = {
   Message: "用戶端要求成功",
   ResultList: [
     {
-      org_no: [
-        {
-          value: "o-01",
-          label: "雄獅資訊"
-        },
-        {
-          value: "o-0101",
-          label: "多元發展部"
-        },
-        {
-          value: "o-0102",
-          label: "資通規畫部"
-        },
-        {
-          value: "o-010101",
-          label: "通運應用整合組"
-        },
-        {
-          value: "o-010102",
-          label: "電商應用整合組"
-        },
-        {
-          value: "o-010103",
-          label: "傳媒整合應用組"
-        }
-      ]
+      org_no: Array.from(DUMMY_ORG_LIST, ([key, value]) => {
+        return { value: key, label: value };
+      })
     }
   ],
   Result: true,
