@@ -83,7 +83,7 @@ const DetailPanel = ({
       req: false,
       label: "職責描述",
       editEle: (
-        <CustomTextArea
+        <Textarea
           placeholder="請輸入職責描述"
           {...register("role_desc", { required: false })}
         />

@@ -146,11 +146,17 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   return (
     <>
-      <ControlBar hasShadow={true}>
+      <ControlBar hasShadow={true} flexEnd={true}>
         <ButtonSet
           isEdit={editPage === "edit"}
           secondaryBtnOnClick={handleCancel}
+          secondaryBtnText={
+            isCreate ? "回列表頁" : editPage === "edit" ? "取消" : "回列表頁"
+          }
           primaryBtnOnClick={handleConfirm}
+          primaryBtnText={
+            isCreate ? "儲存" : editPage === "edit" ? "儲存" : "編輯"
+          }
         />
       </ControlBar>
       {data && (
