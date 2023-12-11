@@ -14,15 +14,11 @@ import { ParsedUrlQuery } from "querystring";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import { getDriverById } from "@services/driver/getDriverById";
 import { updateDriver } from "@services/driver/updateDriver";
-import DataOverview from "@components/DataOverview";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
 import InfoCard from "@components/InfoCard";
-import CustomDatePicker from "@components/CustomDatePicker";
-import FileCard from "@components/FileCard";
-import NewUploader from "@components/NewUploader";
-import CustomTextArea from "@components/CustomTextArea";
-import CustomTextInputField from "@components/CustomTextInputField";
+import NoData from "@components/NoData";
+import InputGenerator from "@components/InputGenerator";
 
 const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
   driverNo
@@ -53,23 +49,24 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
 
   useEffect(() => {
     setIsEdit(editPage === "edit" || false);
+    // setIsEdit(true);
   }, [editPage]);
 
   const TeamInFo = [
     {
       listClassName: "fb-100 gap-0",
       readonly: false,
-      req: true,
+      req: false,
       label: "",
       bold: true,
-      value: "新人訓練",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      // value: <NoData className={"no-data"} text="尚無建立項目" />,
+      value: (
+        <ul className={"list-wrapper"}>
+          <li>第一車隊</li>
+          <li>第二車隊</li>
+        </ul>
+      ),
+      editEle: <InputGenerator />
     }
   ];
 
@@ -77,17 +74,16 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
     {
       listClassName: "fb-100 gap-0",
       readonly: false,
-      req: true,
+      req: false,
       label: "",
       bold: true,
-      value: "新人訓練",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      value: (
+        <ul className={"list-wrapper"}>
+          <li>北北基</li>
+          <li>桃園</li>
+        </ul>
+      ),
+      editEle: <InputGenerator />
     }
   ];
 
@@ -95,17 +91,17 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
     {
       listClassName: "fb-100 gap-0",
       readonly: false,
-      req: true,
+      req: false,
       label: "",
       bold: true,
-      value: "新人訓練",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      value: (
+        <ul className={"list-wrapper"}>
+          <li>A級</li>
+          <li>B級</li>
+          <li>C級</li>
+        </ul>
+      ),
+      editEle: <InputGenerator />
     }
   ];
 
@@ -113,30 +109,30 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
     {
       listClassName: "fb-100 gap-0",
       readonly: false,
-      req: true,
+      req: false,
       label: "",
       bold: true,
-      value: "新人訓練",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      value: (
+        <ul className={"list-wrapper"}>
+          <li>新人訓練</li>
+          <li>道安講座</li>
+          <li>集團服務說明</li>
+        </ul>
+      ),
+      editEle: <InputGenerator />
     }
   ];
 
   const handleEdit = () => {
-    router.push(`/driver/training/${driverNo}?editPage=edit`);
+    router.push("/driver/management?editPage=edit");
   };
 
   const handleView = () => {
-    router.push(`/driver/training/${driverNo}?editPage=view`);
+    router.push("/driver/management?editPage=view");
   };
 
   const handleReturn = () => {
-    router.push(`/driver/detail/${driverNo}?editPage=view`);
+    router.push("/driver");
   };
 
   return (
