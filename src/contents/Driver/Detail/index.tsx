@@ -299,7 +299,7 @@ function DriverDetail(props: Props) {
       editEle: <NewUploader isEditable={true} />
     },
     {
-      listClassName: "fb-66",
+      listClassName: "fb-33",
       readonly: false,
       req: true,
       label: "有效期限",

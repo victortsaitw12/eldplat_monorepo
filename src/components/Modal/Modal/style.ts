@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
+export const ModalSTY = styled.div<{ isOpen: boolean }>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
   position: fixed;
   top: 0;
@@ -47,14 +47,4 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
       padding: 15px;
     }
   }
-`;
-
-export const ButtonSetSTY = styled.div`
-  display: flex;
-  width: 100%;
-  padding: 12px 20px;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  background: ${({ theme }) => theme.color.N0};
 `;

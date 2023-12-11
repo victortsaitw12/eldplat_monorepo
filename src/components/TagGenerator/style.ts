@@ -6,6 +6,10 @@ export const BodySTY = styled.div`
   gap: 8px;
   align-items: flex-start;
 
+  &.min-height{
+    min-height: calc(177px - 35px - 40px);
+  }
+
   .tag {
     height: 27px;
     border-radius: 4px;

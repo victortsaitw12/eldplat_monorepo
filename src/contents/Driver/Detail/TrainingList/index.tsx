@@ -257,51 +257,6 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
           headNode={<PaginationField pageInfo={pageInfo} />}
         />
       </FilterWrapper>
-
-      {/* {orderedLicensesData && (
-        <TableWithEdit
-          tableName=""
-          cleanTableName={userName}
-          titles={table_title}
-          data={orderedLicensesData}
-          goToCreatePage={handleCreate}
-          goToEditPage={handleEdit}
-          deleteItem={handleDelete}
-          createBtnText="新增駕駛證照"
-          needCreateBtn={isEdit}
-          pageInfo={pageInfo}
-          onPageChange={handlePageChange}
-        />
-      )} */}
-
-      {/* {isLightBoxOpen && (
-        <Pane>
-          <Dialog
-            isShown={isLightBoxOpen}
-            title={`${editNo ? "編輯" : "新增"}駕駛證照`}
-            onConfirm={handleConfirm}
-            onCloseComplete={handleCancel}
-            cancelLabel="取消"
-            confirmLabel="確定"
-          >
-            {({}) => (
-              <>
-                <hr
-                  style={{ border: "none", borderBottom: "1px solid #D5E2F1" }}
-                />
-                <LicenseForm
-                  btnRef={btnRef}
-                  editNo={editNo}
-                  licensesData={licensesData}
-                  asyncSubmitCreateForm={asyncSubmitCreateForm}
-                  asyncSubmitEditForm={asyncSubmitEditForm}
-                  driverNo={driverNo}
-                />
-              </>
-            )}
-          </Dialog>
-        </Pane>
-      )} */}
     </DivSTY>
   );
 }
