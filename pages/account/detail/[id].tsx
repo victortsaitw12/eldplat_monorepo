@@ -105,7 +105,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   const asyncSubmitForm = async (data: any) => {
     // check user
-
     console.log("🔜 data:", data);
     const account_name = getAccountName(data);
     const roles = getRoleNames(data);

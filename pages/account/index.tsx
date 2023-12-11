@@ -56,12 +56,6 @@ const Page: NextPageWithLayout<never> = () => {
       const isUpdatedDataAfterCreate =
         localStorage.getItem("accountCreateData");
       if (isUpdatedDataAfterCreate) {
-        console.log("🍅 isUpdatedDataAfterCreate:", isUpdatedDataAfterCreate);
-        console.log("🍅 JSON.parse:", JSON.parse(isUpdatedDataAfterCreate));
-        console.log("🍅 data:", [
-          JSON.parse(isUpdatedDataAfterCreate),
-          ...data
-        ]);
         setData([JSON.parse(isUpdatedDataAfterCreate), ...data]);
         setPageInfo({
           ...pageInfo,

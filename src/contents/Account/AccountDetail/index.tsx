@@ -111,6 +111,5 @@ const getSelectedRoles = (data: I_AccountDetailItem) => {
   );
   if (selectedRoleList.length === 0) return [];
   const roleStrList = selectedRoleList.map((item) => item.role_no);
-  console.log("🍅", roleStrList);
   return roleStrList;
 };

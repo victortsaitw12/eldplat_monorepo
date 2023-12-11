@@ -35,14 +35,14 @@ function CollapseTable({ maxRow, ...props }: I_Props) {
 
   const dataCollapse = data?.map((item, i) => {
     return {
-      ...item,
       checkbox: (
         <IconButton
           icon={collapse.includes(i) ? ChevronDownIcon : ChevronRightIcon}
           value={i}
           onClick={toggleCollapse}
         />
-      )
+      ),
+      ...item
     };
   });
 
