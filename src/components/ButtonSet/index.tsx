@@ -33,7 +33,7 @@ function ButtonSet({
         onClick={primaryBtnOnClick}
         disabled={primaryDisable}
       >
-        {!isEdit && <EditIcon size={14} />}
+        {primaryBtnText === "編輯" && <EditIcon size={14} />}
       </PrimaryBtn>
     </DivSTY>
   );
