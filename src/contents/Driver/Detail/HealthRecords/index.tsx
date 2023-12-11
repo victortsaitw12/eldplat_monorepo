@@ -54,7 +54,6 @@ function EditHistory({
     };
 
     fetchData();
-
   }, [userNo]);
 
   const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
@@ -67,8 +66,8 @@ function EditHistory({
     return data.map((item: I_Healths) => {
       return {
         id: item["health_no"],
-        heal_date: item["heal_date"],
         heal_name: item["heal_name"],
+        heal_date: item["heal_date"],
         description: item["description"],
         next_date: item["next_date"]
       };

@@ -14,33 +14,18 @@ import NewUploader from "@components/NewUploader";
 import CustomTextInputField from "@components/CustomTextInputField";
 import CustomDatePicker from "@components/CustomDatePicker";
 import TagGenerator from "@components/TagGenerator";
-import Uploader from "@components/Uploader";
-import StarRate from "@components/StarRate";
+import ButtonSet from "@components/ButtonSet";
 
-import {
-  Select,
-  TextInput,
-  Textarea,
-  FileUploader,
-  FileCard,
-  SmallPlusIcon,
-  Pane,
-  InlineAlert,
-  TextInputField,
-  toaster
-} from "evergreen-ui";
+import { Select, SmallPlusIcon, Pane } from "evergreen-ui";
+import { set } from "lodash";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  const [newLicense, setNewLicense] = useState<any>(null);
 
   React.useEffect(() => {
     console.log("hello");
   }, []);
-
-  const handleNavigation = async (path: string) => {
-    router.push(path);
-  };
 
   const BasicInFo = [
     {
@@ -69,80 +54,70 @@ const Page: NextPageWithLayout<never> = () => {
       readonly: false,
       req: false,
       label: "國籍",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入手機" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "身分證字號",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "性別",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "生日",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "語言",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "身高",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "體重",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "手機",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "學歷",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
       readonly: false,
       req: false,
       label: "信箱",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      value: "--"
     }
   ];
 
@@ -169,8 +144,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       bold: false,
       label: "入職日期",
-      value: "--",
-      editEle: <TextInput className="required" placeholder="請輸入手機" />
+      value: "--"
     },
     {
       listClassName: "fb-50",
@@ -185,7 +159,13 @@ const Page: NextPageWithLayout<never> = () => {
           </option>
         </Select>
       ),
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            請選擇
+          </option>
+        </Select>
+      )
     },
     {
       listClassName: "fb-50",
@@ -200,7 +180,13 @@ const Page: NextPageWithLayout<never> = () => {
           </option>
         </Select>
       ),
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            請選擇
+          </option>
+        </Select>
+      )
     },
     {
       listClassName: "fb-50 m-0",
@@ -215,7 +201,13 @@ const Page: NextPageWithLayout<never> = () => {
           </option>
         </Select>
       ),
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            請選擇
+          </option>
+        </Select>
+      )
     },
     {
       listClassName: "fb-50 m-0",
@@ -230,7 +222,13 @@ const Page: NextPageWithLayout<never> = () => {
           </option>
         </Select>
       ),
-      editEle: <TextInput className="required" placeholder="請輸入信箱" />
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            請選擇
+          </option>
+        </Select>
+      )
     }
   ];
 
@@ -241,7 +239,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "",
       bold: false,
-      value: <TagGenerator />
+      value: <TagGenerator minHeight />
     }
   ];
 
@@ -346,20 +344,78 @@ const Page: NextPageWithLayout<never> = () => {
     {
       listClassName: "fb-100 m-0",
       readonly: false,
-      req: false,
+      req: true,
       label: "附件/相關檔案",
       bold: true,
       value: <NewUploader isMultiple={true} isEditable={true} />
     }
   ];
 
+  const newLicenseInfo = [
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: true,
+      label: "駕照種類",
+      bold: true,
+      value: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            請選擇
+          </option>
+        </Select>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: true,
+      label: "有效期限",
+      bold: true,
+      value: <CustomDatePicker placeholder="請輸入有效期限" />
+    },
+    {
+      listClassName: "fb-100 m-0",
+      readonly: false,
+      req: true,
+      label: "附件/相關檔案",
+      bold: true,
+      value: <NewUploader isEditable={true} />
+    }
+  ];
+
+  const handleCancel = () => {
+    router.push("/driver");
+  };
+
+  const handleSave = () => {
+    router.push("/driver");
+  };
+
+  const handleAddInfoCard = () => {
+    setNewLicense(newLicenseInfoCard);
+  };
+
+  const newLicenseInfoCard = (
+    <InfoCard isEdit={true} infoData={newLicenseInfo} infoTitle="證照1" />
+  );
+
   return (
     <>
-      <ControlBar />
+      <ControlBar flexEnd hasShadow>
+        <ButtonSet
+          isEdit={false}
+          primaryDisable={true}
+          secondaryBtnText={"取消"}
+          secondaryBtnOnClick={handleCancel}
+          primaryBtnText={"儲存"}
+          primaryBtnOnClick={handleSave}
+        />
+      </ControlBar>
       <BodySTY>
         <Pane className={"main-column"}>
           <InfoCard
-            isEdit={false}
+            isEdit={true}
             infoData={BasicInFo}
             infoTitle="基本資料"
             hasProfileCard={true}
@@ -367,22 +423,27 @@ const Page: NextPageWithLayout<never> = () => {
         </Pane>
         <Pane className={"main-column"}>
           <InfoCard
-            isEdit={false}
+            isEdit={true}
             infoData={EmployeeInFo}
             infoTitle="職員資料"
           />
-          <InfoCard isEdit={false} infoData={TagInFo} infoTitle="標籤" />
+          <InfoCard isEdit={true} infoData={TagInFo} infoTitle="標籤" />
         </Pane>
         <Pane className={"main-column"}>
-          <InfoCard isEdit={false} infoData={LicenseInFo} infoTitle="駕照" />
-          <SecondaryButton text="新增其他證照" className={"create-more-button"}>
+          <InfoCard isEdit={true} infoData={LicenseInFo} infoTitle="駕照" />
+          {newLicense}
+          <SecondaryButton
+            text="新增其他證照"
+            className={"create-more-button"}
+            onClick={handleAddInfoCard}
+          >
             <SmallPlusIcon />
           </SecondaryButton>
         </Pane>
         <Pane className={"main-column"}>
-          <InfoCard isEdit={false} infoData={CommentInFo} infoTitle="備註" />
+          <InfoCard isEdit={true} infoData={CommentInFo} infoTitle="備註" />
           <InfoCard
-            isEdit={false}
+            isEdit={true}
             infoData={TrainingInFo}
             infoTitle="教育訓練"
           />

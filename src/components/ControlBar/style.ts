@@ -4,6 +4,7 @@ export const DivSTY = styled.div`
   display: flex;
   width: 100%;
   padding: 12px 20px;
+  margin-bottom: 20px;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
@@ -11,5 +12,10 @@ export const DivSTY = styled.div`
 
   &.shadow {
     box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
+  }
+
+  &.flex-end {
+    justify-content: flex-end;
+    padding: 0;
   }
 `;
