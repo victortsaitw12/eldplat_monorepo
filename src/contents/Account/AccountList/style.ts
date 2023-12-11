@@ -2,6 +2,23 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   padding: 1rem;
+  header {
+    padding: 0;
+  }
+  .headNode {
+    display: table-header;
+    width: 100%;
+    padding: none;
+    .btns {
+      padding: 8px 16px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+    }
+    .paginationField {
+      padding: 8px 16px;
+    }
+  }
   .roles {
     display: flex;
     flex-direction: column;

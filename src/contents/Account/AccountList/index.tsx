@@ -5,12 +5,14 @@ import {
   EditIcon,
   EnvelopeIcon,
   ChevronDownIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  Button
 } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { I_AccountItem, I_RoleName } from "@services/account/getAccountList";
 import Table from "@components/Table/Table";
+import CollapseTable from "@components/Table/CollapseTable";
 import IconBtn from "@components/Button/IconBtn";
 import Checkbox from "@components/CheckBox";
 import InvitSatus from "./InvitSatus";
@@ -42,6 +44,8 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
     console.log("toggle");
   };
 
+  const handleFoldAll = () => {};
+  const handleOpenAll = () => {};
   const getRoleName = (roles: I_RoleName[]) => {
     const roleNodeArr = roles.map((role: any, i) => {
       return (
@@ -91,13 +95,23 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
     };
   });
 
+  const headNode = (
+    <div className="headNode">
+      <div className="btns">
+        <Button onClick={handleFoldAll}>全部收合</Button>
+        <Button onClick={handleOpenAll}>全部展開</Button>
+      </div>
+      <PaginationField pageInfo={pageInfo} />
+    </div>
+  );
+
   return (
     <BodySTY>
-      <Table
+      <CollapseTable
         titles={tableTitleArr}
         data={dataFitTable}
         onView={handleView}
-        headNode={<PaginationField pageInfo={pageInfo} />}
+        headNode={headNode}
       />
     </BodySTY>
   );

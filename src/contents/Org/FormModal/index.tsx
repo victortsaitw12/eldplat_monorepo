@@ -1,5 +1,12 @@
 import React from "react";
-import { TextInputField, Switch, Group, toaster, Dialog } from "evergreen-ui";
+import {
+  TextInputField,
+  Switch,
+  Group,
+  toaster,
+  Dialog,
+  Text
+} from "evergreen-ui";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { FormSTY } from "./style";
@@ -8,6 +15,8 @@ import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 import { textValidation } from "@utils/hookFormValidation";
 import CustomTextInputField from "@components/CustomTextInputField";
+import { ErrorMessage } from "@hookform/error-message";
+
 // import { fetchData } from "next-auth/client/_utils";
 
 const FormModal = ({
@@ -105,8 +114,15 @@ const FormModal = ({
               required: "不可輸入特殊符號",
               validate: textValidation
             })}
-            isInvalid={!!errors.org_name}
-            hint={errors.org_name?.message}
+            // isInvalid={!!errors.org_name}
+            // hint={errors.org_name?.message}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="org_name"
+            render={({ message }) => (
+              <Text className="input-error">{message}</Text>
+            )}
           />
           {!content.isCreate && (
             <Group

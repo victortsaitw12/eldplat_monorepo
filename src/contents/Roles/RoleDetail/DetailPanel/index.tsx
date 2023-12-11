@@ -102,7 +102,6 @@ const DetailPanel = ({
               name="role_enb"
               render={({ field: { onChange, value, ref } }) => (
                 <>
-                  {" "}
                   <Switch checked={value} onChange={onChange} />
                   <span>啟用</span>
                 </>

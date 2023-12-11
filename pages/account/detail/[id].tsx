@@ -238,6 +238,9 @@ interface Props {
 interface Params extends ParsedUrlQuery {
   id: string;
 }
+interface I_GroupedRoles {
+  [module_no: string]: string[];
+}
 
 const userExistModalContent = {
   title: "您先前已建立該使用者",
