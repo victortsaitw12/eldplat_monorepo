@@ -43,130 +43,50 @@ export const DUMMY_RoleList = {
   ResultList: [
     {
       module_no: "bus",
-      module_name: "車管系統",
+      module_name: "車輛管理",
       role_no: "r-bus01",
-      role_name: "車管模組-管理員",
-      role_desc: "車管模組-管理員",
+      role_name: "車管",
+      role_desc: "管理車輛狀況，日常車輛維護，維修審核",
       role_enb: true
     },
     {
       module_no: "bus",
-      module_name: "車管系統",
+      module_name: "車輛管理",
       role_no: "r-bus01",
-      role_name: "車管模組-管理員",
-      role_desc: "超過一行的呈現方式，超過一行的呈現方式，超過一行的呈現方式",
+      role_name: "駕管",
+      role_desc: "管理駕駛排班，任務指派、休假謙、維修審核",
       role_enb: true
     },
     {
       module_no: "bus",
-      module_name: "車管系統",
+      module_name: "車輛管理",
       role_no: "r-bus02",
-      role_name: "車管模組-駕駛",
-      role_desc: "車管模組-駕駛",
+      role_name: "調度",
+      role_desc: "車輛調度",
       role_enb: true
     },
     {
       module_no: "bus",
-      module_name: "車管系統",
+      module_name: "車輛管理",
       role_no: "r-bus02",
-      role_name: "車管模組-駕駛",
-      role_desc: "車管模組-駕駛",
+      role_name: "駕駛",
+      role_desc: "駕駛、維保任務",
       role_enb: true
     },
     {
       module_no: "bus",
-      module_name: "車管系統",
+      module_name: "車輛管理",
       role_no: "r-bus03",
-      role_name: "車管模組-車管",
-      role_desc: "車管模組-車管",
+      role_name: "業務",
+      role_desc: "任務建立、客戶管理",
       role_enb: true
     },
     {
       module_no: "bus",
-      module_name: "車管系統",
+      module_name: "車輛管理",
       role_no: "r-bus03",
-      role_name: "車管模組-車管",
-      role_desc: "車管模組-車管",
-      role_enb: true
-    },
-    {
-      module_no: "bus",
-      module_name: "車管系統",
-      role_no: "r-bus04",
-      role_name: "車管模組-調度",
-      role_desc: "車管模組-調度",
-      role_enb: true
-    },
-    {
-      module_no: "bus",
-      module_name: "車管系統",
-      role_no: "r-bus04",
-      role_name: "車管模組-調度",
-      role_desc: "車管模組-調度",
-      role_enb: true
-    },
-    {
-      module_no: "bus",
-      module_name: "車管系統",
-      role_no: "r-bus05",
-      role_name: "車管模組-業務",
-      role_desc: "車管模組-業務",
-      role_enb: true
-    },
-    {
-      module_no: "bus",
-      module_name: "車管系統",
-      role_no: "r-bus05",
-      role_name: "車管模組-業務",
-      role_desc: "車管模組-業務",
-      role_enb: true
-    },
-    {
-      module_no: "bus",
-      module_name: "車管系統",
-      role_no: "r-bus06",
-      role_name: "車管模組-行銷",
-      role_desc: "車管模組-行銷",
-      role_enb: true
-    },
-    {
-      module_no: "bus",
-      module_name: "車管系統",
-      role_no: "r-bus06",
-      role_name: "車管模組-行銷",
-      role_desc: "車管模組-行銷",
-      role_enb: true
-    },
-    {
-      module_no: "bus",
-      module_name: "車管系統",
-      role_no: "r-bus07",
-      role_name: "車管模組-小客車駕駛",
-      role_desc: "車管模組-小客車駕駛",
-      role_enb: true
-    },
-    {
-      module_no: "bus",
-      module_name: "車管系統",
-      role_no: "r-bus07",
-      role_name: "車管模組-小客車駕駛",
-      role_desc: "車管模組-小客車駕駛",
-      role_enb: true
-    },
-    {
-      module_no: "sys",
-      module_name: "平台管理",
-      role_no: "r-sys01",
-      role_name: "權限模組-管理員",
-      role_desc: "權限模組-管理員",
-      role_enb: true
-    },
-    {
-      module_no: "sys",
-      module_name: "平台管理",
-      role_no: "r-sys01",
-      role_name: "權限模組-管理員",
-      role_desc: "權限模組-管理員",
+      role_name: "管理員",
+      role_desc: "管理車輛狀況，日常車輛維護，維修審核、任務指派",
       role_enb: true
     }
   ],
