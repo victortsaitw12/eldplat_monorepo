@@ -67,7 +67,7 @@ function InfoCard({
           />
         )}
         {Array.isArray(infoData[0]) ? (
-          infoData.map((col, index) => {
+          (infoData as I_infoData[][]).map((col, index) => {
             return (
               <Pane className="col" key={index}>
                 <UnorderedList className="row">
@@ -89,7 +89,7 @@ function InfoCard({
         ) : (
           <Pane className="col">
             <UnorderedList className="row">
-              {infoData.map((item: I_infoData, itemIndex) => {
+              {(infoData as I_infoData[]).map((item: I_infoData, itemIndex) => {
                 return (
                   <InfoItem
                     key={InfoCardId + itemIndex}
