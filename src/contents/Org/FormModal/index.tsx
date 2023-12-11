@@ -1,21 +1,15 @@
 import React from "react";
-import {
-  TextInputField,
-  Switch,
-  Group,
-  toaster,
-  Dialog,
-  Text
-} from "evergreen-ui";
+import { Switch, Group, Text } from "evergreen-ui";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSession } from "next-auth/react";
+import { ErrorMessage } from "@hookform/error-message";
 import { FormSTY } from "./style";
 
 import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 import { textValidation } from "@utils/hookFormValidation";
 import CustomTextInputField from "@components/CustomTextInputField";
-import { ErrorMessage } from "@hookform/error-message";
+import LightBox from "@components/Lightbox";
 
 // import { fetchData } from "next-auth/client/_utils";
 
@@ -93,37 +87,55 @@ const FormModal = ({
         asyncSubmitForm({ ...data });
       })}
     >
-      <Dialog
+      <LightBox
         title={isCreate ? "新增下級" : "編輯組織"}
-        isShown={true}
+        isOpen={true}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
-        confirmLabel="確定"
-        cancelLabel="取消"
       >
-        <div className="modal__container">
-          <TextInputField
-            label="父層組織"
+        <>
+          <CustomTextInputField
+            label={
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  marginBottom: "8px"
+                }}
+              >
+                父層組織
+              </div>
+            }
             value={content.parentName}
             disabled
           />
           <CustomTextInputField
-            label="組織名稱"
+            label={
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  marginBottom: "8px"
+                }}
+              >
+                組織名稱
+              </div>
+            }
             placeholder="請輸入組織名稱"
             {...register("org_name", {
               required: "不可輸入特殊符號",
               validate: textValidation
             })}
-            // isInvalid={!!errors.org_name}
-            // hint={errors.org_name?.message}
+            isInvalid={!!errors.org_name}
+            hint={errors.org_name?.message}
           />
-          <ErrorMessage
+          {/* <ErrorMessage
             errors={errors}
             name="org_name"
             render={({ message }) => (
               <Text className="input-error">{message}</Text>
             )}
-          />
+          /> */}
           {!content.isCreate && (
             <Group
               style={{ display: "flex", gap: "8px", marginTop: "24px" }}
@@ -140,8 +152,11 @@ const FormModal = ({
               <div>啟用</div>
             </Group>
           )}
-        </div>
-      </Dialog>
+        </>
+      </LightBox>
+
+      {/* confirmLabel="確定"
+        cancelLabel="取消" */}
     </FormSTY>
   );
 };
