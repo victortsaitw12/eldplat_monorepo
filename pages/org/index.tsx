@@ -58,7 +58,7 @@ const Page: NextPageWithLayout<{
     const formContent = {
       isCreate: isCreate,
       parentName: isCreate ? item["org_name"] : item["parent_org_name"],
-      orgName: isCreate ? "" : item["org_name"],
+      org_name: isCreate ? "" : item["org_name"],
       req: isCreate
         ? {
             org_no: item["org_no"],
@@ -82,7 +82,12 @@ const Page: NextPageWithLayout<{
     const result = updatedData[0].sublayer.map((item) => {
       if (item["org_no"] === v["org_no"]) {
         const updateName = v.org_name;
-        const updateItem = { ...item, org_name: updateName };
+        const updateEnb = v.org_enb;
+        const updateItem = {
+          ...item,
+          org_name: updateName,
+          org_enb: updateEnb
+        };
         return updateItem;
       } else {
         return item;

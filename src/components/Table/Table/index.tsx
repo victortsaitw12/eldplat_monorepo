@@ -30,9 +30,6 @@ function Table({
   className
 }: I_Table) {
   const hasData = data !== undefined && data !== null && data.length > 0;
-
-  console.log("data", data);
-
   return (
     <>
       <DivSTY className={`${className || ""} container`}>

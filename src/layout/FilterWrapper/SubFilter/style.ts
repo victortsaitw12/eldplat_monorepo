@@ -3,8 +3,10 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   position: relative;
   .subFilter-select {
+    height: 35px;
     select {
       font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+      border: 1px solid ${({ theme }) => theme.color.N50};
     }
   }
   .filter-button {
@@ -47,7 +49,7 @@ export const BodySTY = styled.div`
       /* Neutral/N0 */
       background: #ffffff;
       /* Neutral/N400 */
-      border: 1px solid #afc3da;
+      border: 1px solid ${({ theme }) => theme.color.N50};
       border-radius: 10px;
     }
     .modal-content {

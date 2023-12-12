@@ -41,7 +41,6 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
 
   const toggleCollapse = (e: any) => {
     e.stopPropagation();
-    console.log("toggle");
   };
 
   const handleFoldAll = () => {
@@ -66,13 +65,6 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
   const dataFitTable = data.map((item, i) => {
     return {
       id: item["account_no"],
-      checkbox: (
-        <IconButton
-          icon={ChevronRightIcon}
-          value={item["account_name"]}
-          onClick={toggleCollapse}
-        />
-      ),
       account_name: item["account_name"] || "--",
       org_name: item["org_name"].join("/") || "--",
       role_name_m: getRoleName(item["roles"]) || "--",

@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Group, Text } from "evergreen-ui";
+import { Switch, Group, Text, TextInputField } from "evergreen-ui";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { ErrorMessage } from "@hookform/error-message";
@@ -44,8 +44,11 @@ const FormModal = ({
     defaultValues
   });
 
+  console.log("🍅", content);
+
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {
+    console.log("🍅 submit:", data);
     isCreate ? handleCreateDummy(data) : handleEditDummy(data);
     // TODO
     // if (!session) return;
@@ -94,7 +97,7 @@ const FormModal = ({
         onCancel={handleCancel}
       >
         <>
-          <CustomTextInputField
+          <TextInputField
             label={
               <div
                 style={{
@@ -109,7 +112,7 @@ const FormModal = ({
             value={content.parentName}
             disabled
           />
-          <CustomTextInputField
+          <TextInputField
             label={
               <div
                 style={{
@@ -145,7 +148,6 @@ const FormModal = ({
                 height={16}
                 checked={checked}
                 {...register("org_enb", {
-                  required: "不可空白",
                   onChange: (e) => setChecked(e.target.checked)
                 })}
               />
