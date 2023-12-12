@@ -55,10 +55,10 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     const editedData = localStorage.getItem("accountEditData");
     const editedDummy = editedData ? JSON.parse(editedData) : null;
     const editDummy = editedDummy
-      ? { ...DUMMY_ONE_ACCOUNT.ResultList[0], editedDummy }
+      ? { ...editedDummy }
       : DUMMY_ONE_ACCOUNT.ResultList[0];
 
-    console.log("🍅 editedData:", JSON.parse(editedData));
+    console.log("🍅 editedData:", editedData && JSON.parse(editedData));
     console.log("🍅 editDummy+:", editDummy);
     setData(isCreate ? createDummy : editDummy);
     setDDL(DUMMY_ACC_DDL.ResultList[0]);
@@ -149,7 +149,26 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       );
       router.push("/account");
     } else {
-      localStorage.setItem("accountEditData", JSON.stringify({ ...data }));
+      const accountRoleArrFromDummy =
+        DUMMY_ONE_ACCOUNT.ResultList[0].account_role;
+      const editedDataFitFormatForRead = accountRoleArrFromDummy.map((item) => {
+        const updatedRoles = item.roles.map((role) => {
+          if (data.account_role.includes(role.role_no)) {
+            return { ...role, is_select: true };
+          }
+          return role;
+        });
+        return { ...item, roles: updatedRoles };
+      });
+      const editedDataForDemo = {
+        ...DUMMY_ONE_ACCOUNT.ResultList[0],
+        ...data,
+        account_role: editedDataFitFormatForRead
+      };
+      localStorage.setItem(
+        "accountEditData",
+        JSON.stringify(editedDataForDemo)
+      );
       router.push(`/account/detail/${id}?editPage=view`);
     }
 
@@ -213,7 +232,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   React.useEffect(() => {
     if (!session) return;
     fetchData();
-  }, [session, isCreate]);
+  }, [session, router]);
 
   // ------- render ------- //
   const userExistModalContent = {
