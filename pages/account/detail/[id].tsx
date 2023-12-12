@@ -40,7 +40,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
   const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const { data: session } = useSession();
-  const { showLeavePageModal, showModal } = useModal();
+  const { showLeavePageModal, showModal, onCancel, onConfirm } = useModal();
   const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
   const [ddl, setDDL] = React.useState<I_DDL>(DUMMY_ACC_DDL.ResultList[0]);
@@ -57,6 +57,9 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     const editDummy = editedDummy
       ? { ...DUMMY_ONE_ACCOUNT.ResultList[0], editedDummy }
       : DUMMY_ONE_ACCOUNT.ResultList[0];
+
+    console.log("🍅 editedData:", JSON.parse(editedData));
+    console.log("🍅 editDummy+:", editDummy);
     setData(isCreate ? createDummy : editDummy);
     setDDL(DUMMY_ACC_DDL.ResultList[0]);
 
@@ -212,6 +215,31 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     fetchData();
   }, [session, isCreate]);
 
+  // ------- render ------- //
+  const userExistModalContent = {
+    title: "您先前已建立該使用者",
+    children: (
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div>是否前往編輯該使用者？</div>
+        <div>若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：</div>
+
+        <div>
+          <input type="radio" name="data" id="retrieve" />
+          <span style={{ paddingInlineStart: "8px" }}>使用以前的資料</span>
+        </div>
+        <div>
+          <input type="radio" name="data" id="renewal" />
+          <span style={{ paddingInlineStart: "8px" }}>
+            使用我剛剛填寫的資料
+          </span>
+        </div>
+      </div>
+    ),
+    customBtns: (
+      <ButtonSet primaryBtnText="前往編輯" secondaryBtnOnClick={onCancel} />
+    )
+  };
+
   return (
     <>
       <ControlBar hasShadow={true} flexEnd={true}>
@@ -268,24 +296,3 @@ interface I_RoleName {
   role_name_m: string; // Assuming DUMMY_ROLE_NAME_MOUDULE_MAP.get(key) returns a string
   role_name: string[]; // Assuming DUMMY_ROLE_NAME_MAP.get(item) returns a string
 }
-
-const userExistModalContent = {
-  title: "您先前已建立該使用者",
-  children: (
-    <div>
-      <div>是否前往編輯該使用者？</div>
-      <div>若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：</div>
-      <div>
-        <div>
-          <input type="radio" name="data" id="retrieve" />
-          使用以前的資料
-        </div>
-        <div>
-          <input type="radio" name="data" id="renewal" />
-          使用我剛剛填寫的資料
-        </div>
-      </div>
-    </div>
-  ),
-  customBtns: <ButtonSet primaryBtnText="前往編輯" />
-};
