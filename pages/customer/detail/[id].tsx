@@ -84,17 +84,6 @@ const Page: NextPageWithLayout<{ customerId: string; editPage: string }> = ({
           onChangeTab={changeMainFilterHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
-          onSave={() => {
-            submitRef.current?.click();
-          }}
-          onEdit={() => {
-            router.push({
-              pathname: "/customer/detail/" + customerId,
-              query: { editPage: "edit" }
-            });
-          }}
-          onClose={onCancelHandler}
-          isEdit={editPage === "edit"}
         >
           <CustomerDetail
             isEdit={editPage === "edit"}

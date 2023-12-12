@@ -311,7 +311,6 @@ const Page: NextPageWithLayout<{
             onChangeTab={changeMainFilterHandler}
             mainFilter={nowTab}
             mainFilterArray={mainFilterArray}
-            viewOnly={true}
           >
             <FilterWrapper
               updateFilter={updateSubFilter}

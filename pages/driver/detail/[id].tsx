@@ -51,7 +51,7 @@ const Page: NextPageWithLayout<
   useEffect(() => {
     updateMainFilter("1");
   }, []);
-  //
+  
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -114,19 +114,11 @@ const Page: NextPageWithLayout<
     setIsLoading(false);
   };
 
-  const onCancelHandler = () => {
-    router.push("/driver");
-  };
-
   const renderContent = (
     <TabsWrapper
       onChangeTab={switchTabHandler}
       mainFilter={mainFilter}
       mainFilterArray={mainFilterArray}
-      isEdit={isEdit}
-      onSave={() => submitRef.current?.click()}
-      onEdit={() => setIsEdit(true)}
-      onClose={onCancelHandler}
     >
       <DriverDetail
         isEdit={isEdit}
