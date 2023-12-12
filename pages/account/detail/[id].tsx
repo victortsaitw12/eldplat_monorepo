@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, GetServerSideProps } from "next";
-import { Radio, toaster } from "evergreen-ui";
+import { RadioGroup } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 
 //
@@ -34,7 +34,7 @@ import ControlBar from "@components/ControlBar";
 import AccountDetail from "@contents/Account/AccountDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
 import ButtonSet from "@components/ButtonSet";
-import { get } from "lodash";
+import RadioColumnField from "@components/RadioGroupColumn";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
@@ -47,6 +47,11 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
   const isCreate = id === "create";
+  const [options] = React.useState([
+    { label: "使用以前的資料", value: "0" },
+    { label: "使用我剛剛填寫的資料", value: "1" }
+  ]);
+  const [dataChoice, setDataChoice] = React.useState("0");
 
   //------ functions ------//
   const fetchData = async () => {
@@ -241,22 +246,19 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         <div>是否前往編輯該使用者？</div>
         <div>若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：</div>
-
-        <div>
-          <input type="radio" name="data" id="retrieve" />
-          <span style={{ paddingInlineStart: "8px" }}>使用以前的資料</span>
-        </div>
-        <div>
-          <input type="radio" name="data" id="renewal" />
-          <span style={{ paddingInlineStart: "8px" }}>
-            使用我剛剛填寫的資料
-          </span>
-        </div>
+        <RadioGroup
+          value={dataChoice}
+          options={options}
+          onChange={(event) => setDataChoice(event.target.value)}
+          size={16}
+        />
       </div>
     ),
-    customBtns: (
-      <ButtonSet primaryBtnText="前往編輯" secondaryBtnOnClick={onCancel} />
-    )
+    onConfirm: () => {
+      setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
+      router.push(`/account/detail/${id}?editPage=view`);
+    },
+    onCancel: () => console.log("cancel")
   };
 
   return (

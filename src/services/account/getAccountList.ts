@@ -78,7 +78,8 @@ export const DUMMY_ACC_LIST: I_responseBody = {
       content_phone_tel2: "",
       roles: [
         { role_name_m: "系統管理", role_name: ["管理員", "使用者"] },
-        { role_name_m: "車輛管理", role_name: ["使用者"] }
+        { role_name_m: "車輛管理", role_name: ["使用者"] },
+        { role_name_m: "人事管理", role_name: ["管理員", "使用者"] }
       ],
       invt_sts: "03"
     },
@@ -107,6 +108,19 @@ export const DUMMY_ACC_LIST: I_responseBody = {
         { role_name_m: "車輛管理", role_name: ["使用者"] }
       ],
       invt_sts: "01"
+    },
+    {
+      account_no: "USR202311290001",
+      account_name: "王小花",
+      org_no: ["o-01", "o-0101"],
+      org_name: ["雄獅資訊", "多元發展部"],
+      content_phone_tel1: "0912341234",
+      content_phone_tel2: "",
+      roles: [
+        { role_name_m: "系統管理", role_name: ["使用者"] },
+        { role_name_m: "車輛管理", role_name: ["使用者"] }
+      ],
+      invt_sts: "04"
     }
   ],
   ConditionList: [
@@ -136,7 +150,7 @@ export const DUMMY_ACC_LIST: I_responseBody = {
     Page_Index: 1,
     Page_Size: 10,
     Arrangement: "desc",
-    Total: 5,
+    Total: 6,
     Last_Page: 1
   }
 };
