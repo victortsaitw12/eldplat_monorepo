@@ -1,70 +1,48 @@
-import TableWithEdit from "@components/Table/TableWithEdit";
 import { getBusTitle } from "@services/bus/getAllBuses";
 import { BodySTY } from "./style";
 import StatusIcon from "@components/StatusIcon";
 import { I_PageInfo } from "@components/PaginationField";
+import Table from "@components/Table/Table";
+import IconBtn from "@components/Button/IconBtn";
+import { I_BusData } from "@services/bus/getAllBuses";
+
 
 interface Props {
-  listType: string;
   busData: any;
-  goToCreatePage: () => void;
-  deleteItemHandler: (id: string) => void;
-  recoverItemHandler?: (id: string) => void;
-  goToEditPageHandler: (
-    id: string,
-    item: { [key: string]: { value: any; label: any } }
-  ) => void;
-  goToDetailPage: (
-    id: string,
-    item: { [key: string]: { value: any; label: any } }
-  ) => void;
-
-  upDatePageHandler?: (pageInfo: I_PageInfo) => void;
   pageInfo: I_PageInfo;
 }
 
-function BusList({
-  listType,
-  busData,
-  goToCreatePage,
-  deleteItemHandler,
-  recoverItemHandler,
-  goToEditPageHandler,
-  goToDetailPage,
-  upDatePageHandler,
-  pageInfo
-}: Props) {
+function BusList({ busData }: Props) {
   const busTitle = getBusTitle();
-  busData.forEach((data: any) => {
-    data["status"] = {
-      label: <StatusIcon status={data["status"].value}></StatusIcon>,
-      value: data.status.value
-    };
-  });
+
+  const handleEdit = () => {
+    console.log("edit");
+  };
+
+  const changeKey = (data: Array<I_BusData>) => {
+    return data.map((item: I_BusData) => {
+      return {
+        id: item["id"],
+        bus_name: item["bus_name"],
+        license_plate: item["license_plate"],
+        type: item["type"],
+        available_seats: item["available_seats"],
+        age: item["age"],
+        depot: item["depot"],
+        team: item["team"],
+        current_dep: item["current_dep"],
+        main_driver: item["team"],
+        status: item["status"],
+        action: <IconBtn tip="編輯" type="edit" onClick={handleEdit} />
+      };
+    });
+  };
+
+  const modifiedData = busData ? changeKey(busData) : undefined;
+
   return (
     <BodySTY>
-      <TableWithEdit
-        tableName="車輛"
-        titles={busTitle}
-        data={busData}
-        goToCreatePage={goToCreatePage}
-        viewItem={goToDetailPage}
-        pageInfo={pageInfo}
-        onPageChange={upDatePageHandler}
-        {...(listType == "1" && {
-          goToEditPage: (id, item) => {
-            goToEditPageHandler(id, item);
-          },
-          deleteItem: (id) => {
-            deleteItemHandler(id);
-          }
-        })}
-        {...(listType == "2" && {
-          recoverItem: (id) => {
-            recoverItemHandler && recoverItemHandler(id);
-          }
-        })}
-      />
+      <Table titles={busTitle} data={modifiedData} />
     </BodySTY>
   );
 }
