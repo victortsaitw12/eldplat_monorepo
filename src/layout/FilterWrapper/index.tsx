@@ -37,7 +37,6 @@ function FilterWrapper({
     }, 500);
   };
   //
-  console.log("FilterWrapper", filter);
   if (!filter) {
     return <LoadingSpinner />;
   }
@@ -52,7 +51,7 @@ function FilterWrapper({
                 <label key={key} className="search-tool">
                   <SearchIcon />
                   <input
-                    placeholder="搜尋"
+                    placeholder={filter[key].label || "搜尋"}
                     onChange={(e) => {
                       delayHandleSearch(key, e.target.value);
                     }}
@@ -101,9 +100,14 @@ function FilterWrapper({
             </button>
           )}
         </div>
-        <div className="btns">{btns}</div>
+        {
+          children && <div className="btns">{btns}</div>
+        }
       </div>
-      <div className="children-container">{children}</div>
+      {
+        children && <div className="children-container">{children}</div>
+      }
+      
     </BodySTY>
   );
 }

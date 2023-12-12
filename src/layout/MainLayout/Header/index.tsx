@@ -71,14 +71,16 @@ const Header = ({ layoutProps }: any) => {
           <Text className="header-title">{layoutProps?.breadcrumbs}</Text>
         </div>
         <div className="plan-info">
-          <NotificationsIcon
+          {/* v2切版註解 */}
+          {/* <NotificationsIcon
             className="notification"
             // color="#FAC86B"
             size={16}
-          />
+          /> */}
           {/* <StyledButton>使用期限還剩{30}天</StyledButton> */}
           {/* <MoonIcon color="#91A9C5" size={16} /> */}
-          <HelpIcon color="#91A9C5" size={16} />
+          {/* v2切版註解 */}
+          {/* <HelpIcon color="#91A9C5" size={16} /> */}
           {/* <Select
             width={100}
             onChange={handleLangChange}

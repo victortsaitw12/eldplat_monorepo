@@ -17,6 +17,7 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import { textValidation, emailValidation } from "@utils/inputValidation";
 import CustomTextArea from "@components/CustomTextArea";
 import CustomTextInput from "@components/CustomTextInput";
+import CustomSelect from "@components/CustomSelect";
 
 const DetailPanel = ({
   data,
@@ -51,7 +52,14 @@ const DetailPanel = ({
           </option>
         </Select>
       ),
-      value: data.module_name || "--"
+      // value: data.module_name || "--",
+      value: (
+        <Select disabled className={`${"disabled"}`}>
+          <option value="foo" selected>
+            {data.module_name || "--"}
+          </option>
+        </Select>
+      )
     },
     {
       readonly: false,
@@ -76,19 +84,39 @@ const DetailPanel = ({
           />
         </Pane>
       ),
-      value: data.role_name || "--"
+      // value: data.role_name || "--",
+      value: (
+        <Pane>
+          <CustomTextInput
+            className="required"
+            placeholder="請輸入角色名稱"
+            disabled={true}
+            {...register("role_name", {
+              required: "必填欄位，不可輸入符號",
+              validate: textValidation
+            })}
+          />
+        </Pane>
+      )
     },
     {
       readonly: false,
       req: false,
       label: "職責描述",
       editEle: (
-        <CustomTextArea
+        <Textarea
           placeholder="請輸入職責描述"
           {...register("role_desc", { required: false })}
         />
       ),
-      value: data.role_desc || "--"
+      // value: data.role_desc || "--",
+      value: (
+        <Textarea
+          placeholder="請輸入職責描述"
+          disabled={true}
+          {...register("role_desc", { required: false })}
+        />
+      )
     },
     isCreate
       ? {}
@@ -102,7 +130,6 @@ const DetailPanel = ({
               name="role_enb"
               render={({ field: { onChange, value, ref } }) => (
                 <>
-                  {" "}
                   <Switch checked={value} onChange={onChange} />
                   <span>啟用</span>
                 </>

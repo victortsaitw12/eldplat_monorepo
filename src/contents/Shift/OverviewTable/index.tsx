@@ -17,7 +17,7 @@ interface I_OverviewTable {
   handleSelectAll?: () => void;
   handleDeselectAll?: () => void;
 }
-const OverviewTable = ({
+const Overview = ({
   data,
   initialMonthFirst,
   expandPercentage,
@@ -31,7 +31,6 @@ const OverviewTable = ({
   const router = useRouter();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
-
   const curMonthFirst: Date = new Date(
     initialMonthFirst.getFullYear(),
     initialMonthFirst.getMonth() + UI.monthCount,
@@ -49,6 +48,7 @@ const OverviewTable = ({
   };
 
   const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
+    console.log(scheduleInfo) //駕駛的紀錄
     const shiftsOnDate = scheduleInfo.filter(
       (item: ScheduleInfoData) =>
         getDayStart(new Date(item.schd_Start_Time)) <=
@@ -219,4 +219,4 @@ const OverviewTable = ({
   );
 };
 
-export default OverviewTable;
+export default Overview;

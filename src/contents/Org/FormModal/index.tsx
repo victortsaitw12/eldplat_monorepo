@@ -1,13 +1,17 @@
 import React from "react";
-import { TextInputField, Switch, Group, toaster, Dialog } from "evergreen-ui";
+import { Switch, Group, Text, TextInputField } from "evergreen-ui";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSession } from "next-auth/react";
+import { ErrorMessage } from "@hookform/error-message";
 import { FormSTY } from "./style";
 
 import { createOrg, I_CreateOrgReq } from "@services/org/createOrg";
 import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 import { textValidation } from "@utils/hookFormValidation";
 import CustomTextInputField from "@components/CustomTextInputField";
+import LightBox from "@components/Lightbox";
+import Required from "@components/Required";
+
 // import { fetchData } from "next-auth/client/_utils";
 
 const FormModal = ({
@@ -23,7 +27,7 @@ const FormModal = ({
   const defaultValues = isCreate
     ? {
         porg_no: content.req.org_no,
-        org_name: "前端測試新增組織", // ""
+        org_name: "", // ""
         org_tp: content.req.org_tp,
         org_lvl: content.req.org_lvl
       }
@@ -41,8 +45,11 @@ const FormModal = ({
     defaultValues
   });
 
+  console.log("🍅", content);
+
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {
+    console.log("🍅 submit:", data);
     isCreate ? handleCreateDummy(data) : handleEditDummy(data);
     // TODO
     // if (!session) return;
@@ -84,30 +91,65 @@ const FormModal = ({
         asyncSubmitForm({ ...data });
       })}
     >
-      <Dialog
+      <LightBox
         title={isCreate ? "新增下級" : "編輯組織"}
-        isShown={true}
+        isOpen={true}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
-        confirmLabel="確定"
-        cancelLabel="取消"
       >
-        <div className="modal__container">
+        <>
           <TextInputField
-            label="父層組織"
+            className="evergreenInput"
+            style={{ fontSize: "16px", height: "38px", color: "#7A869A" }}
+            label={
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  marginBottom: "8px"
+                }}
+              >
+                父層組織
+              </div>
+            }
             value={content.parentName}
             disabled
           />
-          <CustomTextInputField
-            label="組織名稱"
+          <TextInputField
+            className="evergreenInput"
+            style={{ fontSize: "16px", height: "38px", color: "#7A869A" }}
+            label={
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  marginBottom: "8px",
+                  display: "flex"
+                }}
+              >
+                <Required />
+                組織名稱
+              </div>
+            }
             placeholder="請輸入組織名稱"
             {...register("org_name", {
               required: "不可輸入特殊符號",
               validate: textValidation
             })}
             isInvalid={!!errors.org_name}
-            hint={errors.org_name?.message}
+            hint={
+              <div style={{ color: "red", fontSize: "12px", marginTop: "8px" }}>
+                {errors.org_name?.message}
+              </div>
+            }
           />
+          {/* <ErrorMessage
+            errors={errors}
+            name="org_name"
+            render={({ message }) => (
+              <Text className="input-error">{message}</Text>
+            )}
+          /> */}
           {!content.isCreate && (
             <Group
               style={{ display: "flex", gap: "8px", marginTop: "24px" }}
@@ -117,15 +159,17 @@ const FormModal = ({
                 height={16}
                 checked={checked}
                 {...register("org_enb", {
-                  required: "不可空白",
                   onChange: (e) => setChecked(e.target.checked)
                 })}
               />
               <div>啟用</div>
             </Group>
           )}
-        </div>
-      </Dialog>
+        </>
+      </LightBox>
+
+      {/* confirmLabel="確定"
+        cancelLabel="取消" */}
     </FormSTY>
   );
 };

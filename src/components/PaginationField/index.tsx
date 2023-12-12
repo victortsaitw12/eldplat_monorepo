@@ -70,7 +70,7 @@ function PaginationField({
   );
 
   return (
-    <BodySTY>
+    <BodySTY className="paginationField">
       <div className="pageTotal">共 {totalItems} 筆</div>
       <div className="actions">
         <IconButton

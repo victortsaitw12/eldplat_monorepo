@@ -10,10 +10,28 @@ export const DivSTY = styled.div`
   .shadowElem {
     position: absolute;
   }
-  .disabled {
+  /* .disabled {
+    background: ${({ theme }) => theme.color.N40};
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+    svg {
+      display: none;
+    }
+  } */
+  .mask {
     width: 100%;
+    height: 50px;
     position: absolute;
     background: ${({ theme }) => theme.color.N40};
+
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+    svg {
+      display: none;
+    }
+    z-index: 1;
   }
   .labelSty {
     display: flex;
@@ -22,15 +40,27 @@ export const DivSTY = styled.div`
     gap: 8px;
     border-radius: 4px;
     &__1 {
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+      font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+      color: ${({ theme }) => theme.color.G600};
       background: ${({ theme }) => theme.color.G200};
     }
     &__2 {
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+      font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+      color: ${({ theme }) => theme.color.O600};
       background: ${({ theme }) => theme.color.O100};
     }
     &__3 {
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+      font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+      color: ${({ theme }) => theme.color.Y600};
       background: ${({ theme }) => theme.color.Y100};
     }
     &__4 {
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+      font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+      color: ${({ theme }) => theme.color.V500};
       background: ${({ theme }) => theme.color.V100};
     }
     &__0 {

@@ -6,6 +6,15 @@ const textValidation = (text: string) => {
   return true;
 };
 
+const textValidationAllowBlank = (text: string) => {
+  if (text.trim() === "") return true;
+  const globalRegex = new RegExp(/^[a-zA-Z0-9\u4E00-\u9FFF]+$/, "g");
+  if (!globalRegex.test(text)) {
+    return "不能有標點符號";
+  }
+  return true;
+};
+
 const numberValidation = (number: string) => {
   const globalRegex = new RegExp(/^\d+$/, "g");
   if (!globalRegex.test(number)) {
@@ -57,6 +66,7 @@ const dateFormatValidation = (date: string) => {
 
 export {
   textValidation,
+  textValidationAllowBlank,
   numberValidation,
   emailValidation,
   phoneValidation,

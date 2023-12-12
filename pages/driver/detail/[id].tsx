@@ -163,7 +163,7 @@ const Page: NextPageWithLayout<
   return (
     <BodySTY>
       <ControlBar>
-        <DataOverview data={driverData} />
+        <DataOverview data={driverData?.info} />
         <ButtonSet
           isEdit={isEdit}
           primaryDisable={false}
