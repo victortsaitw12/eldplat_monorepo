@@ -74,31 +74,48 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     setIsLoading(false);
   };
 
-  // TODO: to be remve, just for DEMO
+  // TODO: to be remved, just for DEMO
   const getAccountName = (data: any) => {
     return `${data.account_lname}${data.account_fname}`;
   };
 
-  const getRoleNames = (data: any) => {
-    const groupedRoles = data.account_role.reduce((acc: any, item: string) => {
-      const role_no = item.slice(item.length - 2);
-      const module_no = item.slice(0, item.length - 2);
-      if (!acc[module_no]?.includes(role_no)) {
-        return {
-          ...acc,
-          [module_no]: [...(acc[module_no] || []), role_no]
-        };
-      }
-      return acc;
-    }, {});
+  // TODO: to be remved, just for DEMO
+  const getRoleNames = (data: any): I_RoleName[] => {
+    const groupedRoles = data.account_role.reduce(
+      (acc: I_GroupedRoles, item: string) => {
+        const role_no = item.slice(item.length - 2);
+        const module_no = item.slice(0, item.length - 2);
+        if (!acc[module_no]?.includes(role_no)) {
+          return {
+            ...acc,
+            [module_no]: [...(acc[module_no] || []), role_no]
+          };
+        }
+        return acc;
+      },
+      {}
+    );
 
-    const result = [];
-    for (const [key, value] of Object.entries(groupedRoles)) {
-      result.push({
-        role_name_m: DUMMY_ROLE_NAME_MOUDULE_MAP.get(key),
-        role_name: value.map((item: string) => DUMMY_ROLE_NAME_MAP.get(item))
-      });
+    const result: I_RoleName[] = [];
+    for (const module_no in groupedRoles) {
+      if (groupedRoles.hasOwnProperty(module_no)) {
+        const value = groupedRoles[module_no];
+        result.push({
+          role_name_m: DUMMY_ROLE_NAME_MOUDULE_MAP.get(module_no) || "",
+          role_name: value.map((item: string) =>
+            DUMMY_ROLE_NAME_MAP.get(item || "")
+          )
+        });
+      }
     }
+    // for (const [key, value] of Object.entries(groupedRoles)) {
+    //   result.push({
+    //     role_name_m: DUMMY_ROLE_NAME_MOUDULE_MAP.get(key) || "",
+    //     role_name: value.map((item: string) =>
+    //       DUMMY_ROLE_NAME_MAP.get(item || "")
+    //     )
+    //   });
+    // }
 
     return result;
   };
@@ -197,7 +214,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   return (
     <>
-      <ControlBar hasShadow={true}>
+      <ControlBar hasShadow={true} flexEnd={true}>
         <ButtonSet
           isEdit={editPage === "edit"}
           secondaryBtnOnClick={handleCancel}
@@ -240,6 +257,10 @@ interface Params extends ParsedUrlQuery {
 }
 interface I_GroupedRoles {
   [module_no: string]: string[];
+}
+interface I_RoleName {
+  role_name_m: string; // Assuming DUMMY_ROLE_NAME_MOUDULE_MAP.get(key) returns a string
+  role_name: string[]; // Assuming DUMMY_ROLE_NAME_MAP.get(item) returns a string
 }
 
 const userExistModalContent = {

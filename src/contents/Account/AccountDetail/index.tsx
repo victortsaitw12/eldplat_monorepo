@@ -72,7 +72,6 @@ const AccountDetail = ({
         control={control}
         errors={errors}
         setValue={setValue}
-        getValues={getValues}
       />
       <RoleInfoBox
         data={data.account_role}
@@ -81,7 +80,6 @@ const AccountDetail = ({
         control={control}
         setValue={setValue}
         getValues={getValues}
-        errors={errors}
       />
       <button style={{ display: "none" }} ref={submitRef} type="submit">
         發送表單

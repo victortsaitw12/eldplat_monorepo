@@ -44,8 +44,12 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
     console.log("toggle");
   };
 
-  const handleFoldAll = () => {};
-  const handleOpenAll = () => {};
+  const handleFoldAll = () => {
+    console.log("foldAll");
+  };
+  const handleOpenAll = () => {
+    console.log("openAll");
+  };
   const getRoleName = (roles: I_RoleName[]) => {
     const roleNodeArr = roles.map((role: any, i) => {
       return (
@@ -80,7 +84,7 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
             type="edit"
             onClick={handleEdit.bind(null, item.account_no)}
           />
-          {item.invt_sts === "02" && (
+          {item.invt_sts === "01" && (
             <IconBtn
               tip="寄送驗證信"
               type="envelope"

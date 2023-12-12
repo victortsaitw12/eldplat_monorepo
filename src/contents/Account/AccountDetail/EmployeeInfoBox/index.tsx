@@ -27,8 +27,7 @@ const EmployeeInfoBox = ({
   isEdit,
   register,
   control,
-  setValue,
-  getValues
+  setValue
 }: I_Props) => {
   if (!data)
     return (
