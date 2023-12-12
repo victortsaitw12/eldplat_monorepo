@@ -1,8 +1,7 @@
-import { Group, EditIcon } from "evergreen-ui";
+import { EditIcon } from "evergreen-ui";
 import React from "react";
 import { useRouter } from "next/router";
 import { DivSTY } from "./style";
-import LoadingSpinner from "@components/LoadingSpinner";
 import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import SecondaryBtn from "@components/Button/Secondary/Label";
 
