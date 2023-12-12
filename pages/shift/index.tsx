@@ -47,21 +47,21 @@ const ShiftPage: NextPageWithLayout<never> = () => {
       .padStart(2, "0")}`;
     getAllDriverScheduleListFiltered(dateStr, subFilter, pageInfo).then(
       (res) => {
-        const data = [...res.contentList];
-        const updatedData = data.map((item) => ({
-          ...item,
-          id: item.driver_No
-        }));
-        setData(data);
-        setPageInfo(res.pageInfo);
+        // const data = [...res.contentList];
+        // const updatedData = data.map((item) => ({
+        //   ...item,
+        //   id: item.driver_No
+        // }));
+        // setData(data);
+        // setPageInfo(res.pageInfo);
 
-        if (!subFilter) {
-          localStorage.setItem(
-            "shiftInitFilter",
-            JSON.stringify(res.conditionList)
-          );
-          initializeSubFilter();
-        }
+        // if (!subFilter) {
+        //   localStorage.setItem(
+        //     "shiftInitFilter",
+        //     JSON.stringify(res.conditionList)
+        //   );
+        //   initializeSubFilter();
+        // }
       }
     );
   };

@@ -63,7 +63,7 @@ const Home: NextPageWithLayout<never> = () => {
         </div>
       </div>
       <div className="home-body">
-        <EntranceList routerList={routerList} />
+        {/* <EntranceList routerList={routerList} /> */}
       </div>
     </BodySTY>
   );

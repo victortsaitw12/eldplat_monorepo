@@ -37,7 +37,7 @@ export const CHECK_STATUS = new Map([
 // data for EVENT_TYPE  = SCHD_TYPE (+ CHECK_CODE)
 export const EVENT_TYPE = new Map([
   ["00", { label: "排班", color: "ChartAqua", icon: <ClipboardIcon /> }],
-  //"01"排班 應該不會出現的
+  ["01", { label: "待排班", color: "N20", icon: null }], //v2待確認
   ["02", { label: "例假", color: "ChartRed", icon: <TimelineEventsIcon /> }], //"02"
   ["03", { label: "排休", color: "ChartAqua", icon: <TimelineEventsIcon /> }], //"03"
   ["040", { label: "需簽核", color: "ChartYellow", icon: <WarningSignIcon /> }], //"04+0"
