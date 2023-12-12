@@ -10,6 +10,7 @@ import { updateOrg, I_EditOrgReq } from "@services/org/updateOrg";
 import { textValidation } from "@utils/hookFormValidation";
 import CustomTextInputField from "@components/CustomTextInputField";
 import LightBox from "@components/Lightbox";
+import Required from "@components/Required";
 
 // import { fetchData } from "next-auth/client/_utils";
 
@@ -26,7 +27,7 @@ const FormModal = ({
   const defaultValues = isCreate
     ? {
         porg_no: content.req.org_no,
-        org_name: "前端測試新增組織", // ""
+        org_name: "", // ""
         org_tp: content.req.org_tp,
         org_lvl: content.req.org_lvl
       }
@@ -98,6 +99,8 @@ const FormModal = ({
       >
         <>
           <TextInputField
+            className="evergreenInput"
+            style={{ fontSize: "16px", height: "38px", color: "#7A869A" }}
             label={
               <div
                 style={{
@@ -113,14 +116,18 @@ const FormModal = ({
             disabled
           />
           <TextInputField
+            className="evergreenInput"
+            style={{ fontSize: "16px", height: "38px", color: "#7A869A" }}
             label={
               <div
                 style={{
                   fontSize: "14px",
                   fontWeight: "600",
-                  marginBottom: "8px"
+                  marginBottom: "8px",
+                  display: "flex"
                 }}
               >
+                <Required />
                 組織名稱
               </div>
             }
@@ -130,7 +137,11 @@ const FormModal = ({
               validate: textValidation
             })}
             isInvalid={!!errors.org_name}
-            hint={errors.org_name?.message}
+            hint={
+              <div style={{ color: "red", fontSize: "12px", marginTop: "8px" }}>
+                {errors.org_name?.message}
+              </div>
+            }
           />
           {/* <ErrorMessage
             errors={errors}

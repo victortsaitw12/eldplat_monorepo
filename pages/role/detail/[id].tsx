@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { Button } from "evergreen-ui";
 
 //
 import { getLayout } from "@layout/MainLayout";

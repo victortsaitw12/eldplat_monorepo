@@ -58,7 +58,7 @@ const Page: NextPageWithLayout<{
     const formContent = {
       isCreate: isCreate,
       parentName: isCreate ? item["org_name"] : item["parent_org_name"],
-      org_name: isCreate ? "" : item["org_name"],
+      orgName: isCreate ? "" : item["org_name"],
       req: isCreate
         ? {
             org_no: item["org_no"],

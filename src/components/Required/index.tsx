@@ -1,4 +1,4 @@
-const Requred = ({ children }: { children: string }) => {
+const Requred = ({ children }: { children?: string }) => {
   return (
     <div>
       <span style={{ color: "#D14343" }}>*</span>

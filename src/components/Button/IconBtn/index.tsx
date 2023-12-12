@@ -1,4 +1,7 @@
 import {
+  ThemeProvider,
+  mergeTheme,
+  defaultTheme,
   Tooltip,
   SmallPlusIcon,
   EditIcon,
@@ -27,13 +30,27 @@ const IconBtn = ({ tip, type, onClick }: I_Props) => {
       btn = <button type="button" />;
   }
   return (
-    <DivSTY>
-      <Tooltip content={tip || "操作"}>
-        <button>{btn}</button>
-      </Tooltip>
-    </DivSTY>
+    <ThemeProvider value={customTheme}>
+      <DivSTY>
+        <Tooltip content={tip || "操作"}>
+          <button>{btn}</button>
+        </Tooltip>
+      </DivSTY>
+    </ThemeProvider>
   );
 };
+
+const customTheme = mergeTheme(defaultTheme, {
+  components: {
+    Tooltip: {
+      baseStyle: {
+        paddingY: 4,
+        paddingX: 8,
+        borderRadius: 4
+      }
+    }
+  }
+});
 
 interface I_Props {
   tip?: string;
