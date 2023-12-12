@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { Button } from "evergreen-ui";
 
 //
 import { getLayout } from "@layout/MainLayout";
@@ -36,7 +35,8 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const fetchData = async () => {
     setIsLoading(true);
     const createDummy = DUMMY_ONE_ROLE_CREATE.ResultList[0];
-    const editedDummy = localStorage.getItem("roleEditData");
+    const editedData = localStorage.getItem("roleEditData");
+    const editedDummy = editedData ? JSON.parse(editedData) : null;
     const editDummy = editedDummy ? editedDummy : DUMMY_ONE_ROLE.ResultList[0];
     setData(isCreate ? createDummy : editDummy);
     // if (!session) return;
@@ -61,10 +61,16 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     if (isCreate) {
       localStorage.setItem(
         "roleCreateData",
-        JSON.stringify({ ...data, id: "create", module_name: "車管系統" })
+        JSON.stringify({
+          ...data,
+          id: "create",
+          module_name: "車管系統",
+          role_enb: true
+        })
       );
       router.push("/role");
     } else {
+      console.log("🔜 edited data:", data);
       localStorage.setItem("roleEditData", JSON.stringify({ ...data }));
       router.push(`/role/detail/${id}?editPage=view`);
     }
@@ -109,7 +115,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     }
     // onView
     if (!isEdit) {
-      handleChangeRoute("/role");
+      router.push("/role");
     } else {
       // onEdit
       setIsEdit(false);
@@ -137,7 +143,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   React.useEffect(() => {
     if (!session) return;
     fetchData();
-  }, [session]);
+  }, [session, router]);
 
   React.useEffect(() => {
     if (isEdit) return;
@@ -146,11 +152,17 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   return (
     <>
-      <ControlBar hasShadow={true}>
+      <ControlBar hasShadow={true} flexEnd={true}>
         <ButtonSet
           isEdit={editPage === "edit"}
           secondaryBtnOnClick={handleCancel}
+          secondaryBtnText={
+            isCreate ? "回列表頁" : editPage === "edit" ? "取消" : "回列表頁"
+          }
           primaryBtnOnClick={handleConfirm}
+          primaryBtnText={
+            isCreate ? "儲存" : editPage === "edit" ? "儲存" : "編輯"
+          }
         />
       </ControlBar>
       {data && (

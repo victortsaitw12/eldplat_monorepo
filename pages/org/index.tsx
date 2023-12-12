@@ -82,7 +82,12 @@ const Page: NextPageWithLayout<{
     const result = updatedData[0].sublayer.map((item) => {
       if (item["org_no"] === v["org_no"]) {
         const updateName = v.org_name;
-        const updateItem = { ...item, org_name: updateName };
+        const updateEnb = v.org_enb;
+        const updateItem = {
+          ...item,
+          org_name: updateName,
+          org_enb: updateEnb
+        };
         return updateItem;
       } else {
         return item;

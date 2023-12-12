@@ -13,9 +13,17 @@ export const DivSTY = styled.div`
       display: flex;
       padding: 8px 16px;
       gap: 8px;
+      button {
+        height: 36px;
+      }
+      .text {
+        font-size: ${({ theme }) => theme.fontSize.Headline400};
+        font-weight: ${({ theme }) => theme.fontWeight.Headline400};
+      }
     }
     &__items {
       display: flex;
+      position: relative;
     }
     &__item {
       display: flex;

@@ -1,3 +1,5 @@
+import { I_KeyValue } from "./getOneAccount";
+
 export const createAccount = async (uk: string, data: I_ReqBody) => {
   return DUMMY_DATA.DataList;
 
@@ -46,8 +48,10 @@ export interface I_ResBody {
 export interface I_ReqBody {
   account_fname: string;
   account_lname: string;
-  org_no: string;
+  org_no: string[];
   creorgno: string;
+  staff_no: string;
+  job_title: string;
   content_phone_tel_country_code1: string;
   content_phone_tel1: string;
   content_priv_email: string;

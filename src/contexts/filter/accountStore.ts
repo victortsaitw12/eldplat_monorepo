@@ -15,24 +15,7 @@ interface StateTypes {
 }
 
 export const useUserStore = create<StateTypes>((set) => ({
-  subFilter: {
-    Role_Input: {
-      field_Name: "Role_Input",
-      arrayConditions: ["like", "equal"],
-      displayType: "search",
-      dataType: "string",
-      label: "名稱",
-      value: ""
-    },
-    Role_Input2: {
-      field_Name: "Role_Input2",
-      arrayConditions: ["like", "equal"],
-      displayType: "fix",
-      dataType: "string",
-      label: "默認篩選",
-      value: ""
-    }
-  },
+  subFilter: null,
   mainFilter: "1",
   selectedForm: "",
   isDrawerOpen: false,
@@ -45,7 +28,7 @@ export const useUserStore = create<StateTypes>((set) => ({
   },
   initializeSubFilter: () => {
     const filter: any = {};
-    const initFilter = localStorage.getItem("roleInitFilter");
+    const initFilter = localStorage.getItem("accountInitFilter");
     if (!initFilter) return;
     for (const item of JSON.parse(initFilter)) {
       filter[item.field_Name] = item;

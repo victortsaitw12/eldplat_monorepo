@@ -135,9 +135,7 @@ const Page: NextPageWithLayout<never> = () => {
       > */}
       <FilterWrapper
         updateFilter={updateSubFilter}
-        resetFilter={() => {
-          initializeSubFilter();
-        }}
+        resetFilter={() => initializeSubFilter()}
         filter={subFilter}
         btns={createBtn}
       >

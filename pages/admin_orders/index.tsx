@@ -268,7 +268,6 @@ const Page: NextPageWithLayout<{
       {!isFullWidth ? (
         <>
           <TabsWrapper
-            viewOnly={true}
             isHide={isDrawerFullWidth}
             onChangeTab={changeMainFilterHandler}
             mainFilter={nowTab}

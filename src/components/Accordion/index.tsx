@@ -1,7 +1,9 @@
 import React from "react";
-import { Button, CaretRightIcon, CaretDownIcon } from "evergreen-ui";
-import AccordionItem from "./AccordionItem";
+import { CaretRightIcon, CaretDownIcon } from "evergreen-ui";
 import { DivSTY } from "./style";
+
+import AccordionItem from "./AccordionItem";
+import { Label as Button } from "@components/Button/Secondary";
 
 //====== REACT COMPONENT ======//
 const Accordion = ({
@@ -55,8 +57,8 @@ const Accordion = ({
     <DivSTY className={`acc ${className}`}>
       {isTopLayer && (
         <div className="acc__btns">
-          <Button onClick={handleFoldAll}>全部收合</Button>
-          <Button onClick={handleOpenAll}>全部展開</Button>
+          <Button onClick={handleFoldAll} text="全部收合" />
+          <Button onClick={handleOpenAll} text="全部展開" />
         </div>
       )}
       {data.map((item: I_AccordionItem, i: number) => (

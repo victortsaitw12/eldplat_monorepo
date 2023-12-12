@@ -150,11 +150,11 @@ export const DUMMY_ONE_ROLE = {
   ResultList: [
     {
       role_no: "r-0002sys01",
-      role_name: "車輛管理員",
+      role_name: "車管",
       role_enb: true,
-      role_desc: "雄獅集團權限管理員",
+      role_desc: "管理車輛狀況，日常車輛維護，維修審核",
       module_no: "sys",
-      module_name: "平台管理",
+      module_name: "車輛管理",
       func_auth: [
         {
           fg_no: "bus",

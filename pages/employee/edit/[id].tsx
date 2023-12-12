@@ -122,20 +122,9 @@ const Page: NextPageWithLayout<
           <Pane width="100%" height="100%" borderRadius="10px" overflow="auto">
             {(!loading && editData && (
               <TabsWrapper
-                isEdit={true}
                 onChangeTab={(value) => changeMainFilterHandler(value)}
                 mainFilter={nowTab}
                 mainFilterArray={mainFilterArray}
-                onSave={() => {
-                  console.log("點擊全部儲存");
-                  handleSaveAll();
-                }}
-                onEdit={() => {
-                  console.log("TabsWrapper onEdit");
-                }}
-                onClose={() => {
-                  router.push("/employee");
-                }}
               >
                 {nowTab === "1" && (
                   <AddEmployee

@@ -140,18 +140,9 @@ const Page: NextPageWithLayout<{ userId: string; editPage: string }> = ({
     <RegionProvider>
       <BodySTY>
         <TabsWrapper
-          isEdit={false}
-          // viewOnly={true}
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
-          onSave={() => {
-            submitRef.current?.click();
-          }}
-          onEdit={() => {
-            router.push("/employee/edit/" + userId);
-          }}
-          onClose={onCancelHandler}
         >
           {(!loading && data && r_content()) || (
             <Pane

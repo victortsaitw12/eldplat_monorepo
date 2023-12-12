@@ -1,5 +1,5 @@
 import React from "react";
-import { TickCircleIcon, WarningSignIcon, BanCircleIcon } from "evergreen-ui";
+import { TickCircleIcon, OfflineIcon, ErrorIcon } from "evergreen-ui";
 import { DivSTY } from "./style";
 
 const InvitSatus = ({ value }: { value: string }) => {
@@ -16,7 +16,7 @@ export default InvitSatus;
 
 // ====== Map ====== //
 const component = new Map([
-  ["01", { icon: <BanCircleIcon color="danger" />, text: "未驗證" }],
-  ["02", { icon: <WarningSignIcon color="warning" />, text: "驗證中" }],
+  ["01", { icon: <ErrorIcon color="danger" />, text: "待驗證" }],
+  ["02", { icon: <OfflineIcon color="warning" />, text: "驗證中" }],
   ["03", { icon: <TickCircleIcon color="success" />, text: "已驗證" }]
 ]);
