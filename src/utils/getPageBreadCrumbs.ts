@@ -62,6 +62,21 @@ const breadcrumbs: I_routers = {
     { label: "駕駛列表", url: "/driver" },
     { label: "駕駛管理設定", url: "" }
   ],
+  "/schedule": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/" },
+  ],
+  "/schedule/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/schedule" },
+    { label: "個人班表", url: "" },
+  ],
+  "/schedule/approval": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/schedule" },
+    { label: "個人班表", url: "/schedule/[id]" },
+    { label: "簽核", url: "/approval" },
+  ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   "/bus": [
@@ -72,15 +87,6 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "車輛清單", url: "/bus" },
     { label: "檢視", url: "" }
-  ],
-
-  "/shift": [
-    { label: "入門", url: "/" },
-    { label: "駕駛排班", url: "/shift" }
-  ],
-  "/shift/[id]": [
-    { label: "入門", url: "/" },
-    { label: "駕駛排班", url: "/shift" }
   ],
   "/customer": [
     { label: "入門", url: "/" },

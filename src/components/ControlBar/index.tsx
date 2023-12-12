@@ -10,9 +10,10 @@ interface I_Props {
 function ControlBar({ hasShadow = false, flexEnd = false, children }: I_Props) {
   return (
     <DivSTY
-      className={`${hasShadow ? "shadow" : undefined} ${
-        flexEnd ? "flex-end" : undefined
-      }`}
+      className={`
+      ${hasShadow ? "shadow margin-bottom" : ""}
+      ${flexEnd ? "flex-end" : ""}
+      `}
     >
       {children}
     </DivSTY>

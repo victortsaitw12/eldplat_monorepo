@@ -85,7 +85,7 @@ const color = {
   N900: "#091E42",
   // Chart
   ChartPink: "#FD8ADC",
-  ChartRed: "#F53630",
+  ChartRed: "#E88989",
   ChartOrange: "#FF9D66",
   ChartYellow: "#FAC86B",
   ChartGreen: "#6BDAAE",

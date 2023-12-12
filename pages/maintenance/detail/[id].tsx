@@ -122,16 +122,6 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
-        onSave={() => {
-          submitRef.current?.click();
-        }}
-        onEdit={() => {
-          console.log("set is Edit to true");
-          setIsEdit(true);
-        }}
-        onClose={onCancelHandler}
-        isEdit={isEdit}
-        viewOnly={isFinished}
       >
         {maintenanceData && (
           <MaintenanceDetail

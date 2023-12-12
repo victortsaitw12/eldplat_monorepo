@@ -107,27 +107,9 @@ const Index: NextPageWithLayout<never> = ({
         <>
           <Pane>
             <TabsWrapper
-              viewOnly={viewonly}
-              isEdit={editPage}
               onChangeTab={(value) => changeMainFilterHandler(value)}
               mainFilter={nowTab}
               mainFilterArray={mainFilterArray}
-              onSave={() => {
-                submitRef.current && submitRef.current.click();
-              }}
-              onEdit={() => {
-                router.push({
-                  pathname: "/admin_orders/detail/" + p_order_no,
-                  query: { type: p_quote_type, editPage: "edit" }
-                });
-              }}
-              onClose={() => {
-                if (editPage) {
-                  setLightOpen(true);
-                } else {
-                  router.push("/admin_orders/");
-                }
-              }}
             >
               <AdminOrdersDetal
                 submitRef={submitRef}

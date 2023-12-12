@@ -17,7 +17,6 @@ import TagGenerator from "@components/TagGenerator";
 import ButtonSet from "@components/ButtonSet";
 
 import { Select, SmallPlusIcon, Pane } from "evergreen-ui";
-import { set } from "lodash";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
