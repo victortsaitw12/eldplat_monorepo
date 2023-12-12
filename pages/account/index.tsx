@@ -65,6 +65,14 @@ const Page: NextPageWithLayout<never> = () => {
         setData(data);
         setPageInfo(pageInfo);
       }
+
+      if (!subFilter) {
+        localStorage.setItem(
+          "accountInitFilter",
+          JSON.stringify(DUMMY_ACC_LIST.ConditionList)
+        );
+        initializeSubFilter();
+      }
     } catch (e: any) {
       console.log(e);
     }

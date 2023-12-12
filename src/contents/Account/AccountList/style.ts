@@ -14,6 +14,11 @@ export const BodySTY = styled.div`
       display: flex;
       gap: 8px;
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      button {
+        color: ${({ theme }) => theme.color.N300};
+        font-weight: ${({ theme }) => theme.fontWeight.Headline400};
+        font-size: ${({ theme }) => theme.fontSize.Headline400};
+      }
     }
     .paginationField {
       padding: 8px 16px;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const DivSTY = styled.div`
   .disabled {
     background: ${({ theme }) => theme.color.N40};
-    color: ${({ theme }) => theme.color.N70};
+    color: ${({ theme }) => theme.color.N200};
   }
   .hide {
     display: none !important;
