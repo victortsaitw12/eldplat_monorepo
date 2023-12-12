@@ -94,22 +94,9 @@ const Index: NextPageWithLayout<never> = ({ vendor_id, editPage }) => {
       <BodySTY>
         {!loading && oldVendorData && (
           <TabsWrapper
-            isEdit={editPage}
             onChangeTab={(value) => changeMainFilterHandler(value)}
             mainFilter={nowTab}
             mainFilterArray={mainFilterArray}
-            onSave={() => {
-              submitRef.current && submitRef.current.click();
-            }}
-            onEdit={() => {
-              router.push({
-                pathname: "/vendor/detail/" + vendor_id,
-                query: { editPage: "edit" }
-              });
-            }}
-            onClose={() => {
-              router.push("/vendor");
-            }}
           >
             {nowTab === "vendor" && (
               <VendorDetail

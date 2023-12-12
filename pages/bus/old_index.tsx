@@ -197,16 +197,16 @@ const Page: NextPageWithLayout<never> = () => {
         filter={subFilter}
       >
         <BusList
-          listType={nowTab}
+          // listType={nowTab}
           busData={data}
-          goToCreatePage={() => {
-            // setDrawerOpen(true);
-          }}
-          recoverItemHandler={recoverItemHandler}
-          deleteItemHandler={deleteItemHandler}
-          goToEditPageHandler={goToEditPageHandler}
-          goToDetailPage={goToDetailPageHandler}
-          upDatePageHandler={upDatePageHandler}
+          // goToCreatePage={() => {
+          //   setDrawerOpen(true);
+          // }}
+          // recoverItemHandler={recoverItemHandler}
+          // deleteItemHandler={deleteItemHandler}
+          // goToEditPageHandler={goToEditPageHandler}
+          // goToDetailPage={goToDetailPageHandler}
+          // upDatePageHandler={upDatePageHandler}
           pageInfo={pageInfo}
         />
       </FilterWrapper>
