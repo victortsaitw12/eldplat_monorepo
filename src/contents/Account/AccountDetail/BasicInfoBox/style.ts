@@ -5,6 +5,7 @@ export const BodySTY = styled.div`
   height: 100%;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
+
   &__photo {
     width: 120px;
     height: 150px;
@@ -24,14 +25,24 @@ export const BodySTY = styled.div`
   ul :not(:first-child) {
     grid-column: 2/ 4;
   }
-  .basic__lastName {
-    flex: 1;
-    max-width: 92px;
+  .basic__name {
+    display: flex;
+    flex-direction: column;
+    .group {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      .lastName {
+        flex: 1;
+        max-width: 92px;
+      }
+      .firstName {
+        flex: 2;
+        max-width: 136px;
+      }
+    }
   }
-  .basic__firstName {
-    flex: 2;
-    max-width: 136px;
-  }
+
   .basic__photo {
     height: 150px;
     width: 120px;

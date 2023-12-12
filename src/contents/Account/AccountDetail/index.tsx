@@ -13,10 +13,12 @@ import EmployeeInfoBox from "./EmployeeInfoBox";
 import RoleInfoBox from "./RoleInfoBox";
 import { I_ReqBody as I_CreateReqBody } from "@services/account/createAccount";
 import { I_ReqBody as I_UpdateReqBody } from "@services/account/updateAccount";
+import { I_AccountDDLItem } from "@services/account/getAccountDDL";
 import { I_RoleItem } from "@services/account/getOneAccount";
 
 const AccountDetail = ({
   data,
+  ddl,
   isEdit,
   asyncSubmitForm,
   submitRef
@@ -28,8 +30,10 @@ const AccountDetail = ({
   const createValues: I_CreateReqBody = {
     account_fname: data?.account_fname || "",
     account_lname: data?.account_lname || "",
-    org_no: data?.org_no || session?.user.org_no || "",
+    org_no: data?.org_no || [],
     creorgno: session?.user.org_no || "",
+    staff_no: data?.staff_no || "",
+    job_title: data?.job_title || "",
     content_phone_tel_country_code1:
       data?.content_phone_tel_country_code1 || "",
     content_phone_tel1: data?.content_phone_tel1 || "",
@@ -62,10 +66,12 @@ const AccountDetail = ({
       />
       <EmployeeInfoBox
         data={data}
+        ddl={ddl}
         isEdit={isEdit}
         register={register}
         control={control}
         errors={errors}
+        setValue={setValue}
       />
       <RoleInfoBox
         data={data.account_role}
@@ -73,7 +79,7 @@ const AccountDetail = ({
         register={register}
         control={control}
         setValue={setValue}
-        errors={errors}
+        getValues={getValues}
       />
       <button style={{ display: "none" }} ref={submitRef} type="submit">
         發送表單
@@ -86,6 +92,7 @@ export default AccountDetail;
 
 interface I_Props {
   data: I_AccountDetailItem;
+  ddl: I_AccountDDLItem;
   isEdit: boolean;
   asyncSubmitForm: (data: any) => Promise<void>;
   submitRef: React.RefObject<HTMLButtonElement>;

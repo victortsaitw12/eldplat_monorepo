@@ -1,5 +1,6 @@
 import React from "react";
 import { BodySTY } from "./style";
+
 export default function Tooltip({
   children,
   text

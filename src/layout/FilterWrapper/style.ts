@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  /* height: 100%; */
-  /* overflow-x: scroll; */
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -76,7 +74,7 @@ export const BodySTY = styled.div`
   }
   > .children-container {
     flex: 1 0 0;
-    background: #ffffff;
+    background: ${({ theme }) => theme.color.N0};
     //
     overflow: hidden;
   }
@@ -88,5 +86,8 @@ export const BodySTY = styled.div`
   .btns {
     white-space: nowrap;
     padding: 8px 12px;
+    button {
+      height: 35px;
+    }
   }
 `;

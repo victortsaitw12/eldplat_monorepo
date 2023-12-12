@@ -53,8 +53,8 @@ const Page: NextPageWithLayout<never> = () => {
       // setData(result.ResultList);
       const data = DUMMY_ACC_LIST.ResultList;
       const pageInfo = DUMMY_ACC_LIST.PageInfo;
-      const isUpdatedDataAfterCreate = localStorage.getItem("accCreateData");
-
+      const isUpdatedDataAfterCreate =
+        localStorage.getItem("accountCreateData");
       if (isUpdatedDataAfterCreate) {
         setData([JSON.parse(isUpdatedDataAfterCreate), ...data]);
         setPageInfo({
@@ -64,6 +64,14 @@ const Page: NextPageWithLayout<never> = () => {
       } else {
         setData(data);
         setPageInfo(pageInfo);
+      }
+
+      if (!subFilter) {
+        localStorage.setItem(
+          "accountInitFilter",
+          JSON.stringify(DUMMY_ACC_LIST.ConditionList)
+        );
+        initializeSubFilter();
       }
     } catch (e: any) {
       console.log(e);
@@ -87,7 +95,11 @@ const Page: NextPageWithLayout<never> = () => {
   }, [status]);
 
   React.useEffect(() => {
-    localStorage.removeItem("roleCreateData");
+    localStorage.removeItem("accountCreateData");
+  }, [router]);
+
+  React.useEffect(() => {
+    localStorage.removeItem("accountEditData");
   }, [router]);
 
   const createBtn = (

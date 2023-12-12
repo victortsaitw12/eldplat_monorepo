@@ -4,11 +4,11 @@ export const DivSTY = styled.div`
   button {
     height: 36px;
     width: 36px;
-    background: ${({ theme }) => theme.color.N100};
+    background: transparent !important;
     border: none;
     padding: 10px;
     svg {
-      fill: ${({ theme }) => theme.color.N700};
+      fill: ${({ theme }) => theme.color.N200};
     }
   }
 `;

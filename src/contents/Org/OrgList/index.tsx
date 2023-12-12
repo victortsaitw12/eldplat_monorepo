@@ -18,14 +18,19 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
 
   const getDataFitAccordion = (data: any) => {
     return data.map((item: any) => {
-      const labelStyle = (item["org_lvl"] % 5).toString();
+      const labellvl = (item["org_lvl"] % 5).toString();
       const padingNumber = item["org_lvl"] * 16;
       const prepItem: I_AccordionItem = {
         label: (
           <>
+            <div
+              className={` ${item["org_enb"] === false ? "mask" : ""}`}
+            ></div>
             <div className={"accordion"}>
               <div
-                className={`accordion__label labelSty labelSty__${labelStyle}`}
+                className={`accordion__label labelSty labelSty__${
+                  labellvl || ""
+                }`}
               >
                 {item["org_name"]}
               </div>
@@ -50,9 +55,12 @@ const OrgList = ({ data, onCreate, onEdit }: I_Props) => {
                 )}
               </div>
             </div>
-            <div
-              className={` ${item["org_enb"] === false ? "disabled" : ""}`}
-            ></div>
+
+            {/* <mask
+              className={` ${item["org_enb"] === false ? "mask" : ""} ${
+                item["org_enb"] === false ? "" : "hide"
+              }`}
+            ></mask> */}
           </>
         )
       };
