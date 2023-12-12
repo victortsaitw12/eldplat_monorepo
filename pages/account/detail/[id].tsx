@@ -52,7 +52,8 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const fetchData = async () => {
     setIsLoading(true);
     const createDummy = DUMMY_DATA_CREATE.ResultList[0];
-    const editedDummy = localStorage.getItem("accountEditData");
+    const editedData = localStorage.getItem("accountEditData");
+    const editedDummy = editedData ? JSON.parse(editedData) : null;
     const editDummy = editedDummy
       ? { ...DUMMY_ONE_ACCOUNT.ResultList[0], editedDummy }
       : DUMMY_ONE_ACCOUNT.ResultList[0];
@@ -146,7 +147,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       router.push("/account");
     } else {
       localStorage.setItem("accountEditData", JSON.stringify({ ...data }));
-      router.push(`/role/detail/${id}?editPage=view`);
+      router.push(`/account/detail/${id}?editPage=view`);
     }
 
     // if (!session) return;
@@ -181,7 +182,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     }
     // onView
     if (!isEdit) {
-      handleChangeRoute("/account");
+      router.push("/account");
     } else {
       // onEdit
       setIsEdit(false);
@@ -217,7 +218,13 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
         <ButtonSet
           isEdit={editPage === "edit"}
           secondaryBtnOnClick={handleCancel}
+          secondaryBtnText={
+            isCreate ? "回列表頁" : editPage === "edit" ? "取消" : "回列表頁"
+          }
           primaryBtnOnClick={handleConfirm}
+          primaryBtnText={
+            isCreate ? "儲存" : editPage === "edit" ? "儲存" : "編輯"
+          }
         />
       </ControlBar>
       {data && (

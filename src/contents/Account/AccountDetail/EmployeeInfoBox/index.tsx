@@ -1,5 +1,6 @@
 import React from "react";
-import { Select, TextInput, Textarea } from "evergreen-ui";
+import { Select, TextInput, Textarea, Pane } from "evergreen-ui";
+import ReactSelect from "react-select";
 import {
   FieldErrors,
   UseFormRegister,
@@ -78,8 +79,23 @@ const EmployeeInfoBox = ({
           />
         </div>
       ),
-
-      value: data.porg_name.concat("/", labels) || "--"
+      value: (
+        <Pane>
+          <div className="org__select">
+            <ReactSelect
+              defaultValue=""
+              name="colors"
+              className="basic-multi-select"
+              classNamePrefix="select"
+              isDisabled={true}
+            />
+            <div className="org__value">
+              {data.porg_name.concat("/", labels)}{" "}
+            </div>
+          </div>
+        </Pane>
+      )
+      // value: data.porg_name.concat("/", labels) || "--"
       // subLabel?: string | React.ReactNode;
       // inputType?: string;
     },
@@ -97,8 +113,15 @@ const EmployeeInfoBox = ({
           })}
         />
       ),
-
-      value: data.staff_no || "--"
+      value: (
+        <CustomTextInput
+          className="required"
+          placeholder="請輸入員工編號"
+          disabled={true}
+          value={data.staff_no}
+        />
+      )
+      // value: data.staff_no || "--"
     },
     {
       readonly: false,
@@ -113,7 +136,14 @@ const EmployeeInfoBox = ({
           })}
         />
       ),
-      value: data.job_title || "--"
+      value: (
+        <TextInput
+          placeholder="請輸入職稱"
+          disabled={true}
+          value={data.job_title}
+        />
+      )
+      // value: data.job_title || "--"
     },
     isEdit
       ? {}

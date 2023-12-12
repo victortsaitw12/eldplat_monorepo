@@ -15,8 +15,12 @@ export const BodySTY = styled.div`
       select {
         width: 240px;
       }
+      .basic-multi-select {
+        height: 32px;
+      }
     }
     &__value {
+      width: 100%;
       margin-top: 8px;
       color: ${({ theme }) => theme.color.N300};
       font-size: ${({ theme }) => theme.fontSize.Paragraph200};
@@ -53,11 +57,15 @@ export const BodySTY = styled.div`
         }
         .infoBox__value {
           width: 100%;
+          max-width: 280px;
           /* max-height: 38px; */
           flex: unset;
           color: ${({ theme }) => theme.color.N800};
           font-size: ${({ theme }) => theme.fontSize.Paragraph300};
           font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+          /* input {
+            max-width: 280px;
+          } */
         }
       }
     }

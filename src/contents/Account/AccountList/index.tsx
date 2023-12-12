@@ -35,7 +35,8 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
     router.push(`/account/detail/${id}`);
   };
 
-  const handleEdit = (id: string) => {
+  const handleEdit = (id: string, e: any) => {
+    e.stopPropagation();
     router.push(`/account/detail/${id}?editPage=edit`);
   };
 

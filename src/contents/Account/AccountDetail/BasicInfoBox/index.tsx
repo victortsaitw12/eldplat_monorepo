@@ -98,8 +98,17 @@ const BasicInfoBox = ({ data, isEdit, register, errors }: I_Props) => {
           )}
         </Pane>
       ),
+      value: (
+        <CustomTextInput
+          className="required lastName"
+          placeholder="姓氏"
+          isInvalid={false}
+          disabled={true}
+          value={data.account_fname?.concat(" ", data.account_lname)}
+        />
+      )
 
-      value: data.account_fname?.concat(" ", data.account_lname) || "--"
+      // value: data.account_fname?.concat(" ", data.account_lname) || "--"
       // subLabel?: string | React.ReactNode;
       // inputType?: string;
     },
@@ -127,7 +136,16 @@ const BasicInfoBox = ({ data, isEdit, register, errors }: I_Props) => {
           />
         </Pane>
       ),
-      value: hidePhoneNumber(data.content_phone_tel1) || "--"
+      value: (
+        <CustomTextInput
+          className="required"
+          placeholder="請輸入手機"
+          isInvalid={false}
+          disabled={true}
+          value={hidePhoneNumber(data.content_phone_tel1)}
+        />
+      )
+      // value: hidePhoneNumber(data.content_phone_tel1) || "--"
     },
     {
       readonly: false,
@@ -153,7 +171,16 @@ const BasicInfoBox = ({ data, isEdit, register, errors }: I_Props) => {
           />
         </Pane>
       ),
-      value: hideEmail(data.content_priv_email) || "--"
+      value: (
+        <CustomTextInput
+          className="required"
+          placeholder="請輸入信箱"
+          isInvalid={false}
+          disabled={true}
+          value={hideEmail(data.content_priv_email)}
+        />
+      )
+      // value: hideEmail(data.content_priv_email) || "--"
     }
   ];
   return (
