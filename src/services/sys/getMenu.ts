@@ -121,6 +121,10 @@ export const DUMMY_MENU = {
   userdefine: [],
   defaultMenu: [
     {
+      menu_name: "首頁",
+      path: "/"
+    },
+    {
       menu_name: "使用者管理",
       sub_menu: [
         {
@@ -221,25 +225,25 @@ export const DUMMY_MENU = {
       menu_name: "任務管理",
       sub_menu: [
         {
-          module_no: "sys",
-          fg_no: "account",
-          func_no: "org",
-          func_name: "組織設定",
-          path: "/org"
+          module_no: "bus",
+          fg_no: "task",
+          func_no: "assignment",
+          func_name: "任務指派",
+          path: "/assignment"
         },
         {
-          module_no: "sys",
-          fg_no: "account",
-          func_no: "role",
-          func_name: "角色設定",
-          path: "/role"
+          module_no: "bus",
+          fg_no: "task",
+          func_no: "schedule",
+          func_name: "駕駛出勤管理",
+          path: "/schedule"
         },
-        {
-          module_no: "sys",
-          fg_no: "account",
-          func_no: "accountList",
-          func_name: "使用者列表",
-          path: "/account"
+        { 
+          module_no: "bus",
+          fg_no: "task",
+          func_no: "setting",
+          func_name: "出勤管理設定", 
+          path: "/setting"
         }
       ]
     },
