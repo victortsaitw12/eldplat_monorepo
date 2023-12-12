@@ -52,7 +52,7 @@ function FilterWrapper({
                 <label key={key} className="search-tool">
                   <SearchIcon />
                   <input
-                    placeholder="搜尋"
+                    placeholder={filter[key].label || "搜尋"}
                     onChange={(e) => {
                       delayHandleSearch(key, e.target.value);
                     }}
