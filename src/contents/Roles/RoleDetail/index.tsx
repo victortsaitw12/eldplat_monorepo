@@ -52,14 +52,16 @@ const RoleDetail = ({ data, isEdit, asyncSubmitForm, submitRef }: I_Props) => {
         getValues={getValues}
         control={control}
       />
-      <AuthPanel
-        getValues={getValues}
-        data={data.func_auth}
-        register={register}
-        control={control}
-        setValue={setValue}
-        // errors={errors}
-      />
+      {data && (
+        <AuthPanel
+          getValues={getValues}
+          data={data.func_auth}
+          register={register}
+          control={control}
+          setValue={setValue}
+          // errors={errors}
+        />
+      )}
       <button style={{ display: "none" }} ref={submitRef} type="submit">
         發送表單
       </button>

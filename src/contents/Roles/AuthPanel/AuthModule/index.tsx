@@ -28,6 +28,7 @@ const AuthModule = ({
   getValues,
   control,
   setValue,
+  filter,
   subFilter
 }: I_Props) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
@@ -57,6 +58,12 @@ const AuthModule = ({
     setIsOpen((prev) => !prev);
   };
 
+  const isFilteredOut = (fg_no: string) => {
+    if (filter === "") return false;
+    if (filter === fg_no) return false;
+    return true;
+  };
+
   const isAuthFuncDisabled = (value: I_AuthFuncElement[]) => {
     if (!isEdit) return;
     return value.every((elem) => elem.element_default === "3");
@@ -78,7 +85,11 @@ const AuthModule = ({
 
   return (
     <DivSTY className="authFunc">
-      <div className="authFunc__title authFunc__item">
+      <div
+        className={`authFunc__title authFunc__item ${
+          isFilteredOut(data.fg_no) ? "hide" : ""
+        }`}
+      >
         <div className="label">
           <div className="toggleBtn" onClick={handleToggle}>
             {isOpen ? <CaretDownIcon /> : <CaretRightIcon />}
@@ -98,7 +109,7 @@ const AuthModule = ({
       <div
         className={`authFunc__contents ${isOpen ? "" : "hide"} ${
           isEnabled ? "" : "disabled"
-        }`}
+        }  ${isFilteredOut(data.fg_no) ? "hide" : ""}`}
       >
         {isEdit &&
           fields.map((field: any, i) => {
@@ -162,6 +173,7 @@ interface I_Props {
   control: Control<any>;
   setValue: UseFormSetValue<any>;
   getValues: UseFormGetValues<any>;
+  filter: string;
   subFilter: string;
 }
 

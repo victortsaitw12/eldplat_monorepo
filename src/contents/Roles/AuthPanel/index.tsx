@@ -29,7 +29,10 @@ const AuthPanel = ({
   const [filter, setFilter] = React.useState("");
   const [subFilter, setSubFilter] = React.useState("");
 
-  const filtedData = data.filter((item) => item.fg_no === filter);
+  // const filtedData = React.useMemo(() => {
+  //   if (filter === "") return data;
+  //   return data.filter((item) => item.fg_no === filter);
+  // }, [filter, data]);
 
   //------ functions ------//
   const handleFilter = (v: string) => {
@@ -73,39 +76,38 @@ const AuthPanel = ({
     value: <NoResult />
   };
 
-  const dataFitInfoBox = (filter ? filtedData : data).map(
-    (item: I_AuthFuncItem, i: number) => {
-      // if (filter && item.func_no !== filter) return;
-      return {
-        readonly: false,
-        req: false,
-        label: "",
-        editEle: (
-          <AuthModule
-            data={item}
-            isEdit={true}
-            index={i}
-            register={register}
-            getValues={getValues}
-            control={control}
-            setValue={setValue}
-            subFilter={subFilter}
-          />
-        ),
-        value: (
-          <AuthModule
-            data={item}
-            isEdit={false}
-            register={register}
-            getValues={getValues}
-            control={control}
-            setValue={setValue}
-            subFilter={subFilter}
-          />
-        )
-      };
-    }
-  );
+  const dataFitInfoBox = data.map((item: I_AuthFuncItem, i: number) => {
+    return {
+      readonly: false,
+      req: false,
+      label: "",
+      editEle: (
+        <AuthModule
+          data={item}
+          isEdit={true}
+          index={i}
+          register={register}
+          getValues={getValues}
+          control={control}
+          setValue={setValue}
+          filter={filter}
+          subFilter={subFilter}
+        />
+      ),
+      value: (
+        <AuthModule
+          data={item}
+          isEdit={false}
+          register={register}
+          getValues={getValues}
+          control={control}
+          setValue={setValue}
+          filter={filter}
+          subFilter={subFilter}
+        />
+      )
+    };
+  });
   return (
     <BodySTY>
       <InfoBox
