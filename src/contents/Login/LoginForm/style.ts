@@ -8,44 +8,35 @@ export const BodySTY = styled.div`
   align-items: stretch;
   gap: 32px;
   background: ${({ theme }) => theme.color.N0};
-  .asst {
+  .inpitFields {
+    label {
+      font-size: ${({ theme }) => theme.fontSize.Headline400};
+      font-weight: ${({ theme }) => theme.fontWeight.Headline400};
+      color: ${({ theme }) => theme.color.N700};
+    }
+  }
+  .asstRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
-    &__storePW {
+    &__storeAcct {
       display: flex;
-      .checkbox-title {
-        flex: 10;
+      gap: 12px;
+      label {
+        gap: 0px;
+        label {
+          gap: 12px;
+        }
       }
     }
-    &__forgetPW {
+    &__forgetPw {
+      color: ${({ theme }) => theme.color.B400};
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+      font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
       &:hover {
         text-decoration: underline;
-      }
-    }
-  }
-
-  .all-password {
-    position: relative;
-    .forgot-password {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      position: absolute;
-      left: 102%;
-      top: 50%;
-      transform: translateY(-50%);
-
-      button {
-        border: 0;
-        background: transparent;
-        font-weight: 600;
-        &:hover {
-          border-bottom: 1px solid ${({ theme }) => theme.color.N700};
-          cursor: pointer;
-        }
       }
     }
   }

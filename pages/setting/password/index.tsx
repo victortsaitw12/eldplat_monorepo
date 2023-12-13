@@ -5,6 +5,7 @@ import {
   GetServerSideProps,
   InferGetServerSidePropsType
 } from "next";
+import { InlineAlert } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 //
@@ -18,7 +19,7 @@ import {
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
 
-const Page: NextPageWithLayout<never> = ({ id }) => {
+const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
 
   //------ functions ------//
@@ -48,29 +49,14 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       </ControlBar>
       <BodySTY>
         <ChangeePasswordInfoBox />
+        <InlineAlert intent="none" marginBottom={16}>
+          按下儲存按鈕後，系統將自動登出{" "}
+        </InlineAlert>
       </BodySTY>
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props, Params> = async (
-  context
-) => {
-  const { params } = context;
-  return {
-    props: {
-      driverNo: params!.id
-    }
-  };
-};
-
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;
-
-interface Props {
-  driverNo: string;
-}
-interface Params extends ParsedUrlQuery {
-  id: string;
-}

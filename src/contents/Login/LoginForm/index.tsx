@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { signIn } from "next-auth/react";
-import { TextInput, TextInputField, EyeOffIcon, EyeOnIcon } from "evergreen-ui";
+import { TextInputField } from "evergreen-ui";
 import { useRouter } from "next/router";
-
-import LoginInput from "../../../components/LoginInput";
-import Button from "@components/Button/Primary/Label";
 import { BodySTY } from "./style";
+
+import PasswordInputField from "../PasswordInputField";
+import { Label as Button } from "@components/Button/Primary";
 import Checkbox from "@components/Checkbox";
 //
 interface PropsType {
@@ -14,13 +14,13 @@ interface PropsType {
 
 function Form(props: PropsType) {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [inputData, setInputData] = React.useState({
     email: "",
     password: ""
   });
-  const [isPasswordHide, setIsPasswordHide] = useState(true);
+
+  const formType = router.pathname.split("/")[1];
+  //forgot-password, first-login, login
 
   // --- functions --- //
   function checkEmail(value: string) {
@@ -29,23 +29,13 @@ function Form(props: PropsType) {
     return emailRegex.test(value);
   }
 
-  function checkPassword(password: string) {
-    if (password.length <= 0) return true;
-    const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
-    return passwordRegex.test(password);
-  }
-
-  const handleTogglePasswordHide = () => {
-    setIsPasswordHide((prev) => !prev);
-  };
-
-  // 隨時抓取輸入的帳號和密碼並存入狀態
   const handleLogin = async (e: any) => {
     e.preventDefault();
     const result = await signIn("credentials", {
       ...inputData,
       redirect: false
     });
+
     if (result?.error) {
       console.log(result.error);
     } else {
@@ -56,67 +46,32 @@ function Form(props: PropsType) {
 
   return (
     <BodySTY>
-      <TextInputField
-        type="email"
-        placeholder="example@mail.com"
-        label="帳號"
-        value={inputData.email}
-        isInvalid={!checkEmail(inputData.email)}
-        validationMessage={
-          !checkEmail(inputData.email) ? "格式錯誤" : undefined
-        }
-        onChange={(e: any) =>
-          setInputData({ ...inputData, email: e.target.value })
-        }
-      />
-      <div style={{ position: "relative" }}>
-        <div>
-          {isPasswordHide ? (
-            <EyeOffIcon
-              style={{
-                position: "absolute",
-                transform: "translateY(36px)",
-                right: "8px",
-                zIndex: "999",
-                cursor: "pointer"
-              }}
-              onClick={handleTogglePasswordHide}
-            />
-          ) : (
-            <EyeOnIcon
-              style={{
-                position: "absolute",
-                transform: "translateY(36px)",
-                right: "8px",
-                zIndex: "999",
-                cursor: "pointer"
-              }}
-              onClick={handleTogglePasswordHide}
-            />
-          )}
-          <TextInputField
-            type={`${isPasswordHide ? "password" : "text"}`}
-            placeholder="請輸入您的密碼"
-            label="密碼"
-            value={inputData.password}
-            isInvalid={!checkPassword(inputData.password)}
-            validationMessage={
-              !checkPassword(inputData.password)
-                ? "至少4位英數字不含特殊符號"
-                : undefined
-            }
-            onChange={(e: any) =>
-              setInputData({ ...inputData, password: e.target.value })
-            }
-          />
-        </div>
+      <div className="inpitFields">
+        <TextInputField
+          className="emailInput"
+          type="email"
+          placeholder="example@mail.com"
+          label="帳號"
+          value={inputData.email}
+          isInvalid={!checkEmail(inputData.email)}
+          validationMessage={
+            !checkEmail(inputData.email) ? "格式錯誤" : undefined
+          }
+          onChange={(e: any) =>
+            setInputData({ ...inputData, email: e.target.value })
+          }
+        />
+        <PasswordInputField
+          onChange={(v: string) => setInputData({ ...inputData, password: v })}
+        />
       </div>
-      <div className="asst">
-        <div className="asst__storePW">
-          <Checkbox label="記住帳號" isLabelAfter />
+      <div className="asstRow">
+        <div className="asstRow__storeAcct">
+          <Checkbox />
+          記住帳號
         </div>
-        <div className="asst__forgetPW">
-          <a className="material-icons">忘記密碼</a>
+        <div className="asstRow__forgetPw">
+          <a>忘記密碼</a>
         </div>
       </div>
       <div>
