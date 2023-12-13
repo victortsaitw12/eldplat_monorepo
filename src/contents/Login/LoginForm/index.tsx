@@ -70,36 +70,50 @@ function Form(props: PropsType) {
         }
       />
       <div style={{ position: "relative" }}>
-        <TextInputField
-          type={`${isPasswordHide ? "password" : "text"}`}
-          placeholder="請輸入您的密碼"
-          label="密碼"
-          value={inputData.password}
-          isInvalid={!checkPassword(inputData.password)}
-          validationMessage={
-            !checkPassword(inputData.password)
-              ? "至少4位英數字不含特殊符號"
-              : undefined
-          }
-          onChange={(e: any) =>
-            setInputData({ ...inputData, password: e.target.value })
-          }
-        />
-        {isPasswordHide ? (
-          <EyeOffIcon
-            style={{ position: "absolute" }}
-            onClick={handleTogglePasswordHide}
+        <div>
+          {isPasswordHide ? (
+            <EyeOffIcon
+              style={{
+                position: "absolute",
+                transform: "translateY(36px)",
+                right: "8px",
+                zIndex: "999",
+                cursor: "pointer"
+              }}
+              onClick={handleTogglePasswordHide}
+            />
+          ) : (
+            <EyeOnIcon
+              style={{
+                position: "absolute",
+                transform: "translateY(36px)",
+                right: "8px",
+                zIndex: "999",
+                cursor: "pointer"
+              }}
+              onClick={handleTogglePasswordHide}
+            />
+          )}
+          <TextInputField
+            type={`${isPasswordHide ? "password" : "text"}`}
+            placeholder="請輸入您的密碼"
+            label="密碼"
+            value={inputData.password}
+            isInvalid={!checkPassword(inputData.password)}
+            validationMessage={
+              !checkPassword(inputData.password)
+                ? "至少4位英數字不含特殊符號"
+                : undefined
+            }
+            onChange={(e: any) =>
+              setInputData({ ...inputData, password: e.target.value })
+            }
           />
-        ) : (
-          <EyeOnIcon
-            style={{ position: "absolute" }}
-            onClick={handleTogglePasswordHide}
-          />
-        )}
+        </div>
       </div>
       <div className="asst">
         <div className="asst__storePW">
-          <Checkbox label="記住密碼" isLabelAfter />
+          <Checkbox label="記住帳號" isLabelAfter />
         </div>
         <div className="asst__forgetPW">
           <a className="material-icons">忘記密碼</a>
