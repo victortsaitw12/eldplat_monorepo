@@ -1,23 +1,22 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, GetServerSideProps } from "next";
-
-import { toaster } from "evergreen-ui";
+import { RadioGroup, Radio, Pane } from "evergreen-ui";
 import { useSession } from "next-auth/react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { BodySTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import BasicInfoBox from "@contents/Account/BasicInfoBox";
-import EmployeeInfoBox from "@contents/Account/EmployeeInfoBox";
 import { ParsedUrlQuery } from "querystring";
+import { DUMMY_ACC_LIST } from "@services/account/getAccountList";
 import {
   getOneAccount,
   I_AccountDetailItem,
   I_AccountRole,
   I_RoleItem,
-  DUMMY_DATA_CREATE
+  DUMMY_DATA_CREATE,
+  DUMMY_ONE_ACCOUNT,
+  DUMMY_ROLE_NAME_MOUDULE_MAP,
+  DUMMY_ROLE_NAME_MAP
 } from "@services/account/getOneAccount";
 import {
   createAccount,
@@ -27,169 +26,311 @@ import {
   updateAccount,
   I_ReqBody as I_UpdateReqBody
 } from "@services/account/updateAccount";
-import ControlBar from "@contents/Account/ControlBar";
-import { ModalContext } from "@contexts/ModalContext/ModalProvider";
-import RoleInfoBox from "@contents/Account/RoleInfoBox";
-import LoadingSpinner from "@components/LoadingSpinner";
+import {
+  DUMMY_ACC_DDL,
+  I_AccountDDLItem as I_DDL
+} from "@services/account/getAccountDDL";
+import ControlBar from "@components/ControlBar";
+import AccountDetail from "@contents/Account/AccountDetail";
+import { useModal } from "@contexts/ModalContext/ModalProvider";
+import ButtonSet from "@components/ButtonSet";
+import LightBox from "@components/Lightbox";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
-  const { data: session } = useSession();
-  const modal = React.useContext(ModalContext);
-  const { editPage } = router.query; //是否為編輯頁的判斷1或0
+  const submitRef = React.useRef<HTMLButtonElement | null>(null);
+  const { data: session, status } = useSession();
+  const { showLeavePageModal, showModal, onCancel, onConfirm } = useModal();
+  const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
+  const [ddl, setDDL] = React.useState<I_DDL>(DUMMY_ACC_DDL.ResultList[0]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  const isEdit = editPage === "edit";
+  const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
   const isCreate = id === "create";
-
-  const defaultCreate: I_CreateReqBody = {
-    account_fname: "",
-    account_lname: "",
-    org_no: "",
-    creorgno: "",
-    content_phone_tel_country_code1: "+",
-    content_phone_tel1: "",
-    content_priv_email: "",
-    account_role: []
-  };
-
-  const defaultUpdate: I_UpdateReqBody = {
-    account_no: data?.account_no || "",
-    account_fname: data?.account_fname || "",
-    account_lname: data?.account_lname || "",
-    contact_no: data?.contact_no || "",
-    content_phone_tel_country_code1:
-      data?.content_phone_tel_country_code1 || "",
-    content_phone_tel1: data?.content_phone_tel1 || "",
-    creorgno: "o-0001", // TODO useSession
-    account_role: (data && getSelectedRoles(data)) || []
-  };
-
-  const defaultValues = isCreate ? defaultCreate : defaultUpdate;
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    defaultValues
-  });
+  const [options] = React.useState([
+    { label: "使用以前的資料", value: "0" },
+    { label: "使用我剛剛填寫的資料", value: "1" }
+  ]);
+  const [dataChoice, setDataChoice] = React.useState("");
+  const [lightboxOpen, setLightboxOpen] = React.useState(false);
 
   //------ functions ------//
-
   const fetchData = async () => {
     setIsLoading(true);
-    if (!session) return;
-    try {
-      const uk = session.user.account_no;
-      const reqBody = {
-        account_no: id,
-        creorgno: "o-0001"
-      };
-      const res = await getOneAccount(uk, reqBody);
-      const result = res.DataList[0];
-      setData(result);
-    } catch (e: any) {
-      console.log(e);
-    }
+    const createDummy = DUMMY_DATA_CREATE.ResultList[0];
+    const editedData = localStorage.getItem("accountEditData");
+    const editedDummy = editedData ? JSON.parse(editedData) : null;
+    const editDummy = editedDummy
+      ? { ...editedDummy }
+      : DUMMY_ONE_ACCOUNT.ResultList[0];
+    setData(isCreate ? createDummy : editDummy);
+    setDDL(DUMMY_ACC_DDL.ResultList[0]);
+
+    // if (!session) return;
+    // try {
+    // const uk = session.user.account_no;
+    // const reqBody = {
+    //   account_no: id,
+    //   creorgno: session.user.org_no
+    // };
+    // const res = await getOneAccount(uk, reqBody);
+    // const result = res.ResoutList[0];
+    // } catch (e: any) {
+    //   console.log(e);
+    // }
     setIsLoading(false);
   };
 
-  const asyncSubmitForm = async (data: any) => {
-    // const userId = session.user.userID
-    if (!session) return;
-    const uk = session.user.account_no;
-    console.log("🔜 data:", data);
-    try {
-      const res = isCreate
-        ? await createAccount(uk, data)
-        : await updateAccount(uk, data);
+  // TODO: to be remved, just for DEMO
+  const getAccountName = (data: any) => {
+    return `${data.account_lname}${data.account_fname}`;
+  };
 
-      if (res.StatusCode === "200") {
-        // refetch();
-        toaster.success(`${res.Message}`, {
-          duration: 1.5
+  // TODO: to be remved, just for DEMO
+  const getRoleNames = (data: any): I_RoleName[] => {
+    const groupedRoles = data.account_role.reduce(
+      (acc: I_GroupedRoles, item: string) => {
+        const role_no = item.slice(item.length - 2);
+        const module_no = item.slice(0, item.length - 2);
+        if (!acc[module_no]?.includes(role_no)) {
+          return {
+            ...acc,
+            [module_no]: [...(acc[module_no] || []), role_no]
+          };
+        }
+        return acc;
+      },
+      {}
+    );
+
+    const result: I_RoleName[] = [];
+    for (const module_no in groupedRoles) {
+      if (groupedRoles.hasOwnProperty(module_no)) {
+        const value = groupedRoles[module_no];
+        result.push({
+          role_name_m: DUMMY_ROLE_NAME_MOUDULE_MAP.get(module_no) || "",
+          role_name: value.map((item: string) =>
+            DUMMY_ROLE_NAME_MAP.get(item || "")
+          )
         });
-      } else {
-        throw new Error(`${res.Message}`);
       }
-    } catch (err: any) {
-      toaster.warning(err.message);
+    }
+    // for (const [key, value] of Object.entries(groupedRoles)) {
+    //   result.push({
+    //     role_name_m: DUMMY_ROLE_NAME_MOUDULE_MAP.get(key) || "",
+    //     role_name: value.map((item: string) =>
+    //       DUMMY_ROLE_NAME_MAP.get(item || "")
+    //     )
+    //   });
+    // }
+
+    return result;
+  };
+
+  const asyncSubmitForm = async (data: any) => {
+    // check user
+    // console.log("🔜 data:", data);
+    const account_name = getAccountName(data);
+    const roles = getRoleNames(data);
+    if (isCreate) {
+      const isUserExist = DUMMY_ACC_LIST.ResultList.find(
+        (item) => item.account_name === account_name
+      );
+      if (isUserExist && dataChoice === "") {
+        setDataChoice("0");
+        setLightboxOpen(true);
+        // showModal(userExistModalContent);
+        return;
+      }
+      localStorage.setItem(
+        "accountCreateData",
+        JSON.stringify({
+          ...data,
+          id: "create",
+          account_name: account_name,
+          roles: roles,
+          invt_sts: "03"
+        })
+      );
+      router.push("/account");
+    } else {
+      const accountRoleArrFromDummy =
+        DUMMY_ONE_ACCOUNT.ResultList[0].account_role;
+      const editedDataFitFormatForRead = accountRoleArrFromDummy.map((item) => {
+        const updatedRoles = item.roles.map((role) => {
+          if (data.account_role.includes(role.role_no)) {
+            return { ...role, is_select: true };
+          }
+          return role;
+        });
+        return { ...item, roles: updatedRoles };
+      });
+      const editedDataForDemo = {
+        ...DUMMY_ONE_ACCOUNT.ResultList[0],
+        ...data,
+        account_role: editedDataFitFormatForRead
+      };
+      localStorage.setItem(
+        "accountEditData",
+        JSON.stringify(editedDataForDemo)
+      );
+      router.push(`/account/detail/${id}?editPage=view`);
+    }
+
+    // if (!session) return;
+    // const uk = session.user.account_no;
+    // try {
+    //   const res = isCreate
+    //     ? await createAccount(uk, data)
+    //     : await updateAccount(uk, data);
+
+    //   if (res.StatusCode === "200") {
+    //     // refetch();
+    //     toaster.success(`${res.Message}`, {
+    //       duration: 1.5
+    //     });
+    //   } else {
+    //     throw new Error(`${res.Message}`);
+    //   }
+    // } catch (err: any) {
+    //   toaster.warning(err.message);
+    // }
+  };
+
+  const handleChangeRoute = async (path: string) => {
+    showLeavePageModal(path);
+  };
+
+  const handleCancel = () => {
+    // onCreate
+    if (isCreate) {
+      handleChangeRoute("/account");
+      return;
+    }
+    // onView
+    if (!isEdit) {
+      router.push("/account");
+    } else {
+      // onEdit
+      setIsEdit(false);
+      handleChangeRoute(`/account/detail/${id}?editPage=view`);
     }
   };
 
-  const handleNavigation = async (path: string) => {
-    router.push(path);
+  const handleConfirm = () => {
+    // onCreate
+    if (isCreate) {
+      submitRef.current && submitRef.current.click();
+      return;
+    }
+    if (isEdit) {
+      submitRef.current && submitRef.current.click();
+      setIsEdit(false);
+      router.push(`/account/detail/${id}?editPage=view`);
+    } else {
+      setIsEdit(true);
+      router.push(`/account/detail/${id}?editPage=edit`);
+    }
   };
 
-  const handleCreate = () => {
-    handleSubmit(asyncSubmitForm)();
-  };
-
-  const handleEdit = () => {
-    router.push({
-      pathname: "/account/detail/" + id,
-      query: { editPage: "edit" }
-    });
+  const handleDataChoice = () => {
+    // if (dataChoice === "0") {
+    //   setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
+    //   setLightboxOpen(false);
+    // } else
+    if (dataChoice === "1") {
+      submitRef.current && submitRef.current.click();
+      setLightboxOpen(false);
+    } else {
+      router.push(`/account/detail/${id}?editPage=view`);
+      setLightboxOpen(false);
+    }
   };
 
   // ------- useEffect ------- //
   React.useEffect(() => {
     if (!session) return;
-    if (isCreate) return;
     fetchData();
-  }, [session, isCreate]);
+  }, [session, router]);
 
-  React.useEffect(() => {
-    if (isCreate) setData(DUMMY_DATA_CREATE);
-  }, [session]);
-
-  React.useEffect(() => {
-    if (!isEdit) return;
-    const handleRouteChange = (url: string) => {
-      modal.showLeavePageModal();
-    };
-
-    router.beforePopState(({ url, as, options }) => {
-      if (modal.modalContent) {
-        // If there's a confirmation modal open, prevent the route change
-        return false;
-      }
-      return true;
-    });
-
-    router.events.on("routeChangeStart", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [isEdit]);
-
-  const handleCancel = () => {
-    console.log("cancel");
-  };
+  // ------- render ------- //
+  // const userExistModalContent = {
+  //   title: "您先前已建立該使用者",
+  //   children: (
+  //     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+  //       <div>是否前往編輯該使用者？</div>
+  //       <div>若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：</div>
+  //       <RadioGroup
+  //         value={dataChoice}
+  //         options={options}
+  //         onChange={(event) => setDataChoice(event.target.value)}
+  //         size={16}
+  //       />
+  //     </div>
+  //   ),
+  //   onConfirm: () => {
+  //     if (dataChoice === "0") {
+  //       setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
+  //       router.push(`/account/detail/${id}?editPage=edit`);
+  //     } else {
+  //       setData(edited);
+  //       router.push(`/account/detail/${id}?editPage=view`);
+  //     }
+  //   },
+  //   onCancel: () => console.log("cancel")
+  // };
 
   return (
     <>
-      <ControlBar
-        isEdit={editPage === "edit"}
-        handleNavigation={handleNavigation}
-        handleEdit={handleEdit}
-      />
-      <BodySTY>
-        {isCreate ||
-          (data && (
-            <>
-              <BasicInfoBox data={data} isEdit={editPage === "edit"} />
-              <EmployeeInfoBox data={data} isEdit={editPage === "edit"} />
-              <RoleInfoBox
-                data={data.account_role}
-                isEdit={editPage === "edit"}
-              />
-            </>
-          ))}
-      </BodySTY>
+      <ControlBar hasShadow={true} flexEnd={true}>
+        <ButtonSet
+          isEdit={editPage === "edit"}
+          secondaryBtnOnClick={handleCancel}
+          secondaryBtnText={
+            isCreate ? "回列表頁" : editPage === "edit" ? "取消" : "回列表頁"
+          }
+          primaryBtnOnClick={handleConfirm}
+          primaryBtnText={
+            isCreate ? "儲存" : editPage === "edit" ? "儲存" : "編輯"
+          }
+        />
+      </ControlBar>
+      {data && (
+        <AccountDetail
+          data={data}
+          ddl={ddl}
+          isEdit={isEdit}
+          asyncSubmitForm={asyncSubmitForm}
+          submitRef={submitRef}
+        />
+      )}
+      {lightboxOpen && (
+        <LightBox
+          title="您先前已建立該使用者"
+          onCancel={() => setLightboxOpen(false)}
+          onConfirm={handleDataChoice}
+          isOpen={true}
+        >
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+          >
+            <div>是否前往編輯該使用者？</div>
+            <div>
+              若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：
+            </div>
+            {/* <Pane aria-label="Radio Group Label 12" role="group">
+              <Radio checked name="group" label="使用以前的資料" size={16} />
+              <Radio name="group" label="使用我剛剛填寫的資料" size={16} />
+            </Pane> */}
+            <RadioGroup
+              value={dataChoice}
+              options={options}
+              onChange={(event) => setDataChoice(event.target.value)}
+              size={16}
+            />
+          </div>
+        </LightBox>
+      )}
     </>
   );
 };
@@ -215,17 +356,10 @@ interface Props {
 interface Params extends ParsedUrlQuery {
   id: string;
 }
-
-// ===== FUNCTION NOT IN RENDERS ===== //
-const getSelectedRoles = (data: I_AccountDetailItem) => {
-  if (!data) return;
-  const flattenRoleList = data.account_role.flatMap(
-    (accoountRole: I_AccountRole) => accoountRole.roles
-  );
-  const selectedRoleList = flattenRoleList.filter(
-    (item: I_RoleItem) => item.is_select === true
-  );
-  if (selectedRoleList.length === 0) return [];
-  const roleStrList = selectedRoleList.map((item) => item.role_no);
-  return roleStrList;
-};
+interface I_GroupedRoles {
+  [module_no: string]: string[];
+}
+interface I_RoleName {
+  role_name_m: string; // Assuming DUMMY_ROLE_NAME_MOUDULE_MAP.get(key) returns a string
+  role_name: string[]; // Assuming DUMMY_ROLE_NAME_MAP.get(item) returns a string
+}

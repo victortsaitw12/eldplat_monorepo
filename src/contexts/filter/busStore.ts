@@ -7,8 +7,6 @@ interface StateTypes {
   selectedForm: string;
   initializeSubFilter: () => void;
   updateSubFilter: (key: string, value: string) => void;
-  isDrawerOpen: boolean;
-  setDrawerOpen: (value: boolean) => void;
   updateMainFilter: (value: string) => void;
   updateSelectedForm: (value: string) => void;
 }
@@ -16,14 +14,6 @@ export const useBusStore = create<StateTypes>((set) => ({
   subFilter: null,
   mainFilter: "1",
   selectedForm: "",
-  isDrawerOpen: false,
-  setDrawerOpen: (value: boolean) => {
-    return set(() => {
-      return {
-        isDrawerOpen: value
-      };
-    });
-  },
   initializeSubFilter: () => {
     const filter: any = {};
     const initFilter = localStorage.getItem("busInitFilter");

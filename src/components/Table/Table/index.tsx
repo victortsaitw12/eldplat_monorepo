@@ -8,7 +8,7 @@ export interface I_Data {
   [key: string]: string | number | React.ReactNode;
 }
 
-interface I_Table {
+export interface I_Table {
   titles: Array<string | number | React.ReactNode>;
   data?: I_Data[];
   onCheck?: (items: any) => void;
@@ -30,7 +30,6 @@ function Table({
   className
 }: I_Table) {
   const hasData = data !== undefined && data !== null && data.length > 0;
-
   return (
     <>
       <DivSTY className={`${className || ""} container`}>

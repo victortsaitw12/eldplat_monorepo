@@ -41,10 +41,41 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "駕駛列表", url: "/driver" }
   ],
-  "/driver/create": [
+  "/driver/detail/create": [
     { label: "首頁", url: "/" },
     { label: "駕駛列表", url: "/driver" },
-    { label: "新增駕駛", url: "/create" }
+    { label: "新增駕駛", url: "" }
+  ],
+  "/driver/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "檢視駕駛", url: "" }
+  ],
+  "/driver/training/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "檢視駕駛", url: "/driver/detail/[id]" },
+    { label: "教育訓練", url: "" }
+  ],
+  "/driver/management": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "駕駛管理設定", url: "" }
+  ],
+  "/schedule": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/" },
+  ],
+  "/schedule/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/schedule" },
+    { label: "個人班表", url: "" },
+  ],
+  "/schedule/approval": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/schedule" },
+    { label: "個人班表", url: "/schedule/[id]" },
+    { label: "簽核", url: "/approval" },
   ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
@@ -56,15 +87,6 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "車輛清單", url: "/bus" },
     { label: "檢視", url: "" }
-  ],
-
-  "/shift": [
-    { label: "入門", url: "/" },
-    { label: "駕駛排班", url: "/shift" }
-  ],
-  "/shift/[id]": [
-    { label: "入門", url: "/" },
-    { label: "駕駛排班", url: "/shift" }
   ],
   "/customer": [
     { label: "入門", url: "/" },
@@ -141,12 +163,12 @@ const breadcrumbs: I_routers = {
     { label: "入門", url: "/" },
     { label: "員工設定", url: "/employee" },
     { label: "詳情", url: "/" }
-  ],
-  "/driver/detail/[id]": [
-    { label: "入門", url: "/" },
-    { label: "駕駛設定", url: "/driver" },
-    { label: "詳情", url: "/" }
-  ],
+  ]
+  // "/driver/detail/[id]": [
+  //   { label: "入門", url: "/" },
+  //   { label: "駕駛設定", url: "/driver" },
+  //   { label: "詳情", url: "/" }
+  // ],
   // "/driver": [
   //   { label: "入門", url: "/" },
   //   { label: "駕駛設定", url: "/driver" }

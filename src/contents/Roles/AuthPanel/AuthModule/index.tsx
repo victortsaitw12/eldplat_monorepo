@@ -3,49 +3,93 @@ import {
   Switch,
   RadioGroup,
   CaretDownIcon,
-  CaretRightIcon
+  CaretRightIcon,
+  Select
 } from "evergreen-ui";
-import { Control, useFieldArray, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  useFieldArray,
+  UseFormRegister,
+  useWatch,
+  UseFormGetValues
+} from "react-hook-form";
 import { UseFormSetValue } from "react-hook-form/dist/types/form";
 import { DivSTY } from "./style";
 
 import { I_AuthFuncItem, I_AuthFuncElement } from "@services/role/getOneRole";
-import RadioOptions from "../RadioOptions";
-import RadioGroupList from "@components/RadioGroupList";
 import Radio from "@components/HookForm/Radio";
+import { getValue } from "evergreen-ui/types/theme";
 
 const AuthModule = ({
   data,
   isEdit,
   index,
   register,
+  getValues,
   control,
-  setValue
+  setValue,
+  filter,
+  subFilter
 }: I_Props) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
   const [isEnabled, setIsEnabled] = React.useState<boolean>(true);
+  const [isChecked, setIsChecked] = React.useState<boolean>(true);
+
   const { fields } = useFieldArray({
     control,
     name: `func_auth.${index}.func_element`
   });
+
   // TODO data.module_enb
   const handleValueChange = (value: string) => {
     return;
   };
-  console.log("🍅 index:", index);
-  console.log("🍅 name:", `func_auth.${index}.func_element`);
-  console.log("🍅 fields:", fields);
 
   const handleEnabled = () => {
     setIsEnabled((prev) => !prev);
+    if (isEnabled) {
+      for (let i = 0; i < fields.length; i++) {
+        setValue(`func_auth.${index}.func_element.${i}.element_default`, "3");
+      }
+    }
   };
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
   };
+
+  const isFilteredOut = (fg_no: string) => {
+    if (filter === "") return false;
+    if (filter === fg_no) return false;
+    return true;
+  };
+
+  const isAuthFuncDisabled = (value: I_AuthFuncElement[]) => {
+    if (!isEdit) return;
+    return value.every((elem) => elem.element_default === "3");
+  };
+
+  const isAuthFuncElemDisabled = (value: string) => {
+    return value === "3";
+  };
+
+  const currentFunElement = useWatch({
+    control,
+    name: `func_auth.${index}.func_element`
+  });
+
+  React.useEffect(() => {
+    const result = isAuthFuncDisabled(currentFunElement);
+    if (result) setIsChecked(false);
+  }, [currentFunElement]);
+
   return (
     <DivSTY className="authFunc">
-      <div className="authFunc__title authFunc__item">
+      <div
+        className={`authFunc__title authFunc__item ${
+          isFilteredOut(data.fg_no) ? "hide" : ""
+        }`}
+      >
         <div className="label">
           <div className="toggleBtn" onClick={handleToggle}>
             {isOpen ? <CaretDownIcon /> : <CaretRightIcon />}
@@ -54,58 +98,52 @@ const AuthModule = ({
         </div>
         <Switch
           className="value"
-          checked={isEnabled}
           onChange={handleEnabled}
-          disabled={!isEdit}
+          checked={
+            isEnabled &&
+            !isAuthFuncDisabled(getValues(`func_auth.${index}.func_element`))
+          }
+          disabled={!isEdit || isAuthFuncDisabled(data.func_element)}
         />
       </div>
       <div
         className={`authFunc__contents ${isOpen ? "" : "hide"} ${
           isEnabled ? "" : "disabled"
-        }`}
+        }  ${isFilteredOut(data.fg_no) ? "hide" : ""}`}
       >
         {isEdit &&
-          fields.map(
-            (field, i) => (
-              <input
-                key={field.id} // important to include key with field's id
-                {...register(
-                  `func_auth[${index}].func_element.${i}.element_default`
-                )}
-              />
-            )
-            // console.log("🍅 field:", field);
-            // return (
-            //   <div
-            //     className={"authFunc__element authFunc__item"}
-            //     key={`funcElem-${i}`}
-            //   >
-            //     {/* <div className="label">{field.element_name}</div> */}
-            //     <div className="value">
-            //       <Radio
-            //         key={`func_auth.${index}.func_element.${i}.element_default`}
-            //         control={control}
-            //         name={`func_auth.${index}.func_element.${i}.element_default`}
-            //         isDisabled={!isEdit}
-            //         options={[
-            //           {
-            //             value: "1",
-            //             label: "顯示並可用"
-            //           },
-            //           {
-            //             value: "2",
-            //             label: "僅供檢視"
-            //           },
-            //           {
-            //             value: "3",
-            //             label: "不顯示"
-            //           }
-            //         ]}
-            //       />
-            //     </div>
-            //   </div>
-            // );
-          )}
+          fields.map((field: any, i) => {
+            return (
+              <div
+                className={`authFunc__element authFunc__item ${
+                  isAuthFuncElemDisabled(field.element_default)
+                    ? "disabled"
+                    : ""
+                } ${subFilter && field.element_no !== subFilter ? "hide" : ""}`}
+                key={`funcElem-${i}`}
+              >
+                <div className="label">{field.element_name}</div>
+                <div
+                  className={`value ${
+                    isAuthFuncElemDisabled(field.element_default) ? "hide" : ""
+                  }`}
+                >
+                  <Radio
+                    key={`func_auth.${index}.func_element.${i}.element_default`}
+                    control={control}
+                    name={`func_auth.${index}.func_element.${i}.element_default`}
+                    isDisabled={
+                      !isEdit || isAuthFuncElemDisabled(field.element_default)
+                    }
+                    options={Array.from(
+                      authFuncViewValue,
+                      ([value, label]) => ({ value, label })
+                    )}
+                  />
+                </div>
+              </div>
+            );
+          })}
         {!isEdit &&
           data.func_element.map((elem: I_AuthFuncElement, i: number) => {
             return (
@@ -134,6 +172,9 @@ interface I_Props {
   register: UseFormRegister<any>;
   control: Control<any>;
   setValue: UseFormSetValue<any>;
+  getValues: UseFormGetValues<any>;
+  filter: string;
+  subFilter: string;
 }
 
 // ===== VARIABLES NOT IN RENDERS ===== //

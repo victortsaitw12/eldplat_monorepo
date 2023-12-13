@@ -257,42 +257,15 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <TabsWrapper
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={nowTab}
-        mainFilterArray={mainFilterArray}
-        viewOnly={true}
-      >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={initializeSubFilter}
-          filter={subFilter}
-        >
           <div style={{ color: "red", fontSize: "36px" }}></div>
           <AssignmentList
             ordersData={ordersData}
             assignsData={assignsData}
             handleAssignCreate={handleAssignCreate}
             handleAssignEdit={handleAssignEdit}
-            pageInfo={pageInfo}
-            onPageChange={upDatePageHandler}
+         
+
           />
-        </FilterWrapper>
-      </TabsWrapper>
-      {firstDrawerOpen !== "" && (
-        <AssignmentDrawers
-          firstDrawerOpen={firstDrawerOpen}
-          setFirstDrawerOpen={setFirstDrawerOpen}
-          refetch={() => {
-            setPageInfo(defaultPageInfo);
-            fetchAssignData(false, nowTab, defaultPageInfo);
-            setFirstDrawerOpen("");
-          }}
-          orderInfo={orderInfo}
-          setDisabledAutoList={setDisabledAutoList}
-          editData={editData}
-        />
-      )}
     </BodySTY>
   );
 };

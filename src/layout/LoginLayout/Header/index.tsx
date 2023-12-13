@@ -67,6 +67,7 @@ const Header = ({ layoutProps }: any) => {
   return (
     <ThemeProvider value={theme}>
       <BodySTY>
+        <div className="header-text">EldPlat 後台</div>
         <div className="tool-container">
           <Text className="header-title">{layoutProps?.breadcrumbs}</Text>
         </div>

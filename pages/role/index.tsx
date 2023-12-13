@@ -54,14 +54,24 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchData = async () => {
     if (!session) return;
     setIsLoading(true);
-    const uk = session?.user.account_no;
     try {
+      // const uk = session?.user.account_no;
       // const result = await getRoleList(uk);
       // const data = result.ResultList;
       const data = DUMMY_RoleList.ResultList;
       const pageInfo = DUMMY_RoleList.PageInfo;
-      setData(data);
-      setPageInfo(pageInfo);
+      const isUpdatedDataAfterCreate = localStorage.getItem("roleCreateData");
+
+      if (isUpdatedDataAfterCreate) {
+        setData([JSON.parse(isUpdatedDataAfterCreate), ...data]);
+        setPageInfo({
+          ...pageInfo,
+          Total: pageInfo.Total + 1
+        });
+      } else {
+        setData(data);
+        setPageInfo(pageInfo);
+      }
 
       if (!subFilter) {
         localStorage.setItem(
@@ -104,6 +114,10 @@ const Page: NextPageWithLayout<never> = () => {
     if (status === "unauthenticated") router.push("/login");
   }, [status]);
 
+  React.useEffect(() => {
+    localStorage.removeItem("roleCreateData");
+  }, [router]);
+
   // ------- render ------- //
   const createBtn = (
     <IconLeft text="新增角色" onClick={handleCreate}>
@@ -121,9 +135,7 @@ const Page: NextPageWithLayout<never> = () => {
       > */}
       <FilterWrapper
         updateFilter={updateSubFilter}
-        resetFilter={() => {
-          initializeSubFilter();
-        }}
+        resetFilter={() => initializeSubFilter()}
         filter={subFilter}
         btns={createBtn}
       >

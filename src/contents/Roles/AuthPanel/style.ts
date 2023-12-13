@@ -3,6 +3,14 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   padding: 1rem;
   flex: 10;
+  .authPanel__control {
+    padding: 8px 16px;
+    .group {
+      width: fit-content;
+      display: flex;
+      gap: 8px;
+    }
+  }
 
   /* infoBox */
   .infoBox__container {

@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const InfoCardSTY = styled.div`
   width: 100%;
   height: fit-content;
-  min-height: 177px;
   padding: 0;
   background: ${({ theme }) => theme.color.N0};
   border: 1px solid ${({ theme }) => theme.color.N40};
@@ -42,7 +41,7 @@ export const InfoCardSTY = styled.div`
     }
 
     .col {
-      flex-grow: 1;
+      flex: 1;
 
       display: flex;
       flex-wrap: wrap;
@@ -52,6 +51,7 @@ export const InfoCardSTY = styled.div`
         width: 100%;
         display: flex;
         flex-wrap: wrap;
+        gap: 20px;
 
         .item {
           display: flex;
@@ -60,7 +60,6 @@ export const InfoCardSTY = styled.div`
           gap: 8px;
 
           font-size: 14px;
-          margin-bottom: 20px;
           color: ${({ theme }) => theme.color.N800};
 
           .label {
@@ -76,10 +75,10 @@ export const InfoCardSTY = styled.div`
             }
           }
           .value {
-            color: ${({ theme }) => theme.color.N300};
+            color: ${({ theme }) => theme.color.N800};
 
             .select-wrapper {
-              width: 90%;
+              width: 100%;
               max-width: 240px;
 
               select {
@@ -87,7 +86,6 @@ export const InfoCardSTY = styled.div`
                 color: ${({ theme }) => theme.color.N100};
               }
             }
-
           }
         }
 
@@ -95,13 +93,16 @@ export const InfoCardSTY = styled.div`
           flex-basis: 100%;
         }
         .fb-50 {
-          flex-basis: 50%;
-        }
-        .fb-33 {
-          flex-basis: 100% / 3;
+          flex-basis: calc((100% - 20px) / 2);
         }
         .fb-25 {
-          flex-basis: 25%;
+          flex-basis: calc((100% - 60px) / 4);
+        }
+        .fb-66 {
+          flex-basis: calc((100% - 20px) / 3 * 2);
+        }
+        .fb-33 {
+          flex-basis: calc((100% - 20px) / 3);
         }
 
         .m-0 {

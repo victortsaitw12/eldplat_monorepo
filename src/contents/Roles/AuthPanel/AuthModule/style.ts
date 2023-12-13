@@ -1,9 +1,17 @@
 import styled from "styled-components";
 
 export const DivSTY = styled.div`
+  .disabled {
+    background: ${({ theme }) => theme.color.N40};
+    color: ${({ theme }) => theme.color.N200};
+  }
+  .hide {
+    display: none !important;
+  }
   .authFunc {
     width: 100%;
     display: flex;
+    justify-content: flex-start;
     flex-direction: column;
     &__title {
       width: 100%;
@@ -24,6 +32,7 @@ export const DivSTY = styled.div`
         } */
       }
     }
+
     &__contents {
       display: flex;
       flex-direction: column;
@@ -46,8 +55,12 @@ export const DivSTY = styled.div`
       display: flex;
       padding: 8px 16px;
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+
       .label {
         flex: 1;
+        white-space: nowrap;
+        font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+        font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
       }
       .value {
         flex: 2;
@@ -55,11 +68,33 @@ export const DivSTY = styled.div`
         justify-content: flex-end;
       }
     }
-  }
-  .disabled {
-    background: ${({ theme }) => theme.color.N40};
-  }
-  .hide {
-    display: none !important;
+    &__element {
+      .label {
+        white-space: nowrap;
+        font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+        font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+      }
+      .value {
+        .radio__groupList {
+          border: none;
+          background: none;
+
+          .radio__item {
+            display: flex;
+            justify-content: center;
+            border: none;
+            background: none;
+
+            label {
+              white-space: nowrap;
+              span {
+                font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+                font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;

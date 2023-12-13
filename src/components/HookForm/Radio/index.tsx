@@ -27,7 +27,7 @@ const RadioItem = ({
   isDisabled?: boolean;
 }) => {
   return (
-    <RadioListFieldSTY checked={checked}>
+    <RadioListFieldSTY checked={checked} className="radio__item">
       <EverGreenRadio
         size={12}
         label={label}
@@ -36,7 +36,6 @@ const RadioItem = ({
         marginY={0}
         disabled={isDisabled}
         onChange={(e) => {
-          console.log("e.target.value", e.target.value);
           onFormChange(e.target.value);
         }}
       />
@@ -48,7 +47,7 @@ const RadioItem = ({
 const Radio = ({ value, options, onFormChange, isDisabled }: RadioProps) => {
   const id = useId();
   return (
-    <RadioGroupListSTY>
+    <RadioGroupListSTY className="radio__groupList">
       {options.map((radioObject, index) => {
         return (
           <RadioItem

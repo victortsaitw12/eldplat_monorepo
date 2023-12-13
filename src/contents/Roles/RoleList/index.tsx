@@ -21,7 +21,7 @@ const RoleList = ({ data, pageInfo }: I_Props) => {
     router.push(`/role/detail/${id}?editPage=view`);
   };
 
-  const handleEdit = (e, id: string) => {
+  const handleEdit = (id: string, e: any) => {
     e.stopPropagation();
     router.push(`/role/detail/${id}?editPage=edit`);
   };
@@ -38,9 +38,7 @@ const RoleList = ({ data, pageInfo }: I_Props) => {
         <IconBtn
           tip="編輯"
           type="edit"
-          onClick={(e) => {
-            handleEdit(e, item.role_no);
-          }}
+          onClick={handleEdit.bind(null, item.role_no)}
         />
         // <Tooltip content="編輯">
         //   <EditIcon onClick={handleEdit} />

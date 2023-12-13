@@ -14,7 +14,6 @@ const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
     control,
     name: "bus_data"
   });
-  console.log("🍅 RidingInformation:", fields);
   useEffect(() => {
     const initValue = getValues(["adult", "child", "infant"]);
     if (initValue[0] + initValue[1] + initValue[2] > 0) {

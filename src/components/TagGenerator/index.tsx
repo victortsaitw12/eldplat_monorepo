@@ -10,15 +10,16 @@ interface I_Tag {
 
 interface Props {
   data?: I_Tag[];
+  minHeight?: boolean;
 }
 
-const TagGenerator: React.FC<Props> = ({ data }) => {
+const TagGenerator: React.FC<Props> = ({ data, minHeight }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [enteredInput, setEnteredInput] = useState("");
   const [renderedTags, setRenderedTags] = useState<I_Tag[]>([]);
 
   useEffect(() => {
-    // editData && setSelectedOptions(editData);
+    data && setRenderedTags(data);
   }, [data]);
 
   const clickCreateHandler = () => {
@@ -76,7 +77,7 @@ const TagGenerator: React.FC<Props> = ({ data }) => {
   }
 
   return (
-    <BodySTY>
+    <BodySTY className={minHeight ? "min-height" : undefined}>
       {renderedTags.length > 0 &&
         renderedTags.map((tag: I_Tag, index) => {
           return (

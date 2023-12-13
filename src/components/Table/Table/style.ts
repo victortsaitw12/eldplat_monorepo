@@ -54,6 +54,12 @@ export const TableSTY = styled.table`
       border-bottom: none;
     }
   }
+  tbody {
+    position: relative;
+  }
+  tr {
+    width: 100%;
+  }
 
   td,
   th {

@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   position: relative;
-  width: 90%;
+  width: 100%;
+  max-width: 240px;
   .react-datepicker-wrapper {
     width: 100%;
     .react-datepicker__input-container {
       .date-picker {
         color: ${({ theme }) => theme.color.N300};
-        width: 90%;
-        max-width: 240px;
+        width: 100%;
         height: 32px;
         padding: 8px 12px;
         border-radius: 4px;
@@ -194,7 +194,7 @@ export const BodySTY = styled.div`
 
   .icon {
     position: absolute;
-    left: 215px;
+    left: calc(100% - 30px);
     top: 8px;
   }
 `;

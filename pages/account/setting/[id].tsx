@@ -15,10 +15,8 @@ import {
   getOneAccount,
   I_AccountDetailItem
 } from "@services/account/getOneAccount";
-import ControlBar from "@contents/Account/ControlBar";
-import { ModalContext } from "@contexts/ModalContext/ModalProvider";
-import RoleInfoBox from "@contents/Account/RoleInfoBox";
-import LoadingSpinner from "@components/LoadingSpinner";
+import ControlBar from "@components/ControlBar";
+import ButtonSet from "@components/ButtonSet";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
@@ -27,8 +25,11 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const handleSave = (path: string) => {
     console.log("handleSave");
   };
-  const handleCancel = (path: string) => {
+  const handleCancel = () => {
     console.log("handleCancel");
+  };
+  const handleConfirm = () => {
+    console.log("handleConfirm");
   };
   const handleEdit = () => {
     console.log("handleEdit");
@@ -38,11 +39,13 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   return (
     <>
-      <ControlBar
-        isEdit={true}
-        handleNavigation={handleSave}
-        handleEdit={handleEdit}
-      />
+      <ControlBar hasShadow={true} flexEnd={true}>
+        <ButtonSet
+          isEdit={true}
+          secondaryBtnOnClick={handleCancel}
+          primaryBtnOnClick={handleConfirm}
+        />
+      </ControlBar>
       <BodySTY>
         <ChangeePasswordInfoBox />
       </BodySTY>

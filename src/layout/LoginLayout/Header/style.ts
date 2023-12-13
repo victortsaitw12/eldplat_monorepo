@@ -7,6 +7,11 @@ const BodySTY = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.color.N40};
   justify-content: space-between;
   padding: 12px 20px;
+  .header-text {
+    color: ${({ theme }) => theme.color.N0};
+    font-size: ${({ theme }) => theme.fontSize.Headline500};
+    font-weight: ${({ theme }) => theme.fontWeight.Headline500};
+  }
   .tool-container {
     display: flex;
     align-items: center;

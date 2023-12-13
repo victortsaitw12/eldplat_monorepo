@@ -95,14 +95,6 @@ const Page: NextPageWithLayout<
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
-        onSave={() => {
-          submitRef.current?.click();
-        }}
-        onEdit={() => {
-          setIsEdit(true);
-        }}
-        onClose={onCancelHandler}
-        isEdit={isEdit}
       >
         <BusDetail
           isEdit={isEdit}

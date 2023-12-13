@@ -1,8 +1,5 @@
 import React, { useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
-import Link from "next/link";
-import { Avatar } from "evergreen-ui";
-
 import { mappingQueryData } from "@utils/mappingQueryData";
 import SearchEmployee from "@contents/Driver/SearchEmployee";
 import { getAllDriver, defaultPageInfo } from "@services/driver/getAllDrivers";
@@ -16,6 +13,8 @@ import FilterWrapper from "@layout/FilterWrapper";
 import { I_PageInfo } from "@components/PaginationField";
 import { useRouter } from "next/router";
 import LoadingSpinner from "@components/LoadingSpinner";
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import { PlusIcon } from "evergreen-ui";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -88,6 +87,14 @@ const Page: NextPageWithLayout<never> = () => {
           initializeSubFilter();
         }}
         filter={subFilter}
+        btns={
+          <PrimaryBtn
+            text="新增駕駛"
+            onClick={() => router.push("/driver/detail/create")}
+          >
+            <PlusIcon />
+          </PrimaryBtn>
+        }
       >
         {isLoading ? (
           <LoadingSpinner />
@@ -104,10 +111,7 @@ const Page: NextPageWithLayout<never> = () => {
     </BodySTY>
   );
 };
-/*
 
-      
-*/
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;

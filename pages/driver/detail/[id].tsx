@@ -20,14 +20,18 @@ import { getDriverById } from "@services/driver/getDriverById";
 import { updateDriver } from "@services/driver/updateDriver";
 import DriverDetail from "@contents/Driver/Detail";
 import TabsWrapper from "@layout/TabsWrapper";
+import DataOverview from "@components/DataOverview";
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import SecondaryBtn from "@components/Button/Secondary/Label";
+import ControlBar from "@components/ControlBar";
+import ButtonSet from "@components/ButtonSet";
 
-//
 const mainFilterArray = [
-  { id: 1, label: "駕駛資訊", value: "1" },
-  { id: 2, label: "駕駛證照", value: "2" },
-  { id: 3, label: "健康紀錄", value: "3" }
+  { id: 1, label: "基本資料", value: "1" },
+  { id: 2, label: "教育訓練", value: "2" },
+  { id: 3, label: "健康紀錄", value: "3" },
+  { id: 4, label: "修改紀錄", value: "4" }
 ];
-//
 
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -47,7 +51,7 @@ const Page: NextPageWithLayout<
   useEffect(() => {
     updateMainFilter("1");
   }, []);
-  //
+  
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -109,55 +113,73 @@ const Page: NextPageWithLayout<
     }
     setIsLoading(false);
   };
-  const onCancelHandler = () => {
+
+  const renderContent = (
+    <TabsWrapper
+      onChangeTab={switchTabHandler}
+      mainFilter={mainFilter}
+      mainFilterArray={mainFilterArray}
+    >
+      <DriverDetail
+        isEdit={isEdit}
+        submitRef={submitRef}
+        asyncSubmitForm={asyncSubmitForm}
+        driverData={driverData}
+        formType={mainFilter}
+        refetch={refetch}
+        driverNo={driverNo}
+      />
+    </TabsWrapper>
+  );
+
+  const renderLoadingSpinner = (
+    <Pane
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      height={400}
+      style={{ padding: 5 }}
+    >
+      <Spinner />
+    </Pane>
+  );
+
+  const handleEdit = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=edit`);
+  };
+
+  const handleView = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=view`);
+  };
+
+  const handleReturn = () => {
     router.push("/driver");
   };
 
+  useEffect(() => {
+    setIsEdit(editPage === "edit" ? true : false);
+  }, [editPage]);
+
   return (
     <BodySTY>
-      {(!isLoading && driverData && (
-        <TabsWrapper
-          onChangeTab={switchTabHandler}
-          mainFilter={mainFilter}
-          mainFilterArray={mainFilterArray}
+      <ControlBar>
+        <DataOverview data={driverData?.info} />
+        <ButtonSet
           isEdit={isEdit}
-          onSave={() => {
-            submitRef.current?.click();
-          }}
-          onEdit={() => {
-            setIsEdit(true);
-          }}
-          onClose={onCancelHandler}
-        >
-          <DriverDetail
-            isEdit={isEdit}
-            submitRef={submitRef}
-            asyncSubmitForm={asyncSubmitForm}
-            driverData={driverData}
-            formType={mainFilter}
-            refetch={refetch}
-            driverNo={driverNo}
-          />
-        </TabsWrapper>
-      )) || (
-        <Pane
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height={400}
-          style={{ padding: 5 }}
-        >
-          <Spinner />
-        </Pane>
-      )}
+          primaryDisable={false}
+          secondaryBtnText={isEdit ? "取消" : "回列表"}
+          secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+          primaryBtnText={isEdit ? "儲存" : "編輯"}
+          primaryBtnOnClick={isEdit ? handleView : handleEdit}
+        />
+      </ControlBar>
+      {!isLoading && driverData ? renderContent : renderLoadingSpinner}
       <LightBox
         title="確定要離開嗎?"
         isOpen={isLightOpen}
-        handleCloseLightBox={() => {
-          setLightOpen((prev) => false);
-        }}
+        handleCloseLightBox={() => setLightOpen((prev) => false)}
       >
-        如果你現在離開 ，將會遺失未儲存的資料。
+        如果你現在離開，將會遺失未儲存的資料。
         <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
           <LabelSecondaryButton
             style={{

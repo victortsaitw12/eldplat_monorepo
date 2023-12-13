@@ -1,16 +1,6 @@
 import React, { useId } from "react";
-import {
-  Text,
-  UnorderedList,
-  ListItem,
-  Pane,
-  FileCard,
-  Group,
-  TextInput,
-  Select
-} from "evergreen-ui";
+import { Text, UnorderedList, ListItem, Pane } from "evergreen-ui";
 import { InfoCardSTY } from "./style";
-import Checkbox from "@components/CheckBox";
 import Image from "next/image";
 
 export interface I_infoData {
@@ -28,14 +18,34 @@ export interface I_InfoCardProps {
   style?: React.CSSProperties;
   isEdit: boolean;
   infoTitle?: string | React.ReactNode;
-  infoData?: I_infoData[];
+  infoData: I_infoData[] | I_infoData[][];
   infoType?: string;
   hasProfileCard?: boolean;
 }
 
+const InfoItem = ({
+  item,
+  isEdit,
+  InfoCardId
+}: {
+  item: I_infoData;
+  isEdit: boolean;
+  InfoCardId: string;
+}) => (
+  <ListItem className={`item ${item.listClassName}`} key={InfoCardId}>
+    <Pane className={`label ${item.bold && isEdit ? "bold" : ""}`}>
+      {item.req && isEdit && <span className="req">*</span>}
+      <span>{item.label}</span>
+    </Pane>
+    <Pane className="value">
+      {isEdit && item.editEle ? item.editEle : item.value}
+    </Pane>
+  </ListItem>
+);
+
 function InfoCard({
   style,
-  isEdit,
+  isEdit = false,
   infoTitle,
   infoData,
   infoType,
@@ -56,20 +66,42 @@ function InfoCard({
             className="user__photo"
           />
         )}
-        <Group className="col">
-          <UnorderedList className="row">
-            {infoData &&
-              infoData.map((item) => (
-                <ListItem className={`item ${item.listClassName}`} key={InfoCardId}>
-                  <Pane className={`label ${item.bold ? "bold" : ""}`}>
-                    {item.req && <span className="req">*</span>}
-                    <span>{item.label}</span>
-                  </Pane>
-                  <Pane className="value">{item.value}</Pane>
-                </ListItem>
-              ))}
-          </UnorderedList>
-        </Group>
+        {Array.isArray(infoData[0]) ? (
+          (infoData as I_infoData[][]).map((col, index) => {
+            return (
+              <Pane className="col" key={index}>
+                <UnorderedList className="row">
+                  {Array.isArray(col) &&
+                    col.map((item, itemIndex) => {
+                      return (
+                        <InfoItem
+                          key={InfoCardId + itemIndex}
+                          item={item}
+                          isEdit={isEdit}
+                          InfoCardId={InfoCardId}
+                        />
+                      );
+                    })}
+                </UnorderedList>
+              </Pane>
+            );
+          })
+        ) : (
+          <Pane className="col">
+            <UnorderedList className="row">
+              {(infoData as I_infoData[]).map((item: I_infoData, itemIndex) => {
+                return (
+                  <InfoItem
+                    key={InfoCardId + itemIndex}
+                    item={item}
+                    isEdit={isEdit}
+                    InfoCardId={InfoCardId}
+                  />
+                );
+              })}
+            </UnorderedList>
+          </Pane>
+        )}
       </div>
     </InfoCardSTY>
   );
