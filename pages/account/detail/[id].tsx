@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, GetServerSideProps } from "next";
-import { RadioGroup } from "evergreen-ui";
+import { RadioGroup, Radio, Pane } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 
 //
@@ -34,12 +34,12 @@ import ControlBar from "@components/ControlBar";
 import AccountDetail from "@contents/Account/AccountDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
 import ButtonSet from "@components/ButtonSet";
-import RadioColumnField from "@components/RadioGroupColumn";
+import LightBox from "@components/Lightbox";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
   const submitRef = React.useRef<HTMLButtonElement | null>(null);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { showLeavePageModal, showModal, onCancel, onConfirm } = useModal();
   const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
@@ -51,7 +51,8 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     { label: "使用以前的資料", value: "0" },
     { label: "使用我剛剛填寫的資料", value: "1" }
   ]);
-  const [dataChoice, setDataChoice] = React.useState("0");
+  const [dataChoice, setDataChoice] = React.useState("");
+  const [lightboxOpen, setLightboxOpen] = React.useState(false);
 
   //------ functions ------//
   const fetchData = async () => {
@@ -62,9 +63,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     const editDummy = editedDummy
       ? { ...editedDummy }
       : DUMMY_ONE_ACCOUNT.ResultList[0];
-
-    console.log("🍅 editedData:", editedData && JSON.parse(editedData));
-    console.log("🍅 editDummy+:", editDummy);
     setData(isCreate ? createDummy : editDummy);
     setDDL(DUMMY_ACC_DDL.ResultList[0]);
 
@@ -131,15 +129,17 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   const asyncSubmitForm = async (data: any) => {
     // check user
-    console.log("🔜 data:", data);
+    // console.log("🔜 data:", data);
     const account_name = getAccountName(data);
     const roles = getRoleNames(data);
     if (isCreate) {
       const isUserExist = DUMMY_ACC_LIST.ResultList.find(
         (item) => item.account_name === account_name
       );
-      if (isUserExist) {
-        showModal(userExistModalContent);
+      if (isUserExist && dataChoice === "") {
+        setDataChoice("0");
+        setLightboxOpen(true);
+        // showModal(userExistModalContent);
         return;
       }
       localStorage.setItem(
@@ -233,6 +233,20 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     }
   };
 
+  const handleDataChoice = () => {
+    // if (dataChoice === "0") {
+    //   setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
+    //   setLightboxOpen(false);
+    // } else
+    if (dataChoice === "1") {
+      submitRef.current && submitRef.current.click();
+      setLightboxOpen(false);
+    } else {
+      router.push(`/account/detail/${id}?editPage=view`);
+      setLightboxOpen(false);
+    }
+  };
+
   // ------- useEffect ------- //
   React.useEffect(() => {
     if (!session) return;
@@ -240,26 +254,31 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   }, [session, router]);
 
   // ------- render ------- //
-  const userExistModalContent = {
-    title: "您先前已建立該使用者",
-    children: (
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <div>是否前往編輯該使用者？</div>
-        <div>若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：</div>
-        <RadioGroup
-          value={dataChoice}
-          options={options}
-          onChange={(event) => setDataChoice(event.target.value)}
-          size={16}
-        />
-      </div>
-    ),
-    onConfirm: () => {
-      setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
-      router.push(`/account/detail/${id}?editPage=view`);
-    },
-    onCancel: () => console.log("cancel")
-  };
+  // const userExistModalContent = {
+  //   title: "您先前已建立該使用者",
+  //   children: (
+  //     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+  //       <div>是否前往編輯該使用者？</div>
+  //       <div>若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：</div>
+  //       <RadioGroup
+  //         value={dataChoice}
+  //         options={options}
+  //         onChange={(event) => setDataChoice(event.target.value)}
+  //         size={16}
+  //       />
+  //     </div>
+  //   ),
+  //   onConfirm: () => {
+  //     if (dataChoice === "0") {
+  //       setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
+  //       router.push(`/account/detail/${id}?editPage=edit`);
+  //     } else {
+  //       setData(edited);
+  //       router.push(`/account/detail/${id}?editPage=view`);
+  //     }
+  //   },
+  //   onCancel: () => console.log("cancel")
+  // };
 
   return (
     <>
@@ -284,6 +303,33 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
           asyncSubmitForm={asyncSubmitForm}
           submitRef={submitRef}
         />
+      )}
+      {lightboxOpen && (
+        <LightBox
+          title="您先前已建立該使用者"
+          onCancel={() => setLightboxOpen(false)}
+          onConfirm={handleDataChoice}
+          isOpen={true}
+        >
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+          >
+            <div>是否前往編輯該使用者？</div>
+            <div>
+              若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：
+            </div>
+            {/* <Pane aria-label="Radio Group Label 12" role="group">
+              <Radio checked name="group" label="使用以前的資料" size={16} />
+              <Radio name="group" label="使用我剛剛填寫的資料" size={16} />
+            </Pane> */}
+            <RadioGroup
+              value={dataChoice}
+              options={options}
+              onChange={(event) => setDataChoice(event.target.value)}
+              size={16}
+            />
+          </div>
+        </LightBox>
       )}
     </>
   );
