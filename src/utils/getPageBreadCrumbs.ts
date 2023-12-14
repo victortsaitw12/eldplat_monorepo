@@ -66,7 +66,7 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/" },
   ],
-  "/schedule/[id]": [
+  "/schedule/detail/[id]": [
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/schedule" },
     { label: "個人班表", url: "" },
@@ -74,7 +74,7 @@ const breadcrumbs: I_routers = {
   "/schedule/approval": [
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/schedule" },
-    { label: "個人班表", url: "/schedule/[id]" },
+    { label: "個人班表", url: "/schedule/detail/[id]" },
     { label: "簽核", url: "/approval" },
   ],
   // ----------------------------------------------------------------------- V2 above

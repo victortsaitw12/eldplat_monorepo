@@ -45,11 +45,8 @@ const FormModal = ({
     defaultValues
   });
 
-  console.log("🍅", content);
-
   //------ functions ------//
   const asyncSubmitForm = async (data: any) => {
-    console.log("🍅 submit:", data);
     isCreate ? handleCreateDummy(data) : handleEditDummy(data);
     // TODO
     // if (!session) return;

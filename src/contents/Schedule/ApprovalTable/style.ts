@@ -3,5 +3,5 @@ import { ThemeType } from "@styles/theme";
 
 export const ApprovalSTY =styled.div`
   width: 50%;
-  padding: 15px;
+  padding: 0 15px 15px 15px;
 `;

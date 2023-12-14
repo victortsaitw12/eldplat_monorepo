@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const DivSTY = styled.div<{ collapse: number[] }>`
   td > div {
-    max-height: 32px;
+    max-height: fit-content;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
