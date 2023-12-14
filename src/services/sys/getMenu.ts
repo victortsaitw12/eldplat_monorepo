@@ -166,7 +166,7 @@ export const DUMMY_MENU = {
           func_no: "bus",
           func_name: "車輛管理設定",
           path: "/bus"
-        },
+        }
       ]
     },
     {
@@ -238,11 +238,11 @@ export const DUMMY_MENU = {
           func_name: "駕駛出勤管理",
           path: "/schedule"
         },
-        { 
+        {
           module_no: "bus",
           fg_no: "task",
           func_no: "setting",
-          func_name: "出勤管理設定", 
+          func_name: "出勤管理設定",
           path: "/setting"
         }
       ]
@@ -284,7 +284,15 @@ export const DUMMY_MENU = {
     },
     {
       menu_name: "設定",
-      sub_menu: []
+      sub_menu: [
+        {
+          module_no: "setting",
+          fg_no: "password",
+          func_no: "reset",
+          func_name: "重設密碼",
+          path: "/setting/password"
+        }
+      ]
     }
   ]
 };
