@@ -8,56 +8,48 @@ import { MonthlyData } from "@contents/Shift/shift.typing";
 
 import { getLayout } from "@layout/MainLayout";
 import UIProvider from "@contexts/scheduleContext/UIProvider";
-import MonthPicker from "@contents/Shift/MonthPicker";
-import MonthlyView from "@contents/Shift/MonthlyView";
-import DrawerContent from "@contents/Shift/DrawerContent";
-import Tabs from "@components/Tabs";
-import TableTitle from "@contents/Shift/TableTitle";
-import LayoutControl from "@contents/Shift/LayoutControl";
-import DailyView from "@contents/Shift/DailyView";
-import TotalLeaveDays from "@contents/Shift/TotalLeaveDays";
 import { getScheduleList } from "@services/schedule/getScheduleList";
-import MonthlyHeader from "@contents/Shift/MonthlyView/MonthlyHeader";
 import ApprovalTable from "@contents/Schedule/ApprovalTable";
+import LightBox from "@components/Lightbox";
+import ControlBar from "@components/ControlBar";
+import ButtonSet from "@components/ButtonSet";
+import CustomTextArea from "@components/CustomTextArea";
+import InfoItem from "@components/InfoCard/InfoItem";
+import { Truculenta } from "next/font/google";
 
 const ApprovalView: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const containerRef = React.useRef(null);
   const { id, cur } = router.query;
-  const [monthlyData, setMonthlyData] = React.useState<MonthlyData[] | null>(
-    null
-  );
-  const [view, setView] = React.useState<"monthly" | "daily">("monthly");
-  const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false);
-  const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
+
+  const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const initialMonthFirst = new Date(
-    Array.isArray(cur) ? cur[0] : cur || Date.now()
-  );
-
-  const userFullName = monthlyData
-    ?.at(0)
-    ?.user_First_Name.concat(monthlyData[0]?.user_Name);
+  const modalInfo =
+    {
+      listClassName: "",
+      readonly: false,
+      req: true,
+      label: "說明",
+      bold: true,
+      value: <CustomTextArea placeholder="請輸入說明" />
+    };
 
   //------ functions ------//
-  const handleLayout = (type: "monthly" | "daily") => {
-    setView(type);
-    setIsOpenDrawer(false);
+  const cancelApproveHandler = () => {
+    setOpenModal(true);
   };
-  const handleSelectTab = (index: number) => {
-    setSelectedIndex(index);
-    if (index === 0) router.push("/shift");
+  const cancelModalHandler = () => {
+    setOpenModal(false);
   };
   const fetchData = async () => {
-    setIsLoading(true);
-    try {
-      const result = await getScheduleList(id);
-      setMonthlyData(result.data);
-    } catch (e: any) {
-      console.log(e);
-    }
-    setIsLoading(false);
+    // setIsLoading(true);
+    // try {
+    //   const result = await getScheduleList(id);
+    //   setMonthlyData(result.data);
+    // } catch (e: any) {
+    //   console.log(e);
+    // }
+    // setIsLoading(false);
   };
 
   // ------- useEffect ------- //
@@ -71,23 +63,36 @@ const ApprovalView: NextPageWithLayout<never> = () => {
     <UIProvider>
       <ApprovalSTY>
         <Head>
-          <title>駕駛排班 - {monthlyData ? userFullName : ""}</title>
+          <title>駕駛排班 - </title>
         </Head>
+        <ControlBar flexEnd hasShadow>
+          <ButtonSet
+            primaryDisable={false}
+            secondaryBtnText="退回"
+            secondaryBtnOnClick={cancelApproveHandler}
+            primaryBtnText="同意"
+            // primaryBtnOnClick={isEdit ? handleView : handleEdit}
+          /> 
+        </ControlBar>
         <Pane className="table">
           <ApprovalTable/>
         </Pane>
-          {/* <Pane className="pageContent">
-            <div className="monthlyContainer" ref={containerRef}>
-              <MonthlyHeader />
-              <MonthlyView
-                monthlyData={monthlyData}
-                initialMonthFirst={initialMonthFirst}
-                setIsOpenDrawer={setIsOpenDrawer}
-                view={view}
-                containerRef={containerRef}
-              />
-            </div>
-          </Pane> */}
+        <LightBox
+          title="退回"
+          isOpen={isOpenModal}
+          handleCloseLightBox={() => {
+            setOpenModal(false);
+          }}
+          customBtns={
+            <ButtonSet 
+              primaryBtnText="確定退回" 
+              secondaryBtnOnClick={ cancelModalHandler}/>}
+            >
+          <InfoItem
+            item={modalInfo}
+            isEdit={true}
+          />
+        </LightBox>
       </ApprovalSTY>
     </UIProvider>
   );

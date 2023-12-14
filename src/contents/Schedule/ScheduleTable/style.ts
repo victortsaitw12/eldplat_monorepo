@@ -42,11 +42,11 @@ export const ScheduleSTY =styled.div`
       flex: 0 0 14.285%;
       min-width: 80px;
       height: 120px;
-      padding: 12px; {
-        font-size: 16px;
-        color: ${({ theme }) => theme.color.N500};
-        font-weight: 400;
-        letter-spacing: 0;
+      padding: 12px; 
+      font-size: 16px;
+      color: ${({ theme }) => theme.color.N500};
+      font-weight: 400;
+      letter-spacing: 0;
       }
       .today {
         position: relative;
@@ -86,6 +86,5 @@ export const ScheduleSTY =styled.div`
       //   background: $selected_date_bg_color;
       //   border: 2px solid $selected_date_border_color;
       // }
-    }
   }
 `;

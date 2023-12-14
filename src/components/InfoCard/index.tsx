@@ -1,7 +1,8 @@
 import React, { useId } from "react";
-import { Text, UnorderedList, ListItem, Pane } from "evergreen-ui";
+import { Text, Pane } from "evergreen-ui";
 import { InfoCardSTY } from "./style";
 import Image from "next/image";
+import InfoItem from "@components/InfoCard/InfoItem";
 
 export interface I_infoData {
   editEle?: React.ReactNode;
@@ -22,26 +23,6 @@ export interface I_InfoCardProps {
   infoType?: string;
   hasProfileCard?: boolean;
 }
-
-const InfoItem = ({
-  item,
-  isEdit,
-  InfoCardId
-}: {
-  item: I_infoData;
-  isEdit: boolean;
-  InfoCardId: string;
-}) => (
-  <ListItem className={`item ${item.listClassName}`} key={InfoCardId}>
-    <Pane className={`label ${item.bold && isEdit ? "bold" : ""}`}>
-      {item.req && isEdit && <span className="req">*</span>}
-      <span>{item.label}</span>
-    </Pane>
-    <Pane className="value">
-      {isEdit && item.editEle ? item.editEle : item.value}
-    </Pane>
-  </ListItem>
-);
 
 function InfoCard({
   style,
@@ -70,7 +51,7 @@ function InfoCard({
           (infoData as I_infoData[][]).map((col, index) => {
             return (
               <Pane className="col" key={index}>
-                <UnorderedList className="row">
+                <ul className="row">
                   {Array.isArray(col) &&
                     col.map((item, itemIndex) => {
                       return (
@@ -82,13 +63,13 @@ function InfoCard({
                         />
                       );
                     })}
-                </UnorderedList>
+                </ul>
               </Pane>
             );
           })
         ) : (
           <Pane className="col">
-            <UnorderedList className="row">
+            <ul className="row">
               {(infoData as I_infoData[]).map((item: I_infoData, itemIndex) => {
                 return (
                   <InfoItem
@@ -99,7 +80,7 @@ function InfoCard({
                   />
                 );
               })}
-            </UnorderedList>
+            </ul>
           </Pane>
         )}
       </div>

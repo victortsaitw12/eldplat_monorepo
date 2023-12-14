@@ -53,42 +53,6 @@ export const InfoCardSTY = styled.div`
         flex-wrap: wrap;
         gap: 20px;
 
-        .item {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          gap: 8px;
-
-          font-size: 14px;
-          color: ${({ theme }) => theme.color.N800};
-
-          .label {
-            color: ${({ theme }) => theme.color.N300};
-
-            &.bold {
-              font-weight: 600;
-              color: ${({ theme }) => theme.color.N700};
-            }
-
-            .req {
-              color: ${({ theme }) => theme.color.R400};
-            }
-          }
-          .value {
-            color: ${({ theme }) => theme.color.N800};
-
-            .select-wrapper {
-              width: 100%;
-              max-width: 240px;
-
-              select {
-                font-size: 16px;
-                color: ${({ theme }) => theme.color.N100};
-              }
-            }
-          }
-        }
-
         .fb-100 {
           flex-basis: 100%;
         }
