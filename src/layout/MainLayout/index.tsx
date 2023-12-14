@@ -1,6 +1,8 @@
 /* eslint-disable react/display-name */
 import Head from "next/head";
 import React, { FC, ReactNode } from "react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 //
 import Header from "./Header";
 import SideBar from "./SideBar";
@@ -32,6 +34,8 @@ const MainLayout: FC<{
   children: ReactNode;
   layoutProps: any;
 }> = ({ children, layoutProps }) => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [showMenu, setShowMenu] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
@@ -53,6 +57,10 @@ const MainLayout: FC<{
   React.useEffect(() => {
     fetch_menus();
   }, []);
+
+  React.useEffect(() => {
+    if (status === "unauthenticated") router.push("/login");
+  }, [status]);
 
   return (
     <BodySTY showMenu={showMenu}>
