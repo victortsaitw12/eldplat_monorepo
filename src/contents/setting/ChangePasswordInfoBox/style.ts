@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BodySTY = styled.div`
+export const FormSTY = styled.form`
   padding: 1rem;
 
   /* infoBox */

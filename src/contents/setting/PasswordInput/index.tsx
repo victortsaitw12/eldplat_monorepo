@@ -10,26 +10,23 @@ interface I_Props {
   onChange?: (e: any) => void;
 }
 
-function PasswordInputField({
+const PasswordInput = ({
   label,
   placeholder,
   errorMsg,
   onClick,
   onChange,
   ...props
-}: I_Props) {
-  const [inputData, setInputData] = React.useState("");
+}: I_Props) => {
   const [isPasswordHide, setIsPasswordHide] = useState(true);
 
   // --- functions --- //
-
   const handleTogglePasswordHide = () => {
     setIsPasswordHide((prev) => !prev);
   };
 
   const handleChange = (e: any) => {
     onChange && onChange(e.target.value);
-    setInputData(e.target.value);
   };
 
   const handleClick = () => {
@@ -47,16 +44,14 @@ function PasswordInputField({
       <TextInputField
         type={`${isPasswordHide ? "password" : "text"}`}
         placeholder={`${placeholder ? placeholder : "請輸入您的密碼"}`}
-        label={label ? label : undefined}
-        value={inputData}
-        isInvalid={!!errorMsg || undefined}
-        validationMessage={!!errorMsg ? errorMsg : undefined}
+        isInvalid={!!errorMsg}
+        validationMessage={errorMsg}
         onChange={handleChange}
         onClick={handleClick}
         {...props}
       />
     </DivSTY>
   );
-}
+};
 
-export default PasswordInputField;
+export default PasswordInput;

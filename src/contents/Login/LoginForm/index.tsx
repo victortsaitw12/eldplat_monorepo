@@ -6,21 +6,17 @@ import { BodySTY } from "./style";
 
 import PasswordInputField from "../PasswordInputField";
 import { Label as Button } from "@components/Button/Primary";
-import Checkbox from "@components/Checkbox";
+import AssistRow from "./AssistRow";
+import { emailValidation } from "@utils/inputValidation";
 //
-interface PropsType {
-  login: (email: string, password: string) => void;
-}
-
-function Form(props: PropsType) {
+function Form() {
   const router = useRouter();
   const [inputData, setInputData] = React.useState({
     email: "",
     password: ""
   });
-
-  const formType = router.pathname.split("/")[1];
-  //forgot-password, first-login, login
+  const [emailError, setEmailError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
 
   // --- functions --- //
   function checkEmail(value: string) {
@@ -28,9 +24,24 @@ function Form(props: PropsType) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value);
   }
+  const checkPassword = (password: string) => {
+    //至少4位英數字不含特殊符號
+    if (password.length <= 0) return true;
+    const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
+    return passwordRegex.test(password);
+  };
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
+    const checkEmailResult = checkEmail(inputData.email);
+    const checkPasswordResult = checkPassword(inputData.password);
+
+    if (!checkEmailResult || !checkPasswordResult) {
+      if (!checkPasswordResult) setPasswordError("至少4位英數字不含特殊符號");
+      if (!checkEmailResult) setEmailError("格式不符");
+      return;
+    }
+
     const result = await signIn("credentials", {
       ...inputData,
       redirect: false
@@ -54,29 +65,24 @@ function Form(props: PropsType) {
           label="帳號"
           value={inputData.email}
           isInvalid={!checkEmail(inputData.email)}
-          validationMessage={
-            !checkEmail(inputData.email) ? "格式錯誤" : undefined
-          }
+          validationMessage={emailError ? "格式不符" : undefined}
+          onClick={() => setEmailError("")}
           onChange={(e: any) =>
             setInputData({ ...inputData, email: e.target.value })
           }
         />
         <PasswordInputField
+          label="密碼"
+          errorMsg={passwordError || undefined}
+          onClick={() => setPasswordError("")}
           onChange={(v: string) => setInputData({ ...inputData, password: v })}
         />
       </div>
-      <div className="asstRow">
-        <div className="asstRow__storeAcct">
-          <Checkbox />
-          記住帳號
-        </div>
-        <div className="asstRow__forgetPw">
-          <a>忘記密碼</a>
-        </div>
-      </div>
+      <AssistRow />
       <div>
-        <div>測試帳號: user@gmail.com</div>
-        <div>測試密碼: 12345</div>
+        測試帳密:
+        <span> user@gmail.com +</span>
+        <span> 12345</span>
       </div>
       <Button text={"登入"} onClick={handleLogin} />
     </BodySTY>
