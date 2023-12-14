@@ -127,7 +127,7 @@ const OverviewTable = ({
                 <div 
                   className="schedule_daysWrap"
                   key={item.driver_No}
-                  onClick={()=>{router.push(`/schedule/${item.driver_No}`)}}
+                  onClick={()=>{router.push(`/schedule/detail/${item.driver_No}`)}}
                 >
                   <div className="driver_info">{item.user_First_Name}{item.user_Name}<p>0917-444-444</p></div>
                   <div className="w-50">5/8</div>
@@ -142,7 +142,7 @@ const OverviewTable = ({
                         value={EVENT_TYPE.get("040")}
                         onClick={(e:React.MouseEvent<HTMLButtonElement>) => {
                           e.stopPropagation();
-                          router.push(`/schedule/${item.driver_No}?editPage=edit`)
+                          router.push(`/schedule/detail/${item.driver_No}?editPage=edit`)
                         }}
                       />
                     }
