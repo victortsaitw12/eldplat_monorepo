@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, GetServerSideProps } from "next";
-import { RadioGroup, Radio, Pane } from "evergreen-ui";
+import { RadioGroup } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 
 //
@@ -14,17 +14,15 @@ import {
   I_AccountRole,
   I_RoleItem,
   DUMMY_DATA_CREATE,
-  DUMMY_ONE_ACCOUNT,
-  DUMMY_ROLE_NAME_MOUDULE_MAP,
-  DUMMY_ROLE_NAME_MAP
+  DUMMY_ONE_ACCOUNT
 } from "@services/account/getOneAccount";
 import {
   createAccount,
-  I_ReqBody as I_CreateReqBody
+  I_ReqBody as I_CreateReq
 } from "@services/account/createAccount";
 import {
   updateAccount,
-  I_ReqBody as I_UpdateReqBody
+  I_ReqBody as I_UpdateReq
 } from "@services/account/updateAccount";
 import {
   DUMMY_ACC_DDL,
@@ -35,6 +33,7 @@ import AccountDetail from "@contents/Account/AccountDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
 import ButtonSet from "@components/ButtonSet";
 import LightBox from "@components/Lightbox";
+import { getAccountName, getRoleNames } from "@contents/Account/account.util";
 
 const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
@@ -81,55 +80,11 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     setIsLoading(false);
   };
 
-  // TODO: to be remved, just for DEMO
-  const getAccountName = (data: any) => {
-    return `${data.account_lname}${data.account_fname}`;
-  };
-
-  // TODO: to be remved, just for DEMO
-  const getRoleNames = (data: any): I_RoleName[] => {
-    const groupedRoles = data.account_role.reduce(
-      (acc: I_GroupedRoles, item: string) => {
-        const role_no = item.slice(item.length - 2);
-        const module_no = item.slice(0, item.length - 2);
-        if (!acc[module_no]?.includes(role_no)) {
-          return {
-            ...acc,
-            [module_no]: [...(acc[module_no] || []), role_no]
-          };
-        }
-        return acc;
-      },
-      {}
-    );
-
-    const result: I_RoleName[] = [];
-    for (const module_no in groupedRoles) {
-      if (groupedRoles.hasOwnProperty(module_no)) {
-        const value = groupedRoles[module_no];
-        result.push({
-          role_name_m: DUMMY_ROLE_NAME_MOUDULE_MAP.get(module_no) || "",
-          role_name: value.map((item: string) =>
-            DUMMY_ROLE_NAME_MAP.get(item || "")
-          )
-        });
-      }
-    }
-    // for (const [key, value] of Object.entries(groupedRoles)) {
-    //   result.push({
-    //     role_name_m: DUMMY_ROLE_NAME_MOUDULE_MAP.get(key) || "",
-    //     role_name: value.map((item: string) =>
-    //       DUMMY_ROLE_NAME_MAP.get(item || "")
-    //     )
-    //   });
-    // }
-
-    return result;
-  };
-
   const asyncSubmitForm = async (data: any) => {
-    // check user
     // console.log("🔜 data:", data);
+
+    // TODO: to be remved, just for DEMO
+    // check user + store data
     const account_name = getAccountName(data);
     const roles = getRoleNames(data);
     if (isCreate) {
@@ -197,10 +152,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     // }
   };
 
-  const handleChangeRoute = async (path: string) => {
-    showLeavePageModal(path);
-  };
-
+  const handleChangeRoute = async (path: string) => showLeavePageModal(path);
   const handleCancel = () => {
     // onCreate
     if (isCreate) {
@@ -234,10 +186,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   };
 
   const handleDataChoice = () => {
-    // if (dataChoice === "0") {
-    //   setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
-    //   setLightboxOpen(false);
-    // } else
     if (dataChoice === "1") {
       submitRef.current && submitRef.current.click();
       setLightboxOpen(false);
@@ -252,33 +200,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     if (!session) return;
     fetchData();
   }, [session, router]);
-
-  // ------- render ------- //
-  // const userExistModalContent = {
-  //   title: "您先前已建立該使用者",
-  //   children: (
-  //     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-  //       <div>是否前往編輯該使用者？</div>
-  //       <div>若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：</div>
-  //       <RadioGroup
-  //         value={dataChoice}
-  //         options={options}
-  //         onChange={(event) => setDataChoice(event.target.value)}
-  //         size={16}
-  //       />
-  //     </div>
-  //   ),
-  //   onConfirm: () => {
-  //     if (dataChoice === "0") {
-  //       setData(DUMMY_ONE_ACCOUNT.ResultList[0]);
-  //       router.push(`/account/detail/${id}?editPage=edit`);
-  //     } else {
-  //       setData(edited);
-  //       router.push(`/account/detail/${id}?editPage=view`);
-  //     }
-  //   },
-  //   onCancel: () => console.log("cancel")
-  // };
 
   return (
     <>
@@ -318,10 +239,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
             <div>
               若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：
             </div>
-            {/* <Pane aria-label="Radio Group Label 12" role="group">
-              <Radio checked name="group" label="使用以前的資料" size={16} />
-              <Radio name="group" label="使用我剛剛填寫的資料" size={16} />
-            </Pane> */}
             <RadioGroup
               value={dataChoice}
               options={options}
@@ -355,11 +272,4 @@ interface Props {
 }
 interface Params extends ParsedUrlQuery {
   id: string;
-}
-interface I_GroupedRoles {
-  [module_no: string]: string[];
-}
-interface I_RoleName {
-  role_name_m: string; // Assuming DUMMY_ROLE_NAME_MOUDULE_MAP.get(key) returns a string
-  role_name: string[]; // Assuming DUMMY_ROLE_NAME_MAP.get(item) returns a string
 }

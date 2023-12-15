@@ -1,17 +1,13 @@
 import React from "react";
-import { Select, TextInput, Textarea } from "evergreen-ui";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { FormSTY } from "./style";
 
-import { I_AccountDetailItem } from "@services/account/getOneAccount";
 import InfoBox from "@components/InfoBox";
 import PasswordInput from "../PasswordInput";
 import {
   passwordValidation,
   confirmPasswordValidation
 } from "@utils/hookFormValidation";
-import LoadingSpinner from "@components/LoadingSpinner";
-import Control from "react-select/dist/declarations/src/components/Control";
 
 const ChangePasswordInfoBox = ({ asyncSubmitForm, submitRef }: I_Props) => {
   const defaultValues = {
@@ -28,8 +24,7 @@ const ChangePasswordInfoBox = ({ asyncSubmitForm, submitRef }: I_Props) => {
   } = useForm({
     defaultValues
   });
-  //------ functions ------//
-  // ------- render ------- //
+
   const dataFitInfoBox = [
     {
       readonly: false,

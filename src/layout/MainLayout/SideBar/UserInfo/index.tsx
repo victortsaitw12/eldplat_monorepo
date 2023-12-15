@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import {
   Avatar,
@@ -6,8 +6,6 @@ import {
   LogInIcon,
   Popover,
   Pane,
-  Group,
-  Button,
   PersonIcon,
   LockIcon,
   Menu
@@ -15,11 +13,6 @@ import {
 //
 import { BodySTY } from "./style";
 
-import {
-  I_Company_Context,
-  CompanyContext
-} from "@contexts/companyContext/companyProvider";
-import LabelButton from "@components/Button/Primary/Label";
 import IconButton from "@components/Button/Secondary/IconLeft";
 import { useRouter } from "next/router";
 
@@ -27,17 +20,10 @@ function Index(props: any) {
   const { data: session } = useSession();
   const [isCardShow, setIsCardShow] = React.useState(false);
   const router = useRouter();
-  // const { companyData } = useContext<I_Company_Context>(CompanyContext);
-  const toggleCardShow = () => {
-    setIsCardShow((prev) => !prev);
-  };
-  const handleSignout = () => {
-    signOut();
-  };
 
-  const handleChangePassword = () => {
-    router.push("/setting/password");
-  };
+  const toggleCardShow = () => setIsCardShow((prev) => !prev);
+  const handleSignout = () => signOut();
+  const handleChangePassword = () => router.push("/setting/password");
 
   React.useEffect(() => {
     return () => setIsCardShow(false);
@@ -89,7 +75,6 @@ function Index(props: any) {
           </button>
         </Popover>
       )}
-      {/* // TODO to be removed after feat: Log in/ Log out */}
       {!session && (
         <IconButton text="登入" onClick={() => signIn()}>
           <LogInIcon />
