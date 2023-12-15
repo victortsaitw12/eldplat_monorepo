@@ -139,19 +139,19 @@ export const getAllDriver = async (
       });
     }
   }
-  const res = await fetch(`${API_Path["getAllDrivers"]}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
-    },
-    // body: JSON.stringify(data),
-    body: JSON.stringify({
-      filters: driverFilter,
-      filter_Needed: true,
-      pageInfo: pageQuery
-    })
-  });
+  // const res = await fetch(`${API_Path["getAllDrivers"]}`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
+  //   },
+  //   // body: JSON.stringify(data),
+  //   body: JSON.stringify({
+  //     filters: driverFilter,
+  //     filter_Needed: true,
+  //     pageInfo: pageQuery
+  //   })
+  // });
   // return res.json();
   return DUMMY_DATA;
 };
