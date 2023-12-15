@@ -15,11 +15,11 @@ import { BodySTY } from "./style";
 import { useRouter } from "next/router";
 import { deleteCustomer } from "@services/customer/deleteCustomer";
 import { getCreateCustomerOptions } from "@services/customer/getCreateCustomerOptions";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
-import { PageInfoType } from "@services/type";
+import { I_PageInfo } from "@components/PaginationField";
 import RegionProvider from "@contexts/regionContext/regionProvider";
 //
 const mainFilterArray = [
@@ -35,12 +35,12 @@ const Page: NextPageWithLayout<never> = () => {
   );
   const [options, setOptions] = useState<any>(null);
   const [isDrawerFullWidth, setIsDrawerFullWidth] = useState(false);
-  const [pageInfo, setPageInfo] = useState<PageInfoType>({
-    arrangement: "desc",
-    orderby: null,
-    page_Index: 1,
-    page_Size: 10,
-    last_Page: 10
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>({
+    Arrangement: "desc",
+    Orderby: null,
+    Page_Index: 1,
+    Page_Size: 10,
+    Last_Page: 10
   });
   const {
     initializeSubFilter,
@@ -55,7 +55,7 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchCustomerData = async (
     isCanceled: boolean,
     mainFilter = "1",
-    pageInfo: PageInfoType
+    pageInfo: I_PageInfo
   ) => {
     getAllCustomers(pageInfo, subFilter, mainFilter).then((res) => {
       console.log("res", res);
@@ -94,7 +94,7 @@ const Page: NextPageWithLayout<never> = () => {
     };
   }, [nowTab]);
   //進入供應商編輯頁
-  const upDatePageHandler = (newPageInfo: PageInfoType) => {
+  const upDatePageHandler = (newPageInfo: I_PageInfo) => {
     fetchCustomerData(false, nowTab, newPageInfo);
   };
 
@@ -131,12 +131,11 @@ const Page: NextPageWithLayout<never> = () => {
   return (
     <RegionProvider>
       <BodySTY>
-        <TableWrapper
+        <TabsWrapper
           isHide={isDrawerFullWidth}
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
-          viewOnly={true}
         >
           <FilterWrapper
             updateFilter={updateSubFilter}
@@ -159,7 +158,7 @@ const Page: NextPageWithLayout<never> = () => {
               pageInfo={pageInfo}
             />
           </FilterWrapper>
-        </TableWrapper>
+        </TabsWrapper>
         {isDrawerOpen && (
           <Drawer
             tabName={["新增客戶"]}

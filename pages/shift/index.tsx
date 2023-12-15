@@ -16,7 +16,7 @@ import OverviewTable from "@contents/Shift/OverviewTable";
 import ZoomBar from "@components/ZoomBar";
 import { EVENT_TYPE } from "@contents/Shift/shift.data";
 import EventTag from "@contents/Shift/EventTag";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import { I_PageInfo } from "@components/PaginationField";
 
@@ -47,21 +47,21 @@ const ShiftPage: NextPageWithLayout<never> = () => {
       .padStart(2, "0")}`;
     getAllDriverScheduleListFiltered(dateStr, subFilter, pageInfo).then(
       (res) => {
-        const data = [...res.contentList];
-        const updatedData = data.map((item) => ({
-          ...item,
-          id: item.driver_No
-        }));
-        setData(data);
-        setPageInfo(res.pageInfo);
+        // const data = [...res.contentList];
+        // const updatedData = data.map((item) => ({
+        //   ...item,
+        //   id: item.driver_No
+        // }));
+        // setData(data);
+        // setPageInfo(res.pageInfo);
 
-        if (!subFilter) {
-          localStorage.setItem(
-            "shiftInitFilter",
-            JSON.stringify(res.conditionList)
-          );
-          initializeSubFilter();
-        }
+        // if (!subFilter) {
+        //   localStorage.setItem(
+        //     "shiftInitFilter",
+        //     JSON.stringify(res.conditionList)
+        //   );
+        //   initializeSubFilter();
+        // }
       }
     );
   };
@@ -77,8 +77,8 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   const handlePageChange = React.useCallback(
     (pageQuery: I_PageInfo) => {
       if (
-        pageInfo.page_Index === pageQuery.page_Index &&
-        pageInfo.page_Size === pageQuery.page_Size
+        pageInfo.Page_Index === pageQuery.Page_Index &&
+        pageInfo.Page_Size === pageQuery.Page_Size
       )
         return;
 
@@ -112,11 +112,10 @@ const ShiftPage: NextPageWithLayout<never> = () => {
         <Head>
           <title>駕駛排班總覽</title>
         </Head>
-        <TableWrapper
+        <TabsWrapper
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
-          viewOnly={true}
         >
           <FilterWrapper
             updateFilter={updateSubFilter}
@@ -155,7 +154,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
               </div>
             </Pane>
           </FilterWrapper>
-        </TableWrapper>
+        </TabsWrapper>
       </ShiftSTY>
     </UIProvider>
   );

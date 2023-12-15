@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 //@layout
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 //@services
 import { updateMaintenance } from "@services/maintenance/updateMaintenance";
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
@@ -47,7 +47,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
       : fetchDDL(undefined, maintenanceData.am_driver_bus_group_no);
   }, [maintenanceData]);
 
-  //TableWrapper
+  //TabsWrapper
   const changeMainFilterHandler = () => {
     console.log("changeMainFilterHandler");
   };
@@ -118,20 +118,10 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
 
   return (
     <BodySTY>
-      <TableWrapper
+      <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
-        onSave={() => {
-          submitRef.current?.click();
-        }}
-        onEdit={() => {
-          console.log("set is Edit to true");
-          setIsEdit(true);
-        }}
-        onClose={onCancelHandler}
-        isEdit={isEdit}
-        viewOnly={isFinished}
       >
         {maintenanceData && (
           <MaintenanceDetail
@@ -145,7 +135,7 @@ const Page: NextPageWithLayout<never> = ({ maintenance_id }) => {
             fetchDDL={fetchDDL}
           />
         )}
-      </TableWrapper>
+      </TabsWrapper>
     </BodySTY>
   );
 };

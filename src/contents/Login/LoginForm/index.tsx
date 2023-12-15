@@ -1,54 +1,90 @@
-import React, { useState } from "react";
-import LoginInput from "../../../components/LoginInput";
-import Button from "@components/Button/Primary/Label";
+import React from "react";
+import { signIn } from "next-auth/react";
+import { TextInputField } from "evergreen-ui";
+import { useRouter } from "next/router";
 import { BodySTY } from "./style";
+
+import PasswordInputField from "../PasswordInputField";
+import { Label as Button } from "@components/Button/Primary";
+import AssistRow from "./AssistRow";
+import { emailValidation } from "@utils/inputValidation";
 //
-interface PropsType {
-  login: (email: string, password: string) => void;
-}
+function Form() {
+  const router = useRouter();
+  const [inputData, setInputData] = React.useState({
+    email: "",
+    password: ""
+  });
+  const [emailError, setEmailError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
 
-function Form(props: PropsType) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // --- functions --- //
+  function checkEmail(value: string) {
+    if (value.length <= 0) return true;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  }
+  const checkPassword = (password: string) => {
+    //至少4位英數字不含特殊符號
+    if (password.length <= 0) return true;
+    const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
+    return passwordRegex.test(password);
+  };
 
-  // 隨時抓取輸入的帳號和密碼並存入狀態
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    const checkEmailResult = checkEmail(inputData.email);
+    const checkPasswordResult = checkPassword(inputData.password);
+
+    if (!checkEmailResult || !checkPasswordResult) {
+      if (!checkPasswordResult) setPasswordError("至少4位英數字不含特殊符號");
+      if (!checkEmailResult) setEmailError("格式不符");
+      return;
+    }
+
+    const result = await signIn("credentials", {
+      ...inputData,
+      redirect: false
+    });
+
+    if (result?.error) {
+      console.log(result.error);
+    } else {
+      console.log("Login success!");
+      router.push("/");
+    }
+  };
 
   return (
     <BodySTY>
-      <LoginInput
-        type="text"
-        inputName="account"
-        icon="person"
-        titleId="login_account"
-        className="account-input"
-        onChangeCallback={(e) => {
-          e.preventDefault();
-          setEmail(e.target.value);
-        }}
-      />
-      <div className="all-password">
-        <LoginInput
-          type="password"
-          inputName="password"
-          titleId="login_password"
-          icon="key"
-          onChangeCallback={(e) => {
-            e.preventDefault();
-            setPassword(e.target.value);
-          }}
+      <div className="inpitFields">
+        <TextInputField
+          className="emailInput"
+          type="email"
+          placeholder="example@mail.com"
+          label="帳號"
+          value={inputData.email}
+          isInvalid={!checkEmail(inputData.email)}
+          validationMessage={emailError ? "格式不符" : undefined}
+          onClick={() => setEmailError("")}
+          onChange={(e: any) =>
+            setInputData({ ...inputData, email: e.target.value })
+          }
         />
-        <div className="forgot-password">
-          <span className="material-icons">help</span>
-          <button>Forget Password</button>
-        </div>
+        <PasswordInputField
+          label="密碼"
+          errorMsg={passwordError || undefined}
+          onClick={() => setPasswordError("")}
+          onChange={(v: string) => setInputData({ ...inputData, password: v })}
+        />
       </div>
-      <Button
-        text={"登入"}
-        onClick={(e) => {
-          e.preventDefault();
-          props.login(email, password);
-        }}
-      />
+      <AssistRow />
+      <div>
+        測試帳密:
+        <span> user@gmail.com +</span>
+        <span> 12345</span>
+      </div>
+      <Button text={"登入"} onClick={handleLogin} />
     </BodySTY>
   );
 }

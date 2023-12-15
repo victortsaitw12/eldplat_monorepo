@@ -8,6 +8,7 @@ interface I_CheckboxField {
   item?: any;
   toggleFuelValue: (value: string) => void;
   checked: boolean;
+  disabled?: boolean;
 }
 
 function CheckboxField({
@@ -15,7 +16,8 @@ function CheckboxField({
   hint,
   item,
   toggleFuelValue,
-  checked
+  checked,
+  ...props
 }: I_CheckboxField) {
   const handleCheckbox = (e: any) => {
     toggleFuelValue(e.target.value);
@@ -29,6 +31,7 @@ function CheckboxField({
         onChange={(e: any) => {
           handleCheckbox(e);
         }}
+        disabled={props.disabled || false}
       />
       {hint && <p className="hint">{hint}</p>}
     </CheckboxFieldSTY>

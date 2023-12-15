@@ -22,7 +22,7 @@ import { getEmployeeById } from "@services/employee/getEmployeeById";
 import { I_Get_Employees_Type } from "@typings/employee_type";
 import { updateEmployee } from "@services/employee/updateEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import HealthInfo from "@contents/Employee/HealthInfo";
 //
 const Page: NextPageWithLayout<
@@ -106,7 +106,7 @@ const Page: NextPageWithLayout<
     setLoading(false);
   };
 
-  //TableWrapper
+  //TabsWrapper
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
   };
@@ -121,21 +121,10 @@ const Page: NextPageWithLayout<
         {
           <Pane width="100%" height="100%" borderRadius="10px" overflow="auto">
             {(!loading && editData && (
-              <TableWrapper
-                isEdit={true}
+              <TabsWrapper
                 onChangeTab={(value) => changeMainFilterHandler(value)}
                 mainFilter={nowTab}
                 mainFilterArray={mainFilterArray}
-                onSave={() => {
-                  console.log("點擊全部儲存");
-                  handleSaveAll();
-                }}
-                onEdit={() => {
-                  console.log("TableWrapper onEdit");
-                }}
-                onClose={() => {
-                  router.push("/employee");
-                }}
               >
                 {nowTab === "1" && (
                   <AddEmployee
@@ -153,7 +142,7 @@ const Page: NextPageWithLayout<
                     setInsertData={setEditData}
                   />
                 )}
-              </TableWrapper>
+              </TabsWrapper>
             )) || (
               <Pane
                 display="flex"

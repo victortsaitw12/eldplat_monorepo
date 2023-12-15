@@ -1,22 +1,20 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  /* height: 100%; */
-  /* overflow-x: scroll; */
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   .sub-filter {
     display: flex;
     align-items: center;
     padding: 8px 12px;
-    gap: 4px;
+    gap: 16px;
     width: 100%;
-    background: ${({ theme }) => theme.color.N200};
-    border-radius: 10px 10px 0 0;
+
     .subFilter-item {
       cursor: pointer;
-      border: none;
+      /* border: 1px solid ${({ theme }) => theme.color.N400}; */
       background: none;
       display: flex;
       flex-direction: row;
@@ -24,7 +22,7 @@ export const BodySTY = styled.div`
       padding: 8px 16px;
       gap: 8px;
       height: 35px;
-      border-radius: 32px;
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
       .item-number {
         width: 1.2rem;
         height: 1.2rem;
@@ -49,10 +47,11 @@ export const BodySTY = styled.div`
     gap: 8px;
     /* Neutral/N0 */
     background: ${({ theme }) => theme.color.N0};
-    /* Neutral/N400 */
-    border: 1px solid ${({ theme }) => theme.color.N400};
-    border-radius: 32px;
+    /* Neutral/N50 */
+    border: 1px solid ${({ theme }) => theme.color.N50};
+    border-radius: 4px;
     input {
+      font-size: ${({ theme }) => theme.fontSize.Paragraph300};
       border: none;
     }
     input:focus {
@@ -75,8 +74,20 @@ export const BodySTY = styled.div`
   }
   > .children-container {
     flex: 1 0 0;
-    background: #ffffff;
+    background: ${({ theme }) => theme.color.N0};
     //
     overflow: hidden;
+  }
+  .actionRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btns {
+    white-space: nowrap;
+    padding: 8px 12px;
+    button {
+      height: 35px;
+    }
   }
 `;

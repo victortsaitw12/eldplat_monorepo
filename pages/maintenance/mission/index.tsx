@@ -5,7 +5,7 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { BodySTY } from "./style";
 import { useRouter } from "next/router";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import Drawer from "@components/Drawer";
 import MaintenanceMissionList from "@contents/maintenance/Mission/MissionList";
@@ -197,11 +197,10 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <TableWrapper
+      <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
-        viewOnly={true}
       >
         <FilterWrapper
           updateFilter={updateSubFilter}
@@ -222,7 +221,7 @@ const Page: NextPageWithLayout<never> = () => {
             handlePageChange={handlePageChange}
           />
         </FilterWrapper>
-      </TableWrapper>
+      </TabsWrapper>
       {isDrawerOpen && (
         <Drawer
           tabName={["新增維保計畫"]}

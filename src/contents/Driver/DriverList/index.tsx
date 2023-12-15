@@ -2,56 +2,70 @@ import { useRouter } from "next/router";
 import { DriverListSTY } from "./style";
 
 import { getDriverTitle } from "@services/driver/getAllDrivers";
-import TableWithEdit from "@components/Table/TableWithEdit";
+import Table from "@components/Table/Table";
 import { I_PageInfo } from "@components/PaginationField";
+import Checkbox from "@components/CheckBox";
+import IconBtn from "@components/Button/IconBtn";
+import { I_DriverItem } from "@services/driver/getAllDrivers";
+import PaginationField from "@components/PaginationField";
 
 interface Props {
   driverData: any;
   pageInfo: I_PageInfo;
-  goToCreatePage: () => void;
   handleDeleteDriver: (id: string) => void;
   handleRecoverDriver?: (id: string) => void;
   handlePageChange?: (pageQuery: I_PageInfo) => void;
-  listType: string;
 }
 
 function DriverList({
   driverData,
   pageInfo,
-  goToCreatePage,
   handleDeleteDriver,
   handleRecoverDriver,
-  handlePageChange,
-  listType
+  handlePageChange
 }: Props) {
-  const driverTitle = getDriverTitle();
+  // const driverTitle = getDriverTitle();
+  const driverTitle = [
+    <Checkbox key={"driver"} />,
+    "駕駛姓名",
+    "英文姓名",
+    "車隊",
+    "派駐區域",
+    ""
+  ];
   const router = useRouter();
-  console.log("listType", listType);
+
+  const handleView = (id: string) => {
+    router.push(`/driver/detail/${id}?editPage=view`);
+  };
+
+  const changeKey = (data: Array<I_DriverItem>) => {
+    return data.map((item: I_DriverItem) => {
+      return {
+        id: item["driver_no"],
+        checkbox: <Checkbox value={item["driver_name"]} />,
+        driver_name: item["driver_name"],
+        english_name: item["english_name"],
+        team_name: item["team_name"],
+        region: item["region"],
+        action: <IconBtn tip="編輯" type="edit" onClick={handleEdit} />
+      };
+    });
+  };
+
+  const handleEdit = () => {
+    console.log("edit");
+  };
+
+  const modifiedData = driverData ? changeKey(driverData) : undefined;
+
   return (
     <DriverListSTY>
-      <TableWithEdit
-        tableName="駕駛列表"
+      <Table
         titles={driverTitle}
-        data={driverData}
-        goToCreatePage={goToCreatePage}
-        viewItem={(id) => {
-          router.push(`/driver/detail/${id}?editPage=view`);
-        }}
-        pageInfo={pageInfo}
-        onPageChange={handlePageChange}
-        {...(listType == "1" && {
-          goToEditPage: (id) => {
-            router.push(`/driver/detail/${id}?editPage=edit`);
-          },
-          deleteItem: (id) => {
-            handleDeleteDriver(id);
-          }
-        })}
-        {...(listType == "2" && {
-          recoverItem: (id) => {
-            handleRecoverDriver && handleRecoverDriver(id);
-          }
-        })}
+        data={modifiedData}
+        onView={handleView}
+        headNode={<PaginationField pageInfo={pageInfo} />}
       />
     </DriverListSTY>
   );

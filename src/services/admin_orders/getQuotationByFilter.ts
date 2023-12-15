@@ -2,8 +2,8 @@ import API_Path from "./apiPath";
 import { I_PageInfo } from "@components/PaginationField";
 
 export const defaultPageInfo: I_PageInfo = {
-  page_Index: 1,
-  page_Size: 10
+  Page_Index: 1,
+  Page_Size: 10
 };
 
 // 取得詢價單&報價單列表

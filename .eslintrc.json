@@ -23,6 +23,12 @@
     "no-console": "off",
     "react/prop-types": "off",
     "react/function-component-definition": "off",
-    "prettier/prettier": ["off", { "semi": true }]
+    "prettier/prettier": ["off", { "semi": true }],
+    "@typescript-eslint/no-empty-interface": [
+      "error",
+      {
+        "allowSingleExtends": true
+      }
+    ]
   }
 }

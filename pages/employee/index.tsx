@@ -12,14 +12,13 @@ import EmployeeList from "@contents/Employee/EmployeeList";
 import { BodySTY } from "./style";
 import Drawer from "@components/Drawer";
 import FilterWrapper from "@layout/FilterWrapper";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
 import { deleteEmployee } from "@services/employee/deleteEmployee";
 import RegionProvider from "@contexts/regionContext/regionProvider";
 import LoadingSpinner from "@components/LoadingSpinner";
-import { PageInfoType } from "@services/type";
-import { mappingQueryData } from "@utils/mappingQueryData";
 import { I_PageInfo } from "@components/PaginationField";
+import { mappingQueryData } from "@utils/mappingQueryData";
 
 //
 const mainFilterArray = [
@@ -33,12 +32,12 @@ const Page: NextPageWithLayout<never> = () => {
   const [nowTab, setNowTab] = useState(
     (router?.query?.status as string) || "1"
   );
-  const [pageInfo, setPageInfo] = useState<PageInfoType>({
-    arrangement: "desc",
-    orderby: null,
-    page_Index: 1,
-    page_Size: 10,
-    last_Page: 10
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>({
+    Arrangement: "desc",
+    Orderby: null,
+    Page_Index: 1,
+    Page_Size: 10,
+    Last_Page: 10
   });
 
   const [loading, setLoading] = useState(false);
@@ -82,7 +81,7 @@ const Page: NextPageWithLayout<never> = () => {
   const fetchEmployeeData = async (
     isCanceled: boolean,
     mainFilter = "1",
-    pageInfo: PageInfoType
+    pageInfo: I_PageInfo
   ) => {
     getAllEmployees(pageInfo, subFilter, mainFilter).then((res) => {
       const employeesData = mappingQueryData(
@@ -107,7 +106,7 @@ const Page: NextPageWithLayout<never> = () => {
     });
   };
 
-  const updatePageHandler = (newPageInfo: PageInfoType) => {
+  const updatePageHandler = (newPageInfo: I_PageInfo) => {
     fetchEmployeeData(false, nowTab, newPageInfo);
   };
 
@@ -126,11 +125,10 @@ const Page: NextPageWithLayout<never> = () => {
   return (
     <RegionProvider>
       <BodySTY>
-        <TableWrapper
+        <TabsWrapper
           onChangeTab={changeMainFilterHandler}
           mainFilter={mainFilter}
           mainFilterArray={mainFilterArray}
-          viewOnly
         >
           <FilterWrapper
             updateFilter={updateSubFilter}
@@ -153,7 +151,7 @@ const Page: NextPageWithLayout<never> = () => {
               handlePageChange={updatePageHandler}
             />
           </FilterWrapper>
-        </TableWrapper>
+        </TabsWrapper>
         {isDrawerOpen && (
           <Drawer
             tabName={["新增員工"]}

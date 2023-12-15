@@ -8,7 +8,77 @@ interface I_routers {
 }
 
 const breadcrumbs: I_routers = {
-  "/": [{ label: "入門", url: "/" }],
+  "/": [{ label: "首頁", url: "/" }],
+  "/org": [
+    { label: "首頁", url: "/" },
+    { label: "組織設定", url: "/org" }
+  ],
+  "/role": [
+    { label: "首頁", url: "/" },
+    { label: "角色權限", url: "/role" }
+  ],
+  "/role/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "角色權限", url: "/role" },
+    { label: "新增、檢視、編輯角色" }
+  ],
+  "/account": [
+    { label: "首頁", url: "/" },
+    { label: "使用者列表", url: "/account" }
+  ],
+  "/account/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "使用者", url: "/account" },
+    { label: "檢視、編輯使用者", url: "" }
+  ],
+
+  "/account/setting/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "個人設定", url: "/account/setting" },
+    { label: "修改密碼", url: "" }
+  ],
+  "/driver": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" }
+  ],
+  "/driver/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "新增駕駛", url: "" }
+  ],
+  "/driver/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "檢視駕駛", url: "" }
+  ],
+  "/driver/training/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "檢視駕駛", url: "/driver/detail/[id]" },
+    { label: "教育訓練", url: "" }
+  ],
+  "/driver/management": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛列表", url: "/driver" },
+    { label: "駕駛管理設定", url: "" }
+  ],
+  "/schedule": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/" },
+  ],
+  "/schedule/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/schedule" },
+    { label: "個人班表", url: "" },
+  ],
+  "/schedule/approval": [
+    { label: "首頁", url: "/" },
+    { label: "駕駛出勤管理", url: "/schedule" },
+    { label: "個人班表", url: "/schedule/detail/[id]" },
+    { label: "簽核", url: "/approval" },
+  ],
+  // ----------------------------------------------------------------------- V2 above
+  // ----------------------------------------------------------------------- V1 below
   "/bus": [
     { label: "首頁", url: "/" },
     { label: "車輛清單", url: "/bus" }
@@ -17,15 +87,6 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "車輛清單", url: "/bus" },
     { label: "檢視", url: "" }
-  ],
-
-  "/shift": [
-    { label: "入門", url: "/" },
-    { label: "駕駛排班", url: "/shift" }
-  ],
-  "/shift/[id]": [
-    { label: "入門", url: "/" },
-    { label: "駕駛排班", url: "/shift" }
   ],
   "/customer": [
     { label: "入門", url: "/" },
@@ -80,10 +141,10 @@ const breadcrumbs: I_routers = {
     { label: "公司設定", url: "/company" },
     { label: "編輯", url: "" }
   ],
-  "/role": [
-    { label: "入門", url: "/" },
-    { label: "群組設定", url: "/role" }
-  ],
+  // "/role": [
+  //   { label: "入門", url: "/" },
+  //   { label: "群組設定", url: "/role" }
+  // ],
   "/role/edit/[id]": [
     { label: "入門", url: "/" },
     { label: "群組設定", url: "/role" },
@@ -102,16 +163,16 @@ const breadcrumbs: I_routers = {
     { label: "入門", url: "/" },
     { label: "員工設定", url: "/employee" },
     { label: "詳情", url: "/" }
-  ],
-  "/driver/detail/[id]": [
-    { label: "入門", url: "/" },
-    { label: "駕駛設定", url: "/driver" },
-    { label: "詳情", url: "/" }
-  ],
-  "/driver": [
-    { label: "入門", url: "/" },
-    { label: "駕駛設定", url: "/driver" }
   ]
+  // "/driver/detail/[id]": [
+  //   { label: "入門", url: "/" },
+  //   { label: "駕駛設定", url: "/driver" },
+  //   { label: "詳情", url: "/" }
+  // ],
+  // "/driver": [
+  //   { label: "入門", url: "/" },
+  //   { label: "駕駛設定", url: "/driver" }
+  // ]
 };
 
 const vendorsBreadcrumbs: I_routers = {

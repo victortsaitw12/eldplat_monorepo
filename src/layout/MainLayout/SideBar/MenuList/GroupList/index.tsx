@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { ChevronDownIcon } from "evergreen-ui";
+import {
+  ChevronDownIcon,
+  HomeIcon,
+  PersonIcon,
+  DriveTimeIcon,
+  WrenchIcon,
+  BriefcaseIcon,
+  FlagIcon,
+  ClipboardIcon,
+  OfficeIcon,
+  CogIcon
+} from "evergreen-ui";
 import { useRouter } from "next/router";
 //
 import { MenuDataType } from "src/mock-data/side-bar/data";
@@ -14,6 +25,7 @@ interface Props {
 //
 function Index({ menu }: Props) {
   const router = useRouter();
+  const currentUrl = router.asPath.split("/");
   const default_open =
     menu?.subList !== null &&
     menu?.subList &&
@@ -24,6 +36,7 @@ function Index({ menu }: Props) {
         }
       })
       .indexOf(router.asPath) >= 0;
+
   const [openList, setOpenList] = useState(default_open);
   const isActive =
     router.asPath === menu.url ||
@@ -31,6 +44,7 @@ function Index({ menu }: Props) {
       menu.url !== "/" &&
       router.asPath.indexOf(menu.url) >= 0);
   const isDisabled = menu.url === null && !menu.subList;
+
   return (
     <BodySTY>
       <StyledButton
@@ -42,11 +56,31 @@ function Index({ menu }: Props) {
           }
         }}
       >
-        <div>{menu.name}</div>
+        <div className="btn__name ">
+          {iconMap?.get(menu.name)?.icon || ""}
+          <span className="text">{menu.name}</span>
+        </div>
+
         {menu.subList && <ChevronDownIcon color="#fff" size={16} />}
       </StyledButton>
-      {menu.subList && openList && <SubList data={menu.subList} />}
+      <div className="text">
+        {menu.subList && openList && <SubList data={menu.subList} />}
+      </div>
     </BodySTY>
   );
 }
 export default Index;
+
+// asked to add a "menu_no" for identify icons, backend refused
+const iconMap = new Map([
+  ["首頁", { icon: <HomeIcon /> }],
+  ["使用者管理", { icon: <PersonIcon /> }],
+  ["車輛管理", { icon: <DriveTimeIcon /> }],
+  ["維保管理", { icon: <WrenchIcon /> }],
+  ["駕駛管理", { icon: <BriefcaseIcon /> }],
+  ["任務管理", { icon: <FlagIcon /> }],
+  ["訂單管理", { icon: <ClipboardIcon /> }],
+  ["客戶管理", { icon: <BriefcaseIcon /> }],
+  ["供應商管理", { icon: <OfficeIcon /> }],
+  ["設定", { icon: <CogIcon /> }]
+]);

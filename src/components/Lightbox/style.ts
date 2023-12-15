@@ -14,10 +14,14 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
   .wrapper {
     padding: 17px;
     max-width: 572px;
-    margin: 10vh auto;
+    /* margin: 0 auto; */
     border-radius: 10px;
     background: white;
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 400px;
+    transform: translate(-50%, -50%);
     .titleWrap {
       display: flex;
       justify-content: space-between;
@@ -47,4 +51,14 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
       padding: 15px;
     }
   }
+`;
+
+export const ButtonSetSTY = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 12px 20px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  background: ${({ theme }) => theme.color.N0};
 `;

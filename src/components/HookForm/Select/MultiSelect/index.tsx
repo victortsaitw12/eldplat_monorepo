@@ -1,5 +1,11 @@
 import React, { useId } from "react";
-import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldPath,
+  FieldValues,
+  RegisterOptions
+} from "react-hook-form";
 import Select, { MultiValue } from "react-select";
 import { selectStyles, BodySTY } from "./style";
 type Option = { label: string; value: string };
@@ -49,11 +55,13 @@ function ControlledSelect<
 >({
   name,
   control,
+  rules,
   options,
   isDisabled
 }: {
   name: TName;
   control?: Control<TFieldValues>;
+  rules?: RegisterOptions;
   options: Array<{ label: string; value: string }>;
   isDisabled: boolean;
 }) {
@@ -61,6 +69,7 @@ function ControlledSelect<
     <Controller
       control={control}
       name={name}
+      rules={rules ? rules : undefined}
       render={({ field: { onChange, value } }) => (
         <StyledSelect
           options={options}

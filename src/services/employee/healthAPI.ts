@@ -2,12 +2,12 @@ import API_Path from "./apiPath";
 import { I_PageInfo } from "@components/PaginationField";
 
 export const defaultPageInfo: I_PageInfo = {
-  page_Index: 1,
-  page_Size: 10,
-  orderby: null,
-  arrangement: "desc",
-  total: 0,
-  last_Page: 0
+  Page_Index: 1,
+  Page_Size: 10,
+  Orderby: null,
+  Arrangement: "desc",
+  Total: 0,
+  Last_Page: 0
 };
 // create or update health
 interface updateHealthPayload {

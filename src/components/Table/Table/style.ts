@@ -1,38 +1,85 @@
 import styled from "styled-components";
 
+// container
+export const DivSTY = styled.div`
+  border: 1px solid ${({ theme }) => theme.color.N40};
+  border-radius: 4px;
+  header {
+    padding: 6px 20px;
+    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+  }
+  footer {
+    padding: 6px 20px;
+  }
+`;
+
 // 表格本身
 export const TableSTY = styled.table`
   /* width: 100%; */
   min-width: 100%;
-  border: 1px solid ${({ theme }) => theme.color.N300};
-  /* border-collapse: collapse; */
-  border-radius: 4px;
+  border-collapse: collapse;
+  /* border-radius: 4px; */
   border-spacing: 0px;
   overflow: hidden;
+  /* action buttons */
+  .action {
+    div {
+      button {
+        border-radius: 4px;
+        background: ${({ theme }) => theme.color.N20};
+        svg {
+        }
+      }
+    }
+  }
   thead tr {
-    background-color: ${({ theme }) => theme.color.N50};
+    background-color: ${({ theme }) => theme.color.N0};
     text-align: left;
+    color: ${({ theme }) => theme.color.N200};
+    font-weight: ${({ theme }) => theme.fontWeight.Heading400};
+    font-size: ${({ theme }) => theme.fontSize.Headline400};
+    pointer-events: none;
+    /* border-bottom: 1px solid ${({ theme }) => theme.color.N40}; */
   }
-  tr:hover {
-    background-color: #f9fafc;
+  tbody tr {
+    cursor: pointer;
+    &:hover {
+      background-color: #f9fafc;
+    }
+    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+    :first-child {
+      border-top: 1px solid ${({ theme }) => theme.color.N40};
+    }
+    :last-child {
+      border-bottom: none;
+    }
   }
+  tbody {
+    position: relative;
+  }
+  tr {
+    width: 100%;
+  }
+
   td,
   th {
-    padding: 8px 10px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
-    border-bottom: 1px solid ${({ theme }) => theme.color.N300};
     span {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: flex-start;
     }
   }
-  tr:last-child td {
-    border-bottom: none;
+  th {
+    padding: 12px 20px 9px 20px;
   }
   td {
+    padding: 5px 20px;
+    color: ${({ theme }) => theme.color.N500};
+    font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+    /* font-size: ${({ theme }) => theme.fontSize.Paragraph300}; */
     a {
       text-decoration: dotted underline;
     }
@@ -60,7 +107,7 @@ export const TableSTY = styled.table`
         width: 100px;
         height: 100px;
         margin-bottom: 15px;
-        border-radius: 10px;
+        border-radius: 4px;
         overflow: hidden;
         box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
       }

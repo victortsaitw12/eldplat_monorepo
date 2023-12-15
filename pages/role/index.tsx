@@ -1,24 +1,28 @@
 import React, { ReactNode, useState, useMemo } from "react";
 import { NextPageWithLayout } from "next";
+import { PlusIcon } from "evergreen-ui";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+
 //
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-import { Pane } from "evergreen-ui";
 import RoleList from "@contents/Roles/RoleList";
 import { BodySTY } from "./style";
-import { useRouter } from "next/router";
-
-//@contexts
+import { getRoleList, I_RoleListItem } from "@services/role/getRoleList";
 import { useRoleStore } from "@contexts/filter/roleStore";
+import { IconLeft } from "@components/Button/Primary";
+import { DUMMY_RoleList } from "@services/role/getRoleList";
+import { I_PageInfo, defaultPageInfo } from "@components/PaginationField";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   //
   const mainFilterArray = useMemo(
     () => [
-      { id: 1, label: "基本", value: "1" },
-      { id: 2, label: "車產", value: "2" }
+      { id: 1, label: "啟用", value: "1" },
+      { id: 2, label: "停用", value: "2" }
     ],
     []
   );
@@ -41,27 +45,103 @@ const Page: NextPageWithLayout<never> = () => {
     isDrawerOpen,
     setDrawerOpen
   } = useRoleStore();
-  //套用新版filter
+  const { data: session, status } = useSession();
+  const [data, setData] = React.useState<I_RoleListItem[]>([]);
+  const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  //------ functions ------//
+  const fetchData = async () => {
+    if (!session) return;
+    setIsLoading(true);
+    try {
+      // const uk = session?.user.account_no;
+      // const result = await getRoleList(uk);
+      // const data = result.ResultList;
+      const data = DUMMY_RoleList.ResultList;
+      const pageInfo = DUMMY_RoleList.PageInfo;
+      const isUpdatedDataAfterCreate = localStorage.getItem("roleCreateData");
+
+      if (isUpdatedDataAfterCreate) {
+        setData([JSON.parse(isUpdatedDataAfterCreate), ...data]);
+        setPageInfo({
+          ...pageInfo,
+          Total: pageInfo.Total + 1
+        });
+      } else {
+        setData(data);
+        setPageInfo(pageInfo);
+      }
+
+      if (!subFilter) {
+        localStorage.setItem(
+          "roleInitFilter",
+          JSON.stringify(DUMMY_RoleList.ConditionList)
+        );
+        initializeSubFilter();
+      }
+    } catch (e: any) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+
+  const handleCreate = () => {
+    const id = "create";
+    router.push(`/role/detail/${id}?editPage=edit`);
+  };
+
+  const handlePageChange = React.useCallback(
+    (pageQuery: I_PageInfo) => {
+      if (
+        pageInfo.Page_Index === pageQuery.Page_Index &&
+        pageInfo.Page_Size === pageQuery.Page_Size
+      )
+        return;
+
+      // fetchData(subFilter, pageQuery);
+    },
+    [fetchData]
+  );
+
+  // ------- useEffect ------- //
+  React.useEffect(() => {
+    if (!session) return;
+    fetchData();
+  }, [session]);
+
+  React.useEffect(() => {
+    if (status === "unauthenticated") router.push("/login");
+  }, [status]);
+
+  React.useEffect(() => {
+    localStorage.removeItem("roleCreateData");
+  }, [router]);
+
+  // ------- render ------- //
+  const createBtn = (
+    <IconLeft text="新增角色" onClick={handleCreate}>
+      <PlusIcon size={14} />
+    </IconLeft>
+  );
 
   return (
     <BodySTY>
-      <TableWrapper
+      {/* <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
         viewOnly={true}
+      > */}
+      <FilterWrapper
+        updateFilter={updateSubFilter}
+        resetFilter={() => initializeSubFilter()}
+        filter={subFilter}
+        btns={createBtn}
       >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={() => {
-            initializeSubFilter();
-          }}
-          filter={subFilter}
-        >
-          <RoleList />
-        </FilterWrapper>
-      </TableWrapper>
-      {/* Put your component here */}
+        <RoleList data={data} pageInfo={pageInfo} />
+      </FilterWrapper>
+      {/* </TabsWrapper> */}
     </BodySTY>
   );
 };

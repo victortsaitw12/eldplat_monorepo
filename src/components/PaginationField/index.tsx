@@ -11,50 +11,35 @@ import {
 
 // TODO 原本存在各支service檔案裡的defaultPageInfo 改統一引用這一支
 export const defaultPageInfo: I_PageInfo = {
-  page_Index: 1,
-  page_Size: 10,
-  orderby: null,
-  arrangement: "desc",
-  total: 0,
-  last_Page: 0
+  Page_Index: 1,
+  Page_Size: 10,
+  Orderby: null,
+  Arrangement: "desc",
+  Total: 5,
+  Last_Page: 1
 };
-
-interface I_PaginationField {
-  pageInfo?: I_PageInfo;
-  onPageChange?: (pageQuery: I_PageInfo) => void;
-  onClickNext?: () => void;
-  onClickPrevious?: () => void;
-}
-export interface I_PageInfo {
-  page_Index: number; //1
-  page_Size: number; //10
-  arrangement?: "desc" | "asc"; //"desc"
-  orderby?: string | null; //null
-  total?: number; //5
-  last_Page?: number; //1
-}
 
 function PaginationField({
   pageInfo = defaultPageInfo,
   onPageChange
 }: I_PaginationField) {
   const pageSizeOption = [10, 20, 30, 40, 50]; // 設計給定值 預設10
-  const totalItems = pageInfo.total || 0;
+  const totalItems = pageInfo.Total || 0;
 
   const startItem =
-    ((pageInfo?.page_Index || 1) - 1) * (pageInfo.page_Size || 0) + 1;
+    ((pageInfo?.Page_Index || 1) - 1) * (pageInfo.Page_Size || 0) + 1;
   const endItem =
-    pageInfo?.last_Page === pageInfo.page_Index
+    pageInfo?.Last_Page === pageInfo.Page_Index
       ? totalItems
-      : startItem + (pageInfo.page_Size || 0) - 1;
+      : startItem + (pageInfo.Page_Size || 0) - 1;
 
   // ----- function ----- //
   const handlePrevPage = (
     event: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (pageInfo.page_Index === 1) return; // page_Index 是 1-based
-    const updatePage = pageInfo.page_Index - 1;
+    if (pageInfo.Page_Index === 1) return;
+    const updatePage = pageInfo.Page_Index - 1;
     handleUpdatePage(updatePage, undefined);
   };
 
@@ -62,8 +47,8 @@ function PaginationField({
     event: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (pageInfo.page_Index === pageInfo.last_Page) return;
-    const updatePage = pageInfo.page_Index + 1;
+    if (pageInfo.Page_Index === pageInfo.Last_Page) return;
+    const updatePage = pageInfo.Page_Index + 1;
     handleUpdatePage(updatePage, undefined);
   };
 
@@ -74,48 +59,44 @@ function PaginationField({
   };
 
   const handleUpdatePage = React.useCallback(
-    (page_Index: number | undefined, page_Size: number | undefined) => {
+    (Page_Index: number | undefined, Page_Size: number | undefined) => {
       if (!onPageChange || !pageInfo) return;
       const updatedPageInfo = { ...pageInfo };
-      if (page_Index) updatedPageInfo.page_Index = page_Index;
-      if (page_Size) updatedPageInfo.page_Size = page_Size;
+      if (Page_Index) updatedPageInfo.Page_Index = Page_Index;
+      if (Page_Size) updatedPageInfo.Page_Size = Page_Size;
       onPageChange(updatedPageInfo);
     },
     [pageInfo, onPageChange]
   );
 
   return (
-    <BodySTY>
-      <div className="container-pagination">
-        <span>
-          第{startItem}-{endItem}筆, 共{totalItems}筆
-        </span>
-        <div className="actions">
-          <IconButton
-            icon={ChevronLeftIcon}
-            onClick={(event: any) => handlePrevPage(event)}
-            style={{
-              minHeight: "24px",
-              minWidth: "24px",
-              width: "24px",
-              height: "24px"
-            }}
-            disabled={pageInfo.page_Index === 1 || undefined}
-          />
-          <IconButton
-            icon={ChevronRightIcon}
-            onClick={(event: any) => handleNextPage(event)}
-            style={{
-              minHeight: "24px",
-              minWidth: "24px",
-              width: "24px",
-              height: "24px"
-            }}
-            disabled={pageInfo.page_Index === pageInfo.last_Page || undefined}
-          />
-        </div>
+    <BodySTY className="paginationField">
+      <div className="pageTotal">共 {totalItems} 筆</div>
+      <div className="actions">
+        <IconButton
+          icon={ChevronLeftIcon}
+          onClick={(event: any) => handlePrevPage(event)}
+          style={{
+            minHeight: "24px",
+            minWidth: "24px",
+            width: "24px",
+            height: "24px"
+          }}
+          disabled={pageInfo.Page_Index === 1 || undefined}
+        />
+        <span className="actions__page">{pageInfo?.Page_Index}</span>
+        <IconButton
+          icon={ChevronRightIcon}
+          onClick={(event: any) => handleNextPage(event)}
+          style={{
+            minHeight: "24px",
+            minWidth: "24px",
+            width: "24px",
+            height: "24px"
+          }}
+          disabled={pageInfo.Page_Index === pageInfo.Last_Page || undefined}
+        />
         <div>
-          <span>每頁筆數</span>
           <Select
             defaultValue={10}
             style={{ marginLeft: "8px", height: "24px" }}
@@ -123,7 +104,7 @@ function PaginationField({
           >
             {pageSizeOption.map((item: number, i) => (
               <option key={`items-${i}`} value={item}>
-                {item}
+                {item}筆/頁
               </option>
             ))}
           </Select>
@@ -139,3 +120,19 @@ function PaginationField({
 }
 
 export default PaginationField;
+
+// ------- TYPING ------- //
+interface I_PaginationField {
+  pageInfo?: I_PageInfo;
+  onPageChange?: (pageQuery: I_PageInfo) => void;
+  onClickNext?: () => void;
+  onClickPrevious?: () => void;
+}
+export interface I_PageInfo {
+  Page_Index: number; //1
+  Page_Size: number; //10
+  Orderby?: string | null;
+  Arrangement?: string; //"ASC" | "desc"
+  Total?: number; //5
+  Last_Page?: number; //1
+}

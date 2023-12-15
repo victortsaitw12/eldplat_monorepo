@@ -65,20 +65,27 @@ const color = {
   O600: "#85462B",
   // Neutral
   N0: "#FFFFFF",
-  N50: "#FBFDFF",
-  N75: "#F6FAFF",
-  N100: "#F1F6FD",
-  N200: "#E2ECF7",
-  N300: "#D5E2F1",
-  N400: "#AFC3DA",
-  N500: "#8EA8C7",
-  N600: "#718BAA",
-  N700: "#567190",
-  N800: "#3A5779",
-  N900: "#223F65",
+  N10: "#FAFBFC",
+  N20: "#F4F5F7",
+  N30: "#EBECF0",
+  N40: "#DFE1E6",
+  N50: "#C1C7D0",
+  N60: "#B3BAC5",
+  N70: "#A5ADBA",
+  N80: "#97A0AF",
+  N90: "#8993A4",
+  N100: "#7A869A",
+  N200: "#6B778C",
+  N300: "#5E6C84",
+  N400: "#505F79",
+  N500: "#42526E",
+  N600: "#344563",
+  N700: "#253858",
+  N800: "#172B4D",
+  N900: "#091E42",
   // Chart
   ChartPink: "#FD8ADC",
-  ChartRed: "#F53630",
+  ChartRed: "#E88989",
   ChartOrange: "#FF9D66",
   ChartYellow: "#FAC86B",
   ChartGreen: "#6BDAAE",
@@ -103,7 +110,17 @@ const fontSize = {
   Heading600: "1.28rem",
   Heading700: "1.43rem",
   Heading800: "1.71rem",
-  Heading900: "2.28rem"
+  Heading900: "2.28rem",
+
+  Headline100: "0.71rem",
+  Headline200: "0.86rem",
+  Headline300: "0.86rem",
+  Headline400: "1rem",
+  Headline500: "1.14rem",
+  Headline600: "1.28rem",
+  Headline700: "1.43rem",
+  Headline800: "1.71rem",
+  Headline900: "2.28rem"
 };
 
 const fontWeight = {
@@ -120,7 +137,15 @@ const fontWeight = {
   Heading600: "600",
   Heading700: "600",
   Heading800: "600",
-  Heading900: "600"
+  Heading900: "600",
+
+  Headline300: "500", //medium
+  Headline400: "600", //semibold
+  Headline500: "600", //semibold
+  Headline600: "600", //semibold
+  Headline700: "600", //semibold
+  Headline800: "600", //semibold
+  Headline900: "600" //semibold
 };
 
 const theme = {

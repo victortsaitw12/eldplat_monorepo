@@ -5,7 +5,7 @@ import { BodySTY } from "./style";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { useAssignmentStore } from "@contexts/filter/assignmentStore";
@@ -132,7 +132,7 @@ const Page: NextPageWithLayout<never> = () => {
         const newData = [...assignData];
         newData.map((v, idx) => {
           const item_no = (
-            (pageInfo.page_Index - 1) * pageInfo.page_Size +
+            (pageInfo.Page_Index - 1) * pageInfo.Page_Size +
             idx +
             1
           )
@@ -257,42 +257,15 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <TableWrapper
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={nowTab}
-        mainFilterArray={mainFilterArray}
-        viewOnly={true}
-      >
-        <FilterWrapper
-          updateFilter={updateSubFilter}
-          resetFilter={initializeSubFilter}
-          filter={subFilter}
-        >
           <div style={{ color: "red", fontSize: "36px" }}></div>
           <AssignmentList
             ordersData={ordersData}
             assignsData={assignsData}
             handleAssignCreate={handleAssignCreate}
             handleAssignEdit={handleAssignEdit}
-            pageInfo={pageInfo}
-            onPageChange={upDatePageHandler}
+         
+
           />
-        </FilterWrapper>
-      </TableWrapper>
-      {firstDrawerOpen !== "" && (
-        <AssignmentDrawers
-          firstDrawerOpen={firstDrawerOpen}
-          setFirstDrawerOpen={setFirstDrawerOpen}
-          refetch={() => {
-            setPageInfo(defaultPageInfo);
-            fetchAssignData(false, nowTab, defaultPageInfo);
-            setFirstDrawerOpen("");
-          }}
-          orderInfo={orderInfo}
-          setDisabledAutoList={setDisabledAutoList}
-          editData={editData}
-        />
-      )}
     </BodySTY>
   );
 };

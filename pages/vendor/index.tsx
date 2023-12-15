@@ -13,7 +13,7 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //@layout
 import { getLayout } from "@layout/MainLayout";
-import TableWrapper from "@layout/TableWrapper";
+import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
 //@contents
 import VendorList from "@contents/Vendor/VendorList";
@@ -306,12 +306,11 @@ const Page: NextPageWithLayout<{
     <RegionProvider>
       <BodySTY>
         <>
-          <TableWrapper
+          <TabsWrapper
             isHide={isDrawerFullWidth}
             onChangeTab={changeMainFilterHandler}
             mainFilter={nowTab}
             mainFilterArray={mainFilterArray}
-            viewOnly={true}
           >
             <FilterWrapper
               updateFilter={updateSubFilter}
@@ -336,7 +335,7 @@ const Page: NextPageWithLayout<{
                 ></VendorList>
               )}
             </FilterWrapper>
-          </TableWrapper>
+          </TabsWrapper>
           {/* <SideBookMark /> */}
           {isDrawerOpen && (
             <Drawer

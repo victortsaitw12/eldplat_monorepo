@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const BodySTY = styled.div<{ isOpenDrawer: boolean }>`
+const BodySTY = styled.div`
   height: calc(100% - 20px);
   display: flex;
   position: relative;
@@ -19,8 +19,6 @@ const BodySTY = styled.div<{ isOpenDrawer: boolean }>`
   }
   /* fonts */
   .wrapMain {
-    /* width: ${(props) =>
-      props.isOpenDrawer ? "calc(100% - 290px)" : "100%"}; */
     width: 100%;
     height: calc(100% - 51px - 32px);
     overflow-x: hidden;

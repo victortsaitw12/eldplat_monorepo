@@ -59,11 +59,11 @@ const Home: NextPageWithLayout<never> = () => {
       <div className="home-header">
         <div className="header-title">{"嗨！讓我們開始吧。"}</div>
         <div className="header-description">
-          {"開始建立您的車隊並取得成功！利用這些核心功能立即啟用 EldPlat。"}
+          {"利用這些核心功能開始建立您的車隊。"}
         </div>
       </div>
       <div className="home-body">
-        <EntranceList routerList={routerList} />
+        {/* <EntranceList routerList={routerList} /> */}
       </div>
     </BodySTY>
   );
