@@ -42,20 +42,17 @@ function LightBox({
           </div>
         </div>
         <div className="content">{children}</div>
-
-        <ButtonSetSTY>
           {customBtns ? (
             customBtns
           ) : (
-            <>
+            <ButtonSetSTY>
               <SecondaryBtn
                 text="取消"
                 onClick={onCancel || handleCloseLightBox}
               />
               <PrimaryBtn text="確定" onClick={onConfirm} />
-            </>
+            </ButtonSetSTY>
           )}
-        </ButtonSetSTY>
       </div>
     </LightBoxBlock>,
     document.getElementById("overlay-root") as HTMLElement
