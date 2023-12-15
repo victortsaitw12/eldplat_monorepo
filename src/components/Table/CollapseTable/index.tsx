@@ -79,6 +79,7 @@ function CollapseTable({
     return {
       checkbox: (
         <IconButton
+          className="collapseBtn"
           icon={collapse.includes(i + 1) ? ChevronRightIcon : ChevronDownIcon}
           value={i}
           onClick={(e: any) => toggleCollapse({ e, i })}

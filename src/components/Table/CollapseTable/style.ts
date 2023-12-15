@@ -17,22 +17,13 @@ export const DivSTY = styled.div<{ collapse: number[]; maxRow: number }>`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 2rem;
-      width: 100%;
-      background: linear-gradient(to bottom, transparent, red);
-    }
   }
+
   tbody {
     tr {
       position: relative;
     }
   }
-  // TODO 沒有做成功的功能 展開收合
   ${(props) =>
     props.collapse?.map((item) => {
       return `tr:nth-child(${item}) {
@@ -42,6 +33,11 @@ export const DivSTY = styled.div<{ collapse: number[]; maxRow: number }>`
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+      }`;
+    })}
+  ${(props) =>
+    props.collapse?.map((item) => {
+      return `tbody >tr:nth-child(${item}) {
                 &::after {
                 content: "";
                 position: absolute;
@@ -54,7 +50,7 @@ export const DivSTY = styled.div<{ collapse: number[]; maxRow: number }>`
                     transparent,
                     ${props.theme.color.N0}
                 );
-                }
+              }
             }`;
     })}
 `;
