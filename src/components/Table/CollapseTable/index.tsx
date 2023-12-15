@@ -51,21 +51,33 @@ function CollapseTable({
   };
 
   const handleFoldAll = () => {
-    console.log("foldAll");
-  };
-  const handleOpenAll = () => {
-    console.log("openAll");
+    const initCollapse = getInitCollapse();
+    setCollapse(initCollapse);
   };
 
-  // ------ effect ------ //
-  React.useEffect(() => {
-    const getTotalTableRows = () => (data ? data.length : 0);
-    const totalTableRows = getTotalTableRows();
+  const handleOpenAll = () => {
+    setCollapse([]);
+  };
+
+  const getInitCollapse = React.useCallback(() => {
+    const totalTableRows = data ? data.length : 0;
     const totalCollapseRowsArr = Array.from(
       { length: totalTableRows },
       (_, i) => i
     );
-    setCollapse(totalCollapseRowsArr.slice(1, totalTableRows + 1));
+    return totalCollapseRowsArr.slice(1, totalTableRows + 1);
+  }, [data]);
+
+  // ------ effect ------ //
+  React.useEffect(() => {
+    // const getTotalTableRows = () => (data ? data.length : 0);
+    // const totalTableRows = getTotalTableRows();
+    // const totalCollapseRowsArr = Array.from(
+    //   { length: totalTableRows },
+    //   (_, i) => i
+    // );
+    const initCollapse = getInitCollapse();
+    setCollapse(initCollapse);
   }, [data, isAllFold]);
 
   React.useEffect(() => {
