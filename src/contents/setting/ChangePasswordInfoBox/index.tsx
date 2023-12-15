@@ -6,7 +6,10 @@ import { FormSTY } from "./style";
 import { I_AccountDetailItem } from "@services/account/getOneAccount";
 import InfoBox from "@components/InfoBox";
 import PasswordInput from "../PasswordInput";
-import { passwordValidation } from "@utils/hookFormValidation";
+import {
+  passwordValidation,
+  confirmPasswordValidation
+} from "@utils/hookFormValidation";
 import LoadingSpinner from "@components/LoadingSpinner";
 import Control from "react-select/dist/declarations/src/components/Control";
 
@@ -36,6 +39,7 @@ const ChangePasswordInfoBox = ({ asyncSubmitForm, submitRef }: I_Props) => {
         <Controller
           control={control}
           name="current"
+          rules={{ required: "密碼至少4碼數字", validate: passwordValidation }}
           render={({ field: { onChange, value } }) => (
             <PasswordInput
               onChange={onChange}
@@ -54,7 +58,7 @@ const ChangePasswordInfoBox = ({ asyncSubmitForm, submitRef }: I_Props) => {
         <Controller
           control={control}
           name="new"
-          rules={{ required: true }}
+          rules={{ required: "密碼至少4碼數字", validate: passwordValidation }}
           render={({ field: { onChange, value } }) => (
             <PasswordInput onChange={onChange} errorMsg={errors.new?.message} />
           )}
@@ -70,6 +74,10 @@ const ChangePasswordInfoBox = ({ asyncSubmitForm, submitRef }: I_Props) => {
         <Controller
           control={control}
           name="confirm"
+          rules={{
+            required: "密碼不一致",
+            validate: confirmPasswordValidation.bind(null, getValues("new"))
+          }}
           render={({ field: { onChange, value } }) => (
             <PasswordInput
               onChange={onChange}

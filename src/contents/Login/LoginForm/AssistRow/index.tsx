@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { AssistRowSTY } from "./style";
 
 import Checkbox from "@components/CheckBox";
@@ -11,7 +12,7 @@ function AssistRow() {
         記住帳號
       </div>
       <div className="asstRow__forgetPw">
-        <a href="/forgot-password">忘記密碼</a>
+        <Link href="/forget-password">忘記密碼</Link>
       </div>
     </AssistRowSTY>
   );

@@ -44,21 +44,9 @@ const Page: NextPageWithLayout<never> = () => {
     const checkNewPassword = passwordValidation(data.new);
     const checkConfirmPassword = data.new === data.confirm;
 
-    // if (!checkCurreuntPassword) {
-    //   toaster.danger("目前密碼輸入錯誤");
-    //   return;
-    // }
-    // if (!checkNewPassword) {
-    //   toaster.danger("新密碼格式錯誤");
-    //   return;
-    // }
-    // if (!checkConfirmPassword) {
-    //   toaster.danger("再次輸入密碼不一致");
-    //   return;
-    // }
     toaster.success("修改密碼成功，系統將自動登出");
     setTimeout(() => {
-      router.push("/");
+      router.push("/login");
       signOut();
     }, 1000);
   };

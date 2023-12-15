@@ -21,10 +21,12 @@ import {
 } from "@contexts/companyContext/companyProvider";
 import LabelButton from "@components/Button/Primary/Label";
 import IconButton from "@components/Button/Secondary/IconLeft";
+import { useRouter } from "next/router";
 
 function Index(props: any) {
   const { data: session } = useSession();
   const [isCardShow, setIsCardShow] = React.useState(false);
+  const router = useRouter();
   // const { companyData } = useContext<I_Company_Context>(CompanyContext);
   const toggleCardShow = () => {
     setIsCardShow((prev) => !prev);
@@ -33,10 +35,19 @@ function Index(props: any) {
     signOut();
   };
 
+  const handleChangePassword = () => {
+    router.push("/setting/password");
+  };
+
+  React.useEffect(() => {
+    return () => setIsCardShow(false);
+  }, [router]);
+
   return (
     <BodySTY {...props} className="user" onClick={toggleCardShow}>
       {session && (
         <Popover
+          isShown={isCardShow}
           content={
             <Pane
               width={200}
@@ -51,7 +62,11 @@ function Index(props: any) {
                 <Menu.Item className="item" icon={PersonIcon}>
                   個人設定
                 </Menu.Item>
-                <Menu.Item className="item" icon={LockIcon}>
+                <Menu.Item
+                  className="item"
+                  icon={LockIcon}
+                  onSelect={handleChangePassword}
+                >
                   修改密碼
                 </Menu.Item>
                 <Menu.Item
