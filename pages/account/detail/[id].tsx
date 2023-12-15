@@ -39,7 +39,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
   const router = useRouter();
   const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const { data: session, status } = useSession();
-  const { showLeavePageModal, showModal, onCancel, onConfirm } = useModal();
+  const { showLeavePageModal } = useModal();
   const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
   const [ddl, setDDL] = React.useState<I_DDL>(DUMMY_ACC_DDL.ResultList[0]);
@@ -62,6 +62,7 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     const editDummy = editedDummy
       ? { ...editedDummy }
       : DUMMY_ONE_ACCOUNT.ResultList[0];
+    console.log("data:", isCreate ? createDummy : editDummy);
     setData(isCreate ? createDummy : editDummy);
     setDDL(DUMMY_ACC_DDL.ResultList[0]);
 
@@ -175,13 +176,14 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       submitRef.current && submitRef.current.click();
       return;
     }
-    if (isEdit) {
+    // onView
+    if (!isEdit) {
+      setIsEdit(true);
+      router.push(`/account/detail/${id}?editPage=edit`);
+    } else {
       submitRef.current && submitRef.current.click();
       setIsEdit(false);
       router.push(`/account/detail/${id}?editPage=view`);
-    } else {
-      setIsEdit(true);
-      router.push(`/account/detail/${id}?editPage=edit`);
     }
   };
 

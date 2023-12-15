@@ -37,7 +37,9 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     const createDummy = DUMMY_ONE_ROLE_CREATE.ResultList[0];
     const editedData = localStorage.getItem("roleEditData");
     const editedDummy = editedData ? JSON.parse(editedData) : null;
-    const editDummy = editedDummy ? editedDummy : DUMMY_ONE_ROLE.ResultList[0];
+    const editDummy = editedDummy
+      ? { ...editedDummy }
+      : DUMMY_ONE_ROLE.ResultList[0];
     setData(isCreate ? createDummy : editDummy);
     // if (!session) return;
     // const uk = session?.user.account_no;

@@ -87,11 +87,16 @@ export const DUMMY_ONE_ROLE_CREATE = {
               element_no: "btnEdit",
               element_name: "編輯駕駛",
               element_default: "1"
+            },
+            {
+              element_no: "btnView",
+              element_name: "檢視駕駛",
+              element_default: "1"
             }
           ]
         },
         {
-          fg_no: "account",
+          fg_no: "org",
           func_no: "org",
           func_name: "組織設定",
           module_no: "sys",
@@ -217,24 +222,16 @@ export const DUMMY_ONE_ROLE = {
               element_no: "btnEdit",
               element_name: "編輯駕駛",
               element_default: "1"
-            }
-          ]
-        },
-        {
-          fg_no: "drover",
-          func_no: "driver",
-          func_name: "車輛設定",
-          module_no: "bus",
-          func_element: [
+            },
             {
               element_no: "btnView",
-              element_name: "檢視車輛",
+              element_name: "檢視駕駛",
               element_default: "1"
             }
           ]
         },
         {
-          fg_no: "account",
+          fg_no: "org",
           func_no: "org",
           func_name: "組織設定",
           module_no: "sys",
