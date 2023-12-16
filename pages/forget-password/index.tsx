@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 //
 import LoginForm from "../../src/contents/Login/LoginForm";
+import ForgetPasswordForm from "@contents/Login/ForgetPasswordForm";
 import LoginHeader from "../../src/contents/Login/LoginHeader";
 import LoginError from "../../src/contents/Login/LoginError";
 import { BodySTY } from "./style";
@@ -15,6 +16,7 @@ interface LoginProps {
 const LoginPage = ({ locale = "zh", setLocale }: LoginProps) => {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [errorVisible, setErrorVisible] = useState(false);
+
   const loginHandler = async (email: string, password: string) => {
     setErrorVisible(false);
     try {
@@ -34,9 +36,9 @@ const LoginPage = ({ locale = "zh", setLocale }: LoginProps) => {
   return (
     <BodySTY>
       <div className="wrapper">
-        <LoginHeader />
+        <LoginHeader title="忘記密碼" />
         <LoginError message={loginError} visible={errorVisible} />
-        <LoginForm />
+        <ForgetPasswordForm />
       </div>
     </BodySTY>
   );

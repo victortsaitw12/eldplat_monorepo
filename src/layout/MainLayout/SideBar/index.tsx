@@ -7,20 +7,12 @@ import { BodySTY } from "./style";
 import Header from "./Header";
 import UserInfo from "./UserInfo";
 import MenuList from "./MenuList";
-import Search from "./Search";
 import { MenuDataType } from "@mock-data/side-bar/data";
 import FooterItem from "./Footer/FooterItem";
 import LoadingSpinner from "@components/LoadingSpinner";
-import CompanyProvider from "@contexts/companyContext/companyProvider";
-import {
-  I_Company_Context,
-  CompanyContext
-} from "@contexts/companyContext/companyProvider";
-import LabelButton from "@components/Button/Primary/Label";
 
 //
 interface Props {
-  menuData: MenuDataType;
   isLoading?: boolean;
   onToggleMenu: () => void;
 }
@@ -34,7 +26,6 @@ function SideBar({ isLoading, onToggleMenu }: Props) {
   };
 
   const mapping_menus = (list: any) => {
-    // console.log("list", list);
     if (!list) return [];
     return list.map((ele: any) => {
       return {
@@ -56,18 +47,18 @@ function SideBar({ isLoading, onToggleMenu }: Props) {
 
   const menuData = mapping_menus(session?.user?.menuData.defaultMenu);
   return (
-    <CompanyProvider>
-      <BodySTY>
-        <Header handleCloseMenu={onToggleMenu} />
-        <Divider />
-        <div className="container">
-          {isLoading && !menuData && <LoadingSpinner />}
-          <MenuList menuData={menuData} />
-        </div>
-        <Divider />
-        <UserInfo onClick={handleRedirect.bind(null, "/employee")} />
-      </BodySTY>
-    </CompanyProvider>
+    // <CompanyProvider>
+    <BodySTY>
+      <Header handleCloseMenu={onToggleMenu} />
+      <Divider />
+      <div className="container">
+        {isLoading && !menuData && <LoadingSpinner />}
+        <MenuList menuData={menuData} />
+      </div>
+      <Divider />
+      <UserInfo onClick={handleRedirect.bind(null, "/employee")} />
+    </BodySTY>
+    // </CompanyProvider>
   );
 }
 

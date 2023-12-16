@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 //
 import LoginForm from "../../src/contents/Login/LoginForm";
+import SetPasswordForm from "@contents/Login/SetPasswordForm";
 import LoginHeader from "../../src/contents/Login/LoginHeader";
 import LoginError from "../../src/contents/Login/LoginError";
 import { BodySTY } from "./style";
@@ -34,9 +35,9 @@ const LoginPage = ({ locale = "zh", setLocale }: LoginProps) => {
   return (
     <BodySTY>
       <div className="wrapper">
-        <LoginHeader />
+        <LoginHeader title="重設密碼" />
         <LoginError message={loginError} visible={errorVisible} />
-        <LoginForm />
+        <SetPasswordForm />
       </div>
     </BodySTY>
   );

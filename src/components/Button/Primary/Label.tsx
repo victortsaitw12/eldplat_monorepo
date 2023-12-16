@@ -21,7 +21,7 @@ const StyledButton = styled(Button)`
   color: ${({ theme }) => theme.color.N0};
   font-weight: ${({ theme }) => theme.fontWeight.Heading400};
   border: none;
-  border-radius: 32px;
+  border-radius: 4px;
   font-size: 16px;
   gap: 8px;
   font-weight: 600;
