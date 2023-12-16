@@ -7,27 +7,7 @@ import { useSession } from "next-auth/react";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import { BodySTY, ContainerSTY } from "./style";
-import { getSideMenuBackend } from "@services/siderbar/getSideMenuBackend";
 //
-function mapping_menus(list: any, key: string) {
-  // console.log("list", list);
-  return list.map((ele: any) => {
-    return {
-      name: ele?.[key + "_name"],
-      url: ele?.[key + "_url"] || null,
-      subList:
-        ele.sidemenu_lv2 && ele.sidemenu_lv2.length > 0
-          ? ele.sidemenu_lv2.map((c: any) => {
-              return {
-                name: c?.menu_name || "--",
-                url: c?.menu_url || null,
-                subList: null
-              };
-            })
-          : null
-    };
-  });
-}
 
 //
 const MainLayout: FC<{
@@ -38,25 +18,10 @@ const MainLayout: FC<{
   const { data: session, status } = useSession();
   const [showMenu, setShowMenu] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
-  const [menu, setMenu] = React.useState([]);
-  const fetch_menus = async () => {
-    setLoading(true);
-    try {
-      const res_menu = await getSideMenuBackend();
-      setMenu(mapping_menus(res_menu.dataList, "menu"));
-    } catch (e: any) {
-      console.log(e);
-    }
-    setLoading(false);
-  };
 
   const handleToggleMenu = () => {
     setShowMenu((prev) => !prev);
   };
-
-  React.useEffect(() => {
-    fetch_menus();
-  }, []);
 
   React.useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -68,11 +33,7 @@ const MainLayout: FC<{
         <title>管理者頁</title>
         <meta property="og:title" content="管理者頁" />
       </Head>
-      <SideBar
-        menuData={menu}
-        isLoading={loading}
-        onToggleMenu={handleToggleMenu}
-      />
+      <SideBar isLoading={loading} onToggleMenu={handleToggleMenu} />
       <ContainerSTY>
         <Header layoutProps={{ ...layoutProps }} />
         <div className="content">{children}</div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, ReactNode, useContext, useRef, useMemo } from "react";
 import { useRouter } from "next/router";
 import { Checkbox, Table, TimelineEventsIcon } from "evergreen-ui";
 
@@ -9,7 +9,7 @@ import EventTag from "@contents/Schedule/EventTag";
 import EventBtn from "@contents/Schedule/EventBtn";
 import { getDayStart, TotalMS } from "../shift.util";
 import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
-import timeUtil from "../schedule.timeUtil";
+import timeUtil from "@utils/schedule.timeUtil";
 
 interface I_OverviewTable {
   data: DriverData[];
@@ -24,10 +24,9 @@ const OverviewTable = ({
   initialDate,
   expandPercentage,
 }: I_OverviewTable) => {
-  const UI = React.useContext(UIContext);
+  const UI = useContext(UIContext);
   const router = useRouter();
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   //------ functions ------//
   const dateStatusHandler = ( item : {isToday: boolean, weeks: number} ) => {
@@ -39,34 +38,34 @@ const OverviewTable = ({
       return "font_date";
     }
   }
-  const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
-    const shiftsOnDate = scheduleInfo.filter(
-      (item: ScheduleInfoData) =>
-        getDayStart(new Date(item.schd_Start_Time)) <=
-          new Date(date.timestamp.valueOf()) &&
-        new Date(item.schd_End_Time) >= new Date(date.timestamp.valueOf())
-    );
-    // if (shiftsOnDate.length === 0) {
-    //   return;
-    // } else {
-    //   return shiftsOnDate.map((item: ScheduleInfoData, i: number) => {
-    //     const eventTypeCode =
-    //       item.schd_Type === "04"
-    //         ? item.schd_Type.concat(item.check_Status)
-    //         : item.schd_Type;
-    //     const shiftLength = shiftsOnDate.length >= 3 ? 3 : shiftsOnDate.length;
-    //     return (
-    //       <EventTag
-    //         key={`shift-${i}`}
-    //         className={`shift-btn ${i >= 3 ? "hidden" : ""} ${
-    //           item.check_Status === "0" ? "reminder" : ""
-    //         } ${hideText(expandPercentage, shiftLength) && "hideText"}`}
-    //         value={EVENT_TYPE.get(eventTypeCode)}
-    //       />
-    //     );
-    //   });
-    // }
-  };
+  // const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
+  //   const shiftsOnDate = scheduleInfo.filter(
+  //     (item: ScheduleInfoData) =>
+  //       getDayStart(new Date(item.schd_Start_Time)) <=
+  //         new Date(date.timestamp.valueOf()) &&
+  //       new Date(item.schd_End_Time) >= new Date(date.timestamp.valueOf())
+  //   );
+  //   if (shiftsOnDate.length === 0) {
+  //     return;
+  //   } else {
+  //     return shiftsOnDate.map((item: ScheduleInfoData, i: number) => {
+  //       const eventTypeCode =
+  //         item.schd_Type === "04"
+  //           ? item.schd_Type.concat(item.check_Status)
+  //           : item.schd_Type;
+  //       const shiftLength = shiftsOnDate.length >= 3 ? 3 : shiftsOnDate.length;
+  //       return (
+  //         <EventTag
+  //           key={`shift-${i}`}
+  //           className={`shift-btn ${i >= 3 ? "hidden" : ""} ${
+  //             item.check_Status === "0" ? "reminder" : ""
+  //           } ${hideText(expandPercentage, shiftLength) && "hideText"}`}
+  //           value={EVENT_TYPE.get(eventTypeCode)}
+  //         />
+  //       );
+  //     });
+  //   }
+  // };
 
   // checkbox +++
 
@@ -90,6 +89,8 @@ const OverviewTable = ({
   //     <span className="date-day">{date.day.label}</span>
   //   </Table.TextHeaderCell>
   // ));
+
+  console.log()
   return (
     <OverviewSTY
       className="overviewTable"
@@ -154,8 +155,8 @@ const OverviewTable = ({
                           className="zoom_width"
                           key={index}
                         > 
+                          
                           {/* <EventTag
-                            key="040"
                             value={EVENT_TYPE.get("040")}
                           /> */}
                         </div>
