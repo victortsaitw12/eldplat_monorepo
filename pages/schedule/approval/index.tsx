@@ -24,15 +24,14 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const modalInfo =
-    {
-      listClassName: "",
-      readonly: false,
-      req: true,
-      label: "說明",
-      bold: true,
-      value: <CustomTextArea placeholder="請輸入說明" />
-    };
+  const modalInfo = {
+    listClassName: "",
+    readonly: false,
+    req: true,
+    label: "說明",
+    bold: true,
+    value: <CustomTextArea placeholder="請輸入說明" />
+  };
 
   //------ functions ------//
   const cancelApproveHandler = () => {
@@ -40,6 +39,7 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   };
   const cancelModalHandler = () => {
     setOpenModal(false);
+    router.push("/schedule/detail/DRV202311210001");
   };
   const fetchData = async () => {
     // setIsLoading(true);
@@ -58,7 +58,6 @@ const ApprovalView: NextPageWithLayout<never> = () => {
     fetchData();
   }, [id]);
 
-
   return (
     <UIProvider>
       <ApprovalSTY>
@@ -72,10 +71,10 @@ const ApprovalView: NextPageWithLayout<never> = () => {
             secondaryBtnOnClick={cancelApproveHandler}
             primaryBtnText="同意"
             // primaryBtnOnClick={isEdit ? handleView : handleEdit}
-          /> 
+          />
         </ControlBar>
         <Pane className="table">
-          <ApprovalTable/>
+          <ApprovalTable />
         </Pane>
         <LightBox
           title="退回"
@@ -84,14 +83,13 @@ const ApprovalView: NextPageWithLayout<never> = () => {
             setOpenModal(false);
           }}
           customBtns={
-            <ButtonSet 
-              primaryBtnText="確定退回" 
-              secondaryBtnOnClick={ cancelModalHandler}/>}
-            >
-          <InfoItem
-            item={modalInfo}
-            isEdit={true}
-          />
+            <ButtonSet
+              primaryBtnText="確定退回"
+              secondaryBtnOnClick={cancelModalHandler}
+            />
+          }
+        >
+          <InfoItem item={modalInfo} isEdit={true} />
         </LightBox>
       </ApprovalSTY>
     </UIProvider>

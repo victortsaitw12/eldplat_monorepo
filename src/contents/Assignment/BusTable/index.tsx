@@ -1,32 +1,35 @@
-import React, { useState, useEffect, ReactNode, useContext, useRef, useMemo } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { Checkbox, Table, TimelineEventsIcon } from "evergreen-ui";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
 import { OverviewSTY } from "./style";
-import { WKDAY_LABEL, EVENT_TYPE } from "../shift.data";
+import { WKDAY_LABEL, EVENT_TYPE } from "@contents/Schedule/shift.data";
 import EventTag from "@contents/Schedule/EventTag";
 import EventBtn from "@contents/Schedule/EventBtn";
-import { getDayStart, TotalMS } from "../shift.util";
-import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
-import timeUtil from "@utils/schedule.timeUtil";
+import { getDayStart, TotalMS } from "@contents/Schedule/shift.util";
+import { DriverData, ScheduleInfoData, DateItem } from "@contents/Schedule/shift.typing";
+import timeUtil from "@contents/Schedule/schedule.timeUtil";
+import BusStatusTag from "@contents/Assignment/BusStatusTag";
+import { BUS_STATUS } from "@contents/Assignment/assignment.data";
 
 interface I_OverviewTable {
   data: DriverData[];
   initialDate: Date;
-  expandPercentage: number;
+  expandPercentage?: number;
   // handleCheckboxChange?: (item: any) => void;
   // handleSelectAll?: () => void;
   // handleDeselectAll?: () => void;
 }
-const OverviewTable = ({
+const BusTable = ({
   data,
   initialDate,
   expandPercentage,
 }: I_OverviewTable) => {
-  const UI = useContext(UIContext);
+  const UI = React.useContext(UIContext);
   const router = useRouter();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [checkedItems, setCheckedItems] = React.useState<any[]>([]);
 
   //------ functions ------//
   const dateStatusHandler = ( item : {isToday: boolean, weeks: number} ) => {
@@ -38,34 +41,34 @@ const OverviewTable = ({
       return "font_date";
     }
   }
-  // const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
-  //   const shiftsOnDate = scheduleInfo.filter(
-  //     (item: ScheduleInfoData) =>
-  //       getDayStart(new Date(item.schd_Start_Time)) <=
-  //         new Date(date.timestamp.valueOf()) &&
-  //       new Date(item.schd_End_Time) >= new Date(date.timestamp.valueOf())
-  //   );
-  //   if (shiftsOnDate.length === 0) {
-  //     return;
-  //   } else {
-  //     return shiftsOnDate.map((item: ScheduleInfoData, i: number) => {
-  //       const eventTypeCode =
-  //         item.schd_Type === "04"
-  //           ? item.schd_Type.concat(item.check_Status)
-  //           : item.schd_Type;
-  //       const shiftLength = shiftsOnDate.length >= 3 ? 3 : shiftsOnDate.length;
-  //       return (
-  //         <EventTag
-  //           key={`shift-${i}`}
-  //           className={`shift-btn ${i >= 3 ? "hidden" : ""} ${
-  //             item.check_Status === "0" ? "reminder" : ""
-  //           } ${hideText(expandPercentage, shiftLength) && "hideText"}`}
-  //           value={EVENT_TYPE.get(eventTypeCode)}
-  //         />
-  //       );
-  //     });
-  //   }
-  // };
+  const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
+    const shiftsOnDate = scheduleInfo.filter(
+      (item: ScheduleInfoData) =>
+        getDayStart(new Date(item.schd_Start_Time)) <=
+          new Date(date.timestamp.valueOf()) &&
+        new Date(item.schd_End_Time) >= new Date(date.timestamp.valueOf())
+    );
+    // if (shiftsOnDate.length === 0) {
+    //   return;
+    // } else {
+    //   return shiftsOnDate.map((item: ScheduleInfoData, i: number) => {
+    //     const eventTypeCode =
+    //       item.schd_Type === "04"
+    //         ? item.schd_Type.concat(item.check_Status)
+    //         : item.schd_Type;
+    //     const shiftLength = shiftsOnDate.length >= 3 ? 3 : shiftsOnDate.length;
+    //     return (
+    //       <EventTag
+    //         key={`shift-${i}`}
+    //         className={`shift-btn ${i >= 3 ? "hidden" : ""} ${
+    //           item.check_Status === "0" ? "reminder" : ""
+    //         } ${hideText(expandPercentage, shiftLength) && "hideText"}`}
+    //         value={EVENT_TYPE.get(eventTypeCode)}
+    //       />
+    //     );
+    //   });
+    // }
+  };
 
   // checkbox +++
 
@@ -89,19 +92,14 @@ const OverviewTable = ({
   //     <span className="date-day">{date.day.label}</span>
   //   </Table.TextHeaderCell>
   // ));
-
-  console.log()
   return (
     <OverviewSTY
       className="overviewTable"
-      expandPercentage={expandPercentage}
       ref={containerRef}
     >
       <div className="schedule_zone">
         <div className="schedule_weeksWrap">
-          <div className="font_driver">駕駛姓名</div>
-          <div className="font_driver w-50">應休/已休</div>
-          <div className="font_driver w-50">預排班表</div>
+          <div className="font_driver">車輛</div>
           {
             timeUtil.getNowMonthScheduleList(initialDate).map((item, index) => {
               return (
@@ -128,43 +126,30 @@ const OverviewTable = ({
                 <div 
                   className="schedule_daysWrap"
                   key={item.driver_No}
-                  onClick={()=>{router.push(`/schedule/detail/${item.driver_No}`)}}
                 >
-                  <div className="driver_info">{item.user_First_Name}{item.user_Name}<p>0917-444-444</p></div>
-                  <div className="w-50">5/8</div>
-                  <div className="w-50">
-                    {
-                      item.schedule_Approved ?
-                      <button className="icon">
-                        <TimelineEventsIcon /> 
-                      </button> :
-                      <EventTag
-                        key="040"
-                        value={EVENT_TYPE.get("040")}
-                        onClick={(e:React.MouseEvent<HTMLButtonElement>) => {
-                          e.stopPropagation();
-                          router.push(`/schedule/detail/${item.driver_No}?editPage=edit`)
-                        }}
-                      />
-                    }
+                  <div className="driver_info">
+                    <div>
+                      <p>KAA-001</p>
+                      <p>奶油獅號</p>
+                      <div><span>中巴</span><span>36客座</span><span>1年</span></div>
+                      <div><span>吳中華</span><span>0912-345-678</span></div>
+                    </div>
                   </div>
                   {
                     timeUtil.getNowMonthScheduleList(initialDate).map((item, index) => {
                       return (
                         <div
-                          className="zoom_width"
+                          className="bus_info zoom_width"
                           key={index}
                         > 
-                          
-                          {/* <EventTag
-                            value={EVENT_TYPE.get("040")}
-                          /> */}
+                          <BusStatusTag 
+                            value={BUS_STATUS.get("1")}
+                          />
                         </div>
                       )
                     })
                   }
-                </div>
-                
+                </div>                
               )
             })
           }
@@ -174,4 +159,4 @@ const OverviewTable = ({
   );
 };
 
-export default OverviewTable;
+export default BusTable;
