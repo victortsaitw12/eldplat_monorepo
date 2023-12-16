@@ -13,7 +13,9 @@ interface Props {
 }
 //
 function Index({ data }: Props) {
+  
   const router = useRouter();
+  console.log(router.asPath)
   // console.log("🕯️router", router);
   // console.log("data.url", data.url);
   const defaultSelect =

@@ -22,7 +22,41 @@ const Page: NextPageWithLayout<never> = () => {
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
   const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
+  const DUMMY_subfilter = {
+    "User_Name": {
+        "field_Name": "User_Name",
+        "arrayConditions": [
+            "like",
+            "equal"
+        ],
+        "displayType": "search",
+        "dataType": "string",
+        "label": "駕駛姓名、英文姓名...",
+        "value": ""
+    },
+    "Dsph_team": {
+      "field_Name": "Dsph_team",
+      "arrayConditions": [
+          "like",
+          "equal"
+      ],
+      "displayType": "fix",
+      "dataType": "string",
+      "label": "車隊",
+      "value": ""
+  },
+    "Dsph_Area": {
+        "field_Name": "Dsph_Area",
+        "arrayConditions": [
+            "like",
+            "equal"
+        ],
+        "displayType": "fix",
+        "dataType": "string",
+        "label": "派遣區域",
+        "value": ""
+    },
+  }
   React.useEffect(() => {
     setIsLoading(true);
     let isCanceled = false;
@@ -86,7 +120,7 @@ const Page: NextPageWithLayout<never> = () => {
         resetFilter={() => {
           initializeSubFilter();
         }}
-        filter={subFilter}
+        filter={DUMMY_subfilter}
         btns={
           <PrimaryBtn
             text="新增駕駛"
