@@ -15,8 +15,6 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
   const [checkedList, setCheckedList] = React.useState<string[]>([]);
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
 
-  console.log("RoleModule:", data);
-
   //------ functions ------//
   const getInitCheckedList = (data: I_RoleItem[]) => {
     const checkedList = data

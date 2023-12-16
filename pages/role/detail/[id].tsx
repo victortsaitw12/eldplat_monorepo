@@ -72,7 +72,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       );
       router.push("/role");
     } else {
-      console.log("🔜 edited data:", data);
       localStorage.setItem("roleEditData", JSON.stringify({ ...data }));
       router.push(`/role/detail/${id}?editPage=view`);
     }

@@ -17,7 +17,6 @@ const AuthModule = ({
   data,
   isEdit,
   index,
-  register,
   getValues,
   control,
   setValue,
@@ -32,8 +31,6 @@ const AuthModule = ({
     control,
     name: `func_auth.${index}.func_element`
   });
-  if (index === 0)
-    console.log("🍅 AuthModule:", getValues(`func_auth.${index}.func_element`));
 
   const toggleChecked = () => {
     setIsChecked((prev) => !prev);
@@ -155,22 +152,6 @@ const AuthModule = ({
             </div>
           );
         })}
-        {/* {!isEdit &&
-          data.func_element.map((elem: I_AuthFuncElement, i: number) => {
-            return (
-              <div
-                className={`authFunc__element authFunc__item  ${
-                  subFilter && elem.element_no !== subFilter ? "hide" : ""
-                }`}
-                key={`funcElem-${i}`}
-              >
-                <div className="label">{elem.element_name}</div>
-                <div className="value">
-                  {authFuncViewValue.get(elem.element_default)}
-                </div>
-              </div>
-            );
-          })} */}
       </div>
     </DivSTY>
   );

@@ -75,8 +75,8 @@ const FormModal = ({
     setModalContent(null);
   };
   const handleConfirm = () => {
-    const data = getValues();
-    console.log("🔜 data:", data);
+    // const data = getValues();
+    // console.log("🔜 data:", data);
     handleSubmit(asyncSubmitForm)();
   };
 

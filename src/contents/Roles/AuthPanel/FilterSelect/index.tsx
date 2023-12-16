@@ -18,12 +18,12 @@ const FilterSelect = ({
 }) => {
   //------ functions ------//
   const handleChange = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     onChange && onChange(e.target.value);
   };
 
   const handleSubChange = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     onSubChange && onSubChange(e.target.value);
   };
 
