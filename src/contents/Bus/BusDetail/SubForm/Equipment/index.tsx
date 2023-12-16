@@ -20,6 +20,7 @@ import Table from "@components/Table/Table";
 import { useBusStore } from "@contexts/filter/busStore";
 import PaginationField from "@components/PaginationField";
 import IconBtn from "@components/Button/IconBtn";
+import { FullCircleIcon, DisableIcon } from "evergreen-ui";
 
 interface Props {
   register: UseFormRegister<BusDataTypes>;
@@ -173,6 +174,60 @@ function Equipment({
 
   const handleTableEdit = () => {
     console.log("edit");
+  };
+
+  const switchStatus = (status: string) => {
+    switch (status) {
+      case "1":
+        return (
+          <>
+            <FullCircleIcon className={"green"} size={15} />
+            <span>待機中</span>
+          </>
+        );
+      case "2":
+        return (
+          <>
+            <FullCircleIcon className={"teal"} size={15} />
+            <span>保留中</span>
+          </>
+        );
+      case "3":
+        return (
+          <>
+            <FullCircleIcon className={"blue"} size={15} />
+            <span>任務中</span>
+          </>
+        );
+      case "4":
+        return (
+          <>
+            <FullCircleIcon className={"yellow"} size={15} />
+            <span>在維修廠</span>
+          </>
+        );
+      case "5":
+        return (
+          <>
+            <DisableIcon className={"disable"} size={15} />
+            <span>停用</span>
+          </>
+        );
+      case "6":
+        return (
+          <>
+            <FullCircleIcon className={"authorized"} size={15} />
+            <span>已授權某車公司</span>
+          </>
+        );
+      default:
+        return (
+          <>
+            <FullCircleIcon className={"green"} size={15} />
+            <span>待機中</span>
+          </>
+        );
+    }
   };
 
   const changeKey = (data: Array<I_Equipment>) => {
