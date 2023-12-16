@@ -73,8 +73,8 @@ export const DUMMY_ONE_ACCOUNT = {
   ResultList: [
     {
       account_no: "007217",
-      account_fname: "張",
-      account_lname: "友承",
+      account_fname: "鍾",
+      account_lname: "俊儀",
       org_no: ["o-00101", "o-0010101", "o-001010102"],
       org_name: ["雄獅資訊", "多元發展部", "電商應用整合組"],
       porg_no: "o-001",

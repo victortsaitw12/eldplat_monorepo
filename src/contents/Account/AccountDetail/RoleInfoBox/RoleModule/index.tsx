@@ -15,8 +15,14 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
   const [checkedList, setCheckedList] = React.useState<string[]>([]);
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
 
-  const handleValueChange = (value: string) => {
-    console.log("v:", value);
+  console.log("RoleModule:", data);
+
+  //------ functions ------//
+  const getInitCheckedList = (data: I_RoleItem[]) => {
+    const checkedList = data
+      .filter((elem) => elem.is_select === true)
+      .map((elem) => elem.role_no);
+    return checkedList;
   };
 
   const handleCheckItem = (id: string) => {
@@ -37,6 +43,10 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
     onChange(checkedList);
   }, [checkedList, onChange]);
 
+  React.useEffect(() => {
+    setCheckedList(getInitCheckedList(data.roles));
+  }, [data]);
+
   return (
     <DivSTY>
       <div className="roles__module row" onClick={handleToggle}>
@@ -55,9 +65,7 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
             <CheckboxField
               item={{ value: elem.role_no }}
               toggleFuelValue={handleCheckItem}
-              checked={
-                checkedList.includes(elem.role_no) || elem.is_select === true
-              }
+              checked={checkedList.includes(elem.role_no)}
               disabled={!isEdit}
             />
             <div className="text">{elem.role_name}</div>{" "}

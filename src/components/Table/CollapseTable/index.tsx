@@ -8,8 +8,6 @@ import {
 import { DivSTY } from "./style";
 
 import Table, { I_Table } from "@components/Table/Table";
-import IconBtn from "@components/Button/IconBtn";
-import { head, set } from "lodash";
 
 interface I_Props extends I_Table {
   maxRow?: number;
@@ -33,15 +31,10 @@ function CollapseTable({
   } = props;
 
   const [collapse, setCollapse] = React.useState<number[]>([]);
-  const [isAllOpen, setIsAllOpen] = React.useState(false);
-  const [isAllFold, setIsAllFold] = React.useState(false);
-
-  console.log("🍅 collapse", collapse);
 
   //------ functions ------//
   const toggleCollapse = ({ e, i }: { e: any; i: number }) => {
     e.stopPropagation();
-    console.log("🍅 i", i);
     const index = i + 1;
     if (collapse.includes(index)) {
       setCollapse(collapse.filter((item) => item !== index));
@@ -62,7 +55,7 @@ function CollapseTable({
   const getInitCollapse = React.useCallback(() => {
     const totalTableRows = data ? data.length : 0;
     const totalCollapseRowsArr = Array.from(
-      { length: totalTableRows },
+      { length: totalTableRows + 1 },
       (_, i) => i
     );
     return totalCollapseRowsArr.slice(1, totalTableRows + 1);
@@ -70,21 +63,9 @@ function CollapseTable({
 
   // ------ effect ------ //
   React.useEffect(() => {
-    // const getTotalTableRows = () => (data ? data.length : 0);
-    // const totalTableRows = getTotalTableRows();
-    // const totalCollapseRowsArr = Array.from(
-    //   { length: totalTableRows },
-    //   (_, i) => i
-    // );
     const initCollapse = getInitCollapse();
     setCollapse(initCollapse);
-  }, [data, isAllFold]);
-
-  React.useEffect(() => {
-    if (isAllOpen) {
-      setCollapse([]);
-    }
-  }, [isAllOpen]);
+  }, [data]);
 
   // ------- render ------- //
   const dataCollapse = data?.map((item, i) => {

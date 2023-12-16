@@ -131,11 +131,13 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
       submitRef.current && submitRef.current.click();
       return;
     }
+    // onEdit
     if (isEdit) {
       submitRef.current && submitRef.current.click();
       setIsEdit(false);
       router.push(`/role/detail/${id}?editPage=view`);
     } else {
+      // onView
       setIsEdit(true);
       router.push(`/role/detail/${id}?editPage=edit`);
     }

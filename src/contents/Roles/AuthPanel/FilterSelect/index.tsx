@@ -45,7 +45,7 @@ const FilterSelect = ({
           ))}
         </Select>
         <Select onChange={handleSubChange}>
-          <option value="" disabled={subFilter ? false : true}>
+          <option value="" selected disabled={subFilter ? false : true}>
             {subFilter ? "清除選項" : "元件"}
           </option>
           <option value="btnAdd">新增</option>

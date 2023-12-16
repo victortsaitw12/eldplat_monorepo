@@ -40,6 +40,8 @@ const AuthModule = ({
     name: `func_auth.${index}.func_element`
   });
 
+  console.log("🍅 AuthModule:", getValues(`func_auth.${index}.func_element`));
+
   // TODO data.module_enb
   const handleValueChange = (value: string) => {
     return;
@@ -148,7 +150,9 @@ const AuthModule = ({
           data.func_element.map((elem: I_AuthFuncElement, i: number) => {
             return (
               <div
-                className={"authFunc__element authFunc__item"}
+                className={`authFunc__element authFunc__item  ${
+                  subFilter && elem.element_no !== subFilter ? "hide" : ""
+                }`}
                 key={`funcElem-${i}`}
               >
                 <div className="label">{elem.element_name}</div>

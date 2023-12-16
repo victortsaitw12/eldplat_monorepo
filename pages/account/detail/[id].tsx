@@ -62,7 +62,6 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     const editDummy = editedDummy
       ? { ...editedDummy }
       : DUMMY_ONE_ACCOUNT.ResultList[0];
-    console.log("data:", isCreate ? createDummy : editDummy);
     setData(isCreate ? createDummy : editDummy);
     setDDL(DUMMY_ACC_DDL.ResultList[0]);
 
