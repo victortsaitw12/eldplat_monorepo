@@ -52,7 +52,8 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     setIsLoading(true);
     try {
       const result = await getScheduleList(id);
-      setMonthlyData(result.data);
+      // setMonthlyData(result);
+      // setMonthlyData(result.data);
     } catch (e: any) {
       console.log(e);
     }
