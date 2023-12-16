@@ -34,7 +34,7 @@ const PasswordInput = ({
   };
 
   return (
-    <DivSTY hasLabel={!!label}>
+    <DivSTY hasLabel={!!label} className="passWordInput">
       <Icon
         className="icon"
         icon={isPasswordHide ? EyeOffIcon : EyeOnIcon}
@@ -42,6 +42,7 @@ const PasswordInput = ({
         onClick={handleTogglePasswordHide}
       />
       <TextInputField
+        className="textInput"
         type={`${isPasswordHide ? "password" : "text"}`}
         placeholder={`${placeholder ? placeholder : "請輸入您的密碼"}`}
         isInvalid={!!errorMsg}

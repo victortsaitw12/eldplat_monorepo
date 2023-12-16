@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useMemo } from "react";
+import React, { ReactNode, useState } from "react";
 import { NextPageWithLayout } from "next";
 import { PlusIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
@@ -89,10 +89,6 @@ const Page: NextPageWithLayout<never> = () => {
     if (!session) return;
     fetchData();
   }, [session]);
-
-  React.useEffect(() => {
-    if (status === "unauthenticated") router.push("/login");
-  }, [status]);
 
   React.useEffect(() => {
     localStorage.removeItem("accountCreateData");

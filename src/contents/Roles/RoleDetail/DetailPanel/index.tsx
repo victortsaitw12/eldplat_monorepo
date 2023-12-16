@@ -46,8 +46,15 @@ const DetailPanel = ({
       req: false,
       label: "模組",
       editEle: (
-        <Select disabled className={`${"disabled"}`}>
-          <option value="foo" selected>
+        <Select
+          disabled
+          className={`${"disabled"}`}
+          {...register("module_name", {
+            required: "必填欄位，不可輸入符號",
+            validate: textValidation
+          })}
+        >
+          <option value="車輛管理" selected>
             {data.module_name || "--"}
           </option>
         </Select>
@@ -55,7 +62,7 @@ const DetailPanel = ({
       // value: data.module_name || "--",
       value: (
         <Select disabled className={`${"disabled"}`}>
-          <option value="foo" selected>
+          <option value="車輛管理" selected>
             {data.module_name || "--"}
           </option>
         </Select>

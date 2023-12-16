@@ -1,20 +1,10 @@
 import { useRouter } from "next/router";
-import {
-  Tooltip,
-  IconButton,
-  EditIcon,
-  EnvelopeIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  Button
-} from "evergreen-ui";
+import { Button } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { I_AccountItem, I_RoleName } from "@services/account/getAccountList";
-import Table from "@components/Table/Table";
 import CollapseTable from "@components/Table/CollapseTable";
 import IconBtn from "@components/Button/IconBtn";
-import Checkbox from "@components/CheckBox";
 import InvitSatus from "./InvitSatus";
 import PaginationField, { I_PageInfo } from "@components/PaginationField";
 
@@ -40,16 +30,6 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
     router.push(`/account/detail/${id}?editPage=edit`);
   };
 
-  const toggleCollapse = (e: any) => {
-    e.stopPropagation();
-  };
-
-  const handleFoldAll = () => {
-    console.log("foldAll");
-  };
-  const handleOpenAll = () => {
-    console.log("openAll");
-  };
   const getRoleName = (roles: I_RoleName[]) => {
     const roleNodeArr = roles.map((role: any, i) => {
       return (
@@ -85,31 +65,23 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
             />
           )}
         </>
-        // <Tooltip content="編輯">
-        //   <EditIcon onClick={handleEdit} />
-        // </Tooltip>
       )
     };
   });
 
-  const headNode = (
-    <div className="headNode">
-      <div className="btns">
-        <Button onClick={handleFoldAll}>全部收合</Button>
-        <Button onClick={handleOpenAll}>全部展開</Button>
-      </div>
-      <PaginationField pageInfo={pageInfo} />
-    </div>
-  );
+  const headNode = <PaginationField pageInfo={pageInfo} />;
 
   return (
     <BodySTY>
-      <CollapseTable
-        titles={tableTitleArr}
-        data={dataFitTable}
-        onView={handleView}
-        headNode={headNode}
-      />
+      {data && (
+        <CollapseTable
+          titles={tableTitleArr}
+          data={dataFitTable}
+          onView={handleView}
+          headNode={headNode}
+          hasControlAllBtns={true}
+        />
+      )}
     </BodySTY>
   );
 };

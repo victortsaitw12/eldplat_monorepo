@@ -19,8 +19,7 @@ export const FormSTY = styled.form`
         display: flex;
         flex-direction: column;
         align-items: flex-start !important;
-        gap: 8px;
-        margin-bottom: 19px;
+        margin-bottom: 0 !important;
 
         .infoBox__label {
           width: 100%;
@@ -32,7 +31,6 @@ export const FormSTY = styled.form`
         .infoBox__value {
           width: 100%;
           max-width: 240px;
-          max-height: 38px;
           flex: unset;
         }
       }
