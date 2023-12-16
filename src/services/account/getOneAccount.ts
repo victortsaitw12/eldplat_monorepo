@@ -88,6 +88,32 @@ export const DUMMY_ONE_ACCOUNT = {
       content_priv_email: "7217@gmail.com",
       account_role: [
         {
+          module_no: "role",
+          module_name: "角色管理",
+          roles: [
+            {
+              role_no: "r-role01",
+              role_name: "最高管理員",
+              is_select: false
+            },
+            {
+              role_no: "r-role02",
+              role_name: "主管",
+              is_select: true
+            },
+            {
+              role_no: "r-role03",
+              role_name: "調度",
+              is_select: true
+            },
+            {
+              role_no: "r-role04",
+              role_name: "一般使用者",
+              is_select: true
+            }
+          ]
+        },
+        {
           module_no: "bus",
           module_name: "車輛管理",
           roles: [
@@ -114,26 +140,26 @@ export const DUMMY_ONE_ACCOUNT = {
           ]
         },
         {
-          module_no: "sys",
-          module_name: "系統管理",
+          module_no: "driver",
+          module_name: "駕駛管理",
           roles: [
             {
-              role_no: "r-sys01",
+              role_no: "r-driver01",
               role_name: "最高管理員",
               is_select: false
             },
             {
-              role_no: "r-sys02",
+              role_no: "r-driver02",
               role_name: "主管",
               is_select: false
             },
             {
-              role_no: "r-sys03",
+              role_no: "r-driver03",
               role_name: "調度",
               is_select: false
             },
             {
-              role_no: "r-sys04",
+              role_no: "r-driver04",
               role_name: "一般使用者",
               is_select: true
             }
@@ -167,6 +193,32 @@ export const DUMMY_DATA_CREATE = {
       content_priv_email: "",
       account_role: [
         {
+          module_no: "role",
+          module_name: "角色管理",
+          roles: [
+            {
+              role_no: "r-role01",
+              role_name: "最高管理員",
+              is_select: false
+            },
+            {
+              role_no: "r-role02",
+              role_name: "主管",
+              is_select: false
+            },
+            {
+              role_no: "r-role03",
+              role_name: "調度",
+              is_select: false
+            },
+            {
+              role_no: "r-role04",
+              role_name: "一般使用者",
+              is_select: true
+            }
+          ]
+        },
+        {
           module_no: "bus",
           module_name: "車輛管理",
           roles: [
@@ -188,33 +240,33 @@ export const DUMMY_DATA_CREATE = {
             {
               role_no: "r-bus04",
               role_name: "一般使用者",
-              is_select: false
+              is_select: true
             }
           ]
         },
         {
-          module_no: "sys",
-          module_name: "系統管理",
+          module_no: "driver",
+          module_name: "駕駛管理",
           roles: [
             {
-              role_no: "r-sys01",
+              role_no: "r-driver01",
               role_name: "最高管理員",
               is_select: false
             },
             {
-              role_no: "r-sys02",
+              role_no: "r-driver02",
               role_name: "主管",
               is_select: false
             },
             {
-              role_no: "r-sys03",
+              role_no: "r-driver03",
               role_name: "調度",
               is_select: false
             },
             {
-              role_no: "r-sys04",
+              role_no: "r-driver04",
               role_name: "一般使用者",
-              is_select: false
+              is_select: true
             }
           ]
         }
@@ -224,9 +276,9 @@ export const DUMMY_DATA_CREATE = {
 };
 
 export const DUMMY_ROLE_NAME_MOUDULE_MAP = new Map([
+  ["r-role", "角色管理"],
   ["r-bus", "車輛管理"],
-  ["r-sys", "系統管理"],
-  ["r-hr", "人事管理"]
+  ["r-driver", "駕駛管理"]
 ]);
 
 export const DUMMY_ROLE_NAME_MAP = new Map([

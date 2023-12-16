@@ -43,8 +43,6 @@ const RoleDetail = ({ data, isEdit, asyncSubmitForm, submitRef }: I_Props) => {
     formState: { errors }
   } = useForm({ defaultValues: defaultValues });
 
-  console.log("🍅 RoleDetail:", getValues("func_auth"));
-
   return (
     <FormSTY onSubmit={handleSubmit((data) => asyncSubmitForm({ ...data }))}>
       <DetailPanel
