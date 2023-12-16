@@ -39,7 +39,6 @@ export const TableSTY = styled.table`
     font-weight: ${({ theme }) => theme.fontWeight.Heading400};
     font-size: ${({ theme }) => theme.fontSize.Headline400};
     pointer-events: none;
-    /* border-bottom: 1px solid ${({ theme }) => theme.color.N40}; */
   }
   tbody tr {
     cursor: pointer;
@@ -63,20 +62,20 @@ export const TableSTY = styled.table`
 
   td,
   th {
+    padding: 0 20px;
+    height: 46px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
-    span {
+
+    div {
       display: flex;
       align-items: center;
       justify-content: flex-start;
     }
   }
-  th {
-    padding: 12px 20px 9px 20px;
-  }
+
   td {
-    padding: 5px 20px;
     color: ${({ theme }) => theme.color.N500};
     font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
     /* font-size: ${({ theme }) => theme.fontSize.Paragraph300}; */
