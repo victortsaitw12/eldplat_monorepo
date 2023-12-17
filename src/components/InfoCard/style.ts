@@ -43,39 +43,34 @@ export const InfoCardSTY = styled.div`
     .col {
       flex: 1;
 
+      width: 100%;
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      align-content: flex-start;
+      gap: 24px;
 
-      .row {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
+      .fb-100 {
+        flex-basis: 100%;
+      }
+      .fb-50 {
+        flex-basis: calc((100% - 20px) / 2);
+      }
+      .fb-25 {
+        flex-basis: calc((100% - 60px) / 4);
+      }
+      .fb-66 {
+        flex-basis: calc((100% - 20px) / 3 * 2);
+      }
+      .fb-33 {
+        flex-basis: calc((100% - 20px) / 3);
+      }
 
-        .fb-100 {
-          flex-basis: 100%;
-        }
-        .fb-50 {
-          flex-basis: calc((100% - 20px) / 2);
-        }
-        .fb-25 {
-          flex-basis: calc((100% - 60px) / 4);
-        }
-        .fb-66 {
-          flex-basis: calc((100% - 20px) / 3 * 2);
-        }
-        .fb-33 {
-          flex-basis: calc((100% - 20px) / 3);
-        }
+      .m-0 {
+        margin: 0;
+      }
 
-        .m-0 {
-          margin: 0;
-        }
-
-        .gap-0 {
-          gap: 0;
-        }
+      .gap-0 {
+        gap: 0;
       }
     }
   }

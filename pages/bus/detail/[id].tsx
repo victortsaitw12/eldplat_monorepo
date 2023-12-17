@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState, ReactNode } from "react";
+import React, { useEffect, useRef, useState, ReactNode, use } from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
   InferGetServerSidePropsType
 } from "next";
-//
+
 import { getLayout } from "@layout/MainLayout";
 import { updateBus } from "@services/bus/updateBus";
 import { useRouter } from "next/router";
@@ -16,15 +16,18 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import BusDetail from "@contents/Bus/BusDetail";
 import { getBusById } from "@services/bus/getBusById";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
-//
-const mainFilterArray = [
-  { id: 1, label: "細項", value: "1", require: true },
-  { id: 2, label: "維保", value: "2" },
-  { id: 3, label: "生命週期", value: "3" },
-  { id: 4, label: "財務", value: "4" },
-  { id: 5, label: "規格", value: "5" }
+import DataOverview from "@components/DataOverview";
+import ControlBar from "@components/ControlBar";
+import ButtonSet from "@components/ButtonSet";
+
+const mainTabsArray = [
+  { id: 1, label: "車輛明細", value: "1" },
+  { id: 2, label: "分發派駐", value: "2" },
+  { id: 3, label: "維保計劃", value: "3" },
+  { id: 4, label: "車上設備", value: "4" },
+  { id: 5, label: "油耗紀錄", value: "5" }
 ];
-//
+
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ busId }) => {
@@ -36,28 +39,43 @@ const Page: NextPageWithLayout<
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [busDefaultData, setBusDefaultData] = useState<any>(null);
   const [options, setOptions] = useState<any>(null);
+
+  // useEffect(() => {
+  //   updateMainFilter("1");
+  //   setLoading(true);
+  //   getCreateBusOptions()
+  //     .then((res) => {
+  //       setOptions(res.dataList[0]);
+  //       return getBusById(busId);
+  //     })
+  //     .then((res) => {
+  //       setBusDefaultData(res);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, [router]);
+
+  const fetchBusData = async (isCanceled: boolean, busId: string) => {
+    try {
+      const res = await getBusById(busId);
+      setBusDefaultData(res);
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
   useEffect(() => {
-    updateMainFilter("1");
-    setLoading(true);
-    getCreateBusOptions()
-      .then((res) => {
-        setOptions(res.dataList[0]);
-        return getBusById(busId);
-      })
-      .then((res) => {
-        setBusDefaultData(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    fetchBusData(false, busId);
   }, [router]);
 
   const changeMainFilterHandler = (value: string) => {
     updateMainFilter(value);
   };
+
   const asyncSubmitForm = async (data: any) => {
     setLoading(true);
     console.log("asyncSubmitForm", data);
@@ -71,6 +89,7 @@ const Page: NextPageWithLayout<
     router.push("/bus/detail/" + busId + "?editPage=view");
     setLoading(false);
   };
+
   const fetchDDL = async (dsph_group?: string) => {
     try {
       const res = await getCreateBusOptions(dsph_group);
@@ -83,26 +102,52 @@ const Page: NextPageWithLayout<
       console.log(e.message);
     }
   };
-  const onCancelHandler = () => {
+
+  const handleEdit = () => {
+    router.push(`/bus/detail/${busId}?editPage=edit`);
+  };
+
+  const handleView = () => {
+    router.push(`/bus/detail/${busId}?editPage=view`);
+  };
+
+  const handleReturn = () => {
     router.push("/bus");
   };
+
+  useEffect(() => {
+    setIsEdit(editPage === "edit" ? true : false);
+  }, [editPage]);
+
   if (loading) {
     return <LoadingSpinner />;
   }
+
   return (
     <BodySTY>
+      <ControlBar hasShadow>
+        <DataOverview data={busDefaultData?.info} hasImage={false} />
+        <ButtonSet
+          isEdit={isEdit}
+          primaryDisable={false}
+          secondaryBtnText={isEdit ? "取消" : "回列表"}
+          secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+          primaryBtnText={isEdit ? "儲存" : "編輯"}
+          primaryBtnOnClick={isEdit ? handleView : handleEdit}
+        />
+      </ControlBar>
       <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
-        mainFilterArray={mainFilterArray}
+        mainFilterArray={mainTabsArray}
       >
         <BusDetail
           isEdit={isEdit}
+          busId={busId}
+          busDefaultData={busDefaultData}
           submitRef={submitRef}
           asyncSubmitForm={asyncSubmitForm}
-          busId={busId}
           formType={mainFilter}
-          busDefaultData={busDefaultData}
           busOptions={options}
           fetchDDL={fetchDDL}
         />

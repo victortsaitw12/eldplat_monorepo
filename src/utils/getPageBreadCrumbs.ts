@@ -77,6 +77,10 @@ const breadcrumbs: I_routers = {
     { label: "個人班表", url: "/schedule/detail/[id]" },
     { label: "簽核", url: "/approval" },
   ],
+  "/assignment": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派 ", url: "/assignment" }
+  ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   "/bus": [
@@ -127,10 +131,6 @@ const breadcrumbs: I_routers = {
     { label: "入門", url: "/" },
     { label: "訂單", url: "/admin_orders" },
     { label: "詳情", url: "" }
-  ],
-  "/assignment": [
-    { label: "入門", url: "/" },
-    { label: "派單", url: "/assignment" }
   ],
   "/company": [
     { label: "入門", url: "/" },

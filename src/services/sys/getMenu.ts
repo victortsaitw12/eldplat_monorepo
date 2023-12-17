@@ -201,23 +201,23 @@ export const DUMMY_MENU = {
         {
           module_no: "bus",
           fg_no: "driver",
-          func_no: "driverList",
+          func_no: "driver",
           func_name: "駕駛列表",
           path: "/driver"
         },
-        {
-          module_no: "bus",
-          fg_no: "driver",
-          func_no: "driver",
-          func_name: "新增駕駛",
-          path: "/driver/detail/create"
-        },
+        // {
+        //   module_no: "bus",
+        //   fg_no: "driver",
+        //   func_no: "driver",
+        //   func_name: "新增駕駛",
+        //   path: "/detail/create"
+        // },
         {
           module_no: "bus",
           fg_no: "driver",
           func_no: "driver",
           func_name: "駕駛管理設定",
-          path: "/driver/management"
+          path: "/driver_management"
         }
       ]
     },

@@ -39,7 +39,7 @@ function Table({
             <tr>
               {titles.map((title, i) => (
                 <th key={i}>
-                  <span>{title}</span>
+                  <div>{title}</div>
                 </th>
               ))}
             </tr>

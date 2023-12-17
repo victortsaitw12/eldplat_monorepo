@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TextareaFieldSTY } from "./style";
-import { Textarea, Pane } from "evergreen-ui";
+import { TextareaField, Pane } from "evergreen-ui";
 
 interface I_CustomTextArea {
   placeholder: string;
@@ -9,11 +9,16 @@ interface I_CustomTextArea {
 const CustomTextArea = (props: I_CustomTextArea) => {
   const { placeholder = "請輸入內容", data } = props;
   const [value, setValue] = useState("");
-  const hintLength = value.trim().length;
+  const [invalid, setInvalid] = useState(false);
+  const TextareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const hintLength = TextareaRef.current?.value.trim().length ?? 0;
 
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    if (hintLength < 50) {
-      setValue(e.target.value);
+    setValue(e.target.value);
+    if (hintLength > 51) {
+      setInvalid(true);
+    }else{
+      setInvalid(false);
     }
   };
 
@@ -24,10 +29,12 @@ const CustomTextArea = (props: I_CustomTextArea) => {
   return (
     <TextareaFieldSTY>
       <Pane className="comment-textarea">
-        <Textarea
+        <TextareaField
           placeholder={placeholder}
           value={value}
           onChange={changeHandler}
+          isInvalid={invalid}
+          ref={TextareaRef}
         />
         <p className="hint">{hintLength}/50</p>
       </Pane>
