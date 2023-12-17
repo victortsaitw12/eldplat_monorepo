@@ -34,17 +34,6 @@ const RolePanel = ({
     setValue("account_role", v);
   };
 
-  const getRoles = (data: I_RoleItem[]) => {
-    const selectedRoles = data.filter((elem: any) => elem.is_select === true);
-    if (selectedRoles.length === 0) return "--";
-    const roles = selectedRoles.map((elem: any, i: number) => (
-      <div key={`role-${i}`} data-id={elem.role_no}>
-        {elem.role_name}
-      </div>
-    ));
-    return roles;
-  };
-
   // ------- render ------- //
   const dataFitInfoBox = data.map((item) => {
     return {
@@ -77,3 +66,14 @@ interface I_Props {
   setValue: UseFormSetValue<any>;
   getValues: UseFormGetValues<any>;
 }
+
+// const getRoles = (data: I_RoleItem[]) => {
+//   const selectedRoles = data.filter((elem: any) => elem.is_select === true);
+//   if (selectedRoles.length === 0) return "--";
+//   const roles = selectedRoles.map((elem: any, i: number) => (
+//     <div key={`role-${i}`} data-id={elem.role_no}>
+//       {elem.role_name}
+//     </div>
+//   ));
+//   return roles;
+// };
