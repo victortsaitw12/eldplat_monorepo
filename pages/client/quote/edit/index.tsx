@@ -41,9 +41,6 @@ const DummyNavigationListData = [
     label: "乘車資訊"
   },
   {
-    label: "特殊需求"
-  },
-  {
     label: "聯絡人資料"
   },
   {

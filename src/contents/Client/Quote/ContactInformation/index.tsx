@@ -77,7 +77,7 @@ const ContactInformation = () => {
                 <div className="item-input-container">
                   <NationalitySelect 
                     register={register}
-                    selectName="order_contact_list.0.contact_phone_code"
+                    selectName="order_contact_list.0.nationality"
                   />
                   {errors.order_contact_list?.[0]?.name && (
                     <div className="input-error">
