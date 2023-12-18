@@ -9,7 +9,7 @@ import { useMaintenanceStore } from "@contexts/filter/maintenanceStore";
 import MaintenanceMissionList from "@contents/Maintenance/Mission";
 import MaintenanceRecordList from "@contents/Maintenance/Record";
 import MaintenanceNoticeList from "@contents/Maintenance/Notice";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 const mainFilterArray = [
   { id: 1, label: "通知", value: "notice" },
