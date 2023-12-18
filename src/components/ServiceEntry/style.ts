@@ -6,22 +6,20 @@ export const BodySTY = styled.div`
   cursor: pointer;
   display: flex;
   background-color: ${({ theme }) => theme.color.N0};
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
   gap: 20px;
   /* Neutral/N100 */
-  border: 1px solid ${({ theme }) => theme.color.N100};
+  box-shadow: 0px 4px 8px 0px #10184014;
   border-radius: 10px;
 `;
 
 export const IconSTY = styled.div`
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 64px;
+  height: 64px;
   background: ${({ theme }) => theme.color.N0};
-  border-radius: 50%;
   overflow: hidden;
 `;
 

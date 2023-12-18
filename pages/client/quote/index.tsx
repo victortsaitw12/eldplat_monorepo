@@ -76,26 +76,26 @@ const Page = () => {
       <div className="content-container">
         <div className="content-title">請選擇你想要的服務：</div>
         <div className="content-entry">
-          <ServerEntry
-            label="客製包車"
-            imageUrl="/image/svg-icons/custom-bus-pickup.svg"
-            onClick={() => {
-              router.push({
-                pathname: "/client/quote/confirm",
-                query: {
-                  type: "custom"
-                }
-              });
-            }}
-          />
-          <ServerEntry
+        <ServerEntry
             label="機場接送"
-            imageUrl="/image/svg-icons/airport-pickup.svg"
+            imageUrl="/image/svg-icons/airport-pickup2.svg"
             onClick={() => {
               router.push({
                 pathname: "/client/quote/confirm",
                 query: {
                   type: "airport"
+                }
+              });
+            }}
+          />
+          <ServerEntry
+            label="客製包車"
+            imageUrl="/image/svg-icons/custom-bus-pickup2.svg"
+            onClick={() => {
+              router.push({
+                pathname: "/client/quote/confirm",
+                query: {
+                  type: "custom"
                 }
               });
             }}
