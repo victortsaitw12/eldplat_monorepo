@@ -59,15 +59,13 @@ function ControlledSelect<
   control,
   rules,
   options,
-  isDisabled,
-  styles
+  isDisabled
 }: {
   name: TName;
   control?: Control<TFieldValues>;
   rules?: RegisterOptions;
   options: Array<{ label: string; value: string }>;
   isDisabled: boolean;
-  styles?: any;
 }) {
   return (
     <Controller
@@ -80,7 +78,6 @@ function ControlledSelect<
           isDisabled={isDisabled}
           onFormChange={onChange}
           formValue={value}
-          styles={styles || undefined}
         />
       )}
     />

@@ -81,7 +81,6 @@ const EmployeeInfoBox = ({
                 length: (v) => v.length > 0 || "必填欄位"
               }
             }}
-            styles={customStyles}
           />
         </div>
       ),
