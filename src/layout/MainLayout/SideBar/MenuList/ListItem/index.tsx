@@ -13,9 +13,8 @@ interface Props {
 }
 //
 function Index({ data }: Props) {
-  
   const router = useRouter();
-  console.log(router.asPath)
+  console.log(router.asPath);
   // console.log("🕯️router", router);
   // console.log("data.url", data.url);
   const defaultSelect =
@@ -27,10 +26,9 @@ function Index({ data }: Props) {
   return (
     <BodySTY
       onClick={() => {
+        if (!data.url) return;
         setIsSelect((prev) => !prev);
-        if (data.url) {
-          router.push(data.url);
-        }
+        router.push(data.url);
       }}
       className={cx({
         active: isSelect,
@@ -38,7 +36,7 @@ function Index({ data }: Props) {
       })}
     >
       <p>{data.name}</p>
-      {isSelect && <TickIcon color="#567190" size={14} />}
+      {/* {isSelect && <TickIcon color="#567190" size={14} />} */}
     </BodySTY>
   );
 }
