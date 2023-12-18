@@ -29,11 +29,11 @@ const Page: NextPageWithLayout<never> = () => {
     router.push("/maintenance/" + value)
   };
 
-  // useEffect(() => {
-  // if (currentPath && currentPath.length > 0) {
-  //     switchTabHandler(currentPath[0]);
-  // }
-  // }, [currentPath]);
+  useEffect(() => {
+  if (currentPath && currentPath.length > 0) {
+    updateMainFilter(currentPath[0]);
+  }
+  }, [currentPath]);
 
   return (
     <BodySTY>

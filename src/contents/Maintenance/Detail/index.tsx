@@ -88,9 +88,9 @@ function MaintenanceDetail(props: Props) {
     }
   ];
 
-  const MissionInFo = [
+  const MissionInFo = [[
     {
-      listClassName: "fb-50",
+      listClassName: "fb-100",
       readonly: false,
       req: isEdit,
       label: "分類",
@@ -105,7 +105,42 @@ function MaintenanceDetail(props: Props) {
       )
     },
     {
-      listClassName: "fb-50",
+      listClassName: "fb-100",
+      readonly: false,
+      req: isEdit,
+      bold: false,
+      label: "維修廠",
+      value: "台北保養廠",
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            請選擇
+          </option>
+        </Select>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      bold: true,
+      label: "項目",
+      value: "A-25定期保養組合",
+      editEle: (<CustomTextArea placeholder="請輸入項目" />)
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      bold: true,
+      label: "維保日期",
+      value: "2024-01-02(二)18:00~22:00",
+      editEle: (<CustomDatePicker placeholder="請輸入訓練期間" isRange />)
+    },
+    ],
+    [
+    {
+      listClassName: "fb-100",
       readonly: false,
       req: false,
       label: "出發地",
@@ -137,30 +172,6 @@ function MaintenanceDetail(props: Props) {
     {
       listClassName: "fb-100",
       readonly: false,
-      req: isEdit,
-      bold: false,
-      label: "維修廠",
-      value: "台北保養廠",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
-    },
-    {
-      listClassName: "fb-50",
-      readonly: false,
-      req: false,
-      bold: true,
-      label: "項目",
-      value: "A-25定期保養組合",
-      editEle: (<CustomTextArea placeholder="請輸入項目" />)
-    },
-    {
-      listClassName: "fb-50",
-      readonly: false,
       req: false,
       bold: true,
       label: "派工駕駛",
@@ -174,16 +185,7 @@ function MaintenanceDetail(props: Props) {
       )
     },
     {
-      listClassName: "fb-50 m-0",
-      readonly: false,
-      req: false,
-      bold: true,
-      label: "維保日期",
-      value: "2024-01-02(二)18:00~22:00",
-      editEle: (<CustomDatePicker placeholder="請輸入訓練期間" isRange />)
-    },
-    {
-      listClassName: "fb-50 m-0",
+      listClassName: "fb-100",
       readonly: false,
       req: false,
       bold: true,
@@ -195,7 +197,7 @@ function MaintenanceDetail(props: Props) {
           placeholder="里程"
         />
       )
-    }
+    }]
   ];
 
   const CheckItemInFo = [[
@@ -255,7 +257,7 @@ function MaintenanceDetail(props: Props) {
 
   return (
     <DivSTY>
-      <Pane className={"main-column "}>
+      <Pane className={"main-column fb-33"}>
         {isEdit ? 
           <InfoCard
             isEdit={isEdit}
@@ -270,11 +272,11 @@ function MaintenanceDetail(props: Props) {
           />
         }
       </Pane>
-      <Pane className={"main-column"}>
+      <Pane className={"main-column fb-66"}>
           <InfoCard
             isEdit={isEdit}
             infoData={MissionInFo}
-            infoTitle="職員資料"
+            infoTitle="任務指派"
           />
       </Pane>
       <Pane className={"main-column w-full"}>
