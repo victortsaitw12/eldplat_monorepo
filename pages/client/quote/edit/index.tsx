@@ -13,7 +13,6 @@ import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
 import TravelInformation from "@contents/Client/Quote/TravelInformation";
 import RidingInformation from "@contents/Client/Quote/RidingInformation";
-import SpecialNeeds from "@contents/Client/Quote/SpecialNeeds";
 import ContactInformation from "@contents/Client/Quote/ContactInformation";
 import FlightInformation from "@contents/Client/Quote/FlightInformation";
 import { Button, toaster, TickCircleIcon } from "evergreen-ui";
@@ -238,7 +237,7 @@ const Page: NextPageWithLayout<
   };
   useEffect(() => {
     let timmer: any;
-    if (currentTab === 6) {
+    if (currentTab === 5) {
       timmer = setInterval(() => {
         setRemainTime((prev) => prev - 1);
       }, 1000);
@@ -252,7 +251,7 @@ const Page: NextPageWithLayout<
       if (timmer) clearTimeout(timmer);
     };
   }, [currentTab, remainTime]);
-  if (currentTab === 6) {
+  if (currentTab === 5) {
     return (
       <BodySTY>
         <div className="redirect-body">
@@ -320,9 +319,9 @@ const Page: NextPageWithLayout<
                 }}
               />
             )}
-            {currentTab === 3 && <SpecialNeeds />}
-            {currentTab === 4 && <ContactInformation />}
-            {currentTab === 5 && <OrdersDetail />}
+            {/* {currentTab === 3 && <SpecialNeeds />} */}
+            {currentTab === 3 && <ContactInformation />}
+            {currentTab === 4 && <OrdersDetail />}
             <div className="content-actions-container">
               <Button
                 style={{
@@ -400,7 +399,7 @@ const Page: NextPageWithLayout<
                   }
                 }}
               >
-                {currentTab === 5 ? "送出詢價單" : "下一步"}
+                {currentTab === 4 ? "送出詢價單" : "下一步"}
               </Button>
             </div>
           </form>

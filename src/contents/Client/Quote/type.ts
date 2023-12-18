@@ -31,6 +31,7 @@ export interface QuotationCreatePayload {
   order_contact_list: Array<{
     family_name: string;
     name: string;
+    full_name: string;
     contact_phone_code?: string;
     contact_phone: string;
     contact_tel_code?: string;
@@ -39,6 +40,7 @@ export interface QuotationCreatePayload {
     contact_type?: string;
     social_media_type?: string;
     social_media?: string;
+    nationality?: string;
   }>;
   pickup_sign_check: string;
   pickup_sign_remark: string;
@@ -115,6 +117,7 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
     {
       family_name: "",
       name: "",
+      full_name: "",
       contact_phone_code: "",
       contact_phone: "",
       contact_tel_code: "",
@@ -122,11 +125,13 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
       contact_email: "",
       contact_type: "2",
       social_media_type: "",
-      social_media: ""
+      social_media: "",
+      nationality: "",
     },
     {
       family_name: "",
       name: "",
+      full_name: "",
       contact_phone_code: "",
       contact_phone: "",
       contact_tel_code: "",
@@ -134,7 +139,7 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
       contact_email: "",
       contact_type: "1",
       social_media_type: "",
-      social_media: ""
+      social_media: "",
     }
   ],
   pickup_sign_check: "0",
@@ -161,6 +166,7 @@ export const defaultQuotationCreatePayload: QuotationCreatePayload = {
       day_number: 1,
       day_date: "",
       departure_time: "",
+      arrive_time: "",
       pickup_location: "",
       stopover_address_list: [],
       dropoff_location: ""

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   width: 1240px;
-  margin: 28px auto;
+  // margin: 28px auto;
   > .body-container {
     display: grid;
     gap: 20px;

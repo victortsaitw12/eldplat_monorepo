@@ -123,7 +123,7 @@ const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
                 text="車型介紹"
                 style={{
                   backgroundColor: "#5E6C84",
-                  marginTop: "20px"
+                  marginBottom: "20px"
                 }}
                 onClick={() => { console.log("車型介紹") }}
               />

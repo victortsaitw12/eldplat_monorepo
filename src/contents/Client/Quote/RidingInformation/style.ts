@@ -13,7 +13,6 @@ export const BodySTY = styled.ul`
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      padding: 20px 0;
       gap: 20px;
       > .header-title {
         font-weight: 700;

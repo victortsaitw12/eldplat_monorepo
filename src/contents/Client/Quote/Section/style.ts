@@ -27,6 +27,15 @@ export const BodySTY = styled.div`
                 font-size: 18px;
             }
         }
+
+        .collapse_content {
+            padding: 24px 8px 20px;
+
+            > ul {
+                padding: 0;
+            }
+      
+        }
     }
 
 
