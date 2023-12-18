@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 //
 import Header from "./Header";
 import { BodySTY, ContainerSTY } from "./style";
+import Breadcrumbs from "@components/Breadcrumbs";
 
 interface ClientLayoutProps {
   children: ReactNode;
@@ -25,9 +26,17 @@ const ClientLayout = ({ children, layoutProps }: ClientLayoutProps) => {
         <title>2c前台</title>
         <meta property="og:title" content="2c前台" />
       </Head>
+      <Header layoutProps={layoutProps} theme={theme} setTheme={setTheme} />
       <ContainerSTY>
-        <Header layoutProps={layoutProps} theme={theme} setTheme={setTheme} />
-        <div className="content">{children}</div>
+        <div className="content">
+          <Breadcrumbs
+            routes={[
+              { label: "首頁", url: "/client" },
+              { label: "線上訂車", url: "/client/quote" },
+            ]}
+          />
+          {children}
+        </div>
       </ContainerSTY>
     </BodySTY>
   );

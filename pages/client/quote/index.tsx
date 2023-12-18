@@ -4,6 +4,11 @@ import ServerEntry from "@components/ServiceEntry";
 import { useRouter } from "next/router";
 import { getLayout } from "@layout/ClientLayout";
 import { ReactNode } from "react";
+import Section from "@contents/Client/Quote/Section";
+import ServiceList from "@contents/Client/Quote/ServiceList";
+import NoticeMessage from "@components/NoticeMessage";
+import { Pane } from "evergreen-ui";
+
 const FlowListData = [
   {
     imageUrl: "/image/svg-icons/document.svg",
@@ -26,14 +31,46 @@ const FlowListData = [
     label: "行前提醒"
   }
 ];
+
+const DUMMY_ServiceList = [
+  {
+    title: "服務一",
+    value: "介紹",
+  },
+  {
+    title: "服務二",
+    value: "介紹介紹",
+  },
+  {
+    title: "服務三",
+    value: "介紹介紹介紹",
+  },
+]
+
 const Page = () => {
   const router = useRouter();
   return (
     <BodySTY>
       <div className="header">
         <div className="header-container">
-          <div className="header-title">訂車流程</div>
-          <Flow dataLists={FlowListData} />
+          <div className="header-title">服務介紹</div>
+          <div className="service-wrap">
+            <Section title="服務項目">
+              <ServiceList listArray={DUMMY_ServiceList} />
+              <Pane
+                style={{ 
+                  padding: "20px 0", 
+                  borderTop: "1px solid #DFE1E6",
+                  marginTop: "20px"
+                }}
+              >
+                <NoticeMessage message="注意事項注意事項注意事項注意事項注意事項注意事項" />
+              </Pane>
+            </Section>
+            <Section title="訂車流程">
+              <Flow dataLists={FlowListData} />
+            </Section>
+          </div>
         </div>
       </div>
       <div className="content-container">

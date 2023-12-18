@@ -4,13 +4,13 @@ export const BodySTY = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) => theme.color.N300};
+  // background-color: ${({ theme }) => theme.color.N300};
   > .header {
     display: flex;
     justify-content: center;
-    padding: 32px 0px;
+    // padding: 32px 0px;
     width: 100%;
-    background-color: ${({ theme }) => theme.color.N400};
+    // background-color: ${({ theme }) => theme.color.N400};
     > .header-container {
       width: 1030px;
       display: flex;
@@ -19,7 +19,7 @@ export const BodySTY = styled.div`
       > .header-title {
         font-size: 32px;
         font-weight: 600;
-        color: ${({ theme }) => theme.color.N700};
+        color: ${({ theme }) => theme.color.N300};
       }
     }
   }
@@ -31,7 +31,7 @@ export const BodySTY = styled.div`
     align-items: center;
     width: 1030px;
     > .content-title {
-      color: ${({ theme }) => theme.color.N700};
+      color: ${({ theme }) => theme.color.N300};
       font-size: 32px;
       font-weight: 600;
       align-self: flex-start;

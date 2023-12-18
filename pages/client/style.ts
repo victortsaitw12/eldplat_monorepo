@@ -4,7 +4,7 @@ export const BodySTY = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) => theme.color.N300};
+  // background-color: ${({ theme }) => theme.color.N300};
   > .header {
     display: flex;
     justify-content: center;
