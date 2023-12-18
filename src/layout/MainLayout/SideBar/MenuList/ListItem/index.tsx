@@ -21,7 +21,7 @@ function Index({ data }: Props) {
     data.name !== "入門" &&
     data.url !== "/" &&
     (data.url === router.asPath || router.asPath.indexOf(data.url) >= 0);
-  const targetUrl = data.url[0];
+  const targetUrl = Array.isArray(data.url) ? data.url[0] : data.url;
   const [isSelect, setIsSelect] = useState(defaultSelect);
   const isDisabled = data.url === null && !data.subList;
   return (
@@ -29,7 +29,7 @@ function Index({ data }: Props) {
       onClick={() => {
         if (!data.url) return;
         setIsSelect((prev) => !prev);
-        router.push(data.url);
+        router.push(targetUrl);
       }}
       className={cx({
         active: isSelect,
