@@ -16,11 +16,15 @@ function Index({ data }: Props) {
   const router = useRouter();
   console.log(router.asPath);
   console.log("🕯️router", router);
-  // console.log("data.url", data.url);
+
+  console.log(router);
   const defaultSelect =
     data.name !== "入門" &&
-    data.url !== "/" &&
-    (data.url === router.asPath || router.asPath.indexOf(data.url) >= 0);
+    router.asPath !== "/" &&
+    (data.url === router.asPath ||
+      data.url[0] === router.asPath ||
+      (Array.isArray(data.url) &&
+        data.url.some((item) => item.includes(router.pathname))));
   const targetUrl = Array.isArray(data.url) ? data.url[0] : data.url;
   const [isSelect, setIsSelect] = useState(defaultSelect);
   const isDisabled = data.url === null && !data.subList;

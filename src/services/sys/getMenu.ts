@@ -139,14 +139,14 @@ export const DUMMY_MENU = {
           fg_no: "account",
           func_no: "role",
           func_name: "角色設定",
-          path: "/role"
+          path: ["/role", "/role/detail/[id]", "/role/detail/create"]
         },
         {
           module_no: "sys",
           fg_no: "account",
           func_no: "accountList",
           func_name: "使用者列表",
-          path: "/account"
+          path: ["/account", "/account/detail/[id]"]
         },
         {
           module_no: "sys",
@@ -165,7 +165,7 @@ export const DUMMY_MENU = {
           fg_no: "bus",
           func_no: "busList",
           func_name: "車輛列表",
-          path: "/bus"
+          path: ["/bus", "/bus/detail/[id]"]
         },
         {
           module_no: "bus",
@@ -179,7 +179,7 @@ export const DUMMY_MENU = {
           fg_no: "bus",
           func_no: "bus",
           func_name: "車輛管理設定",
-          path: "/bus"
+          path: "/#"
         }
       ]
     },
@@ -198,7 +198,7 @@ export const DUMMY_MENU = {
           fg_no: "maintenance",
           func_no: "mission",
           func_name: "維保任務列表",
-          path: "/maintenance/mission"
+          path: ["/maintenance/mission", "/maintenance/detail/[id]"]
         },
         {
           module_no: "bus",
@@ -217,18 +217,7 @@ export const DUMMY_MENU = {
           fg_no: "driver",
           func_no: "driver",
           func_name: "駕駛列表",
-          path: "/driver"
-        },
-        {
-          module_no: "bus",
-          fg_no: "driver",
-          func_no: "driver",
-          func_name: "TEST",
-          path: [
-            "/driver",
-            "/driver/detail/[id]?editPage=view",
-            "/driver/detail/[id]?editPage=edit"
-          ]
+          path: ["/driver", "/driver/training/[id]", "/driver/detail/[id]"]
         },
         {
           module_no: "bus",
@@ -261,7 +250,7 @@ export const DUMMY_MENU = {
           fg_no: "task",
           func_no: "schedule",
           func_name: "駕駛出勤管理",
-          path: "/schedule"
+          path: ["/schedule", "/schedule/approval", "/schedule/detail/[id]"]
         },
         {
           module_no: "bus",
