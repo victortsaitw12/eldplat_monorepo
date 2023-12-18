@@ -50,38 +50,34 @@ function InfoCard({
         {Array.isArray(infoData[0]) ? (
           (infoData as I_infoData[][]).map((col, index) => {
             return (
-              <Pane className="col" key={index}>
-                <ul className="row">
-                  {Array.isArray(col) &&
-                    col.map((item, itemIndex) => {
-                      return (
-                        <InfoItem
-                          key={InfoCardId + itemIndex}
-                          item={item}
-                          isEdit={isEdit}
-                          InfoCardId={InfoCardId}
-                        />
-                      );
-                    })}
-                </ul>
-              </Pane>
+              <ul className="col" key={index}>
+                {Array.isArray(col) &&
+                  col.map((item, itemIndex) => {
+                    return (
+                      <InfoItem
+                        key={InfoCardId + itemIndex}
+                        item={item}
+                        isEdit={isEdit}
+                        InfoCardId={InfoCardId}
+                      />
+                    );
+                  })}
+              </ul>
             );
           })
         ) : (
-          <Pane className="col">
-            <ul className="row">
-              {(infoData as I_infoData[]).map((item: I_infoData, itemIndex) => {
-                return (
-                  <InfoItem
-                    key={InfoCardId + itemIndex}
-                    item={item}
-                    isEdit={isEdit}
-                    InfoCardId={InfoCardId}
-                  />
-                );
-              })}
-            </ul>
-          </Pane>
+          <ul className="col">
+            {(infoData as I_infoData[]).map((item: I_infoData, itemIndex) => {
+              return (
+                <InfoItem
+                  key={InfoCardId + itemIndex}
+                  item={item}
+                  isEdit={isEdit}
+                  InfoCardId={InfoCardId}
+                />
+              );
+            })}
+          </ul>
         )}
       </div>
     </InfoCardSTY>

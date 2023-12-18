@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  Details,
-  Financial,
-  Lifecycle,
-  Maintenance,
-  Specifications
-} from "./SubFrom";
 import { BusDataTypes } from "../bus.type";
+import SubTabsWrapper from "@layout/SubTabsWrapper";
+import { DivSTY } from "./style";
+import Details from "./SubForm/Detail";
+import Maintenance from "./SubForm/Maintenance";
+import Equipment from "./SubForm/Equipment";
+import FuelRecord from "./SubForm/FuelRecord";
+
 interface I_Props {
   isEdit: boolean;
   submitRef: React.MutableRefObject<HTMLButtonElement | null>;
@@ -18,6 +18,14 @@ interface I_Props {
   busOptions: any;
   fetchDDL: (v: any) => void;
 }
+
+const subTabsArray = [
+  { id: 1, label: "明細", value: "1" },
+  { id: 2, label: "維保", value: "2" },
+  { id: 4, label: "財務", value: "3" },
+  { id: 5, label: "規格", value: "4" }
+];
+
 const BusDetail = ({
   isEdit,
   submitRef,
@@ -29,6 +37,9 @@ const BusDetail = ({
   fetchDDL
 }: I_Props) => {
   const [visibleForm, setVisibleForm] = useState("1");
+
+  const [currentTab, setCurrentTab] = useState<string>("1");
+
   useEffect(() => {
     setVisibleForm(formType);
   }, [formType]);
@@ -49,65 +60,71 @@ const BusDetail = ({
     fetchDDL(bus_group);
   }, [busDefaultData]);
 
-  //TODO 分類的選法
-  if (!busDefaultData) {
-    return <div>查無相關資料...</div>;
-  }
+  const changeTabHandler = (value: string) => {
+    setCurrentTab(value);
+  };
 
   return (
     <form onSubmit={handleSubmit(asyncSubmitForm)}>
       <button ref={submitRef} type="submit" style={{ display: "none" }}>
         儲存
       </button>
-      {visibleForm === "1" && (
-        <Details
-          register={register}
-          errors={errors}
-          getValues={getValues}
-          setValue={setValue}
-          control={control}
-          isEdit={isEdit}
-          busOptions={busOptions}
-          fetchDDL={fetchDDL}
-        />
-      )}
-      {visibleForm === "2" && (
-        <Maintenance
-          busId={busId}
-          register={register}
-          errors={errors}
-          getValues={getValues}
-          control={control}
-          isEdit={isEdit}
-        />
-      )}
-      {visibleForm === "3" && (
-        <Lifecycle
-          register={register}
-          errors={errors}
-          getValues={getValues}
-          control={control}
-          isEdit={isEdit}
-        />
-      )}
-      {visibleForm === "4" && (
-        <Financial
-          register={register}
-          errors={errors}
-          getValues={getValues}
-          control={control}
-          isEdit={isEdit}
-        />
-      )}
-      {visibleForm === "5" && (
-        <Specifications
-          register={register}
-          errors={errors}
-          getValues={getValues}
-          control={control}
-          isEdit={isEdit}
-        />
-      )}
+      <DivSTY>
+        {visibleForm === "1" && (
+          <>
+            <SubTabsWrapper
+              tabsArray={subTabsArray}
+              currentTab={currentTab}
+              onChangeTab={changeTabHandler}
+            />
+            <Details
+              currentTab={currentTab}
+              register={register}
+              errors={errors}
+              getValues={getValues}
+              setValue={setValue}
+              control={control}
+              isEdit={isEdit}
+              busOptions={busOptions}
+              fetchDDL={fetchDDL}
+              className="details"
+            />
+          </>
+        )}
+
+        {visibleForm === "3" && (
+          <Maintenance
+            busId={busId}
+            register={register}
+            errors={errors}
+            getValues={getValues}
+            control={control}
+            isEdit={isEdit}
+          />
+        )}
+
+        {visibleForm === "4" && (
+          <Equipment
+            busId={busId}
+            register={register}
+            errors={errors}
+            getValues={getValues}
+            control={control}
+            isEdit={isEdit}
+          />
+        )}
+
+        {visibleForm === "5" && (
+          <FuelRecord
+            busId={busId}
+            register={register}
+            errors={errors}
+            getValues={getValues}
+            control={control}
+            isEdit={isEdit}
+          />
+        )}
+      </DivSTY>
     </form>
   );
 };

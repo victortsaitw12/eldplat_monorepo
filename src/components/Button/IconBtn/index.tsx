@@ -26,6 +26,9 @@ const IconBtn = ({ tip, type, onClick }: I_Props) => {
     case "envelope":
       btn = <EnvelopeIcon onClick={onClick} />;
       break;
+    case "more":
+      btn = <MoreIcon onClick={onClick} />;
+      break;
     default:
       btn = <button type="button" />;
   }
@@ -54,7 +57,7 @@ const customTheme = mergeTheme(defaultTheme, {
 
 interface I_Props {
   tip?: string;
-  type?: "create" | "edit" | "delete" | "envelope";
+  type?: "create" | "edit" | "delete" | "envelope" | "more";
   onClick?: (e?: any) => void;
   customIcon?: React.ReactNode;
 }

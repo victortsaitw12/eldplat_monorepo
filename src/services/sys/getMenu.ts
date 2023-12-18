@@ -260,10 +260,6 @@ export const DUMMY_MENU = {
       ]
     },
     {
-      menu_name: "客戶管理",
-      sub_menu: []
-    },
-    {
       menu_name: "供應商管理",
       sub_menu: [
         {
@@ -288,8 +284,8 @@ export const DUMMY_MENU = {
         {
           module_no: "setting",
           fg_no: "password",
-          func_no: "reset",
-          func_name: "重設密碼",
+          func_no: "password",
+          func_name: "修改密碼",
           path: "/setting/password"
         }
       ]

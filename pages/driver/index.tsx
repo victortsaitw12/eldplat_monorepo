@@ -66,7 +66,7 @@ const Page: NextPageWithLayout<never> = () => {
     return () => {
       isCanceled = true;
     };
-  }, []);
+  }, []); 
 
   const fetchDriverData = React.useCallback(
     async (isCanceled: boolean, pageQuery = defaultPageInfo) => {

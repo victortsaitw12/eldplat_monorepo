@@ -56,6 +56,15 @@ const passwordValidation = (password: string) => {
   }
 };
 
+export const confirmPasswordValidation = (
+  password: string,
+  confirmPassword: string
+) => {
+  if (password !== confirmPassword) {
+    return "密碼不一致";
+  }
+};
+
 const passwordValidation2 = (password: string) => {
   const globalRegex = new RegExp(
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[A-Za-z\d#?!@$ %^&*-]{10,}$/,

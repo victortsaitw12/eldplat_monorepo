@@ -13,10 +13,6 @@ const RoleList = ({ data, pageInfo }: I_Props) => {
   const router = useRouter();
 
   //------ functions ------//
-  const handleCreateRole = () => {
-    console.log("called");
-  };
-
   const handleView = (id: string) => {
     router.push(`/role/detail/${id}?editPage=view`);
   };
