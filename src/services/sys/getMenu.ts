@@ -177,21 +177,21 @@ export const DUMMY_MENU = {
           fg_no: "maintenance",
           func_no: "notice",
           func_name: "維保通知",
-          path: "/notice"
+          path: "/maintenance"
         },
-        {
-          module_no: "bus",
-          fg_no: "maintenance",
-          func_no: "mission",
-          func_name: "維保任務列表",
-          path: "/mission"
-        },
+        // {
+        //   module_no: "bus",
+        //   fg_no: "maintenance",
+        //   func_no: "mission",
+        //   func_name: "維保任務列表",
+        //   path: "/mission"
+        // },
         {
           module_no: "bus",
           fg_no: "maintenance",
           func_no: "maintenance",
-          func_name: "維保管理設定",
-          path: "/maintenance"
+          func_name: "維保任務列表",
+          path: "/mission"
         }
       ]
     },

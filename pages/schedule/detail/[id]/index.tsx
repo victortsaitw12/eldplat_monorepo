@@ -19,7 +19,6 @@ import InfoItem from "@components/InfoCard/InfoItem";
 import CustomTextArea from "@components/CustomTextArea";
 import LoadingSpinner from "@components/LoadingSpinner";
 
-
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
   // const containerRef = useRef(null);
@@ -31,17 +30,15 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const [shiftData, setShiftData] = useState<any>([]);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
-  
 
-  const modalInfo =
-    {
-      listClassName: "",
-      readonly: false,
-      req: true,
-      label: "說明",
-      bold: true,
-      value: <CustomTextArea placeholder="請輸入說明" />
-    };
+  const modalInfo = {
+    listClassName: "",
+    readonly: false,
+    req: true,
+    label: "說明",
+    bold: true,
+    value: <CustomTextArea placeholder="請輸入說明" />
+  };
 
   const DUMMY_driverData = {
     user_no: "USR202305240008",
@@ -70,6 +67,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   };
   const cancelModalHandler = () => {
     setOpenModal(false);
+    router.push("/schedule");
   };
   const fetchData = async () => {
     setIsLoading(true);
@@ -127,14 +125,10 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               />
             )}
           </ControlBar>
-          {
-            shiftData.length !==0 &&
-            <Schedule 
-              initialDate={renderDate} 
-              shiftData={ shiftData }
-            />
-          }
-          {isEdit && 
+          {shiftData.length !== 0 && (
+            <Schedule initialDate={renderDate} shiftData={shiftData} />
+          )}
+          {isEdit && (
             <LightBox
               title="退回"
               isOpen={isOpenModal}
@@ -142,16 +136,18 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 setOpenModal(false);
               }}
               customBtns={
-                <ButtonSet 
-                  primaryBtnText="確定退回" 
-                  secondaryBtnOnClick={ cancelModalHandler}/>}
-                >
-              <InfoItem
-                item={modalInfo}
-                isEdit={true}
-              />
+                <ButtonSet
+                  primaryBtnText="確定退回"
+                  secondaryBtnOnClick={() => {
+                    setOpenModal(false);
+                  }}
+                  primaryBtnOnClick={cancelModalHandler}
+                />
+              }
+            >
+              <InfoItem item={modalInfo} isEdit={true} />
             </LightBox>
-          }
+          )}
         </Pane>
       </ViewIdSTY>
     </UIProvider>

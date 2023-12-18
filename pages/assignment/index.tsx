@@ -300,7 +300,7 @@ const Page: NextPageWithLayout<never> = () => {
             btns={
               <PrimaryBtn
                 text="新增任務"
-                onClick={() => router.push("/driver/detail/create")}
+                onClick={() => router.push("/assignment/detail/create")}
               >
                 <PlusIcon />
               </PrimaryBtn>
