@@ -171,6 +171,8 @@ const Page: NextPageWithLayout<
             return {
               day_number: index + 1,
               day_date: shiftDate(new Date(departureDate!), index),
+              // FIXME: this arrive_time just prevent typescript error
+              arrive_time: flightTime!,
               departure_time: "",
               pickup_location: "",
               stopover_address_list: [],
@@ -196,6 +198,8 @@ const Page: NextPageWithLayout<
             day_number: 1,
             day_date: flightDate!,
             departure_time: flightTime!,
+            // FIXME: this arrive_time just prevent typescript error
+            arrive_time: flightTime!,
             pickup_location:
               type === "pickUp"
                 ? airport! + `${terminal ? `第${terminal}航廈` : ""}`

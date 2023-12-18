@@ -13,9 +13,8 @@ export const BodySTY = styled.div`
     }
     
     .section-content {
-        padding: 16px;
+        padding: 20px;
     }
-
 
 
     // TODO: for client 覆蓋 Collapse component, 或者可以做成新的獨立component
