@@ -15,12 +15,13 @@ interface Props {
 function Index({ data }: Props) {
   const router = useRouter();
   console.log(router.asPath);
-  // console.log("🕯️router", router);
+  console.log("🕯️router", router);
   // console.log("data.url", data.url);
   const defaultSelect =
     data.name !== "入門" &&
     data.url !== "/" &&
     (data.url === router.asPath || router.asPath.indexOf(data.url) >= 0);
+  const targetUrl = data.url[0];
   const [isSelect, setIsSelect] = useState(defaultSelect);
   const isDisabled = data.url === null && !data.subList;
   return (

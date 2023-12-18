@@ -223,6 +223,17 @@ export const DUMMY_MENU = {
           module_no: "bus",
           fg_no: "driver",
           func_no: "driver",
+          func_name: "TEST",
+          path: [
+            "/driver",
+            "/driver/detail/[id]?editPage=view",
+            "/driver/detail/[id]?editPage=edit"
+          ]
+        },
+        {
+          module_no: "bus",
+          fg_no: "driver",
+          func_no: "driver",
           func_name: "新增駕駛",
           path: "/driver/detail/create"
         },
