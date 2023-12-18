@@ -56,7 +56,6 @@ const AuthModule = ({
   };
 
   const isAuthFuncDisabled = (value: I_AuthFuncElement[]) => {
-    if (!isEdit) return true;
     return value.every((elem) => elem.element_default === "3");
   };
 
@@ -135,7 +134,19 @@ const AuthModule = ({
                   isAuthFuncElemDisabled(field.element_default) ? "hide" : ""
                 }`}
               >
-                {isEdit ? (
+                <Radio
+                  key={`func_auth.${index}.func_element.${i}.element_default`}
+                  control={control}
+                  name={`func_auth.${index}.func_element.${i}.element_default`}
+                  isDisabled={
+                    !isEdit || isAuthFuncElemDisabled(field.element_default)
+                  }
+                  options={Array.from(authFuncViewValue, ([value, label]) => ({
+                    value,
+                    label
+                  }))}
+                />
+                {/* {isEdit ? (
                   <Radio
                     key={`func_auth.${index}.func_element.${i}.element_default`}
                     control={control}
@@ -156,7 +167,7 @@ const AuthModule = ({
                       )
                     )}
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           );

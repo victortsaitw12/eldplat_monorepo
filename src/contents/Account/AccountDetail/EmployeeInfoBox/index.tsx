@@ -48,7 +48,12 @@ const EmployeeInfoBox = ({
   };
 
   // ------- render ------- //
-
+  const customStyles = {
+    control: (base: any) => ({
+      ...base,
+      minHeight: 32
+    })
+  };
   const options = [
     ...ddl.org_no.map((item) => ({ label: item.label, value: item.value }))
   ];
@@ -76,6 +81,7 @@ const EmployeeInfoBox = ({
                 length: (v) => v.length > 0 || "必填欄位"
               }
             }}
+            styles={customStyles}
           />
         </div>
       ),
@@ -88,6 +94,7 @@ const EmployeeInfoBox = ({
               className="basic-multi-select"
               classNamePrefix="select"
               isDisabled={true}
+              placeholder="請選擇"
             />
             <div className="org__value">
               {data.porg_name.concat("/", labels)}{" "}

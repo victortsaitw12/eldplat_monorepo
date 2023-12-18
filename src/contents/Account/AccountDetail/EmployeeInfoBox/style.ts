@@ -25,6 +25,9 @@ export const BodySTY = styled.div`
       color: ${({ theme }) => theme.color.N300};
       font-size: ${({ theme }) => theme.fontSize.Paragraph200};
       font-weight: ${({ theme }) => theme.fontWeight.Paragraph200};
+      white-space: nowrap;
+      overflow: visible;
+      padding: 8px 12px;
     }
   }
 
@@ -63,9 +66,11 @@ export const BodySTY = styled.div`
           color: ${({ theme }) => theme.color.N800};
           font-size: ${({ theme }) => theme.fontSize.Paragraph300};
           font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
-          /* input {
-            max-width: 280px;
-          } */
+
+          input {
+            font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+            color: ${({ theme }) => theme.color.N300};
+          }
         }
       }
     }

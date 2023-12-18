@@ -16,12 +16,14 @@ function StyledSelect<
   options,
   isDisabled,
   onFormChange,
-  formValue
+  formValue,
+  styles
 }: {
   options: Array<Option>;
   isDisabled: boolean;
   formValue: Array<string>;
   onFormChange: (value: Array<string>) => void;
+  styles?: any;
 }) {
   const id = useId();
   // const [value, setValue] = useState(formValue);
@@ -43,7 +45,7 @@ function StyledSelect<
         placeholder={placeholder}
         isMulti
         value={selectedOptions}
-        styles={selectStyles}
+        styles={styles || selectStyles}
       />
     </BodySTY>
   );
@@ -57,13 +59,15 @@ function ControlledSelect<
   control,
   rules,
   options,
-  isDisabled
+  isDisabled,
+  styles
 }: {
   name: TName;
   control?: Control<TFieldValues>;
   rules?: RegisterOptions;
   options: Array<{ label: string; value: string }>;
   isDisabled: boolean;
+  styles?: any;
 }) {
   return (
     <Controller
@@ -76,6 +80,7 @@ function ControlledSelect<
           isDisabled={isDisabled}
           onFormChange={onChange}
           formValue={value}
+          styles={styles || undefined}
         />
       )}
     />
