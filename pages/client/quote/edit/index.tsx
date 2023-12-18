@@ -29,6 +29,7 @@ import { getBusType } from "@services/client/getBusType";
 import LoadingSpinner from "@components/LoadingSpinner";
 import LoadingModal from "@components/LoadingModal";
 import OrdersDetail from "@contents/Client/Quote/Detail";
+import NoticeMessage from "@components/NoticeMessage";
 //
 const DummyNavigationListData = [
   {
@@ -319,93 +320,98 @@ const Page: NextPageWithLayout<
             {/* {currentTab === 3 && <SpecialNeeds />} */}
             {currentTab === 3 && <ContactInformation />}
             {currentTab === 4 && <OrdersDetail />}
-            <div className="content-actions-container">
-              <Button
-                style={{
-                  backgroundColor: "#fff",
-                  color: "#567190",
-                  fontWeight: "600",
-                  borderRadius: "32px",
-                  flex: "1",
-                  border: "none"
-                }}
-                type="button"
-                onClick={() => {
-                  if (currentTab === 1) {
-                    router.push({
-                      pathname: "/client/quote/confirm",
-                      query: {
-                        type,
-                        departureDate,
-                        returnDate,
-                        purpose,
-                        flightDate,
-                        flightNo,
-                        airport,
-                        terminal,
-                        airline,
-                        flightTime,
-                        quote_type:
-                          type === "custom"
-                            ? "1"
-                            : type === "pickUp"
-                            ? "2"
-                            : "3"
-                      }
-                    });
-                    return;
-                  }
-                  setCurrentTab((prev) => prev - 1);
-                }}
-              >
-                上一步
-              </Button>
-              <Button
-                appearance="primary"
-                type="button"
-                style={{
-                  color: "#fff",
-                  backgroundColor: "#3670C9",
-                  fontWeight: "600",
-                  borderRadius: "32px",
-                  flex: "1",
-                  border: "none"
-                }}
-                disabled={methods.formState.isSubmitting}
-                onClick={() => {
-                  let isValid = true;
-                  if (currentTab < 5) {
-                    if (currentTab === 2) {
-                      // if (currentTab === 1 || currentTab === 2) {
-                      isValid = validationList[currentTab].valid;
-                      if (!isValid) {
-                        toaster.danger("無法前往下一頁", {
-                          description: validationList[currentTab].errorMessage,
-                          id: "validation-error"
-                        });
-                        return;
-                      }
-                    }
-                    methods.handleSubmit(() => {
-                      console.log("valid from");
-                      setCurrentTab((prev) => prev + 1);
-                    })();
-                  } else {
-                    console.log("submit");
-                    methods.handleSubmit(asyncSubmitFormHandler)();
-                  }
-                }}
-              >
-                {currentTab === 4 ? "送出詢價單" : "下一步"}
-              </Button>
-            </div>
+
           </form>
         </FormProvider>
         <div className="charge-container">
-          <Collapse title="初估金額" opened={true}>
-            <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
-          </Collapse>
+          <div className="charge-header">
+            <div className="title">初估金額</div>
+            <div className="charge">NTD $2,805</div>
+          </div>
+          <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
+          <NoticeMessage size={16} message="注意事項注意事項注意事項注意事項注意事項注意事項" />
+          <div className="content-actions-container">
+            <Button
+              style={{
+                backgroundColor: "#fff",
+                color: "#567190",
+                fontWeight: "600",
+                borderRadius: "4px",
+                flex: "1",
+                border: "1px solid #B3BAC5"
+              }}
+              type="button"
+              onClick={() => {
+                if (currentTab === 1) {
+                  router.push({
+                    pathname: "/client/quote/confirm",
+                    query: {
+                      type,
+                      departureDate,
+                      returnDate,
+                      purpose,
+                      flightDate,
+                      flightNo,
+                      airport,
+                      terminal,
+                      airline,
+                      flightTime,
+                      quote_type:
+                        type === "custom"
+                          ? "1"
+                          : type === "pickUp"
+                          ? "2"
+                          : "3"
+                    }
+                  });
+                  return;
+                }
+                setCurrentTab((prev) => prev - 1);
+              }}
+            >
+              上一步
+            </Button>
+            <Button
+              appearance="primary"
+              type="button"
+              style={{
+                color: "#fff",
+                backgroundColor: "#5E6C84",
+                fontWeight: "600",
+                borderRadius: "4px",
+                flex: "1",
+                border: "none"
+              }}
+              disabled={methods.formState.isSubmitting}
+              onClick={() => {
+                let isValid = true;
+                if (currentTab < 5) {
+                  if (currentTab === 2) {
+                    // if (currentTab === 1 || currentTab === 2) {
+                    isValid = validationList[currentTab].valid;
+                    if (!isValid) {
+                      toaster.danger("無法前往下一頁", {
+                        description: validationList[currentTab].errorMessage,
+                        id: "validation-error"
+                      });
+                      return;
+                    }
+                  }
+                  methods.handleSubmit(() => {
+                    console.log("valid from");
+                    setCurrentTab((prev) => prev + 1);
+                  })();
+                } else {
+                  console.log("submit");
+                  methods.handleSubmit(asyncSubmitFormHandler)();
+                }
+              }}
+            >
+              {currentTab === 4 ? "送出詢價單" : "下一步"}
+            </Button>
+          </div>
         </div>
+
       </div>
     </BodySTY>
   );

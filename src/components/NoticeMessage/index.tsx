@@ -4,12 +4,13 @@ import { InfoSignIcon } from "evergreen-ui";
 
 interface I_Props {
     message: string;
+    size?: number;
   }
 
-const NoticeMessage = ({ message }: I_Props) => {
+const NoticeMessage = ({ message, size=14 }: I_Props) => {
   return (
     <BodySTY>
-        <InfoSignIcon size={14} />
+        <InfoSignIcon size={size} />
         <div className="message">{message}</div>
     </BodySTY>
   )
