@@ -31,11 +31,7 @@ const RolePanel = ({
 
   //------ functions ------//
   const handleRoleChange = (v: string[]) => {
-    const prev = getValues("account_role");
-    // filter out the same value
-    const filtered = v.filter((elem) => !prev.includes(elem));
-
-    setValue("account_role", prev.concat(filtered));
+    setValue("account_role", v);
   };
 
   const getRoles = (data: I_RoleItem[]) => {

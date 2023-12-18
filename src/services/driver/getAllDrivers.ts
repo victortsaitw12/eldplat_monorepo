@@ -128,6 +128,8 @@ export const getAllDriver = async (
   filter: { [key: string]: any } = {},
   pageQuery = defaultPageInfo
 ) => {
+  return DUMMY_DATA;
+
   const driverFilter = [];
   for (const key in filter) {
     if (filter[key].value !== "") {
@@ -153,7 +155,6 @@ export const getAllDriver = async (
   //   })
   // });
   // return res.json();
-  return DUMMY_DATA;
 };
 
 export const getDriverTitle = () => {

@@ -44,34 +44,34 @@ export const DUMMY_ACC_LIST: I_responseBody = {
   ResultList: [
     {
       account_no: "007217",
-      account_name: "張友承",
+      account_name: "鍾俊儀",
       org_no: ["o-00101", "o-0010101", "o-001010102"],
       org_name: ["雄獅資訊", "多元發展部", "電商應用整合組"],
       content_phone_tel1: "0911000111",
       content_phone_tel2: "0911000222",
       roles: [
         { role_name_m: "系統管理", role_name: ["使用者"] },
-        { role_name_m: "車輛管理", role_name: ["主管", "管理員", "使用者"] }
+        { role_name_m: "車輛管理", role_name: ["主管", "管理員", "使用者"] },
+        { role_name_m: "人事管理", role_name: ["管理員", "使用者"] }
       ],
       invt_sts: "03"
     },
     {
       account_no: "001234",
-      account_name: "王巧茵",
+      account_name: "王大名",
       org_no: ["o-01", "o-0102"],
       org_name: ["雄獅資訊", "資通規畫部"],
       content_phone_tel1: "0922000111",
       content_phone_tel2: "0922000222",
       roles: [
         { role_name_m: "系統管理", role_name: ["主管", "管理員", "使用者"] },
-        { role_name_m: "車輛管理", role_name: ["使用者"] },
-        { role_name_m: "人事管理", role_name: ["管理員", "使用者"] }
+        { role_name_m: "車輛管理", role_name: ["使用者"] }
       ],
       invt_sts: "03"
     },
     {
       account_no: "002234",
-      account_name: "姜昱光",
+      account_name: "江大玉",
       org_no: ["o-01", "o-0101", "o-010101"],
       org_name: ["雄獅資訊", "多元發展部", "通運應用整合組"],
       content_phone_tel1: "0987654321",
@@ -116,10 +116,7 @@ export const DUMMY_ACC_LIST: I_responseBody = {
       org_name: ["雄獅資訊", "多元發展部"],
       content_phone_tel1: "0912341234",
       content_phone_tel2: "",
-      roles: [
-        { role_name_m: "系統管理", role_name: ["使用者"] },
-        { role_name_m: "車輛管理", role_name: ["使用者"] }
-      ],
+      roles: [{ role_name_m: "車輛管理", role_name: ["使用者"] }],
       invt_sts: "04"
     }
   ],

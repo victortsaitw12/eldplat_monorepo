@@ -50,7 +50,8 @@ export const getBusTitle = () => {
     "車隊",
     "目前派遣",
     "主要駕駛",
-    "狀態"
+    "狀態",
+    "更多"
   ];
   return DUMMY_TITLES;
 };
@@ -89,7 +90,7 @@ const DUMMY_DATA = {
     {
       id: "123456",
       bus_name: "雄獅奶油1號",
-      license_plate: "1",
+      license_plate: "KKA-001",
       type: "大巴",
       available_seats: 43,
       age: 5,
@@ -102,7 +103,7 @@ const DUMMY_DATA = {
     {
       id: "234567",
       bus_name: "雄獅奶油2號",
-      license_plate: "2",
+      license_plate: "KKA-002",
       type: "中巴",
       available_seats: 30,
       age: 3,
@@ -110,12 +111,12 @@ const DUMMY_DATA = {
       team: "第二組",
       current_dep: "信義停車場",
       main_driver: "張小明",
-      status: "1"
+      status: "2"
     },
     {
       id: "345678",
       bus_name: "雄獅奶油3號",
-      license_plate: "3",
+      license_plate: "KKA-003",
       type: "小巴",
       available_seats: 20,
       age: 2,
@@ -123,12 +124,12 @@ const DUMMY_DATA = {
       team: "第三組",
       current_dep: "大安停車場",
       main_driver: "王大力",
-      status: "1"
+      status: "3"
     },
     {
       id: "456789",
       bus_name: "雄獅奶油4號",
-      license_plate: "4",
+      license_plate: "KKA-004",
       type: "遊覽車",
       available_seats: 50,
       age: 4,
@@ -136,12 +137,12 @@ const DUMMY_DATA = {
       team: "第四組",
       current_dep: "中山停車場",
       main_driver: "李小龍",
-      status: "1"
+      status: "4"
     },
     {
       id: "567890",
       bus_name: "雄獅奶油5號",
-      license_plate: "5",
+      license_plate: "KKA-005",
       type: "迷你巴士",
       available_seats: 15,
       age: 1,
@@ -149,7 +150,7 @@ const DUMMY_DATA = {
       team: "第五組",
       current_dep: "士林停車場",
       main_driver: "陳小美",
-      status: "1"
+      status: "5"
     }
   ],
   conditionList: [

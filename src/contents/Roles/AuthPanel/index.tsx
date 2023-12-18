@@ -98,6 +98,7 @@ const AuthPanel = ({
         <AuthModule
           data={item}
           isEdit={false}
+          index={i}
           register={register}
           getValues={getValues}
           control={control}

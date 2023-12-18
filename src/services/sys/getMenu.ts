@@ -201,23 +201,23 @@ export const DUMMY_MENU = {
         {
           module_no: "bus",
           fg_no: "driver",
-          func_no: "driverList",
+          func_no: "driver",
           func_name: "駕駛列表",
           path: "/driver"
         },
-        {
-          module_no: "bus",
-          fg_no: "driver",
-          func_no: "driver",
-          func_name: "新增駕駛",
-          path: "/driver/detail/create"
-        },
+        // {
+        //   module_no: "bus",
+        //   fg_no: "driver",
+        //   func_no: "driver",
+        //   func_name: "新增駕駛",
+        //   path: "/detail/create"
+        // },
         {
           module_no: "bus",
           fg_no: "driver",
           func_no: "driver",
           func_name: "駕駛管理設定",
-          path: "/driver/management"
+          path: "/driver_management"
         }
       ]
     },
@@ -260,10 +260,6 @@ export const DUMMY_MENU = {
       ]
     },
     {
-      menu_name: "客戶管理",
-      sub_menu: []
-    },
-    {
       menu_name: "供應商管理",
       sub_menu: [
         {
@@ -288,8 +284,8 @@ export const DUMMY_MENU = {
         {
           module_no: "setting",
           fg_no: "password",
-          func_no: "reset",
-          func_name: "重設密碼",
+          func_no: "password",
+          func_name: "修改密碼",
           path: "/setting/password"
         }
       ]

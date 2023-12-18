@@ -77,6 +77,10 @@ const breadcrumbs: I_routers = {
     { label: "個人班表", url: "/schedule/detail/[id]" },
     { label: "簽核", url: "/approval" },
   ],
+  "/assignment": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派 ", url: "/assignment" }
+  ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   "/bus": [
@@ -102,23 +106,51 @@ const breadcrumbs: I_routers = {
     { label: "供應商", url: "/vendor" },
     { label: "詳情", url: "" }
   ],
+  // "/maintenance/notice": [
+  //   { label: "入門", url: "/" },
+  //   { label: "維保通知", url: "/maintenance/notice" }
+  // ],
+  // "/maintenance/mission": [
+  //   { label: "入門", url: "/" },
+  //   { label: "維保任務", url: "/maintenance/mission" }
+  // ],
+  // "/maintenance/record": [
+  //   { label: "入門", url: "/" },
+  //   { label: "維保紀錄", url: "/maintenance/record" }
+  // ],
+  // "/maintenance/detail/[id]": [
+  //   { label: "入門", url: "/" },
+  //   { label: "維保任務", url: "/maintenance/mission" },
+  //   { label: "詳情", url: "" }
+  // ],
+  // ====== maintenance =====
+  "/maintenance": [
+    { label: "首頁", url: "/" },
+    { label: "維保列表", url: "/maintenance/notice" }
+  ],
   "/maintenance/notice": [
-    { label: "入門", url: "/" },
+    { label: "首頁", url: "/" },
     { label: "維保通知", url: "/maintenance/notice" }
   ],
   "/maintenance/mission": [
-    { label: "入門", url: "/" },
-    { label: "維保任務", url: "/maintenance/mission" }
+    { label: "首頁", url: "/" },
+    { label: "維保任務列表", url: "/maintenance/mission" }
   ],
   "/maintenance/record": [
-    { label: "入門", url: "/" },
-    { label: "維保紀錄", url: "/maintenance/record" }
+    { label: "首頁", url: "/" },
+    { label: "維保任務列表", url: "/maintenance/mission" }
+  ],
+  "/maintenance/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "維保任務列表", url: "/maintenance/mission" },
+    { label: "新增任務", url: "" }
   ],
   "/maintenance/detail/[id]": [
-    { label: "入門", url: "/" },
-    { label: "維保任務", url: "/maintenance/mission" },
-    { label: "詳情", url: "" }
+    { label: "首頁", url: "/" },
+    { label: "維保任務列表", url: "/maintenance/mission" },
+    { label: "檢視任務", url: "" }
   ],
+  // ====== maintenance =====
   "/admin_orders": [
     { label: "入門", url: "/" },
     { label: "訂單", url: "/admin_orders" }
@@ -127,10 +159,6 @@ const breadcrumbs: I_routers = {
     { label: "入門", url: "/" },
     { label: "訂單", url: "/admin_orders" },
     { label: "詳情", url: "" }
-  ],
-  "/assignment": [
-    { label: "入門", url: "/" },
-    { label: "派單", url: "/assignment" }
   ],
   "/company": [
     { label: "入門", url: "/" },

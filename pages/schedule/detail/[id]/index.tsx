@@ -17,6 +17,7 @@ import ButtonSet from "@components/ButtonSet";
 import LightBox from "@components/Lightbox";
 import InfoItem from "@components/InfoCard/InfoItem";
 import CustomTextArea from "@components/CustomTextArea";
+import LoadingSpinner from "@components/LoadingSpinner";
 
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
@@ -27,8 +28,10 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const [monthlyData, setMonthlyData] = useState<MonthlyData[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [renderDate, setRenderDate] = useState(new Date());
+  const [shiftData, setShiftData] = useState<any>([]);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
+  
 
   const modalInfo =
     {
@@ -72,7 +75,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     setIsLoading(true);
     try {
       const result = await getScheduleList(id);
-      setMonthlyData(result.data);
+      setShiftData(result);
     } catch (e: any) {
       console.log(e);
     }
@@ -85,7 +88,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   useEffect(() => {
     if (!id) return;
     fetchData();
-    setIsEdit(editPage === "edit" || false);
+    // setIsEdit(editPage === "edit" || false);
   }, [id]);
   //------ render ------//
   // const tableName = [
@@ -96,7 +99,6 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   //     initialMonthFirst={initialMonthFirst}
   //   />
   // ];
-
   return (
     <UIProvider>
       <ViewIdSTY>
@@ -125,7 +127,13 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               />
             )}
           </ControlBar>
-          <Schedule initialDate={renderDate} />
+          {
+            shiftData.length !==0 &&
+            <Schedule 
+              initialDate={renderDate} 
+              shiftData={ shiftData }
+            />
+          }
           {isEdit && 
             <LightBox
               title="退回"

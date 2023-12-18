@@ -21,7 +21,7 @@ function ForgetPasswordForm() {
     e.preventDefault();
     const result = checkEmail(email);
     if (result) {
-      toaster.success("已寄送驗證信至您的信箱，3秒後跳轉至");
+      toaster.success("已寄送驗證信至您的信箱，3秒後跳轉至重設密碼頁面");
       setTimeout(() => {
         router.push("/set-password");
       }, 3000);
