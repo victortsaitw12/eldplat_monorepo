@@ -60,6 +60,7 @@ export interface QuotationCreatePayload {
   remark: string;
   quote_total_amount: number;
   order_itinerary_list: Array<{
+    arrive_time: string;
     day_number: number;
     day_date: string;
     departure_time: string;
