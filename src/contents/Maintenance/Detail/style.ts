@@ -28,7 +28,13 @@ export const DivSTY = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+    &.fb-33 {
+      flex-basis: calc((100% - 20px) / 3);
+    }
 
+    &.fb-66 {
+      flex-basis: calc((100% - 20px) / 3 * 2);
+    }
     .create-more-button {
       border: 1px dashed ${({ theme }) => theme.color.N40};
       line-height: 127px;
