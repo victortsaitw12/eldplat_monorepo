@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  Switch,
-  RadioGroup,
   CaretDownIcon,
   CaretRightIcon,
   IconButton
@@ -11,26 +9,26 @@ import { I_AccountRole, I_RoleItem } from "@services/account/getOneAccount";
 import CheckboxField from "@components/CheckboxField";
 import { DivSTY } from "./style";
 
+const getInitCheckedList = (data: I_RoleItem[]) => {
+  const checkedList = data
+    .filter((elem) => elem.is_select === true)
+    .map((elem) => elem.role_no);
+  return checkedList;
+};
+
 const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
-  const [checkedList, setCheckedList] = React.useState<string[]>([]);
   const [isOpen, setIsOpen] = React.useState<boolean>(true);
+  const [checkedList, setCheckedList] = React.useState<string[]>(
+    getInitCheckedList(data.roles)
+  );
 
   //------ functions ------//
-  const getInitCheckedList = (data: I_RoleItem[]) => {
-    const checkedList = data
-      .filter((elem) => elem.is_select === true)
-      .map((elem) => elem.role_no);
-    return checkedList;
-  };
-
   const handleCheckItem = (id: string) => {
-    setCheckedList((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item) => item !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
+    const update = checkedList.includes(id)
+      ? checkedList.filter((item: string) => item !== id)
+      : [...checkedList, id];
+    setCheckedList(update);
+    onChange && onChange(id);
   };
 
   const handleToggle = () => {
@@ -38,12 +36,9 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
   };
 
   React.useEffect(() => {
-    onChange(checkedList);
-  }, [checkedList, onChange]);
-
-  React.useEffect(() => {
     setCheckedList(getInitCheckedList(data.roles));
-  }, [data]);
+    console.log("!!!", getInitCheckedList(data.roles));
+  }, []);
 
   return (
     <DivSTY>
@@ -66,7 +61,7 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
               checked={checkedList.includes(elem.role_no)}
               disabled={!isEdit}
             />
-            <div className="text">{elem.role_name}</div>{" "}
+            <div className="text">{elem.role_name}</div>
           </div>
         ))}
       </div>

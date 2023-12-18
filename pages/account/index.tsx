@@ -80,8 +80,8 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const handleCreate = () => {
-    const id = "create";
-    router.push(`/account/detail/${id}?editPage=edit`);
+    // const id = "create";
+    router.push("/account/detail/create");
   };
 
   // ------- useEffect ------- //

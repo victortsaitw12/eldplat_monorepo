@@ -95,6 +95,9 @@ export const BodySTY = styled.div`
           color: ${({ theme }) => theme.color.N800};
           font-size: ${({ theme }) => theme.fontSize.Paragraph300};
           font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
+          input {
+            font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+          }
         }
       }
     }
