@@ -31,12 +31,13 @@ const RolePanel = ({
     );
 
   //------ functions ------//
-  const handleRoleChange = (v: string[]) => {
-    console.log("🍅 v", v);
-    setValue("account_role", v);
+  const handleRoleChange = (v: string) => {
+    const prev = getValues("account_role");
+    const update = prev.includes(v)
+      ? prev.filter((item: string) => item !== v)
+      : [...prev, v];
+    setValue("account_role", update);
   };
-
-  console.log("🍅 data", getValues());
 
   // ------- render ------- //
   const dataFitInfoBox = data.map((item) => {
