@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div`
-  background-color: ${({ theme }) => theme.color.N300};
   display: flex;
   flex-direction: column;
   align-items: center;
