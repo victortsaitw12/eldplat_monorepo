@@ -71,5 +71,5 @@ const Page = () => {
 
 // Page.getLayout = getLayout;
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: "線上訂車" });
+  getLayout(page, { ...layoutProps, title: "EldPlat 前台" });
 export default Page;
