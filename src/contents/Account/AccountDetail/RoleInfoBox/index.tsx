@@ -13,6 +13,7 @@ import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 import RoleModule from "./RoleModule";
 import { getValue } from "evergreen-ui/types/theme";
+import { get } from "lodash";
 
 const RolePanel = ({
   data,
@@ -31,8 +32,11 @@ const RolePanel = ({
 
   //------ functions ------//
   const handleRoleChange = (v: string[]) => {
+    console.log("🍅 v", v);
     setValue("account_role", v);
   };
+
+  console.log("🍅 data", getValues());
 
   // ------- render ------- //
   const dataFitInfoBox = data.map((item) => {

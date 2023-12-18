@@ -1,12 +1,11 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
-import { NextPageWithLayout, GetServerSideProps } from "next";
-import { RadioGroup } from "evergreen-ui";
+import { NextPageWithLayout } from "next";
+import { RadioGroup, toaster } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import { ParsedUrlQuery } from "querystring";
 import { DUMMY_ACC_LIST } from "@services/account/getAccountList";
 import {
   getOneAccount,
@@ -40,11 +39,9 @@ const Page: NextPageWithLayout<never> = () => {
   const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const { data: session, status } = useSession();
   const { showLeavePageModal } = useModal();
-  const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
   const [ddl, setDDL] = React.useState<I_DDL>(DUMMY_ACC_DDL.ResultList[0]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const isEdit = true;
   const isCreate = true;
   const [options] = React.useState([
     { label: "使用以前的資料", value: "0" },
@@ -52,17 +49,12 @@ const Page: NextPageWithLayout<never> = () => {
   ]);
   const [dataChoice, setDataChoice] = React.useState("");
   const [lightboxOpen, setLightboxOpen] = React.useState(false);
+  const createDummy = DUMMY_DATA_CREATE.ResultList[0];
 
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-    const createDummy = DUMMY_DATA_CREATE.ResultList[0];
-    const editedData = localStorage.getItem("accountEditData");
-    const editedDummy = editedData ? JSON.parse(editedData) : null;
-    const editDummy = editedDummy
-      ? { ...editedDummy }
-      : DUMMY_ONE_ACCOUNT.ResultList[0];
-    setData(isCreate ? createDummy : editDummy);
+    setData(createDummy);
     setDDL(DUMMY_ACC_DDL.ResultList[0]);
 
     // if (!session) return;
@@ -87,50 +79,27 @@ const Page: NextPageWithLayout<never> = () => {
     // check user + store data
     const account_name = getAccountName(data);
     const roles = getRoleNames(data);
-    if (isCreate) {
-      const isUserExist = DUMMY_ACC_LIST.ResultList.find(
-        (item) => item.account_name === account_name
-      );
-      if (isUserExist && dataChoice === "") {
-        setDataChoice("0");
-        setLightboxOpen(true);
-        // showModal(userExistModalContent);
-        return;
-      }
-      localStorage.setItem(
-        "accountCreateData",
-        JSON.stringify({
-          ...data,
-          id: "create",
-          account_name: account_name,
-          roles: roles,
-          invt_sts: "03"
-        })
-      );
-      router.push("/account");
-    } else {
-      const accountRoleArrFromDummy =
-        DUMMY_ONE_ACCOUNT.ResultList[0].account_role;
-      const editedDataFitFormatForRead = accountRoleArrFromDummy.map((item) => {
-        const updatedRoles = item.roles.map((role) => {
-          if (data.account_role.includes(role.role_no)) {
-            return { ...role, is_select: true };
-          }
-          return role;
-        });
-        return { ...item, roles: updatedRoles };
-      });
-      const editedDataForDemo = {
-        ...DUMMY_ONE_ACCOUNT.ResultList[0],
-        ...data,
-        account_role: editedDataFitFormatForRead
-      };
-      localStorage.setItem(
-        "accountEditData",
-        JSON.stringify(editedDataForDemo)
-      );
-      router.push("/account/detail/create?editPage=view");
+
+    const isUserExist = DUMMY_ACC_LIST.ResultList.find(
+      (item) => item.account_name === account_name
+    );
+    if (isUserExist && dataChoice === "") {
+      setDataChoice("0");
+      setLightboxOpen(true);
+      return;
     }
+    localStorage.setItem(
+      "accountCreateData",
+      JSON.stringify({
+        ...data,
+        id: "create",
+        account_name: account_name,
+        roles: roles,
+        invt_sts: "03"
+      })
+    );
+    toaster.success("新增帳號成功");
+    location.reload();
 
     // if (!session) return;
     // const uk = session.user.account_no;
@@ -154,19 +123,13 @@ const Page: NextPageWithLayout<never> = () => {
 
   const handleChangeRoute = async (path: string) => showLeavePageModal(path);
   const handleCancel = () => {
-    // onCreate
-    if (isCreate) {
-      handleChangeRoute("/account");
-      return;
-    }
+    handleChangeRoute("/account");
+    return;
   };
 
   const handleConfirm = () => {
-    // onCreate
-    if (isCreate) {
-      submitRef.current && submitRef.current.click();
-      return;
-    }
+    submitRef.current && submitRef.current.click();
+    return;
   };
 
   const handleDataChoice = () => {
@@ -200,7 +163,7 @@ const Page: NextPageWithLayout<never> = () => {
         <AccountDetail
           data={data}
           ddl={ddl}
-          isEdit={isEdit}
+          isEdit={true}
           asyncSubmitForm={asyncSubmitForm}
           submitRef={submitRef}
         />

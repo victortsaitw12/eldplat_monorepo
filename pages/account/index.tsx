@@ -80,7 +80,7 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const handleCreate = () => {
-    const id = "create";
+    // const id = "create";
     router.push("/account/detail/create");
   };
 
