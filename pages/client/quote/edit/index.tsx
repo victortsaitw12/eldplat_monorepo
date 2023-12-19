@@ -128,7 +128,7 @@ const Page: NextPageWithLayout<
   const [isLoading, setIsLoading] = useState(false);
   const [currentTab, setCurrentTab] = useState(1);
   const [remainTime, setRemainTime] = useState(5);
-  const [quoteNo, setQuoteNo] = useState("");
+  const [quoteNo, setQuoteNo] = useState("ORD202311110001");
   useEffect(() => {
     validationList = [...initValidationList];
   }, []);
@@ -235,6 +235,7 @@ const Page: NextPageWithLayout<
         throw new Error("Fail to create quotation");
       }
       setQuoteNo(quote_no)
+      console.log("======>", quote_no, quoteNo)
       setCurrentTab(6);
     } catch (e) {
       console.log(e);
@@ -299,8 +300,7 @@ const Page: NextPageWithLayout<
                 title: "粗估金額",
                 value: "NTD $2,805",
               },
-            ]}>
-            </DetailGrid>
+            ]} />
             <Pane 
               marginTop="24px"
               textAlign="right"

@@ -94,12 +94,8 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
             )}
             <Collapse title="乘車資訊" opened={true}>
               <TakeBusInfoView
-                adult={orderData.adult}
-                child={orderData.child}
-                infant={orderData.infant}
-                check_in_luggage={orderData.check_in_luggage}
-                carry_on_luggage={orderData.carry_on_luggage}
                 bus_data={orderData.bus_data}
+                takeBusInfo={orderData.bus_data}
               />
             </Collapse>
             <Collapse title="特殊需求" opened={true}>
