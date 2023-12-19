@@ -5,6 +5,7 @@ const BodySTY = styled.div`
   flex-direction: column;
   align-items: flex-start;
   border: 1px solid ${({ theme }) => theme.color.N40};
+  border-radius: 4px;
 
   > ul {
     width: 100%;

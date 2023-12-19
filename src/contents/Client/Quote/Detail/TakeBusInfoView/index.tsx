@@ -43,12 +43,23 @@ const TakeBusInfoView = ({
     <>
       {takeBusInfo.length !== 0 && takeBusInfo.map((info, index) => {
         return (
-          <DetailGrid listArray={info.value} title={info.title} key={index} />
+          <DetailGrid
+            borderRadius={index === 0 ? "4px 4px 0 0" : "0"}
+            isCollapse={true} 
+            listArray={info.value} 
+            title={info.title} 
+            key={index} 
+          />
           )
         })}
       {
         mappedBusData && mappedBusData.length !== 0 &&
-        <DetailGrid listArray={mappedBusData} title="車型與數量" />
+        <DetailGrid 
+          borderRadius={"0 0 4px 4px"}
+          isCollapse={true} 
+          listArray={mappedBusData} 
+          title="車型與數量" 
+        />
       }
     </>
 

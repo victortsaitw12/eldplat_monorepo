@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { BodySTY } from "./style";
+import { Pane } from "evergreen-ui";
 //@component
 import Collapse from "@components/Collapse";
 //@contents
@@ -56,9 +57,15 @@ const OrdersDetail = () => {
           />
         </Collapse> */}
         <Collapse opened={true} title="聯絡資訊">
-          <ContactInfoView listArray={contactInfo} title="訂單聯絡人" />
+          <Pane
+            display="flex"
+            flexDirection="column"
+            gap="12px"
 
-          <ContactInfoView listArray={passengerInfo} title="乘客代表人" />
+          >
+            <ContactInfoView listArray={contactInfo} title="訂單聯絡人" />
+            <ContactInfoView listArray={passengerInfo} title="乘客代表人" />
+          </Pane>
         </Collapse>
 
 

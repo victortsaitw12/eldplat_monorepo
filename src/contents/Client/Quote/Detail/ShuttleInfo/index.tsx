@@ -26,8 +26,20 @@ const ShuttleInfo = ({ listArray }: I_Props) => {
   return (
     <>
       {listArray.length !== 0 && listArray.map((item, index) => {
+        const borderRadius = (index === 0)
+        ? "4px 4px 0 0"
+        : (index === listArray.length - 1)
+          ? "0 0 4px 4px"
+          : "0";
+
         return (
-          <DetailGrid listArray={item.data} title={`${item.day_date} (${formatWeek(item.day_date)})`} key={index} />
+          <DetailGrid  
+            borderRadius={borderRadius}
+            isCollapse={true} 
+            listArray={item.data} 
+            title={`${item.day_date} (${formatWeek(item.day_date)})`} 
+            key={index} 
+          />
         )
       })}
     </>

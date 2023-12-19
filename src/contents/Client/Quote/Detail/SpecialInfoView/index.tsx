@@ -7,8 +7,6 @@ interface I_Props {
   remark?: string;
 }
 const SpecialInfoView = ({ listArray, remark = "--" }: I_Props) => {
-  console.log("=====> ", listArray)
-
     return (
     //TODO: 可以簡化一下結構並把mappingSpecailNeededsInfo邏輯搬進來
     <BodySTY>
