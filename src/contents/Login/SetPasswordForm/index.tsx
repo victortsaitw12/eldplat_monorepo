@@ -21,6 +21,7 @@ function SetPasswordForm() {
   const checkPassword = (password: string) => {
     //至少4位英數字不含特殊符號
     if (password.length <= 0) return true;
+    if (password === "12345") return false;
     const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
     return passwordRegex.test(password);
   };
@@ -28,7 +29,7 @@ function SetPasswordForm() {
   const handleLogin = async (e: any) => {
     const isPasswordValid = checkPassword(inputData.password);
     if (!isPasswordValid) {
-      setErrorMsg("不可與目前密碼相同"); // DUMMY for demo purpose
+      setErrorMsg("至少4碼數字、不可與目前密碼相同"); // DUMMY for demo purpose
       return;
     }
     const isPasswordMatch = inputData.password === secondPassword;

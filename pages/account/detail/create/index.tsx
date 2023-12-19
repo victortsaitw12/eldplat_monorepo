@@ -1,12 +1,11 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
-import { NextPageWithLayout, GetServerSideProps } from "next";
-import { RadioGroup } from "evergreen-ui";
+import { NextPageWithLayout } from "next";
+import { RadioGroup, toaster } from "evergreen-ui";
 import { useSession } from "next-auth/react";
 
 //
 import { getLayout } from "@layout/MainLayout";
-import { ParsedUrlQuery } from "querystring";
 import { DUMMY_ACC_LIST } from "@services/account/getAccountList";
 import {
   getOneAccount,
@@ -32,27 +31,30 @@ import ControlBar from "@components/ControlBar";
 import AccountDetail from "@contents/Account/AccountDetail";
 import { useModal } from "@contexts/ModalContext/ModalProvider";
 import ButtonSet from "@components/ButtonSet";
+import LightBox from "@components/Lightbox";
+import { getAccountName, getRoleNames } from "@contents/Account/account.util";
 
-const Page: NextPageWithLayout<never> = ({ id }) => {
+const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const submitRef = React.useRef<HTMLButtonElement | null>(null);
   const { data: session, status } = useSession();
   const { showLeavePageModal } = useModal();
-  const { editPage } = router.query;
   const [data, setData] = React.useState<I_AccountDetailItem | null>(null);
   const [ddl, setDDL] = React.useState<I_DDL>(DUMMY_ACC_DDL.ResultList[0]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isEdit, setIsEdit] = React.useState(editPage === "edit" || false);
+  const isCreate = true;
+  const [options] = React.useState([
+    { label: "使用以前的資料", value: "0" },
+    { label: "使用我剛剛填寫的資料", value: "1" }
+  ]);
+  const [dataChoice, setDataChoice] = React.useState("");
+  const [lightboxOpen, setLightboxOpen] = React.useState(false);
+  const createDummy = DUMMY_DATA_CREATE.ResultList[0];
 
   //------ functions ------//
   const fetchData = async () => {
     setIsLoading(true);
-    const editedData = localStorage.getItem("accountEditData");
-    const editedDummy = editedData ? JSON.parse(editedData) : null;
-    const editDummy = editedDummy
-      ? { ...editedDummy }
-      : DUMMY_ONE_ACCOUNT.ResultList[0];
-    setData(editDummy);
+    setData(createDummy);
     setDDL(DUMMY_ACC_DDL.ResultList[0]);
 
     // if (!session) return;
@@ -72,25 +74,32 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   const asyncSubmitForm = async (data: any) => {
     // console.log("🔜 data:", data);
+
     // TODO: to be remved, just for DEMO
-    const accountRoleArrFromDummy =
-      DUMMY_ONE_ACCOUNT.ResultList[0].account_role;
-    const editedDataFitFormatForRead = accountRoleArrFromDummy.map((item) => {
-      const updatedRoles = item.roles.map((role) => {
-        if (data.account_role.includes(role.role_no)) {
-          return { ...role, is_select: true };
-        }
-        return role;
-      });
-      return { ...item, roles: updatedRoles };
-    });
-    const editedDataForDemo = {
-      ...DUMMY_ONE_ACCOUNT.ResultList[0],
-      ...data,
-      account_role: editedDataFitFormatForRead
-    };
-    localStorage.setItem("accountEditData", JSON.stringify(editedDataForDemo));
-    router.push(`/account/detail/${id}?editPage=view`);
+    // check user + store data
+    const account_name = getAccountName(data);
+    const roles = getRoleNames(data);
+
+    const isUserExist = DUMMY_ACC_LIST.ResultList.find(
+      (item) => item.account_name === account_name
+    );
+    if (isUserExist && dataChoice === "") {
+      setDataChoice("0");
+      setLightboxOpen(true);
+      return;
+    }
+    localStorage.setItem(
+      "accountCreateData",
+      JSON.stringify({
+        ...data,
+        id: "create",
+        account_name: account_name,
+        roles: roles,
+        invt_sts: "03"
+      })
+    );
+    toaster.success("新增帳號成功");
+    location.reload();
 
     // if (!session) return;
     // const uk = session.user.account_no;
@@ -114,22 +123,22 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
 
   const handleChangeRoute = async (path: string) => showLeavePageModal(path);
   const handleCancel = () => {
-    if (!isEdit) {
-      router.push("/account");
-    } else {
-      setIsEdit(false);
-      handleChangeRoute(`/account/detail/${id}?editPage=view`);
-    }
+    handleChangeRoute("/account");
+    return;
   };
 
   const handleConfirm = () => {
-    if (!isEdit) {
-      setIsEdit(true);
-      router.push(`/account/detail/${id}?editPage=edit`);
-    } else {
+    submitRef.current && submitRef.current.click();
+    return;
+  };
+
+  const handleDataChoice = () => {
+    if (dataChoice === "1") {
       submitRef.current && submitRef.current.click();
-      setIsEdit(false);
-      router.push(`/account/detail/${id}?editPage=view`);
+      setLightboxOpen(false);
+    } else {
+      router.push("/account/detail/007217?editPage=view");
+      setLightboxOpen(false);
     }
   };
 
@@ -143,44 +152,49 @@ const Page: NextPageWithLayout<never> = ({ id }) => {
     <>
       <ControlBar hasShadow={true} flexEnd={true}>
         <ButtonSet
-          isEdit={editPage === "edit"}
+          isEdit={true}
           secondaryBtnOnClick={handleCancel}
-          secondaryBtnText={editPage === "edit" ? "取消" : "回列表頁"}
+          secondaryBtnText="回列表頁"
           primaryBtnOnClick={handleConfirm}
-          primaryBtnText={editPage === "edit" ? "儲存" : "編輯"}
+          primaryBtnText="儲存"
         />
       </ControlBar>
       {data && (
         <AccountDetail
           data={data}
           ddl={ddl}
-          isEdit={isEdit}
+          isEdit={true}
           asyncSubmitForm={asyncSubmitForm}
           submitRef={submitRef}
         />
+      )}
+      {lightboxOpen && (
+        <LightBox
+          title="您先前已建立該使用者"
+          onCancel={() => setLightboxOpen(false)}
+          onConfirm={handleDataChoice}
+          isOpen={true}
+        >
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+          >
+            <div>是否前往編輯該使用者？</div>
+            <div>
+              若要編輯該使用者，請選擇下列選項，再點擊「前往編輯」按鈕：
+            </div>
+            <RadioGroup
+              value={dataChoice}
+              options={options}
+              onChange={(event) => setDataChoice(event.target.value)}
+              size={16}
+            />
+          </div>
+        </LightBox>
       )}
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props, Params> = async (
-  context
-) => {
-  const { params } = context;
-  return {
-    props: {
-      id: params!.id
-    }
-  };
-};
-
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
 export default Page;
-
-interface Props {
-  id: string;
-}
-interface Params extends ParsedUrlQuery {
-  id: string;
-}
