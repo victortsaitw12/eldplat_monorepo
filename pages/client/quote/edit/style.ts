@@ -42,8 +42,12 @@ export const BodySTY = styled.div`
       }
     }
   }
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.color.B400};
+  }
   > .redirect-body {
-    height: 250px;
+    height: 122px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,7 +55,10 @@ export const BodySTY = styled.div`
     gap: 12px;
     background-color: ${({ theme }) => theme.color.N0};
     border-radius: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px 0px #10184014;
+
+
   }
   > .redirect-container {
     display: flex;
@@ -69,6 +76,17 @@ export const BodySTY = styled.div`
       font-size: 12px;
       font-weight: 600;
       color: ${({ theme }) => theme.color.N700};
+    }
+  }
+  .quote-detail {
+    .grid_content {
+      .item:nth-child(odd) {
+        background-color: ${({ theme }) => theme.color.N20};;
+      }
+  
+      .item {
+        font-weight: 600;
+      }
     }
   }
 `;

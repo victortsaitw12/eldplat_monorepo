@@ -91,7 +91,7 @@ const defaultSpecialInfo = [
   },
   {
     name: "special_luggage_check",
-    title: "攜帶特大/特殊行李",
+    title: "特殊行李",
     value: "0"
   },
   {

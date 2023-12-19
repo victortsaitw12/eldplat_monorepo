@@ -18,6 +18,7 @@ import FlightInformation from "@contents/Client/Quote/FlightInformation";
 import { Button, toaster, TickCircleIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { useForm, FormProvider } from "react-hook-form";
+import { Pane } from "evergreen-ui";
 //
 import {
   QuotationCreatePayload,
@@ -30,6 +31,9 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import LoadingModal from "@components/LoadingModal";
 import OrdersDetail from "@contents/Client/Quote/Detail";
 import NoticeMessage from "@components/NoticeMessage";
+import Section from "@contents/Client/Quote/Section";
+import DetailGrid from "@components/DetailGrid";
+import Link from "next/link";
 //
 const DummyNavigationListData = [
   {
@@ -123,6 +127,7 @@ const Page: NextPageWithLayout<
   const [isLoading, setIsLoading] = useState(false);
   const [currentTab, setCurrentTab] = useState(1);
   const [remainTime, setRemainTime] = useState(5);
+  const [quoteNo, setQuoteNo] = useState("");
   useEffect(() => {
     validationList = [...initValidationList];
   }, []);
@@ -168,7 +173,6 @@ const Page: NextPageWithLayout<
             return {
               day_number: index + 1,
               day_date: shiftDate(new Date(departureDate!), index),
-              // FIXME: this arrive_time just prevent typescript error
               arrive_time: flightTime!,
               departure_time: "",
               pickup_location: "",
@@ -195,7 +199,6 @@ const Page: NextPageWithLayout<
             day_number: 1,
             day_date: flightDate!,
             departure_time: flightTime!,
-            // FIXME: this arrive_time just prevent typescript error
             arrive_time: flightTime!,
             pickup_location:
               type === "pickUp"
@@ -223,11 +226,14 @@ const Page: NextPageWithLayout<
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
     console.log("submit");
     try {
-      const result = await createQuotation(data);
-      const { quote_no } = result;
+      // TODO:送出API位置，先註解
+      // const result = await createQuotation(data);
+      // const { quote_no } = result;
+      const { quote_no } = { quote_no: "ORD202311110001"};
       if (!quote_no) {
         throw new Error("Fail to create quotation");
       }
+      setQuoteNo(quote_no)
       setCurrentTab(6);
     } catch (e) {
       console.log(e);
@@ -235,16 +241,17 @@ const Page: NextPageWithLayout<
   };
   useEffect(() => {
     let timmer: any;
-    if (currentTab === 5) {
-      timmer = setInterval(() => {
-        setRemainTime((prev) => prev - 1);
-      }, 1000);
-    }
-    if (remainTime <= 0) {
-      clearInterval(timmer);
-      setCurrentTab(1);
-      goToOrdersPage();
-    }
+    // 自動返回
+    // if (currentTab === 5) {
+    //   timmer = setInterval(() => {
+    //     setRemainTime((prev) => prev - 1);
+    //   }, 1000);
+    // }
+    // if (remainTime <= 0) {
+    //   clearInterval(timmer);
+    //   setCurrentTab(1);
+    //   goToOrdersPage();
+    // }
     return () => {
       if (timmer) clearTimeout(timmer);
     };
@@ -263,7 +270,56 @@ const Page: NextPageWithLayout<
             已收到您的訂車詢價單，業務將盡快為您處理。
           </div>
         </div>
-        <div className="redirect-container">
+        <Pane
+          className="quote-detail"
+          boxShadow="box-shadow: 0px 4px 8px 0px #10184014"
+        >
+          <Section title="訂單資訊">
+            <DetailGrid listArray={[
+              {
+                title: "訂單編號",
+                value: <Link href="/">{quoteNo}</Link>,
+              },
+              {
+                title: "訂單狀態",
+                value: "詢價中",
+              },
+              { 
+                title: "服務類型",
+                value: "客製包車",
+              },
+              {
+                title: "粗估金額",
+                value: "NTD $2,805",
+              },
+            ]}>
+            </DetailGrid>
+            <Pane 
+              marginTop="24px"
+              textAlign="right"
+
+            >
+              <NoticeMessage message="注意事項注意事項注意事項注意事項注意事項注意事項" />
+              <Button
+                  appearance="primary"
+                  type="button"
+                  style={{
+                    color: "#5E6C84",
+                    border: "1px solid #B3BAC5",
+                    fontWeight: "600",
+                    borderRadius: "4px",
+                    flex: "1",
+                    backgroundColor: "#fff",
+                    margin: "20px 0"
+                  }}
+                  onClick={() => {console.log("修改訂單")}}
+                >
+                  修改訂單
+              </Button>
+            </Pane>
+          </Section>
+        </Pane>
+        {/* <div className="redirect-container">
           <p>頁面即將於{remainTime}秒後跳轉至訂單管理頁</p>
           <button
             onClick={() => {
@@ -272,7 +328,8 @@ const Page: NextPageWithLayout<
           >
             立即跳轉
           </button>
-        </div>
+        </div> */}
+
       </BodySTY>
     );
   }

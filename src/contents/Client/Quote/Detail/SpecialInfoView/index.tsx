@@ -8,7 +8,7 @@ interface I_Props {
 }
 const SpecialInfoView = ({ listArray, remark = "--" }: I_Props) => {
     return (
-    //TODO: 可以簡化一下結構並把mappingSpecailNeededsInfo邏輯搬進來
+    //FIXME: 可以優化一下結構並把mappingSpecailNeededsInfo邏輯重寫
     <BodySTY>
       {listArray.length !== 0 && listArray.map((item, index) => {
         return (
@@ -16,14 +16,18 @@ const SpecialInfoView = ({ listArray, remark = "--" }: I_Props) => {
           <div className="grid-wrap" key={index}>
             <div className="grid-title">{item.title}</div>
             <div className="multi-wrap">
-              <div className="multi-items">
-                <span className="grid-item">{item.seller.title}</span>
-                <span className="grid-item">{item.seller.detail}</span>
-              </div>
-              <div className="multi-items">
-                <span className="grid-item">{item.yourself.title}</span>
-                <span className="grid-item">{item.yourself.detail}</span>
-              </div>
+              {item.seller.title && 
+                <div className="multi-items">
+                  <span className="grid-item">{item.seller.title}</span>
+                  <span className="grid-item">{item.seller.detail}</span>
+                </div>
+              }
+              {item.yourself.title &&
+                <div className="multi-items">
+                  <span className="grid-item">{item.yourself.title}</span>
+                  <span className="grid-item">{item.yourself.detail}</span>
+                </div>
+              }
             </div>
           </div>
           : 
