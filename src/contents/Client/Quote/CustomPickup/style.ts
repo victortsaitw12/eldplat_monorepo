@@ -12,7 +12,7 @@ export const BodySTY = styled.div`
 export const StyledForm = styled.form`
   display: flex;
   padding: 20px;
-  gap: 58px;
+  gap: 20px;
   background-color: ${({ theme }) => theme.color.N0};
   > .form-item {
     display: flex;
@@ -26,7 +26,7 @@ export const StyledForm = styled.form`
 `;
 
 export const StyledCard = styled.div`
-  width: 1240px;
+  width: 1030px;
   box-shadow: 0px 4px 8px rgba(16, 24, 64, 0.08);
   border-radius: 10px;
   overflow: hidden;

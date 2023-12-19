@@ -8,6 +8,7 @@ import Section from "@contents/Client/Quote/Section";
 import ServiceList from "@contents/Client/Quote/ServiceList";
 import NoticeMessage from "@components/NoticeMessage";
 import { Pane } from "evergreen-ui";
+import Breadcrumbs from "@components/Breadcrumbs";
 
 const FlowListData = [
   {
@@ -51,6 +52,12 @@ const Page = () => {
   const router = useRouter();
   return (
     <BodySTY>
+      <Breadcrumbs
+        routes={[
+          { label: "首頁", url: "/client" },
+          { label: "預約服務", url: "/client/quote" },
+        ]}
+      />
       <div className="header">
         <div className="header-container">
           <div className="header-title">服務介紹</div>

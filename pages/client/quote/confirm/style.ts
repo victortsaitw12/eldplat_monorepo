@@ -5,7 +5,7 @@ export const BodySTY = styled.div`
   flex-direction: column;
   align-items: center;
   /* padding: 28px 0; */
-  width: 1240px;
+  width: 1030px;
   margin: 28px auto;
   gap: 24px;
 `;

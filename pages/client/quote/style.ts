@@ -5,6 +5,11 @@ export const BodySTY = styled.div`
   flex-direction: column;
   align-items: center;
   // background-color: ${({ theme }) => theme.color.N300};
+
+  .breadcrumbs {
+    width: 100%;
+  }
+  
   > .header {
     display: flex;
     justify-content: center;

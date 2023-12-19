@@ -17,7 +17,8 @@ const ContainerSTY = styled.div`
   overflow: auto;
 
   .content {
-    max-width: 1240x;
+    max-width: 1030px;
+    width: 100%;
   }
 
   .breadcrumbs {
