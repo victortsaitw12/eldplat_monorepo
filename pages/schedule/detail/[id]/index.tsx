@@ -2,7 +2,7 @@ import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Pane } from "evergreen-ui";
+import { Pane, DotIcon } from "evergreen-ui";
 import { ViewIdSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
@@ -19,6 +19,16 @@ import InfoItem from "@components/InfoCard/InfoItem";
 import CustomTextArea from "@components/CustomTextArea";
 import LoadingSpinner from "@components/LoadingSpinner";
 
+const dataOverviewArray = [
+  "第一車隊",
+  "北北基",
+  "S級",
+  "0912-345-678",
+  "應休 15 天",
+  "已休 10 天"
+];
+
+const editDataOverviewArray = ["0912-345-678", "應休 15 天", "已休 10 天"];
 
 const DriverScheduleView: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -31,17 +41,15 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   const [shiftData, setShiftData] = useState<any>([]);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
-  
 
-  const modalInfo =
-    {
-      listClassName: "",
-      readonly: false,
-      req: true,
-      label: "說明",
-      bold: true,
-      value: <CustomTextArea placeholder="請輸入說明" />
-    };
+  const modalInfo = {
+    listClassName: "",
+    readonly: false,
+    req: true,
+    label: "說明",
+    bold: true,
+    value: <CustomTextArea placeholder="請輸入說明" />
+  };
 
   const DUMMY_driverData = {
     user_no: "USR202305240008",
@@ -108,7 +116,13 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
         <Pane className="pageContent">
           <ControlBar>
             <DataOverview
-              data={DUMMY_driverData}
+              title={
+                isEdit
+                  ? "鍾俊儀 2023-12-31 ～ 2024-02-24 預排班表"
+                  : "鍾俊儀 JUN-YI ZHONG"
+              }
+              subtitle={isEdit ? "" : "🏳️‍⚧️ 台灣"}
+              infoArray={isEdit ? editDataOverviewArray : dataOverviewArray}
               hasImage={isEdit ? false : true}
             />
             {isEdit ? (
@@ -127,14 +141,10 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
               />
             )}
           </ControlBar>
-          {
-            shiftData.length !==0 &&
-            <Schedule 
-              initialDate={renderDate} 
-              shiftData={ shiftData }
-            />
-          }
-          {isEdit && 
+          {shiftData.length !== 0 && (
+            <Schedule initialDate={renderDate} shiftData={shiftData} />
+          )}
+          {isEdit && (
             <LightBox
               title="退回"
               isOpen={isOpenModal}
@@ -142,16 +152,15 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 setOpenModal(false);
               }}
               customBtns={
-                <ButtonSet 
-                  primaryBtnText="確定退回" 
-                  secondaryBtnOnClick={ cancelModalHandler}/>}
-                >
-              <InfoItem
-                item={modalInfo}
-                isEdit={true}
-              />
+                <ButtonSet
+                  primaryBtnText="確定退回"
+                  secondaryBtnOnClick={cancelModalHandler}
+                />
+              }
+            >
+              <InfoItem item={modalInfo} isEdit={true} />
             </LightBox>
-          }
+          )}
         </Pane>
       </ViewIdSTY>
     </UIProvider>
