@@ -155,7 +155,7 @@ export const DUMMY_ONE_ROLE = {
   ResultList: [
     {
       role_no: "r-0002sys01",
-      role_name: "車管from DUMMY_ONE_ROLE",
+      role_name: "車管",
       role_enb: true,
       role_desc: "管理車輛狀況，日常車輛維護，維修審核",
       module_no: "sys",

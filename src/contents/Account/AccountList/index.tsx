@@ -80,6 +80,7 @@ const AccountList = ({ data, pageInfo }: I_Props) => {
           onView={handleView}
           headNode={headNode}
           hasControlAllBtns={true}
+          maxRow={2}
         />
       )}
     </BodySTY>

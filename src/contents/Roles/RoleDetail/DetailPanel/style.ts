@@ -35,6 +35,9 @@ export const BodySTY = styled.div`
         input {
           width: 100%;
         }
+        textarea {
+          font-size: ${({ theme }) => theme.fontSize.Paragraph300};
+        }
       }
     }
   }
