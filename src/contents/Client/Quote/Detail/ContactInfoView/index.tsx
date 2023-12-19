@@ -1,14 +1,13 @@
 import React from "react";
 import { Pane } from "evergreen-ui";
-import DetailList from "@components/DetailList";
+import DetailGrid from "@components/DetailGrid";
 interface I_Props {
   listArray: { title: string; value: string | number | null }[];
+  title?: string;
 }
-const ContactInfoView = ({ listArray }: I_Props) => {
+const ContactInfoView = ({ listArray, title }: I_Props) => {
   return (
-    <Pane style={{ padding: "20px" }}>
-      <DetailList listArray={listArray} />
-    </Pane>
+    <DetailGrid listArray={listArray} title={title} />
   );
 };
 export default ContactInfoView;

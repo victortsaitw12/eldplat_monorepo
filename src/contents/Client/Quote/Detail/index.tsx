@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { BodySTY } from "./style";
+import { Pane } from "evergreen-ui";
 //@component
 import Collapse from "@components/Collapse";
 //@contents
@@ -14,11 +15,14 @@ import ContactInfoView from "./ContactInfoView";
 //@mock_data
 import {
   mappingContactInfo,
-  mappingSpecailNeededsInfo
+  mappingSpecailNeededsInfo,
+  mappingShuttleInfo,
+  mappingTakeBusInfo
 } from "@services/client/mappingQuotationData";
 import { QuotationCreatePayload } from "../type";
 import { convertMap } from "@utils/convertValueToText";
 import LoadingSpinner from "@components/LoadingSpinner";
+import Section from "@contents/Client/Quote/Section";
 //
 const OrdersDetail = () => {
   const methods = useFormContext<QuotationCreatePayload>();
@@ -26,11 +30,14 @@ const OrdersDetail = () => {
   const contactInfo = mappingContactInfo(orderData["order_contact_list"][0]);
   const passengerInfo = mappingContactInfo(orderData["order_contact_list"][1]);
   const specialInfo = mappingSpecailNeededsInfo(orderData);
+  const shuttleInfo = mappingShuttleInfo(orderData.order_itinerary_list);
+  const takeBusInfo = mappingTakeBusInfo(orderData);
+  console.log("=====> ", orderData, mappingTakeBusInfo(orderData))
 
   const r_template = () => {
     return (
-      <>
-        <Collapse opened={true} title="總覽">
+      <Section title="確認訂單">
+        {/* <Collapse opened={true} title="總覽">
           <SummaryInfoView
             listArray={[
               {
@@ -48,10 +55,20 @@ const OrdersDetail = () => {
               }
             ]}
           />
+        </Collapse> */}
+        <Collapse opened={true} title="聯絡資訊">
+          <Pane
+            display="flex"
+            flexDirection="column"
+            gap="12px"
+
+          >
+            <ContactInfoView listArray={contactInfo} title="訂單聯絡人" />
+            <ContactInfoView listArray={passengerInfo} title="乘客代表人" />
+          </Pane>
         </Collapse>
-        <Collapse opened={true} title="訂單聯絡人">
-          <ContactInfoView listArray={contactInfo} />
-        </Collapse>
+
+
         {orderData["quote_type"] !== "1" ? (
           <>
             <Collapse opened={true} title="航班資訊">
@@ -60,29 +77,24 @@ const OrdersDetail = () => {
             <FlightShuttleInfo listArray={orderData.order_itinerary_list} />
           </>
         ) : (
-          <ShuttleInfo listArray={orderData.order_itinerary_list} />
+          <Collapse title="行程資訊" opened={true}>
+            <ShuttleInfo listArray={shuttleInfo} title="" />
+          </Collapse>
         )}
 
         <Collapse title="乘車資訊" opened={true}>
           <TakeBusInfoView
-            adult={orderData.adult}
-            child={orderData.child}
-            infant={orderData.infant}
-            check_in_luggage={orderData.check_in_luggage}
-            carry_on_luggage={orderData.carry_on_luggage}
             bus_data={orderData.bus_data}
+            takeBusInfo={takeBusInfo}
           />
         </Collapse>
-        <Collapse title="特殊需求" opened={true}>
+        <Collapse title="其他需求" opened={true}>
           <SpecialInfoView
             listArray={specialInfo}
             remark={orderData["remark"]}
           />
         </Collapse>
-        <Collapse opened={true} title="旅客代表人">
-          <ContactInfoView listArray={passengerInfo} />
-        </Collapse>
-      </>
+      </Section>
     );
   };
   return <BodySTY>{!orderData ? <LoadingSpinner /> : r_template()}</BodySTY>;

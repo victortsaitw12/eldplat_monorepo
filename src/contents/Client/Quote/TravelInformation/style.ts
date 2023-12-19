@@ -3,7 +3,7 @@ export const BodySTY = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  gap: 40px;
+  gap: 20px;
   width: 100%;
 `;
 
@@ -16,7 +16,8 @@ export const ItemSTY = styled.li`
   list-style: none;
   width: 100%;
   > .item-content {
-    width: 70px;
+    width: 90px;
+    font-weight: 600;
   }
   > .option-container {
     display: flex;
@@ -36,6 +37,5 @@ export const ItemSTY = styled.li`
 `;
 
 export const CollapseCardSTY = styled.div`
-  border-radius: 10px;
-  overflow: hidden;
+  margin-bottom: 20px;
 `;
