@@ -101,7 +101,7 @@ function FilterWrapper({
           )}
         </div>
         {
-          children && <div className="btns">{btns}</div>
+          btns && <div className="btns">{btns}</div>
         }
       </div>
       {
@@ -109,7 +109,7 @@ function FilterWrapper({
       }
       
     </BodySTY>
-  );
+  );         
 }
 
 export default FilterWrapper;

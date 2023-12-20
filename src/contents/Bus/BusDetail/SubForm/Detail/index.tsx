@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Pane } from "evergreen-ui";
+import { Pane, Group } from "evergreen-ui";
 import { DivSTY } from "./style";
 
 import {
@@ -15,6 +15,7 @@ import InfoCard from "@components/InfoCard";
 import {
   tagList,
   IdentityInfo,
+  CategoryInfo,
   CardInfo,
   TagInFo,
   MaintenanceInfo,
@@ -81,7 +82,20 @@ function Details({
             infoData={IdentityInfo}
             infoTitle="基本資料"
           />
-          <InfoCard isEdit={isEdit} infoData={CardInfo} infoTitle="相關卡號" />
+          <Group className={"col-wrapper"}>
+            {isEdit && (
+              <InfoCard
+                isEdit={isEdit}
+                infoData={CategoryInfo}
+                infoTitle="分類"
+              />
+            )}
+            <InfoCard
+              isEdit={isEdit}
+              infoData={CardInfo}
+              infoTitle="相關卡號"
+            />
+          </Group>
           <Pane className={"w-50"}>
             <InfoCard isEdit={isEdit} infoData={TagInFo} infoTitle="標籤" />
           </Pane>

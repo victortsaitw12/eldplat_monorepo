@@ -1,11 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/ClientLayout";
 import Breadcrumbs from "@components/Breadcrumbs";
 import { BodySTY } from "./style" 
-import Section from "@contents/Client/Quote/Section";
+import QuoteSearch from "@contents/Client/Orders/QuoteSearch";
+import QuoteTable from "@contents/Client/Orders/QuoteTable";
 
 const Page: NextPageWithLayout<never> = () => {
+  const [isSearch, setIsSearch] = useState(false);
+
   return (
     <BodySTY>
       <Breadcrumbs
@@ -15,9 +18,10 @@ const Page: NextPageWithLayout<never> = () => {
         ]}
       />
       <div className="page-title">查詢訂單</div>
-      <Section title="請輸入訂單聯絡人的手機與信箱">
-        <div>CONTENT</div>
-      </Section>
+      {!isSearch ? 
+        <QuoteSearch updateSearchState={setIsSearch} /> :
+        <QuoteTable />
+      }
     </BodySTY>
   )
 } 

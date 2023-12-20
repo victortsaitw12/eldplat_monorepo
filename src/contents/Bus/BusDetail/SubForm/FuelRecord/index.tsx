@@ -20,6 +20,10 @@ import FilterWrapper from "@layout/FilterWrapper";
 import Table from "@components/Table/Table";
 import { useBusStore } from "@contexts/filter/busStore";
 import PaginationField from "@components/PaginationField";
+import { BodySTY } from "./style";
+import IconBtn from "@components/Button/IconBtn";
+import SecondaryBtn from "@components/Button/Secondary/IconLeft";
+import { PlusIcon } from "evergreen-ui";
 
 interface Props {
   register: UseFormRegister<BusDataTypes>;
@@ -30,21 +34,24 @@ interface Props {
   busId: string;
 }
 
-const BodySTY = styled.div`
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
+export interface I_Fuel {
+  id: string;
+  transaction_date: string;
+  provider: string;
+  driver: string;
+  current_miles: string;
+  fuel_level: string;
+  amount: string;
+}
 
-const maintenanceTitle = [
-  "維保單號",
-  "維保日期",
-  "任務狀態",
-  "維保里程",
-  "分類",
-  "維修廠",
-  "項目",
+const fuelTitle = [
+  "交易日期",
+  "供應商",
+  "駕駛",
+  "當下里程",
+  "加油量",
+  "交易金額",
+  ""
 ];
 
 const DUMMY_FILTER = [
@@ -64,7 +71,40 @@ const DUMMY_FILTER = [
   }
 ];
 
-function Maintenance({
+const DUMMY_DATA = {
+  statusCode: "200",
+  message: "OK",
+  resultList: [
+    {
+      id: "1",
+      transaction_date: "2023-12-01",
+      provider: "N072全國文德",
+      driver: "簡中華",
+      current_miles: "12,895 公里",
+      fuel_level: "300 公升",
+      amount: "NT 8,400"
+    },
+    {
+      id: "2",
+      transaction_date: "2024-01-15",
+      provider: "N072全國文德",
+      driver: "張晶晶",
+      current_miles: "18,753 公里",
+      fuel_level: "300 公升",
+      amount: "NT 8,400"
+    }
+  ],
+  pageInfo: {
+    Page_Index: 1,
+    Page_Size: 10,
+    Orderby: null,
+    Arrangement: "desc",
+    Total: 89,
+    Last_Page: 9
+  }
+};
+
+function FuelRecord({
   register,
   errors,
   getValues,
@@ -72,7 +112,7 @@ function Maintenance({
   isEdit,
   busId
 }: Props) {
-  const [busMaintenanceData, setBusMaintenanceData] = useState<any>(null);
+  const [fuelData, setFuelData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>({
     Arrangement: "desc",
     Orderby: null,
@@ -97,21 +137,39 @@ function Maintenance({
       //   busMaintenaceParser
       // );
 
-      const busMaintenanceData = res.resultList;
+      const fuelData = DUMMY_DATA.resultList;
 
       if (!subFilter) {
         localStorage.setItem(
           "maintenanceInitFilter",
-          // JSON.stringify(busMaintenanceData.conditionList)
+          // JSON.stringify(fuelData.conditionList)
           JSON.stringify(DUMMY_FILTER)
         );
         initializeSubFilter();
       }
 
-      setBusMaintenanceData(busMaintenanceData);
-      setPageInfo(res.pageInfo);
+      setFuelData(fuelData);
+      setPageInfo(DUMMY_DATA.pageInfo);
     });
   }
+
+  const handleView = () => {
+    setTimeout(() => {
+      router.push("/bus/fuel/1?editPage=edit");
+    }, 500);
+  };
+
+  const handleTableEdit = () => {
+    setTimeout(() => {
+      router.push("/bus/fuel/1?editPage=edit");
+    }, 500);
+  };
+
+  const handleCreateFuel = () => {
+    setTimeout(() => {
+      router.push("/bus/fuel/create");
+    }, 500);
+  };
 
   useEffect(() => {
     let isCanceled = false;
@@ -121,32 +179,24 @@ function Maintenance({
     };
   }, [busId]);
 
-  const changeKey = (data: Array<I_Maintenance>) => {
-    return data.map((item: I_Maintenance) => {
+  const changeKey = (data: Array<I_Fuel>) => {
+    return data.map((item: I_Fuel) => {
       return {
         id: item["id"],
-        maintenance_no: item["maintenance_no"],
-        maintenance_date: item["maintenance_date"],
-        maintenance_status: item["maintenance_status"],
-        distance: item["distance"],
-        category: item["category"],
-        repair_garage: item["repair_garage"],
-        maintenance_item: item["maintenance_item"]
+        transaction_date: item["transaction_date"],
+        provider: item["provider"],
+        driver: item["driver"],
+        current_miles: item["current_miles"],
+        fuel_level: item["fuel_level"],
+        amount: item["amount"],
+        action: <IconBtn tip="編輯" type="edit" onClick={handleTableEdit} />
       };
     });
   };
 
   const { initializeSubFilter, subFilter, updateSubFilter } = useBusStore();
 
-  const modifiedData = busMaintenanceData
-    ? changeKey(busMaintenanceData)
-    : undefined;
-
-  console.log("modifiedData", modifiedData);
-
-  const handleView = () => {
-    console.log("handle view");
-  };
+  const modifiedData = fuelData ? changeKey(fuelData) : undefined;
 
   return (
     <BodySTY>
@@ -156,9 +206,14 @@ function Maintenance({
           initializeSubFilter();
         }}
         filter={subFilter}
+        btns={
+          <SecondaryBtn text={"新增油耗紀錄"} onClick={handleCreateFuel}>
+            <PlusIcon size={14} />
+          </SecondaryBtn>
+        }
       ></FilterWrapper>
       <Table
-        titles={maintenanceTitle}
+        titles={fuelTitle}
         data={modifiedData}
         onView={handleView}
         headNode={<PaginationField pageInfo={pageInfo} />}
@@ -167,4 +222,4 @@ function Maintenance({
   );
 }
 
-export default Maintenance;
+export default FuelRecord;
