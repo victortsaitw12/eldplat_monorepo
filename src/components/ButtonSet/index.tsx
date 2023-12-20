@@ -12,6 +12,9 @@ interface I_Props {
   primaryBtnOnClick?: () => void;
   primaryBtnText?: string;
   primaryDisable?: boolean;
+  thirdBtnText?: string;
+  thirdBtnOnClick?: () => void;
+  thirdDisable?: boolean;
 }
 
 function ButtonSet({
@@ -20,7 +23,10 @@ function ButtonSet({
   secondaryBtnText = "取消",
   primaryBtnOnClick,
   primaryBtnText = "儲存",
-  primaryDisable
+  primaryDisable,
+  thirdBtnText,
+  thirdBtnOnClick,
+  thirdDisable
 }: I_Props) {
   const router = useRouter();
 
@@ -34,6 +40,15 @@ function ButtonSet({
       >
         {primaryBtnText === "編輯" && <EditIcon size={14} />}
       </PrimaryBtn>
+      {thirdBtnText && 
+        <PrimaryBtn
+          text={thirdBtnText}
+          onClick={thirdBtnOnClick}
+          disabled={thirdDisable}
+        >
+          <EditIcon size={14} />
+        </PrimaryBtn>
+      }
     </DivSTY>
   );
 }
