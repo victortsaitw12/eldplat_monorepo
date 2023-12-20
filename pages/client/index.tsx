@@ -20,11 +20,20 @@ const Page = () => {
             }}
           />
           <ServerEntry
-            label="查看訂單"
+            label="訂單列表"
             imageUrl="/image/svg-icons/wallet.svg"
             onClick={() => {
               router.push({
                 pathname: "/client/orders"
+              });
+            }}
+          />
+          <ServerEntry
+            label="查詢訂單"
+            imageUrl="/image/svg-icons/wallet.svg"
+            onClick={() => {
+              router.push({
+                pathname: "/client/orders/inquire"
               });
             }}
           />

@@ -4,7 +4,7 @@ export const BodySTY = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) => theme.color.N300};
+  // background-color: ${({ theme }) => theme.color.N300};
   > .header {
     display: flex;
     justify-content: center;
@@ -40,9 +40,10 @@ export const BodySTY = styled.div`
       display: flex;
       width: 100%;
       justify-content: space-around;
+      gap: 20px;
+      
       .serverEntryBtn {
-        width: 400px;
-        height: 460px;
+        padding: 24px 0;
       }
     }
   }

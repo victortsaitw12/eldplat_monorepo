@@ -5,6 +5,7 @@ import StepArragement from "@components/StepArragement";
 import { TextInput } from "evergreen-ui";
 import { BodySTY, ItemSTY, CollapseCardSTY } from "./style";
 import { QuotationCreatePayload } from "../type";
+import Section from "@contents/Client/Quote/Section";
 
 const TravelInformation = () => {
   const {
@@ -28,35 +29,64 @@ const TravelInformation = () => {
         gap: "10px"
       }}
     >
-      {fields.map((item, index) => {
-        return (
-          <CollapseCardSTY key={item.id}>
-            <Collapse title={`第${index + 1}天 ${item.day_date}`} opened={true}>
-              <BodySTY>
-                <ItemSTY>
-                  <div className="item-content">出發時間</div>
-                  <TextInput
-                    {...register(
-                      `order_itinerary_list.${index}.departure_time`
-                    )}
-                    type="time"
-                    style={{ flex: "1" }}
-                  />
-                  <div className="option-container"></div>
-                </ItemSTY>
-                <StepArragement
-                  control={control}
-                  errors={errors}
-                  register={register}
-                  startPointName={`order_itinerary_list.${index}.pickup_location`}
-                  destinationPointName={`order_itinerary_list.${index}.dropoff_location`}
-                  middlePointName={`order_itinerary_list.${index}.stopover_address_list`}
-                />
-              </BodySTY>
-            </Collapse>
-          </CollapseCardSTY>
-        );
-      })}
+      <Section title="行程資訊">
+        {fields.map((item, index) => {
+          return (
+            <CollapseCardSTY key={item.id}>
+              <Collapse title={`第${index + 1}天 ${item.day_date}`} opened={true}>
+                <BodySTY>
+                  {index === fields.length - 1 ?
+                    <>
+                      <StepArragement
+                        control={control}
+                        errors={errors}
+                        register={register}
+                        startPointName={`order_itinerary_list.${index}.pickup_location`}
+                        destinationPointName={`order_itinerary_list.${index}.dropoff_location`}
+                        middlePointName={`order_itinerary_list.${index}.stopover_address_list`}
+                      />
+                      <ItemSTY>
+                        <div className="item-content">抵達時間</div>
+                        <TextInput
+                          {...register(
+                            `order_itinerary_list.${index}.arrive_time`
+                          )}
+                          type="time"
+                          style={{ flex: "1" }}
+                        />
+                          <div className="option-container"></div>
+                      </ItemSTY>
+                    </>
+                   :
+                   <>
+                    <ItemSTY>
+                      <div className="item-content">出發時間</div>
+                      <TextInput
+                        {...register(
+                          `order_itinerary_list.${index}.departure_time`
+                        )}
+                        type="time"
+                        style={{ flex: "1" }}
+                      />
+                        <div className="option-container"></div>
+                    </ItemSTY>
+                    <StepArragement
+                      control={control}
+                      errors={errors}
+                      register={register}
+                      startPointName={`order_itinerary_list.${index}.pickup_location`}
+                      destinationPointName={`order_itinerary_list.${index}.dropoff_location`}
+                      middlePointName={`order_itinerary_list.${index}.stopover_address_list`}
+                    />
+                  </>
+                  }
+ 
+                </BodySTY>
+              </Collapse>
+            </CollapseCardSTY>
+          );
+        })}
+      </Section>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { ChevronRightIcon } from "evergreen-ui";
 
 import { DivSTY } from "./style";
 
-interface Route {
+export interface Route {
   label: string;
   url?: string | { pathname: string; query: any };
 }

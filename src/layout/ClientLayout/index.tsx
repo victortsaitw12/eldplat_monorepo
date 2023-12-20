@@ -13,6 +13,7 @@ interface ClientLayoutProps {
     avatar?: string;
     lang?: string;
     langs?: string[];
+
     onChangeLang?: () => void;
   };
 }
@@ -25,9 +26,11 @@ const ClientLayout = ({ children, layoutProps }: ClientLayoutProps) => {
         <title>2c前台</title>
         <meta property="og:title" content="2c前台" />
       </Head>
+      <Header layoutProps={layoutProps} theme={theme} setTheme={setTheme} />
       <ContainerSTY>
-        <Header layoutProps={layoutProps} theme={theme} setTheme={setTheme} />
-        <div className="content">{children}</div>
+        <div className="content">
+          {children}
+        </div>
       </ContainerSTY>
     </BodySTY>
   );
