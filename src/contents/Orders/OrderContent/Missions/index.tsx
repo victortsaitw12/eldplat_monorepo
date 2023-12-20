@@ -5,6 +5,7 @@ import { DivSTY } from "./style";
 import PaginationField from "@components/PaginationField";
 import { I_PageInfo } from "@components/PaginationField";
 import { useOrderStore } from "@contexts/filter/orderStore";
+import { CommentIcon } from "evergreen-ui"
 import { 
     getOrderMissionData, 
     getOrderMissionTitle 
@@ -34,7 +35,7 @@ const Missions = () => {
     useEffect(() => {
         initializeSubFilter();
         const tableData = getOrderMissionData();
-        setData(changeKey(tableData));
+        setData(tableData);
       }, []);
 
     const handleView = (id: string) => {
@@ -48,6 +49,7 @@ const Missions = () => {
             user_name: (
                 <>
                     <span>{item.user_name}</span>
+                    <CommentIcon />
                 </>
             )
           };

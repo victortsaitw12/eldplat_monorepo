@@ -34,7 +34,7 @@ const Records = () => {
     useEffect(() => {
         initializeSubFilter();
         const tableData = getOrderRecordData();
-        setData(changeKey(tableData));
+        setData(tableData);
       }, []);
 
     const handleView = (id: string) => {
