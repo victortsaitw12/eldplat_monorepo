@@ -20,6 +20,9 @@ import DataOverview from "@components/DataOverview";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
 import ProgressList from "@components/ProgressList";
+import IconBtn from "@components/Button/IconBtn";
+import OrderDetail from "@contents/Orders/OrderDetail";
+import OrderContent from "@contents/Orders/OrderContent";
 
 const mainTabsArray = [ 
   { id: 1, label: "訂單內容", value: "1" },
@@ -52,11 +55,25 @@ const Page: NextPageWithLayout<
     router.push("/orders");
   };
 
+  const handleCopy = () => {
+    console.log("click copy button");
+  }
+
+  useEffect(() => {
+    setIsEdit(editPage === "edit" ? true : false);
+  }, [editPage]);
+
+
+
   return (
     <BodySTY>
       <ControlBar hasShadow>
-        {/* <DataOverview data={busDefaultData?.info} hasImage={false} /> */}
-        <ProgressList  dataLists={[
+        <div className="header">
+        <DataOverview  title={"ORD202310310003"}
+        subtitle={<IconBtn tip="複製" type="copy" onClick={handleCopy}/>}
+        infoArray={["客製包車", " 2023-11-22（三）~ 2023-11-24（五） "]}
+        hasImage={false} />
+        <ProgressList dataLists={[
                 {label: "詢價中", date: "11/01 10:00", status: "ok"},
                 {label: "已報價", date: "11/01 13:00", status: "ok"},
                 {label: "接受報價", date: "11/01 15:30", status: "ok"},
@@ -75,22 +92,14 @@ const Page: NextPageWithLayout<
           thirdBtnText={isEdit ? "" : "送出報價"}
           thirdBtnOnClick={isEdit ? handleView : handleEdit}
         />
+        </div>
       </ControlBar>
       <TabsWrapper
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainTabsArray}
       >
-        {/* <BusDetail
-          isEdit={isEdit}
-          busId={busId}
-          busDefaultData={busDefaultData}
-          submitRef={submitRef}
-          asyncSubmitForm={asyncSubmitForm}
-          formType={mainFilter}
-          busOptions={options}
-          fetchDDL={fetchDDL}
-        /> */}
+        <OrderContent isEdit={isEdit} orderId={orderId} formType={mainFilter} />
       </TabsWrapper>
     </BodySTY>
   );

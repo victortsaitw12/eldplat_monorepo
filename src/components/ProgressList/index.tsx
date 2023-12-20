@@ -14,7 +14,7 @@ const HorizontalLine = ({
   color?: string;
 }) => {
   const disabledLength = dataLists.filter(
-    (item) => item.status === "disabled"
+    (item) => item.status === "disabled" || item.status === "pending"
   ).length;
   const grayWidth = disabledLength / (dataLists.length - 1);
   return (
@@ -29,7 +29,13 @@ const ProgressItem = ({ status, label, date, color }: ItemProps) => {
   return (
     <ItemSTY status={status} color={color}>
       <div className="item-label">{label}</div>
-      <div className="item-icon">
+      <div className="item-icon"></div>
+      {date ? (
+        <div className="item-date">{date}</div>
+      ) : (
+        <div style={{ color: "transparent" }}>_</div>
+      )}
+      {/* <div className="item-icon">
         {status === "error" ? (
           <SmallCrossIcon size={12} />
         ) : (
@@ -40,7 +46,7 @@ const ProgressItem = ({ status, label, date, color }: ItemProps) => {
         <div className="item-date">{date}</div>
       ) : (
         <div style={{ color: "transparent" }}>_</div>
-      )}
+      )} */}
     </ItemSTY>
   );
 };
