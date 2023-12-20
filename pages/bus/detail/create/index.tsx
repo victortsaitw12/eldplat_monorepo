@@ -16,7 +16,6 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import BusDetail from "@contents/Bus/BusDetail";
 import { getBusById } from "@services/bus/getBusById";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
-import DataOverview from "@components/DataOverview";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
 import CreateDetail from "@contents/Bus/BusDetail/CreateDetail";

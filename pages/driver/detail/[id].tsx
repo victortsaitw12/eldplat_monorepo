@@ -33,6 +33,13 @@ const mainFilterArray = [
   { id: 4, label: "修改紀錄", value: "4" }
 ];
 
+const dataOverviewArray = [
+  "第一車隊",
+  "北北基",
+  "S級",
+  "中文/英文",
+];
+
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ driverNo }) => {
@@ -51,7 +58,7 @@ const Page: NextPageWithLayout<
   useEffect(() => {
     updateMainFilter("1");
   }, []);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -163,7 +170,12 @@ const Page: NextPageWithLayout<
   return (
     <BodySTY>
       <ControlBar>
-        <DataOverview data={driverData?.info} />
+        <DataOverview
+          title="鍾俊儀 JUN-YI  ZHONG"
+          subtitle="🏳️‍⚧️ 台灣"
+          infoArray={dataOverviewArray}
+          hasImage={false}
+        />
         <ButtonSet
           isEdit={isEdit}
           primaryDisable={false}
