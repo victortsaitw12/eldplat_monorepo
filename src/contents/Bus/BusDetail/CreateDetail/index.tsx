@@ -10,7 +10,7 @@ import {
   UseFormSetValue,
   Control
 } from "react-hook-form";
-import { BusDataTypes } from "../../../bus.type";
+import { BusDataTypes } from "../../bus.type";
 import InfoCard from "@components/InfoCard";
 import {
   tagList,
@@ -36,43 +36,13 @@ import styled from "styled-components";
 
 interface Props {
   currentTab: string;
-  register: UseFormRegister<BusDataTypes>;
-  errors: FieldErrors<BusDataTypes>;
-  getValues: UseFormGetValues<BusDataTypes>;
-  setValue: UseFormSetValue<BusDataTypes>;
-  control: Control<BusDataTypes, any>;
-  busOptions: any;
   isEdit: boolean;
-  fetchDDL: (v: any) => void;
   className?: string;
 }
 
 export const BodySTY = styled.div``;
 
-function Details({
-  currentTab,
-  register,
-  errors,
-  getValues,
-  setValue,
-  control,
-  isEdit,
-  busOptions,
-  fetchDDL,
-  className
-}: Props) {
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [isDriverDDLLoading, setIsDriverDDLoading] = useState<boolean>(false);
-
-  const handleDriverGroupChange = async (e: any) => {
-    setIsDriverDDLoading(true);
-    setValue("bus.operator_no", "");
-    setValue("bus.operator_bus_group_name", e.target.label);
-    const bus_group = e.target.value;
-    await fetchDDL(bus_group);
-    setIsDriverDDLoading(false);
-  };
-
+function CreateDetail({ currentTab, isEdit, className }: Props) {
   return (
     <DivSTY>
       {currentTab === "1" && (
@@ -83,13 +53,11 @@ function Details({
             infoTitle="基本資料"
           />
           <Group className={"col-wrapper"}>
-            {isEdit && (
-              <InfoCard
-                isEdit={isEdit}
-                infoData={CategoryInfo}
-                infoTitle="分類"
-              />
-            )}
+            <InfoCard
+              isEdit={isEdit}
+              infoData={CategoryInfo}
+              infoTitle="分類"
+            />
             <InfoCard
               isEdit={isEdit}
               infoData={CardInfo}
@@ -170,4 +138,4 @@ function Details({
   );
 }
 
-export default Details;
+export default CreateDetail;

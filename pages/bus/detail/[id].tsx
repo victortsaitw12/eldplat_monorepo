@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, ReactNode, use } from "react";
+import React, { useEffect, useRef, useState, ReactNode } from "react";
 import {
   NextPageWithLayout,
   GetServerSideProps,
@@ -19,13 +19,23 @@ import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 import DataOverview from "@components/DataOverview";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
+import { DotIcon } from "evergreen-ui";
+import SecondaryBtn from "@components/Button/Secondary/Label";
 
 const mainTabsArray = [
   { id: 1, label: "車輛明細", value: "1" },
-  { id: 2, label: "分發派駐", value: "2" },
-  { id: 3, label: "維保計劃", value: "3" },
-  { id: 4, label: "車上設備", value: "4" },
-  { id: 5, label: "油耗紀錄", value: "5" }
+  { id: 2, label: "維保計劃", value: "2" },
+  { id: 3, label: "車上設備", value: "3" },
+  { id: 4, label: "油耗紀錄", value: "4" },
+  { id: 5, label: "修改紀錄", value: "5" }
+];
+
+const dataOverviewArray = [
+  "大巴",
+  "43 客座",
+  "車齡 1 年",
+  "內湖停車場",
+  "第一組"
 ];
 
 const Page: NextPageWithLayout<
@@ -126,15 +136,28 @@ const Page: NextPageWithLayout<
   return (
     <BodySTY>
       <ControlBar hasShadow>
-        <DataOverview data={busDefaultData?.info} hasImage={false} />
-        <ButtonSet
-          isEdit={isEdit}
-          primaryDisable={false}
-          secondaryBtnText={isEdit ? "取消" : "回列表"}
-          secondaryBtnOnClick={isEdit ? handleView : handleReturn}
-          primaryBtnText={isEdit ? "儲存" : "編輯"}
-          primaryBtnOnClick={isEdit ? handleView : handleEdit}
+        <DataOverview
+          title="KAA-001 雄雄獅頭號"
+          subtitle={
+            <>
+              <DotIcon size={12} color="success" /> 待機中
+            </>
+          }
+          infoArray={dataOverviewArray}
+          hasImage={false}
         />
+        {mainFilter === "3" || mainFilter === "5" ? (
+          <SecondaryBtn text="回列表" onClick={handleReturn}/>
+        ) : (
+          <ButtonSet
+            isEdit={isEdit}
+            primaryDisable={false}
+            secondaryBtnText={isEdit ? "取消" : "回列表"}
+            secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+            primaryBtnText={isEdit ? "儲存" : "編輯"}
+            primaryBtnOnClick={isEdit ? handleView : handleEdit}
+          />
+        )}
       </ControlBar>
       <TabsWrapper
         onChangeTab={changeMainFilterHandler}
