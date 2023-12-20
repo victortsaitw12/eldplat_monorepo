@@ -54,19 +54,22 @@ export const ListSTY = styled.div`
   padding: 0px;
   /* gap: 80px; */
   width: 100%;
+  border: 1px solid ${({ theme, color }) => color || theme.color.N50};
+  border-radius: 10px;
+  padding: 10px 0 10px 0;
 `;
 
 export const LineSTY = styled.div<{ color?: string }>`
   position: absolute;
   top: 50%;
   left: 40px;
-  border: 1px solid ${({ theme, color }) => color || theme.color.N50};
+  border: 1px solid ${({ theme, color }) => color || theme.color.N300};
   width: calc(100% - 80px);
 `;
 export const GrayLineSTY = styled.div<{ grayWidth?: number }>`
   position: absolute;
   top: 50%;
   right: 40px;
-  border: 1px solid ${({ theme }) => theme.color.N300};
+  border: 1px solid ${({ theme }) => theme.color.N50};
   width: ${({ grayWidth }) => "calc(" + grayWidth + " * (100% - 80px))"};
 `;
