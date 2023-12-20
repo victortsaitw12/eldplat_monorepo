@@ -40,9 +40,9 @@ function ButtonSet({
       >
         {primaryBtnText === "編輯" && <EditIcon size={14} />}
       </PrimaryBtn>
-      {thridBtnText && 
+      {thirdBtnText && 
         <PrimaryBtn
-          text={thridBtnText}
+          text={thirdBtnText}
           onClick={thirdBtnOnClick}
           disabled={thirdDisable}
         >
