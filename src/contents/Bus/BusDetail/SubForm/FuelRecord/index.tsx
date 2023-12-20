@@ -22,7 +22,7 @@ import { useBusStore } from "@contexts/filter/busStore";
 import PaginationField from "@components/PaginationField";
 import { BodySTY } from "./style";
 import IconBtn from "@components/Button/IconBtn";
-import SecondaryBtn from "@components/Button/Secondary/Iconleft";
+import SecondaryBtn from "@components/Button/Secondary/IconLeft";
 import { PlusIcon } from "evergreen-ui";
 
 interface Props {
