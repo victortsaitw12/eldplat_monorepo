@@ -19,7 +19,6 @@ export const BodySTY = styled.section<{ className?: string }>`
 
     // TODO: for client 覆蓋 Collapse component, 或者可以做成新的獨立component
     .collapse {
-
         .collapse_title {
             background-color: ${({ theme }) => theme.color.N20};
             padding: 5px 12px;
@@ -37,6 +36,4 @@ export const BodySTY = styled.section<{ className?: string }>`
       
         }
     }
-
-
 `;

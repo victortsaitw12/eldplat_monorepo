@@ -4,6 +4,7 @@ import { BodySTY } from "./style";
 import { Pane } from "evergreen-ui";
 //@component
 import Collapse from "@components/Collapse";
+import { DoubleCollapseWrap } from "@contents/Orders/OrderDetail/ShuttleInfo/style"; 
 //@contents
 import SummaryInfoView from "@contents/Client/Quote/Detail/SummaryInfoView";
 import ShuttleInfo from "./ShuttleInfo";
@@ -61,7 +62,6 @@ const OrdersDetail = () => {
             display="flex"
             flexDirection="column"
             gap="12px"
-
           >
             <ContactInfoView listArray={contactInfo} title="訂單聯絡人" />
             <ContactInfoView listArray={passengerInfo} title="乘客代表人" />
@@ -97,7 +97,7 @@ const OrdersDetail = () => {
       </Section>
     );
   };
-  return <BodySTY>{!orderData ? <LoadingSpinner /> : r_template()}</BodySTY>;
+  return <BodySTY><DoubleCollapseWrap>{!orderData ? <LoadingSpinner /> : r_template()}</DoubleCollapseWrap></BodySTY>;
 };
 
 export default OrdersDetail;

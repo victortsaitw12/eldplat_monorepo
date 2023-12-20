@@ -4,6 +4,7 @@ export const BodySTY = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
+  margin-bottom: 20px;
   .left {
     flex: 2;
     display: flex;
@@ -15,29 +16,6 @@ export const BodySTY = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
-  .collapse {
-    &_title {
-      padding-left: 20px;
-    }
-    &_content {
-      /* Pane */
-      & > div {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        padding: 20px;
-        /* DetailItem */
-        & > li {
-          height: 32px;
-          align-items: center;
-        }
-        /* ProgressList */
-        & > div {
-          min-height: 32px;
-        }
-      }
-    }
   }
   .paymentBtns {
     flex-direction: row;

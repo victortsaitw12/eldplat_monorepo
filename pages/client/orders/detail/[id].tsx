@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPageWithLayout } from "next";
 import { Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
-import { getLayout } from "@layout/QuoteLayout";
+import { getLayout } from "@layout/ClientLayout";
 import Breadcrumbs from "@components/Breadcrumbs";
 import ConditionCard from "@components/ConditionCard";
 import OrderDetail from "@contents/Orders/OrderDetail";
@@ -54,14 +54,13 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
               url: `/client/orders/detail/${data.quote_no}`
             }
           ]}
-          style={{ marginBottom: "24px" }}
         />
       )}
       <BodySTY>
         {!isLoading && data && (
           <div className="left">
             <OrderDetail orderData={data} />
-            <ConditionCard type="view"></ConditionCard>
+            {/* <ConditionCard type="view"></ConditionCard> */}
           </div>
         )}
         {data && (
