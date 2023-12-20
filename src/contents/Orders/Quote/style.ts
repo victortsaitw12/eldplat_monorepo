@@ -11,19 +11,19 @@ export const DivSTY = styled.div`
     }
   }
   .quote {
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
     background: ${({ theme }) => theme.color.N0};
+    padding: 16px;
+
     .collapse {
       &__title {
         font-weight: 600;
-        font-size: 24px;
-        line-height: 33px;
+        font-size: 20px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        height: 33px;
       }
       &__subTitle {
         font-weight: 400;
@@ -33,6 +33,21 @@ export const DivSTY = styled.div`
         flex-direction: row;
         justify-content: space-between;
       }
+
+      .amount {
+        color: ${({ theme }) => theme.color.R300};
+      }
+    }
+
+    .collapse_title {
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      padding: 0;
+      padding-bottom: 16px;
+    }
+
+    .amend-btn {
+      width: 100%;
+      padding: 8px 0;
     }
   }
 `;

@@ -15,7 +15,11 @@ interface I_Props {
   borderRadius?: string;
 }
 
-const DetailGrid = ({ listArray, title="", isCollapse=false, borderRadius="4px" }: I_Props) => {
+const DetailGrid = ({ 
+  listArray, title="", 
+  isCollapse=false, 
+  borderRadius="4px" 
+}: I_Props) => {
 
   const GridWrapper = ({ 
     isCollapse=false, 
