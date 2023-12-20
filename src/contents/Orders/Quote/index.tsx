@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane } from "evergreen-ui";
+import { Button, Pane } from "evergreen-ui";
 import { DivSTY } from "./style";
 
 // import { MOCK_expenseList } from "@mock-data/orders";
@@ -7,6 +7,7 @@ import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
 // import PaymentBtn from "../PaymentBtn";
 import { I_OrderDetail } from "@services/client/getQuotation";
+import NoticeMessage from "@components/NoticeMessage";
 
 const Quote = ({
   data,
@@ -65,6 +66,7 @@ const Quote = ({
       <Pane className="quote">
         <Collapse
           title="金額試算"
+          color="#fff"
           titleChildren={
             <div className="collapse">
               <div className="collapse__title">
@@ -73,25 +75,9 @@ const Quote = ({
                     ? "初估金額"
                     : "總金額"}
                 </span>
-                <span>
+                <span className="amount">
                   NT${data.quote_total_amount?.toLocaleString("en-US")}
                 </span>
-              </div>
-
-              <div className="collapse__subTitle">
-                {/* isfullpay表示僅接受全額支付 */}
-                {/* checkdeposit表示已付訂金 */}
-                {data.isfullpay ? (
-                  ""
-                ) : (
-                  <>
-                    <span>訂金</span>
-                    <span>
-                      {" "}
-                      NT${data.deposit_amount?.toLocaleString("en-US") || 0}
-                    </span>
-                  </>
-                )}
               </div>
             </div>
           }
@@ -100,6 +86,11 @@ const Quote = ({
           OnToggle={handleToggle}
         >
           <ExpenseDetail data={expenseList} prefix="NT$" />
+          <Pane marginBottom="20px"><NoticeMessage message="注意事項注意事項注意事項注意事項注意事項注意事項" /></Pane>
+          {
+            data.status_list[1].status === "pending" && 
+            <Button className="amend-btn">修改訂單</Button>
+          }
         </Collapse>
       </Pane>
     </DivSTY>
@@ -107,3 +98,20 @@ const Quote = ({
 };
 
 export default Quote;
+
+
+// <div className="collapse__subTitle">
+// {/* isfullpay表示僅接受全額支付 */}
+// {/* checkdeposit表示已付訂金 */}
+// {data.isfullpay ? (
+//   ""
+// ) : (
+//   <>
+//     <span>訂金</span>
+//     <span>
+//       {" "}
+//       NT${data.deposit_amount?.toLocaleString("en-US") || 0}
+//     </span>
+//   </>
+// )}
+// </div>
