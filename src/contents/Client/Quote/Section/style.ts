@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BodySTY = styled.div`
+export const BodySTY = styled.section<{ className?: string }>`
     background-color: ${({ theme }) => theme.color.N0};
     
     .section-title {

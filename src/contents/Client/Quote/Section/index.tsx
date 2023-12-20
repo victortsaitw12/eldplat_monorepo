@@ -11,7 +11,7 @@ const Section = ({
   children 
 }: I_Props) => {
   return (
-    <BodySTY>
+    <BodySTY className="section">
       <div className="section-title"> { title }  </div>
       <div className="section-content">
         { children }
