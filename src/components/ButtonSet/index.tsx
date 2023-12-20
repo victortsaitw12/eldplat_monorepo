@@ -1,4 +1,4 @@
-import { EditIcon } from "evergreen-ui";
+import { EditIcon, ShareIcon } from "evergreen-ui";
 import React from "react";
 import { useRouter } from "next/router";
 import { DivSTY } from "./style";
@@ -46,7 +46,7 @@ function ButtonSet({
           onClick={thirdBtnOnClick}
           disabled={thirdDisable}
         >
-          <EditIcon size={14} />
+          <ShareIcon size={14} />
         </PrimaryBtn>
       }
     </DivSTY>

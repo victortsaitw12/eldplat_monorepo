@@ -21,6 +21,9 @@ import Table from "@components/Table/Table";
 import { useBusStore } from "@contexts/filter/busStore";
 import PaginationField from "@components/PaginationField";
 import { BodySTY } from "./style";
+import IconBtn from "@components/Button/IconBtn";
+import SecondaryBtn from "@components/Button/Secondary/Iconleft";
+import { PlusIcon } from "evergreen-ui";
 
 interface Props {
   register: UseFormRegister<BusDataTypes>;
@@ -31,15 +34,14 @@ interface Props {
   busId: string;
 }
 
-const maintenanceTitle = [
-  "維保單號",
-  "維保日期",
-  "任務狀態",
-  "維保里程",
-  "分類",
-  "維修廠",
-  "項目"
-];
+export interface I_EditHistory {
+  id: string;
+  description: string;
+  editor: string;
+  edit_time: string;
+}
+
+const editHistoryTitle = ["修改說明", "修改人員", "修改時間"];
 
 const DUMMY_FILTER = [
   {
@@ -63,28 +65,16 @@ const DUMMY_DATA = {
   message: "OK",
   resultList: [
     {
-      equipment_no: "EQU20231201001",
-      equipment_name: "麥克風",
-      provider: "麥霸國際",
-      amount: "1,200",
-      purchaser: "林買買",
-      status: "2"
+      id: "1",
+      description: "編輯加油卡號",
+      editor: "林筠紹",
+      edit_time: "2022-11-11 13:40"
     },
     {
-      equipment_no: "EQU20231201002",
-      equipment_name: "礦泉水",
-      provider: "山泉公司",
-      amount: "2,500",
-      purchaser: "林買買",
-      status: "1"
-    },
-    {
-      equipment_no: "EQU20231201003",
-      equipment_name: "伴唱帶",
-      provider: "麥霸國際",
-      amount: "3,800",
-      purchaser: "林買買",
-      status: "3"
+      id: "2",
+      description: "新增該車輛資料車輛資料",
+      editor: "王薇翔",
+      edit_time: "2022-11-11 10:30"
     }
   ],
   pageInfo: {
@@ -92,12 +82,12 @@ const DUMMY_DATA = {
     Page_Size: 10,
     Orderby: null,
     Arrangement: "desc",
-    Total: 100,
+    Total: 4,
     Last_Page: 9
   }
 };
 
-function Maintenance({
+function FuelRecord({
   register,
   errors,
   getValues,
@@ -105,7 +95,7 @@ function Maintenance({
   isEdit,
   busId
 }: Props) {
-  const [busMaintenanceData, setBusMaintenanceData] = useState<any>(null);
+  const [editData, setEditData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>({
     Arrangement: "desc",
     Orderby: null,
@@ -130,19 +120,18 @@ function Maintenance({
       //   busMaintenaceParser
       // );
 
-      const busMaintenanceData = res.resultList;
+      const editData = DUMMY_DATA.resultList;
 
       if (!subFilter) {
         localStorage.setItem(
           "maintenanceInitFilter",
-          // JSON.stringify(busMaintenanceData.conditionList)
+          // JSON.stringify(fuelData.conditionList)
           JSON.stringify(DUMMY_FILTER)
         );
         initializeSubFilter();
       }
 
-      setBusMaintenanceData(busMaintenanceData);
-      // setPageInfo(res.pageInfo);
+      setEditData(editData);
       setPageInfo(DUMMY_DATA.pageInfo);
     });
   }
@@ -155,30 +144,20 @@ function Maintenance({
     };
   }, [busId]);
 
-  const changeKey = (data: Array<I_Maintenance>) => {
-    return data.map((item: I_Maintenance) => {
+  const changeKey = (data: Array<I_EditHistory>) => {
+    return data.map((item: I_EditHistory) => {
       return {
         id: item["id"],
-        maintenance_no: item["maintenance_no"],
-        maintenance_date: item["maintenance_date"],
-        maintenance_status: item["maintenance_status"],
-        distance: item["distance"],
-        category: item["category"],
-        repair_garage: item["repair_garage"],
-        maintenance_item: item["maintenance_item"]
+        description: item["description"],
+        editor: item["editor"],
+        edit_time: item["edit_time"]
       };
     });
   };
 
   const { initializeSubFilter, subFilter, updateSubFilter } = useBusStore();
 
-  const modifiedData = busMaintenanceData
-    ? changeKey(busMaintenanceData)
-    : undefined;
-
-  const handleView = () => {
-    console.log("handle view");
-  };
+  const modifiedData = editData ? changeKey(editData) : undefined;
 
   return (
     <BodySTY>
@@ -190,13 +169,12 @@ function Maintenance({
         filter={subFilter}
       ></FilterWrapper>
       <Table
-        titles={maintenanceTitle}
+        titles={editHistoryTitle}
         data={modifiedData}
-        onView={handleView}
         headNode={<PaginationField pageInfo={pageInfo} />}
       />
     </BodySTY>
   );
 }
 
-export default Maintenance;
+export default FuelRecord;

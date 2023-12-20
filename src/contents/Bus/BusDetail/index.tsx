@@ -7,6 +7,7 @@ import Details from "./SubForm/Detail";
 import Maintenance from "./SubForm/Maintenance";
 import Equipment from "./SubForm/Equipment";
 import FuelRecord from "./SubForm/FuelRecord";
+import EditHistory from "./SubForm/EditHistory";
 
 interface I_Props {
   isEdit: boolean;
@@ -92,7 +93,7 @@ const BusDetail = ({
           </>
         )}
 
-        {visibleForm === "3" && (
+        {visibleForm === "2" && (
           <Maintenance
             busId={busId}
             register={register}
@@ -103,7 +104,7 @@ const BusDetail = ({
           />
         )}
 
-        {visibleForm === "4" && (
+        {visibleForm === "3" && (
           <Equipment
             busId={busId}
             register={register}
@@ -114,8 +115,19 @@ const BusDetail = ({
           />
         )}
 
-        {visibleForm === "5" && (
+        {visibleForm === "4" && (
           <FuelRecord
+            busId={busId}
+            register={register}
+            errors={errors}
+            getValues={getValues}
+            control={control}
+            isEdit={isEdit}
+          />
+        )}
+
+        {visibleForm === "5" && (
+          <EditHistory
             busId={busId}
             register={register}
             errors={errors}

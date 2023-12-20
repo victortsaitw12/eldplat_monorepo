@@ -26,13 +26,7 @@ export const DivSTY = styled.div`
       }
     }
 
-    .switch-wrapper{
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .col-wrapper{
+    .col-wrapper {
       display: flex;
       gap: 20px;
     }
@@ -62,6 +56,23 @@ export const DivSTY = styled.div`
 
       > div {
         height: 100%;
+      }
+    }
+  }
+
+  .switch-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .radio-wrapper {
+    display: flex;
+    gap: 10px;
+
+    label {
+      span {
+        font-size: 16px;
       }
     }
   }
