@@ -154,15 +154,32 @@ function Details({
               isEdit={isEdit}
               infoData={TransmissionInfo}
               infoTitle="變速器"
+              height={365}
             />
-            <InfoCard isEdit={isEdit} infoData={WeightInfo} infoTitle="重量" />
+            <InfoCard
+              isEdit={isEdit}
+              infoData={WeightInfo}
+              infoTitle="重量"
+              height={365}
+            />
             <InfoCard
               isEdit={isEdit}
               infoData={EcoMileageInfo}
               infoTitle="EPA燃油經濟性/油耗表現"
+              height={365}
             />
-            <InfoCard isEdit={isEdit} infoData={FuelInfo} infoTitle="燃料" />
-            <InfoCard isEdit={isEdit} infoData={OilInfo} infoTitle="機油" />
+            <InfoCard
+              isEdit={isEdit}
+              infoData={FuelInfo}
+              infoTitle="燃料"
+              height={365}
+            />
+            <InfoCard
+              isEdit={isEdit}
+              infoData={OilInfo}
+              infoTitle="機油"
+              height={365}
+            />
           </Pane>
         </Pane>
       )}
