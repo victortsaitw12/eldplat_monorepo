@@ -5,10 +5,13 @@ import { DivSTY } from "./style";
 import PaginationField from "@components/PaginationField";
 import { I_PageInfo } from "@components/PaginationField";
 import { useOrderStore } from "@contexts/filter/orderStore";
-import { 
-    getOrderDocsTitle, 
-    getOrderDocsData 
-  } from "@services/orders/getOrderDocs";
+import {
+  getConditionList,
+  getOrderDocsTitle, 
+  getOrderDocsData 
+} from "@services/orders/getOrderDocs";
+import SecondaryBtn from "@components/Button/Secondary/IconLeft";
+import { PlusIcon } from "evergreen-ui";
 export const defaultPageInfo: I_PageInfo = {
     Page_Index: 1,
     Page_Size: 10,
@@ -32,14 +35,25 @@ const Docs = () => {
     const tableTitle = getOrderDocsTitle();
 
     useEffect(() => {
-        initializeSubFilter();
-        const tableData = getOrderDocsData();
-        setData(changeKey(tableData));
-      }, []);
+      const conditionList = getConditionList();
+      const tableData = getOrderDocsData();
+      if (!subFilter) {
+        localStorage.setItem(
+          "orderInitFilter",
+          JSON.stringify(conditionList)
+        );
+      }
+      initializeSubFilter();
+      setData(tableData);
+    }, []);
 
     const handleView = (id: string) => {
         console.log(`hande view: ${id}`);
     };
+
+    const handleAddDoc = () => {
+      console.log(`hande add file`);
+    }
     
     const changeKey = (data: Array<any>) => {
         return data.map((item: any) => {
@@ -60,6 +74,14 @@ const Docs = () => {
               initializeSubFilter();
             }}
             filter={subFilter}
+            btns={
+              <SecondaryBtn
+                text="新增檔案"
+                onClick={handleAddDoc}
+              >
+                <PlusIcon />
+              </SecondaryBtn>
+            }
            />
           <Table
               titles={tableTitle}
