@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import { useRouter  } from "next/router";
 import Table from "@components/Table/Table";
 import FilterWrapper from "@layout/FilterWrapper";
 import { DivSTY } from "./style";
@@ -33,6 +34,7 @@ const Docs = () => {
     const [data, setData] = useState<any>(null);
     const { initializeSubFilter, subFilter, updateSubFilter } = useOrderStore();
     const tableTitle = getOrderDocsTitle();
+    const router = useRouter();
 
     useEffect(() => {
       const conditionList = getConditionList();
@@ -53,6 +55,7 @@ const Docs = () => {
 
     const handleAddDoc = () => {
       console.log(`hande add file`);
+      router.push("/orders/doc/create");
     }
     
     const changeKey = (data: Array<any>) => {
