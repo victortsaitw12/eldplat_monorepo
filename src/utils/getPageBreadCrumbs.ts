@@ -81,17 +81,36 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "任務指派 ", url: "/assignment" }
   ],
-  // ----------------------------------------------------------------------- V2 above
-  // ----------------------------------------------------------------------- V1 below
   "/bus": [
     { label: "首頁", url: "/" },
-    { label: "車輛清單", url: "/bus" }
+    { label: "車輛列表", url: "/bus" }
   ],
   "/bus/detail/[id]": [
     { label: "首頁", url: "/" },
-    { label: "車輛清單", url: "/bus" },
-    { label: "檢視", url: "" }
+    { label: "車輛列表", url: "/bus" },
+    { label: "檢視車輛", url: "" }
   ],
+  "/bus/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "車輛列表", url: "/bus" },
+    { label: "新增車輛", url: "" }
+  ], 
+  "/bus_management": [
+    { label: "首頁", url: "/" },
+    { label: "車輛列表", url: "/bus" },
+    { label: "車輛管理設定", url: "" }
+  ], 
+  // ----------------------------------------------------------------------- V2 above
+  // ----------------------------------------------------------------------- V1 below
+  // "/bus": [
+  //   { label: "首頁", url: "/" },
+  //   { label: "車輛清單", url: "/bus" }
+  // ],
+  // "/bus/detail/[id]": [
+  //   { label: "首頁", url: "/" },
+  //   { label: "車輛清單", url: "/bus" },
+  //   { label: "檢視", url: "" }
+  // ],
   "/customer": [
     { label: "入門", url: "/" },
     { label: "客戶", url: "/customer" }
