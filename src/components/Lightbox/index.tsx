@@ -33,7 +33,7 @@ function LightBox({
 
   if (!mounted) return null;
   return createPortal(
-    <LightBoxBlock isOpen={isOpen} onClick={onCancel || handleCloseLightBox}>
+    <LightBoxBlock className="light-box" isOpen={isOpen} onClick={onCancel || handleCloseLightBox}>
       <div style={wrapperStyle} className="wrapper" onClick={stopPropagation}>
         <div className="titleWrap">
           <div className="title">{title}</div>

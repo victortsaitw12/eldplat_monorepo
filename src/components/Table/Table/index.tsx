@@ -49,7 +49,7 @@ function Table({
     <>
       <DivSTY className={`${className || ""} container`}>
         {headNode && <header>{headNode}</header>}
-        <TableSTY>
+        <TableSTY className="table">
           <thead>
             <tr>
               {titles.map((title, i) => (

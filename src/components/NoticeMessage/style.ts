@@ -10,6 +10,7 @@ export const BodySTY = styled.div.attrs({
 
     .message {
         font-size: 14px;
+        min-width: 14px;
         color: ${({ theme }) => theme.color.N300};
     }
 `;
