@@ -46,7 +46,7 @@ export const ItemSTY = styled.div<{
   }
 `;
 
-export const ListSTY = styled.div`
+export const ListSTY = styled.div<{className?: string}>`
   display: inline-flex;
   position: relative;
   justify-content: space-between;

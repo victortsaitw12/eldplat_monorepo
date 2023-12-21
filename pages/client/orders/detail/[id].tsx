@@ -1,7 +1,7 @@
 import React from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
-import { Spinner } from "evergreen-ui";
-import { BodySTY } from "./style";
+import { Spinner, toaster } from "evergreen-ui";
+import { BodySTY, ButtonSetSTY, LightBoxContentSTY } from "./style";
 
 import { getLayout } from "@layout/ClientLayout";
 import Breadcrumbs from "@components/Breadcrumbs";
@@ -14,11 +14,19 @@ import OverdueMsg from "@contents/Orders/OverdueMsg";
 import PaymentBtn from "@contents/Orders/PaymentBtn";
 import Quote from "@contents/Orders/Quote";
 import PaymentMethod from "@contents/Orders/PaymentMethod";
+import LightBox from "@components/Lightbox";
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import SecondaryBtn from "@components/Button/Secondary/Label";
+import CustomTextArea from "@components/CustomTextArea";
+import { TextareaField } from "evergreen-ui";
 
 const Page: NextPageWithLayout<never> = ({ quote_no }) => {
   // ----- variables, states ----- //
   const [data, setData] = React.useState<I_OrderDetail | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [modifyLightboxOpen, setModifyLightboxOpen] = React.useState(false);
+  const [modifyTextareaValue, setModifyTextareaValue] = React.useState("");
+
   // ----- useEffect ----- //
   React.useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +43,17 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
 
     fetchData();
   }, [quote_no]);
+
+  const handleConfirmOrderModify = () => {
+    setModifyLightboxOpen(false);
+    setModifyTextareaValue("");
+    toaster.success("我們已收到您的修改需求")
+  }
+
+  const handleUpdateTextField = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    console.log("change", e.target.value);
+    setModifyTextareaValue(e.target.value);
+  }
 
   return (
     <>
@@ -68,17 +87,52 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
             {data.status_list.filter(
               (statusItem) => statusItem.status === "error"
             ) && <OverdueMsg data={data} />}
-            {data.status_list[1].status !== "pending" &&
-              data.status_list[3].status === "pending" && (
-                <PaymentBtn data={data} setData={setData} />
-              )}
-
-            <Quote data={data} setData={setData} />
+            <Quote data={data} setData={setData} setModifyLightboxOpen={setModifyLightboxOpen} />
             {data.status_list[1].status === "ok" && (
-              <PaymentMethod data={data} />
+              <PaymentMethod data={data} setData={setData} setModifyLightboxOpen={setModifyLightboxOpen} />
             )}
+            {/* {data.status_list[1].status !== "pending" &&
+              data.status_list[3].status === "pending" && (
+              <PaymentBtn data={data} setData={setData} />
+            )} */}
           </div>
         )}
+        <LightBox
+          onCancel={() => setModifyLightboxOpen(false)}
+          onConfirm={handleConfirmOrderModify}
+          title="修改訂單"
+          isOpen={modifyLightboxOpen}
+          customBtns={
+            <ButtonSetSTY>
+              <SecondaryBtn
+                text="取消"
+                onClick={() => setModifyLightboxOpen(false)}
+                style={{
+                  borderColor: "1px solid #B3BAC5",
+                  color: "#5E6C84"
+                }}
+              />
+              <PrimaryBtn 
+                text="送出"
+                onClick={handleConfirmOrderModify} 
+                style={{
+                  backgroundColor: "#5E6C84"
+                }}
+              />
+            </ButtonSetSTY>
+          }
+        >
+          <LightBoxContentSTY>
+            <div>請在下方欄位輸入修改需求，後續將由業務進行處理。</div>
+            <TextareaField
+              value={modifyTextareaValue}
+              onChange={handleUpdateTextField}
+              marginTop={8}
+              marginBottom={0}
+              placeholder="請輸入說明"
+            />
+          </LightBoxContentSTY>
+        </LightBox>
       </BodySTY>
     </>
   );

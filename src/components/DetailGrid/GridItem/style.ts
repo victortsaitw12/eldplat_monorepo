@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 const BodySTY = styled.li`
-  display: flex;
+  display: grid;
+  grid-template-columns: 135px 1fr;
 
   .item {
     flex: 1;
@@ -12,7 +13,6 @@ const BodySTY = styled.li`
     border-top: 1px solid ${({ theme }) => theme.color.N40};
 
     &:nth-child(odd) {
-      max-width: 135px;
       border-right: 1px solid ${({ theme }) => theme.color.N40};
     }
   }
