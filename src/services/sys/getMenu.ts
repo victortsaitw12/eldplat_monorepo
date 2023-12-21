@@ -269,14 +269,14 @@ export const DUMMY_MENU = {
           fg_no: "order",
           func_no: "orderList",
           func_name: "訂單列表",
-          path: "/orderList"
+          path: "/orders"
         },
         {
           module_no: "bus",
           fg_no: "order",
           func_no: "orderList",
           func_name: "新增訂單",
-          path: "/orderList/detail/create"
+          path: "/orders/detail/create"
         }
       ]
     },
