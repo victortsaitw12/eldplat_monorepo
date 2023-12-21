@@ -105,7 +105,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
                     <DetailItem title="詢價編號" value={orderData.quote_no} />
                   </Pane> */}
                 <Pane marginBottom="24px">
-                  <ProgressList color="#5E6C84" dataLists={progressInfo} />
+                  <ProgressList color="#5E6C84" dataLists={progressInfo} showTick={true} />
                 </Pane>
                 <DetailGrid 
                   listArray={[
