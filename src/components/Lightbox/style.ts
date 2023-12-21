@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
+export const LightBoxBlock = styled.div<{ isOpen: boolean; className?: string }>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
   position: fixed;
   top: 0;

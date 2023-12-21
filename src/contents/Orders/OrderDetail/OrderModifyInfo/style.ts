@@ -44,10 +44,11 @@ export const BodySTY = styled.div`
         &::before {
           position: absolute;
           content: "";
-          width: 4px;
-          height: 4px;
+          width: 5px;
+          height: 5px;
           left: -20px;
           top: 50%;
+          border-radius: 50%;
           transform: translateY(-50%);
           background-color: ${({ theme }) => theme.color.N800};
         }

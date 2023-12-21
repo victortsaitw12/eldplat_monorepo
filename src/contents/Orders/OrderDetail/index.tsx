@@ -89,6 +89,7 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
 
             {currentTab == 2 && <OrderModifyInfo modificationRecord={DUMMY_modificationRecord} />}
           </DoubleCollapseWrap>
+
         </MainSTY>
       </form>
     </FormProvider>

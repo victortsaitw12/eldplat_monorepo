@@ -11,10 +11,12 @@ import NoticeMessage from "@components/NoticeMessage";
 
 const Quote = ({
   data,
-  setData
+  setData,
+  setModifyLightboxOpen
 }: {
   data: I_OrderDetail;
   setData: (data: any) => void;
+  setModifyLightboxOpen: (data: any) => void;
 }) => {
   const expenseList = [
     {
@@ -89,7 +91,12 @@ const Quote = ({
           <Pane marginBottom="20px"><NoticeMessage message="注意事項注意事項注意事項注意事項注意事項注意事項" /></Pane>
           {
             data.status_list[1].status === "pending" && 
-            <Button className="amend-btn">修改訂單</Button>
+            <Button 
+              className="amend-btn"
+              onClick={() => { setModifyLightboxOpen(true) }}  
+            >
+              修改訂單
+            </Button>
           }
         </Collapse>
       </Pane>
