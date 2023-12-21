@@ -2,7 +2,7 @@ import React from "react"
 import { BodySTY } from "./style"
 
 interface I_Props {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 }
 
@@ -11,8 +11,8 @@ const Section = ({
   children 
 }: I_Props) => {
   return (
-    <BodySTY>
-      <div className="section-title"> { title }  </div>
+    <BodySTY className="section">
+      {title && <div className="section-title"> { title } </div>}
       <div className="section-content">
         { children }
       </div>

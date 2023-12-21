@@ -64,23 +64,29 @@ const breadcrumbs: I_routers = {
   ],
   "/schedule": [
     { label: "首頁", url: "/" },
-    { label: "駕駛出勤管理", url: "/" },
+    { label: "駕駛出勤管理", url: "/" }
   ],
   "/schedule/detail/[id]": [
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/schedule" },
-    { label: "個人班表", url: "" },
+    { label: "個人班表", url: "" }
   ],
   "/schedule/approval": [
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/schedule" },
     { label: "個人班表", url: "/schedule/detail/[id]" },
-    { label: "簽核", url: "/approval" },
+    { label: "簽核", url: "/approval" }
   ],
   "/assignment": [
     { label: "首頁", url: "/" },
     { label: "任務指派 ", url: "/assignment" }
   ],
+  "/orders": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" }
+  ],
+  // ----------------------------------------------------------------------- V2 above
+  // ----------------------------------------------------------------------- V1 below
   "/bus": [
     { label: "首頁", url: "/" },
     { label: "車輛列表", url: "/bus" }
