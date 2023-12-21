@@ -11,13 +11,14 @@ import { BodySTY } from "./style";
 import { I_DriverInfo } from "@contents/Driver/driver.type";
 import { getLayout } from "@layout/MainLayout";
 
-import { getDriverById } from "@services/driver/getDriverById";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
 import InfoCard from "@components/InfoCard";
 import NoData from "@components/NoData";
 import InputGenerator from "@components/InputGenerator";
 import SubTabsWrapper from "@layout/SubTabsWrapper";
+import PureInfoCard from "@components/InfoCard/PureStyle";
+import FormGenerator from "@components/FormGenerator";
 
 const subTabsArray = [
   { id: 1, label: "車輛識別", value: "1" },
@@ -179,11 +180,17 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
         {currentTab === "2" && (
           <Pane className="main-column">
             <Pane className="fb-66">
-              <InfoCard
-                isEdit={isEdit}
-                infoData={AreaInFo}
-                infoTitle={"派駐地"}
-              />
+              {isEdit ? (
+                <PureInfoCard infoTitle={"派駐地"} isEdit={true}>
+                  <FormGenerator />
+                </PureInfoCard>
+              ) : (
+                <InfoCard
+                  isEdit={isEdit}
+                  infoData={AreaInFo}
+                  infoTitle={"派駐地"}
+                />
+              )}
             </Pane>
             <Pane className="fb-33">
               <InfoCard

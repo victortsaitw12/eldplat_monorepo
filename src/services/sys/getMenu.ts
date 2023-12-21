@@ -179,7 +179,7 @@ export const DUMMY_MENU = {
           fg_no: "bus",
           func_no: "bus",
           func_name: "車輛管理設定",
-          path: "/#"
+          path: "/bus_management"
         }
       ]
     },
