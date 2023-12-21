@@ -10,7 +10,7 @@ export interface I_GridItem {
 
 interface I_Props {
   listArray: I_GridItem[];
-  title?: string;
+  title?: React.ReactNode | string;
   isCollapse?: boolean;
   borderRadius?: string;
 }
@@ -25,7 +25,7 @@ const DetailGrid = ({
     isCollapse=false, 
     children,
     title="",
-  }:{ isCollapse?: boolean, children: React.ReactNode, title?: string }) => {
+  }:{ isCollapse?: boolean, children: React.ReactNode, title?: string | React.ReactNode }) => {
 
     if(isCollapse) return (
       <Collapse title={title} opened={true}>
@@ -37,7 +37,7 @@ const DetailGrid = ({
   }
 
   return (
-    <BodySTY className="detail_grid" title={title} borderRadius={borderRadius}>
+    <BodySTY className="detail_grid" isShowTitle={typeof title === "string" && title.length !== 0} borderRadius={borderRadius}>
       { title && !isCollapse && <div className="grid_title">{ title }</div>}
       <GridWrapper title={title} isCollapse={isCollapse}>
         <div className="grid_content">

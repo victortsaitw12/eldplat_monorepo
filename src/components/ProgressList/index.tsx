@@ -66,7 +66,7 @@ interface ListProps {
 
 const ProgressList = ({ dataLists, color, showTick=false }: ListProps) => {
   return (
-    <ListSTY color={color}>
+    <ListSTY color={color} className="progress-list">
       {dataLists.map((item, index) => {
         return (
           <ProgressItem
