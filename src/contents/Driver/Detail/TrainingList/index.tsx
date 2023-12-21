@@ -38,6 +38,17 @@ interface Props {
   driverNo: string;
 }
 
+const DUMMY_SUBFILTER = {
+  User_Name: {
+    field_Name: "User_Name",
+    arrayConditions: ["like", "equal"],
+    displayType: "search",
+    dataType: "string",
+    label: "搜尋",
+    value: ""
+  }
+};
+
 function LicensesList({ isEdit, userName, driverNo }: Props) {
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
   const [editNo, setEditNo] = React.useState<number | null>(null);
@@ -248,7 +259,8 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
         resetFilter={() => {
           initializeSubFilter();
         }}
-        filter={subFilter}
+        // filter={subFilter}
+        filter={DUMMY_SUBFILTER}
       >
         <Table
           titles={table_title}
