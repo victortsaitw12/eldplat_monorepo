@@ -14,7 +14,7 @@ export const DivSTY = styled.div`
 `;
 
 // 表格本身
-export const TableSTY = styled.table`
+export const TableSTY = styled.table<{ className?: string }>`
   /* width: 100%; */
   min-width: 100%;
   border-collapse: collapse;

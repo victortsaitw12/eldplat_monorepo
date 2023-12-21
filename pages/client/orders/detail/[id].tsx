@@ -1,6 +1,6 @@
 import React from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
-import { Spinner } from "evergreen-ui";
+import { Spinner, toaster } from "evergreen-ui";
 import { BodySTY, ButtonSetSTY, LightBoxContentSTY } from "./style";
 
 import { getLayout } from "@layout/ClientLayout";
@@ -46,7 +46,8 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
 
   const handleConfirmOrderModify = () => {
     setModifyLightboxOpen(false);
-    setModifyTextareaValue("")
+    setModifyTextareaValue("");
+    toaster.success("我們已收到您的修改需求")
   }
 
   const handleUpdateTextField = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -86,15 +87,14 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
             {data.status_list.filter(
               (statusItem) => statusItem.status === "error"
             ) && <OverdueMsg data={data} />}
-            {data.status_list[1].status !== "pending" &&
-              data.status_list[3].status === "pending" && (
-                <PaymentBtn data={data} setData={setData} />
-              )}
-
             <Quote data={data} setData={setData} setModifyLightboxOpen={setModifyLightboxOpen} />
             {data.status_list[1].status === "ok" && (
-              <PaymentMethod data={data} />
+              <PaymentMethod data={data} setData={setData} setModifyLightboxOpen={setModifyLightboxOpen} />
             )}
+            {/* {data.status_list[1].status !== "pending" &&
+              data.status_list[3].status === "pending" && (
+              <PaymentBtn data={data} setData={setData} />
+            )} */}
           </div>
         )}
         <LightBox

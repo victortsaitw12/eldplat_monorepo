@@ -1,15 +1,18 @@
 import React from "react";
 import { Pane, Dialog, Paragraph, toaster } from "evergreen-ui";
-import { DivSTY } from "./style";
-
+import { DivSTY, CustomTable } from "./style";
+import { ButtonSetSTY } from "@pages/client/orders/detail/style";
 import Table from "@components/Table/Table";
 import PrimaryRadiusBtn from "@components/Button/PrimaryRadius";
 import SecondaryRadiusBtn from "@components/Button/SecondaryRadius";
+import LightBox from "@components/Lightbox";
 
 import { updatePayment } from "@services/client/updatePayment";
 import { updateStatus } from "@services/client/updateStatus";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 import { I_Order } from "@services/client/getOrdersList";
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import SecondaryBtn from "@components/Button/Secondary/Label";
 
 const PaymentBtn = ({
   data,
@@ -110,6 +113,11 @@ const PaymentBtn = ({
     }
   };
 
+  const handleSubmit = () => {
+    toaster.success("己成功接受報價");
+    setIsLightBoxOpen(false)
+  }
+
   const renderBtn = (statusList: any[]) => {
     // 1: {name: '收到報價', status: 'ok', date: '06/20/2023 00:00:00'}
     // render 接受報價
@@ -158,6 +166,16 @@ const PaymentBtn = ({
           </PrimaryRadiusBtn>
         </div>
       );
+      // TODO: For demo 用
+    } else if (statusList[2].status === "ok") {
+      return (
+        <PrimaryRadiusBtn
+          appearance="primary"
+          onClick={handlePayment.bind(null, "8")}
+        >
+          匯款回報
+        </PrimaryRadiusBtn>
+      );
     }
   };
 
@@ -170,37 +188,57 @@ const PaymentBtn = ({
       }
       {isLightBoxOpen && (
         <Pane>
-          <Dialog
-            isShown={isLightBoxOpen}
+          <LightBox
+            isOpen={isLightBoxOpen}
             title="確認接受此報價嗎?"
             onConfirm={handleTakeQuote}
-            onCloseComplete={() => setIsLightBoxOpen(false)}
-            cancelLabel="取消"
-            confirmLabel="確認"
+            onCancel={() => setIsLightBoxOpen(false)}
+            customBtns={
+              <ButtonSetSTY>
+                <SecondaryBtn
+                  text="取消"
+                  onClick={() => setIsLightBoxOpen(false)}
+                  style={{
+                    borderColor: "1px solid #B3BAC5",
+                    color: "#5E6C84"
+                  }}
+                />
+                <PrimaryBtn 
+                  text="接受"
+                  onClick={handleSubmit} 
+                  style={{
+                    backgroundColor: "#5E6C84"
+                  }}
+                />
+              </ButtonSetSTY>
+            }
+            // cancelLabel="取消"
+            // confirmLabel="接受"
           >
-            {({}) => (
-              <Pane>
-                <Paragraph style={{ lineHeight: "32px" }}>
-                  接受報價後，此筆訂單即可繳款。
-                  <br />
-                  報價詳情：
-                </Paragraph>
 
-                <Table
-                  titles={["訂單編號", "總金額"]}
-                  data={[
-                    {
-                      id: data.quote_no,
-                      quote_no: data.quote_no,
-                      quote_total_amount: `NT$${Number(
-                        data.quote_total_amount
+          <Pane>
+            <Paragraph style={{ lineHeight: "32px", fontSize: "16px", marginBottom: "20px" }}>
+              接受報價後，此筆訂單即可繳款。
+              <br />
+              報價詳情：
+            </Paragraph>
+            <CustomTable>
+              <Table
+                titles={["訂單編號", "總金額"]}
+                data={[
+                  {
+                    id: data.quote_no,
+                    quote_no: data.quote_no,
+                    quote_total_amount: `NT$${Number(
+                      data.quote_total_amount
                       ).toLocaleString()}`
                     }
                   ]}
-                />
-              </Pane>
-            )}
-          </Dialog>
+              />
+            </CustomTable>
+          </Pane>
+
+          </LightBox>
         </Pane>
       )}
     </>
