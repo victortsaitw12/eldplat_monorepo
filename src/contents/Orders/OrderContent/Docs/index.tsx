@@ -5,10 +5,11 @@ import { DivSTY } from "./style";
 import PaginationField from "@components/PaginationField";
 import { I_PageInfo } from "@components/PaginationField";
 import { useOrderStore } from "@contexts/filter/orderStore";
-import { 
-    getOrderDocsTitle, 
-    getOrderDocsData 
-  } from "@services/orders/getOrderDocs";
+import {
+  getConditionList,
+  getOrderDocsTitle, 
+  getOrderDocsData 
+} from "@services/orders/getOrderDocs";
 import SecondaryBtn from "@components/Button/Secondary/IconLeft";
 import { PlusIcon } from "evergreen-ui";
 export const defaultPageInfo: I_PageInfo = {
@@ -34,10 +35,17 @@ const Docs = () => {
     const tableTitle = getOrderDocsTitle();
 
     useEffect(() => {
-        initializeSubFilter();
-        const tableData = getOrderDocsData();
-        setData(tableData);
-      }, []);
+      const conditionList = getConditionList();
+      const tableData = getOrderDocsData();
+      if (!subFilter) {
+        localStorage.setItem(
+          "orderInitFilter",
+          JSON.stringify(conditionList)
+        );
+      }
+      initializeSubFilter();
+      setData(tableData);
+    }, []);
 
     const handleView = (id: string) => {
         console.log(`hande view: ${id}`);

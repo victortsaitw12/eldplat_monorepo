@@ -16,7 +16,7 @@ export const useOrderStore = create<StateTypes>((set) => ({
   selectedForm: "",
   initializeSubFilter: () => {
     const filter: any = {};
-    const initFilter = localStorage.getItem("busInitFilter");
+    const initFilter = localStorage.getItem("orderInitFilter");
     if (!initFilter) return;
     for (const item of JSON.parse(initFilter)) {
       filter[item.field_Name] = item;

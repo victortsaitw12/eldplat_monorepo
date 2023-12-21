@@ -3,6 +3,7 @@ const DUMMY_DATA = {
   Message: "用戶端要求成功",
   ContentList: [
     {
+      group: {span: 2, key: "bording_date"},
       id: 1,
       car_type: "中巴36客座",
       plate: "KAA‑0001",
@@ -10,6 +11,7 @@ const DUMMY_DATA = {
       boarding_time: "10：00",
       boarding_location: "台北車站",
       user_name: "韓智翰",
+      bording_date: "2023 12/21",
     },
     {
       id: 2,
@@ -19,8 +21,11 @@ const DUMMY_DATA = {
       boarding_time: "10：00",
       boarding_location: "台北車站",
       user_name: "韓智翰",
+      bording_date: "2023 12/21",
+      group: {span: 0, key: "bording_date"},
     },
     {
+      group: {span: 2, key: "bording_date"},
       id: 3,
       car_type: "中巴36客座",
       plate: "KAA‑0001",
@@ -28,6 +33,7 @@ const DUMMY_DATA = {
       boarding_time: "10：00",
       boarding_location: "台中長榮酒店",
       user_name: "韓智翰",
+      bording_date: "2023 12/22",
     },
     {
       id: 4,
@@ -37,6 +43,8 @@ const DUMMY_DATA = {
       boarding_time: "10：00",
       boarding_location: "台中長榮酒店站",
       user_name: "韓智翰",
+      bording_date: "2023 12/22",
+      group: {span: 0, key: "bording_date"},
     },
   ],
   PageInfo: {
@@ -63,3 +71,13 @@ export const getOrderMissionTitle = () => {
   ];
   return DUMMY_TITLES;
 };
+
+export const getConditionList = () => {
+  return [{
+    field_Name: "search",
+    arrayConditions: ["like", "equal"],
+    displayType: "search",
+    dataType: "string",
+    label: "搜尋"
+  }];
+}
