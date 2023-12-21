@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
-export const InfoCardSTY = styled.div`
+export const InfoCardSTY = styled.div<{ height: number | string }>`
   width: 100%;
-  height: fit-content;
+  height: ${({ height }) =>
+    height === "fit-content" ? "fit-content" : `${height}px`};
+
   padding: 0;
   background: ${({ theme }) => theme.color.N0};
   border: 1px solid ${({ theme }) => theme.color.N40};

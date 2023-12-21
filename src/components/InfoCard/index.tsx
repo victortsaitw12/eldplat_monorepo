@@ -16,26 +16,24 @@ export interface I_infoData {
 }
 
 export interface I_InfoCardProps {
-  style?: React.CSSProperties;
   isEdit: boolean;
   infoTitle?: string | React.ReactNode;
   infoData: I_infoData[] | I_infoData[][];
-  infoType?: string;
   hasProfileCard?: boolean;
+  height?: number | string;
 }
 
 function InfoCard({
-  style,
   isEdit = false,
   infoTitle,
   infoData,
-  infoType,
-  hasProfileCard = false
+  hasProfileCard = false,
+  height = "fit-content"
 }: I_InfoCardProps) {
   const InfoCardId = useId();
 
   return (
-    <InfoCardSTY className="InfoCard__container" style={style}>
+    <InfoCardSTY className="InfoCard__container" height={height} >
       {infoTitle && <Text className="title">{infoTitle}</Text>}
       <div className="content">
         {hasProfileCard && (
