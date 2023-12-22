@@ -54,7 +54,6 @@ const Docs = () => {
     };
 
     const handleAddDoc = () => {
-      console.log(`hande add file`);
       router.push("/orders/doc/create");
     }
     
