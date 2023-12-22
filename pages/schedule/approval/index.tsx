@@ -59,40 +59,41 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   }, [id]);
 
   return (
-    <UIProvider>
-      <ApprovalSTY>
-        <Head>
-          <title>駕駛排班 - </title>
-        </Head>
-        <ControlBar flexEnd hasShadow>
+    <ApprovalSTY>
+      <Head>
+        <title>駕駛排班 - </title>
+      </Head>
+      <ControlBar flexEnd hasShadow>
+        <ButtonSet
+          primaryDisable={false}
+          secondaryBtnText="退回"
+          secondaryBtnOnClick={cancelApproveHandler}
+          primaryBtnText="同意"
+          // primaryBtnOnClick={isEdit ? handleView : handleEdit}
+        />
+      </ControlBar>
+      <Pane className="table">
+        <ApprovalTable />
+      </Pane>
+      <LightBox
+        title="退回"
+        isOpen={isOpenModal}
+        handleCloseLightBox={() => {
+          setOpenModal(false);
+        }}
+        customBtns={
           <ButtonSet
-            primaryDisable={false}
-            secondaryBtnText="退回"
-            secondaryBtnOnClick={cancelApproveHandler}
-            primaryBtnText="同意"
-            // primaryBtnOnClick={isEdit ? handleView : handleEdit}
+            primaryBtnText="確定退回"
+            secondaryBtnOnClick={() => {
+              setOpenModal(false);
+            }}
+            primaryBtnOnClick={cancelModalHandler}
           />
-        </ControlBar>
-        <Pane className="table">
-          <ApprovalTable />
-        </Pane>
-        <LightBox
-          title="退回"
-          isOpen={isOpenModal}
-          handleCloseLightBox={() => {
-            setOpenModal(false);
-          }}
-          customBtns={
-            <ButtonSet
-              primaryBtnText="確定退回"
-              secondaryBtnOnClick={cancelModalHandler}
-            />
-          }
-        >
-          <InfoItem item={modalInfo} isEdit={true} />
-        </LightBox>
-      </ApprovalSTY>
-    </UIProvider>
+        }
+      >
+        <InfoItem item={modalInfo} isEdit={true} />
+      </LightBox>
+    </ApprovalSTY>
   );
 };
 

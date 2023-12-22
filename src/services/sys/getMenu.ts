@@ -200,6 +200,13 @@ export const DUMMY_MENU = {
           func_name: "維保任務列表",
           path: ["/maintenance/mission", "/maintenance/detail/[id]"]
         },
+        // {
+        //   module_no: "bus",
+        //   fg_no: "maintenance",
+        //   func_no: "mission",
+        //   func_name: "維保任務列表",
+        //   path: "/mission"
+        // },
         {
           module_no: "bus",
           fg_no: "maintenance",

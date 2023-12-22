@@ -17,6 +17,8 @@ import ButtonSet from "@components/ButtonSet";
 import CustomTextArea from "@components/CustomTextArea";
 import InfoItem from "@components/InfoCard/InfoItem";
 import { Truculenta } from "next/font/google";
+import InfoCard from "@components/InfoCard";
+import CustomTextInputField from "@components/CustomTextInputField";
 
 const ApprovalView: NextPageWithLayout<never> = () => {
   const router = useRouter();
@@ -32,6 +34,110 @@ const ApprovalView: NextPageWithLayout<never> = () => {
     bold: true,
     value: <CustomTextArea placeholder="請輸入說明" />
   };
+
+  const missionInfo = [
+    [
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: true,
+      label: "任務單號",
+      bold: true,
+      value: <a>ORD202312310003</a>
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "分類",
+      bold: true,
+      value: "客製包車"
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: true,
+      label: "需求",
+      bold: true,
+      value: "2天2車"
+    }
+    ],
+    [
+      {
+        listClassName: "fb-100",
+        readonly: false,
+        req: true,
+        label: "出發地",
+        bold: true,
+        value: "台北車站"
+      },
+      {
+        listClassName: "fb-100",
+        readonly: false,
+        req: false,
+        label: "回程地",
+        bold: true,
+        value: "捷運南港站"
+      },
+      {
+        listClassName: "fb-100",
+        readonly: false,
+        req: true,
+        label: "起始時間",
+        bold: true,
+        value: "2024-01-01 (一) 08:00"
+      },
+      {
+        listClassName: "fb-100",
+        readonly: false,
+        req: true,
+        label: "截止時間",
+        bold: true,
+        value: "2024-01-02 (二) 12:00"
+      }
+      ],
+  ];
+
+  const dispatchInfo = [
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: true,
+      label: "車輛",
+      bold: true,
+      value: (
+        <CustomTextInputField
+          className="input"
+          // isInvalid={true}
+          placeholder="請輸入"
+          // validationMessage="不可輸入符號"
+        />
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: true,
+      label: "駕駛",
+      bold: true,
+      value: (
+        <CustomTextInputField
+          className="input"
+          // isInvalid={true}
+          placeholder="請輸入"
+          // validationMessage="不可輸入符號"
+        />
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "備註",
+      bold: true,
+      value: <CustomTextArea placeholder="請輸入說明" />
+    }
+  ];
 
   //------ functions ------//
   const cancelApproveHandler = () => {
@@ -61,19 +167,35 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   return (
     <BodySTY>
       <Head>
-        <title>任務指派 - 新增任務</title>
+        <title>任務指派 - 新增派單</title>
       </Head>
       <ControlBar flexEnd hasShadow>
         <ButtonSet
           primaryDisable={false}
           secondaryBtnText="取消"
           secondaryBtnOnClick={cancelApproveHandler}
-          primaryBtnText="確定新增任務"
+          primaryBtnText="確定新增派單"
           // primaryBtnOnClick={isEdit ? handleView : handleEdit}
         />
       </ControlBar>
       <Pane className="table">
-        <CreateMission />
+        <Pane className="mission_info_wrapper">
+          <InfoCard
+            isEdit={false}
+            infoData={missionInfo}
+            infoTitle="任務資訊"
+            hasProfileCard={false}
+            hasCollapse={true}
+          />
+        </Pane>
+        <Pane className="mission_dispatch_wrapper">
+          <InfoCard
+            isEdit={false}
+            infoData={dispatchInfo}
+            infoTitle="任務指派"
+            hasProfileCard={false}
+          />
+        </Pane>
       </Pane>
       <LightBox
         title="退回"

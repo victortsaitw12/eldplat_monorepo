@@ -79,7 +79,12 @@ const breadcrumbs: I_routers = {
   ],
   "/assignment": [
     { label: "首頁", url: "/" },
-    { label: "任務指派 ", url: "/assignment" }
+    { label: "任務指派", url: "/assignment" }
+  ],
+  "/assignment/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "新增任務", url: "" }
   ],
   "/orders": [
     { label: "首頁", url: "/" },

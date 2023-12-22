@@ -22,6 +22,9 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean; className?: string }>
     left: 50%;
     min-width: 400px;
     transform: translate(-50%, -50%);
+    &.w-full {
+      max-width: initial;
+    }
     .titleWrap {
       display: flex;
       justify-content: space-between;

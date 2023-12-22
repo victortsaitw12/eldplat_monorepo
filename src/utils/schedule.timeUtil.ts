@@ -1,13 +1,14 @@
-export interface MonthItem {
+import { MissionData } from "@contents/Assignment/assignment.typing";
+export interface I_MonthItem {
   id: string;
   date: string;
   isToday: boolean;
   otherMonth: string;
   weeks: number;
-  detail: DetailItem[] | null;
+  detail: I_DetailItem[] | null | MissionData[];
 }
 
-interface DetailItem {
+export interface I_DetailItem {
   schd_Type: string;
 }
 
@@ -73,8 +74,8 @@ export default {
     return new Date(timeStemp);
   },
 
-  getNowMonthList(date: Date, hideOthersDate = false): MonthItem[] {
-    const arr: MonthItem[] = [];
+  getNowMonthList(date: Date, hideOthersDate = false): I_MonthItem[] {
+    const arr: I_MonthItem[] = [];
     const num = this.getDaysInOneMonth(date);
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
@@ -97,8 +98,8 @@ export default {
     return arr;
   },
 
-  getPrevMonthList(date: Date): MonthItem[] {
-    const arr: MonthItem[] = [];
+  getPrevMonthList(date: Date): I_MonthItem[] {
+    const arr: I_MonthItem[] = [];
     const leftNum = this.getMonthweek(date);
     const num =
       this.getDaysInOneMonth(this.getOtherMonth(date, "prevMonth")) -
@@ -122,8 +123,8 @@ export default {
     return leftNum === 7 ? [] : arr;
   },
 
-  getNextMonthList(date: Date): MonthItem[] {
-    const arr: MonthItem[] = [];
+  getNextMonthList(date: Date): I_MonthItem[] {
+    const arr: I_MonthItem[] = [];
     const nextDate = this.getOtherMonth(date, "nextMonth");
     const leftLength = this.getDaysInOneMonth(date) + this.getMonthweek(date);
     const _length = 7 - (leftLength % 7);
@@ -147,7 +148,7 @@ export default {
   formatZero(date: number): string {
     return date < 10 ? "0" + date : date.toString();
   },
-  getNowMonthScheduleList(date: Date): any[] {
+  getNowMonthScheduleList(date: Date): I_MonthItem[] {
     const arr = [];
     const num = this.getDaysInOneMonth(date);
     const year = date.getFullYear();
@@ -161,11 +162,12 @@ export default {
       const tempDate = new Date(nowTime);
 
       arr.push({
-        id: i + 1,
+        id: String(i + 1),
         date: nowTime,
+        otherMonth: "nowMonth",
         isToday: toDay === nowTime,
         weeks: tempDate.getDay(),
-        detail: null
+        detail: []
       });
     }
     return arr;
@@ -175,7 +177,7 @@ export default {
     date = typeof date === "string" ? new Date(date.replace(/\-/g, "/")) : date;
     return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
   },
-  getMonthList(date: Date): MonthItem[] {
+  getMonthList(date: Date): I_MonthItem[] {
     return [
       ...this.getPrevMonthList(date),
       ...this.getNowMonthList(date),
