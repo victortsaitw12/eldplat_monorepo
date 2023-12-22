@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
 import { ScheduleSTY } from "./style";
-import timeUtil, { type MonthItem } from "@utils/schedule.timeUtil";
+import timeUtil, {
+  type I_MonthItem,
+  type I_DetailItem
+} from "@utils/schedule.timeUtil";
 import EventBtn from "@contents/Schedule/EventBtn";
 import { WKDAY_LABEL, EVENT_TYPE } from "../shift.data";
 
@@ -14,7 +17,7 @@ const ScheduleTable = ({ initialDate, shiftData }: I_ScheduleTable) => {
   const dateArr = timeUtil.getMonthList(initialDate);
   const router = useRouter();
 
-  const dateStatusHandler = (item: MonthItem) => {
+  const dateStatusHandler = (item: I_MonthItem) => {
     if (item.isToday) return "date today";
     const wkdayLabel = WKDAY_LABEL.get(item.weeks);
     if (wkdayLabel && wkdayLabel?.weekend) {
@@ -78,7 +81,7 @@ const ScheduleTable = ({ initialDate, shiftData }: I_ScheduleTable) => {
             >
               <span className={dateStatusHandler(item)}>{item.id}</span>
               {item.detail &&
-                item.detail.map((detail) => {
+                (item.detail as I_DetailItem[]).map((detail) => {
                   return (
                     <EventBtn
                       key={index}

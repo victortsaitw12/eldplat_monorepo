@@ -1,45 +1,66 @@
 import styled from "styled-components";
 
 export const OverviewSTY = styled.div`
-  height: 100%;
-  width: fit-content;
-  .schedule_zone {
-    height: calc(100% - 32px);
+  height: calc(100% - 30px);
+  /* width: fit-content; */
+  border: 1px solid ${({ theme }) => theme.color.N40};
+  border-radius: 4px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
   }
-  .schedule_weeksWrap {
+  .header {
+    padding: 0 10px;
+  }
+  .table_header {
+    border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+    border-top: 1px solid ${({ theme }) => theme.color.N40};
     display: flex;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    div {
-      border:1px solid ${({ theme }) => theme.color.N40};
-      padding: 5px 0;
-      height: 38px;
+    .header_date {
+      display: flex;
+      align-items: center;
+      width: 8%;
+      padding: 0 10px;
+    }
+    .table_header_info {
+      display: flex;
+      width: calc(92% - 20px);
+      padding: 10px 10px;
+    }
+    p {
+      font-size: 14px;
+      font-weight: 600;
       color: ${({ theme }) => theme.color.N200};
-      background: ${({ theme }) => theme.color.N10};
-      font-weight: normal;
-      text-align: center;
-      width: 145px;
-      &.font_driver {
-        font-weight: bold;
-        color: ${({ theme }) => theme.color.N200};
-        background: ${({ theme }) => theme.color.N0};
-        font-size: 14px;
-        padding: 11px 0;
-      }
-      &.w-50 {
-        width: 90px;
-      }
-      &.zoom_width {
-        width: var(--cellWidth);
-        width: 150px;
-      }
-      .font_date {
-        font-size: 14px;
+    }
+  }
+  .table_body {
+    height: 100%;
+  }
+  .table_row {
+    display: flex;
+    /* justify-content: space-between; */
+    width: 100%;
+    min-height: 55px;
+    &:not(:last-child) {
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+    }
+
+    .table_calendar {
+      width: 8%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      border-right: 1px solid ${({ theme }) => theme.color.N40};
+      padding-top: 10px;
+      p {
         font-weight: 600;
-        &.today{
+        font-size: 14px;
+        margin-right: 5px;
+        position: relative;
+        &.weekend {
+          color: ${({ theme }) => theme.color.R400};
+        }
+        &.today {
           position: relative;
           z-index: 1;
           color: ${({ theme }) => theme.color.N0};
@@ -51,84 +72,150 @@ export const OverviewSTY = styled.div`
             content: "";
             position: absolute;
             display: inline-block;
-            width: 21px;
-            height: 21px; 
+            width: 24px;
+            height: 24px;
             background: ${({ theme }) => theme.color.B400};
             border-radius: 50%;
             color: ${({ theme }) => theme.color.N0};
           }
         }
-        &.week_label {
+      }
+      span {
+        font-size: 12px;
+        font-weight: 400;
+        &.weekend {
+          color: ${({ theme }) => theme.color.R400};
+        }
+        &.today {
+          color: ${({ theme }) => theme.color.B400};
+        }
+      }
+    }
+    .table_info_row {
+      width: 95%;
+    }
+    .table_info_wrapper {
+      padding: 10px 10px 10px 10px;
+      &:not(:last-child) {
+        border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      }
+      .mission_area {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        cursor: pointer;
+        /* padding-bottom: 10px; */
+      }
+      .table_info {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+      }
+      .table_button {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 75px;
+      }
+    }
+  }
+  .dispatch_area {
+    margin-top: 10px;
+    .dispatch_table {
+      border: 1px solid ${({ theme }) => theme.color.N40};
+      box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
+      &:not(:last-child) {
+        border-bottom: none;
+      }
+    }
+    .dispatch_header {
+      padding: 10px 20px;
+      background: ${({ theme }) => theme.color.N20};
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      p {
+        color: ${({ theme }) => theme.color.N300};
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+    }
+    .dispatch_row {
+      display: flex;
+      &:not(:last-child) {
+        border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      }
+      .dispatch_title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: ${({ theme }) => theme.color.N20};
+        width: 60px;
+        p {
           font-size: 12px;
-          font-weight: 400;
-          display: inline-block;
-          margin-left: 4px;
-          &.today {
-            color: ${({ theme }) => theme.color.B400};
-            &::before {
-              display: none;
-            }
+          color: ${({ theme }) => theme.color.N300};
+          font-weight: 600;
+        }
+      }
+      .dispatch_info_wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        border-left: 1px solid ${({ theme }) => theme.color.N40};
+        padding: 0 16px;
+        .dispatch_info {
+          display: flex;
+          align-items: center;
+          padding: 10px 0;
+          .dw_1 {
+            padding: 0 30px 0 0;
           }
         }
       }
       p {
-        font-size: 10px;
-        padding-top: 3px;
+        font-size: 16px;
       }
-      .weekend {
-        color: ${({ theme }) => theme.color.R400};
-      }
-      &:nth-child(1) {
-        border-right: 2.5px solid ${({ theme }) => theme.color.N40};
+      .dispatch_info_button {
+        display: flex;
+        align-items: center;
+        button {
+          background: transparent;
+          border: none;
+          cursor: pointer;
+        }
       }
     }
-  }
-  .schedule_bodyWrap {
-    height: 100%;
-    overflow-y: scroll; 
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    padding-bottom: 10px;
-  }
-  .schedule_daysWrap {
-    display: flex;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    justify-content: center;
-    .driver_info {
-      border-right: 2.5px solid ${({ theme }) => theme.color.N40} !important;
-      border:1px solid ${({ theme }) => theme.color.N40};
-      width: 145px;
-      padding: 10px;
+    .dispatch_button {
       display: flex;
-      align-items: center;
-      p {
-        font-size: 14px;
-        padding-bottom: 5px;
-      }
-      span {
-        font-size: 12px;
-        color: ${({ theme }) => theme.color.N200};
-        letter-spacing: 0;
-        padding: 0 4.5px 5px 0;
-        display: inline-block;
-      }
-    }
-    .bus_info {
-      border:1px solid ${({ theme }) => theme.color.N40};
-      text-align: center;
-      padding: 0 2px;
-      letter-spacing: 0px;
-      height: 100px;
-      width: 150px;
-      display: flex;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
+      padding-top: 10px;
     }
   }
-`
+  .w_2 {
+    width: 12.5%;
+  }
+  .w_3 {
+    width: 15%;
+  }
+  .w_4 {
+    width: 23%;
+  }
+  .pb_1 {
+    padding-bottom: 8px;
+  }
+  p {
+    font-size: 16px;
+    color: ${({ theme }) => theme.color.N500};
+    font-weight: 400;
+    letter-spacing: 0;
+    &.font_main {
+      color: ${({ theme }) => theme.color.B300};
+    }
+    &.font_sub {
+      color: ${({ theme }) => theme.color.N80};
+      font-size: 12px;
+    }
+  }
+`;
