@@ -166,7 +166,6 @@ const Page: NextPageWithLayout<
   const handleLightBoxConfirm = () => {
     router.push(`/driver/detail/${driverNo}?editPage=view`);
     setLightOpen(false);
-
   };
 
   useEffect(() => {

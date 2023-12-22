@@ -74,7 +74,6 @@ const Page: NextPageWithLayout<never> = () => {
   }
 
   const createBusHandler = () => {
-    console.log("createBusHandler");
     router.push("/bus/detail/create");
   };
 

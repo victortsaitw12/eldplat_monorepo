@@ -19,6 +19,7 @@ import FileCard from "@components/FileCard";
 import NewUploader from "@components/NewUploader";
 import { Pane, Select, DotIcon } from "evergreen-ui";
 import CustomDatePicker from "@components/CustomDatePicker";
+import LightBox from "@components/Lightbox";
 
 const EquipmentInfo = [
   [
@@ -70,7 +71,7 @@ const EquipmentInfo = [
       bold: true,
       label: "合作日期區間",
       value: "2023-12-01~2024-12-01",
-      editEle: <CustomDatePicker placeholder="請輸入訓練期間" isRange/>
+      editEle: <CustomDatePicker placeholder="請輸入訓練期間" isRange />
     },
     {
       listClassName: "fb-100",
@@ -111,15 +112,20 @@ const Page: NextPageWithLayout<
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [busEquipmentData, setBusEquipmentData] = useState<any>(null);
+  const [isLightOpen, setLightOpen] = useState(false);
 
   const handleSave = () => {
     // router.push(`/bus/equipment/${busId}?editPage=view`);
     router.push("/bus/detail/1?editPage=view");
   };
 
-  const handleReturn = () => {
-    // router.push(`/bus/detail/${busId}?editPage=view`);
+  const handleCancel = () => {
+    setLightOpen(true);
+  };
+
+  const handleLightBoxConfirm = () => {
     router.push("/bus/detail/1?editPage=view");
+    setLightOpen(false);
   };
 
   useEffect(() => {
@@ -133,11 +139,11 @@ const Page: NextPageWithLayout<
   return (
     <BodySTY>
       <ControlBar hasShadow>
-      <DataOverview
+        <DataOverview
           title="KAA-001 雄雄獅頭號"
           subtitle={
             <>
-              <DotIcon size={12} color="success"/> 待機中
+              <DotIcon size={12} color="success" /> 待機中
             </>
           }
           infoArray={dataOverviewArray}
@@ -147,7 +153,7 @@ const Page: NextPageWithLayout<
           isEdit={false}
           primaryDisable={true}
           secondaryBtnText={"取消"}
-          secondaryBtnOnClick={handleReturn}
+          secondaryBtnOnClick={handleCancel}
           primaryBtnText={"儲存"}
           primaryBtnOnClick={handleSave}
         />
@@ -155,6 +161,15 @@ const Page: NextPageWithLayout<
       <Pane className={"main-column"}>
         <InfoCard isEdit={true} infoTitle="設備" infoData={EquipmentInfo} />
       </Pane>
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
+      >
+        如果你現在離開，將會遺失未儲存的資料。
+      </LightBox>
     </BodySTY>
   );
 };
