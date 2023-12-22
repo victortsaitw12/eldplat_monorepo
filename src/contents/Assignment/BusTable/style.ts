@@ -14,7 +14,7 @@ export const OverviewSTY = styled.div`
     padding: 0;
     margin: 0;
     div {
-      border:1px solid ${({ theme }) => theme.color.N40};
+      border: 1px solid ${({ theme }) => theme.color.N40};
       padding: 5px 0;
       height: 38px;
       color: ${({ theme }) => theme.color.N200};
@@ -39,7 +39,7 @@ export const OverviewSTY = styled.div`
       .font_date {
         font-size: 14px;
         font-weight: 600;
-        &.today{
+        &.today {
           position: relative;
           z-index: 1;
           color: ${({ theme }) => theme.color.N0};
@@ -52,7 +52,7 @@ export const OverviewSTY = styled.div`
             position: absolute;
             display: inline-block;
             width: 21px;
-            height: 21px; 
+            height: 21px;
             background: ${({ theme }) => theme.color.B400};
             border-radius: 50%;
             color: ${({ theme }) => theme.color.N0};
@@ -85,10 +85,10 @@ export const OverviewSTY = styled.div`
   }
   .schedule_bodyWrap {
     height: 100%;
-    overflow-y: scroll; 
-      &::-webkit-scrollbar {
-        display: none;
-      }
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     padding-bottom: 10px;
   }
   .schedule_daysWrap {
@@ -101,7 +101,7 @@ export const OverviewSTY = styled.div`
     justify-content: center;
     .driver_info {
       border-right: 2.5px solid ${({ theme }) => theme.color.N40} !important;
-      border:1px solid ${({ theme }) => theme.color.N40};
+      border: 1px solid ${({ theme }) => theme.color.N40};
       width: 145px;
       padding: 10px;
       display: flex;
@@ -119,7 +119,7 @@ export const OverviewSTY = styled.div`
       }
     }
     .bus_info {
-      border:1px solid ${({ theme }) => theme.color.N40};
+      border: 1px solid ${({ theme }) => theme.color.N40};
       text-align: center;
       padding: 0 2px;
       letter-spacing: 0px;
@@ -131,4 +131,4 @@ export const OverviewSTY = styled.div`
       justify-content: center;
     }
   }
-`
+`;
