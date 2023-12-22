@@ -62,6 +62,7 @@ export const getOrderMissionData = () => {
 
 export const getOrderMissionTitle = () => {
   const DUMMY_TITLES = [
+    "",
     "車型",
     "車輛",
     "駕駛",

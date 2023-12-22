@@ -51,17 +51,7 @@ const Missions = () => {
     };
     
     const changeKey = (data: Array<any>) => {
-        return data.map((item: any) => {
-          return {
-            ...item,
-            user_name: (
-                <>
-                    <span>{item.user_name}</span>
-                    <CommentIcon />
-                </>
-            )
-          };
-        });
+      return data;
     };
     
     const modifiedData = data ? changeKey(data) : undefined;
