@@ -73,8 +73,8 @@ const Page: NextPageWithLayout<
               <DataOverview  title="ORD202310310003"
               subtitle={<IconBtn tip="複製" type="copy" onClick={handleCopy}/>}
               infoArray={[
-                <p className="head-info-1">客製包車</p>, 
-                <p className="head-info-2">2023-11-22（三）~2023-11-24（五）</p>
+                <p key={"head-info-1"} className="head-info-1">客製包車</p>, 
+                <p key={"head-info-2"} className="head-info-2">2023-11-22（三）~2023-11-24（五）</p>
               ]}
               hasImage={false} />
           </div>
