@@ -61,7 +61,7 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   return (
     <BodySTY>
       <Head>
-        <title>任務指派 - 手動派單</title>
+        <title>任務指派 - 新增派單</title>
       </Head>
       <ControlBar flexEnd hasShadow>
         <ButtonSet

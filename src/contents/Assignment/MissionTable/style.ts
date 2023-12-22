@@ -104,6 +104,7 @@ export const OverviewSTY = styled.div`
         width: 100%;
         justify-content: space-between;
         cursor: pointer;
+        background: aliceblue;
         /* padding-bottom: 10px; */
       }
       .table_info {
@@ -112,13 +113,30 @@ export const OverviewSTY = styled.div`
         justify-content: flex-start;
         align-items: center;
         width: 100%;
+        background-color: antiquewhite;
       }
       .table_button {
         cursor: pointer;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         width: 75px;
+        /* .flex_end {
+          display: flex;
+          align-items: center;
+          justify-content: end;
+          height: 100%;
+        }
+        .flex_between {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 100%;
+        }
+        button {
+          padding: 0 10px;
+          margin-right: 10px;
+        } */
       }
     }
   }

@@ -14,7 +14,6 @@ interface I_ScheduleTable {
 }
 const ScheduleTable = ({ initialDate, shiftData }: I_ScheduleTable) => {
   const weekArr = ["日", "一", "二", "三", "四", "五", "六"];
-  const dateArr = timeUtil.getMonthList(initialDate);
   const router = useRouter();
 
   const dateStatusHandler = (item: I_MonthItem) => {

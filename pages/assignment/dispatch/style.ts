@@ -1,4 +1,5 @@
 import styled from "styled-components";
 
-export const BodySTY = styled.div`
-`;
+const BodySTY = styled.div``;
+
+export { BodySTY };

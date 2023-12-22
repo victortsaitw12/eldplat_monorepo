@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -20,8 +20,7 @@ import { Truculenta } from "next/font/google";
 
 const ApprovalView: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const { id, cur } = router.query;
-
+  const { id, editPage } = router.query;
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 

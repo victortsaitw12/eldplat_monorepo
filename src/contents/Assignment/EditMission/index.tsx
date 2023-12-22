@@ -10,7 +10,11 @@ import CustomSelect from "@components/CustomTextArea";
 import NewUploader from "@components/NewUploader";
 import FileCard from "@components/FileCard";
 
-const CreateMission = () => {
+interface I_Props {
+  isEdit: boolean;
+}
+const EditMission = ({ isEdit }: I_Props) => {
+  console.log(isEdit);
   const missionInfo = [
     {
       listClassName: "fb-100",
@@ -18,7 +22,8 @@ const CreateMission = () => {
       req: true,
       label: "日期區間",
       bold: true,
-      value: <CustomDatePicker placeholder="請選取時間" />
+      value: "2023/12/01",
+      editEle: <CustomDatePicker placeholder="2023/12/01" />
     },
     {
       listClassName: "fb-100",
@@ -109,7 +114,7 @@ const CreateMission = () => {
     <ApprovalSTY>
       <Pane className="info_wrapper">
         <InfoCard
-          isEdit={false}
+          isEdit={isEdit}
           infoData={missionInfo}
           infoTitle="新增任務"
           hasProfileCard={false}
@@ -117,7 +122,7 @@ const CreateMission = () => {
       </Pane>
       <Pane className="info_wrapper">
         <InfoCard
-          isEdit={false}
+          isEdit={isEdit}
           infoData={dispatchInfo}
           infoTitle="任務指派"
           hasProfileCard={false}
@@ -127,4 +132,4 @@ const CreateMission = () => {
   );
 };
 
-export default CreateMission;
+export default EditMission;
