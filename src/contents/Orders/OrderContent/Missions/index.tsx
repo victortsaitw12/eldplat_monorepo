@@ -5,10 +5,12 @@ import { DivSTY } from "./style";
 import PaginationField from "@components/PaginationField";
 import { I_PageInfo } from "@components/PaginationField";
 import { useOrderStore } from "@contexts/filter/orderStore";
-import { 
-    getOrderMissionData, 
-    getOrderMissionTitle 
-  } from "@services/orders/getOrderMission";
+import { CommentIcon } from "evergreen-ui"
+import {
+  getConditionList,
+  getOrderMissionData, 
+  getOrderMissionTitle 
+} from "@services/orders/getOrderMission";
 export const defaultPageInfo: I_PageInfo = {
     Page_Index: 1,
     Page_Size: 10,
@@ -32,10 +34,17 @@ const Missions = () => {
     const tableTitle = getOrderMissionTitle();
 
     useEffect(() => {
-        initializeSubFilter();
-        const tableData = getOrderMissionData();
-        setData(changeKey(tableData));
-      }, []);
+      const conditionList = getConditionList();
+      const tableData = getOrderMissionData();
+      if (!subFilter) {
+        localStorage.setItem(
+          "orderInitFilter",
+          JSON.stringify(conditionList)
+        );
+      }
+      initializeSubFilter();
+      setData(tableData);
+    }, []);
 
     const handleView = (id: string) => {
         console.log(`hande view: ${id}`);
@@ -48,6 +57,7 @@ const Missions = () => {
             user_name: (
                 <>
                     <span>{item.user_name}</span>
+                    <CommentIcon />
                 </>
             )
           };

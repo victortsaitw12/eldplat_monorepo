@@ -46,3 +46,13 @@ export const getOrderDocsTitle = () => {
   ];
   return DUMMY_TITLES;
 };
+
+export const getConditionList = () => {
+  return [{
+    field_Name: "search",
+    arrayConditions: ["like", "equal"],
+    displayType: "search",
+    dataType: "string",
+    label: "搜尋"
+  }];
+}

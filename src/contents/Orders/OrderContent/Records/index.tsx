@@ -5,7 +5,8 @@ import { DivSTY } from "./style";
 import PaginationField from "@components/PaginationField";
 import { I_PageInfo } from "@components/PaginationField";
 import { useOrderStore } from "@contexts/filter/orderStore";
-import { 
+import {
+    getConditionList,
     getOrderRecordTitle, 
     getOrderRecordData 
   } from "@services/orders/getOrderRecord";
@@ -32,10 +33,17 @@ const Records = () => {
     const tableTitle = getOrderRecordTitle();
 
     useEffect(() => {
-        initializeSubFilter();
-        const tableData = getOrderRecordData();
-        setData(changeKey(tableData));
-      }, []);
+      const conditionList = getConditionList();
+      const tableData = getOrderRecordData();
+      if (!subFilter) {
+        localStorage.setItem(
+          "orderInitFilter",
+          JSON.stringify(conditionList)
+        );
+      }
+      initializeSubFilter();
+      setData(tableData);
+    }, []);
 
     const handleView = (id: string) => {
         console.log(`hande view: ${id}`);

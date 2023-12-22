@@ -23,3 +23,18 @@ export const BodySTY = styled.div`
     gap: 20px;
   }
 `;
+
+export const ButtonSetSTY = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 12px 20px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  background: ${({ theme }) => theme.color.N0};
+`;
+
+export const LightBoxContentSTY = styled.div`
+  
+
+` 
