@@ -45,9 +45,10 @@ export const DivSTY = styled.div`
         border-left: 1px solid ${({ theme }) => theme.color.N40};
         padding: 0 16px 20px;
         .dispatch_info {
-        display: flex;
-        align-items: center;
-        padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
         }
         p {
             font-size: 16px;
@@ -61,10 +62,5 @@ export const DivSTY = styled.div`
             }
         }
     }
-
-     
-
-    }
-  
-  
+}
 `;

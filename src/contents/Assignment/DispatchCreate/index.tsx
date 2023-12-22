@@ -20,11 +20,16 @@ import SecondaryBtn from "@components/Button/Secondary/IconLeft";
 import { ChevronDownIcon, EditIcon, PlusIcon } from "evergreen-ui";
 import CustomTextInput from "@components/CustomTextInput";
 import CustomTextArea from "@components/CustomTextArea";
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import LightBox from "@components/Lightbox";
+import Recommendation from "./recommendation";
 
 
 const DispatchArea = () => {
   const router = useRouter();
   const [data, setData] = useState<Array<{dispatch_Start_Date: string}>>([]);
+  const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
+
   //------ functions ------//
   // const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
   //   const shiftsOnDate = scheduleInfo.filter(
@@ -42,7 +47,9 @@ const DispatchArea = () => {
         dispatch_Start_Date: "2024-01-02(二)",
     }])
   }, []);
-
+  const primaryBtnOnClick = () => {
+    setOpenModal(true);
+  }
   return (
     <DivSTY className="dispatch_area">
       {data.map((item, index) => {
@@ -58,6 +65,13 @@ const DispatchArea = () => {
               <div className="dispatch_info_wrapper">
                 <div className="dispatch_info">
                     <p>台北車站 -{">"} 日月潭飯店</p>
+                    <PrimaryBtn
+                        text={"指定派車"}
+                        onClick={primaryBtnOnClick}
+                        disabled={false}
+                    >
+                        {/* {primaryBtnText === "編輯" && <EditIcon size={14} />} */}
+                    </PrimaryBtn>
                 </div>
                 <div  className="dispatch_inputs">
                     <div className="item">
@@ -83,6 +97,13 @@ const DispatchArea = () => {
               <div className="dispatch_info_wrapper">
                 <div className="dispatch_info">
                     <p>台北車站 -{">"} 日月潭飯店</p>
+                    <PrimaryBtn
+                        text={"指定派車"}
+                        onClick={primaryBtnOnClick}
+                        disabled={false}
+                    >
+                            {/* {primaryBtnText === "編輯" && <EditIcon size={14} />} */}
+                    </PrimaryBtn>
                 </div>
                 <div  className="dispatch_inputs">
                     <div className="item">
@@ -104,6 +125,25 @@ const DispatchArea = () => {
           </div>
         );
       })}
+      <LightBox
+        title="推薦車輛"
+        isOpen={isOpenModal}
+        fullWidth={true}
+        handleCloseLightBox={() => {
+          setOpenModal(false);
+        }}
+        customBtns={
+          <PrimaryBtn
+            text="確定選擇"
+            onClick={() => {
+              setOpenModal(false);
+            }}
+            disabled={false}
+          />
+        }
+      >
+        <Recommendation />
+      </LightBox>
     </DivSTY>
   );
 };
