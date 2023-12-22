@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { Pane } from "evergreen-ui";
 import { BodySTY } from "./style";
+import DispatchCreate from "@contents/Assignment/DispatchCreate"
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
 import { getLayout } from "@layout/MainLayout";
@@ -17,12 +18,79 @@ import ButtonSet from "@components/ButtonSet";
 import CustomTextArea from "@components/CustomTextArea";
 import InfoItem from "@components/InfoCard/InfoItem";
 import { Truculenta } from "next/font/google";
+import InfoCard from "@components/InfoCard";
 
 const ApprovalView: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const { id, editPage } = router.query;
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  const BasicInFo = [
+    [
+        {
+            listClassName: "fb-100",
+            readonly: false,
+            req: false,
+            bold: false,
+            label: "任務資訊",
+            value: <a>ORD202312310003</a>
+        },
+        {
+            listClassName: "fb-100",
+            readonly: false,
+            req: false,
+            bold: false,
+            label: "分類",
+            value: "客製包車"
+        },
+        {
+            listClassName: "fb-100",
+            readonly: false,
+            req: false,
+            bold: false,
+            label: "需求",
+            value: "兩天兩車"
+        },
+    ],
+    [
+
+        {
+            listClassName: "fb-100",
+            readonly: false,
+            req: false,
+            bold: false,
+            label: "出發地",
+            value: "台北車站"
+        },
+        {
+            listClassName: "fb-100",
+            readonly: false,
+            req: false,
+            bold: false,
+            label: "回程第",
+            value: "捷運南港站"
+        },
+    ],
+    [
+        {
+            listClassName: "fb-100",
+            readonly: false,
+            req: false,
+            bold: false,
+            label: "起始時間",
+            value: "2024-01-01(一) 08:00"
+        },
+        {
+            listClassName: "fb-100",
+            readonly: false,
+            req: false,
+            bold: false,
+            label: "截止時間",
+            value: "2024-01-02(二) 12:00"
+        },
+    ]
+  ]
 
   const modalInfo = {
     listClassName: "",
@@ -68,12 +136,20 @@ const ApprovalView: NextPageWithLayout<never> = () => {
           primaryDisable={false}
           secondaryBtnText="取消"
           secondaryBtnOnClick={cancelApproveHandler}
-          primaryBtnText="確定新增任務"
+          primaryBtnText="確定派單"
           // primaryBtnOnClick={isEdit ? handleView : handleEdit}
         />
       </ControlBar>
-      <Pane className="table">
-        <CreateMission />
+      <Pane className="dispatch_info_area">
+        <InfoCard 
+        isEdit={true}
+        infoData={BasicInFo}
+        infoTitle="任務資訊"
+        hasCollapse={true}
+        />
+      </Pane>
+      <Pane className="dispatch_input_area">
+        <DispatchCreate />
       </Pane>
       <LightBox
         title="退回"
