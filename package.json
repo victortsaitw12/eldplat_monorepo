@@ -9,6 +9,7 @@
     "build:compile-lang": "npm-run-all --parallel lang:compile build",
     "start": "next start",
     "lint": "next lint",
+    "lint:error": "next lint --quiet",
     "lint:fix": "next lint --fix",
     "codegen": "graphql-codegen --config codegen.ts",
     "lang:extract": "formatjs extract \"src/**/*.{js,jsx,ts,tsx}\" --ignore \"src/**/*.d.{ts}\" --out-file lang/en.json --id-interpolation-pattern [contenthash:5]",
