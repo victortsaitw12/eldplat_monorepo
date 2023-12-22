@@ -6,6 +6,9 @@ const BodySTY = styled.div`
         display: grid;
         grid-template-columns: 5fr 3fr;
         gap: 20px;
+        a {
+            color: #679DEF;
+        }
     }
 `;
 

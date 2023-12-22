@@ -185,6 +185,7 @@ const ApprovalView: NextPageWithLayout<never> = () => {
             infoData={missionInfo}
             infoTitle="任務資訊"
             hasProfileCard={false}
+            hasCollapse={true}
           />
         </Pane>
         <Pane className="mission_dispatch_wrapper">
