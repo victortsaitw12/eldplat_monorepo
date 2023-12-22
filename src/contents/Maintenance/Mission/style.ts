@@ -15,44 +15,12 @@ export const DivSTY = styled.div`
   .mr-3 {
     margin-right: 30px;
   }
-  .table-wrap {
-    height: 100%;
-    padding: 1rem;
-    .TableContainerSTY {
-      overflow: visible;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-      .container-header {
-        position: sticky;
-        left: 0;
-      }
-    }
-    th,
+  table {
     td {
-      > span {
-        justify-content: flex-start;
-      }
-      :first-child {
-        width: 5%;
-      }
-
-      :nth-child(2) {
-        width: 10%;
-      }
-
-      :nth-child(3) {
-        width: 20%;
-      }
-
-      :nth-child(4) {
-        width: 10%;
-      }
-
-      :last-child {
-        width: 5%;
+      a {
+        text-decoration: none;
+        color: #3670C9;
       }
     }
-  
   }
 `;

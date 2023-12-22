@@ -16,6 +16,7 @@ export const BtnSTY = styled.button<{ color: keyof ThemeType["color"] }>`
   text-align: center;
   width: 100%;
   margin-top: 10px;
+  cursor: pointer;
   svg {
     width: 12px;
     height: auto;

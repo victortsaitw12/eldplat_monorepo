@@ -52,18 +52,20 @@ function CreateDetail({ currentTab, isEdit, className }: Props) {
             infoData={IdentityInfo}
             infoTitle="基本資料"
           />
-          <Group className={"col-wrapper"}>
+          <Pane className={"col-wrapper"}>
             <InfoCard
               isEdit={isEdit}
               infoData={CategoryInfo}
               infoTitle="分類"
+              height={365}
             />
             <InfoCard
               isEdit={isEdit}
               infoData={CardInfo}
               infoTitle="相關卡號"
+              height={365}
             />
-          </Group>
+          </Pane>
           <Pane className={"w-50"}>
             <InfoCard isEdit={isEdit} infoData={TagInFo} infoTitle="標籤" />
           </Pane>
@@ -122,15 +124,32 @@ function CreateDetail({ currentTab, isEdit, className }: Props) {
               isEdit={isEdit}
               infoData={TransmissionInfo}
               infoTitle="變速器"
+              height={365}
             />
-            <InfoCard isEdit={isEdit} infoData={WeightInfo} infoTitle="重量" />
+            <InfoCard
+              isEdit={isEdit}
+              infoData={WeightInfo}
+              infoTitle="重量"
+              height={365}
+            />
             <InfoCard
               isEdit={isEdit}
               infoData={EcoMileageInfo}
               infoTitle="EPA燃油經濟性/油耗表現"
+              height={365}
             />
-            <InfoCard isEdit={isEdit} infoData={FuelInfo} infoTitle="燃料" />
-            <InfoCard isEdit={isEdit} infoData={OilInfo} infoTitle="機油" />
+            <InfoCard
+              isEdit={isEdit}
+              infoData={FuelInfo}
+              infoTitle="燃料"
+              height={365}
+            />
+            <InfoCard
+              isEdit={isEdit}
+              infoData={OilInfo}
+              infoTitle="機油"
+              height={365}
+            />
           </Pane>
         </Pane>
       )}

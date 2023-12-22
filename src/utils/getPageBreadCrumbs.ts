@@ -64,34 +64,75 @@ const breadcrumbs: I_routers = {
   ],
   "/schedule": [
     { label: "首頁", url: "/" },
-    { label: "駕駛出勤管理", url: "/" },
+    { label: "駕駛出勤管理", url: "/" }
   ],
   "/schedule/detail/[id]": [
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/schedule" },
-    { label: "個人班表", url: "" },
+    { label: "個人班表", url: "" }
   ],
   "/schedule/approval": [
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/schedule" },
     { label: "個人班表", url: "/schedule/detail/[id]" },
-    { label: "簽核", url: "/approval" },
+    { label: "簽核", url: "/approval" }
   ],
   "/assignment": [
     { label: "首頁", url: "/" },
-    { label: "任務指派 ", url: "/assignment" }
+    { label: "任務指派", url: "/assignment" }
+  ],
+  "/assignment/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "新增任務", url: "" }
+  ],
+  "/orders": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" }
+  ],
+  "/orders/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" },
+    { label: "檢視訂單", url: "" }
+  ],
+  "/orders/doc/create": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" },
+    { label: "檢視訂單", url: "/orders/detail/create" },
+    { label: "新增文件", url: "" },
   ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   "/bus": [
     { label: "首頁", url: "/" },
-    { label: "車輛清單", url: "/bus" }
+    { label: "車輛列表", url: "/bus" }
   ],
   "/bus/detail/[id]": [
     { label: "首頁", url: "/" },
-    { label: "車輛清單", url: "/bus" },
-    { label: "檢視", url: "" }
+    { label: "車輛列表", url: "/bus" },
+    { label: "檢視車輛", url: "" }
   ],
+  "/bus/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "車輛列表", url: "/bus" },
+    { label: "新增車輛", url: "" }
+  ], 
+  "/bus_management": [
+    { label: "首頁", url: "/" },
+    { label: "車輛列表", url: "/bus" },
+    { label: "車輛管理設定", url: "" }
+  ], 
+  // ----------------------------------------------------------------------- V2 above
+  // ----------------------------------------------------------------------- V1 below
+  // "/bus": [
+  //   { label: "首頁", url: "/" },
+  //   { label: "車輛清單", url: "/bus" }
+  // ],
+  // "/bus/detail/[id]": [
+  //   { label: "首頁", url: "/" },
+  //   { label: "車輛清單", url: "/bus" },
+  //   { label: "檢視", url: "" }
+  // ],
   "/customer": [
     { label: "入門", url: "/" },
     { label: "客戶", url: "/customer" }

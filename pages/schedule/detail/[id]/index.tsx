@@ -78,6 +78,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   };
   const cancelModalHandler = () => {
     setOpenModal(false);
+    router.push("/schedule");
   };
   const fetchData = async () => {
     setIsLoading(true);

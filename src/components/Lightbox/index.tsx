@@ -14,6 +14,7 @@ export interface I_LightBoxProps {
   wrapperStyle?: React.CSSProperties;
   isOpen: boolean;
   handleCloseLightBox?: () => void;
+  fullWidth?: boolean;
 }
 
 function LightBox({
@@ -24,7 +25,8 @@ function LightBox({
   customBtns,
   wrapperStyle,
   isOpen, // intent to be removed if only be used in ModalProvider (always true)
-  handleCloseLightBox // intent to be replaced by onConfirm and onCancel
+  handleCloseLightBox, // intent to be replaced by onConfirm and onCancel
+  fullWidth = false,
 }: I_LightBoxProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -34,7 +36,7 @@ function LightBox({
   if (!mounted) return null;
   return createPortal(
     <LightBoxBlock className="light-box" isOpen={isOpen} onClick={onCancel || handleCloseLightBox}>
-      <div style={wrapperStyle} className="wrapper" onClick={stopPropagation}>
+      <div style={wrapperStyle} className={`wrapper ${fullWidth && "w-full"}`} onClick={stopPropagation}>
         <div className="titleWrap">
           <div className="title">{title}</div>
           <div className="closeBtn" onClick={onCancel || handleCloseLightBox}>

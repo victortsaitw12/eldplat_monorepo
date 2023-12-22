@@ -53,10 +53,6 @@ export const DivSTY = styled.div`
     .row {
       display: flex;
       gap: 20px;
-
-      > div {
-        height: 100%;
-      }
     }
   }
 

@@ -29,10 +29,9 @@ const OrderContent = ({
   return (
     <DivSTY>
         {visibleForm === "1" && <Detail />}
-        {visibleForm === "2" && <Docs />}
+        {visibleForm === "2" && <Records />}
         {visibleForm === "3" && <Missions />}
-        {visibleForm === "4" && <Records />}
-
+        {visibleForm === "4" && <Docs />}
     </DivSTY>
   );
 };

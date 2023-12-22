@@ -1,24 +1,43 @@
 import styled from "styled-components";
 
-export const InfoCardSTY = styled.div`
+export const InfoCardSTY = styled.div<{ height: number | string }>`
   width: 100%;
-  height: fit-content;
+  height: ${({ height }) =>
+    height === "fit-content" ? "fit-content" : `${height}px`};
+
   padding: 0;
   background: ${({ theme }) => theme.color.N0};
   border: 1px solid ${({ theme }) => theme.color.N40};
   border-radius: 4px;
   box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
 
-  .title {
-    display: inline-block;
+  .title-wrapper {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     padding: 8px 16px;
     border-radius: 4px 4px 0 0;
     border-bottom: 1px solid ${({ theme }) => theme.color.N40};
-    font-size: 16px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.color.N300};
     background: ${({ theme }) => theme.color.N20};
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .toggle-button {
+      display: flex;
+      align-items: center;
+      border: none;
+      background-color: transparent;
+      color: ${({ theme }) => theme.color.N300};
+      cursor: pointer;
+      transform: rotate(180deg);
+
+      &.open {
+        transform: rotate(0deg);
+      }
+    }
   }
 
   ul {
