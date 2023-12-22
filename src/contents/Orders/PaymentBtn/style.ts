@@ -20,7 +20,7 @@ export const DivSTY = styled.div`
   }
 `;
 
-export const CustomTable = styled.div`
+export const CustomTableSTY = styled.div`
   table {
     thead {
       tr {
@@ -28,4 +28,20 @@ export const CustomTable = styled.div`
       }
     }
   }
+`
+
+export const InputWrapperSTY = styled.div`
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .item-title {
+    margin-bottom: 8px;
+
+    span {
+      font-weight: 600;
+    }
+  }
+}
 `

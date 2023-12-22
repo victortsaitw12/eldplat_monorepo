@@ -12,16 +12,37 @@ const DUMMY_QuoteHeader = [
 
 const DUMMY_QuoteDataList = [
   {
-    quote_no: "ORD202312140001",
+    quote_no: "ORD202308100008",
     status: "詢價中",
     estimatePrice: "NTD $2,805",
     services: "客製包車",
     period: "2023-11-11 ～ 2023-11-13",
   },
   {
-    quote_no: "ORD202312110001",
-    status: "詢價中",
+    quote_no: "ORD202309050003",
+    status: "接受報價",
     estimatePrice: "NTD $2,8055",
+    services: "客製包車",
+    period: "2023-11-12 ～ 2023-11-15",
+  },
+  {
+    quote_no: "ORD202308090012",
+    status: "收到報價",
+    estimatePrice: "NTD $1,8055",
+    services: "客製包車",
+    period: "2023-11-12 ～ 2023-11-15",
+  },
+  {
+    quote_no: "ORD202308250001",
+    status: "訂單成立",
+    estimatePrice: "NTD $3,8055",
+    services: "飛機",
+    period: "2023-11-12 ～ 2023-11-15",
+  },
+  {
+    quote_no: "ORD202307060002",
+    status: "結案",
+    estimatePrice: "NTD $4,8055",
     services: "飛機",
     period: "2023-11-12 ～ 2023-11-15",
   },
