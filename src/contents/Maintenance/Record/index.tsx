@@ -37,7 +37,7 @@ function MaintenanceRecordList() {
   useEffect(() => {
     initializeSubFilter();
     const tableData = getMaintenanceRecordData();
-    setData(changeKey(tableData));
+    setData(tableData);
   }, []);
 
   const handleView = (id: string) => {

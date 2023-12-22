@@ -38,7 +38,8 @@ const Collapse = ({
       <div
         onClick={(e) => {
           e.stopPropagation();
-          const target = e.target as HTMLTextAreaElement;
+          const target = e.currentTarget as unknown as HTMLTextAreaElement;
+
           if (
             typeof target.className == "string" &&
             (target.className?.indexOf("collapse_title") >= 0 ||

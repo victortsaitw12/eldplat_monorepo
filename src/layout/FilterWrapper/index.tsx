@@ -44,12 +44,12 @@ function FilterWrapper({
   return (
     <BodySTY>
       <div className="actionRow">
-        <div className="sub-filter">
+        <div className="filter-wrapper">
           {Object.entries(filter).reduce((buttonList: any[], [key, _]) => {
             if (filter[key].displayType === "search") {
               buttonList.push(
                 <label key={key} className="search-tool">
-                  <SearchIcon />
+                  <SearchIcon size={12} />
                   <input
                     placeholder={filter[key].label || "搜尋"}
                     onChange={(e) => {
@@ -100,14 +100,9 @@ function FilterWrapper({
             </button>
           )}
         </div>
-        {
-          children && <div className="btns">{btns}</div>
-        }
+        {btns && <div className="btns">{btns}</div>}
       </div>
-      {
-        children && <div className="children-container">{children}</div>
-      }
-      
+      {children && <div className="children-container">{children}</div>}
     </BodySTY>
   );
 }

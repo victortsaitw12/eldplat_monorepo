@@ -24,6 +24,8 @@ import NewUploader from "@components/NewUploader";
 import CustomTextArea from "@components/CustomTextArea";
 import CustomTextInputField from "@components/CustomTextInputField";
 
+const dataOverviewArray = ["第一車隊", "北北基", "S級", "中文/英文"];
+
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ driverNo }) => {
@@ -225,7 +227,14 @@ const Page: NextPageWithLayout<
         flexEnd={isEdit ? true : false}
         hasShadow={isEdit ? true : false}
       >
-        {!isEdit && <DataOverview data={driverData} />}
+        {!isEdit && (
+          <DataOverview
+            title="鍾俊儀 JUN-YI  ZHONG"
+            subtitle="🏳️‍⚧️ 台灣"
+            infoArray={dataOverviewArray}
+            hasImage={false}
+          />
+        )}
         <ButtonSet
           isEdit={false}
           primaryDisable={false}

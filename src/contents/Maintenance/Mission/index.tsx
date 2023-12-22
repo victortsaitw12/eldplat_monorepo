@@ -40,7 +40,7 @@ function MaintenanceMissionList() {
   useEffect(() => {
     initializeSubFilter();
     const tableData = getMaintenanceMissionData();
-    setData(changeKey(tableData));
+    setData(tableData);
   }, []);
 
   const handleView = (id: string) => {
@@ -51,6 +51,10 @@ function MaintenanceMissionList() {
     return data.map((item: any) => {
       return {
         ...item,
+        finish_dt: (<div style={{whiteSpace: "pre", lineHeight: "20px"}}>
+          {item.finish_dt.split(" ").join("\r\n")}
+        </div>
+        ),
         maintenance_no: <a href="/maintenance">{item.maintenance_no}</a>,
         action: (<>
           <PrimaryBtn

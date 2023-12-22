@@ -7,7 +7,6 @@ import {
   UseFormGetValues
 } from "react-hook-form";
 import { BusDataTypes } from "../../../bus.type";
-import styled from "styled-components";
 import {
   getMaintenanceByFilter,
   busMaintenaceParser,
@@ -20,7 +19,9 @@ import Table from "@components/Table/Table";
 import { useBusStore } from "@contexts/filter/busStore";
 import PaginationField from "@components/PaginationField";
 import IconBtn from "@components/Button/IconBtn";
-import { FullCircleIcon, DisableIcon } from "evergreen-ui";
+import { BodySTY } from "./style";
+import SecondaryBtn from "@components/Button/Secondary/IconLeft";
+import { PlusIcon } from "evergreen-ui";
 
 interface Props {
   register: UseFormRegister<BusDataTypes>;
@@ -32,29 +33,20 @@ interface Props {
 }
 
 export interface I_Equipment {
-  id: number;
   equipment_no: string;
-  equipment_name: string;
   provider: string;
-  amount: string;
   purchaser: string;
-  status: string;
+  duration: string;
+  equipment_item: string;
 }
-
-const BodySTY = styled.div`
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
 
 const equipmentTitle = [
   "財產編號",
-  "財產名稱",
   "供應商",
-  "金額",
   "採購人",
-  "項目"
+  "合作日期區間",
+  "項目",
+  "操作"
 ];
 
 const DUMMY_FILTER = [
@@ -80,27 +72,24 @@ const DUMMY_DATA = {
   resultList: [
     {
       equipment_no: "EQU20231201001",
-      equipment_name: "麥克風",
       provider: "麥霸國際",
-      amount: "1,200",
       purchaser: "林買買",
-      status: "2"
+      duration: "2023-12-01~2024-12-01",
+      equipment_item: "麥克風、卡拉OK伴唱機"
     },
     {
       equipment_no: "EQU20231201002",
-      equipment_name: "礦泉水",
       provider: "山泉公司",
-      amount: "2,500",
       purchaser: "林買買",
-      status: "1"
+      duration: "2023-12-01~2024-12-01",
+      equipment_item: "礦泉水"
     },
     {
       equipment_no: "EQU20231201003",
-      equipment_name: "伴唱帶",
       provider: "麥霸國際",
-      amount: "3,800",
       purchaser: "林買買",
-      status: "3"
+      duration: "2023-12-01~2024-12-01",
+      equipment_item: "礦泉水"
     }
   ],
   pageInfo: {
@@ -130,132 +119,50 @@ function Equipment({
     Last_Page: 10
   });
   const router = useRouter();
+  const { initializeSubFilter, subFilter, updateSubFilter } = useBusStore();
 
-  async function fetchMaintenanceData(
-    isCanceled: boolean,
-    busId: string,
-    pageInfo: I_PageInfo
-  ) {
-    getMaintenanceByFilter(busId, pageInfo).then((res) => {
-      if (isCanceled) {
-        return;
-      }
-      // const busMaintenanceData = mappingQueryData(
-      //   res.contentList,
-      //   busMaintenacePattern,
-      //   busMaintenaceParser
-      // );
-
-      // const busEquipmentData = res.resultList;
-      const busEquipmentData = DUMMY_DATA.resultList;
-      const pageInfo = DUMMY_DATA.pageInfo;
-
-      if (!subFilter) {
-        localStorage.setItem(
-          "equipmentInitFilter",
-          // JSON.stringify(busMaintenanceData.conditionList)
-          JSON.stringify(DUMMY_FILTER)
-        );
-        initializeSubFilter();
-      }
-
-      setBusEquipmentData(busEquipmentData);
-      setPageInfo(pageInfo);
-    });
-  }
-
-  useEffect(() => {
-    let isCanceled = false;
-    fetchMaintenanceData(isCanceled, busId, pageInfo);
-    return () => {
-      isCanceled = true;
-    };
-  }, [busId]);
-
-  const handleTableEdit = () => {
-    console.log("edit");
+  const handleView = () => {
+    setTimeout(() => {
+      router.push("/bus/equipment/1?editPage=edit");
+    }, 500);
   };
 
-  const switchStatus = (status: string) => {
-    switch (status) {
-      case "1":
-        return (
-          <>
-            <FullCircleIcon className={"green"} size={15} />
-            <span>待機中</span>
-          </>
-        );
-      case "2":
-        return (
-          <>
-            <FullCircleIcon className={"teal"} size={15} />
-            <span>保留中</span>
-          </>
-        );
-      case "3":
-        return (
-          <>
-            <FullCircleIcon className={"blue"} size={15} />
-            <span>任務中</span>
-          </>
-        );
-      case "4":
-        return (
-          <>
-            <FullCircleIcon className={"yellow"} size={15} />
-            <span>在維修廠</span>
-          </>
-        );
-      case "5":
-        return (
-          <>
-            <DisableIcon className={"disable"} size={15} />
-            <span>停用</span>
-          </>
-        );
-      case "6":
-        return (
-          <>
-            <FullCircleIcon className={"authorized"} size={15} />
-            <span>已授權某車公司</span>
-          </>
-        );
-      default:
-        return (
-          <>
-            <FullCircleIcon className={"green"} size={15} />
-            <span>待機中</span>
-          </>
-        );
-    }
+  const handleTableEdit = () => {
+    setTimeout(() => {
+      router.push("/bus/equipment/1?editPage=edit");
+    }, 500);
+  };
+
+  const handleCreateEquipment = () => {
+    console.log("create");
+    setTimeout(() => {
+      router.push("/bus/equipment/create");
+    }, 500);
   };
 
   const changeKey = (data: Array<I_Equipment>) => {
     return data.map((item: I_Equipment) => {
       return {
-        id: item["equipment_no"],
         equipment_no: item["equipment_no"],
-        equipment_name: item["equipment_name"],
         provider: item["provider"],
-        amount: item["amount"],
         purchaser: item["purchaser"],
-        status: item["status"],
+        duration: item["duration"],
+        equipment_item: item["equipment_item"],
         action: <IconBtn tip="編輯" type="edit" onClick={handleTableEdit} />
       };
     });
   };
 
-  const { initializeSubFilter, subFilter, updateSubFilter } = useBusStore();
+  useEffect(() => {
+    setBusEquipmentData(DUMMY_DATA.resultList);
+    if (!subFilter) {
+      initializeSubFilter();
+    }
+  }, []);
 
   const modifiedData = busEquipmentData
     ? changeKey(busEquipmentData)
     : undefined;
-
-  console.log("modifiedData", modifiedData);
-
-  const handleView = () => {
-    console.log("handle view");
-  };
 
   return (
     <BodySTY>
@@ -265,6 +172,11 @@ function Equipment({
           initializeSubFilter();
         }}
         filter={subFilter}
+        btns={
+          <SecondaryBtn text={"新增設備"} onClick={handleCreateEquipment}>
+            <PlusIcon size={14} />
+          </SecondaryBtn>
+        }
       ></FilterWrapper>
       <Table
         titles={equipmentTitle}

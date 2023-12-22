@@ -10,7 +10,7 @@ import { getLayout } from "@layout/MainLayout";
 import UIProvider from "@contexts/scheduleContext/UIProvider";
 import { getScheduleList } from "@services/schedule/getScheduleList";
 import ApprovalTable from "@contents/Schedule/ApprovalTable";
-import EditMission from "@contents/Assignment/EditMission";
+import CreateMission from "@contents/Assignment/CreateMission";
 import LightBox from "@components/Lightbox";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
@@ -23,7 +23,6 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   const { id, editPage } = router.query;
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
 
   const modalInfo = {
     listClassName: "",
@@ -74,7 +73,7 @@ const ApprovalView: NextPageWithLayout<never> = () => {
         />
       </ControlBar>
       <Pane className="table">
-        <EditMission isEdit={isEdit} />
+        <CreateMission />
       </Pane>
       <LightBox
         title="退回"

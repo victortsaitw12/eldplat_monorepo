@@ -26,8 +26,19 @@ export const DivSTY = styled.div`
       }
     }
 
+    .switch-wrapper{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .col-wrapper{
+      display: flex;
+      gap: 20px;
+    }
+
     .w-50 {
-      width: 50%;
+      width: calc(50% - 10px);
     }
   }
 
@@ -48,10 +59,6 @@ export const DivSTY = styled.div`
     .row {
       display: flex;
       gap: 20px;
-
-      > div {
-        height: 100%;
-      }
     }
   }
 `;

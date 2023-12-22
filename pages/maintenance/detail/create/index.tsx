@@ -18,7 +18,7 @@ import { Select,SmallPlusIcon, Pane, Group } from "evergreen-ui";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
-  const [newCheckItem, setNewCheckItem] = useState<any>(null);
+  const [newCheckItem, setNewCheckItem] = useState<any>([]);
 
   const BasicInFo = [
     {
@@ -38,8 +38,9 @@ const Page: NextPageWithLayout<never> = () => {
   ];
 
   const MissionInFo = [
+    [
     {
-      listClassName: "fb-50",
+      listClassName: "fb-100",
       readonly: false,
       req: false,
       label: "分類",
@@ -52,8 +53,41 @@ const Page: NextPageWithLayout<never> = () => {
         </Select>
       )
     },
+
     {
-      listClassName: "fb-50",
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      bold: false,
+      label: "維修廠",
+      value: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            請選擇
+          </option>
+        </Select>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: true,
+      bold: true,
+      label: "項目",
+      value: (<CustomTextArea placeholder="請輸入項目" />)
+    },
+    {
+      listClassName: "fb-100 m-0",
+      readonly: false,
+      req: true,
+      bold: true,
+      label: "維保日期",
+      value: (<CustomDatePicker placeholder="請輸入訓練期間" isRange />)
+    },
+    ],
+    [
+    {
+      listClassName: "fb-100",
       readonly: false,
       req: false,
       label: "出發地",
@@ -84,28 +118,6 @@ const Page: NextPageWithLayout<never> = () => {
     {
       listClassName: "fb-100",
       readonly: false,
-      req: false,
-      bold: false,
-      label: "維修廠",
-      value: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
-    },
-    {
-      listClassName: "fb-50",
-      readonly: false,
-      req: true,
-      bold: true,
-      label: "項目",
-      value: (<CustomTextArea placeholder="請輸入項目" />)
-    },
-    {
-      listClassName: "fb-50",
-      readonly: false,
       req: true,
       bold: true,
       label: "派工駕駛",
@@ -124,16 +136,9 @@ const Page: NextPageWithLayout<never> = () => {
         </Select>
       )
     },
+
     {
-      listClassName: "fb-50 m-0",
-      readonly: false,
-      req: true,
-      bold: true,
-      label: "維保日期",
-      value: (<CustomDatePicker placeholder="請輸入訓練期間" isRange />)
-    },
-    {
-      listClassName: "fb-50 m-0",
+      listClassName: "fb-100 m-0",
       readonly: false,
       req: false,
       bold: true,
@@ -145,8 +150,9 @@ const Page: NextPageWithLayout<never> = () => {
         />
       )
     }
+    ]
   ];
-
+  
   const CheckItemInFo = [[
     {
       listClassName: "fb-100",
@@ -197,53 +203,77 @@ const Page: NextPageWithLayout<never> = () => {
   ]];
 
   const newCheckItemInfo= [
-    {
-      listClassName: "fb-100",
-      readonly: false,
-      req: true,
-      label: "駕照種類",
-      bold: true,
-      value: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
-    },
-    {
-      listClassName: "fb-100",
-      readonly: false,
-      req: true,
-      label: "有效期限",
-      bold: true,
-      value: <CustomDatePicker placeholder="請輸入有效期限" />
-    },
-    {
-      listClassName: "fb-100 m-0",
-      readonly: false,
-      req: true,
-      label: "附件/相關檔案",
-      bold: true,
-      value: <NewUploader isEditable={true} />
-    }
+    [
+      {
+        listClassName: "fb-100",
+        readonly: false,
+        req: true,
+        label: "發票號碼",
+        bold: true,
+        value: (
+          <CustomTextInputField
+            className="input"
+            placeholder="Placeholder"
+          />
+        )
+      },
+      {
+        listClassName: "fb-100",
+        readonly: false,
+        req: true,
+        label: "金額",
+        bold: true,
+        value: (
+          <CustomTextInputField
+            className="input"
+            placeholder="Placeholder"
+          />
+        )
+      },],[
+      {
+        listClassName: "fb-100 m-0",
+        readonly: false,
+        req: true,
+        label: "附件/相關檔案",
+        bold: true,
+        value: <NewUploader isEditable={true} />
+      },],
+      [{
+        listClassName: "fb-100",
+        readonly: false,
+        req: true,
+        label: "備註",
+        bold: true,
+        value: (
+          <CustomTextArea
+            placeholder="請輸入備註"
+          />
+        )
+      },
+    ]
   ];
 
   const handleCancel = () => {
-    router.push("/maintenance");
+    router.push("/maintenance/mission");
   };
 
   const handleSave = () => {
-    router.push("/maintenance");
+    router.push("/maintenance/mission");
   };
 
   const handleAddInfoCard = () => {
-    setNewCheckItem(newCheckItemInfoCard);
+    const newCheckItemInfoCard = getNewCheckItemInfoCar(newCheckItem.length + 1);
+    setNewCheckItem([...newCheckItem, newCheckItemInfoCard]);
   };
 
-  const newCheckItemInfoCard = (
-    <InfoCard isEdit={true} infoData={newCheckItemInfo} infoTitle="檢查項目" />
-  );
+  const getNewCheckItemInfoCar = (id:number) => {
+    console.log(id);
+    const newCheckItemInfoCard = (
+      <InfoCard key={id} isEdit={true} infoData={newCheckItemInfo} infoTitle="檢查項目" />
+    );
+    return newCheckItemInfoCard;
+  }
+
 
   return (
     <>
@@ -258,22 +288,22 @@ const Page: NextPageWithLayout<never> = () => {
         />
       </ControlBar>
       <BodySTY>
-       <Pane className={"main-column "}>
+       <Pane className={"main-column fb-33"}>
           <InfoCard
             isEdit={true}
             infoData={BasicInFo}
             infoTitle="車輛資料"
           />
         </Pane>
-        <Pane className={"main-column"}>
+        <Pane className={"main-column fb-66"}>
           <InfoCard
             isEdit={true}
             infoData={MissionInFo}
-            infoTitle="職員資料"
+            infoTitle="任務指派"
           />
         </Pane>
         <Pane className={"main-column w-full"}>
-          <InfoCard isEdit={true} infoData={CheckItemInFo} infoTitle="駕照" />
+          <InfoCard isEdit={true} infoData={CheckItemInFo} infoTitle="檢查項目" />
           {newCheckItem}
           <SecondaryButton
             text="新增其他證照"

@@ -16,12 +16,14 @@ function StyledSelect<
   options,
   isDisabled,
   onFormChange,
-  formValue
+  formValue,
+  styles
 }: {
   options: Array<Option>;
   isDisabled: boolean;
   formValue: Array<string>;
   onFormChange: (value: Array<string>) => void;
+  styles?: any;
 }) {
   const id = useId();
   // const [value, setValue] = useState(formValue);
@@ -43,7 +45,7 @@ function StyledSelect<
         placeholder={placeholder}
         isMulti
         value={selectedOptions}
-        styles={selectStyles}
+        styles={styles || selectStyles}
       />
     </BodySTY>
   );
