@@ -150,17 +150,23 @@ const Page: NextPageWithLayout<
     router.push(`/driver/detail/${driverNo}?editPage=edit`);
   };
 
-  const handleView = () => {
+  const handleReturn = () => {
+    router.push("/driver");
+  };
+
+  const handleSave = () => {
     router.push(`/driver/detail/${driverNo}?editPage=view`);
-    setLightOpen(false);
+    toaster.success("儲存成功");
   };
 
   const handleCancel = () => {
     setLightOpen(true);
   };
 
-  const handleReturn = () => {
-    router.push("/driver");
+  const handleLightBoxConfirm = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=view`);
+    setLightOpen(false);
+
   };
 
   useEffect(() => {
@@ -185,7 +191,7 @@ const Page: NextPageWithLayout<
             secondaryBtnText={isEdit ? "取消" : "回列表"}
             secondaryBtnOnClick={isEdit ? handleCancel : handleReturn}
             primaryBtnText={isEdit ? "儲存" : "編輯"}
-            primaryBtnOnClick={isEdit ? handleView : handleEdit}
+            primaryBtnOnClick={isEdit ? handleSave : handleEdit}
           />
         )}
       </ControlBar>
@@ -193,9 +199,9 @@ const Page: NextPageWithLayout<
       <LightBox
         title="確定要離開嗎?"
         isOpen={isLightOpen}
-        handleCloseLightBox={() => setLightOpen((prev) => false)}
-        onConfirm={handleView}
-        onCancel={() => setLightOpen((prev) => false)}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
       >
         如果你現在離開，將會遺失未儲存的資料。
       </LightBox>
