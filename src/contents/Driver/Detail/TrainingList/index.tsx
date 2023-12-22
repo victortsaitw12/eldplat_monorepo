@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { Pane, DocumentIcon, Tooltip, toaster, Dialog } from "evergreen-ui";
 import { DivSTY } from "./style";
 
-import TableWithEdit from "@components/Table/TableWithEdit";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import LicenseForm from "@contents/Driver/Detail/LicenseForm";
 import { LICN_TYP } from "@services/getDDL";
@@ -17,11 +16,13 @@ import {
 
 import Table from "@components/Table/Table";
 import FilterWrapper from "@layout/FilterWrapper";
-import LoadingSpinner from "@components/LoadingSpinner";
 import PaginationField from "@components/PaginationField";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import Checkbox from "@components/CheckBox";
 import IconBtn from "@components/Button/IconBtn";
+import SecondaryButton from "@components/Button/Secondary/IconLeft";
+import { PlusIcon } from "evergreen-ui";
+import { useRouter } from "next/router";
 
 const table_title = [
   <Checkbox key={"driver"} />,
@@ -55,6 +56,8 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
   const [licensesData, setLicensesData] = React.useState<I_License | any>([]);
   const [pageInfo, setPageInfo] = React.useState<I_PageInfo>(defaultPageInfo);
   const btnRef = React.useRef<any>(null);
+
+  const router = useRouter();
   // ordering for <TableWithEdit/>
   const driverPattern = {
     id: true,
@@ -226,12 +229,16 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
   }, [driverNo]);
 
   const handleView = () => {
-    console.log("handle view");
+    router.push(`/driver/training/${driverNo}?editPage=edit`);
   };
 
   const handleTableEdit = () => {
     console.log("edit");
   };
+
+  const handleCreateTraining = () => {
+    router.push("/driver/training/create");
+  }
 
   const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
 
@@ -261,6 +268,11 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
         }}
         // filter={subFilter}
         filter={DUMMY_SUBFILTER}
+        btns={
+          <SecondaryButton onClick={handleCreateTraining} text="新增教育訓練">
+            <PlusIcon />
+          </SecondaryButton>
+        }
       >
         <Table
           titles={table_title}
