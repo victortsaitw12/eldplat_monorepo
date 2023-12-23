@@ -1,16 +1,4 @@
 // -------------------------------------- //
-// export interface DriverData {
-//   id?: string;
-//   driver_No: string;
-//   user_Name: string;
-//   user_First_Name: string;
-//   dsph_Area: string; //"02",
-//   dsph_City: string; //"02",
-//   short_Schd_Date: string; //"2023-07",
-//   total_Leave_Days: string;
-//   schedule_List: Array<ScheduleInfoData>;
-//   schedule_Approved: boolean;
-// }
 export interface MissionData {
   mssion_No: string;
   mission_Date: string;
@@ -38,4 +26,19 @@ export interface ScheduleInfoData {
   leave_Code: string;
   leave_Description: string;
   check_Status: string;
+}
+
+export interface BusScheduleData {
+  bus_No: string;
+  bus_Name: string;
+  bus_Driver: string;
+  short_Schd_Date: string;
+  mission_List: BusMissionData[];
+}
+
+export interface BusMissionData {
+  mission_No: string;
+  mission_Date: string;
+  mission_Name: string;
+  mission_Type: string;
 }

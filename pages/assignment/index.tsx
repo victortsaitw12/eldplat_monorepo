@@ -13,14 +13,12 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import { I_PageInfo } from "@components/PaginationField";
 
 import {
-  assignParser,
-  assignPattern,
   getAllAssignments,
   defaultPageInfo
 } from "@services/assignment/getAllAssignment";
 
 import { getAllMission } from "@services/assignment/getAllMission";
-
+import MonthPicker from "@contents/Schedule/MonthPicker";
 import BusTable from "@contents/Assignment/BusTable";
 import MissionTable from "@contents/Assignment/MissionTable";
 import BusStatusRow from "@contents/Assignment/BusStatusRow";
@@ -77,8 +75,8 @@ const Page: NextPageWithLayout<never> = () => {
     subFilter,
     updateSubFilter
   } = useAssignmentStore();
-  //
 
+  //------ functions ------//
   const fetchAssignData = async (
     isCanceled: boolean,
     mainFilter = "1",
@@ -104,7 +102,9 @@ const Page: NextPageWithLayout<never> = () => {
         console.error("error in assignment list", err);
       });
   };
-
+  const handleChangeMonth = (v: Date) => {
+    setRenderDate(v);
+  };
   // 處理mainFilter
   const changeMainFilterHandler = (value: string) => {
     setNowTab(value);
@@ -145,12 +145,20 @@ const Page: NextPageWithLayout<never> = () => {
             }}
             filter={DUMMY_subfilter}
             btns={
-              <PrimaryBtn
-                text="新增任務"
-                onClick={() => router.push("/assignment/detail/create")}
-              >
-                <PlusIcon />
-              </PrimaryBtn>
+              nowTab === "1" ? (
+                <PrimaryBtn
+                  text="新增任務"
+                  onClick={() => router.push("/assignment/detail/create")}
+                >
+                  <PlusIcon />
+                </PrimaryBtn>
+              ) : (
+                <MonthPicker
+                  key="monthpicker"
+                  initialDate={renderDate}
+                  onMonthChange={handleChangeMonth}
+                />
+              )
             }
           >
             {nowTab === "1" ? (
