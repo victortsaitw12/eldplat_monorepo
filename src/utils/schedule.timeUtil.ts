@@ -3,13 +3,19 @@ import {
   BusScheduleData,
   BusMissionData
 } from "@contents/Assignment/assignment.typing";
+import { ScheduleInfoData } from "@contents/schedule/shift.typing";
 export interface I_MonthItem {
   id: string;
   date: string;
   isToday: boolean;
   otherMonth: string;
   weeks: number;
-  detail: I_DetailItem[] | null | MissionData[] | BusMissionData[];
+  detail:
+    | I_DetailItem[]
+    | null
+    | MissionData[]
+    | BusMissionData[]
+    | ScheduleInfoData[];
 }
 
 export interface I_DetailItem {
