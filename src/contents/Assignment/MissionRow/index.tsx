@@ -62,17 +62,38 @@ const MissionRow = ({ data }: I_OverviewTable) => {
         <div className="table_button">
           {data.dispatch_List?.length !== 0 ? (
             <>
-              <button className="button_edit">
+              <button
+                className="button_edit"
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.stopPropagation();
+                  router.push(
+                    `/assignment/detail/${data.mssion_No}?editPage=edit`
+                  );
+                }}
+              >
                 <EditIcon size={16} />
               </button>
               <ChevronDownIcon size={14} />
             </>
           ) : (
             <>
-              <button className="button_edit">
+              <button
+                className="button_edit"
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.stopPropagation();
+                  router.push(
+                    `/assignment/detail/${data.mssion_No}?editPage=edit`
+                  );
+                }}
+              >
                 <EditIcon size={16} />
               </button>
-              <SecondaryBtn text="派單"></SecondaryBtn>
+              <SecondaryBtn
+                text="派單"
+                onClick={() => {
+                  router.push("/assignment/dispatch/create");
+                }}
+              />
             </>
           )}
         </div>

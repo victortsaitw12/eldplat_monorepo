@@ -11,9 +11,8 @@ export const BtnSTY = styled.button<{ color: keyof ThemeType["color"] }>`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  flex-grow: 1;
   cursor: pointer;
   svg {
     width: 12px;

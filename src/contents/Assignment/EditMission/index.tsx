@@ -10,11 +10,7 @@ import CustomSelect from "@components/CustomTextArea";
 import NewUploader from "@components/NewUploader";
 import FileCard from "@components/FileCard";
 
-interface I_Props {
-  isEdit: boolean;
-}
-const EditMission = ({ isEdit }: I_Props) => {
-  console.log(isEdit);
+const EditMission = () => {
   const missionInfo = [
     {
       listClassName: "fb-100",
@@ -22,8 +18,7 @@ const EditMission = ({ isEdit }: I_Props) => {
       req: true,
       label: "日期區間",
       bold: true,
-      value: "2023/12/01",
-      editEle: <CustomDatePicker placeholder="2023/12/01" />
+      editEle: <CustomDatePicker placeholder="請選取時間" />
     },
     {
       listClassName: "fb-100",
@@ -31,10 +26,10 @@ const EditMission = ({ isEdit }: I_Props) => {
       req: false,
       label: "時間",
       bold: true,
-      value: (
+      editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            12:00 ~ 18:00
           </option>
         </Select>
       )
@@ -45,13 +40,8 @@ const EditMission = ({ isEdit }: I_Props) => {
       req: true,
       label: "起點",
       bold: true,
-      value: (
-        <CustomTextInputField
-          className="input"
-          // isInvalid={true}
-          placeholder="請輸入"
-          // validationMessage="不可輸入符號"
-        />
+      editEle: (
+        <CustomTextInputField defaultValue="台北車站" placeholder="請輸入" />
       )
     },
     {
@@ -60,13 +50,8 @@ const EditMission = ({ isEdit }: I_Props) => {
       req: true,
       label: "迄點",
       bold: true,
-      value: (
-        <CustomTextInputField
-          className="input"
-          // isInvalid={true}
-          placeholder="請輸入"
-          // validationMessage="不可輸入符號"
-        />
+      editEle: (
+        <CustomTextInputField defaultValue="潭日月飯店" placeholder="請輸入" />
       )
     }
   ];
@@ -77,13 +62,8 @@ const EditMission = ({ isEdit }: I_Props) => {
       req: true,
       label: "車輛",
       bold: true,
-      value: (
-        <CustomTextInputField
-          className="input"
-          // isInvalid={true}
-          placeholder="請輸入"
-          // validationMessage="不可輸入符號"
-        />
+      editEle: (
+        <CustomTextInputField defaultValue="KAA-0001" placeholder="請輸入" />
       )
     },
     {
@@ -92,13 +72,8 @@ const EditMission = ({ isEdit }: I_Props) => {
       req: true,
       label: "駕駛",
       bold: true,
-      value: (
-        <CustomTextInputField
-          className="input"
-          // isInvalid={true}
-          placeholder="請輸入"
-          // validationMessage="不可輸入符號"
-        />
+      editEle: (
+        <CustomTextInputField defaultValue="楊俊儀" placeholder="請輸入" />
       )
     },
     {
@@ -114,7 +89,7 @@ const EditMission = ({ isEdit }: I_Props) => {
     <ApprovalSTY>
       <Pane className="info_wrapper">
         <InfoCard
-          isEdit={isEdit}
+          isEdit={true}
           infoData={missionInfo}
           infoTitle="新增任務"
           hasProfileCard={false}
@@ -122,7 +97,7 @@ const EditMission = ({ isEdit }: I_Props) => {
       </Pane>
       <Pane className="info_wrapper">
         <InfoCard
-          isEdit={isEdit}
+          isEdit={true}
           infoData={dispatchInfo}
           infoTitle="任務指派"
           hasProfileCard={false}

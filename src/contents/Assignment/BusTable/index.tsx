@@ -42,7 +42,6 @@ const BusTable = ({ data, initialDate }: I_OverviewTable) => {
         (timeData) => timeData.mission_Date === item.date
       );
       if (matchingData.length !== 0) {
-        console.log(matchingData);
         item.detail = matchingData;
       }
     });
@@ -93,7 +92,7 @@ const BusTable = ({ data, initialDate }: I_OverviewTable) => {
                           (detail, index) => {
                             return (
                               <BusStatusTag
-                                key={index}
+                                key={detail.mission_No}
                                 value={BUS_STATUS.get(detail.mission_Type)}
                                 detail={detail}
                               />
