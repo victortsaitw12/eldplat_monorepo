@@ -59,7 +59,7 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean; className?: string }>
 export const ButtonSetSTY = styled.div`
   display: flex;
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 15px;
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
