@@ -2,7 +2,7 @@ import React, { useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Pane } from "evergreen-ui";
+import { Pane, toaster } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
@@ -34,13 +34,14 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   };
 
   //------ functions ------//
-  const cancelApproveHandler = () => {
-    setOpenModal(true);
+  const submitHandler = () => {
+    router.push("/assignment");
+    toaster.success("成功新增任務");
   };
-  const cancelModalHandler = () => {
-    setOpenModal(false);
-    router.push("/schedule/detail/DRV202311210001");
-  };
+  // const cancelModalHandler = () => {
+  //   setOpenModal(false);
+  //   router.push("/schedule/detail/DRV202311210001");
+  // };
   const fetchData = async () => {
     // setIsLoading(true);
     // try {
@@ -67,32 +68,14 @@ const ApprovalView: NextPageWithLayout<never> = () => {
         <ButtonSet
           primaryDisable={false}
           secondaryBtnText="取消"
-          secondaryBtnOnClick={cancelApproveHandler}
+          secondaryBtnOnClick={() => router.push("/assignment")}
           primaryBtnText="確定新增任務"
-          // primaryBtnOnClick={isEdit ? handleView : handleEdit}
+          primaryBtnOnClick={submitHandler}
         />
       </ControlBar>
       <Pane className="table">
         <CreateMission />
       </Pane>
-      <LightBox
-        title="退回"
-        isOpen={isOpenModal}
-        handleCloseLightBox={() => {
-          setOpenModal(false);
-        }}
-        customBtns={
-          <ButtonSet
-            primaryBtnText="確定退回"
-            secondaryBtnOnClick={() => {
-              setOpenModal(false);
-            }}
-            primaryBtnOnClick={cancelModalHandler}
-          />
-        }
-      >
-        <InfoItem item={modalInfo} isEdit={true} />
-      </LightBox>
     </BodySTY>
   );
 };

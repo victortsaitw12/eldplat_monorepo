@@ -1,11 +1,15 @@
-import { MissionData } from "@contents/Assignment/assignment.typing";
+import {
+  MissionData,
+  BusScheduleData,
+  BusMissionData
+} from "@contents/Assignment/assignment.typing";
 export interface I_MonthItem {
   id: string;
   date: string;
   isToday: boolean;
   otherMonth: string;
   weeks: number;
-  detail: I_DetailItem[] | null | MissionData[];
+  detail: I_DetailItem[] | null | MissionData[] | BusMissionData[];
 }
 
 export interface I_DetailItem {

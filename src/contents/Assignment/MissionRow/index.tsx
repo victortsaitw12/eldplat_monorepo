@@ -61,14 +61,19 @@ const MissionRow = ({ data }: I_OverviewTable) => {
         </div>
         <div className="table_button">
           {data.dispatch_List?.length !== 0 ? (
-            <div className="flex_end">
-              <button>
+            <>
+              <button className="button_edit">
                 <EditIcon size={16} />
               </button>
               <ChevronDownIcon size={14} />
-            </div>
+            </>
           ) : (
-            <SecondaryBtn text="派單"></SecondaryBtn>
+            <>
+              <button className="button_edit">
+                <EditIcon size={16} />
+              </button>
+              <SecondaryBtn text="派單"></SecondaryBtn>
+            </>
           )}
         </div>
       </div>

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const OverviewSTY = styled.div`
-  height: calc(100% - 30px);
+  height: 100%;
+  /* height: calc(100% - 30px); */
   /* width: fit-content; */
   border: 1px solid ${({ theme }) => theme.color.N40};
   border-radius: 4px;
@@ -24,7 +25,8 @@ export const OverviewSTY = styled.div`
     }
     .table_header_info {
       display: flex;
-      width: calc(92% - 20px);
+      width: 79%;
+      /* width: calc(92% - 20px); */
       padding: 10px 10px;
     }
     p {
@@ -104,7 +106,6 @@ export const OverviewSTY = styled.div`
         width: 100%;
         justify-content: space-between;
         cursor: pointer;
-        background: aliceblue;
         /* padding-bottom: 10px; */
       }
       .table_info {
@@ -112,31 +113,20 @@ export const OverviewSTY = styled.div`
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-items: center;
-        width: 100%;
-        background-color: antiquewhite;
+        width: 86%;
       }
       .table_button {
-        cursor: pointer;
+        width: 120px;
+        padding-right: 10px;
         display: flex;
-        justify-content: center;
         align-items: center;
-        width: 75px;
-        /* .flex_end {
-          display: flex;
-          align-items: center;
-          justify-content: end;
-          height: 100%;
-        }
-        .flex_between {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          height: 100%;
-        }
-        button {
-          padding: 0 10px;
+        justify-content: flex-end;
+        .button_edit {
           margin-right: 10px;
-        } */
+          background: transparent;
+          border: none;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -145,9 +135,7 @@ export const OverviewSTY = styled.div`
     .dispatch_table {
       border: 1px solid ${({ theme }) => theme.color.N40};
       box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
-      &:not(:last-child) {
-        border-bottom: none;
-      }
+      border-bottom: none;
     }
     .dispatch_header {
       padding: 10px 20px;
@@ -162,8 +150,9 @@ export const OverviewSTY = styled.div`
     }
     .dispatch_row {
       display: flex;
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       &:not(:last-child) {
-        border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+        border: none;
       }
       .dispatch_title {
         display: flex;
@@ -212,10 +201,10 @@ export const OverviewSTY = styled.div`
     }
   }
   .w_2 {
-    width: 12.5%;
+    width: 13%;
   }
   .w_3 {
-    width: 15%;
+    width: 16%;
   }
   .w_4 {
     width: 23%;
