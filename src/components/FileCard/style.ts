@@ -10,6 +10,14 @@ export const FileCardSTY = styled.div`
     max-width: 346px;
 
     .title {
+      display: inline-block;
+      width: 100%;
+      padding: 8px 16px;
+      border-radius: 4px 4px 0 0;
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      background: ${({ theme }) => theme.color.N20};
+      font-size: 16px;
+      font-weight: 600;
     }
 
     .content-wrapper {

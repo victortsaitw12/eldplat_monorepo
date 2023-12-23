@@ -19,6 +19,7 @@ import InputGenerator from "@components/InputGenerator";
 import SubTabsWrapper from "@layout/SubTabsWrapper";
 import PureInfoCard from "@components/InfoCard/PureStyle";
 import FormGenerator from "@components/FormGenerator";
+import LightBox from "@components/Lightbox";
 
 const subTabsArray = [
   { id: 1, label: "車輛識別", value: "1" },
@@ -32,6 +33,7 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
   const { editPage } = router.query; //是否為編輯頁的判斷"edit"
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [currentTab, setCurrentTab] = useState<string>("1");
+  const [isLightOpen, setLightOpen] = useState(false);
 
   useEffect(() => {
     setIsEdit(editPage === "edit" || false);
@@ -144,12 +146,22 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
     router.push("/bus_management?editPage=edit");
   };
 
-  const handleView = () => {
-    router.push("/bus_management?editPage=view");
-  };
-
   const handleReturn = () => {
     router.push("/bus");
+  };
+
+  const handleSave = () => {
+    router.push("/bus_management?editPage=view");
+    toaster.success("儲存成功");
+  };
+
+  const handleCancel = () => {
+    setLightOpen(true);
+  };
+
+  const handleLightBoxConfirm = () => {
+    router.push("/bus_management?editPage=view");
+    setLightOpen(false);
   };
 
   return (
@@ -159,9 +171,9 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
           isEdit={false}
           primaryDisable={false}
           secondaryBtnText={isEdit ? "取消" : "回列表"}
-          secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+          secondaryBtnOnClick={isEdit ? handleCancel : handleReturn}
           primaryBtnText={isEdit ? "儲存" : "編輯"}
-          primaryBtnOnClick={isEdit ? handleView : handleEdit}
+          primaryBtnOnClick={isEdit ? handleSave : handleEdit}
         />
       </ControlBar>
       <Pane className={"wrapper"}>
@@ -201,6 +213,15 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
             </Pane>
           </Pane>
         )}
+        <LightBox
+          title="確定要離開嗎?"
+          isOpen={isLightOpen}
+          handleCloseLightBox={() => setLightOpen(false)}
+          onConfirm={handleLightBoxConfirm}
+          onCancel={() => setLightOpen(false)}
+        >
+          如果你現在離開，將會遺失未儲存的資料。
+        </LightBox>
       </Pane>
     </BodySTY>
   );

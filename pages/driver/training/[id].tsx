@@ -23,6 +23,7 @@ import FileCard from "@components/FileCard";
 import NewUploader from "@components/NewUploader";
 import CustomTextArea from "@components/CustomTextArea";
 import CustomTextInputField from "@components/CustomTextInputField";
+import LightBox from "@components/Lightbox";
 
 const dataOverviewArray = ["第一車隊", "北北基", "S級", "中文/英文"];
 
@@ -34,6 +35,7 @@ const Page: NextPageWithLayout<
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [driverData, setDriverData] = useState<I_DriverInfo>();
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [isLightOpen, setLightOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -213,12 +215,22 @@ const Page: NextPageWithLayout<
     router.push(`/driver/training/${driverNo}?editPage=edit`);
   };
 
-  const handleView = () => {
-    router.push(`/driver/training/${driverNo}?editPage=view`);
-  };
-
   const handleReturn = () => {
     router.push(`/driver/detail/${driverNo}?editPage=view`);
+  };
+
+  const handleSave = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=view`);
+    toaster.success("儲存成功");
+  };
+
+  const handleCancel = () => {
+    setLightOpen(true);
+  };
+
+  const handleLightBoxConfirm = () => {
+    router.push(`/driver/training/${driverNo}?editPage=view`);
+    setLightOpen(false);
   };
 
   return (
@@ -239,9 +251,9 @@ const Page: NextPageWithLayout<
           isEdit={false}
           primaryDisable={false}
           secondaryBtnText={isEdit ? "取消" : "回列表"}
-          secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+          secondaryBtnOnClick={isEdit ? handleCancel : handleReturn}
           primaryBtnText={isEdit ? "儲存" : "編輯"}
-          primaryBtnOnClick={isEdit ? handleView : handleEdit}
+          primaryBtnOnClick={isEdit ? handleSave : handleEdit}
         />
       </ControlBar>
       {!isLoading && driverData ? (
@@ -263,6 +275,15 @@ const Page: NextPageWithLayout<
           <Spinner />
         </Pane>
       )}
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
+      >
+        如果你現在離開，將會遺失未儲存的資料。
+      </LightBox>
     </BodySTY>
   );
 };
