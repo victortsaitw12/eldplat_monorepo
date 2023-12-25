@@ -85,6 +85,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     try {
       const result = await getScheduleList(id);
       setShiftData(result);
+      console.log(result);
     } catch (e: any) {
       console.log(e);
     }
@@ -147,7 +148,11 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
             )}
           </ControlBar>
           {shiftData.length !== 0 && (
-            <Schedule initialDate={renderDate} shiftData={shiftData} />
+            <Schedule
+              initialDate={renderDate}
+              shiftData={shiftData}
+              isEdit={isEdit}
+            />
           )}
           {isEdit && (
             <LightBox
