@@ -11,8 +11,9 @@ import { WKDAY_LABEL, EVENT_TYPE } from "../shift.data";
 interface I_ScheduleTable {
   initialDate: Date;
   shiftData: Array<any>;
+  isEdit: boolean;
 }
-const ScheduleTable = ({ initialDate, shiftData }: I_ScheduleTable) => {
+const ScheduleTable = ({ initialDate, shiftData, isEdit }: I_ScheduleTable) => {
   const weekArr = ["日", "一", "二", "三", "四", "五", "六"];
   const router = useRouter();
 
@@ -79,20 +80,23 @@ const ScheduleTable = ({ initialDate, shiftData }: I_ScheduleTable) => {
               key={index}
             >
               <span className={dateStatusHandler(item)}>{item.id}</span>
-              {item.detail &&
-                (item.detail as I_DetailItem[]).map((detail) => {
-                  return (
-                    <EventBtn
-                      key={index}
-                      type={EVENT_TYPE.get(detail?.schd_Type)}
-                      onClickEvent={() => {
-                        detail.schd_Type == "040"
-                          ? router.push("/schedule/approval")
-                          : undefined;
-                      }}
-                    />
-                  );
-                })}
+              {item.detail
+                ? (item.detail as I_DetailItem[]).map((detail) => {
+                    return (
+                      <EventBtn
+                        key={index}
+                        type={EVENT_TYPE.get(detail?.schd_Type)}
+                        onClickEvent={() => {
+                          detail.schd_Type == "040"
+                            ? router.push("/schedule/approval")
+                            : undefined;
+                        }}
+                      />
+                    );
+                  })
+                : !isEdit && ( //* need to add approve_schedule determine
+                    <EventBtn key={index} type={EVENT_TYPE.get("01")} />
+                  )}
             </li>
           );
         })}
