@@ -29,7 +29,8 @@ export const loginV2 = async (email: string, password: string) => {
     DataList: result.ResultList,
     Result: result.Result,
     ResultString: result.ResultString,
-    ResultInt: result.ResultInt
+    ResultInt: result.ResultInt,
+    menuData: DUMMY_MENU
   };
 };
 

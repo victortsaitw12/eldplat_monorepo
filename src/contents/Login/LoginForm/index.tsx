@@ -81,7 +81,7 @@ function Form() {
       <AssistRow />
       <div>
         測試帳密:
-        <span> user@gmail.com ++</span>
+        <span> user@gmail.com +</span>
         <span> 12345</span>
       </div>
       <Button text={"登入"} onClick={handleLogin} />
