@@ -15,14 +15,14 @@ import {
 } from "@contents/Schedule/shift.typing";
 
 import timeUtil, { type I_MonthItem } from "@utils/schedule.timeUtil";
-import BusStatusTag from "@contents/Assignment/BusStatusTag";
+import BusStatusTag from "@contents/Assignment/BusTable/BusStatusTag";
 import { BUS_STATUS } from "@contents/Assignment/assignment.data";
 import PaginationField from "@components/PaginationField";
 import SecondaryBtn from "@components/Button/Secondary/IconLeft";
 import { MissionData } from "@contents/Assignment/assignment.typing";
 import { ChevronDownIcon, EditIcon, PlusIcon } from "evergreen-ui";
 
-import DispatchArea from "../DispatchArea";
+import DispatchArea from "@contents/Assignment/MissionTable/DispatchArea";
 
 interface I_OverviewTable {
   data: MissionData;

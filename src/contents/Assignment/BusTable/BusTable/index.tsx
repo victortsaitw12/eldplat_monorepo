@@ -13,7 +13,7 @@ import {
   BusMissionData
 } from "@contents/Assignment/assignment.typing";
 import timeUtil, { type I_MonthItem } from "@utils/schedule.timeUtil";
-import BusStatusTag from "@contents/Assignment/BusStatusTag";
+import BusStatusTag from "@contents/Assignment/BusTable/BusStatusTag";
 import { BUS_STATUS } from "@contents/Assignment/assignment.data";
 
 interface I_OverviewTable {

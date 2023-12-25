@@ -53,8 +53,6 @@ const OverviewTable = ({
       );
       if (matchingData.length !== 0) {
         item.detail = matchingData;
-      } else {
-        item.detail = [];
       }
     });
     console.log(dateArr);
@@ -171,21 +169,23 @@ const OverviewTable = ({
                 {renderShifts(driver.schedule_List).map((date, index) => {
                   return (
                     <div className="zoom_width" key={index}>
-                      {date.detail &&
-                        (date.detail as ScheduleInfoData[]).map(
-                          (detail, index) => {
-                            return (
-                              <EventTag
-                                key={index}
-                                value={
-                                  detail.schd_Type
-                                    ? EVENT_TYPE.get(detail.schd_Type)
-                                    : EVENT_TYPE.get("01")
-                                }
-                              />
-                            );
-                          }
-                        )}
+                      {date.detail
+                        ? (date.detail as ScheduleInfoData[])?.map(
+                            (detail, index) => {
+                              return (
+                                <EventTag
+                                  key={index}
+                                  value={EVENT_TYPE.get(detail.schd_Type)}
+                                />
+                              );
+                            }
+                          )
+                        : !driver.schedule_Approved && (
+                            <EventTag
+                              key={index}
+                              value={EVENT_TYPE.get("01")}
+                            />
+                          )}
                     </div>
                   );
                 })}
