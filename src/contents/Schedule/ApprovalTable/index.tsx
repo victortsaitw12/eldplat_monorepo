@@ -1,6 +1,6 @@
 import React from "react";
 import { ApprovalSTY } from "./style";
-import timeUtil from "../schedule.timeUtil";
+import timeUtil from "@utils/schedule.timeUtil";
 import EventBtn from "@contents/Schedule/EventBtn";
 import { WKDAY_LABEL, EVENT_TYPE } from "../shift.data";
 import InfoCard from "@components/InfoCard";
