@@ -85,6 +85,11 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "訂單列表", url: "/orders" }
   ],
+  "/orders/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" },
+    { label: "新增訂單", url: "/orders/detail/create" }
+  ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   "/bus": [
@@ -100,12 +105,12 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "車輛列表", url: "/bus" },
     { label: "新增車輛", url: "" }
-  ], 
+  ],
   "/bus_management": [
     { label: "首頁", url: "/" },
     { label: "車輛列表", url: "/bus" },
     { label: "車輛管理設定", url: "" }
-  ], 
+  ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   // "/bus": [
