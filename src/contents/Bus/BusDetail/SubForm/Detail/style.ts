@@ -26,13 +26,13 @@ export const DivSTY = styled.div`
       }
     }
 
-    .switch-wrapper{
+    .switch-wrapper {
       display: flex;
       gap: 10px;
       align-items: center;
     }
 
-    .col-wrapper{
+    .col-wrapper {
       display: flex;
       gap: 20px;
     }
@@ -59,6 +59,17 @@ export const DivSTY = styled.div`
     .row {
       display: flex;
       gap: 20px;
+    }
+  }
+
+  .radio-wrapper {
+    display: flex;
+    gap: 5px;
+
+    label {
+      span {
+        font-size: 16px;
+      }
     }
   }
 `;
