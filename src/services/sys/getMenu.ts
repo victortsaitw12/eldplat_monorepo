@@ -258,14 +258,14 @@ export const DUMMY_MENU = {
           func_no: "schedule",
           func_name: "駕駛出勤管理",
           path: ["/schedule", "/schedule/approval", "/schedule/detail/[id]"]
-        },
-        {
-          module_no: "bus",
-          fg_no: "task",
-          func_no: "setting",
-          func_name: "出勤管理設定",
-          path: "/schedule/setting"
         }
+        // {
+        //   module_no: "bus",
+        //   fg_no: "task",
+        //   func_no: "setting",
+        //   func_name: "出勤管理設定",
+        //   path: "/schedule/setting"
+        // }
       ]
     },
     {
