@@ -5,15 +5,16 @@ export const loginV2 = async (email: string, password: string) => {
   const token = await fullPreRequest();
   const res = await fetch(
     `${
-      process.env.NODE_ENV === "production"
-        ? process.env.NEXT_PUBLIC_PROD_ENDPOINT
-        : process.env.NEXT_PUBLIC_DEV_ENDPOINT
+      process.env.NEXT_PUBLIC_PROD_ENDPOINT
+      // process.env.NODE_ENV === "production"
+      //   ? process.env.NEXT_PUBLIC_PROD_ENDPOINT
+      //   : process.env.NEXT_PUBLIC_DEV_ENDPOINT
     }/sys/api/V2/Account/Login`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token
+        Authorization: token
       },
       body: JSON.stringify({
         content_priv_email: email,
@@ -22,15 +23,15 @@ export const loginV2 = async (email: string, password: string) => {
     }
   );
   const result = await res.json();
-  return {  
+  return {
     StatusCode: result.StatusCode,
     Message: result.Message,
     DataList: result.ResultList,
     Result: result.Result,
     ResultString: result.ResultString,
-    ResultInt: result.ResultInt, 
+    ResultInt: result.ResultInt
   };
-}
+};
 
 export const login = async (email: string, password: string) => {
   // return DUMMY_DATA;
