@@ -22,11 +22,11 @@ const ExpenseItem = ({
     <BodySTY>
       <div className="item-title">
         <div className="title-content">{label}</div>
-        {!!hint && (
+        {/* {!!hint && (
           <Tooltip text={hint}>
             <HelpIcon />
           </Tooltip>
-        )}
+        )} */}
       </div>
 
       <div className="item-value">

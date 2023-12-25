@@ -5,7 +5,7 @@ export const StyledForm = styled.form`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  padding: 20px;
-  gap: 8px;
   color: ${({ theme }) => theme.color.N700};
+  padding: 20px 0;
+  gap: 8px;
 `;

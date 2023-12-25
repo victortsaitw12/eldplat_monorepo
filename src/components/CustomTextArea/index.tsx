@@ -5,9 +5,10 @@ import { TextareaField, Pane } from "evergreen-ui";
 interface I_CustomTextArea {
   placeholder: string;
   data?: string;
+  rows?: number;
 }
 const CustomTextArea = (props: I_CustomTextArea) => {
-  const { placeholder = "請輸入內容", data } = props;
+  const { placeholder = "請輸入內容", data, rows=100 } = props;
   const [value, setValue] = useState("");
   const [invalid, setInvalid] = useState(false);
   const TextareaRef = React.useRef<HTMLTextAreaElement>(null);
@@ -27,7 +28,7 @@ const CustomTextArea = (props: I_CustomTextArea) => {
   }, [data]);
 
   return (
-    <TextareaFieldSTY>
+    <TextareaFieldSTY rows={rows}>
       <Pane className="comment-textarea">
         <TextareaField
           placeholder={placeholder}

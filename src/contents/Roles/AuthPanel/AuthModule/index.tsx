@@ -56,12 +56,11 @@ const AuthModule = ({
   };
 
   const isAuthFuncDisabled = (value: I_AuthFuncElement[]) => {
-    if (!isEdit) return true;
     return value.every((elem) => elem.element_default === "3");
   };
 
   const isAuthFuncChecked = (value: I_AuthFuncElement[]) => {
-    return !value.every((elem) => elem.element_default === "3");
+    return value.every((elem) => elem.element_default === "3");
   };
 
   const isAuthFuncElemDisabled = (value: string) => {
@@ -75,12 +74,20 @@ const AuthModule = ({
 
   React.useEffect(() => {
     const result = isAuthFuncDisabled(data.func_element);
-    if (result) setIsEnabled(false);
-  }, []);
+    if (result) {
+      setIsEnabled(false);
+    } else {
+      setIsEnabled(true);
+    }
+  }, [data]);
 
   React.useEffect(() => {
     const result = isAuthFuncChecked(currentFunElement);
-    if (result) setIsChecked(false);
+    if (result) {
+      setIsChecked(false);
+    } else {
+      setIsChecked(true);
+    }
   }, [currentFunElement]);
 
   return (
@@ -99,9 +106,10 @@ const AuthModule = ({
         <Switch
           className="value"
           onChange={toggleChecked}
-          checked={isAuthFuncChecked(
-            getValues(`func_auth.${index}.func_element`)
-          )}
+          // checked={isAuthFuncChecked(
+          //   getValues(`func_auth.${index}.func_element`)
+          // )}
+          checked={isChecked}
           disabled={!isEdit || !isEnabled}
         />
       </div>
@@ -126,7 +134,19 @@ const AuthModule = ({
                   isAuthFuncElemDisabled(field.element_default) ? "hide" : ""
                 }`}
               >
-                {isEdit ? (
+                <Radio
+                  key={`func_auth.${index}.func_element.${i}.element_default`}
+                  control={control}
+                  name={`func_auth.${index}.func_element.${i}.element_default`}
+                  isDisabled={
+                    !isEdit || isAuthFuncElemDisabled(field.element_default)
+                  }
+                  options={Array.from(authFuncViewValue, ([value, label]) => ({
+                    value,
+                    label
+                  }))}
+                />
+                {/* {isEdit ? (
                   <Radio
                     key={`func_auth.${index}.func_element.${i}.element_default`}
                     control={control}
@@ -147,7 +167,7 @@ const AuthModule = ({
                       )
                     )}
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           );

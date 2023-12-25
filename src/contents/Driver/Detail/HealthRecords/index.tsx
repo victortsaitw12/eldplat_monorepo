@@ -11,6 +11,17 @@ import { mappingQueryData } from "@utils/mappingQueryData";
 import FilterWrapper from "@layout/FilterWrapper";
 import { useDriverStore } from "@contexts/filter/driverStore";
 
+const DUMMY_SUBFILTER = {
+  User_Name: {
+    field_Name: "User_Name",
+    arrayConditions: ["like", "equal"],
+    displayType: "search",
+    dataType: "string",
+    label: "搜尋",
+    value: ""
+  }
+};
+
 const table_title = ["項目名稱", "健檢日期", "說明", "下次健檢日"];
 
 function EditHistory({
@@ -83,7 +94,8 @@ function EditHistory({
         resetFilter={() => {
           initializeSubFilter();
         }}
-        filter={subFilter}
+        // filter={subFilter}
+        filter={DUMMY_SUBFILTER}
       >
         <Table
           titles={table_title}
@@ -92,20 +104,6 @@ function EditHistory({
           headNode={<PaginationField pageInfo={pageInfo} />}
         />
       </FilterWrapper>
-
-      {/* <Pane className="health-title container-header">
-        <div className="container-header-left">{userName}</div>
-      </Pane>
-      <Pane className="health-title-right">
-        <PaginationField />
-      </Pane>
-      {healthData.length !== 0 ? (
-        <Table titles={table_title} data={orderedTableData} />
-      ) : ( 
-        <div style={{ textAlign: "center" }}>
-          目前無資料，請至員工設定頁面編輯
-        </div>
-      )} */}
     </BodySTY>
   );
 }

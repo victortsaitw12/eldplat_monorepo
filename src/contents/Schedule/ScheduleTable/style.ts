@@ -76,15 +76,5 @@ export const ScheduleSTY = styled.div`
         color: ${({ theme }) => theme.color.R400};
       }
     }
-    // &:hover {
-    //   background: $selected_date_bg_color;
-    // }
-    // &.cover {
-    //   background: $cover_date_bg;
-    // }
-    // &.selected {
-    //   background: $selected_date_bg_color;
-    //   border: 2px solid $selected_date_border_color;
-    // }
   }
 `;

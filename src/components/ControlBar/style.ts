@@ -15,7 +15,6 @@ export const DivSTY = styled.div`
 
   &.flex-end {
     justify-content: flex-end;
-    padding: 0;
   }
   &.margin-bottom {
     margin-bottom: 20px;

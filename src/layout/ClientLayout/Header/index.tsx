@@ -8,6 +8,7 @@ import {
 } from "evergreen-ui";
 import React from "react";
 import { BodySTY } from "./style";
+import { HelpIcon } from "evergreen-ui";
 
 const Header = ({ layoutProps, theme, setTheme }: any) => {
   const handleLangChange = (e: any) => {
@@ -22,7 +23,8 @@ const Header = ({ layoutProps, theme, setTheme }: any) => {
       <BodySTY>
         <div className="header__title">{layoutProps?.title}</div>
         <div className="header__settings">
-          <Select
+          <HelpIcon size={20} />
+          {/* <Select
             className="header__settings-lang"
             width={100}
             onChange={handleLangChange}
@@ -30,8 +32,9 @@ const Header = ({ layoutProps, theme, setTheme }: any) => {
             <option value="zh-tw">繁體中文</option>
             <option value="en-us">英語</option>
             <option value="th-th">日語</option>
-          </Select>
-          {theme ? (
+          </Select> */}
+
+          {/* {theme ? (
             <FlashIcon
               className="header__settings-theme"
               onClick={handleToggleTheme}
@@ -50,7 +53,7 @@ const Header = ({ layoutProps, theme, setTheme }: any) => {
             ) : (
               <PersonIcon color="#91A9C5" size={16} />
             )}
-          </div>
+          </div> */}
         </div>
       </BodySTY>
     </ThemeProvider>

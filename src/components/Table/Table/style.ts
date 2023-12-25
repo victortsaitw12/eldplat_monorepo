@@ -14,7 +14,7 @@ export const DivSTY = styled.div`
 `;
 
 // 表格本身
-export const TableSTY = styled.table`
+export const TableSTY = styled.table<{ className?: string }>`
   /* width: 100%; */
   min-width: 100%;
   border-collapse: collapse;
@@ -22,6 +22,20 @@ export const TableSTY = styled.table`
   border-spacing: 0px;
   overflow: hidden;
   /* action buttons */
+  .group-cell {
+    position: relative;
+    background-color:  ${({ theme }) => theme.color.N20};
+    &:after {
+      display: block;
+      content: "";
+      width: 1px;
+      height: 100%;
+      background-color:  ${({ theme }) => theme.color.N40};
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
   .action {
     div {
       button {

@@ -1,18 +1,47 @@
 import React from "react";
 import { BodySTY } from "./style";
-import DetailList from "@components/DetailList";
+import DetailGrid from "@components/DetailGrid";
 
 interface I_Props {
-  listArray: { title: string; value: string | number | null }[];
+  listArray: any[];
   remark?: string;
 }
 const SpecialInfoView = ({ listArray, remark = "--" }: I_Props) => {
-  return (
+    return (
+    //FIXME: 可以優化一下結構並把mappingSpecailNeededsInfo邏輯重寫
     <BodySTY>
-      <DetailList listArray={listArray} />
-      <div className="remark">
-        <div className="remark-title">備註</div>
-        <div className="remark-content">{remark || "無"}</div>
+      {listArray.length !== 0 && listArray.map((item, index) => {
+        return (
+          item.isMulti ? 
+          <div className="grid-wrap" key={index}>
+            <div className="grid-title">{item.title}</div>
+            <div className="multi-wrap">
+              {item.seller.title && 
+                <div className="multi-items">
+                  <span className="grid-item">{item.seller.title}</span>
+                  <span className="grid-item">{item.seller.detail}</span>
+                </div>
+              }
+              {item.yourself.title &&
+                <div className="multi-items">
+                  <span className="grid-item">{item.yourself.title}</span>
+                  <span className="grid-item">{item.yourself.detail}</span>
+                </div>
+              }
+            </div>
+          </div>
+          : 
+          <div className="grid-wrap" key={index}>
+            <div className="grid-title">{ item.title }</div>
+            { item.detail ? 
+              <span className="grid-item">{ item.detail }</span> :
+              <span className="grid-item">{ item.value }</span> }
+          </div>
+        )
+      })}
+      <div className="grid-wrap">
+        <div className="grid-title">備註</div>
+        <div className="grid-item">{remark || "無"}</div>
       </div>
     </BodySTY>
   );

@@ -13,20 +13,14 @@ export const BodySTY = styled.div`
   tr {
     padding: 0 20px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    td {
-      padding: 0 ;
-    }
-
-    th{
-      padding: 10px 0;
-    }
 
     th,
     td {
       flex-grow: 1;
+      padding: 0 ;
+
+
+      display: flex;
 
       &:first-child {
         width: 90px;
@@ -42,12 +36,12 @@ export const BodySTY = styled.div`
 
       &:nth-child(4) {
         width: 40px;
-        text-align: center;
+        justify-content: center;
       }
 
       &:nth-child(5) {
         width: 30px;
-        text-align: center;
+        justify-content: center;
       }
 
       &:nth-child(6) {
@@ -82,6 +76,7 @@ export const BodySTY = styled.div`
 
       &:nth-child(11) {
         width: 40px;
+        justify-content: flex-end;
       }
     }
 

@@ -22,20 +22,31 @@ type MenuType = MenuDataType[0];
 interface Props {
   menu: MenuType;
 }
+
 //
 function Index({ menu }: Props) {
   const router = useRouter();
+  const checkPahtnameExistInSubList = (subList: MenuType["subList"]) => {
+    if (router.asPath === "/") return;
+    if (!subList) return false;
+    return subList.some((item) => {
+      if (item.url === "/") {
+        return false;
+      }
+      if (Array.isArray(item.url)) {
+        return item.url.some((url) => {
+          return url.includes(router.pathname);
+        });
+      } else {
+        return item.url === window.location.pathname;
+      }
+    });
+  };
   const currentUrl = router.asPath.split("/");
   const default_open =
     menu?.subList !== null &&
     menu?.subList &&
-    menu?.subList
-      .map((child) => {
-        if (child.url !== "/") {
-          return child.url;
-        }
-      })
-      .indexOf(router.asPath) >= 0;
+    checkPahtnameExistInSubList(menu?.subList);
 
   const [openList, setOpenList] = useState(default_open);
   const isActive =

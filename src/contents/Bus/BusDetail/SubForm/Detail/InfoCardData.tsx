@@ -1,6 +1,8 @@
 import React from "react";
-import { Select } from "evergreen-ui";
+import { Select, Switch, Pane, Radio, Checkbox } from "evergreen-ui";
 import TagGenerator from "src/components/TagGenerator";
+import CustomTextInputField from "@components/CustomTextInputField";
+import CustomDatePicker from "@components/CustomDatePicker";
 
 interface InfoItem {
   listClassName: string;
@@ -48,13 +50,7 @@ export const IdentityInfo: InfoArray = [
       label: "車牌",
       bold: false,
       value: "KAA-001",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"KAA-001"} />
     },
     {
       listClassName: "fb-100",
@@ -66,7 +62,7 @@ export const IdentityInfo: InfoArray = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            大巴
           </option>
         </Select>
       )
@@ -78,13 +74,7 @@ export const IdentityInfo: InfoArray = [
       label: "座位數",
       bold: false,
       value: "43",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"43"} />
     },
     {
       listClassName: "fb-100",
@@ -93,13 +83,7 @@ export const IdentityInfo: InfoArray = [
       label: "行李數",
       bold: false,
       value: "43",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"43"} />
     }
   ],
   [
@@ -110,13 +94,7 @@ export const IdentityInfo: InfoArray = [
       label: "引擎號碼",
       bold: false,
       value: "100099884455",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100099884455"} />
     },
     {
       listClassName: "fb-100",
@@ -125,13 +103,7 @@ export const IdentityInfo: InfoArray = [
       label: "車身號碼",
       bold: false,
       value: "203349556874",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"203349556874"} />
     },
     {
       listClassName: "fb-100",
@@ -140,13 +112,7 @@ export const IdentityInfo: InfoArray = [
       label: "行照號碼",
       bold: false,
       value: "1209384",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"1209384"} />
     },
     {
       listClassName: "fb-100",
@@ -155,13 +121,7 @@ export const IdentityInfo: InfoArray = [
       label: "行照有效日期",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     }
   ],
   [
@@ -172,13 +132,7 @@ export const IdentityInfo: InfoArray = [
       label: "領牌日期",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     },
     {
       listClassName: "fb-100",
@@ -187,13 +141,7 @@ export const IdentityInfo: InfoArray = [
       label: "領牌里程數",
       bold: false,
       value: "12,000 公里",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"12,000 公里"} />
     },
     {
       listClassName: "fb-100",
@@ -202,13 +150,7 @@ export const IdentityInfo: InfoArray = [
       label: "出廠日期",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     },
     {
       listClassName: "fb-100",
@@ -217,13 +159,7 @@ export const IdentityInfo: InfoArray = [
       label: "出廠里程數",
       bold: false,
       value: "12,000 公里",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"12,000 公里"} />
     },
     {
       listClassName: "fb-100",
@@ -232,13 +168,7 @@ export const IdentityInfo: InfoArray = [
       label: "車齡",
       bold: false,
       value: "1年",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField disabled value={"1年"} />
     }
   ],
   [
@@ -249,13 +179,7 @@ export const IdentityInfo: InfoArray = [
       label: "名稱",
       bold: false,
       value: "雄雄獅頭號",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"雄雄獅頭號"} />
     },
     {
       listClassName: "fb-100",
@@ -263,11 +187,11 @@ export const IdentityInfo: InfoArray = [
       req: false,
       label: "品牌",
       bold: false,
-      value: "Volove",
+      value: "Volvo",
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            Volvo
           </option>
         </Select>
       )
@@ -282,7 +206,7 @@ export const IdentityInfo: InfoArray = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            360
           </option>
         </Select>
       )
@@ -297,7 +221,7 @@ export const IdentityInfo: InfoArray = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            臺灣
           </option>
         </Select>
       )
@@ -310,9 +234,105 @@ export const IdentityInfo: InfoArray = [
       bold: false,
       value: "是",
       editEle: (
+        <div className="switch-wrapper">
+          <Switch checked />
+          <span>啟用</span>
+        </div>
+      )
+    }
+  ]
+];
+
+export const CategoryInfo = [
+  [
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "所有權",
+      bold: false,
+      value: "高級柴油",
+      editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            高級柴油
+          </option>
+        </Select>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "主要駕駛",
+      bold: false,
+      value: "AA1245676675",
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            AA1245676675
+          </option>
+        </Select>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "支援駕駛",
+      bold: false,
+      value: "中油",
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            中油
+          </option>
+        </Select>
+      )
+    }
+  ],
+  [
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "派駐地",
+      bold: false,
+      value: "CC124472814675",
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            CC124472814675
+          </option>
+        </Select>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "車隊",
+      bold: false,
+      value: "遠通電收",
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            遠通電收
+          </option>
+        </Select>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "目前派遣",
+      bold: false,
+      value: "遠通電收",
+      editEle: (
+        <Select className={"select-wrapper"}>
+          <option value="foo" selected>
+            遠通電收
           </option>
         </Select>
       )
@@ -329,13 +349,7 @@ export const CardInfo = [
       label: "油品",
       bold: false,
       value: "高級柴油",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"高級柴油"} />
     },
     {
       listClassName: "fb-100",
@@ -344,13 +358,7 @@ export const CardInfo = [
       label: "加油卡號",
       bold: false,
       value: "AA1245676675",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"AA1245676675"} />
     },
     {
       listClassName: "fb-100",
@@ -362,7 +370,7 @@ export const CardInfo = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            中油
           </option>
         </Select>
       )
@@ -376,13 +384,7 @@ export const CardInfo = [
       label: "尿素卡號",
       bold: false,
       value: "CC124472814675",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"CC124472814675"} />
     },
     {
       listClassName: "fb-100",
@@ -394,7 +396,7 @@ export const CardInfo = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            遠通電收
           </option>
         </Select>
       )
@@ -406,13 +408,7 @@ export const CardInfo = [
       label: "ETC卡號",
       bold: false,
       value: "BB1245676675",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"BB1245676675"} />
     },
     {
       listClassName: "fb-100",
@@ -424,7 +420,7 @@ export const CardInfo = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            遠通電收
           </option>
         </Select>
       )
@@ -456,7 +452,7 @@ export const MaintenanceInfo = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            1 年
           </option>
         </Select>
       )
@@ -471,7 +467,7 @@ export const MaintenanceInfo = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            12,000 公里
           </option>
         </Select>
       )
@@ -488,7 +484,7 @@ export const MaintenanceInfo = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            Volove中壢廠
           </option>
         </Select>
       )
@@ -505,7 +501,7 @@ export const MaintenanceInfo = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            全車檢修
           </option>
         </Select>
       )
@@ -525,7 +521,7 @@ export const FinanceInfo: InfoArray = [
       editEle: (
         <Select className={"select-wrapper"}>
           <option value="foo" selected>
-            請選擇
+            Volove歐洲廠
           </option>
         </Select>
       )
@@ -537,13 +533,7 @@ export const FinanceInfo: InfoArray = [
       label: "購買日期",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     },
     {
       listClassName: "fb-100",
@@ -552,13 +542,7 @@ export const FinanceInfo: InfoArray = [
       label: "購買價格",
       bold: false,
       value: "NT 10000,000",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"NT 10000,000"} />
     },
     {
       listClassName: "fb-100",
@@ -567,13 +551,7 @@ export const FinanceInfo: InfoArray = [
       label: "購買當時的里程數",
       bold: false,
       value: "1,000 公里",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"1,000 公里"} />
     },
     {
       listClassName: "fb-100",
@@ -582,13 +560,7 @@ export const FinanceInfo: InfoArray = [
       label: "保固截止日期",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     },
     {
       listClassName: "fb-100",
@@ -597,13 +569,7 @@ export const FinanceInfo: InfoArray = [
       label: "保固最大里程數",
       bold: false,
       value: "200,000 公里",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"200,000 公里"} />
     }
   ],
   [
@@ -615,11 +581,11 @@ export const FinanceInfo: InfoArray = [
       bold: false,
       value: "貸款",
       editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
+        <Pane className={"radio-wrapper"}>
+          <Radio checked name="group" label="無" />
+          <Radio checked name="group" label="貸款" />
+          <Radio checked name="group" label="租賃" />
+        </Pane>
       )
     },
     {
@@ -629,13 +595,7 @@ export const FinanceInfo: InfoArray = [
       label: "貸款銀行",
       bold: false,
       value: "台新",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"台新"} />
     },
     {
       listClassName: "fb-100",
@@ -644,13 +604,7 @@ export const FinanceInfo: InfoArray = [
       label: "金額",
       bold: false,
       value: "NT 5000,000",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"NT 5000,000"} />
     },
     {
       listClassName: "fb-100",
@@ -659,13 +613,7 @@ export const FinanceInfo: InfoArray = [
       label: "年利率",
       bold: false,
       value: "2 %",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"2 %"} />
     }
   ],
   [
@@ -676,13 +624,7 @@ export const FinanceInfo: InfoArray = [
       label: "開始日期",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     },
     {
       listClassName: "fb-100",
@@ -691,13 +633,7 @@ export const FinanceInfo: InfoArray = [
       label: "結束日期",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     }
   ],
   [
@@ -708,13 +644,7 @@ export const FinanceInfo: InfoArray = [
       label: "分期期數",
       bold: false,
       value: "24",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"24"} />
     },
     {
       listClassName: "fb-100",
@@ -723,13 +653,7 @@ export const FinanceInfo: InfoArray = [
       label: "首期付款金額",
       bold: false,
       value: "NT 30,000",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"NT 30,000"} />
     },
     {
       listClassName: "fb-100",
@@ -738,13 +662,7 @@ export const FinanceInfo: InfoArray = [
       label: "月付金額",
       bold: false,
       value: "NT 30,000",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"NT 30,000"} />
     },
     {
       listClassName: "fb-100",
@@ -753,13 +671,7 @@ export const FinanceInfo: InfoArray = [
       label: "付款帳號",
       bold: false,
       value: "220056558988",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"220056558988"} />
     },
     {
       listClassName: "fb-100",
@@ -768,13 +680,7 @@ export const FinanceInfo: InfoArray = [
       label: "備註",
       bold: false,
       value: "我是備註",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"我是備註"} />
     },
     {
       listClassName: "fb-100",
@@ -783,13 +689,7 @@ export const FinanceInfo: InfoArray = [
       label: "是否加入計算報表",
       bold: false,
       value: "是",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <Checkbox label="加入計算報表" />
     }
   ]
 ];
@@ -803,13 +703,7 @@ export const InsuranceInfo: InfoArray = [
       label: "車險到期日",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     },
     {
       listClassName: "fb-100",
@@ -818,13 +712,7 @@ export const InsuranceInfo: InfoArray = [
       label: "強制險到期日",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     },
     {
       listClassName: "fb-100",
@@ -833,13 +721,7 @@ export const InsuranceInfo: InfoArray = [
       label: "聯保到期日",
       bold: false,
       value: "2023-12-01",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomDatePicker />
     }
   ],
   [
@@ -850,13 +732,7 @@ export const InsuranceInfo: InfoArray = [
       label: "承保公司",
       bold: false,
       value: "保安心公司",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"保安心公司"} />
     },
     {
       listClassName: "fb-100",
@@ -865,13 +741,7 @@ export const InsuranceInfo: InfoArray = [
       label: "保額",
       bold: false,
       value: "NT 10,000,000",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"NT 10,000,000"} />
     }
   ],
   [
@@ -882,13 +752,7 @@ export const InsuranceInfo: InfoArray = [
       label: "業務姓名",
       bold: false,
       value: "林心安",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"林心安"} />
     },
     {
       listClassName: "fb-100",
@@ -897,13 +761,7 @@ export const InsuranceInfo: InfoArray = [
       label: "業務手機",
       bold: false,
       value: "0988222666",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"0988222666"} />
     }
   ],
   [
@@ -914,13 +772,7 @@ export const InsuranceInfo: InfoArray = [
       label: "業務市話",
       bold: false,
       value: "22337766",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"22337766"} />
     },
     {
       listClassName: "fb-100",
@@ -929,13 +781,7 @@ export const InsuranceInfo: InfoArray = [
       label: "業務信箱",
       bold: false,
       value: "lion@example.com",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"lion@example.com"} />
     }
   ]
 ];
@@ -949,13 +795,7 @@ export const SpecificationInfo: InfoArray = [
       label: "寬度",
       bold: false,
       value: "100 公分",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公分"} />
     },
     {
       listClassName: "fb-100",
@@ -964,13 +804,7 @@ export const SpecificationInfo: InfoArray = [
       label: "高度",
       bold: false,
       value: "100 公分",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公分"} />
     }
   ],
   [
@@ -981,13 +815,7 @@ export const SpecificationInfo: InfoArray = [
       label: "長度",
       bold: false,
       value: "100 公分",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公分"} />
     },
     {
       listClassName: "fb-100",
@@ -996,13 +824,7 @@ export const SpecificationInfo: InfoArray = [
       label: "內部容積",
       bold: false,
       value: "100 公升",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公升"} />
     }
   ],
   [
@@ -1013,13 +835,7 @@ export const SpecificationInfo: InfoArray = [
       label: "載客量",
       bold: false,
       value: "100 公升",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公升"} />
     },
     {
       listClassName: "fb-100",
@@ -1028,13 +844,7 @@ export const SpecificationInfo: InfoArray = [
       label: "貨物量",
       bold: false,
       value: "100 公升",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公升"} />
     }
   ],
   [
@@ -1045,13 +855,7 @@ export const SpecificationInfo: InfoArray = [
       label: "離地間隙",
       bold: false,
       value: "100 公分",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公分"} />
     },
     {
       listClassName: "fb-100",
@@ -1060,13 +864,7 @@ export const SpecificationInfo: InfoArray = [
       label: "底盤長度",
       bold: false,
       value: "100 公分",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公分"} />
     }
   ]
 ];
@@ -1080,13 +878,7 @@ export const AppearanceInfo: InfoArray = [
       label: "顏色",
       bold: false,
       value: "白",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"白"} />
     },
     {
       listClassName: "fb-100",
@@ -1095,13 +887,7 @@ export const AppearanceInfo: InfoArray = [
       label: "符號",
       bold: false,
       value: "雄獅LOGO",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"雄獅LOGO"} />
     }
   ]
 ];
@@ -1115,13 +901,7 @@ export const WeightInfo: InfoArray = [
       label: "空車重量",
       bold: false,
       value: "100 公斤",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公斤"} />
     },
     {
       listClassName: "fb-100",
@@ -1130,13 +910,7 @@ export const WeightInfo: InfoArray = [
       label: "車輛總重量",
       bold: false,
       value: "100 公斤",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公斤"} />
     }
   ]
 ];
@@ -1150,13 +924,7 @@ export const PerformanceInfo: InfoArray = [
       label: "空車重量",
       bold: false,
       value: "100 公斤",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公斤"} />
     },
     {
       listClassName: "fb-100",
@@ -1165,13 +933,7 @@ export const PerformanceInfo: InfoArray = [
       label: "車輛總重量",
       bold: false,
       value: "100 公斤",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公斤"} />
     }
   ]
 ];
@@ -1185,13 +947,7 @@ export const EngineInfo: InfoArray = [
       label: "引擎摘要",
       bold: false,
       value: "摘要",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"摘要"} />
     },
     {
       listClassName: "fb-100",
@@ -1200,13 +956,7 @@ export const EngineInfo: InfoArray = [
       label: "引擎品牌",
       bold: false,
       value: "品牌",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"品牌"} />
     },
     {
       listClassName: "fb-100",
@@ -1215,13 +965,7 @@ export const EngineInfo: InfoArray = [
       label: "進氣系統",
       bold: false,
       value: "進氣系統",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"進氣系統"} />
     },
     {
       listClassName: "fb-100",
@@ -1230,13 +974,7 @@ export const EngineInfo: InfoArray = [
       label: "引擎缸體類型",
       bold: false,
       value: "引擎缸體類型",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"引擎缸體類型"} />
     }
   ],
   [
@@ -1247,13 +985,7 @@ export const EngineInfo: InfoArray = [
       label: "汽缸孔徑",
       bold: false,
       value: "100 公分",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公分"} />
     },
     {
       listClassName: "fb-100",
@@ -1262,13 +994,7 @@ export const EngineInfo: InfoArray = [
       label: "凸輪軸類型",
       bold: false,
       value: "凸輪軸類型",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"凸輪軸類型"} />
     },
     {
       listClassName: "fb-100",
@@ -1277,13 +1003,7 @@ export const EngineInfo: InfoArray = [
       label: "壓縮比",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1292,13 +1012,7 @@ export const EngineInfo: InfoArray = [
       label: "汽缸",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     }
   ],
   [
@@ -1308,14 +1022,8 @@ export const EngineInfo: InfoArray = [
       req: false,
       label: "排量大小",
       bold: false,
-      value: "100 公分",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      value: "100",
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1324,13 +1032,7 @@ export const EngineInfo: InfoArray = [
       label: "燃油進氣方式",
       bold: false,
       value: "燃油進氣方式",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"燃油進氣方式"} />
     },
     {
       listClassName: "fb-100",
@@ -1339,13 +1041,7 @@ export const EngineInfo: InfoArray = [
       label: "最大馬力",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1354,13 +1050,7 @@ export const EngineInfo: InfoArray = [
       label: "最大扭矩",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     }
   ],
   [
@@ -1371,13 +1061,7 @@ export const EngineInfo: InfoArray = [
       label: "最大轉速",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1386,13 +1070,7 @@ export const EngineInfo: InfoArray = [
       label: "衝程",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1401,13 +1079,7 @@ export const EngineInfo: InfoArray = [
       label: "每缸氣門數量",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     }
   ]
 ];
@@ -1421,13 +1093,7 @@ export const TireInfo: InfoArray = [
       label: "驅動類型",
       bold: false,
       value: "驅動類型",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"驅動類型"} />
     },
     {
       listClassName: "fb-100",
@@ -1436,13 +1102,7 @@ export const TireInfo: InfoArray = [
       label: "煞車系統",
       bold: false,
       value: "煞車系統",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"煞車系統"} />
     },
     {
       listClassName: "fb-100",
@@ -1451,13 +1111,7 @@ export const TireInfo: InfoArray = [
       label: "前輪輪距",
       bold: false,
       value: "前輪輪距",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"前輪輪距"} />
     }
   ],
   [
@@ -1468,13 +1122,7 @@ export const TireInfo: InfoArray = [
       label: "後輪輪距",
       bold: false,
       value: "後輪輪距",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"後輪輪距"} />
     },
     {
       listClassName: "fb-100",
@@ -1483,13 +1131,7 @@ export const TireInfo: InfoArray = [
       label: "軸距",
       bold: false,
       value: "100 公分",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公分"} />
     },
     {
       listClassName: "fb-100",
@@ -1498,13 +1140,7 @@ export const TireInfo: InfoArray = [
       label: "前輪直徑",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     }
   ],
   [
@@ -1515,13 +1151,7 @@ export const TireInfo: InfoArray = [
       label: "後輪直徑",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1530,13 +1160,7 @@ export const TireInfo: InfoArray = [
       label: "後軸",
       bold: false,
       value: "後軸",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"後軸"} />
     },
     {
       listClassName: "fb-100",
@@ -1545,13 +1169,7 @@ export const TireInfo: InfoArray = [
       label: "前輪輪胎類型",
       bold: false,
       value: "前輪輪胎類型",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"前輪輪胎類型"} />
     }
   ],
   [
@@ -1562,13 +1180,7 @@ export const TireInfo: InfoArray = [
       label: "前輪胎壓大小",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1577,13 +1189,7 @@ export const TireInfo: InfoArray = [
       label: "後輪輪胎類型",
       bold: false,
       value: "後輪輪胎類型",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"後輪輪胎類型"} />
     },
     {
       listClassName: "fb-100",
@@ -1592,13 +1198,7 @@ export const TireInfo: InfoArray = [
       label: "後輪胎壓大小",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     }
   ]
 ];
@@ -1612,13 +1212,7 @@ export const TransmissionInfo: InfoArray = [
       label: "摘要",
       bold: false,
       value: "摘要",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"摘要"} />
     },
     {
       listClassName: "fb-100",
@@ -1627,13 +1221,7 @@ export const TransmissionInfo: InfoArray = [
       label: "品牌",
       bold: false,
       value: "品牌",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"品牌"} />
     },
     {
       listClassName: "fb-100",
@@ -1642,13 +1230,7 @@ export const TransmissionInfo: InfoArray = [
       label: "類別",
       bold: false,
       value: "類別",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"類別"} />
     },
     {
       listClassName: "fb-100",
@@ -1657,13 +1239,7 @@ export const TransmissionInfo: InfoArray = [
       label: "檔位",
       bold: false,
       value: "檔位",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"檔位"} />
     }
   ]
 ];
@@ -1677,13 +1253,7 @@ export const EcoMileageInfo: InfoArray = [
       label: "市區",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1692,13 +1262,7 @@ export const EcoMileageInfo: InfoArray = [
       label: "高速公路",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     },
     {
       listClassName: "fb-100",
@@ -1707,13 +1271,7 @@ export const EcoMileageInfo: InfoArray = [
       label: "綜合",
       bold: false,
       value: "100",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100"} />
     }
   ]
 ];
@@ -1727,13 +1285,7 @@ export const FuelInfo: InfoArray = [
       label: "汽油質量",
       bold: false,
       value: "汽油質量",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"汽油質量"} />
     },
     {
       listClassName: "fb-100",
@@ -1742,13 +1294,7 @@ export const FuelInfo: InfoArray = [
       label: "油箱1容量大小",
       bold: false,
       value: "100 公升",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公升"} />
     },
     {
       listClassName: "fb-100",
@@ -1757,13 +1303,7 @@ export const FuelInfo: InfoArray = [
       label: "油箱2容量大小",
       bold: false,
       value: "100 公升",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公升"} />
     }
   ]
 ];
@@ -1777,13 +1317,7 @@ export const OilInfo: InfoArray = [
       label: "機油容量",
       bold: false,
       value: "100 公升",
-      editEle: (
-        <Select className={"select-wrapper"}>
-          <option value="foo" selected>
-            請選擇
-          </option>
-        </Select>
-      )
+      editEle: <CustomTextInputField value={"100 公升"} />
     }
   ]
 ];

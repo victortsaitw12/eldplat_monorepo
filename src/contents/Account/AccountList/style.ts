@@ -27,7 +27,9 @@ export const BodySTY = styled.div`
   .roles {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 4px;
+    align-self: flex-start;
     .role {
       display: flex;
       gap: 8px;

@@ -73,7 +73,7 @@ const Page: NextPageWithLayout<
   };
 
   const handleReturn = () => {
-    router.push("/maintenance");
+    router.push("/maintenance/mission");
   };
 
   useEffect(() => {

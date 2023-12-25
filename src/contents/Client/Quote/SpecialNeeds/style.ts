@@ -23,7 +23,6 @@ export const RemarkSTY = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
   gap: 8px;
   width: 100%;
   color: ${({ theme }) => theme.color.N700};
@@ -34,6 +33,6 @@ export const RemarkSTY = styled.div`
 `;
 
 export const CollapseCardSTY = styled.div`
-  border-radius: 10px;
+
   overflow: hidden;
 `;

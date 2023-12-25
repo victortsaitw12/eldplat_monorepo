@@ -9,17 +9,16 @@ export const BodySTY = styled.div`
   padding: 8px 12px;
   /* background: "none"; */
   &:hover {
-    background-color: #e2edff;
-    color: ${({ theme }) => theme.color.B400};
+    background-color: ${({ theme }) => theme.color.N400};
+    color: ${({ theme }) => theme.color.N0};
   }
   &.active {
-    background: #e2edff;
-    color: ${({ theme }) => theme.color.B400};
+    background: ${({ theme }) => theme.color.N400};
+    color: ${({ theme }) => theme.color.N0};
   }
   &.disable {
-    background: ${({ theme }) => theme.color.N700};
-    color: ${({ theme }) => theme.color.N600};
+    color: ${({ theme }) => theme.color.N50};
     opacity: 50%;
-    cursor: default;
+    cursor: not-allowed;
   }
 `;
