@@ -65,25 +65,8 @@ export const MainSTY = styled.section`
       border-radius: 50%;
     }
   }
-`;
 
-export const CustomTableSTY = styled.div` 
-  .detail_grid {
-    .grid_item {
-      .item:first-child {
-        background-color: ${({ theme }) => theme.color.N20};
-        font-weight: 600;
-      }
-    }
+  .progress-list {
+    border: none;
   }
-`
-
-export const SectionSTY = styled.div`
-  padding: 16px;
-  background-color: ${({ theme }) => theme.color.N0};
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-`
+`;

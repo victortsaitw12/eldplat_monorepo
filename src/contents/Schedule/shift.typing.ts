@@ -8,7 +8,7 @@ export interface DriverData {
   dsph_City: string; //"02",
   short_Schd_Date: string; //"2023-07",
   total_Leave_Days: string;
-  schedule_List: Array<ScheduleInfoData>;
+  schedule_List: ScheduleInfoData[];
   schedule_Approved: boolean;
 }
 

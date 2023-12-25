@@ -200,6 +200,13 @@ export const DUMMY_MENU = {
           func_name: "維保任務列表",
           path: ["/maintenance/mission", "/maintenance/detail/[id]"]
         },
+        // {
+        //   module_no: "bus",
+        //   fg_no: "maintenance",
+        //   func_no: "mission",
+        //   func_name: "維保任務列表",
+        //   path: "/mission"
+        // },
         {
           module_no: "bus",
           fg_no: "maintenance",
@@ -269,14 +276,14 @@ export const DUMMY_MENU = {
           fg_no: "order",
           func_no: "orderList",
           func_name: "訂單列表",
-          path: "/orderList"
+          path: "/orders"
         },
         {
           module_no: "bus",
           fg_no: "order",
           func_no: "orderList",
           func_name: "新增訂單",
-          path: "/orderList/detail/create"
+          path: "/orders/detail/create"
         }
       ]
     },

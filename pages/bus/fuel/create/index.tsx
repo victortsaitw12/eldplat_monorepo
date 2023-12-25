@@ -19,6 +19,7 @@ import FileCard from "@components/FileCard";
 import NewUploader from "@components/NewUploader";
 import { Pane, Select, DotIcon } from "evergreen-ui";
 import CustomDatePicker from "@components/CustomDatePicker";
+import LightBox from "@components/Lightbox";
 
 const FuelInfo = [
   [
@@ -138,15 +139,20 @@ const Page: NextPageWithLayout<
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [busEquipmentData, setBusEquipmentData] = useState<any>(null);
+  const [isLightOpen, setLightOpen] = useState(false);
 
   const handleSave = () => {
     // router.push(`/bus/equipment/${busId}?editPage=view`);
     router.push("/bus/detail/1?editPage=view");
   };
 
-  const handleReturn = () => {
-    // router.push(`/bus/detail/${busId}?editPage=view`);
+  const handleCancel = () => {
+    setLightOpen(true);
+  };
+
+  const handleLightBoxConfirm = () => {
     router.push("/bus/detail/1?editPage=view");
+    setLightOpen(false);
   };
 
   useEffect(() => {
@@ -174,7 +180,7 @@ const Page: NextPageWithLayout<
           isEdit={false}
           primaryDisable={true}
           secondaryBtnText={"取消"}
-          secondaryBtnOnClick={handleReturn}
+          secondaryBtnOnClick={handleCancel}
           primaryBtnText={"儲存"}
           primaryBtnOnClick={handleSave}
         />
@@ -182,6 +188,15 @@ const Page: NextPageWithLayout<
       <Pane className={"main-column"}>
         <InfoCard isEdit={true} infoTitle="設備" infoData={FuelInfo} />
       </Pane>
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
+      >
+        如果你現在離開，將會遺失未儲存的資料。
+      </LightBox>
     </BodySTY>
   );
 };

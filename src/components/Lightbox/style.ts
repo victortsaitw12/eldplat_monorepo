@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
+export const LightBoxBlock = styled.div<{ isOpen: boolean; className?: string }>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
   position: fixed;
   top: 0;
@@ -22,6 +22,9 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
     left: 50%;
     min-width: 400px;
     transform: translate(-50%, -50%);
+    &.w-full {
+      max-width: initial;
+    }
     .titleWrap {
       display: flex;
       justify-content: space-between;
@@ -56,7 +59,7 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
 export const ButtonSetSTY = styled.div`
   display: flex;
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 15px;
   justify-content: flex-end;
   align-items: center;
   gap: 10px;

@@ -45,6 +45,17 @@ const MOCK_DATA: I_EditHistory[] = [
   }
 ];
 
+const DUMMY_SUBFILTER = {
+  User_Name: {
+    field_Name: "User_Name",
+    arrayConditions: ["like", "equal"],
+    displayType: "search",
+    dataType: "string",
+    label: "搜尋",
+    value: ""
+  }
+};
+
 function HealthRecords({
   userNo,
   userName
@@ -98,7 +109,8 @@ function HealthRecords({
         resetFilter={() => {
           initializeSubFilter();
         }}
-        filter={subFilter}
+        // filter={subFilter}
+        filter={DUMMY_SUBFILTER}
       >
         <Table
           titles={table_title}

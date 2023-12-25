@@ -30,11 +30,26 @@ function Table({
   className
 }: I_Table) {
   const hasData = data !== undefined && data !== null && data.length > 0;
+
+  // const groupedData: {[key: string]: Array<string>} = data?.reduce((res, item) => {
+
+  //   if (Object.keys(item).indexOf("group") != -1) {
+  //     const key = item[item.group as string] as string;
+  //     if(!res[key]){
+  //       res[key] = [];
+  //     }
+  //     res[key].push(item.id);
+  //     return res;
+  //   } else {
+  //     return res;
+  //   }
+  // }, {});
+
   return (
     <>
       <DivSTY className={`${className || ""} container`}>
         {headNode && <header>{headNode}</header>}
-        <TableSTY>
+        <TableSTY className="table">
           <thead>
             <tr>
               {titles.map((title, i) => (
@@ -52,6 +67,11 @@ function Table({
                   onClick={onView ? () => onView(item.id) : undefined}
                 >
                   {Object.keys(item).map((key) => {
+                    if (key === "group")
+                      return item.group.span > 0 && (<td className="group-cell" rowSpan={item.group.span}>
+                        <div>{item[item.group.key]}</div>
+                      </td>)
+                    if (item.group && key == item.group.key) return;
                     if (key === "id") return;
                     if (key === "action")
                       return (

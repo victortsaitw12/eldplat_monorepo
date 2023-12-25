@@ -19,8 +19,9 @@ import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 import DataOverview from "@components/DataOverview";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
-import { DotIcon } from "evergreen-ui";
+import { DotIcon, toaster } from "evergreen-ui";
 import SecondaryBtn from "@components/Button/Secondary/Label";
+import LightBox from "@components/Lightbox";
 
 const mainTabsArray = [
   { id: 1, label: "車輛明細", value: "1" },
@@ -49,6 +50,7 @@ const Page: NextPageWithLayout<
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [busDefaultData, setBusDefaultData] = useState<any>(null);
   const [options, setOptions] = useState<any>(null);
+  const [isLightOpen, setLightOpen] = useState(false);
 
   // useEffect(() => {
   //   updateMainFilter("1");
@@ -117,13 +119,28 @@ const Page: NextPageWithLayout<
     router.push(`/bus/detail/${busId}?editPage=edit`);
   };
 
+  const handleReturn = () => {
+    router.push("/bus");
+  };
+
   const handleView = () => {
     router.push(`/bus/detail/${busId}?editPage=view`);
   };
 
-  const handleReturn = () => {
-    router.push("/bus");
+  const handleSave = () => {
+    router.push(`/bus/detail/${busId}?editPage=view`);
+    toaster.success("儲存成功");
   };
+
+  const handleCancel = () => {
+    setLightOpen(true);
+  };
+
+  const handleLightBoxConfirm = () => {
+    router.push(`/bus/detail/${busId}?editPage=view`);
+    setLightOpen(false);
+  };
+
 
   useEffect(() => {
     setIsEdit(editPage === "edit" ? true : false);
@@ -153,9 +170,9 @@ const Page: NextPageWithLayout<
             isEdit={isEdit}
             primaryDisable={false}
             secondaryBtnText={isEdit ? "取消" : "回列表"}
-            secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+            secondaryBtnOnClick={isEdit ? handleCancel : handleReturn}
             primaryBtnText={isEdit ? "儲存" : "編輯"}
-            primaryBtnOnClick={isEdit ? handleView : handleEdit}
+            primaryBtnOnClick={isEdit ? handleSave : handleEdit}
           />
         )}
       </ControlBar>
@@ -175,6 +192,15 @@ const Page: NextPageWithLayout<
           fetchDDL={fetchDDL}
         />
       </TabsWrapper>
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
+      >
+        如果你現在離開，將會遺失未儲存的資料。
+      </LightBox>
     </BodySTY>
   );
 };

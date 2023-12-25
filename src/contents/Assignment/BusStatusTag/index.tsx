@@ -1,16 +1,25 @@
 import React from "react";
 import { TagSTY } from "./style";
+import { BusMissionData } from "@contents/Assignment/assignment.typing";
 
-const BusStatusTag = ({value, className }: { value: any; className?: string; }) => {
+const BusStatusTag = ({
+  value,
+  className,
+  detail
+}: {
+  value: any;
+  className?: string;
+  detail: BusMissionData;
+}) => {
   return (
-    <TagSTY 
-      color={value?.color} 
-      className={className} 
+    <TagSTY
+      color={value?.color}
+      className={className}
       background={value?.background}
     >
       <>
-        <p className="font_order">ORD202312310003</p>
-        <p className="font_title">客製包車 一天一車</p>
+        <p className="font_order">{detail.mission_No}</p>
+        <p className="font_title">{detail.mission_Name}</p>
         <p className="font_subtitle">台北車站</p>
         <p className="font_subtitle">14:00 ～ 20:00</p>
       </>

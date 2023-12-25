@@ -19,6 +19,7 @@ import ButtonSet from "@components/ButtonSet";
 import InfoCard from "@components/InfoCard";
 import NoData from "@components/NoData";
 import InputGenerator from "@components/InputGenerator";
+import LightBox from "@components/Lightbox";
 
 const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
   driverNo
@@ -28,6 +29,7 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [driverData, setDriverData] = useState<I_DriverInfo>();
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [isLightOpen, setLightOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,15 +126,25 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
   ];
 
   const handleEdit = () => {
-    router.push("/driver/management?editPage=edit");
-  };
-
-  const handleView = () => {
-    router.push("/driver/management?editPage=view");
+    router.push("/driver_management?editPage=edit");
   };
 
   const handleReturn = () => {
     router.push("/driver");
+  };
+
+  const handleSave = () => {
+    router.push("/driver_management?editPage=view");
+    toaster.success("儲存成功");
+  };
+
+  const handleCancel = () => {
+    setLightOpen(true);
+  };
+
+  const handleLightBoxConfirm = () => {
+    router.push("/driver_management?editPage=view");
+    setLightOpen(false);
   };
 
   return (
@@ -142,9 +154,9 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
           isEdit={false}
           primaryDisable={false}
           secondaryBtnText={isEdit ? "取消" : "回列表"}
-          secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+          secondaryBtnOnClick={isEdit ? handleCancel : handleReturn}
           primaryBtnText={isEdit ? "儲存" : "編輯"}
-          primaryBtnOnClick={isEdit ? handleView : handleEdit}
+          primaryBtnOnClick={isEdit ? handleSave : handleEdit}
         />
       </ControlBar>
       <Group className="wrapper">
@@ -173,6 +185,15 @@ const Page: NextPageWithLayout<InferGetServerSidePropsType<never>> = ({
           />
         </Pane>
       </Group>
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
+      >
+        如果你現在離開，將會遺失未儲存的資料。
+      </LightBox>
     </BodySTY>
   );
 };
