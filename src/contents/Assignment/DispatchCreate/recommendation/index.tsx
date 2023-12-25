@@ -74,7 +74,7 @@ const Recommendation = () => {
         return data.map((item: any) => {
           return {
             action: (
-                <Radio name="group" />
+                <Radio name="group" className="radio"/>
             ),
             id: item.id,
             bus_name: item.bus_name,
