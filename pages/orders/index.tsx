@@ -95,7 +95,7 @@ const Page: NextPageWithLayout<never> = () => {
         btns={
           <PrimaryBtn
             text="新增報價單"
-            onClick={() => router.push("/driver/detail/create")}
+            onClick={() => router.push("/orders/detail/create")}
           >
             <PlusIcon />
           </PrimaryBtn>
