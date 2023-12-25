@@ -65,7 +65,14 @@ const DispatchArea = ({ data }: I_OverviewTable) => {
                   </div>
                 </div>
                 <div className="dispatch_info_button">
-                  <button>
+                  <button
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.stopPropagation();
+                      router.push(
+                        "/assignment/dispatch/detail/K001?editPage=edit"
+                      );
+                    }}
+                  >
                     <EditIcon />
                   </button>
                 </div>
@@ -77,7 +84,7 @@ const DispatchArea = ({ data }: I_OverviewTable) => {
       <div className="dispatch_button">
         <SecondaryBtn
           text="新增派單"
-          onClick={() => router.push("/assignment/detail/create")}
+          onClick={() => router.push("/assignment/dispatch")}
         >
           <PlusIcon />
         </SecondaryBtn>

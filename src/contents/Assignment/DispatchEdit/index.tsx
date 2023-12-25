@@ -18,14 +18,14 @@ import { BUS_STATUS } from "@contents/Assignment/assignment.data";
 import PaginationField from "@components/PaginationField";
 import SecondaryBtn from "@components/Button/Secondary/IconLeft";
 import { ChevronDownIcon, EditIcon, PlusIcon } from "evergreen-ui";
-import CustomTextInput from "@components/CustomTextInput";
 import CustomTextInputField from "@components/CustomTextInputField";
+import CustomTextInput from "@components/CustomTextInput";
 import CustomTextArea from "@components/CustomTextArea";
 import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import LightBox from "@components/Lightbox";
 import Recommendation from "./recommendation";
 
-const DispatchArea = () => {
+const DispatchEdit = () => {
   const router = useRouter();
   const [data, setData] = useState<Array<{ dispatch_Start_Date: string }>>([]);
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
@@ -77,13 +77,22 @@ const DispatchArea = () => {
                 </div>
                 <div className="dispatch_inputs">
                   <div className="item">
-                    <CustomTextInputField placeholder="Placeholder" />
+                    <CustomTextInputField
+                      placeholder="Placeholder"
+                      defaultValue="台北車站 -> 日月潭飯店"
+                    />
                   </div>
                   <div className="item">
-                    <CustomTextInputField placeholder="Placeholder" />
+                    <CustomTextInputField
+                      placeholder="Placeholder"
+                      defaultValue="08 : 00 ～ 21 : 00"
+                    />
                   </div>
                   <div className="item">
-                    <CustomTextInputField placeholder="Placeholder" />
+                    <CustomTextInputField
+                      placeholder="Placeholder"
+                      defaultValue="吳中華"
+                    />
                   </div>
                   <div className="item">
                     <CustomTextArea placeholder="請輸入備註" rows={1} />
@@ -108,13 +117,22 @@ const DispatchArea = () => {
                 </div>
                 <div className="dispatch_inputs">
                   <div className="item">
-                    <CustomTextInputField placeholder="Placeholder" />
+                    <CustomTextInputField
+                      placeholder="Placeholder"
+                      defaultValue="台北車站 -> 日月潭飯店"
+                    />
                   </div>
                   <div className="item">
-                    <CustomTextInputField placeholder="Placeholder" />
+                    <CustomTextInputField
+                      placeholder="Placeholder"
+                      defaultValue="08 : 00 ～ 21 : 00"
+                    />
                   </div>
                   <div className="item">
-                    <CustomTextInputField placeholder="Placeholder" />
+                    <CustomTextInputField
+                      placeholder="Placeholder"
+                      defaultValue="吳中華"
+                    />
                   </div>
                   <div className="item">
                     <CustomTextArea placeholder="請輸入備註" rows={1} />
@@ -148,4 +166,4 @@ const DispatchArea = () => {
   );
 };
 
-export default DispatchArea;
+export default DispatchEdit;
