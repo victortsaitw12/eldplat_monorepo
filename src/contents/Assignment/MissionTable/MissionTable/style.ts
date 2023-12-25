@@ -26,7 +26,6 @@ export const OverviewSTY = styled.div`
     .table_header_info {
       display: flex;
       width: 79%;
-      /* width: calc(92% - 20px); */
       padding: 10px 10px;
     }
     p {

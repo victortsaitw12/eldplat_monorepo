@@ -109,7 +109,6 @@ export const OverviewSTY = styled.div<{
     div {
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       border-right: 1px solid ${({ theme }) => theme.color.N40};
-      background-color: aliceblue;
       text-align: center;
       padding: 0 2px;
       letter-spacing: 0px;
