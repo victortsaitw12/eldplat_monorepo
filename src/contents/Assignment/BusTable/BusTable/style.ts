@@ -14,7 +14,8 @@ export const OverviewSTY = styled.div`
     padding: 0;
     margin: 0;
     div {
-      border: 1px solid ${({ theme }) => theme.color.N40};
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      border-right: 1px solid ${({ theme }) => theme.color.N40};
       padding: 5px 0;
       height: 38px;
       color: ${({ theme }) => theme.color.N200};
@@ -79,7 +80,7 @@ export const OverviewSTY = styled.div`
         color: ${({ theme }) => theme.color.R400};
       }
       &:nth-child(1) {
-        border-right: 2.5px solid ${({ theme }) => theme.color.N40};
+        border-right: 2px solid ${({ theme }) => theme.color.N40};
       }
     }
   }
@@ -100,8 +101,9 @@ export const OverviewSTY = styled.div`
     margin: 0;
     justify-content: center;
     .driver_info {
-      border-right: 2.5px solid ${({ theme }) => theme.color.N40} !important;
-      border: 1px solid ${({ theme }) => theme.color.N40};
+      border-right: 2px solid ${({ theme }) => theme.color.N40} !important;
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+
       width: 145px;
       padding: 10px;
       display: flex;
@@ -119,7 +121,8 @@ export const OverviewSTY = styled.div`
       }
     }
     .bus_info {
-      border: 1px solid ${({ theme }) => theme.color.N40};
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      border-right: 1px solid ${({ theme }) => theme.color.N40};
       text-align: center;
       padding: 0 2px;
       letter-spacing: 0px;
