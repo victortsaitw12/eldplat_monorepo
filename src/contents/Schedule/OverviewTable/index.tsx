@@ -53,8 +53,11 @@ const OverviewTable = ({
       );
       if (matchingData.length !== 0) {
         item.detail = matchingData;
+      } else {
+        item.detail = [];
       }
     });
+    console.log(dateArr);
     return dateArr;
   };
   // const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
@@ -108,8 +111,6 @@ const OverviewTable = ({
   //     <span className="date-day">{date.day.label}</span>
   //   </Table.TextHeaderCell>
   // ));
-
-  console.log();
   return (
     <OverviewSTY
       className="overviewTable"

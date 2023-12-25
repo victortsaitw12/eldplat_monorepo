@@ -3,7 +3,7 @@ import {
   BusScheduleData,
   BusMissionData
 } from "@contents/Assignment/assignment.typing";
-import { ScheduleInfoData } from "@contents/schedule/shift.typing";
+import { ScheduleInfoData } from "@contents/Schedule/shift.typing";
 export interface I_MonthItem {
   id: string;
   date: string;
