@@ -113,6 +113,7 @@ const breadcrumbs: I_routers = {
   "/orders/detail/create": [
     { label: "首頁", url: "/" },
     { label: "訂單列表", url: "/orders" },
+    { label: "新增訂單", url: "/orders/detail/create" },
     { label: "檢視訂單", url: "" }
   ],
   "/orders/doc/create": [
