@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { DivSTY } from "./style";
 import {
+  getConditionList,
   getMaintenanceMissionData,
   getMaintenanceMissionTitle
 } from "@services/maintenance/getMaintenanceMission";
@@ -39,8 +40,15 @@ function MaintenanceMissionList() {
   const tableTitle = getMaintenanceMissionTitle();
 
   useEffect(() => {
-    initializeSubFilter();
+    const conditionList = getConditionList();
     const tableData = getMaintenanceMissionData();
+    if (!subFilter) {
+      localStorage.setItem(
+        "maintenanceInitFilter",
+        JSON.stringify(conditionList)
+      );
+    }
+    initializeSubFilter();
     setData(tableData);
   }, []);
 
@@ -84,7 +92,7 @@ function MaintenanceMissionList() {
 
   return (
     <DivSTY>
-      {/* <FilterWrapper
+      <FilterWrapper
         updateFilter={updateSubFilter}
         resetFilter={() => {
           initializeSubFilter();
@@ -98,9 +106,7 @@ function MaintenanceMissionList() {
             <PlusIcon />
           </PrimaryBtn>
         }
-      >
-        1
-      </FilterWrapper> */}
+      />d
       <Table
         titles={tableTitle}
         data={modifiedData}
