@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
-import { useRouter,  } from "next/router";
+import { useRouter } from "next/router";
 import { DivSTY } from "./style";
-import { 
-  getMaintenanceMissionData, 
-  getMaintenanceMissionTitle 
+import {
+  getMaintenanceMissionData,
+  getMaintenanceMissionTitle
 } from "@services/maintenance/getMaintenanceMission";
 import { I_PageInfo } from "@components/PaginationField";
 import Table from "@components/Table/Table";
@@ -34,7 +34,8 @@ function MaintenanceMissionList() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
-  const { initializeSubFilter, subFilter, updateSubFilter } = useMaintenanceStore();
+  const { initializeSubFilter, subFilter, updateSubFilter } =
+    useMaintenanceStore();
   const tableTitle = getMaintenanceMissionTitle();
 
   useEffect(() => {
@@ -51,17 +52,28 @@ function MaintenanceMissionList() {
     return data.map((item: any) => {
       return {
         ...item,
-        finish_dt: (<div style={{whiteSpace: "pre", lineHeight: "20px"}}>
-          {item.finish_dt.split(" ").join("\r\n")}
-        </div>
+        finish_dt: (
+          <div style={{ whiteSpace: "pre", lineHeight: "20px" }}>
+            {item.finish_dt.split(" ").join("\r\n")}
+          </div>
         ),
         maintenance_no: <a href="/maintenance">{item.maintenance_no}</a>,
-        action: (<>
-          <PrimaryBtn
-            className="mr-2"
-            text="派單"
-            onClick={() => router.push(`/maintenance/detail/detail/${item.id}`)}/>
-          <IconBtn tip="編輯" type="edit" onClick={() => router.push(`/maintenance/detail/detail/${item.id}`)} />
+        action: (
+          <>
+            <PrimaryBtn
+              className="mr-2"
+              text="派單"
+              onClick={() =>
+                router.push(`/maintenance/detail/detail/${item.id}`)
+              }
+            />
+            <IconBtn
+              tip="編輯"
+              type="edit"
+              onClick={() =>
+                router.push(`/maintenance/detail/detail/${item.id}`)
+              }
+            />
           </>
         )
       };
@@ -72,7 +84,7 @@ function MaintenanceMissionList() {
 
   return (
     <DivSTY>
-      <FilterWrapper
+      {/* <FilterWrapper
         updateFilter={updateSubFilter}
         resetFilter={() => {
           initializeSubFilter();
@@ -86,12 +98,14 @@ function MaintenanceMissionList() {
             <PlusIcon />
           </PrimaryBtn>
         }
-       >1</FilterWrapper>
+      >
+        1
+      </FilterWrapper> */}
       <Table
-          titles={tableTitle}
-          data={modifiedData}
-          onView={handleView}
-          headNode={<PaginationField pageInfo={pageInfo} />}
+        titles={tableTitle}
+        data={modifiedData}
+        onView={handleView}
+        headNode={<PaginationField pageInfo={pageInfo} />}
       />
     </DivSTY>
   );

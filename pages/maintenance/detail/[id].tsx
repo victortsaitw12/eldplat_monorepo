@@ -14,11 +14,9 @@ import ButtonSet from "@components/ButtonSet";
 import { toaster, Pane, Spinner } from "evergreen-ui";
 import MaitenanceDetail from "@contents/Maintenance/Detail";
 
-
 import { getMaintenanceById } from "@services/maintenance/getMaintenanceById";
 
-
-const Page: NextPageWithLayout< 
+const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ maitenanceNo }) => {
   const router = useRouter();
@@ -46,10 +44,7 @@ const Page: NextPageWithLayout<
   }, [maitenanceNo]);
 
   const renderContent = (
-      <MaitenanceDetail
-        isEdit={isEdit}
-        maitenanceData={maintenanceData}
-      />
+    <MaitenanceDetail isEdit={isEdit} maitenanceData={maintenanceData} />
   );
 
   const renderLoadingSpinner = (
@@ -93,9 +88,7 @@ const Page: NextPageWithLayout<
         />
       </ControlBar>
       {!isLoading && maintenanceData ? renderContent : renderLoadingSpinner}
-
     </BodySTY>
-
   );
 };
 
@@ -116,7 +109,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     }
   };
 };
-
 
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });

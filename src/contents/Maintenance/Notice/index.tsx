@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
-import { useRouter,  } from "next/router";
+import { useRouter } from "next/router";
 import { DivSTY } from "./style";
-import { 
-  getMaintenanceNoticeTitle, 
-  getMaintenanceNoticeData 
+import {
+  getMaintenanceNoticeTitle,
+  getMaintenanceNoticeData
 } from "@services/maintenance/getMaintenanceNotice";
 import { I_PageInfo } from "@components/PaginationField";
 import Table from "@components/Table/Table";
@@ -31,7 +31,8 @@ function MaintenanceNoticeList() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
-  const { initializeSubFilter, subFilter, updateSubFilter } = useMaintenanceStore();
+  const { initializeSubFilter, subFilter, updateSubFilter } =
+    useMaintenanceStore();
   const tableTitle = getMaintenanceNoticeTitle();
 
   useEffect(() => {
@@ -46,18 +47,19 @@ function MaintenanceNoticeList() {
 
   return (
     <DivSTY>
-      <FilterWrapper
+      {/* delete loading spinner */}
+      {/* <FilterWrapper
         updateFilter={updateSubFilter}
         resetFilter={() => {
           initializeSubFilter();
         }}
         filter={subFilter}
-       />
+      /> */}
       <Table
-          titles={tableTitle}
-          data={data}
-          onView={handleView}
-          headNode={<PaginationField pageInfo={pageInfo} />}
+        titles={tableTitle}
+        data={data}
+        onView={handleView}
+        headNode={<PaginationField pageInfo={pageInfo} />}
       />
     </DivSTY>
   );
