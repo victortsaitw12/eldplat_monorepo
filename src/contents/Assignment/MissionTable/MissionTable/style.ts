@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 export const OverviewSTY = styled.div`
   height: 100%;
-  /* height: calc(100% - 30px); */
-  /* width: fit-content; */
   border: 1px solid ${({ theme }) => theme.color.N40};
   border-radius: 4px;
   overflow-y: scroll;
