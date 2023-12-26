@@ -86,6 +86,26 @@ const breadcrumbs: I_routers = {
     { label: "任務指派", url: "/assignment" },
     { label: "新增任務", url: "" }
   ],
+  "/assignment/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "修改任務", url: "" }
+  ],
+  "/assignment/dispatch": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "新增派單", url: "" }
+  ],
+  "/assignment/dispatch/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "修改派單", url: "" }
+  ],
+  "/assignment/dispatch/create": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "手動派單", url: "" }
+  ],
   "/orders": [
     { label: "首頁", url: "/" },
     { label: "訂單列表", url: "/orders" }
@@ -93,13 +113,14 @@ const breadcrumbs: I_routers = {
   "/orders/detail/create": [
     { label: "首頁", url: "/" },
     { label: "訂單列表", url: "/orders" },
+    { label: "新增訂單", url: "/orders/detail/create" },
     { label: "檢視訂單", url: "" }
   ],
   "/orders/doc/create": [
     { label: "首頁", url: "/" },
     { label: "訂單列表", url: "/orders" },
     { label: "檢視訂單", url: "/orders/detail/create" },
-    { label: "新增文件", url: "" },
+    { label: "新增文件", url: "" }
   ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
@@ -116,12 +137,12 @@ const breadcrumbs: I_routers = {
     { label: "首頁", url: "/" },
     { label: "車輛列表", url: "/bus" },
     { label: "新增車輛", url: "" }
-  ], 
+  ],
   "/bus_management": [
     { label: "首頁", url: "/" },
     { label: "車輛列表", url: "/bus" },
     { label: "車輛管理設定", url: "" }
-  ], 
+  ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   // "/bus": [

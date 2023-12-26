@@ -23,6 +23,7 @@ import NewUploader from "@components/NewUploader";
 import CustomTextArea from "@components/CustomTextArea";
 import CustomTextInputField from "@components/CustomTextInputField";
 import SecondaryButton from "@components/Button/Secondary/IconLeft";
+import LightBox from "@components/Lightbox";
 
 const Page: NextPageWithLayout<never> = ({ driverNo = "1" }) => {
   const router = useRouter();
@@ -30,6 +31,7 @@ const Page: NextPageWithLayout<never> = ({ driverNo = "1" }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [driverData, setDriverData] = useState<I_DriverInfo>();
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
+  const [isLightOpen, setLightOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,12 +112,7 @@ const Page: NextPageWithLayout<never> = ({ driverNo = "1" }) => {
         label: "說明",
         bold: true,
         value: "由公司內部舉辦之新人訓練，凡加入本公司必須參加。",
-        editEle: (
-          <CustomTextArea
-            placeholder={"請輸入備註"}
-            data={""}
-          />
-        )
+        editEle: <CustomTextArea placeholder={"請輸入備註"} data={""} />
       }
     ],
     [
@@ -132,11 +129,17 @@ const Page: NextPageWithLayout<never> = ({ driverNo = "1" }) => {
   ];
 
   const handleCancel = () => {
-    router.push(`/driver/training/${driverNo}?editPage=view`);
+    setLightOpen(true);
   };
 
   const handleSave = () => {
     router.push(`/driver/training/${driverNo}?editPage=view`);
+    toaster.success("儲存成功");
+  };
+
+  const handleLightBoxConfirm = () => {
+    setLightOpen(false);
+    router.push(`/driver/detail/${driverNo}?editPage=view`);
   };
 
   return (
@@ -173,6 +176,15 @@ const Page: NextPageWithLayout<never> = ({ driverNo = "1" }) => {
           <Spinner />
         </Pane>
       )}
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
+      >
+        如果你現在離開，將會遺失未儲存的資料。
+      </LightBox>
     </BodySTY>
   );
 };

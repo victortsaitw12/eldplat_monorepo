@@ -26,7 +26,7 @@ function LightBox({
   wrapperStyle,
   isOpen, // intent to be removed if only be used in ModalProvider (always true)
   handleCloseLightBox, // intent to be replaced by onConfirm and onCancel
-  fullWidth = false,
+  fullWidth = false
 }: I_LightBoxProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -35,8 +35,16 @@ function LightBox({
 
   if (!mounted) return null;
   return createPortal(
-    <LightBoxBlock className="light-box" isOpen={isOpen} onClick={onCancel || handleCloseLightBox}>
-      <div style={wrapperStyle} className={`wrapper ${fullWidth && "w-full"}`} onClick={stopPropagation}>
+    <LightBoxBlock
+      className="light-box"
+      isOpen={isOpen}
+      onClick={onCancel || handleCloseLightBox}
+    >
+      <div
+        style={wrapperStyle}
+        className={`wrapper ${fullWidth && "w-full"}`}
+        onClick={stopPropagation}
+      >
         <div className="titleWrap">
           <div className="title">{title}</div>
           <div className="closeBtn" onClick={onCancel || handleCloseLightBox}>
@@ -44,17 +52,17 @@ function LightBox({
           </div>
         </div>
         <div className="content">{children}</div>
-          {customBtns ? (
-            customBtns
-          ) : (
-            <ButtonSetSTY>
-              <SecondaryBtn
-                text="取消"
-                onClick={onCancel || handleCloseLightBox}
-              />
-              <PrimaryBtn text="確定" onClick={onConfirm} />
-            </ButtonSetSTY>
-          )}
+        {customBtns ? (
+          <ButtonSetSTY>{customBtns}</ButtonSetSTY>
+        ) : (
+          <ButtonSetSTY>
+            <SecondaryBtn
+              text="取消"
+              onClick={onCancel || handleCloseLightBox}
+            />
+            <PrimaryBtn text="確定" onClick={onConfirm} />
+          </ButtonSetSTY>
+        )}
       </div>
     </LightBoxBlock>,
     document.getElementById("overlay-root") as HTMLElement

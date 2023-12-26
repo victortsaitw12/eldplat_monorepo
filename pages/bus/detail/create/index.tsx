@@ -20,7 +20,9 @@ import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
 import CreateDetail from "@contents/Bus/BusDetail/CreateDetail";
 import SubTabsWrapper from "@layout/SubTabsWrapper";
-import { Pane } from "evergreen-ui";
+import { Pane, toaster } from "evergreen-ui";
+import LightBox from "@components/Lightbox";
+
 
 const subTabsArray = [
   { id: 1, label: "明細", value: "1" },
@@ -39,6 +41,7 @@ const Page: NextPageWithLayout<
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
   const [currentTab, setCurrentTab] = useState<string>("1");
+  const [isLightOpen, setLightOpen] = useState(false);
 
   // useEffect(() => {
   //   updateMainFilter("1");
@@ -63,12 +66,18 @@ const Page: NextPageWithLayout<
     setCurrentTab(value);
   };
 
-  const handleView = () => {
-    router.push(`/bus/detail/${busId}?editPage=view`);
+  const handleSave = () => {
+    router.push("/bus/detail/1?editPage=view");
+    toaster.success("儲存成功");
   };
 
-  const handleReturn = () => {
+  const handleCancel = () => {
+    setLightOpen(true);
+  };
+
+  const handleLightBoxConfirm = () => {
     router.push("/bus");
+    setLightOpen(false);
   };
 
   useEffect(() => {
@@ -86,9 +95,9 @@ const Page: NextPageWithLayout<
           isEdit={isEdit}
           primaryDisable={true}
           secondaryBtnText={"取消"}
-          secondaryBtnOnClick={handleReturn}
+          secondaryBtnOnClick={handleCancel}
           primaryBtnText={"儲存"}
-          primaryBtnOnClick={handleView}
+          primaryBtnOnClick={handleSave}
         />
       </ControlBar>
       <Pane className={"main-column"}>
@@ -103,6 +112,15 @@ const Page: NextPageWithLayout<
           className="details"
         />
       </Pane>
+      <LightBox
+        title="確定要離開嗎?"
+        isOpen={isLightOpen}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
+      >
+        如果你現在離開，將會遺失未儲存的資料。
+      </LightBox>
     </BodySTY>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Pane, DotIcon } from "evergreen-ui";
+import { Pane, toaster } from "evergreen-ui";
 import { ViewIdSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
@@ -85,6 +85,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     try {
       const result = await getScheduleList(id);
       setShiftData(result);
+      console.log(result);
     } catch (e: any) {
       console.log(e);
     }
@@ -92,6 +93,10 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
   };
   const handleChangeMonth = (v: Date) => {
     setRenderDate(v);
+  };
+  const submitHandler = () => {
+    router.push("/schedule");
+    toaster.success("成功簽核");
   };
   // ------- useEffect ------- //
   useEffect(() => {
@@ -132,7 +137,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 secondaryBtnText="退回"
                 secondaryBtnOnClick={cancelApproveHandler}
                 primaryBtnText="同意"
-                // primaryBtnOnClick={isEdit ? handleView : handleEdit}
+                primaryBtnOnClick={submitHandler}
               />
             ) : (
               <MonthPicker
@@ -143,7 +148,11 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
             )}
           </ControlBar>
           {shiftData.length !== 0 && (
-            <Schedule initialDate={renderDate} shiftData={shiftData} />
+            <Schedule
+              initialDate={renderDate}
+              shiftData={shiftData}
+              isEdit={isEdit}
+            />
           )}
           {isEdit && (
             <LightBox

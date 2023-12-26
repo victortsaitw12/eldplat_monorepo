@@ -1,4 +1,11 @@
-import React, { useState, useEffect, ReactNode, useContext, useRef, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+  useRef,
+  useMemo
+} from "react";
 import { useRouter } from "next/router";
 import { Checkbox, Table, TimelineEventsIcon } from "evergreen-ui";
 
@@ -8,8 +15,8 @@ import { WKDAY_LABEL, EVENT_TYPE } from "../shift.data";
 import EventTag from "@contents/Schedule/EventTag";
 import EventBtn from "@contents/Schedule/EventBtn";
 import { getDayStart, TotalMS } from "../shift.util";
-import { DriverData, ScheduleInfoData, DateItem } from "../shift.typing";
-import timeUtil from "@utils/schedule.timeUtil";
+import { DriverData, ScheduleInfoData } from "../shift.typing";
+import timeUtil, { type I_MonthItem } from "@utils/schedule.timeUtil";
 
 interface I_OverviewTable {
   data: DriverData[];
@@ -22,22 +29,35 @@ interface I_OverviewTable {
 const OverviewTable = ({
   data,
   initialDate,
-  expandPercentage,
+  expandPercentage
 }: I_OverviewTable) => {
   const UI = useContext(UIContext);
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
 
   //------ functions ------//
-  const dateStatusHandler = ( item : {isToday: boolean, weeks: number} ) => {
-    if(item.isToday) return "font_date today";
+  const dateStatusHandler = (item: { isToday: boolean; weeks: number }) => {
+    if (item.isToday) return "font_date today";
     const wkdayLabel = WKDAY_LABEL.get(item.weeks);
     if (wkdayLabel && wkdayLabel?.weekend) {
       return "font_date weekend";
     } else {
       return "font_date";
     }
-  }
+  };
+  const renderShifts = (detail: ScheduleInfoData[]): I_MonthItem[] => {
+    const dateArr = timeUtil.getNowMonthList(initialDate);
+    dateArr.forEach((item) => {
+      const matchingData = detail.filter(
+        (timeData) => timeData.schd_Date === item.date
+      );
+      if (matchingData.length !== 0) {
+        item.detail = matchingData;
+      }
+    });
+    console.log(dateArr);
+    return dateArr;
+  };
   // const renderShifts = (date: DateItem, scheduleInfo: ScheduleInfoData[]) => {
   //   const shiftsOnDate = scheduleInfo.filter(
   //     (item: ScheduleInfoData) =>
@@ -89,8 +109,6 @@ const OverviewTable = ({
   //     <span className="date-day">{date.day.label}</span>
   //   </Table.TextHeaderCell>
   // ));
-
-  console.log()
   return (
     <OverviewSTY
       className="overviewTable"
@@ -102,72 +120,78 @@ const OverviewTable = ({
           <div className="font_driver">駕駛姓名</div>
           <div className="font_driver w-50">應休/已休</div>
           <div className="font_driver w-50">預排班表</div>
-          {
-            timeUtil.getNowMonthScheduleList(initialDate).map((item, index) => {
-              return (
-                <div
-                  className="zoom_width"
-                  key={index}
-                > 
-                  <span className={dateStatusHandler(item)}>
-                    {item.id}
-                  </span>
-                  <span className={`${dateStatusHandler(item)} week_label`}>
-                    {WKDAY_LABEL.get(item.weeks)?.label}
-                  </span>
-                  <p></p>
-                </div>
-              )
-            })
-          }
+          {timeUtil.getNowMonthScheduleList(initialDate).map((item, index) => {
+            return (
+              <div className="zoom_width" key={index}>
+                <span className={dateStatusHandler(item)}>{item.id}</span>
+                <span className={`${dateStatusHandler(item)} week_label`}>
+                  {WKDAY_LABEL.get(item.weeks)?.label}
+                </span>
+                <p></p>
+              </div>
+            );
+          })}
         </div>
         <div className="schedule_bodyWrap">
-          {
-            data.map((item, index)=> {
-              return (
-                <div 
-                  className="schedule_daysWrap"
-                  key={item.driver_No}
-                  onClick={()=>{router.push(`/schedule/detail/${item.driver_No}`)}}
-                >
-                  <div className="driver_info">{item.user_First_Name}{item.user_Name}<p>0917-444-444</p></div>
-                  <div className="w-50">5/8</div>
-                  <div className="w-50">
-                    {
-                      item.schedule_Approved ?
-                      <button className="icon">
-                        <TimelineEventsIcon /> 
-                      </button> :
-                      <EventTag
-                        key="040"
-                        value={EVENT_TYPE.get("040")}
-                        onClick={(e:React.MouseEvent<HTMLButtonElement>) => {
-                          e.stopPropagation();
-                          router.push(`/schedule/detail/${item.driver_No}?editPage=edit`)
-                        }}
-                      />
-                    }
-                  </div>
-                  {
-                    timeUtil.getNowMonthScheduleList(initialDate).map((item, index) => {
-                      return (
-                        <div
-                          className="zoom_width"
-                          key={index}
-                        > 
-                          
-                          {/* <EventTag
-                            value={EVENT_TYPE.get("040")}
-                          /> */}
-                        </div>
-                      )
-                    })
-                  }
+          {data.map((driver, index) => {
+            return (
+              <div
+                className="schedule_daysWrap"
+                key={driver.driver_No}
+                onClick={() => {
+                  router.push(`/schedule/detail/${driver.driver_No}`);
+                }}
+              >
+                <div className="driver_info">
+                  {driver.user_First_Name}
+                  {driver.user_Name}
+                  <p>0917-444-444</p>
                 </div>
-                
-              )
-            })
-          }
+                <div className="w-50">5/8</div>
+                <div className="w-50">
+                  {driver.schedule_Approved ? (
+                    <button className="icon">
+                      <TimelineEventsIcon />
+                    </button>
+                  ) : (
+                    <EventTag
+                      key="040"
+                      value={EVENT_TYPE.get("040")}
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        e.stopPropagation();
+                        router.push(
+                          `/schedule/detail/${driver.driver_No}?editPage=edit`
+                        );
+                      }}
+                    />
+                  )}
+                </div>
+                {renderShifts(driver.schedule_List).map((date, index) => {
+                  return (
+                    <div className="zoom_width" key={index}>
+                      {date.detail
+                        ? (date.detail as ScheduleInfoData[])?.map(
+                            (detail, index) => {
+                              return (
+                                <EventTag
+                                  key={index}
+                                  value={EVENT_TYPE.get(detail.schd_Type)}
+                                />
+                              );
+                            }
+                          )
+                        : !driver.schedule_Approved && (
+                            <EventTag
+                              key={index}
+                              value={EVENT_TYPE.get("01")}
+                            />
+                          )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </OverviewSTY>

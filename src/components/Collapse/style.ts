@@ -23,7 +23,8 @@ export const BodySTY = styled.div<I_StyProps>`
       color: ${(props) => props.theme.color.N700};
       cursor: pointer;
     }
-    & > svg {
+    &.icon_end > svg,
+    svg {
       position: absolute;
       right: 10px;
       top: 50%;
@@ -32,6 +33,10 @@ export const BodySTY = styled.div<I_StyProps>`
     .title_text {
       display: flex;
       align-items: center;
+    }
+    &.icon_start > svg {
+      left: 0;
+      top: 50%;
     }
   }
   .collapse_content {

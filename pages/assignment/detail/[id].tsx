@@ -2,7 +2,7 @@ import React, { useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Pane } from "evergreen-ui";
+import { Pane, toaster } from "evergreen-ui";
 import { BodySTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
@@ -10,7 +10,7 @@ import { getLayout } from "@layout/MainLayout";
 import UIProvider from "@contexts/scheduleContext/UIProvider";
 import { getScheduleList } from "@services/schedule/getScheduleList";
 import ApprovalTable from "@contents/Schedule/ApprovalTable";
-import CreateMission from "@contents/Assignment/CreateMission";
+import EditMission from "@contents/Assignment/Mission/EditMission";
 import LightBox from "@components/Lightbox";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";
@@ -23,6 +23,7 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   const { id, editPage } = router.query;
   const [isOpenModal, setOpenModal] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState(editPage === "edit" || false);
 
   const modalInfo = {
     listClassName: "",
@@ -34,12 +35,13 @@ const ApprovalView: NextPageWithLayout<never> = () => {
   };
 
   //------ functions ------//
-  const cancelApproveHandler = () => {
-    setOpenModal(true);
+  const submitHandler = () => {
+    router.push("/assignment");
+    toaster.success("成功修改任務");
   };
   const cancelModalHandler = () => {
     setOpenModal(false);
-    router.push("/schedule/detail/DRV202311210001");
+    router.push("/assignment");
   };
   const fetchData = async () => {
     // setIsLoading(true);
@@ -51,7 +53,6 @@ const ApprovalView: NextPageWithLayout<never> = () => {
     // }
     // setIsLoading(false);
   };
-
   // ------- useEffect ------- //
   React.useEffect(() => {
     if (!id) return;
@@ -67,31 +68,22 @@ const ApprovalView: NextPageWithLayout<never> = () => {
         <ButtonSet
           primaryDisable={false}
           secondaryBtnText="取消"
-          secondaryBtnOnClick={cancelApproveHandler}
-          primaryBtnText="確定新增任務"
-          // primaryBtnOnClick={isEdit ? handleView : handleEdit}
+          secondaryBtnOnClick={() => setOpenModal(true)}
+          primaryBtnText="確定修改任務"
+          primaryBtnOnClick={submitHandler}
         />
       </ControlBar>
       <Pane className="table">
-        <CreateMission />
+        <EditMission />
       </Pane>
       <LightBox
-        title="退回"
+        title="確定要離開嗎?"
         isOpen={isOpenModal}
-        handleCloseLightBox={() => {
-          setOpenModal(false);
-        }}
-        customBtns={
-          <ButtonSet
-            primaryBtnText="確定退回"
-            secondaryBtnOnClick={() => {
-              setOpenModal(false);
-            }}
-            primaryBtnOnClick={cancelModalHandler}
-          />
-        }
+        handleCloseLightBox={() => setOpenModal(false)}
+        onConfirm={cancelModalHandler}
+        onCancel={() => setOpenModal(false)}
       >
-        <InfoItem item={modalInfo} isEdit={true} />
+        如果你現在離開，將會遺失未儲存的資料。
       </LightBox>
     </BodySTY>
   );

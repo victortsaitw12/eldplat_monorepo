@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Pane } from "evergreen-ui";
+import { Pane, toaster } from "evergreen-ui";
 import { ApprovalSTY } from "./style";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
@@ -41,6 +41,10 @@ const ApprovalView: NextPageWithLayout<never> = () => {
     setOpenModal(false);
     router.push("/schedule/detail/DRV202311210001");
   };
+  const submitHandler = () => {
+    router.push("/schedule/detail/DRV202311210001");
+    toaster.success("成功簽核");
+  };
   const fetchData = async () => {
     // setIsLoading(true);
     // try {
@@ -69,7 +73,7 @@ const ApprovalView: NextPageWithLayout<never> = () => {
           secondaryBtnText="退回"
           secondaryBtnOnClick={cancelApproveHandler}
           primaryBtnText="同意"
-          // primaryBtnOnClick={isEdit ? handleView : handleEdit}
+          primaryBtnOnClick={submitHandler}
         />
       </ControlBar>
       <Pane className="table">

@@ -48,7 +48,6 @@ function Index({ menu }: Props) {
     menu?.subList &&
     checkPahtnameExistInSubList(menu?.subList);
 
-  console.log(menu?.subList);
   const [openList, setOpenList] = useState(default_open);
   const isActive =
     router.asPath === menu.url ||
