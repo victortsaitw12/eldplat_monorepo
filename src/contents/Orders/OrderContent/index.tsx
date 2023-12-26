@@ -4,6 +4,7 @@ import Detail from "./Detail";
 import Docs from "./Docs";
 import Missions from "./Missions";
 import Records from "./Records";
+import Edit from "./Edit";
 
 interface I_Props {
   isEdit: boolean;
@@ -11,12 +12,7 @@ interface I_Props {
   formType: string;
 }
 
-
-const OrderContent = ({
-  isEdit,
-  formType,
-  orderId,
-}: I_Props) => {
+const OrderContent = ({ isEdit, formType, orderId }: I_Props) => {
   const [visibleForm, setVisibleForm] = useState("1");
   useEffect(() => {
     setVisibleForm(formType);
@@ -28,10 +24,10 @@ const OrderContent = ({
 
   return (
     <DivSTY>
-        {visibleForm === "1" && <Detail />}
-        {visibleForm === "2" && <Records />}
-        {visibleForm === "3" && <Missions />}
-        {visibleForm === "4" && <Docs />}
+      {visibleForm === "1" && (isEdit ? <Edit /> : <Detail />)}
+      {visibleForm === "2" && <Records />}
+      {visibleForm === "3" && <Missions />}
+      {visibleForm === "4" && <Docs />}
     </DivSTY>
   );
 };
