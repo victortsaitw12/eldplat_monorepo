@@ -48,30 +48,35 @@ function InfoItem({
   item,
   isEdit,
   InfoCardId,
-  direction = "column"
+  direction = "column",
+  addOn
 }: {
   item: I_infoData;
   isEdit: boolean;
   InfoCardId?: string;
   direction?: string;
+  addOn?: React.ReactNode;
 }) {
   return (
-    <ListItem
-      className={`item ${item?.listClassName} ${direction}`}
-      key={InfoCardId}
-    >
-      {direction === "row" && !item.label ? (
-        ""
-      ) : (
-        <Pane className={`label ${item?.bold && isEdit ? "bold" : ""}`}>
-          {item?.req && isEdit && <span className="req">*</span>}
-          <span>{item?.label}</span>
+    <>
+      <ListItem
+        className={`item ${item?.listClassName} ${direction}`}
+        key={InfoCardId}
+      >
+        {direction === "row" && !item.label ? (
+          ""
+        ) : (
+          <Pane className={`label ${item?.bold && isEdit ? "bold" : ""}`}>
+            {item?.req && isEdit && <span className="req">*</span>}
+            <span>{item?.label}</span>
+          </Pane>
+        )}
+        <Pane className="value">
+          {isEdit && item?.editEle ? item?.editEle : item?.value}
         </Pane>
-      )}
-      <Pane className="value">
-        {isEdit && item?.editEle ? item?.editEle : item?.value}
-      </Pane>
-    </ListItem>
+      </ListItem>
+      {addOn}
+    </>
   );
 }
 
