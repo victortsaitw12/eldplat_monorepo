@@ -16,6 +16,12 @@ import Collapse from "@components/Collapse";
 import InfoItem from "@components/InfoCard/InfoItem";
 import CustomDatePicker from "@components/CustomDatePicker";
 import CustomTextInputField from "@components/CustomTextInputField";
+import CheckboxField from "@components/CheckboxField";
+import { TimeIcon } from "evergreen-ui";
+import CounterInput from "@components/CounterInput";
+import { useForm } from "react-hook-form";
+import VerticalDetail from "@components/VerticalDetail";
+import CustomTextArea from "@components/CustomTextArea";
 
 export interface I_infoData {
   editEle?: React.ReactNode;
@@ -26,10 +32,12 @@ export interface I_infoData {
   inputType?: string;
   listClassName?: string;
   bold?: boolean;
+  direction?: string;
 }
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
+  const { register, getValues, setValue } = useForm();
 
   const OrderContactInFo = [
     {
@@ -63,7 +71,7 @@ const Page: NextPageWithLayout<never> = () => {
       req: true,
       label: "國籍",
       value: (
-        <Select width="100%">
+        <Select width="100%" className="select-full">
           <option value="foo">請選擇</option>
         </Select>
       )
@@ -77,6 +85,7 @@ const Page: NextPageWithLayout<never> = () => {
         <CustomTextInputField
           placeholder="請輸入電話"
           width="100%"
+          className="input-full"
         ></CustomTextInputField>
       )
     },
@@ -89,11 +98,11 @@ const Page: NextPageWithLayout<never> = () => {
         <CustomTextInputField
           placeholder="請輸入信箱"
           width="100%"
+          className="input-full"
         ></CustomTextInputField>
       )
     }
   ];
-
   const PassengerInFo = [
     {
       listClassName: "fb-100",
@@ -101,7 +110,11 @@ const Page: NextPageWithLayout<never> = () => {
       req: false,
       label: "",
       bold: false,
-      value: <Checkbox label="同訂單聯絡人"></Checkbox>
+      value: (
+        <div className="checkbox">
+          <Checkbox label="同訂單聯絡人" />
+        </div>
+      )
     },
     {
       listClassName: "fb-25",
@@ -144,6 +157,7 @@ const Page: NextPageWithLayout<never> = () => {
         <CustomTextInputField
           placeholder="請輸入電話"
           width="100%"
+          className="input-full"
         ></CustomTextInputField>
       )
     },
@@ -156,11 +170,128 @@ const Page: NextPageWithLayout<never> = () => {
         <CustomTextInputField
           placeholder="請輸入信箱"
           width="100%"
+          className="input-full"
         ></CustomTextInputField>
       )
     }
   ];
+  const TotalPriceInFo = [
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "總金額",
+      bold: true,
+      value: (
+        <>
+          <div className="row">
+            <span className="nowrap">NTD $</span>
+            <CustomTextInputField placeholder="2,805" disabled={true} />
+          </div>
+        </>
+      ),
+      direction: "row"
+    }
+  ];
+  const PriceInFo = [
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "基本車資",
+      bold: true,
+      value: (
+        <>
+          <div className="row">
+            <span className="nowrap">NTD $</span>
+            <CustomTextInputField placeholder="1,500" disabled={true} />
+          </div>
+        </>
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "中途停靠站",
+      bold: true,
+      value: (
+        <>
+          <div className="row">
+            <span className="nowrap">NTD $</span>
+            <CustomTextInputField placeholder="500" disabled={true} />
+          </div>
+        </>
+      ),
+      direction: "row"
+    },
 
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "小費",
+      bold: true,
+      value: (
+        <>
+          <div className="row">
+            <span className="nowrap">NTD $</span>
+            <CustomTextInputField placeholder="805" disabled={true} />
+          </div>
+        </>
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "項目A",
+      bold: true,
+      value: (
+        <>
+          <div className="row">
+            <span className="nowrap">NTD $</span>
+            <CustomTextInputField placeholder="0" disabled={true} />
+          </div>
+        </>
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "項目B",
+      bold: true,
+      value: (
+        <>
+          <div className="row">
+            <span className="nowrap">NTD $</span>
+            <CustomTextInputField placeholder="0" disabled={true} />
+          </div>
+        </>
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "折扣",
+      bold: true,
+      value: (
+        <>
+          <div className="row">
+            <span className="nowrap">NTD $</span>
+            <CustomTextInputField placeholder="0" disabled={true} />
+          </div>
+        </>
+      ),
+      direction: "row"
+    }
+  ];
   const ServiceInFo = [
     {
       listClassName: "fb-50",
@@ -169,7 +300,7 @@ const Page: NextPageWithLayout<never> = () => {
       label: "服務項目",
       bold: false,
       value: (
-        <Select width="100%">
+        <Select width="100%" className="select-full">
           <option value="foo">請選擇</option>
         </Select>
       )
@@ -199,18 +330,394 @@ const Page: NextPageWithLayout<never> = () => {
       )
     }
   ];
-
   const ItineraryInFo = [
     {
-      listClassName: "fb-25",
+      listClassName: "fb-100",
       readonly: false,
       req: false,
       label: "出發時間",
       bold: false,
       value: (
+        <div className="row">
+          <CustomTextInputField
+            placeholder="出發時間"
+            className="input-full"
+          ></CustomTextInputField>
+          <span className="icon">
+            <TimeIcon></TimeIcon>
+          </span>
+        </div>
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: true,
+      label: "上車地點",
+      bold: false,
+      value: (
         <>
-          <CustomTextInputField placeholder="出發時間"></CustomTextInputField>
+          <CustomTextInputField
+            placeholder="請輸入地點"
+            className="input-full"
+          ></CustomTextInputField>
         </>
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "",
+      bold: false,
+      value: (
+        <div className="row-container">
+          <div className="row">
+            <label className="label">
+              <span className="required">*</span>下車地點
+            </label>
+            <CustomTextInputField
+              placeholder="請輸入地點"
+              className="input-full"
+            ></CustomTextInputField>
+          </div>
+          <div className="row">
+            <span className="normal">也可輸地址</span>
+            <Select className="select-wrapper">
+              <option>縣市</option>
+            </Select>
+            <CustomTextInputField placeholder="區域"></CustomTextInputField>
+            <CustomTextInputField placeholder="請輸入地址"></CustomTextInputField>
+          </div>
+        </div>
+      ),
+      direction: "row"
+    }
+  ];
+  const TravelInFo = [
+    {
+      listClassName: "fb-100 mt-1",
+      readonly: false,
+      req: false,
+      label: "成人",
+      bold: true,
+      value: (
+        <VerticalDetail
+          title=""
+          items={[
+            {
+              label: "",
+              value: (
+                <CounterInput
+                  register={register}
+                  getValues={getValues}
+                  setValue={setValue}
+                  inputName="adult"
+                  label=""
+                />
+              )
+            }
+          ]}
+        />
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100 mt-1",
+      readonly: false,
+      req: false,
+      label: "兒童（2~4歲）",
+      bold: true,
+      value: (
+        <VerticalDetail
+          title=""
+          items={[
+            {
+              label: "",
+              value: (
+                <CounterInput
+                  register={register}
+                  getValues={getValues}
+                  setValue={setValue}
+                  inputName="child"
+                  label=""
+                />
+              )
+            }
+          ]}
+        />
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-50 mt-1",
+      readonly: false,
+      req: false,
+      label: "嬰兒（0~1歲）",
+      bold: true,
+      value: (
+        <VerticalDetail
+          title=""
+          items={[
+            {
+              label: "",
+              value: (
+                <CounterInput
+                  register={register}
+                  getValues={getValues}
+                  setValue={setValue}
+                  inputName="infant"
+                  label=""
+                />
+              )
+            }
+          ]}
+        />
+      ),
+      direction: "row"
+    }
+  ];
+  const LuggageInFo = [
+    {
+      listClassName: "fb-100 mt-1",
+      readonly: false,
+      req: false,
+      label: "成人",
+      bold: true,
+      value: (
+        <VerticalDetail
+          title=""
+          items={[
+            {
+              label: "",
+              value: (
+                <CounterInput
+                  register={register}
+                  getValues={getValues}
+                  setValue={setValue}
+                  inputName="adult"
+                  label=""
+                />
+              )
+            }
+          ]}
+        />
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100 mt-1",
+      readonly: false,
+      req: false,
+      label: "大件行李",
+      bold: true,
+      value: (
+        <VerticalDetail
+          title=""
+          items={[
+            {
+              label: "",
+              value: (
+                <CounterInput
+                  register={register}
+                  getValues={getValues}
+                  setValue={setValue}
+                  inputName="lg-luggage"
+                  label=""
+                />
+              )
+            }
+          ]}
+        />
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-50 mt-1",
+      readonly: false,
+      req: false,
+      label: "小件行李",
+      bold: true,
+      value: (
+        <VerticalDetail
+          title=""
+          items={[
+            {
+              label: "",
+              value: (
+                <CounterInput
+                  register={register}
+                  getValues={getValues}
+                  setValue={setValue}
+                  inputName="sm-luggage"
+                  label=""
+                />
+              )
+            }
+          ]}
+        />
+      ),
+      direction: "row"
+    }
+  ];
+  const VehicleInFo = [
+    {
+      listClassName: "fb-100 mt-1",
+      readonly: false,
+      req: false,
+      label: "A型車",
+      bold: true,
+      value: (
+        <VerticalDetail
+          title=""
+          items={[
+            {
+              label: "",
+              value: (
+                <CounterInput
+                  register={register}
+                  getValues={getValues}
+                  setValue={setValue}
+                  inputName="vehicle-A"
+                  label=""
+                />
+              )
+            }
+          ]}
+        />
+      ),
+      direction: "row"
+    },
+    {
+      listClassName: "fb-100 mt-1",
+      readonly: false,
+      req: false,
+      label: "B型車",
+      bold: true,
+      value: (
+        <VerticalDetail
+          title=""
+          items={[
+            {
+              label: "",
+              value: (
+                <CounterInput
+                  register={register}
+                  getValues={getValues}
+                  setValue={setValue}
+                  inputName="vehicle-B"
+                  label=""
+                />
+              )
+            }
+          ]}
+        />
+      ),
+      direction: "row"
+    }
+  ];
+  const OtherServiceInFo = [
+    {
+      listClassName: "fb-100 mt-1",
+      readonly: false,
+      req: false,
+      label: "",
+      bold: true,
+      value: (
+        <div>
+          <div className="checkbox">
+            <CheckboxField
+              label="項目名稱 NTD $200"
+              checked={false}
+              toggleFuelValue={() => {
+                return;
+              }}
+            />
+          </div>
+          <span className="normal instruction-text">說明文字</span>
+        </div>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "",
+      bold: true,
+      value: (
+        <div>
+          <div className="checkbox">
+            <CheckboxField
+              label="項目名稱"
+              checked={false}
+              toggleFuelValue={() => {
+                return;
+              }}
+            />
+          </div>
+          <span className="normal instruction-text">說明文字</span>
+        </div>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "",
+      bold: true,
+      value: (
+        <div>
+          <div className="checkbox">
+            <CheckboxField
+              label="項目名稱 NTD $200"
+              checked={false}
+              toggleFuelValue={() => {
+                return;
+              }}
+            />
+          </div>
+          <span className="normal instruction-text">說明文字</span>
+        </div>
+      )
+    },
+    {
+      listClassName: "fb-100",
+      readonly: false,
+      req: false,
+      label: "",
+      bold: true,
+      value: (
+        <div className="mb-1">
+          <div className="checkbox">
+            <CheckboxField
+              label="項目名稱 NTD $200"
+              checked={false}
+              toggleFuelValue={() => {
+                return;
+              }}
+            />
+          </div>
+          <span className="normal instruction-text">說明文字</span>
+        </div>
+      )
+    }
+  ];
+  const RemarkInFo = [
+    {
+      listClassName: "fb-100 mt-2",
+      readonly: false,
+      req: false,
+      label: "備註",
+      bold: true,
+      value: (
+        <div>
+          <div className="mb-1">
+            <span className="normal">說明文字</span>
+          </div>
+          <CustomTextArea placeholder="請輸入備註"></CustomTextArea>
+        </div>
       )
     }
   ];
@@ -219,7 +726,12 @@ const Page: NextPageWithLayout<never> = () => {
     return (
       <ul className="col">
         {info.map((item, index) => (
-          <InfoItem key={index} item={item} isEdit={true} />
+          <InfoItem
+            key={index}
+            item={item}
+            isEdit={true}
+            direction={item?.direction}
+          />
         ))}
       </ul>
     );
@@ -246,8 +758,12 @@ const Page: NextPageWithLayout<never> = () => {
         />
       </ControlBar>
       <BodySTY>
-        <Pane className={"main-column"}>
-          <InfoCard isEdit={true} infoTitle="聯絡資訊">
+        <Pane className={"two-column"}>
+          <InfoCard
+            style={{ flexBasis: "75%" }}
+            isEdit={true}
+            infoTitle="聯絡資訊"
+          >
             <Collapse
               title="訂單聯絡人"
               color="transparent"
@@ -265,6 +781,16 @@ const Page: NextPageWithLayout<never> = () => {
               {MakeInfoCard(PassengerInFo)}
             </Collapse>
           </InfoCard>
+          <InfoCard
+            style={{ flexBasis: "25%" }}
+            isEdit={true}
+            infoTitle="金額計算"
+            className="price-column"
+          >
+            {MakeInfoCard(TotalPriceInFo)}
+            <hr className="my-1" />
+            {MakeInfoCard(PriceInFo)}
+          </InfoCard>
         </Pane>
         <Pane className={"main-column"}>
           <InfoCard isEdit={true} infoTitle="選擇項目">
@@ -274,12 +800,97 @@ const Page: NextPageWithLayout<never> = () => {
         <Pane className={"main-column"}>
           <InfoCard isEdit={true} infoTitle="行程資訊">
             <Collapse
-              title="訂單聯絡人"
+              title="2023-11-22（三）"
               color="transparent"
               iconPosition="icon_start"
               opened={true}
             >
               {MakeInfoCard(ItineraryInFo)}
+              <div className="checkbox">
+                <CheckboxField
+                  label="通過山區"
+                  checked={false}
+                  toggleFuelValue={() => {
+                    return;
+                  }}
+                />
+              </div>
+            </Collapse>
+            <hr className="mt-1" />
+            <Collapse
+              title="2023-11-23（四）"
+              color="transparent"
+              iconPosition="icon_start"
+              opened={true}
+            >
+              {MakeInfoCard(ItineraryInFo)}
+              <div className="checkbox">
+                <CheckboxField
+                  label="通過山區"
+                  checked={false}
+                  toggleFuelValue={() => {
+                    return;
+                  }}
+                />
+              </div>
+            </Collapse>
+            <hr className="mt-1" />
+            <Collapse
+              title="2023-11-24（五）"
+              color="transparent"
+              iconPosition="icon_start"
+              opened={true}
+            >
+              {MakeInfoCard(ItineraryInFo)}
+              <div className="checkbox">
+                <CheckboxField
+                  label="通過山區"
+                  checked={false}
+                  toggleFuelValue={() => {
+                    return;
+                  }}
+                />
+              </div>
+            </Collapse>
+          </InfoCard>
+        </Pane>
+        <Pane className={"travel-column"}>
+          <InfoCard isEdit={true} infoTitle="乘車資訊">
+            <Collapse
+              title="乘客"
+              color="transparent"
+              iconPosition="icon_start"
+              opened={true}
+            >
+              {MakeInfoCard(TravelInFo)}
+            </Collapse>
+            <hr className="mt-2 mb-1" />
+            <Collapse
+              title="行李"
+              color="transparent"
+              iconPosition="icon_start"
+              opened={true}
+            >
+              {MakeInfoCard(LuggageInFo)}
+            </Collapse>
+            <hr className="mt-2 mb-1" />
+            <Collapse
+              title="車型與數量"
+              color="transparent"
+              iconPosition="icon_start"
+              opened={true}
+            >
+              {MakeInfoCard(VehicleInFo)}
+            </Collapse>
+          </InfoCard>
+        </Pane>
+        <Pane className={"other-column"}>
+          <InfoCard isEdit={true} infoTitle="其他需求">
+            <Collapse title="服務項目" color="#F4F5F7" opened={true}>
+              {MakeInfoCard(OtherServiceInFo)}
+            </Collapse>
+            <Collapse title="備註" color="#F4F5F7" opened={true}>
+              {MakeInfoCard(RemarkInFo)}
             </Collapse>
           </InfoCard>
         </Pane>
