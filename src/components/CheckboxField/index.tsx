@@ -27,7 +27,7 @@ function CheckboxField({
       <Checkbox
         label={label}
         checked={checked}
-        value={item.value}
+        value={item?.value}
         onChange={(e: any) => {
           handleCheckbox(e);
         }}

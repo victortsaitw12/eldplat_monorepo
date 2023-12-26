@@ -48,3 +48,36 @@ export const getMaintenanceRecordTitle = () => {
   ];
   return DUMMY_TITLES;
 };
+
+export const getConditionList = () => {
+  return [
+    {
+      field_Name: "search",
+      arrayConditions: ["like", "equal"],
+      displayType: "search",
+      dataType: "string",
+      label: "搜尋"
+    },
+    {
+      field_Name: "Short_Schd_Date",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "日期區間"
+    },
+    {
+      field_Name: "Short_Schd_Category",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "分類"
+    },
+    {
+      field_Name: "Dsph_Area",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "維修廠"
+    }
+  ];
+}

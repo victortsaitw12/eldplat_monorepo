@@ -1,9 +1,10 @@
 import { useState, useCallback, useEffect } from "react";
-import { useRouter,  } from "next/router";
+import { useRouter } from "next/router";
 import { DivSTY } from "./style";
-import { 
-  getMaintenanceRecordTitle, 
-  getMaintenanceRecordData 
+import {
+  getConditionList,
+  getMaintenanceRecordTitle,
+  getMaintenanceRecordData
 } from "@services/maintenance/getMaintenanceRecord";
 import { I_PageInfo } from "@components/PaginationField";
 import Table from "@components/Table/Table";
@@ -31,12 +32,20 @@ function MaintenanceRecordList() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
-  const { initializeSubFilter, subFilter, updateSubFilter } = useMaintenanceStore();
+  const { initializeSubFilter, subFilter, updateSubFilter } =
+    useMaintenanceStore();
   const tableTitle = getMaintenanceRecordTitle();
 
   useEffect(() => {
-    initializeSubFilter();
+    const conditionList = getConditionList();
     const tableData = getMaintenanceRecordData();
+    if (!subFilter) {
+      localStorage.setItem(
+        "maintenanceInitFilter",
+        JSON.stringify(conditionList)
+      );
+    }
+    initializeSubFilter();
     setData(tableData);
   }, []);
 
@@ -65,10 +74,10 @@ function MaintenanceRecordList() {
         filter={subFilter}
        />
       <Table
-          titles={tableTitle}
-          data={modifiedData}
-          onView={handleView}
-          headNode={<PaginationField pageInfo={pageInfo} />}
+        titles={tableTitle}
+        data={modifiedData}
+        onView={handleView}
+        headNode={<PaginationField pageInfo={pageInfo} />}
       />
     </DivSTY>
   );
