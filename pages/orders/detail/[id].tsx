@@ -24,11 +24,11 @@ import IconBtn from "@components/Button/IconBtn";
 import OrderDetail from "@contents/Orders/OrderDetail";
 import OrderContent from "@contents/Orders/OrderContent";
 
-const mainTabsArray = [ 
+const mainTabsArray = [
   { id: 1, label: "訂單內容", value: "1" },
   { id: 2, label: "修改紀錄", value: "2" },
   { id: 3, label: "任務派遣", value: "3" },
-  { id: 4, label: "相關文件", value: "4" },
+  { id: 4, label: "相關文件", value: "4" }
 ];
 
 const Page: NextPageWithLayout<
@@ -57,38 +57,44 @@ const Page: NextPageWithLayout<
 
   const handleCopy = () => {
     console.log("click copy button");
-  }
+  };
 
   useEffect(() => {
     setIsEdit(editPage === "edit" ? true : false);
   }, [editPage]);
-
-
 
   return (
     <BodySTY>
       <ControlBar hasShadow>
         <div className="header">
           <div className="item">
-              <DataOverview  title="ORD202310310003"
-              subtitle={<IconBtn tip="複製" type="copy" onClick={handleCopy}/>}
+            <DataOverview
+              title="ORD202310310003"
+              subtitle={<IconBtn tip="複製" type="copy" onClick={handleCopy} />}
               infoArray={[
-                <p key={"head-info-1"} className="head-info-1">客製包車</p>, 
-                <p key={"head-info-2"} className="head-info-2">2023-11-22（三）~2023-11-24（五）</p>
+                <p key={"head-info-1"} className="head-info-1">
+                  客製包車
+                </p>,
+                <p key={"head-info-2"} className="head-info-2">
+                  2023-11-22（三）~2023-11-24（五）
+                </p>
               ]}
-              hasImage={false} />
+              hasImage={false}
+            />
           </div>
-       
+
           <div className="item">
-            <ProgressList dataLists={[
-                    {label: "詢價中", date: "11/01 10:00", status: "ok"},
-                    {label: "已報價", date: "", status: "pending"},
-                    {label: "接受報價", date: "", status: "pending"},
-                    {label: "訂單成立", date: "", status: "pending"},
-                    {label: "建立任務", date: "", status: "pending"},
-                    {label: "已付尾款", date: "", status: "pending"},
-                    {label: "結案", date: "", status: "pending"},
-            ]} />
+            <ProgressList
+              dataLists={[
+                { label: "詢價中", date: "11/01 10:00", status: "ok" },
+                { label: "已報價", date: "", status: "pending" },
+                { label: "接受報價", date: "", status: "pending" },
+                { label: "訂單成立", date: "", status: "pending" },
+                { label: "建立任務", date: "", status: "pending" },
+                { label: "已付尾款", date: "", status: "pending" },
+                { label: "結案", date: "", status: "pending" }
+              ]}
+            />
           </div>
           <div className="item">
             <ButtonSet

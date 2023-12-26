@@ -11,28 +11,10 @@ import {
   Control
 } from "react-hook-form";
 import { BusDataTypes } from "../../../bus.type";
-import InfoCard from "@components/InfoCard";
-import {
-  tagList,
-  IdentityInfo,
-  CategoryInfo,
-  CardInfo,
-  TagInFo,
-  MaintenanceInfo,
-  FinanceInfo,
-  InsuranceInfo,
-  SpecificationInfo,
-  AppearanceInfo,
-  WeightInfo,
-  PerformanceInfo,
-  EngineInfo,
-  TireInfo,
-  TransmissionInfo,
-  EcoMileageInfo,
-  FuelInfo,
-  OilInfo
-} from "./InfoCardData";
-import styled from "styled-components";
+import FinanceDetail from "./SubTabs/Finance";
+import MainDetail from "./SubTabs/MainDetail";
+import MaintenanceDetail from "./SubTabs/Maintenance";
+import SpecificationDetail from "./SubTabs/Specification";
 
 interface Props {
   currentTab: string;
@@ -46,8 +28,6 @@ interface Props {
   fetchDDL: (v: any) => void;
   className?: string;
 }
-
-export const BodySTY = styled.div``;
 
 function Details({
   currentTab,
@@ -75,114 +55,10 @@ function Details({
 
   return (
     <DivSTY>
-      {currentTab === "1" && (
-        <Pane className={"detail"}>
-          <InfoCard
-            isEdit={isEdit}
-            infoData={IdentityInfo}
-            infoTitle="基本資料"
-          />
-          <Group className={"col-wrapper"}>
-            {isEdit && (
-              <InfoCard
-                isEdit={isEdit}
-                infoData={CategoryInfo}
-                infoTitle="分類"
-              />
-            )}
-            <InfoCard
-              isEdit={isEdit}
-              infoData={CardInfo}
-              infoTitle="相關卡號"
-            />
-          </Group>
-          <Pane className={"w-50"}>
-            <InfoCard isEdit={isEdit} infoData={TagInFo} infoTitle="標籤" />
-          </Pane>
-        </Pane>
-      )}
-
-      {currentTab === "2" && (
-        <Pane className={"maintenance"}>
-          <InfoCard
-            isEdit={isEdit}
-            infoData={MaintenanceInfo}
-            infoTitle="定期保養設定"
-          />
-        </Pane>
-      )}
-
-      {currentTab === "3" && (
-        <Pane className={"finance"}>
-          <InfoCard
-            isEdit={isEdit}
-            infoData={FinanceInfo}
-            infoTitle="財務成本"
-          />
-          <InfoCard isEdit={isEdit} infoData={InsuranceInfo} infoTitle="保險" />
-        </Pane>
-      )}
-
-      {currentTab === "4" && (
-        <Pane className={"specification"}>
-          <InfoCard
-            isEdit={isEdit}
-            infoData={SpecificationInfo}
-            infoTitle="尺寸"
-          />
-          <Pane className={"row"}>
-            <InfoCard
-              isEdit={isEdit}
-              infoData={AppearanceInfo}
-              infoTitle="車身"
-            />
-            <InfoCard isEdit={isEdit} infoData={WeightInfo} infoTitle="重量" />
-            <InfoCard
-              isEdit={isEdit}
-              infoData={PerformanceInfo}
-              infoTitle="性能"
-            />
-          </Pane>
-          <InfoCard isEdit={isEdit} infoData={EngineInfo} infoTitle="引擎" />
-          <InfoCard
-            isEdit={isEdit}
-            infoData={TireInfo}
-            infoTitle="車輪和輪胎"
-          />
-          <Pane className={"row"}>
-            <InfoCard
-              isEdit={isEdit}
-              infoData={TransmissionInfo}
-              infoTitle="變速器"
-              height={365}
-            />
-            <InfoCard
-              isEdit={isEdit}
-              infoData={WeightInfo}
-              infoTitle="重量"
-              height={365}
-            />
-            <InfoCard
-              isEdit={isEdit}
-              infoData={EcoMileageInfo}
-              infoTitle="EPA燃油經濟性/油耗表現"
-              height={365}
-            />
-            <InfoCard
-              isEdit={isEdit}
-              infoData={FuelInfo}
-              infoTitle="燃料"
-              height={365}
-            />
-            <InfoCard
-              isEdit={isEdit}
-              infoData={OilInfo}
-              infoTitle="機油"
-              height={365}
-            />
-          </Pane>
-        </Pane>
-      )}
+      {currentTab === "1" && <MainDetail isEdit={isEdit} />}
+      {currentTab === "2" && <MaintenanceDetail isEdit={isEdit} />}
+      {currentTab === "3" && <FinanceDetail isEdit={isEdit} />}
+      {currentTab === "4" && <SpecificationDetail isEdit={isEdit} />}
     </DivSTY>
   );
 }

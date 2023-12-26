@@ -22,8 +22,11 @@ export const InfoCardSTY = styled.div`
   }
 
   .content {
-    padding: 20px;
     border-radius: 0 0 4px 4px;
     overflow: visible;
+
+    &.padding-20 {
+      padding: 20px;
+    }
   }
 `;
