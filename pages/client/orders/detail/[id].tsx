@@ -4,20 +4,16 @@ import { Spinner, toaster } from "evergreen-ui";
 import { BodySTY, ButtonSetSTY, LightBoxContentSTY } from "./style";
 
 import { getLayout } from "@layout/ClientLayout";
-import Breadcrumbs from "@components/Breadcrumbs";
-import ConditionCard from "@components/ConditionCard";
 import OrderDetail from "@contents/Orders/OrderDetail";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 import StatusCard from "@components/StatusCard";
 import { ParsedUrlQuery } from "querystring";
 import OverdueMsg from "@contents/Orders/OverdueMsg";
-import PaymentBtn from "@contents/Orders/PaymentBtn";
 import Quote from "@contents/Orders/Quote";
 import PaymentMethod from "@contents/Orders/PaymentMethod";
 import LightBox from "@components/Lightbox";
 import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import SecondaryBtn from "@components/Button/Secondary/Label";
-import CustomTextArea from "@components/CustomTextArea";
 import { TextareaField } from "evergreen-ui";
 
 const Page: NextPageWithLayout<never> = ({ quote_no }) => {
@@ -62,18 +58,6 @@ const Page: NextPageWithLayout<never> = ({ quote_no }) => {
           <Spinner />
           <div>載入訂單資料中</div>
         </StatusCard>
-      )}
-      {data && (
-        <Breadcrumbs
-          routes={[
-            { label: "首頁", url: "/client" },
-            { label: "訂單管理", url: "/client/orders" },
-            {
-              label: `訂單編號${data.quote_no}`,
-              url: `/client/orders/detail/${data.quote_no}`
-            }
-          ]}
-        />
       )}
       <BodySTY>
         {!isLoading && data && (

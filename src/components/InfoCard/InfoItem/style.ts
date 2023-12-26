@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const ListItem = styled.li`
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
 
-font-size: 14px;
-color: ${({ theme }) => theme.color.N800};
+  font-size: 14px;
+  color: ${({ theme }) => theme.color.N800};
   .label {
     color: ${({ theme }) => theme.color.N300};
 
@@ -32,7 +32,25 @@ color: ${({ theme }) => theme.color.N800};
         color: ${({ theme }) => theme.color.N100};
       }
     }
+    .select-full {
+      width: 100%;
+      select {
+        font-size: 16px;
+        color: ${({ theme }) => theme.color.N100};
+      }
+    }
   }
+
+  &.row {
+    flex-direction: row;
+    align-items: center;
+    .label span:not(:empty) {
+      flex: 0 0 auto;
+      width: 70px;
+      text-align: right;
+    }
+  }
+
   .fb-100 {
     flex-basis: 100%;
   }

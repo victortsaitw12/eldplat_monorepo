@@ -19,7 +19,6 @@ import { Button, toaster, TickCircleIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { useForm, FormProvider } from "react-hook-form";
 import { Pane } from "evergreen-ui";
-import Breadcrumbs from "@components/Breadcrumbs";
 //
 import {
   QuotationCreatePayload,
@@ -261,12 +260,6 @@ const Page: NextPageWithLayout<
   if (currentTab === 5) {
     return (
       <BodySTY>
-        <Breadcrumbs
-          routes={[
-            { label: "首頁", url: "/client" },
-            { label: "預約服務", url: "/client/quote" },
-          ]}
-        />
         <div className="redirect-body">
           <TickCircleIcon
             color="success"
@@ -346,12 +339,6 @@ const Page: NextPageWithLayout<
     </LoadingModal>
   ) : (
     <BodySTY>
-      <Breadcrumbs
-        routes={[
-          { label: "首頁", url: "/client" },
-          { label: "預約服務", url: "/client/quote" },
-        ]}
-      />
       <StatusCard>
         <NavigationList
           dataLists={DummyNavigationListData}

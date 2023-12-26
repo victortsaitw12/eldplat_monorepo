@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { DivSTY } from "./style";
 import {
+  getConditionList,
   getMaintenanceNoticeTitle,
   getMaintenanceNoticeData
 } from "@services/maintenance/getMaintenanceNotice";
@@ -36,8 +37,15 @@ function MaintenanceNoticeList() {
   const tableTitle = getMaintenanceNoticeTitle();
 
   useEffect(() => {
-    initializeSubFilter();
+    const conditionList = getConditionList();
     const tableData = getMaintenanceNoticeData();
+    if (!subFilter) {
+      localStorage.setItem(
+        "maintenanceInitFilter",
+        JSON.stringify(conditionList)
+      );
+    }
+    initializeSubFilter();
     setData(tableData);
   }, []);
 
@@ -48,13 +56,13 @@ function MaintenanceNoticeList() {
   return (
     <DivSTY>
       {/* delete loading spinner */}
-      {/* <FilterWrapper
+      <FilterWrapper
         updateFilter={updateSubFilter}
         resetFilter={() => {
           initializeSubFilter();
         }}
         filter={subFilter}
-      /> */}
+      />
       <Table
         titles={tableTitle}
         data={data}
