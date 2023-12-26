@@ -59,64 +59,88 @@ const Page: NextPageWithLayout<
     console.log("click copy button");
   };
 
+  const DUMMY_DATA = [
+    { id: "ORD202310310001", status: 0 },
+    {
+      id: "ORD202310310002",
+      status: 2
+    },
+    {
+      id: "ORD202310310003",
+      status: 4
+    }
+  ];
+
   useEffect(() => {
     setIsEdit(editPage === "edit" ? true : false);
   }, [editPage]);
 
   return (
     <BodySTY>
-      <ControlBar hasShadow>
-        <div className="header">
-          <div className="item">
-            <DataOverview
-              title={orderId}
-              subtitle={<IconBtn tip="複製" type="copy" onClick={handleCopy} />}
-              infoArray={[
-                <p key={"head-info-1"} className="head-info-1">
-                  客製包車
-                </p>,
-                <p key={"head-info-2"} className="head-info-2">
-                  2023-11-22（三）~2023-11-24（五）
-                </p>
-              ]}
-              hasImage={false}
-            />
-          </div>
+      {!isEdit ? (
+        <>
+          <ControlBar hasShadow>
+            <div className="header">
+              <div className="item">
+                <DataOverview
+                  title={orderId}
+                  subtitle={
+                    <IconBtn tip="複製" type="copy" onClick={handleCopy} />
+                  }
+                  infoArray={[
+                    <p key={"head-info-1"} className="head-info-1">
+                      客製包車
+                    </p>,
+                    <p key={"head-info-2"} className="head-info-2">
+                      2023-11-22（三）~2023-11-24（五）
+                    </p>
+                  ]}
+                  hasImage={false}
+                />
+              </div>
 
-          <div className="item">
-            <ProgressList
-              dataLists={[
-                { label: "詢價中", date: "11/01 10:00", status: "ok" },
-                { label: "已報價", date: "", status: "pending" },
-                { label: "接受報價", date: "", status: "pending" },
-                { label: "訂單成立", date: "", status: "pending" },
-                { label: "建立任務", date: "", status: "pending" },
-                { label: "已付尾款", date: "", status: "pending" },
-                { label: "結案", date: "", status: "pending" }
-              ]}
-            />
-          </div>
-          <div className="item">
-            <ButtonSet
+              <div className="item">
+                <ProgressList
+                  dataLists={[
+                    { label: "詢價中", date: "11/01 10:00", status: "ok" },
+                    { label: "已報價", date: "", status: "pending" },
+                    { label: "接受報價", date: "", status: "pending" },
+                    { label: "訂單成立", date: "", status: "pending" },
+                    { label: "建立任務", date: "", status: "pending" },
+                    { label: "已付尾款", date: "", status: "pending" },
+                    { label: "結案", date: "", status: "pending" }
+                  ]}
+                />
+              </div>
+              <div className="item">
+                <ButtonSet
+                  isEdit={isEdit}
+                  primaryDisable={false}
+                  secondaryBtnText={isEdit ? "取消" : "回列表"}
+                  secondaryBtnOnClick={isEdit ? handleView : handleReturn}
+                  primaryBtnText={isEdit ? "儲存" : "編輯"}
+                  primaryBtnOnClick={isEdit ? handleView : handleEdit}
+                  thirdBtnText={isEdit ? "" : "送出報價"}
+                  thirdBtnOnClick={isEdit ? handleView : handleEdit}
+                />
+              </div>
+            </div>
+          </ControlBar>
+          <TabsWrapper
+            onChangeTab={changeMainFilterHandler}
+            mainFilter={mainFilter}
+            mainFilterArray={mainTabsArray}
+          >
+            <OrderContent
               isEdit={isEdit}
-              primaryDisable={false}
-              secondaryBtnText={isEdit ? "取消" : "回列表"}
-              secondaryBtnOnClick={isEdit ? handleView : handleReturn}
-              primaryBtnText={isEdit ? "儲存" : "編輯"}
-              primaryBtnOnClick={isEdit ? handleView : handleEdit}
-              thirdBtnText={isEdit ? "" : "送出報價"}
-              thirdBtnOnClick={isEdit ? handleView : handleEdit}
+              orderId={orderId}
+              formType={mainFilter}
             />
-          </div>
-        </div>
-      </ControlBar>
-      <TabsWrapper
-        onChangeTab={changeMainFilterHandler}
-        mainFilter={mainFilter}
-        mainFilterArray={mainTabsArray}
-      >
+          </TabsWrapper>
+        </>
+      ) : (
         <OrderContent isEdit={isEdit} orderId={orderId} formType={mainFilter} />
-      </TabsWrapper>
+      )}
     </BodySTY>
   );
 };

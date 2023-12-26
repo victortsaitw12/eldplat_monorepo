@@ -122,6 +122,11 @@ const breadcrumbs: I_routers = {
     { label: "檢視訂單", url: "/orders/detail/create" },
     { label: "新增文件", url: "" }
   ],
+  "/orders/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" },
+    { label: "編輯訂單", url: "" }
+  ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   "/bus": [
@@ -268,15 +273,15 @@ const breadcrumbs: I_routers = {
 const clientBreadcrumbs: I_routers = {
   "/client/quote": [
     { label: "首頁", url: "/client" },
-    { label: "預約服務", url: "/client/quote" },
+    { label: "預約服務", url: "/client/quote" }
   ],
   "/client/quote/edit": [
     { label: "首頁", url: "/client" },
-    { label: "預約服務", url: "/client/quote" },
+    { label: "預約服務", url: "/client/quote" }
   ],
   "/client/quote/confirm": [
     { label: "首頁", url: "/client" },
-    { label: "訂單管理", url: "/client/orders" },
+    { label: "訂單管理", url: "/client/orders" }
   ],
   "/client/orders/detail/[id]": [
     { label: "首頁", url: "/client" },
@@ -288,9 +293,9 @@ const clientBreadcrumbs: I_routers = {
   ],
   "/client/orders/inquire": [
     { label: "首頁", url: "/client" },
-    { label: "查詢訂單", url: "/client/orders/inquire" },
+    { label: "查詢訂單", url: "/client/orders/inquire" }
   ]
-}
+};
 
 const vendorsBreadcrumbs: I_routers = {
   "01": [
@@ -347,19 +352,19 @@ const busListBreadcrumbs: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
-  console.log("======> breadcrumbs")
+  console.log("======> breadcrumbs");
   console.log("router.pathname", router.pathname);
   console.log("router.asPath", router.asPath);
   console.log("router.query", router.query);
   const newBreadcrumbs =
-  breadcrumbs[router.pathname] ||
-  breadcrumbs[router.asPath] ||
-  clientBreadcrumbs[router.pathname] ||
-  vendorsBreadcrumbs[router?.query?.codeType as string] ||
-  busListBreadcrumbs[router?.query?.type as string] ||
-  [];
+    breadcrumbs[router.pathname] ||
+    breadcrumbs[router.asPath] ||
+    clientBreadcrumbs[router.pathname] ||
+    vendorsBreadcrumbs[router?.query?.codeType as string] ||
+    busListBreadcrumbs[router?.query?.type as string] ||
+    [];
   console.log("newBreadcrumbs", newBreadcrumbs);
-  console.log("=====================")
+  console.log("=====================");
   return newBreadcrumbs;
 };
 
