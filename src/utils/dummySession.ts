@@ -211,3 +211,6 @@ export const useSession = () => {
     }
 }
 
+export const signIn = async (category: string, data: any) => {
+  return {message: "success", error: undefined};
+}

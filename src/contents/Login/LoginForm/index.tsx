@@ -1,5 +1,7 @@
 import React from "react";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
+import { signIn } from "@utils/dummySession";
+
 import { TextInputField } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
