@@ -31,31 +31,25 @@ const ShiftPage: NextPageWithLayout<never> = () => {
   const [data, setData] = React.useState<any>([]);
   const [pageInfo, setPageInfo] = React.useState<I_PageInfo>(defaultPageInfo);
   const [renderDate, setRenderDate] = React.useState(new Date());
-  
+
   const DUMMY_subfilter = {
-    "User_Name": {
-        "field_Name": "User_Name",
-        "arrayConditions": [
-            "like",
-            "equal"
-        ],
-        "displayType": "search",
-        "dataType": "string",
-        "label": "駕駛-名",
-        "value": ""
+    User_Name: {
+      field_Name: "User_Name",
+      arrayConditions: ["like", "equal"],
+      displayType: "search",
+      dataType: "string",
+      label: "駕駛-名",
+      value: ""
     },
-    "Dsph_Area": {
-        "field_Name": "Dsph_Area",
-        "arrayConditions": [
-            "like",
-            "equal"
-        ],
-        "displayType": "fix",
-        "dataType": "string",
-        "label": "駐派區域",
-        "value": ""
-    },
-  }
+    Dsph_Area: {
+      field_Name: "Dsph_Area",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "駐派區域",
+      value: ""
+    }
+  };
   const DUMMY_pageInfo = {
     Page_Index: 1,
     Page_Size: 10,
@@ -63,7 +57,7 @@ const ShiftPage: NextPageWithLayout<never> = () => {
     Arrangement: "desc",
     Total: 5,
     Last_Page: 1
-  }
+  };
   //------ functions ------//
   const fetchData = async (subFilter: any, pageInfo: I_PageInfo) => {
     const dateStr = `${renderDate.getFullYear()}-${(
@@ -135,24 +129,31 @@ const ShiftPage: NextPageWithLayout<never> = () => {
                 initializeSubFilter();
               }}
               filter={DUMMY_subfilter}
-            >
-            </FilterWrapper>
+            ></FilterWrapper>
             <MonthPicker
               key="monthpicker"
               initialDate={renderDate}
               onMonthChange={handleChangeMonth}
             />
           </Pane>
-          <Pane className="overviewControl" display="flex" justifyContent="space-between">
+          <Pane
+            className="overviewControl"
+            display="flex"
+            justifyContent="space-between"
+          >
             <Pane display="flex">
-              { Array.from(EVENT_TYPE).map(([key, value]) => {
-                if (key !== "00" && key !=="042") return <EventTag key={key} value={value} />;
+              {Array.from(EVENT_TYPE).map(([key, value]) => {
+                if (key !== "00" && key !== "042")
+                  return <EventTag key={key} value={value} />;
               })}
             </Pane>
             <ZoomBar key="zoombar" setState={handleZoombar} />
           </Pane>
-          <Pane>
-            <PaginationField pageInfo={pageInfo} onPageChange={handlePageChange} />
+          <Pane className="overviewPag">
+            <PaginationField
+              pageInfo={pageInfo}
+              onPageChange={handlePageChange}
+            />
           </Pane>
           <div className="overviewContainer">
             <OverviewTable

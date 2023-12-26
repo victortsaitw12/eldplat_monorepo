@@ -1,7 +1,9 @@
 import React, { ReactNode } from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
+import { useSession } from "@utils/dummySession";
+
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 //

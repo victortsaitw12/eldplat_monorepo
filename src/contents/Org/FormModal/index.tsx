@@ -1,7 +1,9 @@
 import React from "react";
 import { Switch, Group, Text, TextInputField } from "evergreen-ui";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
+import { useSession } from "@utils/dummySession";
+
 import { ErrorMessage } from "@hookform/error-message";
 import { FormSTY } from "./style";
 

@@ -19,9 +19,9 @@ import {
 
 import { getAllMission } from "@services/assignment/getAllMission";
 import MonthPicker from "@contents/Schedule/MonthPicker";
-import BusTable from "@contents/Assignment/BusTable";
-import MissionTable from "@contents/Assignment/MissionTable";
-import BusStatusRow from "@contents/Assignment/BusStatusRow";
+import BusTable from "@contents/Assignment/BusTable/BusTable";
+import MissionTable from "@contents/Assignment/MissionTable/MissionTable";
+import BusStatusRow from "@contents/Assignment/MissionTable/BusStatusRow";
 import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import { PlusIcon } from "evergreen-ui";
 
