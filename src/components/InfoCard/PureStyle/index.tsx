@@ -7,17 +7,24 @@ export interface I_InfoCardProps {
   isEdit: boolean;
   infoTitle?: string | React.ReactNode;
   children: any;
+  hasPadding?: boolean;
   className?: string;
 }
 
-function InfoCard({ style, infoTitle, children, className }: I_InfoCardProps) {
+function InfoCard({
+  style,
+  infoTitle,
+  children,
+  hasPadding = true,
+  className
+}: I_InfoCardProps) {
   return (
     <InfoCardSTY
       className={`${className ? className : ""} InfoCard__container`}
       style={style}
     >
       {infoTitle && <Text className="title">{infoTitle}</Text>}
-      <div className="content">{children}</div>
+      <div className={`content ${hasPadding ? "padding-20" : ""}`}>{children}</div>
     </InfoCardSTY>
   );
 }

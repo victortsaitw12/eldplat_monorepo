@@ -186,7 +186,7 @@ const Page: NextPageWithLayout<
         />
       </ControlBar>
       <Pane className={"main-column"}>
-        <InfoCard isEdit={true} infoTitle="設備" infoData={FuelInfo} />
+        <InfoCard isEdit={true} infoTitle="油耗紀錄" infoData={FuelInfo} />
       </Pane>
       <LightBox
         title="確定要離開嗎?"

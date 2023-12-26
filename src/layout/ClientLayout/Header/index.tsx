@@ -4,13 +4,15 @@ import {
   FlashIcon,
   ThemeProvider,
   Select,
-  PersonIcon
+  PersonIcon,
 } from "evergreen-ui";
 import React from "react";
 import { BodySTY } from "./style";
 import { HelpIcon } from "evergreen-ui";
 
 const Header = ({ layoutProps, theme, setTheme }: any) => {
+  console.log("=====", layoutProps);
+
   const handleLangChange = (e: any) => {
     layoutProps?.setLocale(e.target.value);
   };

@@ -45,5 +45,8 @@ const Page = () => {
 
 // Page.getLayout = getLayout;
 Page.getLayout = (page: ReactNode, layoutProps: any) =>
-  getLayout(page, { ...layoutProps, title: "前台首頁" });
+  getLayout(page, { 
+    ...layoutProps, 
+    title: "前台首頁",
+  });
 export default Page;
