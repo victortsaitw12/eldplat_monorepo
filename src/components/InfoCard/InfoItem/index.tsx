@@ -12,6 +12,7 @@ export interface I_infoData {
   inputType?: string;
   listClassName?: string;
   bold?: boolean;
+  direction?: string;
 }
 
 // export interface I_InfoCardProps {
@@ -46,18 +47,27 @@ export interface I_infoData {
 function InfoItem({
   item,
   isEdit,
-  InfoCardId
+  InfoCardId,
+  direction = "column"
 }: {
   item: I_infoData;
   isEdit: boolean;
   InfoCardId?: string;
+  direction?: string;
 }) {
   return (
-    <ListItem className={`item ${item?.listClassName}`} key={InfoCardId}>
-      <Pane className={`label ${item?.bold && isEdit ? "bold" : ""}`}>
-        {item?.req && isEdit && <span className="req">*</span>}
-        <span>{item?.label}</span>
-      </Pane>
+    <ListItem
+      className={`item ${item?.listClassName} ${direction}`}
+      key={InfoCardId}
+    >
+      {direction === "row" && !item.label ? (
+        ""
+      ) : (
+        <Pane className={`label ${item?.bold && isEdit ? "bold" : ""}`}>
+          {item?.req && isEdit && <span className="req">*</span>}
+          <span>{item?.label}</span>
+        </Pane>
+      )}
       <Pane className="value">
         {isEdit && item?.editEle ? item?.editEle : item?.value}
       </Pane>
