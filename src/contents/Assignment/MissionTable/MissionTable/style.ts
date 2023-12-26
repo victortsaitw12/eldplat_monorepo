@@ -130,14 +130,17 @@ export const OverviewSTY = styled.div`
   .dispatch_area {
     margin-top: 10px;
     .dispatch_table {
-      border: 1px solid ${({ theme }) => theme.color.N40};
       box-shadow: 0px 4px 8px 0px rgba(16, 24, 64, 0.08);
-      border-bottom: none;
+      /* border-bottom: none; */
+      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      border-left: 1px solid ${({ theme }) => theme.color.N40};
+      border-right: 1px solid ${({ theme }) => theme.color.N40};
     }
     .dispatch_header {
       padding: 10px 20px;
       background: ${({ theme }) => theme.color.N20};
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+      border-top: 1px solid ${({ theme }) => theme.color.N40};
       p {
         color: ${({ theme }) => theme.color.N300};
         font-size: 16px;
@@ -147,10 +150,6 @@ export const OverviewSTY = styled.div`
     }
     .dispatch_row {
       display: flex;
-      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
-      &:not(:last-child) {
-        border: none;
-      }
       .dispatch_title {
         display: flex;
         align-items: center;
