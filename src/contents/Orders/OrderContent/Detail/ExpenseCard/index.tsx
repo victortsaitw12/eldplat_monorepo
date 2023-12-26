@@ -5,7 +5,7 @@ import { Pane } from "evergreen-ui";
 
 const ExpenseCard = () => {
   return (
-    <InfoCard isEdit={false} hasPadding={false} infoTitle={"費用"}>
+    <InfoCard isEdit={false} hasPadding={true} infoTitle={"費用"}>
       <DivSTY className="expense-content">
         <div className="list expense-title">
           <div>總金額</div>
