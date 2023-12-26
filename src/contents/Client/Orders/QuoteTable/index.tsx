@@ -70,6 +70,7 @@ const ButtonGroup = () => {
             border="none"
             fontWeight="600"
             fontSize="16px"
+            backgroundColor="transparent"
           >
             {btn.text}
           </Button>

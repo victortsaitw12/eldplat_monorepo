@@ -14,4 +14,8 @@ export const CustomTableSTY = styled.div`
       }
     }
   }
+
+  .item-icon.pending {
+    background-color: ${({ theme }) => theme.color.N0};
+  }
 `
