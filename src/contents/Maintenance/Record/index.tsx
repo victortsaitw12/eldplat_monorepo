@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
-import { useRouter,  } from "next/router";
+import { useRouter } from "next/router";
 import { DivSTY } from "./style";
-import { 
-  getMaintenanceRecordTitle, 
-  getMaintenanceRecordData 
+import {
+  getMaintenanceRecordTitle,
+  getMaintenanceRecordData
 } from "@services/maintenance/getMaintenanceRecord";
 import { I_PageInfo } from "@components/PaginationField";
 import Table from "@components/Table/Table";
@@ -31,7 +31,8 @@ function MaintenanceRecordList() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<I_PageInfo>(defaultPageInfo);
-  const { initializeSubFilter, subFilter, updateSubFilter } = useMaintenanceStore();
+  const { initializeSubFilter, subFilter, updateSubFilter } =
+    useMaintenanceStore();
   const tableTitle = getMaintenanceRecordTitle();
 
   useEffect(() => {
@@ -57,18 +58,18 @@ function MaintenanceRecordList() {
 
   return (
     <DivSTY>
-      <FilterWrapper
+      {/* <FilterWrapper
         updateFilter={updateSubFilter}
         resetFilter={() => {
           initializeSubFilter();
         }}
         filter={subFilter}
-       />
+       /> */}
       <Table
-          titles={tableTitle}
-          data={modifiedData}
-          onView={handleView}
-          headNode={<PaginationField pageInfo={pageInfo} />}
+        titles={tableTitle}
+        data={modifiedData}
+        onView={handleView}
+        headNode={<PaginationField pageInfo={pageInfo} />}
       />
     </DivSTY>
   );

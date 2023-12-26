@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { login } from "@services/account/login";
 import { getMenu } from "@services/sys/getMenu";
-import { DUMMY_USER } from "@services/account/login";
+import { DUMMY_USER, loginV2 } from "@services/account/login";
 
 //All requests to /api/auth/* (signIn, callback, signOut, etc.) will automatically be handled
 export const authOptions = {
@@ -24,7 +24,12 @@ export const authOptions = {
         }
       },
       async authorize(credentials, req) {
-        if (!req.body.email || !req.body.password) return null;
+        return DUMMY_USER;
+
+        // const { email, password } = credentials;
+        // const resLogin = await loginV2(email, password);
+        // if (resLogin.StatusCode !== "200") return null;
+        // return resLogin;
         // TODO comment out for 12/28 demo
         // const resLogin = await login(req.body.email, req.body.password);
         // if (resLogin.StatusCode !== "200") return null;
@@ -39,7 +44,7 @@ export const authOptions = {
         // const resMenu = await getMenu(user.account_no, user.org_no);
         // if (resMenu.StatusCode !== "200") return null;
         // user.menuData = resMenu.DataList[0];
-        return DUMMY_USER;
+        // return DUMMY_USER;
       }
     })
   ],

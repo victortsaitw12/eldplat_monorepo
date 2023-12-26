@@ -4,14 +4,14 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { Pane, toaster } from "evergreen-ui";
 import { BodySTY } from "./style";
-import DispatchCreate from "@contents/Assignment/DispatchCreate";
+import DispatchCreate from "@contents/Assignment/ManualDispatch/DispatchCreate";
 import { MonthlyData } from "@contents/Shift/shift.typing";
 
 import { getLayout } from "@layout/MainLayout";
 import UIProvider from "@contexts/scheduleContext/UIProvider";
 import { getScheduleList } from "@services/schedule/getScheduleList";
 import ApprovalTable from "@contents/Schedule/ApprovalTable";
-import CreateMission from "@contents/Assignment/CreateMission";
+import CreateMission from "@contents/Assignment/Mission/CreateMission";
 import LightBox from "@components/Lightbox";
 import ControlBar from "@components/ControlBar";
 import ButtonSet from "@components/ButtonSet";

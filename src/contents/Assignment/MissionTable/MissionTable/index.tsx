@@ -11,11 +11,11 @@ import { getDayStart, TotalMS } from "@contents/Schedule/shift.util";
 import { MissionData } from "@contents/Assignment/assignment.typing";
 
 import timeUtil, { type I_MonthItem } from "@utils/schedule.timeUtil";
-import BusStatusTag from "@contents/Assignment/BusStatusTag";
+import BusStatusTag from "@contents/Assignment/BusTable/BusStatusTag";
 import { BUS_STATUS } from "@contents/Assignment/assignment.data";
 import PaginationField from "@components/PaginationField";
 import SecondaryBtn from "@components/Button/Secondary/Label";
-import MissionArea from "@contents/Assignment/MissionArea";
+import MissionArea from "@contents/Assignment/MissionTable/MissionArea";
 
 interface I_OverviewTable {
   data: MissionData[];
