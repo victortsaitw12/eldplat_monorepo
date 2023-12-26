@@ -69,7 +69,7 @@ const Page: NextPageWithLayout<
         <div className="header">
           <div className="item">
             <DataOverview
-              title="ORD202310310003"
+              title={orderId}
               subtitle={<IconBtn tip="複製" type="copy" onClick={handleCopy} />}
               infoArray={[
                 <p key={"head-info-1"} className="head-info-1">
