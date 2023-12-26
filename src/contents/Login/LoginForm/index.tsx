@@ -1,5 +1,7 @@
 import React from "react";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
+import { signIn } from "@utils/dummySession";
+
 import { TextInputField } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { BodySTY } from "./style";
@@ -81,7 +83,7 @@ function Form() {
       <AssistRow />
       <div>
         測試帳密:
-        <span> user@gmail.com ++</span>
+        <span> user@gmail.com +</span>
         <span> 12345</span>
       </div>
       <Button text={"登入"} onClick={handleLogin} />

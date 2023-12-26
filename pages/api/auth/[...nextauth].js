@@ -24,10 +24,12 @@ export const authOptions = {
         }
       },
       async authorize(credentials, req) {
-        const { email, password } = credentials;
-        const resLogin = await loginV2(email, password);
-        if (resLogin.StatusCode !== "200") return null;
         return DUMMY_USER;
+
+        // const { email, password } = credentials;
+        // const resLogin = await loginV2(email, password);
+        // if (resLogin.StatusCode !== "200") return null;
+        // return resLogin;
         // TODO comment out for 12/28 demo
         // const resLogin = await login(req.body.email, req.body.password);
         // if (resLogin.StatusCode !== "200") return null;
