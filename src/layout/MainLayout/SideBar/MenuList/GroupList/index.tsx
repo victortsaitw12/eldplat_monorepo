@@ -38,7 +38,7 @@ function Index({ menu }: Props) {
           return url.includes(router.pathname);
         });
       } else {
-        return item.url === window.location.pathname;
+        return typeof window !== "undefined" && item.url === window.location.pathname;
       }
     });
   };
