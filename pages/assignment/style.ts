@@ -13,9 +13,6 @@ export const BodySTY = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: row;
-  .table-content {
-    overflow: hidden;
-  }
   .pageContent {
     height: 100%;
     width: 100%;

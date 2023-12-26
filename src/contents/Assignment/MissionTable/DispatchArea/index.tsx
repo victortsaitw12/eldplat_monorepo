@@ -34,53 +34,55 @@ const DispatchArea = ({ data }: I_OverviewTable) => {
   // };
   return (
     <div className="dispatch_area">
-      {data.map((item, index) => {
-        return (
-          <div key={index} className="dispatch_table">
-            <div className="dispatch_header">
-              <p>{item.dispatch_Start_Date}</p>
-            </div>
-            <div className="dispatch_row">
-              <div className="dispatch_title">
-                <p>第一車</p>
+      <div className="dispatch_table">
+        {data.map((item, index) => {
+          return (
+            <div key={index} className="dispatch">
+              <div className="dispatch_header">
+                <p>{item.dispatch_Start_Date}</p>
               </div>
-              <div className="dispatch_info_wrapper">
-                <div className="dispatch_info">
-                  <div className="dw_1">
-                    <p>台北車站 -{">"} 日月潭飯店</p>
+              <div className="dispatch_row">
+                <div className="dispatch_title">
+                  <p>第一車</p>
+                </div>
+                <div className="dispatch_info_wrapper">
+                  <div className="dispatch_info">
+                    <div className="dw_1">
+                      <p>台北車站 -{">"} 日月潭飯店</p>
+                    </div>
+                    <div className="dw_1">
+                      <p>08 : 00 ～ 21 : 00</p>
+                    </div>
+                    <div className="dw_1">
+                      <p className="font_main pb_1">KAA-0001 奶油雄獅</p>
+                      <p className="font_sub">中巴 36客座 一年</p>
+                    </div>
+                    <div className="dw_1">
+                      <p className="font_main pb_1">吳中華</p>
+                      <p className="font_sub">0912-345-678 </p>
+                    </div>
+                    <div className="dw_1">
+                      <p>我是備註</p>
+                    </div>
                   </div>
-                  <div className="dw_1">
-                    <p>08 : 00 ～ 21 : 00</p>
-                  </div>
-                  <div className="dw_1">
-                    <p className="font_main pb_1">KAA-0001 奶油雄獅</p>
-                    <p className="font_sub">中巴 36客座 一年</p>
-                  </div>
-                  <div className="dw_1">
-                    <p className="font_main pb_1">吳中華</p>
-                    <p className="font_sub">0912-345-678 </p>
-                  </div>
-                  <div className="dw_1">
-                    <p>我是備註</p>
+                  <div className="dispatch_info_button">
+                    <button
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        e.stopPropagation();
+                        router.push(
+                          "/assignment/dispatch/detail/K001?editPage=edit"
+                        );
+                      }}
+                    >
+                      <EditIcon />
+                    </button>
                   </div>
                 </div>
-                <div className="dispatch_info_button">
-                  <button
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      e.stopPropagation();
-                      router.push(
-                        "/assignment/dispatch/detail/K001?editPage=edit"
-                      );
-                    }}
-                  >
-                    <EditIcon />
-                  </button>
-                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       <div className="dispatch_button">
         <SecondaryBtn
           text="新增派單"
