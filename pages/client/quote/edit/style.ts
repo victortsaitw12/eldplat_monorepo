@@ -11,6 +11,10 @@ export const BodySTY = styled.div`
       display: flex;
       flex-direction: column;
       gap: 50px;
+      box-shadow: 0px 4px 8px 0px #10184014;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 20px;
     }
           
     .content-actions-container {
@@ -21,7 +25,7 @@ export const BodySTY = styled.div`
     }
 
     > .charge-container {
-      border-radius: 10px;
+      border-radius: 4px;
       overflow: hidden;
       height: fit-content;
       background-color: ${({ theme }) => theme.color.N0};
@@ -79,6 +83,9 @@ export const BodySTY = styled.div`
     }
   }
   .quote-detail {
+    box-shadow: 0px 4px 8px 0px #10184014;
+    border-radius: 4px;
+    overflow: hiddden;
     .grid_content {
       .item:nth-child(odd) {
         background-color: ${({ theme }) => theme.color.N20};;

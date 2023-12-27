@@ -33,7 +33,6 @@ function DriverList({
     router.push(`/user/detail/${id}`);
   };
 
-  console.log("driverData ======> ", driverData);
 
   return (
     <DriverListSTY>
