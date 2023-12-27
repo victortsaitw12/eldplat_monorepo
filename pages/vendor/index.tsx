@@ -24,7 +24,6 @@ import { deleteVendor } from "@services/vendor/deleteVendor";
 import { getAllVendors, defaultPageInfo } from "@services/vendor/getAllVendors";
 
 //@components
-import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
 import LabelTag from "@components/LabelTag";
 import { I_PageInfo } from "@components/PaginationField";
@@ -337,27 +336,6 @@ const Page: NextPageWithLayout<{
             </FilterWrapper>
           </TabsWrapper>
           {/* <SideBookMark /> */}
-          {isDrawerOpen && (
-            <Drawer
-              tabName={["新增供應商"]}
-              isFullScreen={isDrawerFullWidth}
-              closeDrawer={() => {
-                setDrawerOpen(false);
-                setIsDrawerFullWidth(false);
-              }}
-              toggleFullScreenDrawer={() => {
-                setIsDrawerFullWidth(!isDrawerFullWidth);
-              }}
-            >
-              <VendorCreateForm
-                reloadData={() => {
-                  setDrawerOpen(false);
-                  setData([]);
-                  fetchVendorsData(false, "1", pageInfo);
-                }}
-              />
-            </Drawer>
-          )}
         </>
       </BodySTY>
     </RegionProvider>

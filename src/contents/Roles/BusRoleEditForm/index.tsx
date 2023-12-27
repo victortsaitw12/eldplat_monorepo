@@ -1,7 +1,6 @@
 import React from "react";
 import { Checkbox } from "evergreen-ui";
 import StyledCheckBox from "@components/CheckBox";
-import { StepControlSTY } from "@components/FormCard/style";
 import { BodySTY } from "./style";
 
 interface Props {

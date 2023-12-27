@@ -4,7 +4,6 @@ import { DivSTY } from "./style";
 
 // import { MOCK_expenseList } from "@mock-data/orders";
 import Collapse from "@components/Collapse";
-import ExpenseDetail from "@components/ExpenseDetail";
 // import PaymentBtn from "../PaymentBtn";
 import { I_OrderDetail } from "@services/client/getQuotation";
 import NoticeMessage from "@components/NoticeMessage";
@@ -87,7 +86,6 @@ const Quote = ({
           viewOnly
           OnToggle={handleToggle}
         >
-          <ExpenseDetail data={expenseList} prefix="NT$" />
           <Pane marginBottom="20px"><NoticeMessage message="注意事項注意事項注意事項注意事項注意事項注意事項" /></Pane>
           {
             data.status_list[1].status === "pending" && 

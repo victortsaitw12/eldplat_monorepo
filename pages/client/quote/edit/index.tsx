@@ -10,7 +10,6 @@ import StatusCard from "@components/StatusCard";
 import { BodySTY } from "./style";
 import NavigationList from "@components/NavigationList";
 import Collapse from "@components/Collapse";
-import ExpenseDetail from "@components/ExpenseDetail";
 import TravelInformation from "@contents/Client/Quote/TravelInformation";
 import RidingInformation from "@contents/Client/Quote/RidingInformation";
 import ContactInformation from "@contents/Client/Quote/ContactInformation";
@@ -385,7 +384,6 @@ const Page: NextPageWithLayout<
             <div className="title">初估金額</div>
             <div className="charge">NTD $2,805</div>
           </div>
-          <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
           <NoticeMessage size={16} message="注意事項注意事項注意事項注意事項注意事項注意事項" />
           <div className="content-actions-container">
             <Button

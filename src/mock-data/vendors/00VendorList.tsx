@@ -1,5 +1,4 @@
 import { TagSTY, MultipleTxtSTY } from "@components/Table/style";
-import StarRate from "@components/StarRate";
 
 export const MOCK_LIST_TITLES = [
   "名稱",
@@ -31,7 +30,7 @@ export const MOCK_LIST_DATA = [
     contactName: "Jose Valdespino",
     contactEmail: null,
     labels: null,
-    Rating: <StarRate rate={0.5} reviews={2} />,
+    Rating: <p>DELETE STARRATE, PLEASE CHECK THE PAGE AGAIN</p>,
     watchers: null
   },
   {
@@ -52,7 +51,7 @@ export const MOCK_LIST_DATA = [
     contactName: "Jose Valdespino",
     contactEmail: null,
     labels: null,
-    Rating: <StarRate rate={2.5} reviews={5} />,
+    Rating: <p>DELETE STARRATE, PLEASE CHECK THE PAGE AGAIN</p>,
     watchers: null
   },
   {
@@ -94,7 +93,7 @@ export const MOCK_LIST_DATA = [
     contactName: "Jose Valdespino",
     contactEmail: null,
     labels: null,
-    Rating: <StarRate rate={3.5} reviews={10} />,
+    Rating: <p>DELETE STARRATE, PLEASE CHECK THE PAGE AGAIN</p>,
     watchers: null
   }
 ];

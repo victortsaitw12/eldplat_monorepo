@@ -12,7 +12,6 @@ import { BodySTY } from "./style";
 import { mappingQueryData } from "@utils/mappingQueryData";
 import { deleteBus } from "@services/bus/deleteBus";
 import FilterWrapper from "@layout/FilterWrapper";
-import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 import { I_PageInfo } from "@components/PaginationField";

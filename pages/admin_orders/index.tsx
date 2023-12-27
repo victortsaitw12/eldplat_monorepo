@@ -20,7 +20,6 @@ import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
 import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
 
 //@components
-import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
 import LabelTag from "@components/LabelTag";
 import { I_PageInfo } from "@components/PaginationField";
@@ -292,27 +291,6 @@ const Page: NextPageWithLayout<{
               ></AdminOrdersList>
             </FilterWrapper>
           </TabsWrapper>
-          {isDrawerOpen && (
-            <Drawer
-              tabName={["新增詢價單"]}
-              isFullScreen={isDrawerFullWidth}
-              closeDrawer={() => {
-                setDrawerOpen(false);
-                setIsDrawerFullWidth(false);
-              }}
-              toggleFullScreenDrawer={() => {
-                setIsDrawerFullWidth(!isDrawerFullWidth);
-              }}
-            >
-              <AdminOrderCreateForm
-                reloadData={() => {
-                  setDrawerOpen(false);
-                  setData([]);
-                  getDataByTab(nowTab);
-                }}
-              />
-            </Drawer>
-          )}
           {/* <SideBookMark /> */}
         </>
       ) : (

@@ -17,7 +17,6 @@ import { deleteCustomer } from "@services/customer/deleteCustomer";
 import { getCreateCustomerOptions } from "@services/customer/getCreateCustomerOptions";
 import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-import Drawer from "@components/Drawer";
 import CustomerCreateForm from "@contents/Customer/CustomerCreateForm";
 import { I_PageInfo } from "@components/PaginationField";
 import RegionProvider from "@contexts/regionContext/regionProvider";
@@ -159,27 +158,6 @@ const Page: NextPageWithLayout<never> = () => {
             />
           </FilterWrapper>
         </TabsWrapper>
-        {isDrawerOpen && (
-          <Drawer
-            tabName={["新增客戶"]}
-            closeDrawer={() => {
-              setDrawerOpen(false);
-              setIsDrawerFullWidth(false);
-            }}
-            isFullScreen={isDrawerFullWidth}
-            toggleFullScreenDrawer={() => {
-              setIsDrawerFullWidth(!isDrawerFullWidth);
-            }}
-          >
-            <CustomerCreateForm
-              reloadData={() => {
-                fetchCustomerData(false, nowTab, pageInfo);
-                setDrawerOpen(false);
-              }}
-              options={options}
-            />
-          </Drawer>
-        )}
       </BodySTY>
     </RegionProvider>
   );

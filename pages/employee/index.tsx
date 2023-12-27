@@ -10,7 +10,6 @@ import {
 } from "@services/employee/getAllEmployee";
 import EmployeeList from "@contents/Employee/EmployeeList";
 import { BodySTY } from "./style";
-import Drawer from "@components/Drawer";
 import FilterWrapper from "@layout/FilterWrapper";
 import TabsWrapper from "@layout/TabsWrapper";
 import EmployeeCreateForm from "@contents/Employee/EmployeeCreateForm";
@@ -152,21 +151,6 @@ const Page: NextPageWithLayout<never> = () => {
             />
           </FilterWrapper>
         </TabsWrapper>
-        {isDrawerOpen && (
-          <Drawer
-            tabName={["新增員工"]}
-            closeDrawer={() => {
-              setDrawerOpen(false);
-            }}
-          >
-            <EmployeeCreateForm
-              reloadData={() => {
-                fetchEmployeeData(false, nowTab, pageInfo);
-                setDrawerOpen(false);
-              }}
-            />
-          </Drawer>
-        )}
       </BodySTY>
     </RegionProvider>
   );
