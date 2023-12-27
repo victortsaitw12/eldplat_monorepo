@@ -126,7 +126,7 @@ const BusDetail = ({
           />
         )}
 
-        {visibleForm === "5" && (
+        {/* {visibleForm === "5" && (
           <EditHistory
             busId={busId}
             register={register}
@@ -135,7 +135,7 @@ const BusDetail = ({
             control={control}
             isEdit={isEdit}
           />
-        )}
+        )} */}
       </DivSTY>
     </form>
   );

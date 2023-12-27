@@ -1,9 +1,4 @@
 import React, { ReactNode } from "react";
-import {
-  GetServerSideProps,
-  NextPageWithLayout,
-  InferGetServerSidePropsType
-} from "next";
 
 import { getLayout } from "@layout/MainLayout";
 import { BodySTY } from "./style";
@@ -33,9 +28,10 @@ export interface I_infoData {
   listClassName?: string;
   bold?: boolean;
   direction?: string;
+  addOn?: React.ReactNode;
 }
 
-const Page: NextPageWithLayout<never> = () => {
+const Edit = () => {
   const router = useRouter();
   const { register, getValues, setValue } = useForm();
 
@@ -50,6 +46,7 @@ const Page: NextPageWithLayout<never> = () => {
         <CustomTextInputField
           placeholder="姓氏"
           width="100%"
+          value={"宋"}
         ></CustomTextInputField>
       )
     },
@@ -62,6 +59,7 @@ const Page: NextPageWithLayout<never> = () => {
         <CustomTextInputField
           placeholder="名字"
           width="100%"
+          value={"琳淑"}
         ></CustomTextInputField>
       )
     },
@@ -72,7 +70,7 @@ const Page: NextPageWithLayout<never> = () => {
       label: "國籍",
       value: (
         <Select width="100%" className="select-full">
-          <option value="foo">請選擇</option>
+          <option value="foo">台灣</option>
         </Select>
       )
     },
@@ -86,6 +84,7 @@ const Page: NextPageWithLayout<never> = () => {
           placeholder="請輸入電話"
           width="100%"
           className="input-full"
+          value={"0971027144"}
         ></CustomTextInputField>
       )
     },
@@ -99,6 +98,7 @@ const Page: NextPageWithLayout<never> = () => {
           placeholder="請輸入信箱"
           width="100%"
           className="input-full"
+          value={"54linlin@gmail.com"}
         ></CustomTextInputField>
       )
     }
@@ -112,7 +112,7 @@ const Page: NextPageWithLayout<never> = () => {
       bold: false,
       value: (
         <div className="checkbox">
-          <Checkbox label="同訂單聯絡人" />
+          <Checkbox label="同訂單聯絡人" checked />
         </div>
       )
     },
@@ -126,6 +126,7 @@ const Page: NextPageWithLayout<never> = () => {
         <CustomTextInputField
           placeholder="姓氏"
           width="100%"
+          value={"宋"}
         ></CustomTextInputField>
       )
     },
@@ -138,6 +139,7 @@ const Page: NextPageWithLayout<never> = () => {
         <CustomTextInputField
           placeholder="名字"
           width="100%"
+          value={"琳淑"}
         ></CustomTextInputField>
       )
     },
@@ -158,6 +160,7 @@ const Page: NextPageWithLayout<never> = () => {
           placeholder="請輸入電話"
           width="100%"
           className="input-full"
+          value={"0971027144"}
         ></CustomTextInputField>
       )
     },
@@ -171,6 +174,7 @@ const Page: NextPageWithLayout<never> = () => {
           placeholder="請輸入信箱"
           width="100%"
           className="input-full"
+          value={"54linlin@gmail.com"}
         ></CustomTextInputField>
       )
     }
@@ -301,7 +305,7 @@ const Page: NextPageWithLayout<never> = () => {
       bold: false,
       value: (
         <Select width="100%" className="select-full">
-          <option value="foo">請選擇</option>
+          <option value="foo">客製包車</option>
         </Select>
       )
     },
@@ -342,6 +346,7 @@ const Page: NextPageWithLayout<never> = () => {
           <CustomTextInputField
             placeholder="出發時間"
             className="input-full"
+            value={"10:00"}
           ></CustomTextInputField>
           <span className="icon">
             <TimeIcon></TimeIcon>
@@ -351,66 +356,84 @@ const Page: NextPageWithLayout<never> = () => {
       direction: "row"
     },
     {
-      listClassName: "fb-100",
+      listClassName: "fb-66",
       readonly: false,
       req: true,
-      label: "",
+      label: "上車地點",
       bold: false,
       value: (
-        <div className="row-container">
-          <div className="row">
-            <label className="label">
-              <span className="required">*</span>上車地點
-            </label>
-            <CustomTextInputField
-              placeholder="請輸入地點"
-              className="input-full"
-            ></CustomTextInputField>
-          </div>
-          <div className="row">
-            <span className="normal">也可輸地址</span>
-            <Select className="select-wrapper">
-              <option>縣市</option>
-            </Select>
-            <CustomTextInputField placeholder="區域"></CustomTextInputField>
-            <CustomTextInputField placeholder="請輸入地址"></CustomTextInputField>
-          </div>
-        </div>
+        <>
+          <CustomTextInputField
+            placeholder="請輸入地點"
+            className="input-full"
+            value={"台北車站"}
+          ></CustomTextInputField>
+        </>
       ),
       direction: "row"
     },
     {
-      listClassName: "fb-100",
+      listClassName: "fb-66",
       readonly: false,
       req: true,
-      label: "",
+      label: "中途停靠站",
       bold: false,
       value: (
-        <div className="row-container">
-          <div className="row">
-            <label className="label">
-              <span>中途點1</span>
-            </label>
-            <CustomTextInputField
-              placeholder="請輸入地點"
-              className="input-full"
-            ></CustomTextInputField>
-          </div>
-          <div className="row">
-            <span className="normal">也可輸地址</span>
-            <Select className="select-wrapper">
-              <option>縣市</option>
-            </Select>
-            <CustomTextInputField placeholder="區域"></CustomTextInputField>
-            <CustomTextInputField placeholder="請輸入地址"></CustomTextInputField>
-            <span className="outer-icon">
-              <TrashIcon></TrashIcon>
-            </span>
-            <span className="outer-icon">
-              <PlusIcon></PlusIcon>
-            </span>
-          </div>
-        </div>
+        <CustomTextInputField
+          placeholder="請輸入地點"
+          className="input-full"
+          value={"台中車站"}
+        />
+      ),
+      direction: "row",
+      addOn: (
+        <>
+          <span className="outer-icon">
+            <TrashIcon></TrashIcon>
+          </span>
+          <span className="outer-icon">
+            <PlusIcon></PlusIcon>
+          </span>
+        </>
+      )
+    },
+    {
+      listClassName: "fb-66",
+      readonly: false,
+      req: true,
+      label: "中途停靠站",
+      bold: false,
+      value: (
+        <CustomTextInputField
+          placeholder="請輸入地點"
+          className="input-full"
+          value={"審計新村"}
+        />
+      ),
+      direction: "row",
+      addOn: (
+        <>
+          <span className="outer-icon">
+            <TrashIcon></TrashIcon>
+          </span>
+          <span className="outer-icon">
+            <PlusIcon></PlusIcon>
+          </span>
+        </>
+      )
+    },
+    {
+      listClassName: "fb-66",
+      readonly: false,
+      req: false,
+      label: "下車地點",
+      bold: false,
+      value: (
+        <CustomTextInputField
+          placeholder="請輸入地點"
+          className="input-full"
+          value={"台中長榮酒店"}
+        />
       ),
       direction: "row"
     },
@@ -418,27 +441,18 @@ const Page: NextPageWithLayout<never> = () => {
       listClassName: "fb-100",
       readonly: false,
       req: false,
-      label: "",
+      label: "抵達時間",
       bold: false,
       value: (
-        <div className="row-container">
-          <div className="row">
-            <label className="label">
-              <span className="required">*</span>下車地點
-            </label>
-            <CustomTextInputField
-              placeholder="請輸入地點"
-              className="input-full"
-            ></CustomTextInputField>
-          </div>
-          <div className="row">
-            <span className="normal">也可輸地址</span>
-            <Select className="select-wrapper">
-              <option>縣市</option>
-            </Select>
-            <CustomTextInputField placeholder="區域"></CustomTextInputField>
-            <CustomTextInputField placeholder="請輸入地址"></CustomTextInputField>
-          </div>
+        <div className="row">
+          <CustomTextInputField
+            placeholder="抵達時間"
+            className="input-full"
+            value={"22:00"}
+          ></CustomTextInputField>
+          <span className="icon">
+            <TimeIcon></TimeIcon>
+          </span>
         </div>
       ),
       direction: "row"
@@ -446,7 +460,7 @@ const Page: NextPageWithLayout<never> = () => {
   ];
   const TravelInFo = [
     {
-      listClassName: "fb-100 mt-1",
+      listClassName: "fb-33 mt-1",
       readonly: false,
       req: false,
       label: "成人",
@@ -473,7 +487,7 @@ const Page: NextPageWithLayout<never> = () => {
       direction: "row"
     },
     {
-      listClassName: "fb-100 mt-1",
+      listClassName: "fb-33 mt-1",
       readonly: false,
       req: false,
       label: "兒童（2~4歲）",
@@ -529,7 +543,7 @@ const Page: NextPageWithLayout<never> = () => {
   ];
   const LuggageInFo = [
     {
-      listClassName: "fb-100 mt-1",
+      listClassName: "fb-33 mt-1",
       readonly: false,
       req: false,
       label: "成人",
@@ -556,7 +570,7 @@ const Page: NextPageWithLayout<never> = () => {
       direction: "row"
     },
     {
-      listClassName: "fb-100 mt-1",
+      listClassName: "fb-33 mt-1",
       readonly: false,
       req: false,
       label: "大件行李",
@@ -583,7 +597,7 @@ const Page: NextPageWithLayout<never> = () => {
       direction: "row"
     },
     {
-      listClassName: "fb-50 mt-1",
+      listClassName: "fb-33 mt-1",
       readonly: false,
       req: false,
       label: "小件行李",
@@ -612,7 +626,7 @@ const Page: NextPageWithLayout<never> = () => {
   ];
   const VehicleInFo = [
     {
-      listClassName: "fb-100 mt-1",
+      listClassName: "fb-33 mt-1",
       readonly: false,
       req: false,
       label: "A型車",
@@ -639,7 +653,7 @@ const Page: NextPageWithLayout<never> = () => {
       direction: "row"
     },
     {
-      listClassName: "fb-100 mt-1",
+      listClassName: "fb-33 mt-1",
       readonly: false,
       req: false,
       label: "B型車",
@@ -678,7 +692,7 @@ const Page: NextPageWithLayout<never> = () => {
           <div className="checkbox">
             <CheckboxField
               label="項目名稱 NTD $200"
-              checked={false}
+              checked
               toggleFuelValue={() => {
                 return;
               }}
@@ -779,6 +793,7 @@ const Page: NextPageWithLayout<never> = () => {
             item={item}
             isEdit={true}
             direction={item?.direction}
+            addOn={item?.addOn}
           />
         ))}
       </ul>
@@ -845,7 +860,7 @@ const Page: NextPageWithLayout<never> = () => {
             {MakeInfoCard(ServiceInFo)}
           </InfoCard>
         </Pane>
-        <Pane className={"main-column"}>
+        <Pane className={"itinerary-column"}>
           <InfoCard isEdit={true} infoTitle="行程資訊">
             <Collapse
               title="2023-11-22（三）"
@@ -947,6 +962,6 @@ const Page: NextPageWithLayout<never> = () => {
   );
 };
 
-Page.getLayout = (page: ReactNode, layoutProps: any) =>
+Edit.getLayout = (page: ReactNode, layoutProps: any) =>
   getLayout(page, { ...layoutProps });
-export default Page;
+export default Edit;
