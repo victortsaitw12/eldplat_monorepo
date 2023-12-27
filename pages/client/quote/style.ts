@@ -4,6 +4,7 @@ export const BodySTY = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   // background-color: ${({ theme }) => theme.color.N300};
 
   .breadcrumbs {
@@ -58,4 +59,11 @@ export const BodySTY = styled.div`
       }
     }
   }
+
+  .service-wrap {
+    box-shadow: 0px 4px 8px 0px #10184014;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
 `;

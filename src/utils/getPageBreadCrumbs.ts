@@ -347,10 +347,9 @@ const busListBreadcrumbs: I_routers = {
 };
 
 const getPageBreadCrumbs = (router: NextRouter) => {
-  console.log("======> breadcrumbs")
-  console.log("router.pathname", router.pathname);
-  console.log("router.asPath", router.asPath);
-  console.log("router.query", router.query);
+  // console.log("router.pathname", router.pathname);
+  // console.log("router.asPath", router.asPath);
+  // console.log("router.query", router.query);
   const newBreadcrumbs =
   breadcrumbs[router.pathname] ||
   breadcrumbs[router.asPath] ||
@@ -358,8 +357,6 @@ const getPageBreadCrumbs = (router: NextRouter) => {
   vendorsBreadcrumbs[router?.query?.codeType as string] ||
   busListBreadcrumbs[router?.query?.type as string] ||
   [];
-  console.log("newBreadcrumbs", newBreadcrumbs);
-  console.log("=====================")
   return newBreadcrumbs;
 };
 

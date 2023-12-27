@@ -6,7 +6,7 @@ const BodySTY = styled.div`
   padding: 0px 0px 40px;
   gap: 12px;
   background-color: ${({ theme }) => theme.color.N0};
-  border-radius: 10px;
+  border-radius: 4px;
   overflow: hidden;
   .special_content {
     .detail_list > .detail_item {
