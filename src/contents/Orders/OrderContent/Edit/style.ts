@@ -43,6 +43,7 @@ const BodySTY = styled.div`
     }
     .row {
       display: flex;
+      flex-direction: row;
       align-items: center;
       gap: 10px;
       justify-content: flex-start;
