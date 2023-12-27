@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const DivSTY = styled.div`
+  box-shadow: 0px 4px 8px 0px #10184014;
+
   .collapse {
     &_title {
     }

@@ -70,3 +70,7 @@ export const MainSTY = styled.section`
     border: none;
   }
 `;
+
+export const ShadowSTY = styled.div`
+  box-shadow: 0px 4px 8px 0px #10184014;
+`

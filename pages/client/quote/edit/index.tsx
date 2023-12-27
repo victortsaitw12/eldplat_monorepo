@@ -19,7 +19,6 @@ import { Button, toaster, TickCircleIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { useForm, FormProvider } from "react-hook-form";
 import { Pane } from "evergreen-ui";
-import Breadcrumbs from "@components/Breadcrumbs";
 //
 import {
   QuotationCreatePayload,
@@ -140,7 +139,13 @@ const Page: NextPageWithLayout<
   async function asyncGetDefaultValues(
     type: string
   ): Promise<QuotationCreatePayload> {
-    const busData = await getBusType();
+    let busData;
+    try {
+      busData = await getBusType();
+    } catch(err) {
+      console.log(err);
+    }
+
     const formatedBusData = [];
     for (const key in busData) {
       formatedBusData.push({
@@ -235,7 +240,6 @@ const Page: NextPageWithLayout<
         throw new Error("Fail to create quotation");
       }
       setQuoteNo(quote_no)
-      console.log("======>", quote_no, quoteNo)
       setCurrentTab(6);
     } catch (e) {
       console.log(e);
@@ -243,7 +247,7 @@ const Page: NextPageWithLayout<
   };
   useEffect(() => {
     let timmer: any;
-    // 自動返回
+    // 自動返回首頁
     // if (currentTab === 5) {
     //   timmer = setInterval(() => {
     //     setRemainTime((prev) => prev - 1);
@@ -261,12 +265,6 @@ const Page: NextPageWithLayout<
   if (currentTab === 5) {
     return (
       <BodySTY>
-        <Breadcrumbs
-          routes={[
-            { label: "首頁", url: "/client" },
-            { label: "預約服務", url: "/client/quote" },
-          ]}
-        />
         <div className="redirect-body">
           <TickCircleIcon
             color="success"
@@ -346,12 +344,6 @@ const Page: NextPageWithLayout<
     </LoadingModal>
   ) : (
     <BodySTY>
-      <Breadcrumbs
-        routes={[
-          { label: "首頁", url: "/client" },
-          { label: "預約服務", url: "/client/quote" },
-        ]}
-      />
       <StatusCard>
         <NavigationList
           dataLists={DummyNavigationListData}

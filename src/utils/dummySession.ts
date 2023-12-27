@@ -212,5 +212,9 @@ export const useSession = () => {
 }
 
 export const signIn = async (category: string, data: any) => {
-  return {message: "success", error: undefined};
+  if(data.email === "user@gmail.com" && data.password ==="12345"){
+    return {message: "success", error: undefined};
+  } else {
+    return {message: "fail", error: "fail"};
+  }
 }

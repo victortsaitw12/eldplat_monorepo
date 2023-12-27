@@ -265,6 +265,33 @@ const breadcrumbs: I_routers = {
   // ]
 };
 
+const clientBreadcrumbs: I_routers = {
+  "/client/quote": [
+    { label: "首頁", url: "/client" },
+    { label: "預約服務", url: "/client/quote" },
+  ],
+  "/client/quote/edit": [
+    { label: "首頁", url: "/client" },
+    { label: "預約服務", url: "/client/quote" },
+  ],
+  "/client/quote/confirm": [
+    { label: "首頁", url: "/client" },
+    { label: "訂單管理", url: "/client/orders" },
+  ],
+  "/client/orders/detail/[id]": [
+    { label: "首頁", url: "/client" },
+    { label: "訂單管理", url: "/client/orders" },
+    {
+      label: "訂單內容",
+      url: ""
+    }
+  ],
+  "/client/orders/inquire": [
+    { label: "首頁", url: "/client" },
+    { label: "查詢訂單", url: "/client/orders/inquire" },
+  ]
+}
+
 const vendorsBreadcrumbs: I_routers = {
   "01": [
     { label: "入門", url: "/" },
@@ -324,11 +351,12 @@ const getPageBreadCrumbs = (router: NextRouter) => {
   // console.log("router.asPath", router.asPath);
   // console.log("router.query", router.query);
   const newBreadcrumbs =
-    breadcrumbs[router.pathname] ||
-    breadcrumbs[router.asPath] ||
-    vendorsBreadcrumbs[router?.query?.codeType as string] ||
-    busListBreadcrumbs[router?.query?.type as string] ||
-    [];
+  breadcrumbs[router.pathname] ||
+  breadcrumbs[router.asPath] ||
+  clientBreadcrumbs[router.pathname] ||
+  vendorsBreadcrumbs[router?.query?.codeType as string] ||
+  busListBreadcrumbs[router?.query?.type as string] ||
+  [];
   return newBreadcrumbs;
 };
 
