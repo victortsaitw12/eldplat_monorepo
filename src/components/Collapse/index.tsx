@@ -23,7 +23,7 @@ const Collapse = ({
   OnToggle = (isOpen) => {
     return isOpen;
   },
-  iconPosition = "end"
+  iconPosition = "icon_end"
 }: I_Props) => {
   const [isOpen, setIsOpen] = React.useState(opened);
   const titleOnClick = () => {

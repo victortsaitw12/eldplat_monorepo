@@ -12,7 +12,6 @@ import {
 } from "next";
 
 import { getLayout } from "@layout/ClientLayout";
-import Breadcrumbs from "@components/Breadcrumbs";
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({

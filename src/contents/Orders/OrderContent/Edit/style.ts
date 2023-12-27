@@ -33,6 +33,7 @@ const BodySTY = styled.div`
     .value {
       color: ${({ theme }) => theme.color.N800};
       font-weight: ${({ theme }) => theme.fontWeight.Heading100};
+      width: 100%;
     }
     .row-container {
       display: flex;
@@ -60,16 +61,6 @@ const BodySTY = styled.div`
           color: ${({ theme }) => theme.color.R400};
         }
       }
-
-      .icon {
-        position: absolute;
-        left: 290px;
-        color: ${({ theme }) => theme.color.N300};
-      }
-      .outer-icon {
-        color: ${({ theme }) => theme.color.N300};
-        margin-left: 10px;
-      }
     }
     .checkbox {
       margin: 14px 0;
@@ -81,6 +72,7 @@ const BodySTY = styled.div`
       display: flex;
       flex-wrap: wrap;
       align-content: flex-start;
+      align-items: center;
       gap: 20px;
 
       .fb-100 {
@@ -100,6 +92,16 @@ const BodySTY = styled.div`
       }
       .fb-33 {
         flex-basis: calc((100% - 24px) / 3);
+      }
+
+      .icon {
+        position: absolute;
+        left: 290px;
+        color: ${({ theme }) => theme.color.N300};
+      }
+      .outer-icon {
+        color: ${({ theme }) => theme.color.N300};
+        margin-left: 5px;
       }
     }
     .m-0 {
@@ -138,6 +140,9 @@ const BodySTY = styled.div`
       width: 120px;
       text-align: left;
       margin-right: 40px;
+    }
+    .col {
+      flex-direction: column;
     }
   }
   .other-column {

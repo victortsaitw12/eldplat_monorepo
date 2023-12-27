@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { NextPageWithLayout } from "next";
 import { getLayout } from "@layout/ClientLayout";
-import Breadcrumbs from "@components/Breadcrumbs";
 import { BodySTY } from "./style" 
 import QuoteSearch from "@contents/Client/Orders/QuoteSearch";
 import QuoteTable from "@contents/Client/Orders/QuoteTable";
@@ -11,12 +10,6 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <Breadcrumbs
-        routes={[
-          { label: "首頁", url: "/client" },
-          { label: "查詢訂單", url: "/client/orders/inquire" },
-        ]}
-      />
       <div className="page-title">查詢訂單</div>
       {!isSearch ? 
         <QuoteSearch updateSearchState={setIsSearch} /> :

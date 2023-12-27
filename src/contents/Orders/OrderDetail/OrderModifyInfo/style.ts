@@ -24,6 +24,7 @@ export const BodySTY = styled.div`
       display: grid;
       grid-template-columns: 1fr 140px;
       width: 100%;
+      align-items: center;
 
       span:nth-child(even) {
         font-size: 12px;

@@ -106,7 +106,7 @@ function MaintenanceMissionList() {
             <PlusIcon />
           </PrimaryBtn>
         }
-      />d
+      />
       <Table
         titles={tableTitle}
         data={modifiedData}

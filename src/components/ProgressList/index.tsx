@@ -30,7 +30,7 @@ const ProgressItem = ({ status, label, date, color, showTick=false }: ItemProps)
   return (
     <ItemSTY status={status} color={color}>
       <div className="item-label">{label}</div>
-      <div className="item-icon">
+      <div className={`item-icon ${status}`}>
         {status === "ok" && showTick && <SmallTickIcon/>}
       </div>
       {date ? (

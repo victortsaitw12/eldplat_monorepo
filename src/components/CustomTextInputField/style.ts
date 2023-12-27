@@ -15,5 +15,8 @@ export const BodySTY = styled.div`
         display: none;
       }
     }
+    .input-full {
+      max-width: unset;
+    }
   }
 `;

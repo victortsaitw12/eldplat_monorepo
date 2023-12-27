@@ -4,7 +4,6 @@ import React, { ReactNode } from "react";
 //
 import Header from "./Header";
 import { BodySTY, ContainerSTY } from "./style";
-
 interface ClientLayoutProps {
   children: ReactNode;
   layoutProps: {
@@ -13,7 +12,7 @@ interface ClientLayoutProps {
     avatar?: string;
     lang?: string;
     langs?: string[];
-
+    breadcrumbs?: any[];
     onChangeLang?: () => void;
   };
 }
@@ -29,6 +28,7 @@ const ClientLayout = ({ children, layoutProps }: ClientLayoutProps) => {
       <Header layoutProps={layoutProps} theme={theme} setTheme={setTheme} />
       <ContainerSTY>
         <div className="content">
+          {layoutProps?.breadcrumbs}
           {children}
         </div>
       </ContainerSTY>
