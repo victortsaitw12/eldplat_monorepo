@@ -2,8 +2,7 @@
 import Head from "next/head";
 import React, { FC, ReactNode } from "react";
 import { useRouter } from "next/router";
-// import { useSession } from "next-auth/react";
-import { useSession } from "@utils/dummySession";
+import { useSession } from "next-auth/react";
 
 //
 import Header from "./Header";
