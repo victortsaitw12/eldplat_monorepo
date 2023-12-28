@@ -15,7 +15,6 @@ import {
 } from "@utils/convertDate";
 import { I_ManualCreateType } from "@typings/assignment_type";
 import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
-import TimeInput from "@components/Timepicker/TimeInput";
 import Requred from "@components/Required";
 
 interface I_AssignManualCreateProps {
@@ -192,18 +191,12 @@ function SecondCarAssignManualCreate({
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <TimeInput
-          date={dateStrStart || dateStr}
-          setDate={handleTimeChange.bind(null, "task_start_time")}
-        />
+        <p>DELETED TIME-PICKER, PLEASE CHECK</p>
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <TimeInput
-          date={dateStrEnd || dateStr}
-          setDate={handleTimeChange.bind(null, "task_end_time")}
-        />
+        <p>DELETED TIME-PICKER, PLEASE CHECK</p>
       </Pane>
 
       <TextareaField

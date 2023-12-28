@@ -6,7 +6,6 @@ import {
   I_Company_Context,
   CompanyContext
 } from "@contexts/companyContext/companyProvider";
-import TagSelect from "@components/TagSelect";
 import {
   I_Region_Context,
   RegionContext
@@ -158,20 +157,11 @@ function CountrySet() {
         </Pane>
         <Pane className="input-line">
           <Text className="">語系</Text>
-          <TagSelect
-            // options={languageOptions}
-            options={ddlLanguage}
-            handleCustomData={setLangData}
-            editData={editLangData}
-          />
+          <p>DELETED TAG-SELECT, PLEASE CHECK THE PAGE AGAIN</p>
         </Pane>
         <Pane className="input-line">
           <Text className="">幣別</Text>
-          <TagSelect
-            options={ddlCurrency}
-            handleCustomData={setCurrencyData}
-            editData={editCurData}
-          />
+          <p>DELETED TAG-SELECT, PLEASE CHECK THE PAGE AGAIN</p>
         </Pane>
       </form>
     </BodySTY>
