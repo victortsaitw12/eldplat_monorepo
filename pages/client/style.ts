@@ -11,7 +11,7 @@ export const BodySTY = styled.div`
     padding: 32px 0px;
     width: 100%;
     background-color: ${({ theme }) => theme.color.N400};
-    > .header-container {
+    > .header_container {
       width: 1030px;
       display: flex;
       flex-direction: column;
@@ -23,26 +23,26 @@ export const BodySTY = styled.div`
       }
     }
   }
-  > .content-container {
+  > .content_container {
     display: flex;
     padding: 40px 0px;
     gap: 40px;
     flex-direction: column;
     align-items: center;
     width: 1030px;
-    > .content-title {
+    > .content_title {
       color: ${({ theme }) => theme.color.N700};
       font-size: 32px;
       font-weight: 600;
       align-self: flex-start;
     }
-    > .content-entry {
+    > .content_entry {
       display: flex;
       width: 100%;
       justify-content: space-around;
       gap: 20px;
       
-      .serverEntryBtn {
+      .server_entry_btn {
         padding: 24px 0;
       }
     }

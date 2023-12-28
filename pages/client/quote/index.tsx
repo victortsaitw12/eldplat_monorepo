@@ -53,9 +53,9 @@ const Page = () => {
   return (
     <BodySTY>
       <div className="header">
-        <div className="header-container">
-          <div className="header-title">服務介紹</div>
-          <div className="service-wrap">
+        <div className="header_container">
+          <div className="header_title">服務介紹</div>
+          <div className="service_wrap">
             <Section title="服務項目">
               <ServiceList listArray={DUMMY_ServiceList} />
               <Pane
@@ -74,9 +74,9 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="content-container">
-        <div className="content-title">請選擇你想要的服務：</div>
-        <div className="content-entry">
+      <div className="content_container">
+        <div className="content_title">請選擇你想要的服務：</div>
+        <div className="content_entry">
         <ServerEntry
             label="機場接送"
             imageUrl="/image/svg-icons/airport-pickup2.svg"

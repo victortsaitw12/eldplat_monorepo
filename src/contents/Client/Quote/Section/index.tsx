@@ -12,8 +12,8 @@ const Section = ({
 }: I_Props) => {
   return (
     <BodySTY className="section">
-      {title && <div className="section-title"> { title } </div>}
-      <div className="section-content">
+      {title && <div className="section_title"> { title } </div>}
+      <div className="section_content">
         { children }
       </div>
     </BodySTY>
