@@ -201,18 +201,12 @@ function CarEdit({ editData, refetch }: I_AssignManualCreateProps) {
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <TimeInput
-          date={dateStrStart}
-          setDate={handleTimeChange.bind(null, "start")}
-        />
+        <p> DELETED TIMEINPUT</p>
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <TimeInput
-          date={dateStrEnd}
-          setDate={handleTimeChange.bind(null, "end")}
-        />
+        <p> DELETED TIMEINPUT</p>
       </Pane>
 
       <TextareaField

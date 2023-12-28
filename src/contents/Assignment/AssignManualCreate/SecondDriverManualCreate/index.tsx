@@ -173,18 +173,12 @@ function SecondDriverAssignManualCreate({
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <TimeInput
-          date={dateStrStart || dateStr}
-          setDate={handleTimeChange.bind(null, "task_start_time")}
-        />
+        <p> DELETED TIMEINPUT</p>
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <TimeInput
-          date={dateStrEnd || dateStr}
-          setDate={handleTimeChange.bind(null, "task_end_time")}
-        />
+        <p> DELETED TIMENPUT</p>
       </Pane>
 
       <TextareaField
