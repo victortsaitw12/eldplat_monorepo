@@ -139,7 +139,13 @@ const Page: NextPageWithLayout<
   async function asyncGetDefaultValues(
     type: string
   ): Promise<QuotationCreatePayload> {
-    const busData = await getBusType();
+    let busData;
+    try {
+      busData = await getBusType();
+    } catch(err) {
+      console.log(err);
+    }
+
     const formatedBusData = [];
     for (const key in busData) {
       formatedBusData.push({
@@ -234,7 +240,6 @@ const Page: NextPageWithLayout<
         throw new Error("Fail to create quotation");
       }
       setQuoteNo(quote_no)
-      console.log("======>", quote_no, quoteNo)
       setCurrentTab(6);
     } catch (e) {
       console.log(e);
@@ -242,7 +247,7 @@ const Page: NextPageWithLayout<
   };
   useEffect(() => {
     let timmer: any;
-    // 自動返回
+    // 自動返回首頁
     // if (currentTab === 5) {
     //   timmer = setInterval(() => {
     //     setRemainTime((prev) => prev - 1);
