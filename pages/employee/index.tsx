@@ -135,21 +135,20 @@ const Page: NextPageWithLayout<never> = () => {
               initializeSubFilter();
             }}
             filter={subFilter}
-          >
-            <EmployeeList
-              listType={nowTab}
-              data={employeesData}
-              goToCreatePage={() => {
-                setDrawerOpen(true);
-              }}
-              deleteItemHandler={deleteItemHandler}
-              goToDetailPageHandler={goToDetailPageHandler}
-              goToEditPageHandler={goToEditPageHandler}
-              recoverItemHandler={recoverItemHandler}
-              pageInfo={pageInfo}
-              handlePageChange={updatePageHandler}
-            />
-          </FilterWrapper>
+          ></FilterWrapper>
+          <EmployeeList
+            listType={nowTab}
+            data={employeesData}
+            goToCreatePage={() => {
+              setDrawerOpen(true);
+            }}
+            deleteItemHandler={deleteItemHandler}
+            goToDetailPageHandler={goToDetailPageHandler}
+            goToEditPageHandler={goToEditPageHandler}
+            recoverItemHandler={recoverItemHandler}
+            pageInfo={pageInfo}
+            handlePageChange={updatePageHandler}
+          />
         </TabsWrapper>
       </BodySTY>
     </RegionProvider>

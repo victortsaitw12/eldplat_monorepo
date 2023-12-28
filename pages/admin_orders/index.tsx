@@ -278,18 +278,17 @@ const Page: NextPageWithLayout<{
                 initializeSubFilter();
               }}
               filter={subFilter}
-            >
-              {/* <FormattedMessage id="vendor_name" /> */}
-              <AdminOrdersList
-                listData={data}
-                goToDetailPage={goToDetailPage}
-                goToCreatePage={goToCreatePage}
-                {...(nowTab !== "6" && { goToEditPageHandler })}
-                {...(nowTab !== "6" && { deleteItemHandler })}
-                pageInfo={pageInfo}
-                handlePageChange={handlePageChange}
-              ></AdminOrdersList>
-            </FilterWrapper>
+            ></FilterWrapper>
+            {/* <FormattedMessage id="vendor_name" /> */}
+            <AdminOrdersList
+              listData={data}
+              goToDetailPage={goToDetailPage}
+              goToCreatePage={goToCreatePage}
+              {...(nowTab !== "6" && { goToEditPageHandler })}
+              {...(nowTab !== "6" && { deleteItemHandler })}
+              pageInfo={pageInfo}
+              handlePageChange={handlePageChange}
+            ></AdminOrdersList>
           </TabsWrapper>
           {/* <SideBookMark /> */}
         </>

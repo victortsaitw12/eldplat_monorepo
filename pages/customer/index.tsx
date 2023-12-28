@@ -142,21 +142,20 @@ const Page: NextPageWithLayout<never> = () => {
               initializeSubFilter();
             }}
             filter={subFilter}
-          >
-            <CustomerList
-              listType={nowTab}
-              customerData={data}
-              goToCreatePage={() => {
-                setDrawerOpen(true);
-              }}
-              deleteItemHandler={deleteItemHandler}
-              recoverItemHandler={recoverItemHandler}
-              goToEditPageHandler={goToEditPageHandler}
-              goToDetailPage={goToDetailPageHandler}
-              upDatePageHandler={upDatePageHandler}
-              pageInfo={pageInfo}
-            />
-          </FilterWrapper>
+          ></FilterWrapper>
+          <CustomerList
+            listType={nowTab}
+            customerData={data}
+            goToCreatePage={() => {
+              setDrawerOpen(true);
+            }}
+            deleteItemHandler={deleteItemHandler}
+            recoverItemHandler={recoverItemHandler}
+            goToEditPageHandler={goToEditPageHandler}
+            goToDetailPage={goToDetailPageHandler}
+            upDatePageHandler={upDatePageHandler}
+            pageInfo={pageInfo}
+          />
         </TabsWrapper>
       </BodySTY>
     </RegionProvider>

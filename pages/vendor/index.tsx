@@ -317,23 +317,22 @@ const Page: NextPageWithLayout<{
                 initializeSubFilter();
               }}
               filter={subFilter}
-            >
-              {/* <FormattedMessage id="vendor_name" /> */}
-              {data && (
-                <VendorList
-                  vendor_code={router.query.codeType as string}
-                  listType={nowTab}
-                  vendorData={data}
-                  goToDetailPage={goToDetailPage}
-                  goToCreatePage={goToCreatePage}
-                  goToEditPageHandler={goToEditPageHandler}
-                  deleteItemHandler={deleteItemHandler}
-                  recoverItem={recoverItem}
-                  pageInfo={pageInfo}
-                  handlePageChange={handlePageChange}
-                ></VendorList>
-              )}
-            </FilterWrapper>
+            ></FilterWrapper>
+            {/* <FormattedMessage id="vendor_name" /> */}
+            {data && (
+              <VendorList
+                vendor_code={router.query.codeType as string}
+                listType={nowTab}
+                vendorData={data}
+                goToDetailPage={goToDetailPage}
+                goToCreatePage={goToCreatePage}
+                goToEditPageHandler={goToEditPageHandler}
+                deleteItemHandler={deleteItemHandler}
+                recoverItem={recoverItem}
+                pageInfo={pageInfo}
+                handlePageChange={handlePageChange}
+              ></VendorList>
+            )}
           </TabsWrapper>
           {/* <SideBookMark /> */}
         </>

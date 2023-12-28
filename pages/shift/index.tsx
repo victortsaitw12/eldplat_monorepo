@@ -54,7 +54,6 @@ const ShiftPage: NextPageWithLayout<never> = () => {
         // }));
         // setData(data);
         // setPageInfo(res.pageInfo);
-
         // if (!subFilter) {
         //   localStorage.setItem(
         //     "shiftInitFilter",
@@ -123,37 +122,36 @@ const ShiftPage: NextPageWithLayout<never> = () => {
               initializeSubFilter();
             }}
             filter={subFilter}
-          >
-            <Pane className="pageContent">
-              <TableTitle
-                tableName={[
-                  <MonthPicker
-                    key="monthpicker"
-                    initialMonthFirst={initialMonthFirst}
-                    onMonthChange={handleChangeMonth}
-                  />,
-                  <div key="tabelTitle-type" className="container-header-left">
-                    <span>全部區域</span>
-                    <span>全部都市</span>
-                  </div>
-                ]}
-                control={[<ZoomBar key="zoombar" setState={handleZoombar} />]}
-                sub={Array.from(EVENT_TYPE).map(([key, value]) => {
-                  if (key !== "00") return <EventTag key={key} value={value} />;
-                })}
-                page={true}
-                pageInfo={pageInfo}
-                onPageChange={handlePageChange}
-              />
-              <div className="overviewContainer">
-                <OverviewTable
-                  data={data}
+          ></FilterWrapper>
+          <Pane className="pageContent">
+            <TableTitle
+              tableName={[
+                <MonthPicker
+                  key="monthpicker"
                   initialMonthFirst={initialMonthFirst}
-                  expandPercentage={expandPercentage}
-                />
-              </div>
-            </Pane>
-          </FilterWrapper>
+                  onMonthChange={handleChangeMonth}
+                />,
+                <div key="tabelTitle-type" className="container-header-left">
+                  <span>全部區域</span>
+                  <span>全部都市</span>
+                </div>
+              ]}
+              control={[<ZoomBar key="zoombar" setState={handleZoombar} />]}
+              sub={Array.from(EVENT_TYPE).map(([key, value]) => {
+                if (key !== "00") return <EventTag key={key} value={value} />;
+              })}
+              page={true}
+              pageInfo={pageInfo}
+              onPageChange={handlePageChange}
+            />
+            <div className="overviewContainer">
+              <OverviewTable
+                data={data}
+                initialMonthFirst={initialMonthFirst}
+                expandPercentage={expandPercentage}
+              />
+            </div>
+          </Pane>
         </TabsWrapper>
       </ShiftSTY>
     </UIProvider>

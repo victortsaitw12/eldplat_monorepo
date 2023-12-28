@@ -95,12 +95,8 @@ const Page: NextPageWithLayout<never> = () => {
     Last_Page: 10
   });
 
-  const {
-    initializeSubFilter,
-    updateMainFilter,
-    subFilter,
-    updateSubFilter,
-  } = useBusStore();
+  const { initializeSubFilter, updateMainFilter, subFilter, updateSubFilter } =
+    useBusStore();
 
   const fetchBusData = async (
     isCanceled: boolean,
@@ -192,13 +188,8 @@ const Page: NextPageWithLayout<never> = () => {
           initializeSubFilter();
         }}
         filter={subFilter}
-      >
-        <BusList
-          busData={data}
-          pageInfo={pageInfo}
-        />
-      </FilterWrapper>
-
+      ></FilterWrapper>
+      <BusList busData={data} pageInfo={pageInfo} />
     </BodySTY>
   );
 };
