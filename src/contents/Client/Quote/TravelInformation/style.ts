@@ -15,14 +15,14 @@ export const ItemSTY = styled.li`
   align-items: center;
   list-style: none;
   width: 100%;
-  > .item-content {
+  > .item_content {
     width: 90px;
     font-weight: 600;
   }
-  > .option-container {
+  > .option_container {
     display: flex;
     width: 72px;
-    .option-item {
+    .option_item {
       cursor: pointer;
       display: inline-flex;
       align-items: center;

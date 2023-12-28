@@ -63,9 +63,9 @@ const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
         <CollapseCardSTY>
           <Collapse title="乘客" opened={true}>
             <BodySTY>
-              <div className="header-container">
-                <div className="header-item">
-                  {/* <div className="header-title">
+              <div className="header_container">
+                <div className="header_item">
+                  {/* <div className="header_title">
                     <span style={{ color: "#D14343" }}>*</span>
                     <span>乘客數量</span>
                   </div> */}
@@ -97,8 +97,8 @@ const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
           </Collapse>
           <Collapse title="行李" opened={true}>
             <BodySTY>
-              <div className="header-container">
-                <div className="header-item">
+              <div className="header_container">
+                <div className="header_item">
                   <CounterInput
                     register={register}
                     setValue={setValue}
@@ -128,8 +128,8 @@ const RidingInformation = ({ validateSubForm }: RidingInformationProps) => {
                 onClick={() => { console.log("車型介紹") }}
               />
               <BodySTY>
-                <div className="header-container">
-                  <div className="header-item">
+                <div className="header_container">
+                  <div className="header_item">
                     {fields.map((item, index) => {
                       return (
                         <>

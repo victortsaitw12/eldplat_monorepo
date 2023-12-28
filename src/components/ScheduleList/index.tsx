@@ -48,8 +48,8 @@ const ScheduleList = ({
 
   const r_stopover = (fields: any[]) => {
     return fields.map((child, i) => (
-      <li key={i} className="schedule-list-item">
-        <Text className="schedule-list-label">
+      <li key={i} className="schedule_list_item">
+        <Text className="schedule_list_label">
           {needLine && (
             <Text className={cx("dot")}>
               <DotIcon />
@@ -85,7 +85,7 @@ const ScheduleList = ({
           )}
         </Text>
         {isEdit && (
-          <Text className="schedule-item-action">
+          <Text className="schedule_item_action">
             <TrashIcon
               color="#718BAA"
               size={11}
@@ -111,15 +111,15 @@ const ScheduleList = ({
     ));
   };
   return (
-    <BodySTY className="schedule-list-container">
+    <BodySTY className="schedule_list_container">
       <ul
-        className={cx("schedule-list", {
+        className={cx("schedule_list", {
           dropoffError:
             !!errors?.[fatherArrayName]?.[dayIndex]?.dropoff_location
         })}
       >
-        <li className="schedule-list-item">
-          <Text className="schedule-list-label">
+        <li className="schedule_list_item">
+          <Text className="schedule_list_label">
             {needLine && (
               <Text className={cx("dot")}>
                 <DotIcon />
@@ -157,7 +157,7 @@ const ScheduleList = ({
             )}
           </Text>
           {isEdit && fields.length == 0 && (
-            <Text className="schedule-item-action">
+            <Text className="schedule_item_action">
               <PlusIcon
                 color="#718BAA"
                 size={11}
@@ -172,8 +172,8 @@ const ScheduleList = ({
           )}
         </li>
         {r_stopover(fields)}
-        <li className="schedule-list-item">
-          <Text className="schedule-list-label">
+        <li className="schedule_list_item">
+          <Text className="schedule_list_label">
             {needLine && (
               <Text className={cx("dot")}>
                 <DotIcon />

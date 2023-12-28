@@ -28,11 +28,11 @@ export const StyledForm = styled.form`
   padding: 20px;
   gap: 40px;
   background-color: ${({ theme }) => theme.color.N0};
-  > .form-item {
+  > .form_item {
     display: flex;
     align-items: center;
     gap: 20px;
-    > .form-sub-item {
+    > .form_sub_item {
       flex: 1;
       display: flex;
       align-items: center;

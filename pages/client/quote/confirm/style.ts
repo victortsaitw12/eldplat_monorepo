@@ -15,7 +15,7 @@ export const StyledForm = styled.form`
   padding: 20px;
   gap: 58px;
   background-color: ${({ theme }) => theme.color.N0};
-  .form-item {
+  .form_item {
     display: flex;
     align-items: center;
     gap: 20px;

@@ -3,18 +3,18 @@ export const BodySTY = styled.ul`
   display: flex;
   flex-direction: column;
   width: 100%;
-  > .header-container {
+  > .header_container {
     display: flex;
     flex-direction: row;
     padding: 0px;
     gap: 40px;
-    > .header-item {
+    > .header_item {
       flex: 1 0 0;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 20px;
-      > .header-title {
+      > .header_title {
         font-weight: 700;
         font-size: 14px;
         color: ${({ theme }) => theme.color.N700};
@@ -36,7 +36,7 @@ export const BodySTY = styled.ul`
       }
     }
   }
-  > .content-container {
+  > .content_container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
