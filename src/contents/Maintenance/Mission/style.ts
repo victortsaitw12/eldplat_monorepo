@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const DivSTY = styled.div`
-  padding: 1rem;
-  background-color: #fff;
-  overflow-x: auto;
-  /* height: 100%;
-  min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+
   .mr-1 {
     margin-right: 10px;
   }

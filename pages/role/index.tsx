@@ -139,9 +139,8 @@ const Page: NextPageWithLayout<never> = () => {
         resetFilter={() => initializeSubFilter()}
         filter={subFilter}
         btns={createBtn}
-      >
-        <RoleList data={data} pageInfo={pageInfo} />
-      </FilterWrapper>
+      />
+      <RoleList data={data} pageInfo={pageInfo} />
     </BodySTY>
   );
 };

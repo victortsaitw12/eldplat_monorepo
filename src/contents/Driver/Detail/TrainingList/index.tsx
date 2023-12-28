@@ -238,7 +238,7 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
 
   const handleCreateTraining = () => {
     router.push("/driver/training/create");
-  }
+  };
 
   const { initializeSubFilter, subFilter, updateSubFilter } = useDriverStore();
 
@@ -273,14 +273,13 @@ function LicensesList({ isEdit, userName, driverNo }: Props) {
             <PlusIcon />
           </SecondaryButton>
         }
-      >
-        <Table
-          titles={table_title}
-          data={modifiedData}
-          onView={handleView}
-          headNode={<PaginationField pageInfo={pageInfo} />}
-        />
-      </FilterWrapper>
+      />
+      <Table
+        titles={table_title}
+        data={modifiedData}
+        onView={handleView}
+        headNode={<PaginationField pageInfo={pageInfo} />}
+      />
     </DivSTY>
   );
 }
