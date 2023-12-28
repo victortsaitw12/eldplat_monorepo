@@ -45,6 +45,7 @@ function PasswordInputField({
         onClick={handleTogglePasswordHide}
       />
       <TextInputField
+        id="password_input"
         type={`${isPasswordHide ? "password" : "text"}`}
         placeholder={`${placeholder ? placeholder : "請輸入您的密碼"}`}
         label={label ? label : undefined}
