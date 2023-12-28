@@ -5,6 +5,7 @@ interface ItemProps {
   label: string;
   date?: string;
   color?: string;
+  showTick?: boolean;
 }
 const HorizontalLine = ({
   dataLists,
@@ -14,7 +15,7 @@ const HorizontalLine = ({
   color?: string;
 }) => {
   const disabledLength = dataLists.filter(
-    (item) => item.status === "disabled"
+    (item) => item.status === "disabled" || item.status === "pending"
   ).length;
   const grayWidth = disabledLength / (dataLists.length - 1);
   return (
@@ -25,11 +26,19 @@ const HorizontalLine = ({
   );
 };
 
-const ProgressItem = ({ status, label, date, color }: ItemProps) => {
+const ProgressItem = ({ status, label, date, color, showTick=false }: ItemProps) => {
   return (
     <ItemSTY status={status} color={color}>
       <div className="item-label">{label}</div>
-      <div className="item-icon">
+      <div className={`item-icon ${status}`}>
+        {status === "ok" && showTick && <SmallTickIcon/>}
+      </div>
+      {date ? (
+        <div className="item-date">{date}</div>
+      ) : (
+        <div style={{ color: "transparent" }}>_</div>
+      )}
+      {/* <div className="item-icon">
         {status === "error" ? (
           <SmallCrossIcon size={12} />
         ) : (
@@ -40,7 +49,7 @@ const ProgressItem = ({ status, label, date, color }: ItemProps) => {
         <div className="item-date">{date}</div>
       ) : (
         <div style={{ color: "transparent" }}>_</div>
-      )}
+      )} */}
     </ItemSTY>
   );
 };
@@ -52,11 +61,12 @@ interface ListProps {
     date?: string;
   }>;
   color?: string;
+  showTick?: boolean;
 }
 
-const ProgressList = ({ dataLists, color }: ListProps) => {
+const ProgressList = ({ dataLists, color, showTick=false }: ListProps) => {
   return (
-    <ListSTY color={color}>
+    <ListSTY color={color} className="progress-list">
       {dataLists.map((item, index) => {
         return (
           <ProgressItem
@@ -65,6 +75,7 @@ const ProgressList = ({ dataLists, color }: ListProps) => {
             label={item.label}
             date={item.date}
             color={color}
+            showTick={showTick}
           />
         );
       })}

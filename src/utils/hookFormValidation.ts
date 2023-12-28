@@ -50,12 +50,28 @@ const tellValidation = (phone: string) => {
 };
 
 const passwordValidation = (password: string) => {
+  const globalRegex = new RegExp(/^[0-9]{4,}$/, "g");
+  if (!globalRegex.test(password)) {
+    return "密碼至少4碼數字";
+  }
+};
+
+export const confirmPasswordValidation = (
+  password: string,
+  confirmPassword: string
+) => {
+  if (password !== confirmPassword) {
+    return "密碼不一致";
+  }
+};
+
+const passwordValidation2 = (password: string) => {
   const globalRegex = new RegExp(
-    /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[A-Za-z\d#?!@$ %^&*-]{10,}$/,
     "g"
   );
   if (!globalRegex.test(password)) {
-    return "日期格式必須為yyyy-mm-dd";
+    return "密碼必須包含大寫、小寫、數字、特殊符號且長度至少10碼。";
   }
   return true;
 };
@@ -79,6 +95,7 @@ export {
   phoneValidation,
   tellValidation,
   passwordValidation,
+  passwordValidation2,
   dateFormatValidation
 };
 

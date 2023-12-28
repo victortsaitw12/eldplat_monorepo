@@ -1,8 +1,9 @@
-import React, { ReactNode, useState, useMemo } from "react";
+import React, { ReactNode, useState } from "react";
 import { NextPageWithLayout } from "next";
 import { PlusIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
+import { useSession } from "@utils/dummySession";
 
 import { getLayout } from "@layout/MainLayout";
 import FilterWrapper from "@layout/FilterWrapper";
@@ -80,8 +81,8 @@ const Page: NextPageWithLayout<never> = () => {
   };
 
   const handleCreate = () => {
-    const id = "create";
-    router.push(`/account/detail/${id}?editPage=edit`);
+    // const id = "create";
+    router.push("/account/detail/create");
   };
 
   // ------- useEffect ------- //
@@ -89,10 +90,6 @@ const Page: NextPageWithLayout<never> = () => {
     if (!session) return;
     fetchData();
   }, [session]);
-
-  React.useEffect(() => {
-    if (status === "unauthenticated") router.push("/login");
-  }, [status]);
 
   React.useEffect(() => {
     localStorage.removeItem("accountCreateData");

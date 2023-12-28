@@ -12,109 +12,113 @@ export const defaultPageInfo: I_PageInfo = {
   Total: 0,
   Last_Page: 0
 };
-
-export const getAllAssignments = async (pageInfo = defaultPageInfo) => {
-  const res = await fetch(API_Path["GetAllAssignments"], {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-    },
-    body: JSON.stringify(pageInfo)
-  });
-  console.log("res for getting the list of assignment : ", res);
-  return res.json();
-};
-
-export const getAssignmentTitle = () => {
-  const DUMMY_TITLES = [
-    "序號",
-    "單號",
-    "分類",
-    "起始日期",
-    "截止日期",
-    "",
-    "",
-    ""
-  ];
-  return DUMMY_TITLES;
-};
-export const getSubAssignmentTitle = () => {
-  const DUMMY_TITLES = [
-    "日期",
-    "車次",
-    "派單單號",
-    "車隊",
-    "車輛名稱",
-    "車牌",
-    "駕駛",
-    "起始時間",
-    "截止時間"
-  ];
-  return DUMMY_TITLES;
-};
-
-export const assignPattern: PatternType = {
-  no: true,
-  maintenance_quote_no: true,
-  maintenance_quote_type_name: true,
-  task_start_time: true,
-  task_end_time: true,
-  auto_assign: true,
-  manual_assign: true
-};
-
-export const assignParser = (data: any, key: string) => {
-  // if (key === "id") {
-  //   return {
-  //     label: data["customer_no"] || null,
-  //     value: data["customer_no"] || null
-  //   };
-  // }
-  if (key === "maintenance_quote_no") {
-    const labelElement = createElement(
-      "a",
+const DUMMY_DATA = [
+  {
+    bus_No: "KAA-001",
+    bus_Name: "奶油雄獅號",
+    bus_Driver: "楊俊儀",
+    mission_List: [
       {
-        className: "link",
-        href:
-          data.maintenance_quote_no.substring(0, 3) === "MTC"
-            ? `/maintenance/detail/${data.maintenance_quote_no}?editPage=view`
-            : `/admin_orders/detail/${data.maintenance_quote_no}?type=1`
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/01",
+        mission_Name: "客製包車 一天一車",
+        mission_Type: "1"
       },
-      data.maintenance_quote_no || "--"
-    );
-    return {
-      label: labelElement,
-      value: data.maintenance_quote_no || null
-    };
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/02",
+        mission_Name: "定期保養",
+        mission_Type: "2"
+      }
+    ]
+  },
+  {
+    bus_No: "KAA-002",
+    bus_Name: "雄獅號",
+    bus_Driver: "吳中華",
+    mission_List: [
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/01",
+        mission_Name: "客製包車 一天一車",
+        mission_Type: "1"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/02",
+        mission_Name: "需求變更 一天一車",
+        mission_Type: "3"
+      }
+    ]
+  },
+  {
+    bus_No: "KAA-002",
+    bus_Name: "雄獅號",
+    bus_Driver: "吳中華",
+    mission_List: [
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/01",
+        mission_Name: "客製包車 一天一車",
+        mission_Type: "1"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/02",
+        mission_Name: "需求變更 一天一車",
+        mission_Type: "3"
+      }
+    ]
+  },
+  {
+    bus_No: "KAA-002",
+    bus_Name: "雄獅號",
+    bus_Driver: "吳中華",
+    mission_List: [
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/01",
+        mission_Name: "客製包車 一天一車",
+        mission_Type: "1"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/02",
+        mission_Name: "需求變更 一天一車",
+        mission_Type: "3"
+      }
+    ]
+  },
+  {
+    bus_No: "KAA-002",
+    bus_Name: "雄獅號",
+    bus_Driver: "吳中華",
+    mission_List: [
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/01",
+        mission_Name: "客製包車 一天一車",
+        mission_Type: "1"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2023/12/02",
+        mission_Name: "需求變更 一天一車",
+        mission_Type: "3"
+      }
+    ]
   }
-  if (key === "task_start_time") {
-    return {
-      label:
-        data.task_start_time !== null
-          ? convertDateAndTimeFormat(data.task_start_time)
-          : "--",
-      value:
-        data.task_start_time !== null
-          ? convertDateAndTimeFormat(data.task_start_time)
-          : "--"
-    };
-  }
-  if (key === "task_end_time") {
-    return {
-      label:
-        data.task_end_time !== null
-          ? convertDateAndTimeFormat(data.task_end_time)
-          : "--",
-      value:
-        data.task_end_time !== null
-          ? convertDateAndTimeFormat(data.task_end_time)
-          : "--"
-    };
-  }
-
-  return {
-    label: data[key] || "--",
-    value: data[key] || null
-  };
+];
+export const getAllAssignments = async (pageInfo = defaultPageInfo) => {
+  // const res = await fetch(API_Path["GetAllAssignments"], {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
+  //   },
+  //   body: JSON.stringify(pageInfo)
+  // });
+  // console.log("res for getting the list of assignment : ", res);
+  return DUMMY_DATA;
+  // return res.json();
 };

@@ -13,12 +13,12 @@ import Collapse from "@components/Collapse";
 import ExpenseDetail from "@components/ExpenseDetail";
 import TravelInformation from "@contents/Client/Quote/TravelInformation";
 import RidingInformation from "@contents/Client/Quote/RidingInformation";
-import SpecialNeeds from "@contents/Client/Quote/SpecialNeeds";
 import ContactInformation from "@contents/Client/Quote/ContactInformation";
 import FlightInformation from "@contents/Client/Quote/FlightInformation";
 import { Button, toaster, TickCircleIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
 import { useForm, FormProvider } from "react-hook-form";
+import { Pane } from "evergreen-ui";
 //
 import {
   QuotationCreatePayload,
@@ -30,6 +30,10 @@ import { getBusType } from "@services/client/getBusType";
 import LoadingSpinner from "@components/LoadingSpinner";
 import LoadingModal from "@components/LoadingModal";
 import OrdersDetail from "@contents/Client/Quote/Detail";
+import NoticeMessage from "@components/NoticeMessage";
+import Section from "@contents/Client/Quote/Section";
+import DetailGrid from "@components/DetailGrid";
+import Link from "next/link";
 //
 const DummyNavigationListData = [
   {
@@ -40,9 +44,6 @@ const DummyNavigationListData = [
   },
   {
     label: "乘車資訊"
-  },
-  {
-    label: "特殊需求"
   },
   {
     label: "聯絡人資料"
@@ -126,6 +127,7 @@ const Page: NextPageWithLayout<
   const [isLoading, setIsLoading] = useState(false);
   const [currentTab, setCurrentTab] = useState(1);
   const [remainTime, setRemainTime] = useState(5);
+  const [quoteNo, setQuoteNo] = useState("ORD202311110001");
   useEffect(() => {
     validationList = [...initValidationList];
   }, []);
@@ -137,7 +139,13 @@ const Page: NextPageWithLayout<
   async function asyncGetDefaultValues(
     type: string
   ): Promise<QuotationCreatePayload> {
-    const busData = await getBusType();
+    let busData;
+    try {
+      busData = await getBusType();
+    } catch(err) {
+      console.log(err);
+    }
+
     const formatedBusData = [];
     for (const key in busData) {
       formatedBusData.push({
@@ -171,6 +179,7 @@ const Page: NextPageWithLayout<
             return {
               day_number: index + 1,
               day_date: shiftDate(new Date(departureDate!), index),
+              arrive_time: flightTime!,
               departure_time: "",
               pickup_location: "",
               stopover_address_list: [],
@@ -196,6 +205,7 @@ const Page: NextPageWithLayout<
             day_number: 1,
             day_date: flightDate!,
             departure_time: flightTime!,
+            arrive_time: flightTime!,
             pickup_location:
               type === "pickUp"
                 ? airport! + `${terminal ? `第${terminal}航廈` : ""}`
@@ -222,11 +232,14 @@ const Page: NextPageWithLayout<
   const asyncSubmitFormHandler = async (data: QuotationCreatePayload) => {
     console.log("submit");
     try {
-      const result = await createQuotation(data);
-      const { quote_no } = result;
+      // TODO:送出API位置，先註解
+      // const result = await createQuotation(data);
+      // const { quote_no } = result;
+      const { quote_no } = { quote_no: "ORD202311110001"};
       if (!quote_no) {
         throw new Error("Fail to create quotation");
       }
+      setQuoteNo(quote_no)
       setCurrentTab(6);
     } catch (e) {
       console.log(e);
@@ -234,21 +247,22 @@ const Page: NextPageWithLayout<
   };
   useEffect(() => {
     let timmer: any;
-    if (currentTab === 6) {
-      timmer = setInterval(() => {
-        setRemainTime((prev) => prev - 1);
-      }, 1000);
-    }
-    if (remainTime <= 0) {
-      clearInterval(timmer);
-      setCurrentTab(1);
-      goToOrdersPage();
-    }
+    // 自動返回首頁
+    // if (currentTab === 5) {
+    //   timmer = setInterval(() => {
+    //     setRemainTime((prev) => prev - 1);
+    //   }, 1000);
+    // }
+    // if (remainTime <= 0) {
+    //   clearInterval(timmer);
+    //   setCurrentTab(1);
+    //   goToOrdersPage();
+    // }
     return () => {
       if (timmer) clearTimeout(timmer);
     };
   }, [currentTab, remainTime]);
-  if (currentTab === 6) {
+  if (currentTab === 5) {
     return (
       <BodySTY>
         <div className="redirect-body">
@@ -262,7 +276,55 @@ const Page: NextPageWithLayout<
             已收到您的訂車詢價單，業務將盡快為您處理。
           </div>
         </div>
-        <div className="redirect-container">
+        <Pane
+          className="quote-detail"
+          boxShadow="box-shadow: 0px 4px 8px 0px #10184014"
+        >
+          <Section title="訂單資訊">
+            <DetailGrid listArray={[
+              {
+                title: "訂單編號",
+                value: <Link href="/">{quoteNo}</Link>,
+              },
+              {
+                title: "訂單狀態",
+                value: "詢價中",
+              },
+              { 
+                title: "服務類型",
+                value: "客製包車",
+              },
+              {
+                title: "粗估金額",
+                value: "NTD $2,805",
+              },
+            ]} />
+            <Pane 
+              marginTop="24px"
+              textAlign="right"
+
+            >
+              <NoticeMessage message="注意事項注意事項注意事項注意事項注意事項注意事項" />
+              <Button
+                  appearance="primary"
+                  type="button"
+                  style={{
+                    color: "#5E6C84",
+                    border: "1px solid #B3BAC5",
+                    fontWeight: "600",
+                    borderRadius: "4px",
+                    flex: "1",
+                    backgroundColor: "#fff",
+                    margin: "20px 0"
+                  }}
+                  onClick={() => {console.log("修改訂單")}}
+                >
+                  修改訂單
+              </Button>
+            </Pane>
+          </Section>
+        </Pane>
+        {/* <div className="redirect-container">
           <p>頁面即將於{remainTime}秒後跳轉至訂單管理頁</p>
           <button
             onClick={() => {
@@ -271,7 +333,8 @@ const Page: NextPageWithLayout<
           >
             立即跳轉
           </button>
-        </div>
+        </div> */}
+
       </BodySTY>
     );
   }
@@ -316,96 +379,101 @@ const Page: NextPageWithLayout<
                 }}
               />
             )}
-            {currentTab === 3 && <SpecialNeeds />}
-            {currentTab === 4 && <ContactInformation />}
-            {currentTab === 5 && <OrdersDetail />}
-            <div className="content-actions-container">
-              <Button
-                style={{
-                  backgroundColor: "#fff",
-                  color: "#567190",
-                  fontWeight: "600",
-                  borderRadius: "32px",
-                  flex: "1",
-                  border: "none"
-                }}
-                type="button"
-                onClick={() => {
-                  if (currentTab === 1) {
-                    router.push({
-                      pathname: "/client/quote/confirm",
-                      query: {
-                        type,
-                        departureDate,
-                        returnDate,
-                        purpose,
-                        flightDate,
-                        flightNo,
-                        airport,
-                        terminal,
-                        airline,
-                        flightTime,
-                        quote_type:
-                          type === "custom"
-                            ? "1"
-                            : type === "pickUp"
-                            ? "2"
-                            : "3"
-                      }
-                    });
-                    return;
-                  }
-                  setCurrentTab((prev) => prev - 1);
-                }}
-              >
-                上一步
-              </Button>
-              <Button
-                appearance="primary"
-                type="button"
-                style={{
-                  color: "#fff",
-                  backgroundColor: "#3670C9",
-                  fontWeight: "600",
-                  borderRadius: "32px",
-                  flex: "1",
-                  border: "none"
-                }}
-                disabled={methods.formState.isSubmitting}
-                onClick={() => {
-                  let isValid = true;
-                  if (currentTab < 5) {
-                    if (currentTab === 2) {
-                      // if (currentTab === 1 || currentTab === 2) {
-                      isValid = validationList[currentTab].valid;
-                      if (!isValid) {
-                        toaster.danger("無法前往下一頁", {
-                          description: validationList[currentTab].errorMessage,
-                          id: "validation-error"
-                        });
-                        return;
-                      }
-                    }
-                    methods.handleSubmit(() => {
-                      console.log("valid from");
-                      setCurrentTab((prev) => prev + 1);
-                    })();
-                  } else {
-                    console.log("submit");
-                    methods.handleSubmit(asyncSubmitFormHandler)();
-                  }
-                }}
-              >
-                {currentTab === 5 ? "送出詢價單" : "下一步"}
-              </Button>
-            </div>
+            {/* {currentTab === 3 && <SpecialNeeds />} */}
+            {currentTab === 3 && <ContactInformation />}
+            {currentTab === 4 && <OrdersDetail />}
+
           </form>
         </FormProvider>
         <div className="charge-container">
-          <Collapse title="初估金額" opened={true}>
-            <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
-          </Collapse>
+          <div className="charge-header">
+            <div className="title">初估金額</div>
+            <div className="charge">NTD $2,805</div>
+          </div>
+          <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
+          <NoticeMessage size={16} message="注意事項注意事項注意事項注意事項注意事項注意事項" />
+          <div className="content-actions-container">
+            <Button
+              style={{
+                backgroundColor: "#fff",
+                color: "#567190",
+                fontWeight: "600",
+                borderRadius: "4px",
+                flex: "1",
+                border: "1px solid #B3BAC5"
+              }}
+              type="button"
+              onClick={() => {
+                if (currentTab === 1) {
+                  router.push({
+                    pathname: "/client/quote/confirm",
+                    query: {
+                      type,
+                      departureDate,
+                      returnDate,
+                      purpose,
+                      flightDate,
+                      flightNo,
+                      airport,
+                      terminal,
+                      airline,
+                      flightTime,
+                      quote_type:
+                        type === "custom"
+                          ? "1"
+                          : type === "pickUp"
+                          ? "2"
+                          : "3"
+                    }
+                  });
+                  return;
+                }
+                setCurrentTab((prev) => prev - 1);
+              }}
+            >
+              上一步
+            </Button>
+            <Button
+              appearance="primary"
+              type="button"
+              style={{
+                color: "#fff",
+                backgroundColor: "#5E6C84",
+                fontWeight: "600",
+                borderRadius: "4px",
+                flex: "1",
+                border: "none"
+              }}
+              disabled={methods.formState.isSubmitting}
+              onClick={() => {
+                let isValid = true;
+                if (currentTab < 5) {
+                  if (currentTab === 2) {
+                    // if (currentTab === 1 || currentTab === 2) {
+                    isValid = validationList[currentTab].valid;
+                    if (!isValid) {
+                      toaster.danger("無法前往下一頁", {
+                        description: validationList[currentTab].errorMessage,
+                        id: "validation-error"
+                      });
+                      return;
+                    }
+                  }
+                  methods.handleSubmit(() => {
+                    console.log("valid from");
+                    setCurrentTab((prev) => prev + 1);
+                  })();
+                } else {
+                  console.log("submit");
+                  methods.handleSubmit(asyncSubmitFormHandler)();
+                }
+              }}
+            >
+              {currentTab === 4 ? "送出詢價單" : "下一步"}
+            </Button>
+          </div>
         </div>
+
       </div>
     </BodySTY>
   );

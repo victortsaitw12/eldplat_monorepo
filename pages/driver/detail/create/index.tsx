@@ -1,7 +1,7 @@
 import React, { useState, ReactNode } from "react";
 import { NextPageWithLayout } from "next";
 import Link from "next/link";
-import { Avatar } from "evergreen-ui";
+import { Avatar, toaster } from "evergreen-ui";
 
 import { getLayout } from "@layout/MainLayout";
 import { BodySTY } from "./style";
@@ -15,12 +15,14 @@ import CustomTextInputField from "@components/CustomTextInputField";
 import CustomDatePicker from "@components/CustomDatePicker";
 import TagGenerator from "@components/TagGenerator";
 import ButtonSet from "@components/ButtonSet";
+import LightBox from "@components/Lightbox";
 
 import { Select, SmallPlusIcon, Pane } from "evergreen-ui";
 
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [newLicense, setNewLicense] = useState<any>(null);
+  const [isLightOpen, setLightOpen] = useState(false);
 
   React.useEffect(() => {
     console.log("hello");
@@ -384,11 +386,17 @@ const Page: NextPageWithLayout<never> = () => {
   ];
 
   const handleCancel = () => {
-    router.push("/driver");
+    setLightOpen(true);
   };
 
   const handleSave = () => {
     router.push("/driver");
+    toaster.success("儲存成功");
+  };
+
+  const handleLightBoxConfirm = () => {
+    router.push("/driver");
+    setLightOpen(false);
   };
 
   const handleAddInfoCard = () => {
@@ -447,6 +455,15 @@ const Page: NextPageWithLayout<never> = () => {
             infoTitle="教育訓練"
           />
         </Pane>
+        <LightBox
+          title="確定要離開嗎?"
+          isOpen={isLightOpen}
+          handleCloseLightBox={() => setLightOpen(false)}
+          onConfirm={handleLightBoxConfirm}
+          onCancel={() => setLightOpen(false)}
+        >
+          如果你現在離開，將會遺失未儲存的資料。
+        </LightBox>
       </BodySTY>
     </>
   );

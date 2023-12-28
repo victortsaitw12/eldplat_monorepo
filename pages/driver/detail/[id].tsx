@@ -33,6 +33,8 @@ const mainFilterArray = [
   { id: 4, label: "修改紀錄", value: "4" }
 ];
 
+const dataOverviewArray = ["第一車隊", "北北基", "S級", "中文/英文"];
+
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ driverNo }) => {
@@ -51,7 +53,7 @@ const Page: NextPageWithLayout<
   useEffect(() => {
     updateMainFilter("1");
   }, []);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -148,12 +150,22 @@ const Page: NextPageWithLayout<
     router.push(`/driver/detail/${driverNo}?editPage=edit`);
   };
 
-  const handleView = () => {
-    router.push(`/driver/detail/${driverNo}?editPage=view`);
-  };
-
   const handleReturn = () => {
     router.push("/driver");
+  };
+
+  const handleSave = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=view`);
+    toaster.success("儲存成功");
+  };
+
+  const handleCancel = () => {
+    setLightOpen(true);
+  };
+
+  const handleLightBoxConfirm = () => {
+    router.push(`/driver/detail/${driverNo}?editPage=view`);
+    setLightOpen(false);
   };
 
   useEffect(() => {
@@ -163,49 +175,34 @@ const Page: NextPageWithLayout<
   return (
     <BodySTY>
       <ControlBar>
-        <DataOverview data={driverData?.info} />
-        <ButtonSet
-          isEdit={isEdit}
-          primaryDisable={false}
-          secondaryBtnText={isEdit ? "取消" : "回列表"}
-          secondaryBtnOnClick={isEdit ? handleView : handleReturn}
-          primaryBtnText={isEdit ? "儲存" : "編輯"}
-          primaryBtnOnClick={isEdit ? handleView : handleEdit}
+        <DataOverview
+          title="鍾俊儀 JUN-YI  ZHONG"
+          subtitle="🏳️‍⚧️ 台灣"
+          infoArray={dataOverviewArray}
+          hasImage={false}
         />
+        {mainFilter === "3" || mainFilter === "4" ? (
+          <SecondaryBtn text="回列表" onClick={handleReturn} />
+        ) : (
+          <ButtonSet
+            isEdit={isEdit}
+            primaryDisable={false}
+            secondaryBtnText={isEdit ? "取消" : "回列表"}
+            secondaryBtnOnClick={isEdit ? handleCancel : handleReturn}
+            primaryBtnText={isEdit ? "儲存" : "編輯"}
+            primaryBtnOnClick={isEdit ? handleSave : handleEdit}
+          />
+        )}
       </ControlBar>
       {!isLoading && driverData ? renderContent : renderLoadingSpinner}
       <LightBox
         title="確定要離開嗎?"
         isOpen={isLightOpen}
-        handleCloseLightBox={() => setLightOpen((prev) => false)}
+        handleCloseLightBox={() => setLightOpen(false)}
+        onConfirm={handleLightBoxConfirm}
+        onCancel={() => setLightOpen(false)}
       >
         如果你現在離開，將會遺失未儲存的資料。
-        <Pane style={{ display: "flex", justifyContent: "flex-end" }}>
-          <LabelSecondaryButton
-            style={{
-              width: "unset",
-              fontSize: "12px",
-              fontWeight: "600"
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              setLightOpen((prev) => false);
-            }}
-            text="取消"
-          />
-          <LabelButton
-            style={{
-              width: "unset",
-              fontSize: "12px"
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              switchTabValue && updateMainFilter(switchTabValue);
-              setTimeout(() => setLightOpen(false), 500);
-            }}
-            text="確定離開"
-          />
-        </Pane>
       </LightBox>
     </BodySTY>
   );

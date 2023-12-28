@@ -64,30 +64,101 @@ const breadcrumbs: I_routers = {
   ],
   "/schedule": [
     { label: "首頁", url: "/" },
-    { label: "駕駛出勤管理", url: "/" },
+    { label: "駕駛出勤管理", url: "/" }
   ],
-  "/schedule/[id]": [
+  "/schedule/detail/[id]": [
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/schedule" },
-    { label: "個人班表", url: "" },
+    { label: "個人班表", url: "" }
   ],
   "/schedule/approval": [
     { label: "首頁", url: "/" },
     { label: "駕駛出勤管理", url: "/schedule" },
-    { label: "個人班表", url: "/schedule/[id]" },
-    { label: "簽核", url: "/approval" },
+    { label: "個人班表", url: "/schedule/detail/[id]" },
+    { label: "簽核", url: "/approval" }
+  ],
+  "/assignment": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" }
+  ],
+  "/assignment/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "新增任務", url: "" }
+  ],
+  "/assignment/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "修改任務", url: "" }
+  ],
+  "/assignment/dispatch": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "新增派單", url: "" }
+  ],
+  "/assignment/dispatch/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "修改派單", url: "" }
+  ],
+  "/assignment/dispatch/create": [
+    { label: "首頁", url: "/" },
+    { label: "任務指派", url: "/assignment" },
+    { label: "手動派單", url: "" }
+  ],
+  "/orders": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" }
+  ],
+  "/orders/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" },
+    { label: "新增訂單", url: "/orders/detail/create" },
+    { label: "檢視訂單", url: "" }
+  ],
+  "/orders/doc/create": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" },
+    { label: "檢視訂單", url: "/orders/detail/create" },
+    { label: "新增文件", url: "" }
+  ],
+  "/orders/detail/[id]": [
+    { label: "首頁", url: "/" },
+    { label: "訂單列表", url: "/orders" },
+    { label: "編輯訂單", url: "" }
   ],
   // ----------------------------------------------------------------------- V2 above
   // ----------------------------------------------------------------------- V1 below
   "/bus": [
     { label: "首頁", url: "/" },
-    { label: "車輛清單", url: "/bus" }
+    { label: "車輛列表", url: "/bus" }
   ],
   "/bus/detail/[id]": [
     { label: "首頁", url: "/" },
-    { label: "車輛清單", url: "/bus" },
-    { label: "檢視", url: "" }
+    { label: "車輛列表", url: "/bus" },
+    { label: "檢視車輛", url: "" }
   ],
+  "/bus/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "車輛列表", url: "/bus" },
+    { label: "新增車輛", url: "" }
+  ],
+  "/bus_management": [
+    { label: "首頁", url: "/" },
+    { label: "車輛列表", url: "/bus" },
+    { label: "車輛管理設定", url: "" }
+  ],
+  // ----------------------------------------------------------------------- V2 above
+  // ----------------------------------------------------------------------- V1 below
+  // "/bus": [
+  //   { label: "首頁", url: "/" },
+  //   { label: "車輛清單", url: "/bus" }
+  // ],
+  // "/bus/detail/[id]": [
+  //   { label: "首頁", url: "/" },
+  //   { label: "車輛清單", url: "/bus" },
+  //   { label: "檢視", url: "" }
+  // ],
   "/customer": [
     { label: "入門", url: "/" },
     { label: "客戶", url: "/customer" }
@@ -102,23 +173,51 @@ const breadcrumbs: I_routers = {
     { label: "供應商", url: "/vendor" },
     { label: "詳情", url: "" }
   ],
+  // "/maintenance/notice": [
+  //   { label: "入門", url: "/" },
+  //   { label: "維保通知", url: "/maintenance/notice" }
+  // ],
+  // "/maintenance/mission": [
+  //   { label: "入門", url: "/" },
+  //   { label: "維保任務", url: "/maintenance/mission" }
+  // ],
+  // "/maintenance/record": [
+  //   { label: "入門", url: "/" },
+  //   { label: "維保紀錄", url: "/maintenance/record" }
+  // ],
+  // "/maintenance/detail/[id]": [
+  //   { label: "入門", url: "/" },
+  //   { label: "維保任務", url: "/maintenance/mission" },
+  //   { label: "詳情", url: "" }
+  // ],
+  // ====== maintenance =====
+  "/maintenance": [
+    { label: "首頁", url: "/" },
+    { label: "維保列表", url: "/maintenance/notice" }
+  ],
   "/maintenance/notice": [
-    { label: "入門", url: "/" },
+    { label: "首頁", url: "/" },
     { label: "維保通知", url: "/maintenance/notice" }
   ],
   "/maintenance/mission": [
-    { label: "入門", url: "/" },
-    { label: "維保任務", url: "/maintenance/mission" }
+    { label: "首頁", url: "/" },
+    { label: "維保任務列表", url: "/maintenance/mission" }
   ],
   "/maintenance/record": [
-    { label: "入門", url: "/" },
-    { label: "維保紀錄", url: "/maintenance/record" }
+    { label: "首頁", url: "/" },
+    { label: "維保任務列表", url: "/maintenance/mission" }
+  ],
+  "/maintenance/detail/create": [
+    { label: "首頁", url: "/" },
+    { label: "維保任務列表", url: "/maintenance/mission" },
+    { label: "新增任務", url: "" }
   ],
   "/maintenance/detail/[id]": [
-    { label: "入門", url: "/" },
-    { label: "維保任務", url: "/maintenance/mission" },
-    { label: "詳情", url: "" }
+    { label: "首頁", url: "/" },
+    { label: "維保任務列表", url: "/maintenance/mission" },
+    { label: "檢視任務", url: "" }
   ],
+  // ====== maintenance =====
   "/admin_orders": [
     { label: "入門", url: "/" },
     { label: "訂單", url: "/admin_orders" }
@@ -127,10 +226,6 @@ const breadcrumbs: I_routers = {
     { label: "入門", url: "/" },
     { label: "訂單", url: "/admin_orders" },
     { label: "詳情", url: "" }
-  ],
-  "/assignment": [
-    { label: "入門", url: "/" },
-    { label: "派單", url: "/assignment" }
   ],
   "/company": [
     { label: "入門", url: "/" },
@@ -173,6 +268,33 @@ const breadcrumbs: I_routers = {
   //   { label: "入門", url: "/" },
   //   { label: "駕駛設定", url: "/driver" }
   // ]
+};
+
+const clientBreadcrumbs: I_routers = {
+  "/client/quote": [
+    { label: "首頁", url: "/client" },
+    { label: "預約服務", url: "/client/quote" }
+  ],
+  "/client/quote/edit": [
+    { label: "首頁", url: "/client" },
+    { label: "預約服務", url: "/client/quote" }
+  ],
+  "/client/quote/confirm": [
+    { label: "首頁", url: "/client" },
+    { label: "訂單管理", url: "/client/orders" }
+  ],
+  "/client/orders/detail/[id]": [
+    { label: "首頁", url: "/client" },
+    { label: "訂單管理", url: "/client/orders" },
+    {
+      label: "訂單內容",
+      url: ""
+    }
+  ],
+  "/client/orders/inquire": [
+    { label: "首頁", url: "/client" },
+    { label: "查詢訂單", url: "/client/orders/inquire" }
+  ]
 };
 
 const vendorsBreadcrumbs: I_routers = {
@@ -236,6 +358,7 @@ const getPageBreadCrumbs = (router: NextRouter) => {
   const newBreadcrumbs =
     breadcrumbs[router.pathname] ||
     breadcrumbs[router.asPath] ||
+    clientBreadcrumbs[router.pathname] ||
     vendorsBreadcrumbs[router?.query?.codeType as string] ||
     busListBreadcrumbs[router?.query?.type as string] ||
     [];

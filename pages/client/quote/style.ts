@@ -4,13 +4,19 @@ export const BodySTY = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) => theme.color.N300};
+
+  // background-color: ${({ theme }) => theme.color.N300};
+
+  .breadcrumbs {
+    width: 100%;
+  }
+  
   > .header {
     display: flex;
     justify-content: center;
-    padding: 32px 0px;
+    // padding: 32px 0px;
     width: 100%;
-    background-color: ${({ theme }) => theme.color.N400};
+    // background-color: ${({ theme }) => theme.color.N400};
     > .header-container {
       width: 1030px;
       display: flex;
@@ -19,7 +25,7 @@ export const BodySTY = styled.div`
       > .header-title {
         font-size: 32px;
         font-weight: 600;
-        color: ${({ theme }) => theme.color.N700};
+        color: ${({ theme }) => theme.color.N300};
       }
     }
   }
@@ -31,7 +37,7 @@ export const BodySTY = styled.div`
     align-items: center;
     width: 1030px;
     > .content-title {
-      color: ${({ theme }) => theme.color.N700};
+      color: ${({ theme }) => theme.color.N300};
       font-size: 32px;
       font-weight: 600;
       align-self: flex-start;
@@ -41,10 +47,11 @@ export const BodySTY = styled.div`
       width: 100%;
       justify-content: flex-start;
       gap: 25px;
+
       .serverEntryBtn {
-        width: 240px;
-        height: 264px;
         padding: 25.5px 40px;
+        border-radius: 10px;
+        
         div {
           font-size: 24px;
           line-height: 32px;
@@ -52,4 +59,11 @@ export const BodySTY = styled.div`
       }
     }
   }
+
+  .service-wrap {
+    box-shadow: 0px 4px 8px 0px #10184014;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
 `;

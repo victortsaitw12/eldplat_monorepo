@@ -1,7 +1,10 @@
 import { StylesConfig } from "react-select";
 import styled from "styled-components";
 export const selectStyles: StylesConfig = {
-  control: (styles) => ({ ...styles, backgroundColor: "white" }),
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: "white"
+  }),
   option: (styles, { isDisabled }) => {
     return {
       ...styles,

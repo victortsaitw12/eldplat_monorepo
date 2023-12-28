@@ -1,15 +1,18 @@
-import React from "react";
-import { Pane, Dialog, Paragraph, toaster } from "evergreen-ui";
-import { DivSTY } from "./style";
-
+import React, { ChangeEvent } from "react";
+import { Pane, Dialog, Paragraph, toaster, TextInput } from "evergreen-ui";
+import { DivSTY, CustomTableSTY, InputWrapperSTY } from "./style";
+import { ButtonSetSTY } from "@pages/client/orders/detail/style";
 import Table from "@components/Table/Table";
 import PrimaryRadiusBtn from "@components/Button/PrimaryRadius";
 import SecondaryRadiusBtn from "@components/Button/SecondaryRadius";
+import LightBox from "@components/Lightbox";
 
 import { updatePayment } from "@services/client/updatePayment";
 import { updateStatus } from "@services/client/updateStatus";
 import { getQuotation, I_OrderDetail } from "@services/client/getQuotation";
 import { I_Order } from "@services/client/getOrdersList";
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import SecondaryBtn from "@components/Button/Secondary/Label";
 
 const PaymentBtn = ({
   data,
@@ -19,6 +22,7 @@ const PaymentBtn = ({
   setData: (data: any) => void;
 }) => {
   const [isLightBoxOpen, setIsLightBoxOpen] = React.useState(false);
+  const [isPaymentLightBoxOpen, setIsPaymentLightBoxOpen] = React.useState(false);
 
   const handleRefetch = async () => {
     try {
@@ -96,12 +100,12 @@ const PaymentBtn = ({
       }
       if (status_code === "8") {
         //已付尾款
-        const res = await updatePayment(status_code, data.quote_no);
-        toaster.success("尾款付款完成", {
-          description: res.resultString,
-          duration: 2,
-          hasCloseButton: true
-        });
+        // const res = await updatePayment(status_code, data.quote_no);
+        // toaster.success("尾款付款完成", {
+        //   description: res.resultString,
+        //   duration: 2,
+        //   hasCloseButton: true
+        // });
       }
     } catch (e: any) {
       console.log("somehting's wrong:", e.message);
@@ -109,6 +113,16 @@ const PaymentBtn = ({
       handleRefetch();
     }
   };
+
+  const handleSubmit = () => {
+    toaster.success("己成功接受報價");
+    setIsLightBoxOpen(false)
+  }
+  
+  const handleSubmitPayment = () => {
+    toaster.success("己成功匯款");
+    setIsPaymentLightBoxOpen(false)
+  }
 
   const renderBtn = (statusList: any[]) => {
     // 1: {name: '收到報價', status: 'ok', date: '06/20/2023 00:00:00'}
@@ -158,6 +172,20 @@ const PaymentBtn = ({
           </PrimaryRadiusBtn>
         </div>
       );
+      // TODO: For demo 用
+    } else if (statusList[2].status === "ok") {
+      return (
+        <PrimaryRadiusBtn
+          appearance="primary"
+          onClick={() => {
+            handlePayment.bind(null, "8")
+            setIsPaymentLightBoxOpen(true)
+            console.log("click")
+          }}
+        >
+          匯款回報
+        </PrimaryRadiusBtn>
+      );
     }
   };
 
@@ -170,22 +198,40 @@ const PaymentBtn = ({
       }
       {isLightBoxOpen && (
         <Pane>
-          <Dialog
-            isShown={isLightBoxOpen}
+          <LightBox
+            isOpen={isLightBoxOpen}
             title="確認接受此報價嗎?"
             onConfirm={handleTakeQuote}
-            onCloseComplete={() => setIsLightBoxOpen(false)}
-            cancelLabel="取消"
-            confirmLabel="確認"
+            onCancel={() => setIsLightBoxOpen(false)}
+            customBtns={
+              <ButtonSetSTY>
+                <SecondaryBtn
+                  text="取消"
+                  onClick={() => setIsLightBoxOpen(false)}
+                  style={{
+                    borderColor: "1px solid #B3BAC5",
+                    color: "#5E6C84"
+                  }}
+                />
+                <PrimaryBtn 
+                  text="接受"
+                  onClick={handleSubmit} 
+                  style={{
+                    backgroundColor: "#5E6C84"
+                  }}
+                />
+              </ButtonSetSTY>
+            }
+            // cancelLabel="取消"
+            // confirmLabel="接受"
           >
-            {({}) => (
-              <Pane>
-                <Paragraph style={{ lineHeight: "32px" }}>
-                  接受報價後，此筆訂單即可繳款。
-                  <br />
-                  報價詳情：
-                </Paragraph>
-
+            <Pane>
+              <Paragraph style={{ lineHeight: "32px", fontSize: "16px", marginBottom: "20px" }}>
+                接受報價後，此筆訂單即可繳款。
+                <br />
+                報價詳情：
+              </Paragraph>
+              <CustomTableSTY>
                 <Table
                   titles={["訂單編號", "總金額"]}
                   data={[
@@ -194,15 +240,67 @@ const PaymentBtn = ({
                       quote_no: data.quote_no,
                       quote_total_amount: `NT$${Number(
                         data.quote_total_amount
-                      ).toLocaleString()}`
-                    }
-                  ]}
+                        ).toLocaleString()}`
+                      }
+                    ]}
                 />
-              </Pane>
-            )}
-          </Dialog>
+              </CustomTableSTY>
+            </Pane>
+          </LightBox>
         </Pane>
       )}
+      <LightBox
+        isOpen={isPaymentLightBoxOpen}
+        title="匯款回報"
+        onCancel={() => setIsPaymentLightBoxOpen(false)}
+        customBtns={
+          <ButtonSetSTY>
+            <SecondaryBtn
+              text="取消"
+              onClick={() => setIsPaymentLightBoxOpen(false)}
+              style={{
+                borderColor: "1px solid #B3BAC5",
+                color: "#5E6C84"
+              }}
+            />
+            <PrimaryBtn 
+              text="送出"
+              onClick={handleSubmitPayment} 
+              style={{
+                backgroundColor: "#5E6C84"
+              }}
+            />
+          </ButtonSetSTY>
+        }
+        // cancelLabel="取消"
+        // confirmLabel="接受"
+      >
+        <InputWrapperSTY>
+          <div className="input-wrapper">
+            <div className="item-container">
+              <div className="item-title">
+              <span style={{ color: "#D14343" }}>*</span>
+              <span>帳戶末五碼</span>
+              </div>
+              <TextInput
+                placeholder="請輸入手機"
+                // value={}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {console.log(e)}}
+              />
+            </div>
+            <div className="item-container">
+                <div className="item-title">
+                <span>統一編號 （有需要再填寫）</span>
+                </div>
+                <TextInput
+                  placeholder="請輸入信箱"
+                  // value={}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {console.log(e)}}
+                />
+            </div>
+          </div>
+        </InputWrapperSTY>
+      </LightBox>
     </>
   );
 };

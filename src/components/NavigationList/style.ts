@@ -12,13 +12,13 @@ export const IconSTY = styled.div<{ status: "done" | "current" | "next" }>`
       ? theme.color.G200
       : status === "current"
       ? theme.color.B200
-      : theme.color.N200};
+      : theme.color.N30};
   color: ${({ theme, status }) =>
     status === "done"
       ? theme.color.G400
       : status === "current"
       ? theme.color.B500
-      : theme.color.N700};
+      : theme.color.N200};
 `;
 
 export const ItemSTY = styled.div<{ status: "done" | "current" | "next" }>`
@@ -33,6 +33,6 @@ export const ItemSTY = styled.div<{ status: "done" | "current" | "next" }>`
 
 export const ListSTY = styled.div`
   display: flex;
-  gap: 24px;
+  gap: 38px;
   align-items: center;
 `;

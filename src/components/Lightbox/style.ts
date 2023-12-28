@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
+export const LightBoxBlock = styled.div<{
+  isOpen: boolean;
+  className?: string;
+}>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
   position: fixed;
   top: 0;
@@ -14,10 +17,17 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
   .wrapper {
     padding: 17px;
     max-width: 572px;
-    margin: 10vh auto;
+    /* margin: 0 auto; */
     border-radius: 10px;
     background: white;
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 400px;
+    transform: translate(-50%, -50%);
+    &.w-full {
+      max-width: initial;
+    }
     .titleWrap {
       display: flex;
       justify-content: space-between;
@@ -46,13 +56,26 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean }>`
     .content {
       padding: 15px;
     }
+    .column + .column {
+      margin-top: 28px;
+    }
+
+    .header-table {
+      thead tr {
+        background-color: ${({ theme }) => theme.color.N20};
+      }
+      a {
+        text-decoration: none;
+        color: ${({ theme }) => theme.color.B400};
+      }
+    }
   }
 `;
 
 export const ButtonSetSTY = styled.div`
   display: flex;
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 15px;
   justify-content: flex-end;
   align-items: center;
   gap: 10px;

@@ -18,17 +18,20 @@ function Index({ data }: Props) {
   // console.log("data.url", data.url);
   const defaultSelect =
     data.name !== "入門" &&
-    data.url !== "/" &&
-    (data.url === router.asPath || router.asPath.indexOf(data.url) >= 0);
+    router.asPath !== "/" &&
+    (data.url === router.asPath ||
+      data.url[0] === router.asPath ||
+      (Array.isArray(data.url) &&
+        data.url.some((item) => item.includes(router.pathname))));
+  const targetUrl = Array.isArray(data.url) ? data.url[0] : data.url;
   const [isSelect, setIsSelect] = useState(defaultSelect);
   const isDisabled = data.url === null && !data.subList;
   return (
     <BodySTY
       onClick={() => {
+        if (!data.url) return;
         setIsSelect((prev) => !prev);
-        if (data.url) {
-          router.push(data.url);
-        }
+        router.push(targetUrl);
       }}
       className={cx({
         active: isSelect,
@@ -36,7 +39,7 @@ function Index({ data }: Props) {
       })}
     >
       <p>{data.name}</p>
-      {isSelect && <TickIcon color="#567190" size={14} />}
+      {/* {isSelect && <TickIcon color="#567190" size={14} />} */}
     </BodySTY>
   );
 }

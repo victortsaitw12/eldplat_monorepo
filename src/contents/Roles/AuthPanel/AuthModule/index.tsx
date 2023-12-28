@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Switch,
-  RadioGroup,
-  CaretDownIcon,
-  CaretRightIcon,
-  Select
-} from "evergreen-ui";
+import { Switch, CaretDownIcon, CaretRightIcon } from "evergreen-ui";
 import {
   Control,
   useFieldArray,
@@ -18,13 +12,11 @@ import { DivSTY } from "./style";
 
 import { I_AuthFuncItem, I_AuthFuncElement } from "@services/role/getOneRole";
 import Radio from "@components/HookForm/Radio";
-import { getValue } from "evergreen-ui/types/theme";
 
 const AuthModule = ({
   data,
   isEdit,
   index,
-  register,
   getValues,
   control,
   setValue,
@@ -40,16 +32,15 @@ const AuthModule = ({
     name: `func_auth.${index}.func_element`
   });
 
-  // TODO data.module_enb
-  const handleValueChange = (value: string) => {
-    return;
-  };
-
-  const handleEnabled = () => {
-    setIsEnabled((prev) => !prev);
-    if (isEnabled) {
+  const toggleChecked = () => {
+    setIsChecked((prev) => !prev);
+    if (isChecked) {
       for (let i = 0; i < fields.length; i++) {
         setValue(`func_auth.${index}.func_element.${i}.element_default`, "3");
+      }
+    } else {
+      for (let i = 0; i < fields.length; i++) {
+        setValue(`func_auth.${index}.func_element.${i}.element_default`, "1");
       }
     }
   };
@@ -65,7 +56,10 @@ const AuthModule = ({
   };
 
   const isAuthFuncDisabled = (value: I_AuthFuncElement[]) => {
-    if (!isEdit) return;
+    return value.every((elem) => elem.element_default === "3");
+  };
+
+  const isAuthFuncChecked = (value: I_AuthFuncElement[]) => {
     return value.every((elem) => elem.element_default === "3");
   };
 
@@ -79,8 +73,21 @@ const AuthModule = ({
   });
 
   React.useEffect(() => {
-    const result = isAuthFuncDisabled(currentFunElement);
-    if (result) setIsChecked(false);
+    const result = isAuthFuncDisabled(data.func_element);
+    if (result) {
+      setIsEnabled(false);
+    } else {
+      setIsEnabled(true);
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    const result = isAuthFuncChecked(currentFunElement);
+    if (result) {
+      setIsChecked(false);
+    } else {
+      setIsChecked(true);
+    }
   }, [currentFunElement]);
 
   return (
@@ -98,12 +105,12 @@ const AuthModule = ({
         </div>
         <Switch
           className="value"
-          onChange={handleEnabled}
-          checked={
-            isEnabled &&
-            !isAuthFuncDisabled(getValues(`func_auth.${index}.func_element`))
-          }
-          disabled={!isEdit || isAuthFuncDisabled(data.func_element)}
+          onChange={toggleChecked}
+          // checked={isAuthFuncChecked(
+          //   getValues(`func_auth.${index}.func_element`)
+          // )}
+          checked={isChecked}
+          disabled={!isEdit || !isEnabled}
         />
       </div>
       <div
@@ -111,23 +118,35 @@ const AuthModule = ({
           isEnabled ? "" : "disabled"
         }  ${isFilteredOut(data.fg_no) ? "hide" : ""}`}
       >
-        {isEdit &&
-          fields.map((field: any, i) => {
-            return (
+        {fields.map((field: any, i) => {
+          return (
+            <div
+              className={`authFunc__element authFunc__item ${
+                isAuthFuncElemDisabled(data.func_element[i].element_default)
+                  ? "disabled"
+                  : ""
+              } ${subFilter && field.element_no !== subFilter ? "hide" : ""}`}
+              key={`funcElem-${i}`}
+            >
+              <div className="label">{field.element_name}</div>
               <div
-                className={`authFunc__element authFunc__item ${
-                  isAuthFuncElemDisabled(field.element_default)
-                    ? "disabled"
-                    : ""
-                } ${subFilter && field.element_no !== subFilter ? "hide" : ""}`}
-                key={`funcElem-${i}`}
+                className={`value ${
+                  isAuthFuncElemDisabled(field.element_default) ? "hide" : ""
+                }`}
               >
-                <div className="label">{field.element_name}</div>
-                <div
-                  className={`value ${
-                    isAuthFuncElemDisabled(field.element_default) ? "hide" : ""
-                  }`}
-                >
+                <Radio
+                  key={`func_auth.${index}.func_element.${i}.element_default`}
+                  control={control}
+                  name={`func_auth.${index}.func_element.${i}.element_default`}
+                  isDisabled={
+                    !isEdit || isAuthFuncElemDisabled(field.element_default)
+                  }
+                  options={Array.from(authFuncViewValue, ([value, label]) => ({
+                    value,
+                    label
+                  }))}
+                />
+                {/* {isEdit ? (
                   <Radio
                     key={`func_auth.${index}.func_element.${i}.element_default`}
                     control={control}
@@ -140,24 +159,19 @@ const AuthModule = ({
                       ([value, label]) => ({ value, label })
                     )}
                   />
-                </div>
+                ) : (
+                  <div className="value">
+                    {authFuncViewValue.get(
+                      getValues(
+                        `func_auth.${index}.func_element.${i}.element_default`
+                      )
+                    )}
+                  </div>
+                )} */}
               </div>
-            );
-          })}
-        {!isEdit &&
-          data.func_element.map((elem: I_AuthFuncElement, i: number) => {
-            return (
-              <div
-                className={"authFunc__element authFunc__item"}
-                key={`funcElem-${i}`}
-              >
-                <div className="label">{elem.element_name}</div>
-                <div className="value">
-                  {authFuncViewValue.get(elem.element_default)}
-                </div>
-              </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
     </DivSTY>
   );

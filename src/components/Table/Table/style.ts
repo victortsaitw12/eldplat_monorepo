@@ -14,7 +14,7 @@ export const DivSTY = styled.div`
 `;
 
 // 表格本身
-export const TableSTY = styled.table`
+export const TableSTY = styled.table<{ className?: string }>`
   /* width: 100%; */
   min-width: 100%;
   border-collapse: collapse;
@@ -22,6 +22,20 @@ export const TableSTY = styled.table`
   border-spacing: 0px;
   overflow: hidden;
   /* action buttons */
+  .group-cell {
+    position: relative;
+    background-color:  ${({ theme }) => theme.color.N20};
+    &:after {
+      display: block;
+      content: "";
+      width: 1px;
+      height: 100%;
+      background-color:  ${({ theme }) => theme.color.N40};
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
   .action {
     div {
       button {
@@ -39,7 +53,6 @@ export const TableSTY = styled.table`
     font-weight: ${({ theme }) => theme.fontWeight.Heading400};
     font-size: ${({ theme }) => theme.fontSize.Headline400};
     pointer-events: none;
-    /* border-bottom: 1px solid ${({ theme }) => theme.color.N40}; */
   }
   tbody tr {
     cursor: pointer;
@@ -63,20 +76,20 @@ export const TableSTY = styled.table`
 
   td,
   th {
+    padding: 0 20px;
+    height: 46px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
-    span {
+
+    div {
       display: flex;
       align-items: center;
       justify-content: flex-start;
     }
   }
-  th {
-    padding: 12px 20px 9px 20px;
-  }
+
   td {
-    padding: 5px 20px;
     color: ${({ theme }) => theme.color.N500};
     font-weight: ${({ theme }) => theme.fontWeight.Paragraph300};
     /* font-size: ${({ theme }) => theme.fontSize.Paragraph300}; */

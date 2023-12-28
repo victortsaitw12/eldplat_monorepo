@@ -139,14 +139,21 @@ export const DUMMY_MENU = {
           fg_no: "account",
           func_no: "role",
           func_name: "角色設定",
-          path: "/role"
+          path: ["/role", "/role/detail/[id]", "/role/detail/create"]
         },
         {
           module_no: "sys",
           fg_no: "account",
           func_no: "accountList",
           func_name: "使用者列表",
-          path: "/account"
+          path: ["/account", "/account/detail/[id]"]
+        },
+        {
+          module_no: "sys",
+          fg_no: "account",
+          func_no: "accountList",
+          func_name: "新增使用者",
+          path: "/account/detail/create"
         }
       ]
     },
@@ -158,15 +165,22 @@ export const DUMMY_MENU = {
           fg_no: "bus",
           func_no: "busList",
           func_name: "車輛列表",
-          path: "/bus"
+          path: ["/bus", "/bus/detail/[id]"]
+        },
+        {
+          module_no: "bus",
+          fg_no: "bus",
+          func_no: "bus",
+          func_name: "新增車輛明細",
+          path: "/bus/detail/create"
         },
         {
           module_no: "bus",
           fg_no: "bus",
           func_no: "bus",
           func_name: "車輛管理設定",
-          path: "/bus"
-        },
+          path: "/bus_management"
+        }
       ]
     },
     {
@@ -177,21 +191,28 @@ export const DUMMY_MENU = {
           fg_no: "maintenance",
           func_no: "notice",
           func_name: "維保通知",
-          path: "/notice"
+          path: "/maintenance/notice"
         },
         {
           module_no: "bus",
           fg_no: "maintenance",
           func_no: "mission",
           func_name: "維保任務列表",
-          path: "/mission"
+          path: ["/maintenance/mission", "/maintenance/detail/[id]"]
         },
+        // {
+        //   module_no: "bus",
+        //   fg_no: "maintenance",
+        //   func_no: "mission",
+        //   func_name: "維保任務列表",
+        //   path: "/mission"
+        // },
         {
           module_no: "bus",
           fg_no: "maintenance",
           func_no: "maintenance",
-          func_name: "維保管理設定",
-          path: "/maintenance"
+          func_name: "新增維保任務",
+          path: "/maintenance/detail/create"
         }
       ]
     },
@@ -201,9 +222,9 @@ export const DUMMY_MENU = {
         {
           module_no: "bus",
           fg_no: "driver",
-          func_no: "driverList",
+          func_no: "driver",
           func_name: "駕駛列表",
-          path: "/driver"
+          path: ["/driver", "/driver/training/[id]", "/driver/detail/[id]"]
         },
         {
           module_no: "bus",
@@ -217,7 +238,7 @@ export const DUMMY_MENU = {
           fg_no: "driver",
           func_no: "driver",
           func_name: "駕駛管理設定",
-          path: "/driver/management"
+          path: "/driver_management"
         }
       ]
     },
@@ -236,15 +257,15 @@ export const DUMMY_MENU = {
           fg_no: "task",
           func_no: "schedule",
           func_name: "駕駛出勤管理",
-          path: "/schedule"
-        },
-        { 
-          module_no: "bus",
-          fg_no: "task",
-          func_no: "setting",
-          func_name: "出勤管理設定", 
-          path: "/setting"
+          path: ["/schedule", "/schedule/approval", "/schedule/detail/[id]"]
         }
+        // {
+        //   module_no: "bus",
+        //   fg_no: "task",
+        //   func_no: "setting",
+        //   func_name: "出勤管理設定",
+        //   path: "/schedule/setting"
+        // }
       ]
     },
     {
@@ -255,13 +276,16 @@ export const DUMMY_MENU = {
           fg_no: "order",
           func_no: "orderList",
           func_name: "訂單列表",
-          path: "/orderList"
+          path: "/orders"
+        },
+        {
+          module_no: "bus",
+          fg_no: "order",
+          func_no: "orderList",
+          func_name: "新增訂單",
+          path: "/orders/detail/create"
         }
       ]
-    },
-    {
-      menu_name: "客戶管理",
-      sub_menu: []
     },
     {
       menu_name: "供應商管理",
@@ -270,21 +294,27 @@ export const DUMMY_MENU = {
           module_no: "bus",
           fg_no: "vendor",
           func_no: "car",
-          func_name: "外部車隊",
-          path: "/car"
+          func_name: "外部車隊"
         },
         {
           module_no: "bus",
           fg_no: "vendor",
           func_no: "repairer",
-          func_name: "維修廠",
-          path: "/repairer"
+          func_name: "維修廠"
+        },
+        {
+          module_no: "bus",
+          fg_no: "vendor",
+          func_no: "repairer",
+          func_name: "其他供應商"
+        },
+        {
+          module_no: "bus",
+          fg_no: "vendor",
+          func_no: "repairer",
+          func_name: "新增供應商"
         }
       ]
-    },
-    {
-      menu_name: "設定",
-      sub_menu: []
     }
   ]
 };

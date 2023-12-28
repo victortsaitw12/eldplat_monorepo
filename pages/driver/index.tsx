@@ -16,6 +16,33 @@ import LoadingSpinner from "@components/LoadingSpinner";
 import PrimaryBtn from "@components/Button/Primary/IconLeft";
 import { PlusIcon } from "evergreen-ui";
 
+const DUMMY_SUBFILTER = {
+  User_Name: {
+    field_Name: "User_Name",
+    arrayConditions: ["like", "equal"],
+    displayType: "search",
+    dataType: "string",
+    label: "駕駛姓名、英文姓名...",
+    value: ""
+  },
+  Dsph_team: {
+    field_Name: "Dsph_team",
+    arrayConditions: ["like", "equal"],
+    displayType: "fix",
+    dataType: "string",
+    label: "車隊",
+    value: ""
+  },
+  Dsph_Area: {
+    field_Name: "Dsph_Area",
+    arrayConditions: ["like", "equal"],
+    displayType: "fix",
+    dataType: "string",
+    label: "派遣區域",
+    value: ""
+  }
+};
+
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
@@ -86,7 +113,7 @@ const Page: NextPageWithLayout<never> = () => {
         resetFilter={() => {
           initializeSubFilter();
         }}
-        filter={subFilter}
+        filter={DUMMY_SUBFILTER}
         btns={
           <PrimaryBtn
             text="新增駕駛"

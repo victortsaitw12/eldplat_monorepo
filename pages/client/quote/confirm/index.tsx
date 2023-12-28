@@ -12,7 +12,6 @@ import {
 } from "next";
 
 import { getLayout } from "@layout/ClientLayout";
-import Breadcrumbs from "@components/Breadcrumbs";
 const Page: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({
@@ -33,16 +32,6 @@ const Page: NextPageWithLayout<
   const [isFilled, setIsFilled] = useState<boolean>(false);
   return (
     <BodySTY>
-      <Breadcrumbs
-        routes={[
-          { label: "首頁", url: "/client" },
-          { label: "線上訂車", url: "/client/quote" },
-          {
-            label: type === "custom" ? "客製包車" : "機場接送"
-          }
-        ]}
-        style={{ alignSelf: "flex-start" }}
-      />
       {type === "custom" ? (
         <CustomPickup
           ref={formButtonRef}

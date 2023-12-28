@@ -1,142 +1,104 @@
-import { PatternType } from "@utils/mappingQueryData";
-import { createElement } from "react";
-import API_Path from "./apiPath";
-import { I_PageInfo } from "@components/PaginationField";
-export const defaultPageInfo: I_PageInfo = {
-  Page_Index: 1,
-  Page_Size: 10,
-  Orderby: "maintenance_no",
-  Arrangement: "desc",
-  Total: 0,
-  Last_Page: 0
-};
-
-// 取得維保任務資料
-export const getAllMaintenanceMissions = async (
-  filter: { [key: string]: any } = {},
-  maintenance_status = "1",
-  pageQuery = defaultPageInfo
-) => {
-  const mainMissionFilter = [];
-  for (const key in filter) {
-    if (filter[key].value !== "") {
-      mainMissionFilter.push({
-        field_Name: key,
-        arrayConditions: "like",
-        value: filter[key].value,
-        dataType: filter[key].dataType
-      });
+const DUMMY_DATA = {
+  StatusCode: "200",
+  Message: "用戶端要求成功",
+  ContentList: [
+    {
+      id: 1,
+      plate: "KKA-7885",
+      car_name: "奶油獅號",
+      classification: "維修",
+      factory: "台北保養廠",
+      maintenance_no: "--",
+      finish_dt: "--",
+      driver_name: "--",
+    },
+    {
+      id: 2,
+      plate: "KKA-7885",
+      car_name: "奶油獅號",
+      classification: "維修",
+      factory: "台北保養廠",
+      maintenance_no: "MTC202401220001",
+      finish_dt: "2024-01-22(一)",
+      driver_name: "林大明",
+    },
+    {
+      id: 3,
+      plate: "KKA-7885",
+      car_name: "奶油獅號",
+      classification: "定期保養",
+      factory: "台北保養廠",
+      maintenance_no: "MTC202401220002",
+      finish_dt: "2024-01-22(一) 18:00~22:00",
+      driver_name: "鍾俊儀",
+    },
+    {
+      id: 4,
+      plate: "KKA-7885",
+      car_name: "--",
+      classification: "定期保養",
+      factory: "台北保養廠",
+      maintenance_no: "MTC202401220002",
+      finish_dt: "2024-01-22(一) 18:00~22:00",
+      driver_name: "林大明",
     }
+  ],
+  PageInfo: {
+    Page_Index: 1,
+    Page_Size: 1000,
+    Arrangement: "desc",
+    Total: 3,
+    Last_Page: 1
   }
-  const res = await fetch(API_Path["GetMaintenanceListForMissionAndRecord"], {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-    },
-    body: JSON.stringify({
-      maintenance_status,
-      maintenance_filter: mainMissionFilter,
-      filter_Needed: true,
-      page_info: pageQuery
-    })
-  });
-  console.log("mission res : ", res);
-  return res.json();
 };
 
-// 更改維保狀態(結案與否)
-export const UpdateMaintenanceStatus = async (
-  maintenance_no: string,
-  maintenance_status: string
-) => {
-  const res = await fetch(API_Path["UpdateMaintenanceStatus"], {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + process.env.NEXT_PUBLIC_ACCESS_TOKEN
-    },
-    body: JSON.stringify({
-      maintenance_no,
-      maintenance_status
-    })
-  });
-  return res.json();
-};
-
-export const maintenancePattern: PatternType = {
-  id: true,
-  bus_name: true,
-  driver_name: true,
-  maintenance_no: true,
-  type_name: true,
-  vendor_name: true,
-  package_name: true,
-  all_assignment_no: true,
-  // bus_assignment_no: true,
-  // driver_assignment_no: true,
-  completion_time: true
-};
-
-export const maintenanceParser = (data: any, key: string) => {
-  if (key === "id") {
-    return {
-      label: data["maintenance_no"] || null,
-      value: data["maintenance_no"] || null
-    };
-  } else if (key === "bus_name") {
-    const labelElement = createElement(
-      "a",
-      {
-        style: { textDecoration: "none", cursor: "pointer", color: "inherit" },
-        href: `/maintenance/detail/${data["maintenance_no"]}?editPage=view`
-      },
-      data["bus_name"]
-    );
-    return {
-      label: labelElement,
-      value: data["bus_name"] || null
-    };
-  } else if (key === "all_assignment_no") {
-    const labelElement = createElement(
-      "div",
-      { style: { display: "flex", flexDirection: "column" } },
-      [
-        createElement(
-          "div",
-          { key: "bus_assignment_no" },
-          data["bus_assignment_no"] ? data["bus_assignment_no"] : "---"
-        ),
-        createElement(
-          "div",
-          { key: "driver_assignment_no" },
-          data["driver_assignment_no"] ? data["driver_assignment_no"] : "---"
-        )
-      ]
-    );
-    return {
-      label: labelElement,
-      value:
-        `${data["bus_assignment_no"]}, ${data["driver_assignment_no"]}` || null
-    };
-  }
-
-  return {
-    label: data[key] || "---",
-    value: data[key] || null
-  };
-};
+export const getMaintenanceMissionData = () => {
+  return DUMMY_DATA.ContentList;
+}
 
 export const getMaintenanceMissionTitle = () => {
   const DUMMY_TITLES = [
+    "車牌",
     "車輛名稱",
-    "駕駛",
-    "維保序號",
     "分類",
     "維修廠",
-    "項目",
-    "派單單號",
-    "結案"
+    "維保單號",
+    "維保日期",
+    "派工駕駛",
+    "",
   ];
   return DUMMY_TITLES;
 };
+
+export const getConditionList = () => {
+  return [
+    {
+      field_Name: "search",
+      arrayConditions: ["like", "equal"],
+      displayType: "search",
+      dataType: "string",
+      label: "搜尋"
+    },
+    {
+      field_Name: "Short_Schd_Date",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "日期區間"
+    },
+    {
+      field_Name: "Short_Schd_Category",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "分類"
+    },
+    {
+      field_Name: "Dsph_Area",
+      arrayConditions: ["like", "equal"],
+      displayType: "fix",
+      dataType: "string",
+      label: "維修廠"
+    }
+  ];
+}

@@ -16,65 +16,9 @@ import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 import { I_PageInfo } from "@components/PaginationField";
+import PrimaryBtn from "@components/Button/Primary/IconLeft";
+import { PlusIcon } from "evergreen-ui";
 
-const busParser = (data: any, key: string): { label: any; value: any } => {
-  if (key === "id") {
-    return {
-      label: data["bus_no"] || null,
-      value: data["bus_no"] || null
-    };
-  } else if (key === "age") {
-    return {
-      label: data["age"] + "年" || null,
-      value: data["age"] || null
-    };
-  } else if (key === "type") {
-    return {
-      label: data["type_name"] || null,
-      value: data["type"] || null
-    };
-  } else if (key === "model") {
-    return {
-      label: data["model_name"] || null,
-      value: data["model"] || null
-    };
-  } else if (key === "make") {
-    return {
-      label: data["make_name"] || null,
-      value: data["make"] || null
-    };
-  } else if (key === "bus_group") {
-    return {
-      label: data["bus_group_name"] || null,
-      value: data["bus_group"] || null
-    };
-  } else if (key === "ownership") {
-    return {
-      label: data["ownership_name"] || null,
-      value: data["ownership"] || null
-    };
-  } else if (key === "bus_name" || key === "license_plate") {
-    return {
-      label:
-        (
-          <Link
-            href={{
-              pathname: `/bus/detail/${data["bus_no"]}`,
-              query: { editPage: "view", license_plate: data["license_plate"] }
-            }}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            {data[key]}
-          </Link>
-        ) || null,
-      value: data[key] || null
-    };
-  }
-  return {
-    label: data[key] || null,
-    value: data[key] || null
-  };
-};
 const Page: NextPageWithLayout<never> = () => {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
@@ -129,6 +73,16 @@ const Page: NextPageWithLayout<never> = () => {
     return <LoadingSpinner />;
   }
 
+  const createBusHandler = () => {
+    router.push("/bus/detail/create");
+  };
+
+  const controlButton = (
+    <PrimaryBtn text={"新增車輛明細"} onClick={createBusHandler}>
+      <PlusIcon size={14} />
+    </PrimaryBtn>
+  );
+
   return (
     <BodySTY>
       <FilterWrapper
@@ -137,6 +91,7 @@ const Page: NextPageWithLayout<never> = () => {
           initializeSubFilter();
         }}
         filter={subFilter}
+        btns={controlButton}
       >
         <BusList busData={data} pageInfo={pageInfo} />
       </FilterWrapper>

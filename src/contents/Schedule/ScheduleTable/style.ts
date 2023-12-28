@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import { ThemeType } from "@styles/theme";
 
-export const ScheduleSTY =styled.div`
+export const ScheduleSTY = styled.div`
   width: 100%;
   overflow: auto;
   position: relative;
   .calendars_weeksWrap {
     width: 100%;
     position: sticky;
-    top:0;
+    top: 0;
     display: flex;
     flex-flow: row wrap;
     list-style: none;
@@ -42,11 +42,16 @@ export const ScheduleSTY =styled.div`
       flex: 0 0 14.285%;
       min-width: 80px;
       height: 120px;
-      padding: 12px; {
-        font-size: 16px;
-        color: ${({ theme }) => theme.color.N500};
-        font-weight: 400;
-        letter-spacing: 0;
+      padding: 12px;
+      font-size: 16px;
+      color: ${({ theme }) => theme.color.N500};
+      font-weight: 400;
+      letter-spacing: 0;
+      &.other_month {
+        background: ${({ theme }) => theme.color.N30};
+        .date {
+          opacity: 50%;
+        }
       }
       .today {
         position: relative;
@@ -61,7 +66,7 @@ export const ScheduleSTY =styled.div`
           position: absolute;
           display: inline-block;
           width: 24px;
-          height: 24px; 
+          height: 24px;
           background: ${({ theme }) => theme.color.B400};
           border-radius: 50%;
           color: ${({ theme }) => theme.color.N0};
@@ -70,22 +75,6 @@ export const ScheduleSTY =styled.div`
       .weekend {
         color: ${({ theme }) => theme.color.R400};
       }
-      &.other_month {
-        background: ${({ theme }) => theme.color.N30};
-        .date {
-          opacity: 50%;
-        }
-      }
-      // &:hover {
-      //   background: $selected_date_bg_color;
-      // } 
-      // &.cover {
-      //   background: $cover_date_bg;
-      // }
-      // &.selected {
-      //   background: $selected_date_bg_color;
-      //   border: 2px solid $selected_date_border_color;
-      // }
     }
   }
 `;

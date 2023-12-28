@@ -8,8 +8,9 @@ interface I_Props {
   title?: string | React.ReactNode;
   titleChildren?: React.ReactNode;
   viewOnly?: boolean;
-  children: React.ReactNode;
+  children: React.ReactNode | React.JSX.Element;
   OnToggle?: (isOpen: boolean) => void;
+  iconPosition?: string;
 }
 
 const Collapse = ({
@@ -21,7 +22,8 @@ const Collapse = ({
   children = <p>內容</p>,
   OnToggle = (isOpen) => {
     return isOpen;
-  }
+  },
+  iconPosition = "icon_end"
 }: I_Props) => {
   const [isOpen, setIsOpen] = React.useState(opened);
   const titleOnClick = () => {
@@ -38,7 +40,8 @@ const Collapse = ({
       <div
         onClick={(e) => {
           e.stopPropagation();
-          const target = e.target as HTMLTextAreaElement;
+          const target = e.currentTarget as unknown as HTMLTextAreaElement;
+
           if (
             typeof target.className == "string" &&
             (target.className?.indexOf("collapse_title") >= 0 ||
@@ -47,7 +50,7 @@ const Collapse = ({
             titleOnClick();
           }
         }}
-        className="collapse_title"
+        className={cx("collapse_title", iconPosition)}
       >
         <>
           {titleChildren ? (

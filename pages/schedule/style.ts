@@ -23,10 +23,16 @@ export const ShiftSTY = styled.div`
         margin-right: 8px;
       }
     }
+    .overviewPag {
+      border: 1px solid ${({ theme }) => theme.color.N40};
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      padding: 5px 12px;
+    }
     .overviewContainer {
       flex-grow: 10;
       overflow: hidden;
-      overflow-x: scroll;
+      /* overflow-x: scroll; */
       &::-webkit-scrollbar {
         /* display: none; */
       }

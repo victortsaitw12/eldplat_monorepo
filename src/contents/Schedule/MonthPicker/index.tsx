@@ -10,7 +10,7 @@ import {
 
 import { formatYYYYMM } from "@contents/Schedule/shift.util";
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import timeUtil from "../schedule.timeUtil";
+import timeUtil from "@utils/schedule.timeUtil";
 
 const MonthPicker = ({
   initialDate,
@@ -25,10 +25,9 @@ const MonthPicker = ({
   const handlePrev = () => {
     const newMonth = timeUtil.getOtherMonth(initialDate, "prevMonth");
     updateMonthCount(newMonth);
-
   };
   const handleNext = () => {
-    const newMonth = timeUtil.getOtherMonth(initialDate, "nextMonth"); 
+    const newMonth = timeUtil.getOtherMonth(initialDate, "nextMonth");
     updateMonthCount(newMonth);
   };
   const handleToday = () => {
@@ -40,7 +39,9 @@ const MonthPicker = ({
   };
   return (
     <Pane display="flex" padding={8} paddingRight={12}>
-      <Button marginRight={5} onClick={handleToday}>今天</Button>
+      <Button marginRight={5} onClick={handleToday}>
+        今天
+      </Button>
       <Group>
         <IconButton icon={ChevronLeftIcon} onClick={handlePrev} />
         <Button>{formatYYYYMM(initialDate)}</Button>

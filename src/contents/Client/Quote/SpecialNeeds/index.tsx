@@ -18,7 +18,6 @@ const SpecialNeedsInformation = () => {
     <CollapseCardSTY>
       <Collapse title="特殊需求" opened={true}>
         <BodySTY>
-          <ItemSTY>
             <div className="item">
               <CheckBoxWrapper
                 label="舉牌(NT$200)"
@@ -56,8 +55,6 @@ const SpecialNeedsInformation = () => {
                 description="免費提供。每車提供一箱，總共有x杯。"
               ></CheckBoxWrapper>
             </div>
-          </ItemSTY>
-          <ItemSTY>
             <div className="item">
               <CheckBoxWrapper
                 label="司導(NT$200)"
@@ -82,8 +79,6 @@ const SpecialNeedsInformation = () => {
                 />
               </CheckBoxWrapper>
             </div>
-          </ItemSTY>
-          <ItemSTY>
             <div className="item">
               <CheckBoxWrapper
                 label="指定車齡(視選項加價)"
@@ -119,8 +114,6 @@ const SpecialNeedsInformation = () => {
                 />
               </CheckBoxWrapper>
             </div>
-          </ItemSTY>
-          <ItemSTY>
             <div className="item">
               <CheckBoxWrapper
                 label="攜帶特大/特殊行李"
@@ -152,8 +145,6 @@ const SpecialNeedsInformation = () => {
                 />
               </CheckBoxWrapper>
             </div>
-          </ItemSTY>
-          <ItemSTY>
             <div className="item">
               <CheckBoxWrapper
                 label="攜帶寵物"
@@ -174,15 +165,16 @@ const SpecialNeedsInformation = () => {
               </CheckBoxWrapper>
             </div>
             <div className="item"></div>
-          </ItemSTY>
-          <RemarkSTY>
-            <div className="title">備註</div>
-            <div>
-              此欄位可補充說明以上需求之細節，或提出您的其他需求。若有其他特殊需求，專人將會再提供報價。
-            </div>
-            <Textarea width={"100%"} {...register("remark")} />
-          </RemarkSTY>
         </BodySTY>
+      </Collapse>
+      <Collapse title="備註" opened={true}>
+        <RemarkSTY>
+          <div className="title">備註</div>
+          <div>
+            此欄位可補充說明以上需求之細節，或提出您的其他需求。若有其他特殊需求，專人將會再提供報價。
+          </div>
+          <Textarea width={"100%"} {...register("remark")} />
+        </RemarkSTY>
       </Collapse>
     </CollapseCardSTY>
   );

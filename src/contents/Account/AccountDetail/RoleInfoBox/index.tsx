@@ -13,6 +13,7 @@ import InfoBox from "@components/InfoBox";
 import LoadingSpinner from "@components/LoadingSpinner";
 import RoleModule from "./RoleModule";
 import { getValue } from "evergreen-ui/types/theme";
+import { get } from "lodash";
 
 const RolePanel = ({
   data,
@@ -30,23 +31,12 @@ const RolePanel = ({
     );
 
   //------ functions ------//
-  const handleRoleChange = (v: string[]) => {
+  const handleRoleChange = (v: string) => {
     const prev = getValues("account_role");
-    // filter out the same value
-    const filtered = v.filter((elem) => !prev.includes(elem));
-
-    setValue("account_role", prev.concat(filtered));
-  };
-
-  const getRoles = (data: I_RoleItem[]) => {
-    const selectedRoles = data.filter((elem: any) => elem.is_select === true);
-    if (selectedRoles.length === 0) return "--";
-    const roles = selectedRoles.map((elem: any, i: number) => (
-      <div key={`role-${i}`} data-id={elem.role_no}>
-        {elem.role_name}
-      </div>
-    ));
-    return roles;
+    const update = prev.includes(v)
+      ? prev.filter((item: string) => item !== v)
+      : [...prev, v];
+    setValue("account_role", update);
   };
 
   // ------- render ------- //
@@ -81,3 +71,14 @@ interface I_Props {
   setValue: UseFormSetValue<any>;
   getValues: UseFormGetValues<any>;
 }
+
+// const getRoles = (data: I_RoleItem[]) => {
+//   const selectedRoles = data.filter((elem: any) => elem.is_select === true);
+//   if (selectedRoles.length === 0) return "--";
+//   const roles = selectedRoles.map((elem: any, i: number) => (
+//     <div key={`role-${i}`} data-id={elem.role_no}>
+//       {elem.role_name}
+//     </div>
+//   ));
+//   return roles;
+// };
