@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import dayjs from "dayjs";
 import { DoubleCollapseWrap } from "./ShuttleInfo/style"; 
-import { MainSTY } from "./style";
+import { MainSTY, ShadowSTY } from "./style";
 import {
   mappingContactInfo,
   mappingSpecailNeededsInfo,
@@ -71,25 +71,26 @@ const OrderDetail = ({ orderData }: { orderData: any }) => {
       <form>
         <MainSTY>
           <OrderStatusInfo progressInfo={progressInfo} orderData={orderData} />
-          <DoubleCollapseWrap>
-            <SimpleTabs
-              tabsArray={tabsArray}
-              onTabChange={(v: any) => handleTabChange(v)}
-              defaultTab={1}
-            />
-            {currentTab == 1 && 
-              <OrderDetailInfo 
-                orderData={orderData}
-                contactInfo={contactInfo}
-                passengerInfo={passengerInfo}
-                shuttleInfo={shuttleInfo}
-                takeBusInfo={takeBusInfo}
-                specialInfo={specialInfo}
-              />}
+          <ShadowSTY>
+            <DoubleCollapseWrap>
+              <SimpleTabs
+                tabsArray={tabsArray}
+                onTabChange={(v: any) => handleTabChange(v)}
+                defaultTab={1}
+              />
+              {currentTab == 1 && 
+                <OrderDetailInfo 
+                  orderData={orderData}
+                  contactInfo={contactInfo}
+                  passengerInfo={passengerInfo}
+                  shuttleInfo={shuttleInfo}
+                  takeBusInfo={takeBusInfo}
+                  specialInfo={specialInfo}
+                />}
 
-            {currentTab == 2 && <OrderModifyInfo modificationRecord={DUMMY_modificationRecord} />}
-          </DoubleCollapseWrap>
-
+              {currentTab == 2 && <OrderModifyInfo modificationRecord={DUMMY_modificationRecord} />}
+            </DoubleCollapseWrap>
+          </ShadowSTY>
         </MainSTY>
       </form>
     </FormProvider>

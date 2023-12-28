@@ -54,9 +54,9 @@ const QuoteSearch = ({ updateSearchState }: any) => {
     <BodySTY>
       <Section title="請輸入訂單聯絡人的手機與信箱">
         <form>
-          <div className="input-wrapper">
-            <div className="item-container">
-              <div className="item-title">
+          <div className="input_wrapper">
+            <div className="item_container">
+              <div className="item_title">
               <span style={{ color: "#D14343" }}>*</span>
               <span>手機</span>
               </div>
@@ -66,8 +66,8 @@ const QuoteSearch = ({ updateSearchState }: any) => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange("phone", e.target.value)}
               />
             </div>
-            <div className="item-container">
-                <div className="item-title">
+            <div className="item_container">
+                <div className="item_title">
                 <span style={{ color: "#D14343" }}>*</span>
                 <span>信箱</span>
                 </div>

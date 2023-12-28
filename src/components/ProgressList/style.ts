@@ -13,7 +13,7 @@ export const ItemSTY = styled.div<{
   height: 60px;
   width: 80px;
   z-index: 2;
-  .item-label {
+  .item_label {
     color: ${({ theme, status, color }) =>
       status === "error" 
       ? theme.color.R400 
@@ -22,7 +22,7 @@ export const ItemSTY = styled.div<{
       : color || theme.color.N300};
     font-weight: 600;
   }
-  .item-icon {
+  .item_icon {
     height: 16px;
     width: 16px;
     border-radius: 50%;
@@ -40,7 +40,7 @@ export const ItemSTY = styled.div<{
       (status === "pending" && `2px solid ${color || theme.color.N50}`) ||
       (status === "disabled" && `2px solid ${theme.color.N300}`)};
   }
-  .item-date {
+  .item_date {
     color: ${({ theme }) => theme.color.N300};
     font-size: 12px;
   }

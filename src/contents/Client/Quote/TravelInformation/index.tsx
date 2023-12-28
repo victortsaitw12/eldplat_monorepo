@@ -46,7 +46,7 @@ const TravelInformation = () => {
                         middlePointName={`order_itinerary_list.${index}.stopover_address_list`}
                       />
                       <ItemSTY>
-                        <div className="item-content">抵達時間</div>
+                        <div className="item_content">抵達時間</div>
                         <TextInput
                           {...register(
                             `order_itinerary_list.${index}.arrive_time`
@@ -54,13 +54,13 @@ const TravelInformation = () => {
                           type="time"
                           style={{ flex: "1" }}
                         />
-                          <div className="option-container"></div>
+                          <div className="option_container"></div>
                       </ItemSTY>
                     </>
                    :
                    <>
                     <ItemSTY>
-                      <div className="item-content">出發時間</div>
+                      <div className="item_content">出發時間</div>
                       <TextInput
                         {...register(
                           `order_itinerary_list.${index}.departure_time`
@@ -68,7 +68,7 @@ const TravelInformation = () => {
                         type="time"
                         style={{ flex: "1" }}
                       />
-                        <div className="option-container"></div>
+                        <div className="option_container"></div>
                     </ItemSTY>
                     <StepArragement
                       control={control}

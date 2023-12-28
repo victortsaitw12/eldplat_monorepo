@@ -5,8 +5,10 @@ const BodySTY = styled.div`
   
   .section {
     box-shadow: 0px 4px 8px 0px #10184014;
+    border-radius: 4px;
+    
 
-    .section-content {
+    .section_content {
       padding-bottom: 40px;
     }
   }
@@ -24,7 +26,7 @@ const BodySTY = styled.div`
       font-size: 16px;
     }
 
-    .button-wrap {
+    .button_wrap {
       button:hover {
         border: none;
       }
@@ -36,13 +38,13 @@ const BodySTY = styled.div`
     }
   }
   
-  .notice-message {
+  .notice_message {
     margin-bottom: 12px;
     font-weight: 600;
     font-size: 16px;
   }
 
-  .back-link {
+  .back_link {
     font-size: 16px;
     color: ${({ theme }) => theme.color.N300};
     text-decoration: none;

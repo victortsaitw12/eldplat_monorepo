@@ -3,32 +3,36 @@ import styled from "styled-components";
 export const BodySTY = styled.div`
   width: 1030px;
   // margin: 28px auto;
-  > .body-container {
+  > .body_container {
     display: grid;
     gap: 20px;
     grid-template-columns: 1fr 295px;
-    > .content-container {
+    > .content_container {
       display: flex;
       flex-direction: column;
       gap: 50px;
+      box-shadow: 0px 4px 8px 0px #10184014;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 20px;
     }
           
-    .content-actions-container {
+    .content_actions_container {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-top: 20px;
     }
 
-    > .charge-container {
-      border-radius: 10px;
+    > .charge_container {
+      border-radius: 4px;
       overflow: hidden;
       height: fit-content;
       background-color: ${({ theme }) => theme.color.N0};
       padding: 16px;
       box-shadow: 0px 4px 8px 0px #10184014;
 
-      .charge-header {
+      .charge_header {
         font-size: 20px;
         display: flex;
         justify-content: space-between;
@@ -46,7 +50,7 @@ export const BodySTY = styled.div`
     text-decoration: none;
     color: ${({ theme }) => theme.color.B400};
   }
-  > .redirect-body {
+  > .redirect_body {
     height: 122px;
     display: flex;
     flex-direction: column;
@@ -60,7 +64,7 @@ export const BodySTY = styled.div`
 
 
   }
-  > .redirect-container {
+  > .redirect_container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,7 +82,10 @@ export const BodySTY = styled.div`
       color: ${({ theme }) => theme.color.N700};
     }
   }
-  .quote-detail {
+  .quote_detail {
+    box-shadow: 0px 4px 8px 0px #10184014;
+    border-radius: 4px;
+    overflow: hiddden;
     .grid_content {
       .item:nth-child(odd) {
         background-color: ${({ theme }) => theme.color.N20};;

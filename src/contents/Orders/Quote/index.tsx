@@ -86,7 +86,8 @@ const Quote = ({
           viewOnly
           OnToggle={handleToggle}
         >
-          <Pane marginBottom="20px"><NoticeMessage message="注意事項注意事項注意事項注意事項注意事項注意事項" /></Pane>
+          <ExpenseDetail data={expenseList} prefix="NT$" />
+          <Pane marginBottom="20px"><NoticeMessage size={16} message="注意事項注意事項注意事項注意事項注意事項注意事項" /></Pane>
           {
             data.status_list[1].status === "pending" && 
             <Button 

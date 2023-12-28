@@ -138,7 +138,13 @@ const Page: NextPageWithLayout<
   async function asyncGetDefaultValues(
     type: string
   ): Promise<QuotationCreatePayload> {
-    const busData = await getBusType();
+    let busData;
+    try {
+      busData = await getBusType();
+    } catch(err) {
+      console.log(err);
+    }
+
     const formatedBusData = [];
     for (const key in busData) {
       formatedBusData.push({
@@ -233,7 +239,6 @@ const Page: NextPageWithLayout<
         throw new Error("Fail to create quotation");
       }
       setQuoteNo(quote_no)
-      console.log("======>", quote_no, quoteNo)
       setCurrentTab(6);
     } catch (e) {
       console.log(e);
@@ -241,7 +246,7 @@ const Page: NextPageWithLayout<
   };
   useEffect(() => {
     let timmer: any;
-    // 自動返回
+    // 自動返回首頁
     // if (currentTab === 5) {
     //   timmer = setInterval(() => {
     //     setRemainTime((prev) => prev - 1);
@@ -259,7 +264,7 @@ const Page: NextPageWithLayout<
   if (currentTab === 5) {
     return (
       <BodySTY>
-        <div className="redirect-body">
+        <div className="redirect_body">
           <TickCircleIcon
             color="success"
             style={{ height: "40px", width: "40px" }}
@@ -271,7 +276,7 @@ const Page: NextPageWithLayout<
           </div>
         </div>
         <Pane
-          className="quote-detail"
+          className="quote_detail"
           boxShadow="box-shadow: 0px 4px 8px 0px #10184014"
         >
           <Section title="訂單資訊">
@@ -345,10 +350,10 @@ const Page: NextPageWithLayout<
         />
       </StatusCard>
 
-      <div className="body-container">
+      <div className="body_container">
         <FormProvider {...methods}>
           <form
-            className="content-container"
+            className="content_container"
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
               e.preventDefault();
             }}
@@ -379,13 +384,13 @@ const Page: NextPageWithLayout<
 
           </form>
         </FormProvider>
-        <div className="charge-container">
-          <div className="charge-header">
+        <div className="charge_container">
+          <div className="charge_header">
             <div className="title">初估金額</div>
             <div className="charge">NTD $2,805</div>
           </div>
           <NoticeMessage size={16} message="注意事項注意事項注意事項注意事項注意事項注意事項" />
-          <div className="content-actions-container">
+          <div className="content_actions_container">
             <Button
               style={{
                 backgroundColor: "#fff",

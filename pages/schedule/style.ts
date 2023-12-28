@@ -32,7 +32,7 @@ export const ShiftSTY = styled.div`
     .overviewContainer {
       flex-grow: 10;
       overflow: hidden;
-      overflow-x: scroll;
+      /* overflow-x: scroll; */
       &::-webkit-scrollbar {
         /* display: none; */
       }

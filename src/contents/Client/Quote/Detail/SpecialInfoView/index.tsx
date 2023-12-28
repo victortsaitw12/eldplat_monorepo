@@ -13,35 +13,35 @@ const SpecialInfoView = ({ listArray, remark = "--" }: I_Props) => {
       {listArray.length !== 0 && listArray.map((item, index) => {
         return (
           item.isMulti ? 
-          <div className="grid-wrap" key={index}>
-            <div className="grid-title">{item.title}</div>
-            <div className="multi-wrap">
+          <div className="grid_wrap" key={index}>
+            <div className="grid_title">{item.title}</div>
+            <div className="multi_wrap">
               {item.seller.title && 
-                <div className="multi-items">
-                  <span className="grid-item">{item.seller.title}</span>
-                  <span className="grid-item">{item.seller.detail}</span>
+                <div className="multi_items">
+                  <span className="grid_item">{item.seller.title}</span>
+                  <span className="grid_item">{item.seller.detail}</span>
                 </div>
               }
               {item.yourself.title &&
-                <div className="multi-items">
-                  <span className="grid-item">{item.yourself.title}</span>
-                  <span className="grid-item">{item.yourself.detail}</span>
+                <div className="multi_items">
+                  <span className="grid_item">{item.yourself.title}</span>
+                  <span className="grid_item">{item.yourself.detail}</span>
                 </div>
               }
             </div>
           </div>
           : 
-          <div className="grid-wrap" key={index}>
-            <div className="grid-title">{ item.title }</div>
+          <div className="grid_wrap" key={index}>
+            <div className="grid_title">{ item.title }</div>
             { item.detail ? 
-              <span className="grid-item">{ item.detail }</span> :
-              <span className="grid-item">{ item.value }</span> }
+              <span className="grid_item">{ item.detail }</span> :
+              <span className="grid_item">{ item.value }</span> }
           </div>
         )
       })}
-      <div className="grid-wrap">
-        <div className="grid-title">備註</div>
-        <div className="grid-item">{remark || "無"}</div>
+      <div className="grid_wrap">
+        <div className="grid_title">備註</div>
+        <div className="grid_item">{remark || "無"}</div>
       </div>
     </BodySTY>
   );

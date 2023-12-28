@@ -29,12 +29,12 @@ const HorizontalLine = ({
 const ProgressItem = ({ status, label, date, color, showTick=false }: ItemProps) => {
   return (
     <ItemSTY status={status} color={color}>
-      <div className="item-label">{label}</div>
-      <div className={`item-icon ${status}`}>
+      <div className="item_label">{label}</div>
+      <div className={`item_icon ${status}`}>
         {status === "ok" && showTick && <SmallTickIcon/>}
       </div>
       {date ? (
-        <div className="item-date">{date}</div>
+        <div className="item_date">{date}</div>
       ) : (
         <div style={{ color: "transparent" }}>_</div>
       )}
@@ -66,7 +66,7 @@ interface ListProps {
 
 const ProgressList = ({ dataLists, color, showTick=false }: ListProps) => {
   return (
-    <ListSTY color={color} className="progress-list">
+    <ListSTY color={color} className="progress_list">
       {dataLists.map((item, index) => {
         return (
           <ProgressItem
