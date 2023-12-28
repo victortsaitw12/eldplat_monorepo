@@ -114,9 +114,8 @@ const Page: NextPageWithLayout<
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainTabsArray}
-      >
-        <OrderContent isEdit={isEdit} orderId={orderId} formType={mainFilter} />
-      </TabsWrapper>
+      />
+      <OrderContent isEdit={isEdit} orderId={orderId} formType={mainFilter} />
     </BodySTY>
   );
 };

@@ -133,7 +133,7 @@ const Page: NextPageWithLayout<never> = () => {
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
         viewOnly={true}
-      > */}
+      /> */}
       <FilterWrapper
         updateFilter={updateSubFilter}
         resetFilter={() => initializeSubFilter()}
@@ -142,7 +142,6 @@ const Page: NextPageWithLayout<never> = () => {
       >
         <RoleList data={data} pageInfo={pageInfo} />
       </FilterWrapper>
-      {/* </TabsWrapper> */}
     </BodySTY>
   );
 };

@@ -27,7 +27,7 @@ const mainTabsArray = [
   { id: 1, label: "車輛明細", value: "1" },
   { id: 2, label: "維保計劃", value: "2" },
   { id: 3, label: "車上設備", value: "3" },
-  { id: 4, label: "油耗紀錄", value: "4" },
+  { id: 4, label: "油耗紀錄", value: "4" }
   // { id: 5, label: "修改紀錄", value: "5" }
 ];
 
@@ -141,7 +141,6 @@ const Page: NextPageWithLayout<
     setLightOpen(false);
   };
 
-
   useEffect(() => {
     setIsEdit(editPage === "edit" ? true : false);
   }, [editPage]);
@@ -164,7 +163,7 @@ const Page: NextPageWithLayout<
           hasImage={false}
         />
         {mainFilter === "3" || mainFilter === "5" ? (
-          <SecondaryBtn text="回列表" onClick={handleReturn}/>
+          <SecondaryBtn text="回列表" onClick={handleReturn} />
         ) : (
           <ButtonSet
             isEdit={isEdit}
@@ -180,18 +179,17 @@ const Page: NextPageWithLayout<
         onChangeTab={changeMainFilterHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainTabsArray}
-      >
-        <BusDetail
-          isEdit={isEdit}
-          busId={busId}
-          busDefaultData={busDefaultData}
-          submitRef={submitRef}
-          asyncSubmitForm={asyncSubmitForm}
-          formType={mainFilter}
-          busOptions={options}
-          fetchDDL={fetchDDL}
-        />
-      </TabsWrapper>
+      />
+      <BusDetail
+        isEdit={isEdit}
+        busId={busId}
+        busDefaultData={busDefaultData}
+        submitRef={submitRef}
+        asyncSubmitForm={asyncSubmitForm}
+        formType={mainFilter}
+        busOptions={options}
+        fetchDDL={fetchDDL}
+      />
       <LightBox
         title="確定要離開嗎?"
         isOpen={isLightOpen}
