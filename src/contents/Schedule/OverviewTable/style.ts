@@ -10,17 +10,17 @@ export const OverviewSTY = styled.div<{
     --cellWidth: ${64 + (expandPercentage * (256 - 64)) / 100 + "px"};
   `}
   height: 100%;
-  width: fit-content;
+  /* width: fit-content; */
+  display: flex;
+  width: 100%;
   .schedule_zone {
     height: calc(100% - 32px);
+    /* overflow: hidden; */
+    width: 100%;
   }
   .schedule_weeksWrap {
     display: flex;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    width: fit-content;
     div {
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       border-right: 1px solid ${({ theme }) => theme.color.N40};
@@ -94,74 +94,96 @@ export const OverviewSTY = styled.div<{
   .schedule_bodyWrap {
     height: 100%;
     overflow-y: scroll;
-    &::-webkit-scrollbar {
+    /* position: relative; */
+    overflow-x: scroll;
+    /* &::-webkit-scrollbar {
       display: none;
-    }
+    } */
     padding-bottom: 10px;
   }
   .schedule_daysWrap {
+    width: fit-content;
     display: flex;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    div {
-      border-bottom: 1px solid ${({ theme }) => theme.color.N40};
-      border-right: 1px solid ${({ theme }) => theme.color.N40};
-      text-align: center;
-      padding: 0 2px;
-      letter-spacing: 0px;
-      height: 56px;
-      width: 95px;
+    /* flex-flow: row wrap; */
+    /* flex-wrap: nowrap; */
+    position: relative;
+    .driver_info {
       display: flex;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      &.driver_info {
-        padding: 12px 0;
-        display: unset;
-        font-size: 14px;
-        p {
-          font-size: 12px;
-          color: ${({ theme }) => theme.color.N80};
-          padding-top: 4px;
-        }
-      }
-      &.w-50 {
-        width: 90px;
-      }
-      &.zoom_width {
-        width: var(--cellWidth);
-      }
-      .icon {
-        border: none;
-        border-radius: 5px;
-        padding: 2px;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        flex-wrap: nowrap;
-        -webkit-box-pack: center;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-align-items: center;
-        align-items: center;
+      position: sticky;
+      left: 0;
+      background-color: #fff;
+      & div {
+        border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+        border-right: 1px solid ${({ theme }) => theme.color.N40};
         text-align: center;
-        padding: 4px;
-        background: ${({ theme }) => theme.color.N20};
-        color: ${({ theme }) => theme.color.N200};
+        padding: 0 2px;
+        letter-spacing: 0px;
+        height: 56px;
+        width: 95px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
-        svg {
-          width: 15px;
-          height: 15px;
+        &.driver {
+          padding: 12px 0;
+          display: unset;
+          font-size: 14px;
+          p {
+            font-size: 12px;
+            color: ${({ theme }) => theme.color.N80};
+            padding-top: 4px;
+          }
+        }
+
+        &.w-50 {
+          width: 90px;
+        }
+        .icon {
+          border: none;
+          border-radius: 5px;
+          padding: 2px;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          flex-wrap: nowrap;
+          -webkit-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -webkit-align-items: center;
+          align-items: center;
+          text-align: center;
+          padding: 4px;
+          background: ${({ theme }) => theme.color.N20};
+          color: ${({ theme }) => theme.color.N200};
+          cursor: pointer;
+          svg {
+            width: 15px;
+            height: 15px;
+          }
+        }
+        &:nth-child(3) {
+          border-right: 2px solid ${({ theme }) => theme.color.N40};
         }
       }
-      &:nth-child(3) {
-        border-right: 2px solid ${({ theme }) => theme.color.N40};
+    }
+    .driver_shift {
+      display: flex;
+      .zoom_width {
+        border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+        border-right: 1px solid ${({ theme }) => theme.color.N40};
+        text-align: center;
+        padding: 0 2px;
+        letter-spacing: 0px;
+        height: 56px;
+        width: var(--cellWidth);
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
       }
     }
   }
