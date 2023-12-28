@@ -91,9 +91,8 @@ const Page: NextPageWithLayout<never> = () => {
         }}
         filter={subFilter}
         btns={controlButton}
-      >
-        <BusList busData={data} pageInfo={pageInfo} />
-      </FilterWrapper>
+      />
+      <BusList busData={data} pageInfo={pageInfo} />
     </BodySTY>
   );
 };

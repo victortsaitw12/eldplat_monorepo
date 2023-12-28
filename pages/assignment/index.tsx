@@ -160,17 +160,16 @@ const Page: NextPageWithLayout<never> = () => {
               />
             )
           }
-        >
-          {nowTab === "1" ? (
-            <MissionTable data={missionData} initialDate={renderDate} />
-          ) : (
-            <Pane className="pageContent">
-              <div className="overviewContainer">
-                <BusTable data={busData} initialDate={renderDate} />
-              </div>
-            </Pane>
-          )}
-        </FilterWrapper>
+        />
+        {nowTab === "1" ? (
+          <MissionTable data={missionData} initialDate={renderDate} />
+        ) : (
+          <Pane className="pageContent">
+            <div className="overviewContainer">
+              <BusTable data={busData} initialDate={renderDate} />
+            </div>
+          </Pane>
+        )}
       </div>
     </BodySTY>
   );
