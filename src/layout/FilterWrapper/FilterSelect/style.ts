@@ -2,26 +2,11 @@ import styled from "styled-components";
 
 export const BodySTY = styled.div`
   position: relative;
-  .subFilter-select {
+  .filter_select {
     height: 35px;
     select {
       font-size: ${({ theme }) => theme.fontSize.Paragraph300};
       border: 1px solid ${({ theme }) => theme.color.N50};
-    }
-  }
-  .filter-button {
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 8px 16px;
-    gap: 8px;
-    height: 35px;
-    border-radius: 32px;
-    &:hover {
-      background: ${({ theme }) => theme.color.N400};
     }
   }
   .filter-modal {

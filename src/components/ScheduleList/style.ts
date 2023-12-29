@@ -31,7 +31,7 @@ const BodySTY = styled.div`
         padding-left: calc(11px + 12px);
         min-width: 80px;
       }
-      .schedule-list-label {
+      .schedule_list_label {
         & > .dot {
           display: inline-block;
           position: absolute;
@@ -45,7 +45,7 @@ const BodySTY = styled.div`
           }
         }
       }
-      .schedule-item-action {
+      .schedule_item_action {
         display: flex;
         align-items: center;
         gap: 32px;

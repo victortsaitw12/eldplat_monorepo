@@ -15,6 +15,7 @@ export interface I_LightBoxProps {
   isOpen: boolean;
   handleCloseLightBox?: () => void;
   fullWidth?: boolean;
+  confirmBtnText?: string;
 }
 
 function LightBox({
@@ -26,7 +27,8 @@ function LightBox({
   wrapperStyle,
   isOpen, // intent to be removed if only be used in ModalProvider (always true)
   handleCloseLightBox, // intent to be replaced by onConfirm and onCancel
-  fullWidth = false
+  fullWidth = false,
+  confirmBtnText = "確定"
 }: I_LightBoxProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -60,7 +62,7 @@ function LightBox({
               text="取消"
               onClick={onCancel || handleCloseLightBox}
             />
-            <PrimaryBtn text="確定" onClick={onConfirm} />
+            <PrimaryBtn text={confirmBtnText} onClick={onConfirm} />
           </ButtonSetSTY>
         )}
       </div>

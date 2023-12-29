@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const LightBoxBlock = styled.div<{ isOpen: boolean; className?: string }>`
+export const LightBoxBlock = styled.div<{
+  isOpen: boolean;
+  className?: string;
+}>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
   position: fixed;
   top: 0;
@@ -52,6 +55,19 @@ export const LightBoxBlock = styled.div<{ isOpen: boolean; className?: string }>
 
     .content {
       padding: 15px;
+    }
+    .column + .column {
+      margin-top: 28px;
+    }
+
+    .header-table {
+      thead tr {
+        background-color: ${({ theme }) => theme.color.N20};
+      }
+      a {
+        text-decoration: none;
+        color: ${({ theme }) => theme.color.B400};
+      }
     }
   }
 `;

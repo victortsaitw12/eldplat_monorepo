@@ -149,42 +149,40 @@ const Page: NextPageWithLayout<never> = () => {
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
-        >
-          {nowTab === "1" && <BusStatusRow />}
-          <FilterWrapper
-            updateFilter={updateSubFilter}
-            resetFilter={() => {
-              initializeSubFilter();
-            }}
-            filter={DUMMY_subfilter}
-            btns={
-              nowTab === "1" ? (
-                <PrimaryBtn
-                  text="新增任務"
-                  onClick={() => router.push("/assignment/detail/create")}
-                >
-                  <PlusIcon />
-                </PrimaryBtn>
-              ) : (
-                <MonthPicker
-                  key="monthpicker"
-                  initialDate={renderDate}
-                  onMonthChange={handleChangeMonth}
-                />
-              )
-            }
-          >
-            {nowTab === "1" ? (
-              <MissionTable data={missionData} initialDate={renderDate} />
+        />
+        {nowTab === "1" && <BusStatusRow />}
+        <FilterWrapper
+          updateFilter={updateSubFilter}
+          resetFilter={() => {
+            initializeSubFilter();
+          }}
+          filter={DUMMY_subfilter}
+          btns={
+            nowTab === "1" ? (
+              <PrimaryBtn
+                text="新增任務"
+                onClick={() => router.push("/assignment/detail/create")}
+              >
+                <PlusIcon />
+              </PrimaryBtn>
             ) : (
-              <Pane className="pageContent">
-                <div className="overviewContainer">
-                  <BusTable data={busData} initialDate={renderDate} />
-                </div>
-              </Pane>
-            )}
-          </FilterWrapper>
-        </TabsWrapper>
+              <MonthPicker
+                key="monthpicker"
+                initialDate={renderDate}
+                onMonthChange={handleChangeMonth}
+              />
+            )
+          }
+        />
+        {nowTab === "1" ? (
+          <MissionTable data={missionData} initialDate={renderDate} />
+        ) : (
+          <Pane className="pageContent">
+            <div className="overviewContainer">
+              <BusTable data={busData} initialDate={renderDate} />
+            </div>
+          </Pane>
+        )}
       </div>
     </BodySTY>
   );

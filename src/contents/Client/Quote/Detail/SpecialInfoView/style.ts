@@ -18,20 +18,20 @@ const BodySTY = styled.div`
     }
   }
   > .remark {
-    > .remark-title {
+    > .remark_title {
       font-size: 14px;
       color: ${({ theme }) => theme.color.N700};
       font-weight: 600;
       line-height: 19px;
     }
-    > .remark-content {
+    > .remark_content {
       font-size: 14px;
       line-height: 19px;
     }
   }
 
 
-  .grid-wrap {
+  .grid_wrap {
     width: 100%;
     display: grid;
     grid-template-columns: 130px 1fr;
@@ -40,7 +40,7 @@ const BodySTY = styled.div`
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
     }
 
-    .grid-title {
+    .grid_title {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -48,16 +48,16 @@ const BodySTY = styled.div`
       border-right: 1px solid ${({ theme }) => theme.color.N40};
     }
 
-    .grid-item, .grid-title {
+    .grid_item, .grid_title {
       padding: 20px;
     }
 
-    .multi-wrap {
-      .multi-items {
+    .multi_wrap {
+      .multi_items {
         display: grid;
         grid-template-columns: 1fr 1fr;
         
-        .grid-item {
+        .grid_item {
           &:not(:last-child) {
             border-right: 1px solid ${({ theme }) => theme.color.N40};
           }

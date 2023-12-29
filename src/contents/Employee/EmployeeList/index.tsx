@@ -4,7 +4,6 @@ import { BodySTY } from "./style";
 import TableWithEdit from "@components/Table/TableWithEdit";
 import { I_PageInfo } from "@components/PaginationField";
 import StatusIconWithText from "@components/StatusIconWithText";
-import FirstNameIcon from "@components/FirstNameIcon";
 import Link from "next/link";
 //
 interface I_EmployeeListType {
@@ -54,7 +53,6 @@ function EmployeeList({
               alignItems: "center"
             }}
           >
-            <FirstNameIcon text={item["user_name"].value.slice(0, 1)} />
             {item["user_name"].value}
           </div>
         </Link>

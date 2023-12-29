@@ -13,7 +13,6 @@ import { UseFormRegister, UseFormGetValues } from "react-hook-form";
 import FlexWrapper from "@layout/FlexWrapper";
 import { UpdateDriverInfoPayload } from "../../driver.type";
 import LanguageAbility from "@contents/Employee/LanguageAbility";
-import TagSelect from "@components/TagSelect";
 import {
   getDriverCountryDDL,
   getLicenseAreaDDL,
@@ -282,36 +281,7 @@ function DriverInfo({
           <div>特優</div> <div>優良</div>
         </div>
       ),
-      editEle: (
-        <TagSelect
-          options={[
-            {
-              label: "請選擇",
-              value: "00",
-              placeholder: true
-            },
-            {
-              label: "特優",
-              value: "01"
-            },
-            {
-              label: "優良",
-              value: "02"
-            }
-          ]}
-          editData={[
-            {
-              label: "特優",
-              value: "01"
-            },
-            {
-              label: "優良",
-              value: "02"
-            }
-          ]}
-          handleCustomData={() => console.log("selected")}
-        />
-      )
+      editEle: <p>DELETED TAG-SELECT</p>
     }
   ];
 

@@ -14,12 +14,12 @@ export const StyledForm = styled.form`
   padding: 20px;
   gap: 20px;
   background-color: ${({ theme }) => theme.color.N0};
-  > .form-item {
+  > .form_item {
     display: flex;
     flex: 1 0 0;
     align-items: center;
     gap: 20px;
-    > .item-title {
+    > .item_title {
       width: 70px;
     }
   }

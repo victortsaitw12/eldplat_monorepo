@@ -167,7 +167,7 @@ function FuelRecord({
           initializeSubFilter();
         }}
         filter={subFilter}
-      ></FilterWrapper>
+      />
       <Table
         titles={editHistoryTitle}
         data={modifiedData}

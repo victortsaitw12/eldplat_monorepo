@@ -1,6 +1,5 @@
 import React from "react";
-// import { signIn } from "next-auth/react";
-import { signIn } from "@utils/dummySession";
+import { signIn } from "next-auth/react";
 
 import { TextInputField } from "evergreen-ui";
 import { useRouter } from "next/router";
@@ -61,6 +60,7 @@ function Form() {
     <BodySTY>
       <div className="inpitFields">
         <TextInputField
+          id="account_input"
           className="emailInput"
           type="email"
           placeholder="example@mail.com"

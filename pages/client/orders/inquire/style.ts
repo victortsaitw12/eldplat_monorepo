@@ -7,24 +7,24 @@ const BodySTY = styled.div`
   .breadcrumbs {
     width: 100%:
   }
-  .page-title {
+  .page_title {
     color: ${({ theme }) => theme.color.N300};
     font-size: 32px;
     font-weight: 600;
     margin-bottom: 20px;
   }
 
-  .input-wrapper {
+  .input_wrapper {
     display: flex;
     flex-direction: column;
     gap: 24px;
 
-    .item-container {
+    .item_container {
       display: flex;
       flex-direction: column;
       gap: 8px;
 
-      .item-title {
+      .item_title {
         > span {
           font-size: 14px;
           color: ${({ theme }) => theme.color.N700};
@@ -34,7 +34,7 @@ const BodySTY = styled.div`
     }
   }
   
-  .revise-wrap {
+  .revise_wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;

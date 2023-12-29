@@ -6,7 +6,6 @@ import CheckBoxWrapper from "@components/CheckBoxWrapper";
 import VerticalDetail from "@components/VerticalDetail";
 import CounterInput from "@components/CounterInput";
 import CustomSelect from "@components/CustomSelect";
-import VerticalTextArea from "@components/VerticalTextArea";
 import { BodySTY } from "./style";
 
 const SpecialInfoEdit = () => {
@@ -208,12 +207,7 @@ const SpecialInfoEdit = () => {
         </Pane>
       </Pane>
       <Pane style={{ padding: "20px" }}>
-        <VerticalTextArea
-          register={register}
-          inputName="remark"
-          title="備註"
-          description=""
-        />
+        <p>DELETED VERTICAL-TEXTAREA, PLEASE CHECK THE PAGE AGAIN</p>
       </Pane>
     </BodySTY>
   );

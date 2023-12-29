@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler, UseFormRegister } from "react-hook-form";
-// import { useSession } from "next-auth/react";
-import { useSession } from "@utils/dummySession";
+import { useSession } from "next-auth/react";
 
 import { useRouter } from "next/router";
 import { FormSTY } from "./style";

@@ -2,8 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { NextPageWithLayout } from "next";
 import { PlusIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
-// import { useSession } from "next-auth/react";
-import { useSession } from "@utils/dummySession";
+import { useSession } from "next-auth/react";
 
 import { getLayout } from "@layout/MainLayout";
 import FilterWrapper from "@layout/FilterWrapper";
@@ -112,9 +111,8 @@ const Page: NextPageWithLayout<never> = () => {
         resetFilter={() => initializeSubFilter()}
         filter={subFilter}
         btns={createBtn}
-      >
-        <AccountList data={data} pageInfo={pageInfo} />
-      </FilterWrapper>
+      />
+      <AccountList data={data} pageInfo={pageInfo} />
     </BodySTY>
   );
 };

@@ -3,7 +3,6 @@ import ServerEntry from "@components/ServiceEntry";
 import NavigationList from "@components/NavigationList";
 import ProgressList from "@components/ProgressList";
 import HookFormMultiSelect from "@components/HookForm/Select/MultiSelect";
-import ExpenseDetail from "@components/ExpenseDetail";
 import { useForm, useWatch } from "react-hook-form";
 import StepArragement from "@components/StepArragement";
 import CounterInput from "@components/CounterInput";
@@ -231,12 +230,6 @@ const ComponentsRender = () => {
       />
 
       <div style={{ width: "600px", padding: "20px", backgroundColor: "#fff" }}>
-        <ExpenseDetail
-          data={DummyExpenseDetailData}
-          prefix="NT$"
-          isEdit
-          ref={formButtonRef}
-        />
         <button
           onClick={() => {
             formButtonRef.current?.click();

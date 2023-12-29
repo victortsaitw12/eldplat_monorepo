@@ -7,9 +7,9 @@ const Page = () => {
   const router = useRouter();
   return (
     <BodySTY>
-      <div className="content-container">
-        <div className="content-title">請選擇你想要的服務：</div>
-        <div className="content-entry">
+      <div className="content_container">
+        <div className="content_title">請選擇你想要的服務：</div>
+        <div className="content_entry">
           <ServerEntry
             label="前往詢價"
             imageUrl="/image/svg-icons/document.svg"

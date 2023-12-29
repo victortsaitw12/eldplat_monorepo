@@ -8,7 +8,7 @@ import { updateDriverStatus } from "@services/driver/updateDriverStatus";
 import { useDriverStore } from "@contexts/filter/driverStore";
 import { getLayout } from "@layout/MainLayout";
 import DriverList from "@contents/Driver/DriverList";
-import { BodySTY, StyledDot, UserSTY } from "./style";
+import { BodySTY } from "./style";
 import FilterWrapper from "@layout/FilterWrapper";
 import { I_PageInfo } from "@components/PaginationField";
 import { useRouter } from "next/router";
@@ -122,19 +122,18 @@ const Page: NextPageWithLayout<never> = () => {
             <PlusIcon />
           </PrimaryBtn>
         }
-      >
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <DriverList
-            driverData={data}
-            pageInfo={pageInfo}
-            handleDeleteDriver={handleDeleteDriver}
-            handleRecoverDriver={handleRecoverDriver}
-            handlePageChange={handlePageChange}
-          />
-        )}
-      </FilterWrapper>
+      />
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <DriverList
+          driverData={data}
+          pageInfo={pageInfo}
+          handleDeleteDriver={handleDeleteDriver}
+          handleRecoverDriver={handleRecoverDriver}
+          handlePageChange={handlePageChange}
+        />
+      )}
     </BodySTY>
   );
 };
