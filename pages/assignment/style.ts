@@ -21,9 +21,7 @@ export const BodySTY = styled.div`
     display: flex;
     flex-direction: column;
     .overviewContainer {
-      /* flex-grow: 10; */
-      overflow: hidden;
-      overflow-x: scroll;
+      overflow: scroll;
     }
   }
 `;

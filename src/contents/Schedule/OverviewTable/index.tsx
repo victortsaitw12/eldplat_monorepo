@@ -113,9 +113,14 @@ const OverviewTable = ({
     <OverviewSTY expandPercentage={expandPercentage}>
       <div className="schedule_zone">
         <div className="schedule_weeksWrap">
-          <div className="font_driver">駕駛姓名</div>
+          <div className="font_driver">
+            <div className="">駕駛姓名</div>
+            <div className="w-50">應休/已休</div>
+            <div className="w-50">預排班表</div>
+          </div>
+          {/* <div className="font_driver">駕駛姓名</div>
           <div className="font_driver w-50">應休/已休</div>
-          <div className="font_driver w-50">預排班表</div>
+          <div className="font_driver w-50">預排班表</div> */}
           {timeUtil.getNowMonthScheduleList(initialDate).map((item, index) => {
             return (
               <div className="zoom_width" key={index}>

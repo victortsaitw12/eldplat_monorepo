@@ -30,12 +30,7 @@ export const ShiftSTY = styled.div`
       padding: 5px 12px;
     }
     .overviewContainer {
-      flex-grow: 10;
-      overflow: hidden;
-      /* overflow-x: scroll; */
-      &::-webkit-scrollbar {
-        /* display: none; */
-      }
+      overflow: scroll;
     }
   }
   label {
