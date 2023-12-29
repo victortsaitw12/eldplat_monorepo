@@ -69,8 +69,8 @@ const FlightInformation = ({
             <Collapse title="行程資訊" opened={true}>
               <BodySTY>
                 <ItemSTY>
-                  <div className="item-content-container">
-                    <div className="item-content">
+                  <div className="item_content_container">
+                    <div className="item_content">
                       <span style={{ color: "#D14343" }}>*</span>接送日期
                     </div>
                     <TextInput
@@ -78,10 +78,10 @@ const FlightInformation = ({
                       {...register(`order_itinerary_list.${index}.day_date`)}
                       style={{ flex: "1" }}
                     />
-                    <div className="option-container"></div>
+                    <div className="option_container"></div>
                   </div>
-                  <div className="item-content-container">
-                    <div className="item-content">
+                  <div className="item_content_container">
+                    <div className="item_content">
                       <span style={{ color: "#D14343" }}>*</span>接送時間
                     </div>
                     <TextInput
@@ -92,7 +92,7 @@ const FlightInformation = ({
                       min={flightTime}
                       style={{ flex: "1" }}
                     />
-                    <div className="option-container"></div>
+                    <div className="option_container"></div>
                   </div>
                 </ItemSTY>
                 <StepArragement

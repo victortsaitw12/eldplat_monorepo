@@ -19,7 +19,7 @@ const SimpleTabs = ({ defaultTab = 1, tabsArray, onTabChange }: Props) => {
   };
   return (
     <>
-      <GroupSTY className="tabs-wrap">
+      <GroupSTY className="tabs_wrap">
         {tabsArray &&
           tabsArray.map((item) => (
             <DivSTY

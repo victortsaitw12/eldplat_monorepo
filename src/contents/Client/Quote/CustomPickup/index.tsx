@@ -65,8 +65,8 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
     <StyledCard>
       <Collapse title="客製包車" viewOnly opened={true}>
         <StyledForm onSubmit={handleSubmit(submitFormHandler)}>
-          <label className="form-item">
-            <div className="item-title">
+          <label className="form_item">
+            <div className="item_title">
               <span style={{ color: "#D14343" }}>*</span>
               <span>出發日期</span>
             </div>
@@ -87,8 +87,8 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
               )}
             />
           </label>
-          <label className="form-item">
-            <div className="item-title">
+          <label className="form_item">
+            <div className="item_title">
               <span style={{ color: "#D14343" }}>*</span>
               <span>回程日期</span>
             </div>
@@ -107,8 +107,8 @@ const CustomPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
               isInvalid={!!errors.returnDate}
             />
           </label>
-          <label className="form-item">
-            <div className="item-title">
+          <label className="form_item">
+            <div className="item_title">
               <span>訂車用途</span>
             </div>
             <Select {...register("purpose")}>

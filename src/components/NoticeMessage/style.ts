@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const BodySTY = styled.div.attrs({
-    className: "notice-message"
+    className: "notice_message"
 })`
     background-color: ${({ theme }) => theme.color.N20};
     padding: 8px 16px;

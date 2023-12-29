@@ -17,7 +17,7 @@ export const ItemSTY = styled.li`
   padding: 0px;
   gap: 40px;
   width: 100%;
-  > .item-container {
+  > .item_container {
     display: flex;
     flex-wrap: wrap;
     flex: 1 0 0;
@@ -36,7 +36,7 @@ export const ItemSTY = styled.li`
       }
     }
 
-    > .item-title {
+    > .item_title {
       width: 100%; 
       display: flex;
       justify-content: flex-start;
@@ -45,7 +45,7 @@ export const ItemSTY = styled.li`
       color: ${({ theme }) => theme.color.N700};
       font-weight: 600;
     }
-    > .item-input-container {
+    > .item_input_container {
       width: 100%; 
 
       max-width: 216px;
@@ -61,15 +61,15 @@ export const ItemSTY = styled.li`
       > input {
         width: auto;
       }
-      .input-error {
+      .input_error {
         color: ${({ theme }) => theme.color.R400};
       }
     }
-    > .double-input-container {
+    > .double_input_container {
       display: flex;
       /* gap: 8px; */
       flex: 1 0 0;
-      > .item-input-container {
+      > .item_input_container {
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -77,7 +77,7 @@ export const ItemSTY = styled.li`
         > input {
           width: auto;
         }
-        .input-error {
+        .input_error {
           color: ${({ theme }) => theme.color.R400};
         }
       }

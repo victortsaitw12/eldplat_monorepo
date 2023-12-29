@@ -14,11 +14,11 @@ const FlightShuttleInfo = ({ listArray }: I_Props) => {
       <Collapse opened={true} key={i} title="行程資訊">
         <ContainerSTY>
           <HeaderSTY>
-            <div className="detail-with-icon">
+            <div className="detail_with_icon">
               <CalendarIcon color="#8EA8C7" size={11} />
               <DetailItem title="接送日期" value={item.day_date} />
             </div>
-            <div className="detail-with-icon">
+            <div className="detail_with_icon">
               <TimeIcon color="#8EA8C7" size={11} />
               <DetailItem title="接送時間" value={item.departure_time} />
             </div>
