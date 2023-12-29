@@ -16,3 +16,7 @@ export const signIn = async (category: string, data: any) => {
     return { message: "fail", error: "fail" };
   }
 };
+
+export const signOut = async () => {
+  location.assign("/login");
+};
