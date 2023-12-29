@@ -1,19 +1,22 @@
 import styled from "styled-components";
 
 export const OverviewSTY = styled.div`
-  height: 100%;
-  width: fit-content;
+  height: fit-content;
+  width: 100%;
   .schedule_zone {
     height: calc(100% - 32px);
   }
   .schedule_weeksWrap {
+    width: fit-content;
     display: flex;
     flex-flow: row wrap;
     flex-wrap: nowrap;
     list-style: none;
-    padding: 0;
-    margin: 0;
     border-top: 1px solid ${({ theme }) => theme.color.N40};
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 3;
     div {
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       border-right: 1px solid ${({ theme }) => theme.color.N40};
@@ -31,6 +34,10 @@ export const OverviewSTY = styled.div`
         font-size: 14px;
         padding: 11px 0;
         border-left: 1px solid ${({ theme }) => theme.color.N40};
+        position: sticky;
+        left: 0;
+        top: 0;
+        z-index: 2;
       }
       &.w-50 {
         width: 90px;
@@ -88,21 +95,18 @@ export const OverviewSTY = styled.div`
   }
   .schedule_bodyWrap {
     height: 100%;
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
+    /* &::-webkit-scrollbar {
       display: none;
-    }
+    } */
     padding-bottom: 10px;
   }
   .schedule_daysWrap {
+    width: fit-content;
     display: flex;
-    flex-flow: row wrap;
-    flex-wrap: nowrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
     justify-content: center;
     .driver_info {
+      position: sticky;
+      left: 0;
       border-right: 2px solid ${({ theme }) => theme.color.N40} !important;
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       border-left: 1px solid ${({ theme }) => theme.color.N40};
@@ -110,6 +114,7 @@ export const OverviewSTY = styled.div`
       padding: 10px;
       display: flex;
       align-items: center;
+      background: ${({ theme }) => theme.color.N0};
       p {
         font-size: 14px;
         padding-bottom: 5px;
