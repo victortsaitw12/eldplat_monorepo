@@ -117,11 +117,12 @@ const Page: NextPageWithLayout<
   };
 
   const renderContent = (
-    <TabsWrapper
-      onChangeTab={switchTabHandler}
-      mainFilter={mainFilter}
-      mainFilterArray={mainFilterArray}
-    >
+    <>
+      <TabsWrapper
+        onChangeTab={switchTabHandler}
+        mainFilter={mainFilter}
+        mainFilterArray={mainFilterArray}
+      />
       <DriverDetail
         isEdit={isEdit}
         submitRef={submitRef}
@@ -131,7 +132,7 @@ const Page: NextPageWithLayout<
         refetch={refetch}
         driverNo={driverNo}
       />
-    </TabsWrapper>
+    </>
   );
 
   const renderLoadingSpinner = (

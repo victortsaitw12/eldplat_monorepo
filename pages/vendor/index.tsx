@@ -24,7 +24,6 @@ import { deleteVendor } from "@services/vendor/deleteVendor";
 import { getAllVendors, defaultPageInfo } from "@services/vendor/getAllVendors";
 
 //@components
-import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
 import LabelTag from "@components/LabelTag";
 import { I_PageInfo } from "@components/PaginationField";
@@ -318,46 +317,24 @@ const Page: NextPageWithLayout<{
                 initializeSubFilter();
               }}
               filter={subFilter}
-            >
-              {/* <FormattedMessage id="vendor_name" /> */}
-              {data && (
-                <VendorList
-                  vendor_code={router.query.codeType as string}
-                  listType={nowTab}
-                  vendorData={data}
-                  goToDetailPage={goToDetailPage}
-                  goToCreatePage={goToCreatePage}
-                  goToEditPageHandler={goToEditPageHandler}
-                  deleteItemHandler={deleteItemHandler}
-                  recoverItem={recoverItem}
-                  pageInfo={pageInfo}
-                  handlePageChange={handlePageChange}
-                ></VendorList>
-              )}
-            </FilterWrapper>
+            ></FilterWrapper>
+            {/* <FormattedMessage id="vendor_name" /> */}
+            {data && (
+              <VendorList
+                vendor_code={router.query.codeType as string}
+                listType={nowTab}
+                vendorData={data}
+                goToDetailPage={goToDetailPage}
+                goToCreatePage={goToCreatePage}
+                goToEditPageHandler={goToEditPageHandler}
+                deleteItemHandler={deleteItemHandler}
+                recoverItem={recoverItem}
+                pageInfo={pageInfo}
+                handlePageChange={handlePageChange}
+              ></VendorList>
+            )}
           </TabsWrapper>
           {/* <SideBookMark /> */}
-          {isDrawerOpen && (
-            <Drawer
-              tabName={["新增供應商"]}
-              isFullScreen={isDrawerFullWidth}
-              closeDrawer={() => {
-                setDrawerOpen(false);
-                setIsDrawerFullWidth(false);
-              }}
-              toggleFullScreenDrawer={() => {
-                setIsDrawerFullWidth(!isDrawerFullWidth);
-              }}
-            >
-              <VendorCreateForm
-                reloadData={() => {
-                  setDrawerOpen(false);
-                  setData([]);
-                  fetchVendorsData(false, "1", pageInfo);
-                }}
-              />
-            </Drawer>
-          )}
         </>
       </BodySTY>
     </RegionProvider>

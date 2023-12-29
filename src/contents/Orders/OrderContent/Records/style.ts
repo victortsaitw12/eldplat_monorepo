@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
 export const DivSTY = styled.div`
-  padding: 1rem;
-  background-color: #fff;
-  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  
   td {
     width: 100%;
   }

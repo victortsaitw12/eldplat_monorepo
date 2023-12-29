@@ -13,7 +13,6 @@ import { BodySTY } from "./style";
 //@components
 import InfoBox from "@components/InfoBox";
 import ContactList from "@components/ContactList";
-// import FormCard from "@components/FormCard";
 
 //@layout
 import FlexWrapper from "@layout/FlexWrapper";

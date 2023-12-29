@@ -1,10 +1,9 @@
 import React from "react";
-import FormCard from "src/components/FormCard";
 
 function NewContactFile() {
   return (
     <div>
-      <FormCard formTitle="Details" />
+      <p>DELETED FORMCARD, PLEASE CHECK THE PAGE AGAIN.</p>
     </div>
   );
 }

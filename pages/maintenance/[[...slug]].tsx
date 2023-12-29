@@ -39,23 +39,22 @@ const Page: NextPageWithLayout<never> = () => {
         onChangeTab={switchTabHandler}
         mainFilter={mainFilter}
         mainFilterArray={mainFilterArray}
-      >
-        {mainFilter == "notice" && (
-          <div>
-            <MaintenanceNoticeList />
-          </div>
-        )}
-        {mainFilter == "mission" && (
-          <div>
-            <MaintenanceMissionList />
-          </div>
-        )}
-        {mainFilter == "record" && (
-          <div>
-            <MaintenanceRecordList />
-          </div>
-        )}
-      </TabsWrapper>
+      />
+      {mainFilter == "notice" && (
+        <div>
+          <MaintenanceNoticeList />
+        </div>
+      )}
+      {mainFilter == "mission" && (
+        <div>
+          <MaintenanceMissionList />
+        </div>
+      )}
+      {mainFilter == "record" && (
+        <div>
+          <MaintenanceRecordList />
+        </div>
+      )}
     </BodySTY>
   );
 };

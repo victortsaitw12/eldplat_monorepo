@@ -24,30 +24,24 @@ function TabsWrapper({
 }: Props) {
   return (
     <BodySTY isHide={isHide}>
-      <div className="tabs-header">
-        <div className="tab-container">
-          {mainFilterArray.map((item) => {
-            return (
-              <FilterItemSTY
-                key={item.id!}
-                onClick={() => {
-                  onChangeTab(item.value);
-                }}
-                isActive={item.value === mainFilter}
-              >
-                {item.require && <div className="require">*</div>}
-                <span
-                  className={`${item.value === mainFilter ? "active" : ""}`}
-                >
-                  {item.label}
-                </span>
-                {/* {item.value === mainFilter && <ChevronDownIcon />} */}
-              </FilterItemSTY>
-            );
-          })}
-        </div>
+      <div className="tab-container">
+        {mainFilterArray.map((item) => {
+          return (
+            <FilterItemSTY
+              key={item.id!}
+              onClick={() => {
+                onChangeTab(item.value);
+              }}
+              isActive={item.value === mainFilter}
+            >
+              {item.require && <div className="require">*</div>}
+              <span className={`${item.value === mainFilter ? "active" : ""}`}>
+                {item.label}
+              </span>
+            </FilterItemSTY>
+          );
+        })}
       </div>
-      <div className="table-content">{children}</div>
     </BodySTY>
   );
 }

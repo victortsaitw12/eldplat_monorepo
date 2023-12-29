@@ -13,7 +13,6 @@ import { mappingQueryData } from "@utils/mappingQueryData";
 import { deleteBus } from "@services/bus/deleteBus";
 import TabsWrapper from "@layout/TabsWrapper";
 import FilterWrapper from "@layout/FilterWrapper";
-import Drawer from "@components/Drawer";
 import BusCreateForm from "@contents/Bus/BusCreateForm";
 import { getCreateBusOptions } from "@services/bus/getCreateBusOptions";
 import { I_PageInfo } from "@components/PaginationField";
@@ -96,14 +95,8 @@ const Page: NextPageWithLayout<never> = () => {
     Last_Page: 10
   });
 
-  const {
-    initializeSubFilter,
-    updateMainFilter,
-    subFilter,
-    updateSubFilter,
-    // isDrawerOpen,
-    // setDrawerOpen
-  } = useBusStore();
+  const { initializeSubFilter, updateMainFilter, subFilter, updateSubFilter } =
+    useBusStore();
 
   const fetchBusData = async (
     isCanceled: boolean,
@@ -195,39 +188,8 @@ const Page: NextPageWithLayout<never> = () => {
           initializeSubFilter();
         }}
         filter={subFilter}
-      >
-        <BusList
-          // listType={nowTab}
-          busData={data}
-          // goToCreatePage={() => {
-          //   setDrawerOpen(true);
-          // }}
-          // recoverItemHandler={recoverItemHandler}
-          // deleteItemHandler={deleteItemHandler}
-          // goToEditPageHandler={goToEditPageHandler}
-          // goToDetailPage={goToDetailPageHandler}
-          // upDatePageHandler={upDatePageHandler}
-          pageInfo={pageInfo}
-        />
-      </FilterWrapper>
-
-      {/* {isDrawerOpen && (
-        <Drawer
-          tabName={["新增車輛"]}
-          closeDrawer={() => {
-            setDrawerOpen(false);
-          }}
-        >
-          <BusCreateForm
-            reloadData={() => {
-              fetchBusData(false, nowTab, pageInfo);
-              setDrawerOpen(false);
-            }}
-            options={options}
-            setOptions={setOptions}
-          />
-        </Drawer>
-      )} */}
+      ></FilterWrapper>
+      <BusList busData={data} pageInfo={pageInfo} />
     </BodySTY>
   );
 };
