@@ -49,7 +49,7 @@ const BusTable = ({ data, initialDate }: I_OverviewTable) => {
   };
 
   return (
-    <OverviewSTY className="overviewTable" ref={containerRef}>
+    <OverviewSTY>
       <div className="schedule_zone">
         <div className="schedule_weeksWrap">
           <div className="font_driver">車輛</div>

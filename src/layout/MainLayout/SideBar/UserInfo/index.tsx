@@ -1,8 +1,5 @@
 import React from "react";
-// import { useSession, signIn, signOut } from "next-auth/react";
-import { signIn, signOut } from "next-auth/react";
-
-import { useSession } from "@utils/dummySession";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 import {
   Avatar,

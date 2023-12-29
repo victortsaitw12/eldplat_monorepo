@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  CaretDownIcon,
-  CaretRightIcon,
-  IconButton
-} from "evergreen-ui";
+import { CaretDownIcon, CaretRightIcon, IconButton } from "evergreen-ui";
 
 import { I_AccountRole, I_RoleItem } from "@services/account/getOneAccount";
 import CheckboxField from "@components/CheckboxField";
@@ -37,7 +33,6 @@ const RoleModule = ({ data, onChange, isEdit }: I_Props) => {
 
   React.useEffect(() => {
     setCheckedList(getInitCheckedList(data.roles));
-    console.log("!!!", getInitCheckedList(data.roles));
   }, []);
 
   return (

@@ -28,9 +28,7 @@ function FilterSelect({
         onChange={(event) => alert(event.target.value)}
         className="filter_select"
       >
-        <option value="foo" selected>
-          {label}
-        </option>
+        <option value="foo">{label}</option>
       </Select>
     </BodySTY>
   );

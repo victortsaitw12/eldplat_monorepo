@@ -77,31 +77,46 @@ const Page: NextPageWithLayout<never> = () => {
   } = useAssignmentStore();
 
   //------ functions ------//
-  const fetchAssignData = async (
-    isCanceled: boolean,
-    mainFilter = "1",
-    pageInfo = defaultPageInfo
-  ) => {
-    getAllAssignments(pageInfo)
-      .then((res) => {
-        const data = res;
-        setBusData(data);
-      })
-      .catch((err) => {
-        console.error("error in assignment list", err);
-      });
+  const fetchData = async () => {
+    try {
+      const isCanceled = false;
+      const busDataRes = await getAllAssignments(defaultPageInfo);
+      const missionDataRes = await getAllMission(defaultPageInfo);
+
+      if (!isCanceled) {
+        setBusData(busDataRes);
+        setMissionData(missionDataRes);
+      }
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
   };
 
-  const fetchMissionData = async (pageInfo = defaultPageInfo) => {
-    getAllMission(pageInfo)
-      .then((res) => {
-        const data = res;
-        setMissionData(data);
-      })
-      .catch((err) => {
-        console.error("error in assignment list", err);
-      });
-  };
+  // const fetchAssignData = async (
+  //   isCanceled: boolean,
+  //   mainFilter = "1",
+  //   pageInfo = defaultPageInfo
+  // ) => {
+  //   getAllAssignments(pageInfo)
+  //     .then((res) => {
+  //       const data = res;
+  //       setBusData(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error("error in assignment list", err);
+  //     });
+  // };
+
+  // const fetchMissionData = async (pageInfo = defaultPageInfo) => {
+  //   getAllMission(pageInfo)
+  //     .then((res) => {
+  //       const data = res;
+  //       setMissionData(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error("error in assignment list", err);
+  //     });
+  // };
   const handleChangeMonth = (v: Date) => {
     setRenderDate(v);
   };
@@ -121,9 +136,7 @@ const Page: NextPageWithLayout<never> = () => {
   // };
 
   useEffect(() => {
-    const isCanceled = false;
-    fetchAssignData(isCanceled, "1");
-    fetchMissionData();
+    fetchData();
   }, []);
 
   return (
