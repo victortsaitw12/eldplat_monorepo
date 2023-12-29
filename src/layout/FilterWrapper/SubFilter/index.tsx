@@ -27,10 +27,9 @@ function SubFilter({
       <Select
         onChange={(event) => alert(event.target.value)}
         className="subFilter-select"
+        defaultValue="foo"
       >
-        <option value="foo" selected>
-          {label}
-        </option>
+        <option value="foo">{label}</option>
       </Select>
       {/* <button
         onClick={() => {

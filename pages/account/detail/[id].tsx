@@ -2,8 +2,7 @@ import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, GetServerSideProps } from "next";
 import { RadioGroup } from "evergreen-ui";
-// import { useSession } from "next-auth/react";
-import { useSession } from "@utils/dummySession";
+import { useSession } from "next-auth/react";
 
 //
 import { getLayout } from "@layout/MainLayout";
