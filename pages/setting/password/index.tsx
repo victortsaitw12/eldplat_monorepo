@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/router";
-import { signOut } from "next-auth/react";
+// import { signOut } from "next-auth/react";
+import { signOut } from "@utils/dummySession";
+
 import { NextPageWithLayout } from "next";
 import { InlineAlert, toaster } from "evergreen-ui";
 import { BodySTY } from "./style";

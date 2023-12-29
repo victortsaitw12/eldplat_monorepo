@@ -1,5 +1,6 @@
 import React from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+// import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "@utils/dummySession";
 
 import {
   Avatar,
@@ -75,11 +76,6 @@ function Index(props: any) {
             </div>
           </button>
         </Popover>
-      )}
-      {!session && (
-        <IconButton text="登入" onClick={() => signIn()}>
-          <LogInIcon />
-        </IconButton>
       )}
     </BodySTY>
   );

@@ -2,7 +2,8 @@ import React, { ReactNode, useState, useMemo } from "react";
 import { NextPageWithLayout } from "next";
 import { PlusIcon } from "evergreen-ui";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
+import { useSession } from "@utils/dummySession";
 
 //
 import { getLayout } from "@layout/MainLayout";
