@@ -72,7 +72,7 @@ function MaintenanceRecordList() {
           initializeSubFilter();
         }}
         filter={subFilter}
-       />
+      />
       <Table
         titles={tableTitle}
         data={modifiedData}

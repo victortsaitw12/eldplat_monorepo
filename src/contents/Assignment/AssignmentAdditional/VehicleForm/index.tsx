@@ -24,7 +24,6 @@ import {
   I_creatOtherAssignment
 } from "@services/assignment/createReplaceAssignment";
 import PrimaryRadius from "@components/Button/PrimaryRadius";
-import TimeInput from "@components/Timepicker/TimeInput";
 
 interface I_VehicleFormProps {
   orderInfo: I_ManualAssignType[];
@@ -250,24 +249,12 @@ function VehicleForm({
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <TimeInput
-          date={dateBase}
-          setDate={handleTimeChange.bind(null, "start")}
-          {...register("task_start_time", {
-            required: "必填"
-          })}
-        />
+        <p>DELETED TIME-PICKER, PLEASE CHECK</p>
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <TimeInput
-          date={dateBase}
-          setDate={handleTimeChange.bind(null, "end")}
-          {...register("task_end_time", {
-            required: "必填"
-          })}
-        />
+        <p>DELETED TIME-PICKER, PLEASE CHECK</p>
       </Pane>
 
       <TextareaField

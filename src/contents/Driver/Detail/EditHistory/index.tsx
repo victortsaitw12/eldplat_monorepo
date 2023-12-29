@@ -111,14 +111,13 @@ function HealthRecords({
         }}
         // filter={subFilter}
         filter={DUMMY_SUBFILTER}
-      >
-        <Table
-          titles={table_title}
-          data={modifiedData}
-          onView={handleView}
-          headNode={<PaginationField pageInfo={pageInfo} />}
-        />
-      </FilterWrapper>
+      />
+      <Table
+        titles={table_title}
+        data={modifiedData}
+        onView={handleView}
+        headNode={<PaginationField pageInfo={pageInfo} />}
+      />
     </BodySTY>
   );
 }

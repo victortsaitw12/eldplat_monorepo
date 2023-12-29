@@ -77,31 +77,46 @@ const Page: NextPageWithLayout<never> = () => {
   } = useAssignmentStore();
 
   //------ functions ------//
-  const fetchAssignData = async (
-    isCanceled: boolean,
-    mainFilter = "1",
-    pageInfo = defaultPageInfo
-  ) => {
-    getAllAssignments(pageInfo)
-      .then((res) => {
-        const data = res;
-        setBusData(data);
-      })
-      .catch((err) => {
-        console.error("error in assignment list", err);
-      });
+  const fetchData = async () => {
+    try {
+      const isCanceled = false;
+      const busDataRes = await getAllAssignments(defaultPageInfo);
+      const missionDataRes = await getAllMission(defaultPageInfo);
+
+      if (!isCanceled) {
+        setBusData(busDataRes);
+        setMissionData(missionDataRes);
+      }
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
   };
 
-  const fetchMissionData = async (pageInfo = defaultPageInfo) => {
-    getAllMission(pageInfo)
-      .then((res) => {
-        const data = res;
-        setMissionData(data);
-      })
-      .catch((err) => {
-        console.error("error in assignment list", err);
-      });
-  };
+  // const fetchAssignData = async (
+  //   isCanceled: boolean,
+  //   mainFilter = "1",
+  //   pageInfo = defaultPageInfo
+  // ) => {
+  //   getAllAssignments(pageInfo)
+  //     .then((res) => {
+  //       const data = res;
+  //       setBusData(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error("error in assignment list", err);
+  //     });
+  // };
+
+  // const fetchMissionData = async (pageInfo = defaultPageInfo) => {
+  //   getAllMission(pageInfo)
+  //     .then((res) => {
+  //       const data = res;
+  //       setMissionData(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error("error in assignment list", err);
+  //     });
+  // };
   const handleChangeMonth = (v: Date) => {
     setRenderDate(v);
   };
@@ -121,9 +136,7 @@ const Page: NextPageWithLayout<never> = () => {
   // };
 
   useEffect(() => {
-    const isCanceled = false;
-    fetchAssignData(isCanceled, "1");
-    fetchMissionData();
+    fetchData();
   }, []);
 
   return (
@@ -136,42 +149,40 @@ const Page: NextPageWithLayout<never> = () => {
           onChangeTab={changeMainFilterHandler}
           mainFilter={nowTab}
           mainFilterArray={mainFilterArray}
-        >
-          {nowTab === "1" && <BusStatusRow />}
-          <FilterWrapper
-            updateFilter={updateSubFilter}
-            resetFilter={() => {
-              initializeSubFilter();
-            }}
-            filter={DUMMY_subfilter}
-            btns={
-              nowTab === "1" ? (
-                <PrimaryBtn
-                  text="新增任務"
-                  onClick={() => router.push("/assignment/detail/create")}
-                >
-                  <PlusIcon />
-                </PrimaryBtn>
-              ) : (
-                <MonthPicker
-                  key="monthpicker"
-                  initialDate={renderDate}
-                  onMonthChange={handleChangeMonth}
-                />
-              )
-            }
-          >
-            {nowTab === "1" ? (
-              <MissionTable data={missionData} initialDate={renderDate} />
+        />
+        {nowTab === "1" && <BusStatusRow />}
+        <FilterWrapper
+          updateFilter={updateSubFilter}
+          resetFilter={() => {
+            initializeSubFilter();
+          }}
+          filter={DUMMY_subfilter}
+          btns={
+            nowTab === "1" ? (
+              <PrimaryBtn
+                text="新增任務"
+                onClick={() => router.push("/assignment/detail/create")}
+              >
+                <PlusIcon />
+              </PrimaryBtn>
             ) : (
-              <Pane className="pageContent">
-                <div className="overviewContainer">
-                  <BusTable data={busData} initialDate={renderDate} />
-                </div>
-              </Pane>
-            )}
-          </FilterWrapper>
-        </TabsWrapper>
+              <MonthPicker
+                key="monthpicker"
+                initialDate={renderDate}
+                onMonthChange={handleChangeMonth}
+              />
+            )
+          }
+        />
+        {nowTab === "1" ? (
+          <MissionTable data={missionData} initialDate={renderDate} />
+        ) : (
+          <Pane className="pageContent">
+            <div className="overviewContainer">
+              <BusTable data={busData} initialDate={renderDate} />
+            </div>
+          </Pane>
+        )}
       </div>
     </BodySTY>
   );

@@ -17,6 +17,6 @@ export const DivSTY = styled.div`
     justify-content: flex-end;
   }
   &.margin-bottom {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 `;

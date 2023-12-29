@@ -15,8 +15,7 @@ import {
 } from "@utils/convertDate";
 import { I_ManualCreateType } from "@typings/assignment_type";
 import { getAssignDriverDDL } from "@services/assignment/getAssignmentDDL";
-import TimeInput from "@components/Timepicker/TimeInput";
-import Requred from "@components/Required";
+import Required from "@components/Required";
 
 interface I_AssignManualCreateProps {
   handleAssign: (e: any) => void;
@@ -141,7 +140,7 @@ function SecondDriverAssignManualCreate({
       </Pane>
 
       <SelectField
-        label={<Requred>車隊</Requred>}
+        label={<Required>車隊</Required>}
         name="bus_group"
         onChange={handleBusGroupChange}
         value={curAssignment?.bus_group}
@@ -158,7 +157,7 @@ function SecondDriverAssignManualCreate({
       </SelectField>
 
       <SelectField
-        label={<Requred>駕駛</Requred>}
+        label={<Required>駕駛</Required>}
         name="driver_no"
         onChange={handleAssign}
         value={curAssignment?.driver_no}
@@ -174,18 +173,12 @@ function SecondDriverAssignManualCreate({
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <TimeInput
-          date={dateStrStart || dateStr}
-          setDate={handleTimeChange.bind(null, "task_start_time")}
-        />
+        <p> DELETED TIMEINPUT</p>
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <TimeInput
-          date={dateStrEnd || dateStr}
-          setDate={handleTimeChange.bind(null, "task_end_time")}
-        />
+        <p> DELETED TIMENPUT</p>
       </Pane>
 
       <TextareaField

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Pane, TextInputField, RadioGroup, Checkbox } from "evergreen-ui";
-import FormCard from "@components/FormCard";
 
 const primaryMeterOptions = [
   { label: "Miles", value: "0" },
@@ -41,44 +40,7 @@ function Settings() {
 
   return (
     <Pane marginX="20px">
-      <FormCard formTitle="Settings">
-        <div className="w50">
-          <RadioGroup
-            label="Primary Meter"
-            value={primaryMeter}
-            options={primaryMeterOptions}
-            onChange={(event) => setPrimaryMeter(event.target.value)}
-          />
-          <div>
-            <TextInputField label="Current Reading" />
-            <TextInputField
-              label="Average Usage per Day"
-              type="number"
-              hint="Average Usage per Day is used to forecast Service Reminders. Normally, it is automatically calculated based on the Vehicle’s Meter Entries. If the Vehicle has few Meter Entries, you can override the automatic calculation to accurately forecast Service Reminders. Learn More"
-            />
-            <Checkbox label="Automatically calculate" />
-          </div>
-        </div>
-
-        <div className="w100">
-          <Checkbox label="Secondary Meter" />
-        </div>
-
-        <div className="w100">
-          <RadioGroup
-            label="Fuel Unit"
-            value={fuelUnit}
-            options={fuelUnitOptions}
-            onChange={(event) => setFuelUnit(event.target.value)}
-          />
-          <RadioGroup
-            label="Measurement Units"
-            value={measurementUnits}
-            options={measurementUnitsOptions}
-            onChange={(event) => setMeasurementUnits(event.target.value)}
-          />
-        </div>
-      </FormCard>
+      <p>DELETED FORMCARD, PLEASE CHECK THE PAGE AGAIN.</p>
     </Pane>
   );
 }

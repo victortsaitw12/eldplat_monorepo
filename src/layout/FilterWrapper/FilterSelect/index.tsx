@@ -13,7 +13,7 @@ interface Props {
   setActive: (value: string) => void;
 }
 //
-function SubFilter({
+function FilterSelect({
   value,
   label,
   updateFilter,
@@ -26,25 +26,11 @@ function SubFilter({
     <BodySTY>
       <Select
         onChange={(event) => alert(event.target.value)}
-        className="subFilter-select"
-        defaultValue="foo"
+        className="filter_select"
       >
         <option value="foo">{label}</option>
       </Select>
-      {/* <button
-        onClick={() => {
-          if (active) {
-            setActive("");
-          } else {
-            setActive(filterTag);
-          }
-        }}
-        className="filter-button"
-      >
-        <span>{label}</span>
-        <ChevronDownIcon />
-      </button> */}
     </BodySTY>
   );
 }
-export default SubFilter;
+export default FilterSelect;

@@ -20,7 +20,6 @@ import { deleteQuotation } from "@services/admin_orders/deleteQuotation";
 import { assignmentClosed } from "@services/admin_orders/assignmentClosed";
 
 //@components
-import Drawer from "@components/Drawer";
 import { I_Data } from "@components/Table/Table";
 import LabelTag from "@components/LabelTag";
 import { I_PageInfo } from "@components/PaginationField";
@@ -279,40 +278,18 @@ const Page: NextPageWithLayout<{
                 initializeSubFilter();
               }}
               filter={subFilter}
-            >
-              {/* <FormattedMessage id="vendor_name" /> */}
-              <AdminOrdersList
-                listData={data}
-                goToDetailPage={goToDetailPage}
-                goToCreatePage={goToCreatePage}
-                {...(nowTab !== "6" && { goToEditPageHandler })}
-                {...(nowTab !== "6" && { deleteItemHandler })}
-                pageInfo={pageInfo}
-                handlePageChange={handlePageChange}
-              ></AdminOrdersList>
-            </FilterWrapper>
+            ></FilterWrapper>
+            {/* <FormattedMessage id="vendor_name" /> */}
+            <AdminOrdersList
+              listData={data}
+              goToDetailPage={goToDetailPage}
+              goToCreatePage={goToCreatePage}
+              {...(nowTab !== "6" && { goToEditPageHandler })}
+              {...(nowTab !== "6" && { deleteItemHandler })}
+              pageInfo={pageInfo}
+              handlePageChange={handlePageChange}
+            ></AdminOrdersList>
           </TabsWrapper>
-          {isDrawerOpen && (
-            <Drawer
-              tabName={["新增詢價單"]}
-              isFullScreen={isDrawerFullWidth}
-              closeDrawer={() => {
-                setDrawerOpen(false);
-                setIsDrawerFullWidth(false);
-              }}
-              toggleFullScreenDrawer={() => {
-                setIsDrawerFullWidth(!isDrawerFullWidth);
-              }}
-            >
-              <AdminOrderCreateForm
-                reloadData={() => {
-                  setDrawerOpen(false);
-                  setData([]);
-                  getDataByTab(nowTab);
-                }}
-              />
-            </Drawer>
-          )}
           {/* <SideBookMark /> */}
         </>
       ) : (
