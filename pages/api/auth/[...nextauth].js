@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { login } from "@services/account/login";
 import { getMenu } from "@services/sys/getMenu";
 import { DUMMY_USER, loginV2 } from "@services/account/login";
+import { Console } from "console";
 
 //All requests to /api/auth/* (signIn, callback, signOut, etc.) will automatically be handled
 export const authOptions = {
@@ -25,7 +26,6 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         return DUMMY_USER;
-
         // const { email, password } = credentials;
         // const resLogin = await loginV2(email, password);
         // if (resLogin.StatusCode !== "200") return null;

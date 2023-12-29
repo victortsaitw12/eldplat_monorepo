@@ -21,8 +21,8 @@ const ScheduleListView = ({
       (item) => item.stopover_address.trim() !== ""
     );
     return filterArray.map((child, i) => (
-      <li key={i} className="schedule-list-item">
-        <Text className="schedule-list-label">
+      <li key={i} className="schedule_list_item">
+        <Text className="schedule_list_label">
           <Text className={cx("dot", { withLine: true })}>
             <DotIcon />
           </Text>
@@ -34,9 +34,9 @@ const ScheduleListView = ({
   };
   return (
     <BodySTY>
-      <ul className="schedule-list">
-        <li className="schedule-list-item">
-          <Text className="schedule-list-label">
+      <ul className="schedule_list">
+        <li className="schedule_list_item">
+          <Text className="schedule_list_label">
             <Text className={cx("dot", { withLine: true })}>
               <DotIcon />
             </Text>
@@ -45,8 +45,8 @@ const ScheduleListView = ({
           <Text>{pickup_location || "--"}</Text>
         </li>
         {r_stopover(listArray)}
-        <li className="schedule-list-item">
-          <Text className="schedule-list-label">
+        <li className="schedule_list_item">
+          <Text className="schedule_list_label">
             <Text className={cx("dot")}>
               <DotIcon />
             </Text>

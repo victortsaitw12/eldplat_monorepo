@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const BodySTY = styled.section<{ className?: string }>`
     background-color: ${({ theme }) => theme.color.N0};
     
-    .section-title {
+    .section_title {
         padding: 16px 0;
         margin: 0 16px;
         font-size: 20px;
@@ -12,7 +12,7 @@ export const BodySTY = styled.section<{ className?: string }>`
         border-bottom: 1px solid ${({ theme }) => theme.color.N40};
     }
     
-    .section-content {
+    .section_content {
         padding: 20px;
     }
 

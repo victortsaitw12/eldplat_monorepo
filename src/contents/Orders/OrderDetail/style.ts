@@ -47,7 +47,7 @@ export const MainSTY = styled.section`
   //   }
   // }
 
-  .tabs-wrap {
+  .tabs_wrap {
     border-bottom: 1px solid ${({ theme }) => theme.color.N40};
   }
 
@@ -66,7 +66,7 @@ export const MainSTY = styled.section`
     }
   }
 
-  .progress-list {
+  .progress_list {
     border: none;
   }
 `;

@@ -1,7 +1,6 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-// import { useSession } from "next-auth/react";
-import { useSession } from "@utils/dummySession";
+import { useSession } from "next-auth/react";
 
 //
 import { MenuDataType } from "src/mock-data/side-bar/data";

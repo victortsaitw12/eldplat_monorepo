@@ -9,19 +9,51 @@ export const OverviewSTY = styled.div<{
   ${({ expandPercentage }) => `
     --cellWidth: ${64 + (expandPercentage * (256 - 64)) / 100 + "px"};
   `}
-  height: 100%;
+  height:fit-content;
   /* width: fit-content; */
   display: flex;
   width: 100%;
   .schedule_zone {
     height: calc(100% - 32px);
-    /* overflow: hidden; */
-    width: 100%;
   }
   .schedule_weeksWrap {
     display: flex;
     width: fit-content;
-    div {
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    .font_driver {
+      display: flex;
+      width: fit-content;
+      position: sticky;
+      left: 0;
+      top: 0;
+      z-index: 2;
+      div {
+        border-bottom: 1px solid ${({ theme }) => theme.color.N40};
+        border-right: 1px solid ${({ theme }) => theme.color.N40};
+        padding: 5px 0;
+        height: 38px;
+        color: ${({ theme }) => theme.color.N200};
+        background: ${({ theme }) => theme.color.N10};
+        font-weight: normal;
+        text-align: center;
+        width: 95px;
+        font-weight: bold;
+        color: ${({ theme }) => theme.color.N200};
+        background: ${({ theme }) => theme.color.N0};
+        font-size: 14px;
+        padding: 11px 0;
+        &.w-50 {
+          width: 90px;
+        }
+        &:nth-child(3) {
+          border-right: 2px solid ${({ theme }) => theme.color.N40};
+        }
+      }
+    }
+    .zoom_width {
       border-bottom: 1px solid ${({ theme }) => theme.color.N40};
       border-right: 1px solid ${({ theme }) => theme.color.N40};
       padding: 5px 0;
@@ -30,72 +62,55 @@ export const OverviewSTY = styled.div<{
       background: ${({ theme }) => theme.color.N10};
       font-weight: normal;
       text-align: center;
-      width: 95px;
-      &.font_driver {
-        font-weight: bold;
-        color: ${({ theme }) => theme.color.N200};
-        background: ${({ theme }) => theme.color.N0};
-        font-size: 14px;
-        padding: 11px 0;
-      }
-      &.w-50 {
-        width: 90px;
-      }
-      &.zoom_width {
-        width: var(--cellWidth);
-      }
-      .font_date {
-        font-size: 14px;
-        font-weight: 600;
-        &.today {
-          position: relative;
-          z-index: 1;
-          color: ${({ theme }) => theme.color.N0};
-          &::before {
-            z-index: -1;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            content: "";
-            position: absolute;
-            display: inline-block;
-            width: 21px;
-            height: 21px;
-            background: ${({ theme }) => theme.color.B400};
-            border-radius: 50%;
-            color: ${({ theme }) => theme.color.N0};
-          }
-        }
-        &.week_label {
-          font-size: 12px;
-          font-weight: 400;
+      width: var(--cellWidth);
+    }
+    .font_date {
+      font-size: 14px;
+      font-weight: 600;
+      &.today {
+        position: relative;
+        z-index: 1;
+        color: ${({ theme }) => theme.color.N0};
+        &::before {
+          z-index: -1;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          content: "";
+          position: absolute;
           display: inline-block;
-          margin-left: 4px;
-          &.today {
-            color: ${({ theme }) => theme.color.B400};
-            &::before {
-              display: none;
-            }
+          width: 21px;
+          height: 21px;
+          background: ${({ theme }) => theme.color.B400};
+          border-radius: 50%;
+          color: ${({ theme }) => theme.color.N0};
+        }
+      }
+      &.week_label {
+        font-size: 12px;
+        font-weight: 400;
+        display: inline-block;
+        margin-left: 4px;
+        &.today {
+          color: ${({ theme }) => theme.color.B400};
+          &::before {
+            display: none;
           }
         }
       }
-      p {
-        font-size: 10px;
-        padding-top: 3px;
-      }
-      .weekend {
-        color: ${({ theme }) => theme.color.R400};
-      }
-      &:nth-child(3) {
-        border-right: 2px solid ${({ theme }) => theme.color.N40};
-      }
+    }
+    p {
+      font-size: 10px;
+      padding-top: 3px;
+    }
+    .weekend {
+      color: ${({ theme }) => theme.color.R400};
     }
   }
   .schedule_bodyWrap {
     height: 100%;
-    overflow-y: scroll;
-    /* position: relative; */
-    overflow-x: scroll;
+    /* overflow-y: scroll;
+    overflow-x: scroll; */
     /* &::-webkit-scrollbar {
       display: none;
     } */
@@ -104,14 +119,12 @@ export const OverviewSTY = styled.div<{
   .schedule_daysWrap {
     width: fit-content;
     display: flex;
-    /* flex-flow: row wrap; */
-    /* flex-wrap: nowrap; */
-    position: relative;
+    /* position: relative; */
     .driver_info {
       display: flex;
       position: sticky;
       left: 0;
-      background-color: #fff;
+      background: ${({ theme }) => theme.color.N0};
       & div {
         border-bottom: 1px solid ${({ theme }) => theme.color.N40};
         border-right: 1px solid ${({ theme }) => theme.color.N40};
@@ -135,7 +148,6 @@ export const OverviewSTY = styled.div<{
             padding-top: 4px;
           }
         }
-
         &.w-50 {
           width: 90px;
         }

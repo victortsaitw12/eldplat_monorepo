@@ -17,7 +17,7 @@ const HeaderSTY = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  > .detail-with-icon {
+  > .detail_with_icon {
     display: flex;
     height: 32px;
     align-items: center;
