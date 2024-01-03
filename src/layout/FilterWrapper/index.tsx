@@ -2,12 +2,11 @@ import { FilterIcon, SearchIcon, Select, Button } from "evergreen-ui";
 import React, { useState } from "react";
 import { countActiveFilter } from "@utils/countActiveFilter";
 import { BodySTY } from "./style";
-import SubFilter from "./SubFilter";
+import FilterSelect from "./FilterSelect";
 import LoadingSpinner from "@components/LoadingSpinner";
 // import { useFilterStore } from "@stores/busFilterStore";
 // TODO: 測試用，之後可以拿掉
 interface I_MainBookmark {
-  children?: React.ReactNode;
   updateFilter: (key: string, value: string) => void;
   resetFilter?: () => void;
   filter: any;
@@ -15,7 +14,6 @@ interface I_MainBookmark {
 }
 
 function FilterWrapper({
-  children,
   resetFilter,
   updateFilter,
   filter,
@@ -43,66 +41,63 @@ function FilterWrapper({
 
   return (
     <BodySTY>
-      <div className="actionRow">
-        <div className="filter-wrapper">
-          {Object.entries(filter).reduce((buttonList: any[], [key, _]) => {
-            if (filter[key].displayType === "search") {
-              buttonList.push(
-                <label key={key} className="search-tool">
-                  <SearchIcon size={12} />
-                  <input
-                    placeholder={filter[key].label || "搜尋"}
-                    onChange={(e) => {
-                      delayHandleSearch(key, e.target.value);
-                    }}
-                  />
-                </label>
-              );
-            } else if (filter[key].displayType === "fix") {
-              buttonList.push(
-                <SubFilter
-                  key={key}
-                  filterTag={key}
-                  label={filter[key].label}
-                  value={filter[key].value}
-                  updateFilter={updateFilter.bind(null, key)}
-                  active={activeSubFilter === key}
-                  setActive={setActiveSubFilter}
+      <div className="filter-wrapper">
+        {Object.entries(filter).reduce((buttonList: any[], [key, _]) => {
+          if (filter[key].displayType === "search") {
+            buttonList.push(
+              <label key={key} className="search-tool">
+                <SearchIcon size={12} />
+                <input
+                  placeholder={filter[key].label || "搜尋"}
+                  onChange={(e) => {
+                    delayHandleSearch(key, e.target.value);
+                  }}
                 />
-              );
-            }
-            return buttonList;
-          }, [])}
-          <Button
-            className="subFilter-item"
+              </label>
+            );
+          } else if (filter[key].displayType === "fix") {
+            buttonList.push(
+              <FilterSelect
+                key={key}
+                filterTag={key}
+                label={filter[key].label}
+                value={filter[key].value}
+                updateFilter={updateFilter.bind(null, key)}
+                active={activeSubFilter === key}
+                setActive={setActiveSubFilter}
+              />
+            );
+          }
+          return buttonList;
+        }, [])}
+        <Button
+          className="filter_btn"
+          onClick={() => {
+            setActiveSubFilter("");
+            setFilterIsOpen((prev) => !prev);
+          }}
+        >
+          {activeSubFilterCount > 0 ? (
+            <div className="item-number">
+              <span>{activeSubFilterCount}</span>
+            </div>
+          ) : (
+            <FilterIcon />
+          )}
+          <span>篩選器</span>
+        </Button>
+        {activeSubFilterCount > 0 && (
+          <button
+            className="filter_btn clear"
             onClick={() => {
-              setActiveSubFilter("");
-              setFilterIsOpen((prev) => !prev);
+              resetFilter!();
             }}
           >
-            {activeSubFilterCount > 0 ? (
-              <div className="item-number">
-                <span>{activeSubFilterCount}</span>
-              </div>
-            ) : (
-              <FilterIcon />
-            )}
-            <span>篩選器</span>
-          </Button>
-          {activeSubFilterCount > 0 && (
-            <button
-              className="subFilter-item clear"
-              onClick={() => {
-                resetFilter!();
-              }}
-            >
-              清除所有篩選
-            </button>
-          )}
-        </div>
-        {btns && <div className="btns">{btns}</div>}
+            清除所有篩選
+          </button>
+        )}
       </div>
-      {children && <div className="children-container">{children}</div>}
+      {btns && <div className="btns">{btns}</div>}
     </BodySTY>
   );
 }

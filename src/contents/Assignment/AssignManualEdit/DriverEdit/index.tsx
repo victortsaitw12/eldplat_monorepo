@@ -10,7 +10,6 @@ import { dashDate } from "@utils/convertDate";
 import dayjs from "dayjs";
 import { Label } from "@components/Button/Primary";
 import { v4 as uuid } from "uuid";
-import TimeInput from "@components/Timepicker/TimeInput";
 import { getWeekName } from "@utils/convertDate";
 
 interface I_AssignManualCreateProps {
@@ -186,18 +185,12 @@ function DriverEdit({ editData, refetch }: I_AssignManualCreateProps) {
 
       <Pane className="time-area">
         <Paragraph>起始時間</Paragraph>
-        <TimeInput
-          date={dateStrStart}
-          setDate={handleTimeChange.bind(null, "start")}
-        />
+        <p>DELETED TIME-PICKER, PLEASE CHECK</p>
       </Pane>
 
       <Pane className="time-area">
         <Paragraph>截止時間</Paragraph>
-        <TimeInput
-          date={dateStrEnd}
-          setDate={handleTimeChange.bind(null, "end")}
-        />
+        <p>DELETED TIME-PICKER, PLEASE CHECK</p>
       </Pane>
 
       <TextareaField

@@ -188,7 +188,7 @@ function Maintenance({
           initializeSubFilter();
         }}
         filter={subFilter}
-      ></FilterWrapper>
+      />
       <Table
         titles={maintenanceTitle}
         data={modifiedData}

@@ -110,16 +110,17 @@ const OverviewTable = ({
   //   </Table.TextHeaderCell>
   // ));
   return (
-    <OverviewSTY
-      className="overviewTable"
-      expandPercentage={expandPercentage}
-      ref={containerRef}
-    >
+    <OverviewSTY expandPercentage={expandPercentage}>
       <div className="schedule_zone">
         <div className="schedule_weeksWrap">
-          <div className="font_driver">駕駛姓名</div>
+          <div className="font_driver">
+            <div className="">駕駛姓名</div>
+            <div className="w-50">應休/已休</div>
+            <div className="w-50">預排班表</div>
+          </div>
+          {/* <div className="font_driver">駕駛姓名</div>
           <div className="font_driver w-50">應休/已休</div>
-          <div className="font_driver w-50">預排班表</div>
+          <div className="font_driver w-50">預排班表</div> */}
           {timeUtil.getNowMonthScheduleList(initialDate).map((item, index) => {
             return (
               <div className="zoom_width" key={index}>
@@ -143,52 +144,56 @@ const OverviewTable = ({
                 }}
               >
                 <div className="driver_info">
-                  {driver.user_First_Name}
-                  {driver.user_Name}
-                  <p>0917-444-444</p>
+                  <div className="driver">
+                    {driver.user_First_Name}
+                    {driver.user_Name}
+                    <p>0917-444-444</p>
+                  </div>
+                  <div className="w-50">5/8</div>
+                  <div className="w-50">
+                    {driver.schedule_Approved ? (
+                      <button className="icon">
+                        <TimelineEventsIcon />
+                      </button>
+                    ) : (
+                      <EventTag
+                        key="040"
+                        value={EVENT_TYPE.get("040")}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                          e.stopPropagation();
+                          router.push(
+                            `/schedule/detail/${driver.driver_No}?editPage=edit`
+                          );
+                        }}
+                      />
+                    )}
+                  </div>
                 </div>
-                <div className="w-50">5/8</div>
-                <div className="w-50">
-                  {driver.schedule_Approved ? (
-                    <button className="icon">
-                      <TimelineEventsIcon />
-                    </button>
-                  ) : (
-                    <EventTag
-                      key="040"
-                      value={EVENT_TYPE.get("040")}
-                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                        e.stopPropagation();
-                        router.push(
-                          `/schedule/detail/${driver.driver_No}?editPage=edit`
-                        );
-                      }}
-                    />
-                  )}
+                <div className="driver_shift">
+                  {renderShifts(driver.schedule_List).map((date, index) => {
+                    return (
+                      <div className="zoom_width" key={index}>
+                        {date.detail
+                          ? (date.detail as ScheduleInfoData[])?.map(
+                              (detail, index) => {
+                                return (
+                                  <EventTag
+                                    key={index}
+                                    value={EVENT_TYPE.get(detail.schd_Type)}
+                                  />
+                                );
+                              }
+                            )
+                          : !driver.schedule_Approved && (
+                              <EventTag
+                                key={index}
+                                value={EVENT_TYPE.get("01")}
+                              />
+                            )}
+                      </div>
+                    );
+                  })}
                 </div>
-                {renderShifts(driver.schedule_List).map((date, index) => {
-                  return (
-                    <div className="zoom_width" key={index}>
-                      {date.detail
-                        ? (date.detail as ScheduleInfoData[])?.map(
-                            (detail, index) => {
-                              return (
-                                <EventTag
-                                  key={index}
-                                  value={EVENT_TYPE.get(detail.schd_Type)}
-                                />
-                              );
-                            }
-                          )
-                        : !driver.schedule_Approved && (
-                            <EventTag
-                              key={index}
-                              value={EVENT_TYPE.get("01")}
-                            />
-                          )}
-                    </div>
-                  );
-                })}
               </div>
             );
           })}

@@ -177,7 +177,7 @@ function Equipment({
             <PlusIcon size={14} />
           </SecondaryBtn>
         }
-      ></FilterWrapper>
+      />
       <Table
         titles={equipmentTitle}
         data={modifiedData}

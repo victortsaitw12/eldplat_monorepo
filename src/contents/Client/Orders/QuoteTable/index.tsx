@@ -108,7 +108,7 @@ const QuoteTable = () => {
   return (
     <BodySTY>
       <Section title="查詢結果">
-        <div className="revise-wrap">
+        <div className="revise_wrap">
             <Text fontSize="16px">若要查看訂單修改紀錄，請點選此快速前往。</Text>
             <Button
               appearance="primary"
@@ -134,7 +134,7 @@ const QuoteTable = () => {
           onView={() => {console.log("onView")}}
         />
       </Section>
-       <Link className="back-link" href="/client">返回首頁</Link>     
+       <Link className="back_link" href="/client">返回首頁</Link>     
     </BodySTY>
   )
 }

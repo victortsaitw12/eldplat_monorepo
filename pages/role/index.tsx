@@ -112,10 +112,6 @@ const Page: NextPageWithLayout<never> = () => {
   }, [session]);
 
   React.useEffect(() => {
-    if (status === "unauthenticated") router.push("/login");
-  }, [status]);
-
-  React.useEffect(() => {
     localStorage.removeItem("roleCreateData");
   }, [router]);
 
@@ -133,16 +129,14 @@ const Page: NextPageWithLayout<never> = () => {
         mainFilter={nowTab}
         mainFilterArray={mainFilterArray}
         viewOnly={true}
-      > */}
+      /> */}
       <FilterWrapper
         updateFilter={updateSubFilter}
         resetFilter={() => initializeSubFilter()}
         filter={subFilter}
         btns={createBtn}
-      >
-        <RoleList data={data} pageInfo={pageInfo} />
-      </FilterWrapper>
-      {/* </TabsWrapper> */}
+      />
+      <RoleList data={data} pageInfo={pageInfo} />
     </BodySTY>
   );
 };

@@ -17,38 +17,38 @@ export const BodySTY = styled.div`
     // padding: 32px 0px;
     width: 100%;
     // background-color: ${({ theme }) => theme.color.N400};
-    > .header-container {
+    > .header_container {
       width: 1030px;
       display: flex;
       flex-direction: column;
       gap: 24px;
-      > .header-title {
+      > .header_title {
         font-size: 32px;
         font-weight: 600;
         color: ${({ theme }) => theme.color.N300};
       }
     }
   }
-  > .content-container {
+  > .content_container {
     display: flex;
     padding: 40px 0px;
     gap: 40px;
     flex-direction: column;
     align-items: center;
     width: 1030px;
-    > .content-title {
+    > .content_title {
       color: ${({ theme }) => theme.color.N300};
       font-size: 32px;
       font-weight: 600;
       align-self: flex-start;
     }
-    > .content-entry {
+    > .content_entry {
       display: flex;
       width: 100%;
       justify-content: flex-start;
       gap: 25px;
 
-      .serverEntryBtn {
+      .server_entry_btn {
         padding: 25.5px 40px;
         border-radius: 10px;
         
@@ -60,7 +60,7 @@ export const BodySTY = styled.div`
     }
   }
 
-  .service-wrap {
+  .service_wrap {
     box-shadow: 0px 4px 8px 0px #10184014;
     border-radius: 4px;
     overflow: hidden;

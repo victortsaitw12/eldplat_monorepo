@@ -211,7 +211,7 @@ function FuelRecord({
             <PlusIcon size={14} />
           </SecondaryBtn>
         }
-      ></FilterWrapper>
+      />
       <Table
         titles={fuelTitle}
         data={modifiedData}

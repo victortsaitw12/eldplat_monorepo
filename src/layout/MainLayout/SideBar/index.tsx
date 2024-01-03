@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 // import { useSession } from "next-auth/react";
 import { useSession } from "@utils/dummySession";
-
 import { useRouter } from "next/router";
 
 //

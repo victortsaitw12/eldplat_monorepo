@@ -123,8 +123,8 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
       <StyledCard>
         <Collapse title="航班資訊" viewOnly opened={true}>
           <StyledForm onSubmit={handleSubmit(submitFormHandler)}>
-            <div className="form-item">
-              <label className="form-sub-item">
+            <div className="form_item">
+              <label className="form_sub_item">
                 <div>
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>航班日期</span>
@@ -137,7 +137,7 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
                   isInvalid={!!errors.flightDate}
                 />
               </label>
-              <label className="form-sub-item">
+              <label className="form_sub_item">
                 <div>
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>航班編號</span>
@@ -151,22 +151,22 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
               </label>
             </div>
 
-            <div className="form-item">
-              <label className="form-sub-item">
+            <div className="form_item">
+              <label className="form_sub_item">
                 <div>
                   <span>機場</span>
                 </div>
                 <TextInput {...register("airport")} />
               </label>
-              <label className="form-sub-item">
+              <label className="form_sub_item">
                 <div>
                   <span>航廈</span>
                 </div>
                 <TextInput {...register("terminal")} />
               </label>
             </div>
-            <div className="form-item">
-              <label className="form-sub-item">
+            <div className="form_item">
+              <label className="form_sub_item">
                 <div>
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>
@@ -181,7 +181,7 @@ const FlightPickup = forwardRef<HTMLButtonElement, Props>(function CustomPickup(
                   isInvalid={!!errors.flightTime}
                 />
               </label>
-              <label className="form-sub-item">
+              <label className="form_sub_item">
                 <div>
                   <span>航空公司</span>
                 </div>

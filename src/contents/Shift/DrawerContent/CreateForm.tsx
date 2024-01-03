@@ -10,7 +10,6 @@ import {
 import { FormSTY } from "./style";
 
 import { UIContext } from "@contexts/scheduleContext/UIProvider";
-import Timepicker from "@components/Timepicker";
 import LeaveTypePicker from "@contents/Shift/LeaveTypePicker";
 import { createSchedule } from "@services/schedule/createSchedule";
 
@@ -75,25 +74,14 @@ const CreateForm = ({
           <TimeIcon />
           <span>開始時間</span>
         </label>
-        <Timepicker
-          type="start"
-          date={scheduleUI.startDate}
-          setDate={scheduleUI.setStartDate}
-          fullDay={view === "monthly" ? true : false}
-        />
+        <p>DELETED TIME-PICKER, PLEASE CHECK</p>
       </section>
       <section className="form__endTime">
         <label className="form__label">
           <TimeIcon />
           <span>結束時間</span>
         </label>
-        <Timepicker
-          type="end"
-          date={scheduleUI.endDate}
-          setDate={scheduleUI.setEndDate}
-          fullDay={view === "monthly" ? true : false}
-          minDate={scheduleUI.startDate}
-        />
+        <p>DELETED TIME-PICKER, PLEASE CHECK</p>
       </section>
       <section className="form__leaveCode">
         <label className="form__label">

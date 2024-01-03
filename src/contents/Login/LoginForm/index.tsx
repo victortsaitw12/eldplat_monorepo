@@ -61,6 +61,7 @@ function Form() {
     <BodySTY>
       <div className="inpitFields">
         <TextInputField
+          id="account_input"
           className="emailInput"
           type="email"
           placeholder="example@mail.com"

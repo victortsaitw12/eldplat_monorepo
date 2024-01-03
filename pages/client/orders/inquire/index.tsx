@@ -10,7 +10,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <div className="page-title">查詢訂單</div>
+      <div className="page_title">查詢訂單</div>
       {!isSearch ? 
         <QuoteSearch updateSearchState={setIsSearch} /> :
         <QuoteTable />

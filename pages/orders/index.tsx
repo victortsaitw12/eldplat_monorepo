@@ -100,13 +100,12 @@ const Page: NextPageWithLayout<never> = () => {
             <PlusIcon />
           </PrimaryBtn>
         }
-      >
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <OrdersList orderData={data} pageInfo={pageInfo} />
-        )}
-      </FilterWrapper>
+      />
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <OrdersList orderData={data} pageInfo={pageInfo} />
+      )}
     </BodySTY>
   );
 };

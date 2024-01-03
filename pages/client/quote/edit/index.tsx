@@ -10,7 +10,6 @@ import StatusCard from "@components/StatusCard";
 import { BodySTY } from "./style";
 import NavigationList from "@components/NavigationList";
 import Collapse from "@components/Collapse";
-import ExpenseDetail from "@components/ExpenseDetail";
 import TravelInformation from "@contents/Client/Quote/TravelInformation";
 import RidingInformation from "@contents/Client/Quote/RidingInformation";
 import ContactInformation from "@contents/Client/Quote/ContactInformation";
@@ -265,7 +264,7 @@ const Page: NextPageWithLayout<
   if (currentTab === 5) {
     return (
       <BodySTY>
-        <div className="redirect-body">
+        <div className="redirect_body">
           <TickCircleIcon
             color="success"
             style={{ height: "40px", width: "40px" }}
@@ -277,7 +276,7 @@ const Page: NextPageWithLayout<
           </div>
         </div>
         <Pane
-          className="quote-detail"
+          className="quote_detail"
           boxShadow="box-shadow: 0px 4px 8px 0px #10184014"
         >
           <Section title="訂單資訊">
@@ -351,10 +350,10 @@ const Page: NextPageWithLayout<
         />
       </StatusCard>
 
-      <div className="body-container">
+      <div className="body_container">
         <FormProvider {...methods}>
           <form
-            className="content-container"
+            className="content_container"
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
               e.preventDefault();
             }}
@@ -385,14 +384,13 @@ const Page: NextPageWithLayout<
 
           </form>
         </FormProvider>
-        <div className="charge-container">
-          <div className="charge-header">
+        <div className="charge_container">
+          <div className="charge_header">
             <div className="title">初估金額</div>
             <div className="charge">NTD $2,805</div>
           </div>
-          <ExpenseDetail data={DummyExpenseDetailData} prefix="NT$" />
           <NoticeMessage size={16} message="注意事項注意事項注意事項注意事項注意事項注意事項" />
-          <div className="content-actions-container">
+          <div className="content_actions_container">
             <Button
               style={{
                 backgroundColor: "#fff",

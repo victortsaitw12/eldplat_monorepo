@@ -15,18 +15,18 @@ export const ItemSTY = styled.li`
   align-items: center;
   list-style: none;
   width: 100%;
-  > .item-content-container {
+  > .item_content_container {
     display: flex;
     align-items: center;
     gap: 20px;
     flex: 1 0 0;
-    > .item-content {
+    > .item_content {
       width: 70px;
     }
-    > .option-container {
+    > .option_container {
       display: flex;
       width: 72px;
-      .option-item {
+      .option_item {
         cursor: pointer;
         display: inline-flex;
         align-items: center;

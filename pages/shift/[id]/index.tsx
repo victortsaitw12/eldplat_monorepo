@@ -11,7 +11,6 @@ import UIProvider from "@contexts/scheduleContext/UIProvider";
 import MonthPicker from "@contents/Shift/MonthPicker";
 import MonthlyView from "@contents/Shift/MonthlyView";
 import DrawerContent from "@contents/Shift/DrawerContent";
-import Tabs from "@components/Tabs";
 import TableTitle from "@contents/Shift/TableTitle";
 import LayoutControl from "@contents/Shift/LayoutControl";
 import DailyView from "@contents/Shift/DailyView";
@@ -83,11 +82,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
           <title>駕駛排班 - {monthlyData ? userFullName : ""}</title>
         </Head>
         <Pane className="wrapMain">
-          <Tabs
-            titleNames={["回到總表", monthlyData && userFullName]}
-            selectedIdx={selectedIndex}
-            onSelectTab={handleSelectTab}
-          />
+          <p>DELETED TABS, PLEASE CHECK THE PAGE AGAIN.</p>
           <Pane className="pageContent">
             <TableTitle
               tableName={tableName}
@@ -124,6 +119,7 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
                 />
               </div>
             )}
+            p
           </Pane>
         </Pane>
         <DrawerContent

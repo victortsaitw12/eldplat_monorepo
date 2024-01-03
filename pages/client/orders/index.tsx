@@ -4,7 +4,6 @@ import { Spinner } from "evergreen-ui";
 import { BodySTY } from "./style";
 
 import { getLayout } from "@layout/QuoteLayout";
-import StatusTabs from "@components/StatusTabs";
 import StatusCard from "@components/StatusCard";
 import OrdersList from "@contents/Orders/OrdersList";
 import { getOrdersList, I_Order } from "@services/client/getOrdersList";
@@ -80,12 +79,7 @@ const Page: NextPageWithLayout<never> = () => {
 
   return (
     <BodySTY>
-      <StatusTabs
-        tabsArray={tabsArray}
-        onTabChange={(v) => handleTabChange(v)}
-        isLoading={isLoading}
-        defaultTab={1}
-      />
+      <p>DELETED STATUS-TABS, PLEASE CHECK THE PAGE AGAIN</p>
       {isLoading && (
         <StatusCard>
           <Spinner />

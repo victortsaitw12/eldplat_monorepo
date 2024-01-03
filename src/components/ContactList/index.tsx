@@ -12,7 +12,6 @@ import {
 import { IconLeft } from "@components/Button/Primary";
 import { PlusIcon, TrashIcon, TextInput, Text, Pane } from "evergreen-ui";
 import { BodySTY, ItemSTY } from "./style";
-// import ArrayInfoBox from "@components/ArrayInfoBox";
 import InfoBox from "@components/InfoBox";
 import { textValidation, emailValidation } from "@utils/inputValidation";
 //

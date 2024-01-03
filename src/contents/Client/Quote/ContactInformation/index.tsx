@@ -50,12 +50,12 @@ const ContactInformation = () => {
         <Collapse title="訂單聯絡人" opened={true}>
           <ContainerSTY>
             <ItemSTY>
-              <div className="item-container">
-                <div className="item-title">
+              <div className="item_container">
+                <div className="item_title">
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>姓名</span>
                 </div>
-                <div className="item-input-container">
+                <div className="item_input_container">
                   <TextInput
                     {...register("order_contact_list.0.full_name", {
                       required: "不可空白"
@@ -69,18 +69,18 @@ const ContactInformation = () => {
                   )}
                 </div>
               </div>
-              <div className="item-container">
-                <div className="item-title">
+              <div className="item_container">
+                <div className="item_title">
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>國籍</span>
                 </div>
-                <div className="item-input-container">
+                <div className="item_input_container">
                   <NationalitySelect 
                     register={register}
                     selectName="order_contact_list.0.nationality"
                   />
                   {errors.order_contact_list?.[0]?.name && (
-                    <div className="input-error">
+                    <div className="input_error">
                       {errors.order_contact_list?.[0]?.name?.message}
                     </div>
                   )}
@@ -88,24 +88,24 @@ const ContactInformation = () => {
               </div>
             </ItemSTY>
             <ItemSTY>
-              <div className="item-container">
-                <div className="item-title">
+              <div className="item_container">
+                <div className="item_title">
                   <span>電話</span>
                 </div>
-                <div className="item-input-container">
-                  <div className="item-input-container">
+                <div className="item_input_container">
+                  <div className="item_input_container">
                     <TextInput
                       {...register("order_contact_list.0.contact_tel")}
                     />
                   </div>
                 </div>
               </div>
-              <div className="item-container">
-                <div className="item-title">
+              <div className="item_container">
+                <div className="item_title">
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>信箱</span>
                 </div>
-                <div className="item-input-container">
+                <div className="item_input_container">
                   <TextInput
                     {...register("order_contact_list.0.contact_email", {
                       required: "不可空白",
@@ -114,7 +114,7 @@ const ContactInformation = () => {
                     isInvalid={!!errors.order_contact_list?.[0]?.contact_email}
                   />
                   {errors.order_contact_list?.[0]?.contact_email && (
-                    <div className="input-error">
+                    <div className="input_error">
                       {errors.order_contact_list?.[0]?.contact_email?.message}
                     </div>
                   )}
@@ -143,12 +143,12 @@ const ContactInformation = () => {
               </label>
             </StyledCollapseTitle>
             <ItemSTY>
-              <div className="item-container">
-                <div className="item-title">
+              <div className="item_container">
+                <div className="item_title">
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>姓名</span>
                 </div>
-                <div className="item-input-container">
+                <div className="item_input_container">
                   <TextInput
                     {...register("order_contact_list.1.full_name", {
                       required: "不可空白"
@@ -156,7 +156,7 @@ const ContactInformation = () => {
                     isInvalid={!!errors.order_contact_list?.[1]?.full_name}
                   />
                   {errors.order_contact_list?.[1]?.full_name && (
-                    <div className="input-error">
+                    <div className="input_error">
                       {errors.order_contact_list?.[1]?.full_name?.message}
                     </div>
                   )}
@@ -164,22 +164,22 @@ const ContactInformation = () => {
               </div>
             </ItemSTY>
             <ItemSTY>
-              <div className="item-container">
-                <div className="item-title">
+              <div className="item_container">
+                <div className="item_title">
                   <span>電話</span>
                 </div>
-                  <div className="item-input-container">
+                  <div className="item_input_container">
                     <TextInput
                       {...register("order_contact_list.1.contact_tel")}
                     />
                   </div>
               </div>
-              <div className="item-container">
-                <div className="item-title">
+              <div className="item_container">
+                <div className="item_title">
                   <span style={{ color: "#D14343" }}>*</span>
                   <span>信箱</span>
                 </div>
-                <div className="item-input-container">
+                <div className="item_input_container">
                   <TextInput
                     {...register("order_contact_list.1.contact_email", {
                       required: "不可空白",
@@ -188,7 +188,7 @@ const ContactInformation = () => {
                     isInvalid={!!errors.order_contact_list?.[1]?.contact_email}
                   />
                   {errors.order_contact_list?.[1]?.contact_email && (
-                    <div className="input-error">
+                    <div className="input_error">
                       {errors.order_contact_list?.[1]?.contact_email?.message}
                     </div>
                   )}

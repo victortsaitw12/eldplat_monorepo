@@ -112,9 +112,8 @@ const Page: NextPageWithLayout<never> = () => {
         resetFilter={() => initializeSubFilter()}
         filter={subFilter}
         btns={createBtn}
-      >
-        <AccountList data={data} pageInfo={pageInfo} />
-      </FilterWrapper>
+      />
+      <AccountList data={data} pageInfo={pageInfo} />
     </BodySTY>
   );
 };
