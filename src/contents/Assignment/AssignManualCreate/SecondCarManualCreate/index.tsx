@@ -15,7 +15,7 @@ import {
 } from "@utils/convertDate";
 import { I_ManualCreateType } from "@typings/assignment_type";
 import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
-import Requred from "@components/Required";
+import Required from "@components/Required";
 
 interface I_AssignManualCreateProps {
   handleAssign: (e: any) => void;
