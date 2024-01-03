@@ -29,6 +29,18 @@ const DUMMY_DATA = [
         mission_Date: "2023/12/02",
         mission_Name: "定期保養",
         mission_Type: "2"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2024/01/01",
+        mission_Name: "客製包車 一天一車",
+        mission_Type: "1"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2024/01/02",
+        mission_Name: "定期保養",
+        mission_Type: "2"
       }
     ]
   },
@@ -48,6 +60,18 @@ const DUMMY_DATA = [
         mission_Date: "2023/12/02",
         mission_Name: "需求變更 一天一車",
         mission_Type: "3"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2024/01/01",
+        mission_Name: "客製包車 一天一車",
+        mission_Type: "1"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2024/01/02",
+        mission_Name: "需求變更 一天一車",
+        mission_Type: "3"
       }
     ]
   },
@@ -65,6 +89,12 @@ const DUMMY_DATA = [
       {
         mission_No: "DSD202311220339",
         mission_Date: "2023/12/02",
+        mission_Name: "需求變更 一天一車",
+        mission_Type: "3"
+      },
+      {
+        mission_No: "DSD202311220339",
+        mission_Date: "2024/01/02",
         mission_Name: "需求變更 一天一車",
         mission_Type: "3"
       }

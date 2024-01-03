@@ -85,7 +85,6 @@ const DriverScheduleView: NextPageWithLayout<never> = () => {
     try {
       const result = await getScheduleList(id);
       setShiftData(result);
-      console.log(result);
     } catch (e: any) {
       console.log(e);
     }
