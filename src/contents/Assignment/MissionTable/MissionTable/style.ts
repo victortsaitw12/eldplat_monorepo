@@ -5,6 +5,7 @@ export const OverviewSTY = styled.div`
   border: 1px solid ${({ theme }) => theme.color.N40};
   border-radius: 4px;
   overflow-y: scroll;
+  /* position: relative; */
   &::-webkit-scrollbar {
     display: none;
   }
@@ -15,6 +16,10 @@ export const OverviewSTY = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.color.N40};
     border-top: 1px solid ${({ theme }) => theme.color.N40};
     display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: ${({ theme }) => theme.color.N0};
     .header_date {
       display: flex;
       align-items: center;

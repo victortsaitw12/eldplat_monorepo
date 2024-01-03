@@ -145,11 +145,13 @@ const Page: NextPageWithLayout<never> = () => {
         <title>任務指派</title>
       </Head>
       <div className="pageContent">
-        <TabsWrapper
-          onChangeTab={changeMainFilterHandler}
-          mainFilter={nowTab}
-          mainFilterArray={mainFilterArray}
-        />
+        <Pane className="tabs_wrapper">
+          <TabsWrapper
+            onChangeTab={changeMainFilterHandler}
+            mainFilter={nowTab}
+            mainFilterArray={mainFilterArray}
+          />
+        </Pane>
         {nowTab === "1" && <BusStatusRow />}
         <FilterWrapper
           updateFilter={updateSubFilter}
@@ -177,11 +179,9 @@ const Page: NextPageWithLayout<never> = () => {
         {nowTab === "1" ? (
           <MissionTable data={missionData} initialDate={renderDate} />
         ) : (
-          <Pane className="pageContent">
-            <div className="overviewContainer">
-              <BusTable data={busData} initialDate={renderDate} />
-            </div>
-          </Pane>
+          <div className="overviewContainer">
+            <BusTable data={busData} initialDate={renderDate} />
+          </div>
         )}
       </div>
     </BodySTY>

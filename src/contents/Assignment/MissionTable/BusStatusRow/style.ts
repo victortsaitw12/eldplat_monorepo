@@ -7,7 +7,6 @@ export const RowSTY = styled.div`
   display: flex;
   flex-wrap: nowrap;
   background: ${({ theme }) => theme.color.B100};
-  margin: 15px 12px 10px 12px;
   div {
     flex: 0 0 25%;
     text-align: center;

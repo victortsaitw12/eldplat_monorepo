@@ -64,6 +64,50 @@ const DUMMY_DATA = [
         leave_Code: null,
         leave_Description: null,
         check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202311220339",
+        driver_No: "DRV202311220001",
+        schd_Date: "2024/01/05",
+        schd_Type: "03",
+        schd_Start_Time: "12/05/2023 00:00:00",
+        schd_End_Time: "12/05/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202311220346",
+        driver_No: "DRV202311220001",
+        schd_Date: "2024/01/12",
+        schd_Type: "03",
+        schd_Start_Time: "12/12/2023 00:00:00",
+        schd_End_Time: "12/12/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202311220353",
+        driver_No: "DRV202311220001",
+        schd_Date: "2024/01/19",
+        schd_Type: "03",
+        schd_Start_Time: "12/19/2023 00:00:00",
+        schd_End_Time: "12/19/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202311220360",
+        driver_No: "DRV202311220001",
+        schd_Date: "2024/01/26",
+        schd_Type: "03",
+        schd_Start_Time: "12/26/2023 00:00:00",
+        schd_End_Time: "12/26/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
       }
     ]
   },
@@ -181,6 +225,61 @@ const DUMMY_DATA = [
         drv_Schedule_No: "DSD202309180364",
         driver_No: "DRV202309180001",
         schd_Date: "2023/12/30",
+        schd_Type: "03",
+        schd_Start_Time: "12/30/2023 00:00:00",
+        schd_End_Time: "12/30/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202309180336",
+        driver_No: "DRV202309180001",
+        schd_Date: "2024/01/02",
+        schd_Type: "03",
+        schd_Start_Time: "12/02/2023 00:00:00",
+        schd_End_Time: "12/02/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202309180343",
+        driver_No: "DRV202309180001",
+        schd_Date: "2024/01/09",
+        schd_Type: "03",
+        schd_Start_Time: "12/09/2023 00:00:00",
+        schd_End_Time: "12/09/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202309180350",
+        driver_No: "DRV202309180001",
+        schd_Date: "2024/01/16",
+        schd_Type: "03",
+        schd_Start_Time: "12/16/2023 00:00:00",
+        schd_End_Time: "12/16/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202309180357",
+        driver_No: "DRV202309180001",
+        schd_Date: "2024/01/23",
+        schd_Type: "03",
+        schd_Start_Time: "12/23/2023 00:00:00",
+        schd_End_Time: "12/23/2023 23:59:00",
+        leave_Code: null,
+        leave_Description: null,
+        check_Status: null
+      },
+      {
+        drv_Schedule_No: "DSD202309180364",
+        driver_No: "DRV202309180001",
+        schd_Date: "2024/01/30",
         schd_Type: "03",
         schd_Start_Time: "12/30/2023 00:00:00",
         schd_End_Time: "12/30/2023 23:59:00",
