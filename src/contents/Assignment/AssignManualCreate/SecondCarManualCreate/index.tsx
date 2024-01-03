@@ -15,7 +15,7 @@ import {
 } from "@utils/convertDate";
 import { I_ManualCreateType } from "@typings/assignment_type";
 import { getAssignBusDDL } from "@services/assignment/getAssignmentDDL";
-import Requred from "@components/Required";
+import Required from "@components/Required";
 
 interface I_AssignManualCreateProps {
   handleAssign: (e: any) => void;
@@ -162,7 +162,7 @@ function SecondCarAssignManualCreate({
       </Pane>
 
       <SelectField
-        label={<Requred>車隊</Requred>}
+        label={<Required>車隊</Required>}
         onChange={handleBusGroupChange}
         value={curAssignment?.bus_group}
       >
@@ -176,7 +176,7 @@ function SecondCarAssignManualCreate({
       </SelectField>
 
       <SelectField
-        label={<Requred>車輛名稱</Requred>}
+        label={<Required>車輛名稱</Required>}
         onChange={handleBusNameChange}
         value={curAssignment?.bus_no}
       >
