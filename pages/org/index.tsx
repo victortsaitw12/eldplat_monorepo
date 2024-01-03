@@ -1,6 +1,7 @@
 import React from "react";
 import { GetServerSideProps, NextPageWithLayout } from "next";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
+import { useSession } from "@utils/dummySession";
 
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { BodySTY } from "./style";

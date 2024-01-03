@@ -1,4 +1,4 @@
-const Requred = ({ children }: { children?: string }) => {
+const Required = ({ children }: { children?: string }) => {
   return (
     <div>
       <span style={{ color: "#D14343" }}>*</span>
@@ -7,4 +7,4 @@ const Requred = ({ children }: { children?: string }) => {
   );
 };
 
-export default Requred;
+export default Required;
