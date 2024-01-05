@@ -7,6 +7,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     volumes:
+      - ./apps/workshop/src:/usr/src/app/apps/workshop/src
       - ./apps/Eldplat_Admin:/usr/src/app/apps/Eldplat_Admin
       - ./apps/Eldplat_Client:/usr/src/app/apps/Eldplat_Client
       - ./packages/baseui:/usr/src/app/packages/baseui
@@ -15,6 +16,6 @@ services:
     ports:
       - "3000:3000"
       - "3001:3001"
-      # - "6007:6007"
+      - "6006:6006"
     environment:
       - CHOKIDAR_USEPOLLING=true
