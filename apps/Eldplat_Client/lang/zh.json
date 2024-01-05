@@ -1,0 +1,36 @@
+{
+  "login_welcome": { "defaultMessage": "歡迎蒞臨 !" },
+  "login_guest": { "defaultMessage": "雄獅通運同仁" },
+  "login_account": { "defaultMessage": "帳號" },
+  "login_password": { "defaultMessage": "密碼" },
+  "login_login": { "defaultMessage": "登入" },
+  "login_forgetPassword": { "defaultMessage": "忘記密碼" },
+
+  "header_plan": { "defaultMessage": "方案資訊" },
+  "header_setting": { "defaultMessage": "設定" },
+  "header_notification": { "defaultMessage": "通知" },
+
+  "planInfo_title": { "defaultMessage": "方案資訊" },
+  "planInfo_companyName": { "defaultMessage": "公司名稱" },
+  "planInfo_userName": { "defaultMessage": "使用者名稱" },
+  "planInfo_startDate": { "defaultMessage": "方案起始日" },
+  "planInfo_endDate": { "defaultMessage": "方案結束日" },
+  "planInfo_companyNo": { "defaultMessage": "統一編號" },
+  "planInfo_contact": {
+    "defaultMessage": "如需續約，請管理員或負責同仁點右下角對話洽專人服務"
+  },
+
+  "dataManage_basic": { "defaultMessage": "基本資料管理" },
+  "dataManage_employee": { "defaultMessage": "員工資料管理" },
+  "dataManage_driver": { "defaultMessage": "駕駛資料管理" },
+  "dataManage_client": { "defaultMessage": "客戶資料管理" },
+  "dataManage_bus": { "defaultMessage": "車籍資料管理" },
+  "dataManage_busSupplier": { "defaultMessage": "車輛供應商管理" },
+  "dataManage_supplier": { "defaultMessage": "一般供應商管理" },
+
+  "member_title": { "defaultMessage": "會員個人訊息" },
+  "member_sub1": { "defaultMessage": "會員訊息1" },
+  "member_sub2": { "defaultMessage": "會員訊息2" },
+  "member_sub3": { "defaultMessage": "會員訊息3" },
+  "member_sub4": { "defaultMessage": "會員訊息4" }
+}

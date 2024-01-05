@@ -1,0 +1,118 @@
+@import "../Basic/colors.scss";
+@import "../Basic/global.scss";
+
+// :root {
+//   --select-width: 0;
+//   --space-width: 18px;
+// }
+.container {
+  height: 200px;
+}
+
+.select {
+  position: relative;
+
+  .selected-option {
+    padding: 10px;
+    min-width: 150px;
+    min-height: 25px;
+    border: 1px solid $lightgray;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    &:hover {
+      border-color: $gray;
+    }
+
+    .label,
+    .selectedOption {
+      cursor: pointer;
+      position: absolute;
+      top: 45%;
+      transform: translateY(-45%);
+      left: var(--space-width);
+    }
+    .icon {
+      width: 1em;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translate(-20%, -50%);
+      transition: all 0.4s ease;
+    }
+    &.error {
+      border: 1px solid $red;
+      border-radius: 5px;
+    }
+    &.disabled {
+      background-color: $gainsboro;
+      opacity: 0.6;
+      cursor: not-allowed !important;
+      .label {
+        background-color: none;
+      }
+    }
+    &.read-only {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    &.selected {
+      cursor: initial;
+      width: calc(var(--select-width) - 20px);
+
+      .label {
+        position: absolute;
+        cursor: initial;
+        background-color: $white;
+        text-align: center;
+        font-size: 0.9rem;
+        top: 20%;
+        left: calc(var(--space-width) - 5px);
+        padding: 0 5px;
+        transform: translate(0, -95%);
+        transition: all 0.5s ease;
+      }
+    }
+    .search-input {
+      padding: 0 2px;
+      height: 20px;
+      width: calc(var(--select-width) - 20px);
+      border: none;
+      outline: none;
+      cursor: text !important;
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+
+      &::placeholder {
+        color: $lightgray;
+        left: 3px;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .options {
+    position: absolute;
+    top: 100%;
+    left: 2px;
+    border-radius: 5px;
+    background-color: $white;
+    box-shadow: 0 0 5px 0.5px $lightgray;
+    z-index: 1;
+
+    .option {
+      padding: 15px;
+      box-sizing: border-box;
+      cursor: pointer;
+      min-width: calc(var(--select-width) - 2px);
+
+      &:hover {
+        background-color: $lightgray;
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+@import "../Basic/colors.scss";
+@import "../Basic/global.scss";
+
+// default
+@mixin chip {
+  display: inline-flex;
+  color: $white;
+  background-color: $primary;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 2rem;
+}
+
+// chip variant & sizes
+.chip {
+  @include chip;
+  // variant: solid(default), outline, text, link, transparent
+  &.outline {
+    background-color: transparent;
+    color: $primary;
+    border: 1px solid $primary;
+  }
+  &.text {
+    background-color: transparent;
+    color: $black;
+    border: none;
+  }
+  &.link {
+    text-decoration: underline;
+    background-color: transparent;
+    color: $primary;
+    border: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &.transparent {
+    background-color: rgba($primary, 0.1);
+    color: $primary;
+    border: 1px solid $primary;
+  }
+  &-sm {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+  }
+  &-md {
+    font-size: 0.8rem;
+    padding: 0.1rem 0.5rem;
+  }
+  &-lg {
+    font-size: 1rem;
+    padding: 0.1rem 1rem;
+  }
+  @each $color-name, $color-value in $colors {
+    &-#{$color-name} {
+      background-color: $color-value;
+      border-color: $color-value;
+      &.outline {
+        background-color: transparent;
+        color: $color-value;
+        border: 1px solid $color-value;
+      }
+      &.text {
+        background-color: transparent;
+        color: $color-value;
+        border: none;
+      }
+      &.link {
+        text-decoration: underline;
+        background-color: transparent;
+        color: $color-value;
+        border: none;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      &.transparent {
+        background-color: rgba($color-value, 0.1);
+        color: $color-value;
+        border: 1px solid $color-value;
+      }
+    }
+  }
+}

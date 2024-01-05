@@ -1,0 +1,37 @@
+@import "../Basic/colors.scss";
+@import "../Basic/global.scss";
+
+.textarea {
+  display: block;
+  padding: 4px 11px;
+  &-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  &:focus {
+    outline: none;
+    border: 1px solid $blue;
+  }
+  &.resize-disabled {
+    resize: none;
+  }
+  &.clearable {
+    padding-right: 24px;
+  }
+}
+
+.data-count {
+  position: absolute;
+  inset-inline-end: 0;
+  color: $gray;
+  font-size: 0.8rem;
+}
+
+.clearable-icon {
+  position: absolute;
+  top: 0.1rem;
+  right: 0.5rem;
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,229 @@
+@import "../Basic/colors.scss";
+
+$iterations: 10;
+
+// padding
+.pd {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+    &-#{$i} {
+      padding: $value + rem !important;
+    }
+  }
+}
+.pt {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+    &-#{$i} {
+      padding-top: $value + rem !important;
+    }
+  }
+}
+.pr {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+    &-#{$i} {
+      padding-right: $value + rem !important;
+    }
+  }
+}
+.pl {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+    &-#{$i} {
+      padding-left: $value + rem !important;
+    }
+  }
+}
+.pb {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      padding-bottom: $value + rem !important;
+    }
+  }
+}
+.px {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      padding-left: $value + rem !important;
+      padding-right: $value + rem !important;
+    }
+  }
+}
+.py {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      padding-top: $value + rem !important;
+      padding-bottom: $value + rem !important;
+    }
+  }
+}
+// margin
+.mg {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      margin: $value + rem !important;
+    }
+  }
+}
+.mt {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      margin-top: $value + rem !important;
+    }
+  }
+}
+.mr {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      margin-right: $value + rem !important;
+    }
+  }
+}
+.ml {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      margin-left: $value + rem !important;
+    }
+  }
+}
+.mb {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      margin-bottom: $value + rem !important;
+    }
+  }
+}
+.mx {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      margin-left: $value + rem !important;
+      margin-right: $value + rem !important;
+    }
+  }
+}
+.my {
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      margin-top: $value + rem !important;
+      margin-bottom: $value + rem !important;
+    }
+  }
+}
+// border
+.bd {
+  // border style
+  @for $i from 0 through $iterations {
+    $value: $i * 0.5;
+
+    &-#{$i} {
+      border: $i + px solid !important;
+    }
+  }
+  // border color
+  @each $color-name, $color-value in $colors {
+    &-#{$color-name} {
+      border-color: $color-value !important;
+    }
+  }
+  // border radius
+  &-radius {
+    @for $i from 0 through $iterations {
+      $value: $i * 0.5;
+
+      &-#{$i} {
+        border-radius: $i + px !important;
+      }
+    }
+  }
+}
+// background
+.bg {
+  @each $color-name, $color-value in $colors {
+    &-#{$color-name} {
+      background-color: $color-value !important;
+    }
+  }
+}
+// rounded
+.rounded {
+  border-radius: 0.3rem !important;
+  &-md {
+    border-radius: 0.5rem !important;
+  }
+  &-lg {
+    border-radius: 0.8rem !important;
+  }
+  &-full {
+    border-radius: 1rem !important;
+  }
+}
+// text color
+.text {
+  @each $color-name, $color-value in $colors {
+    &-#{$color-name} {
+      color: $color-value !important;
+    }
+  }
+  &-center {
+    text-align: center;
+  }
+  &-left {
+    text-align: left;
+  }
+  &-right {
+    text-align: right;
+  }
+
+  &-sm {
+    font-size: 0.8rem;
+  }
+  &-md {
+    font-size: 1rem;
+  }
+  &-lg {
+    font-size: 1.2rem;
+  }
+}
+
+.font {
+  &-light {
+    font-style: 300;
+  }
+  &-bold {
+    font-weight: 500;
+  }
+  &-bolder {
+    font-weight: 900;
+  }
+}
+
+.d-block {
+  display: block;
+}
+
+.flex-all-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

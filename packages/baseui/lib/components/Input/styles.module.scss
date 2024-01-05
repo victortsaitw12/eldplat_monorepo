@@ -1,0 +1,53 @@
+@import "../Basic/colors.scss";
+@import "../Basic/global.scss";
+
+.input {
+  // input's container : borderless, clearable...
+  &-container {
+    border: 1px solid $lightgray;
+    padding: 2px 5px;
+    position: relative;
+    &:hover,
+    &:focus-within {
+      border: 1px solid $blue;
+    }
+    &.borderless {
+      border: none;
+      padding: 0;
+      &:hover,
+      &:focus-within {
+        border: none;
+      }
+    }
+    &.multiple {
+      padding-right: 1rem;
+    }
+  }
+  // input
+  border: none;
+  position: relative;
+  padding: 0;
+  width: 100%;
+  &:focus,
+  &:hover {
+    outline: none;
+    border: none;
+  }
+  &::placeholder {
+    color: $lightgray;
+  }
+  // &.clearable {
+  //   padding-right: 24px;
+  // }
+}
+
+.preview-icon,
+.clearable-icon {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0.5rem;
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,17 @@
+@import "../Basic/colors.scss";
+@import "../Basic/global.scss";
+
+.btn-group {
+  border: 1px solid $lightgray;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 6px 0px;
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.vertical {
+    flex-direction: column;
+    height: 100%;
+  }
+}

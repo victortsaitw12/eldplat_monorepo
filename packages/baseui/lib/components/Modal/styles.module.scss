@@ -1,0 +1,23 @@
+@import "../Basic/colors.scss";
+@import "../Basic/global.scss";
+
+.modal {
+  min-width: 100px;
+  min-height: 100px;
+  background-color: $white;
+  position: relative;
+  padding: 1rem;
+  &.full {
+    padding: 0;
+    .close-btn-wrapper {
+      position: absolute;
+      right: 0;
+      padding: 0.3rem;
+    }
+  }
+  .close-btn-wrapper {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}

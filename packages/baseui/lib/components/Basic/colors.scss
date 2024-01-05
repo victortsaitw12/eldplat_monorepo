@@ -1,0 +1,44 @@
+// define colors
+$white: white;
+$black: rgb(0, 0, 0);
+$green: green;
+$salmon: salmon;
+$gray: gray;
+$darkgray: darkgray;
+$silver: silver;
+$lightgray: lightgray;
+$gainsboro: gainsboro;
+$blue: rgb(64, 64, 214);
+$lightblue: lightblue;
+$red: rgb(245, 57, 57);
+$yellow: rgb(242, 242, 52);
+$orange: orange;
+
+$primary: $blue;
+$secondary: $gray;
+$danger: $red;
+$success: $green;
+$warning: $orange;
+
+$colors: (
+  "white": $white,
+  "black": $black,
+  "green": $green,
+  "salmon": $salmon,
+  "gray": $gray,
+  "blue": $blue,
+  "lightblue": $lightblue,
+  "red": $red,
+  "yellow": $yellow,
+  "orange": $orange,
+  "lightgray": $lightgray,
+  "gainsboro": $gainsboro,
+  "silver": $silver,
+  "darkgray": $darkgray,
+
+  "primary": $blue,
+  "secondary": $gray,
+  "danger": $red,
+  "success": $green,
+  "warning": $orange,
+);

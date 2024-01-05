@@ -1,0 +1,2469 @@
+
+> admin@0.1.0 build
+> next build
+
+   Linting and checking validity of types ...
+
+./pages/account/detail/create/index.tsx
+12:3  Warning: 'getOneAccount' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'I_AccountRole' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'I_RoleItem' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'DUMMY_ONE_ACCOUNT' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'createAccount' is defined but never used.  @typescript-eslint/no-unused-vars
+21:16  Warning: 'I_CreateReq' is defined but never used.  @typescript-eslint/no-unused-vars
+24:3  Warning: 'updateAccount' is defined but never used.  @typescript-eslint/no-unused-vars
+25:16  Warning: 'I_UpdateReq' is defined but never used.  @typescript-eslint/no-unused-vars
+41:26  Warning: 'status' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+45:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+46:9  Warning: 'isCreate' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+150:6  Warning: React Hook React.useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/account/detail/[id].tsx
+4:10  Warning: 'RadioGroup' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'DUMMY_ACC_LIST' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'getOneAccount' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'I_AccountRole' is defined but never used.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'I_RoleItem' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'DUMMY_DATA_CREATE' is defined but never used.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'createAccount' is defined but never used.  @typescript-eslint/no-unused-vars
+22:16  Warning: 'I_CreateReq' is defined but never used.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'updateAccount' is defined but never used.  @typescript-eslint/no-unused-vars
+26:16  Warning: 'I_UpdateReq' is defined but never used.  @typescript-eslint/no-unused-vars
+40:26  Warning: 'status' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+45:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/account/index.tsx
+13:3  Warning: 'getAccountList' is defined but never used.  @typescript-eslint/no-unused-vars
+26:5  Warning: 'mainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+27:5  Warning: 'updateMainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:5  Warning: 'isDrawerOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+31:5  Warning: 'setDrawerOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+33:26  Warning: 'status' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+36:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+92:6  Warning: React Hook React.useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/admin_orders/detail/[id].tsx
+4:16  Warning: 'toaster' is defined but never used.  @typescript-eslint/no-unused-vars
+31:3  Warning: 'viewonly' is defined but never used.  @typescript-eslint/no-unused-vars
+71:13  Warning: 'res' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+102:6  Warning: React Hook useEffect has a missing dependency: 'fetch_quotation'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+130:25  Warning: 'prev' is defined but never used.  @typescript-eslint/no-unused-vars
+143:29  Warning: 'prev' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/admin_orders/index.tsx
+14:8  Warning: 'AdminOrderCreateForm' is defined but never used.  @typescript-eslint/no-unused-vars
+53:9  Warning: 'locale' is defined but never used.  @typescript-eslint/no-unused-vars
+60:29  Warning: 'setIsDrawerFullWidth' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+63:5  Warning: 'mainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+64:5  Warning: 'updateMainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+67:5  Warning: 'isDrawerOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+103:6  Warning: React Hook useEffect has missing dependencies: 'getDataByTab', 'initializeSubFilter', and 'nowTab'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+232:5  Warning: React Hook React.useCallback has a missing dependency: 'mapping_to_table'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+250:5  Warning: React Hook React.useCallback has a missing dependency: 'getDataByTab'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+313:11  Warning: 'query' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/api/auth/[...nextauth].js
+3:10  Warning: 'login' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'getMenu' is defined but never used.  @typescript-eslint/no-unused-vars
+5:22  Warning: 'loginV2' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Warning: 'Console' is defined but never used.  @typescript-eslint/no-unused-vars
+27:23  Warning: 'credentials' is defined but never used.  @typescript-eslint/no-unused-vars
+27:36  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+67:20  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+67:26  Warning: 'account' is defined but never used.  @typescript-eslint/no-unused-vars
+67:35  Warning: 'profile' is defined but never used.  @typescript-eslint/no-unused-vars
+67:44  Warning: 'email' is defined but never used.  @typescript-eslint/no-unused-vars
+67:51  Warning: 'credentials' is defined but never used.  @typescript-eslint/no-unused-vars
+77:37  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+90:39  Warning: 'profile' is defined but never used.  @typescript-eslint/no-unused-vars
+90:48  Warning: 'isNewUser' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/assignment/detail/create/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'MonthlyData' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'UIProvider' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'getScheduleList' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'ApprovalTable' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'InfoItem' is defined but never used.  @typescript-eslint/no-unused-vars
+19:10  Warning: 'Truculenta' is defined but never used.  @typescript-eslint/no-unused-vars
+23:15  Warning: 'editPage' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:21  Warning: 'setIsLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+27:9  Warning: 'modalInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/assignment/detail/[id].tsx
+7:10  Warning: 'MonthlyData' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'UIProvider' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'getScheduleList' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'ApprovalTable' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'InfoItem' is defined but never used.  @typescript-eslint/no-unused-vars
+19:10  Warning: 'Truculenta' is defined but never used.  @typescript-eslint/no-unused-vars
+25:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:21  Warning: 'setIsLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+26:10  Warning: 'isEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+26:18  Warning: 'setIsEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+28:9  Warning: 'modalInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/assignment/dispatch/create/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'MonthlyData' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'UIProvider' is defined but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'getScheduleList' is defined but never used.  @typescript-eslint/no-unused-vars
+13:8  Warning: 'ApprovalTable' is defined but never used.  @typescript-eslint/no-unused-vars
+14:8  Warning: 'CreateMission' is defined but never used.  @typescript-eslint/no-unused-vars
+19:8  Warning: 'InfoItem' is defined but never used.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'Truculenta' is defined but never used.  @typescript-eslint/no-unused-vars
+25:15  Warning: 'editPage' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+27:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+27:21  Warning: 'setIsLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+94:9  Warning: 'modalInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/assignment/dispatch/detail/[id].tsx
+8:10  Warning: 'MonthlyData' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'UIProvider' is defined but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'getScheduleList' is defined but never used.  @typescript-eslint/no-unused-vars
+13:8  Warning: 'ApprovalTable' is defined but never used.  @typescript-eslint/no-unused-vars
+14:8  Warning: 'CreateMission' is defined but never used.  @typescript-eslint/no-unused-vars
+19:8  Warning: 'InfoItem' is defined but never used.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'Truculenta' is defined but never used.  @typescript-eslint/no-unused-vars
+27:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+27:21  Warning: 'setIsLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+28:10  Warning: 'isEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+28:18  Warning: 'setIsEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+95:9  Warning: 'modalInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/assignment/dispatch/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'MonthlyData' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'UIProvider' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'getScheduleList' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'ApprovalTable' is defined but never used.  @typescript-eslint/no-unused-vars
+13:8  Warning: 'CreateMission' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'InfoItem' is defined but never used.  @typescript-eslint/no-unused-vars
+19:10  Warning: 'Truculenta' is defined but never used.  @typescript-eslint/no-unused-vars
+25:15  Warning: 'editPage' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+27:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+27:21  Warning: 'setIsLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+29:9  Warning: 'modalInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/assignment/index.tsx
+3:16  Warning: 'toaster' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'LoadingSpinner' is defined but never used.  @typescript-eslint/no-unused-vars
+59:7  Warning: 'DUMMY_data' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+64:10  Warning: 'orderInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+64:21  Warning: 'setOrderInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+65:10  Warning: 'pageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+65:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+73:5  Warning: 'mainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+74:5  Warning: 'updateMainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+75:5  Warning: 'subFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus/detail/create/index.tsx
+9:10  Warning: 'updateBus' is defined but never used.  @typescript-eslint/no-unused-vars
+15:8  Warning: 'BusDetail' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'getBusById' is defined but never used.  @typescript-eslint/no-unused-vars
+17:10  Warning: 'getCreateBusOptions' is defined but never used.  @typescript-eslint/no-unused-vars
+35:8  Warning: 'busId' is defined but never used.  @typescript-eslint/no-unused-vars
+36:9  Warning: 'submitRef' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:11  Warning: 'mainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:23  Warning: 'updateMainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+40:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus/detail/old_[id].tsx
+57:6  Warning: React Hook useEffect has missing dependencies: 'busId' and 'updateMainFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+90:9  Warning: 'onCancelHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus/detail/[id].tsx
+85:6  Warning: React Hook useEffect has a missing dependency: 'busId'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+126:9  Warning: 'handleView' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus/equipment/create/index.tsx
+1:28  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+109:8  Warning: 'busId' is defined but never used.  @typescript-eslint/no-unused-vars
+112:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+113:10  Warning: 'isEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+114:10  Warning: 'busEquipmentData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+114:28  Warning: 'setBusEquipmentData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus/equipment/[id].tsx
+1:28  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+112:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+114:10  Warning: 'busEquipmentData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+114:28  Warning: 'setBusEquipmentData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus/fuel/create/index.tsx
+1:28  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+136:8  Warning: 'busId' is defined but never used.  @typescript-eslint/no-unused-vars
+139:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+140:10  Warning: 'isEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+141:10  Warning: 'busEquipmentData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+141:28  Warning: 'setBusEquipmentData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus/fuel/[id].tsx
+1:28  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+139:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+141:10  Warning: 'busEquipmentData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+141:28  Warning: 'setBusEquipmentData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus/index.tsx
+3:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+7:23  Warning: 'busPattern' is defined but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'mappingQueryData' is defined but never used.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'deleteBus' is defined but never used.  @typescript-eslint/no-unused-vars
+15:8  Warning: 'BusCreateForm' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'getCreateBusOptions' is defined but never used.  @typescript-eslint/no-unused-vars
+69:6  Warning: React Hook useEffect has a missing dependency: 'fetchBusData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/bus/old_index.tsx
+14:8  Warning: 'TabsWrapper' is defined but never used.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'BusCreateForm' is defined but never used.  @typescript-eslint/no-unused-vars
+20:7  Warning: 'mainFilterArray' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+89:10  Warning: 'options' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+134:6  Warning: React Hook useEffect has a missing dependency: 'updateMainFilter'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+142:6  Warning: React Hook useEffect has missing dependencies: 'fetchBusData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+144:9  Warning: 'upDatePageHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+148:9  Warning: 'goToEditPageHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+155:9  Warning: 'goToDetailPageHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+162:9  Warning: 'changeMainFilterHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+170:9  Warning: 'deleteItemHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+171:25  Warning: 'res' is defined but never used.  @typescript-eslint/no-unused-vars
+175:9  Warning: 'recoverItemHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+175:37  Warning: 'id' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/bus_management/index.tsx
+4:3  Warning: 'GetServerSideProps' is defined but never used.  @typescript-eslint/no-unused-vars
+8:25  Warning: 'Group' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'I_DriverInfo' is defined but never used.  @typescript-eslint/no-unused-vars
+17:8  Warning: 'NoData' is defined but never used.  @typescript-eslint/no-unused-vars
+30:3  Warning: 'driverNo' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/client/orders/detail/[id].tsx
+133:11  Warning: 'query' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/client/orders/index.tsx
+28:9  Warning: 'tabsArray' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+52:9  Warning: 'handleTabChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/client/quote/edit/index.tsx
+7:20  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+7:39  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'Collapse' is defined but never used.  @typescript-eslint/no-unused-vars
+27:10  Warning: 'createQuotation' is defined but never used.  @typescript-eslint/no-unused-vars
+57:7  Warning: 'DummyExpenseDetailData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+128:22  Warning: 'setRemainTime' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+134:12  Warning: 'goToOrdersPage' is defined but never used.  @typescript-eslint/no-unused-vars
+231:41  Warning: 'data' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/client/quote/index.tsx
+11:8  Warning: 'Breadcrumbs' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/company/index.tsx
+1:17  Warning: 'useContext' is defined but never used.  @typescript-eslint/no-unused-vars
+12:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/customer/detail/[id].tsx
+54:6  Warning: React Hook useEffect has missing dependencies: 'customerId' and 'updateMainFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+74:9  Warning: 'onCancelHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/customer/index.tsx
+20:8  Warning: 'CustomerCreateForm' is defined but never used.  @typescript-eslint/no-unused-vars
+35:10  Warning: 'options' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+36:29  Warning: 'setIsDrawerFullWidth' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+46:5  Warning: 'mainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+47:5  Warning: 'updateMainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+50:5  Warning: 'isDrawerOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+94:6  Warning: React Hook useEffect has missing dependencies: 'fetchCustomerData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+117:30  Warning: 'res' is defined but never used.  @typescript-eslint/no-unused-vars
+122:37  Warning: 'id' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/driver/detail/create/index.tsx
+3:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'Avatar' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/driver/detail/[id].tsx
+12:8  Warning: 'LabelSecondaryButton' is defined but never used.  @typescript-eslint/no-unused-vars
+13:8  Warning: 'LabelButton' is defined but never used.  @typescript-eslint/no-unused-vars
+24:8  Warning: 'PrimaryBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+50:10  Warning: 'switchTabValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+55:6  Warning: React Hook useEffect has a missing dependency: 'updateMainFilter'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+73:6  Warning: React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/driver/index.tsx
+3:10  Warning: 'mappingQueryData' is defined but never used.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'SearchEmployee' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Warning: 'deleteDriver' is defined but never used.  @typescript-eslint/no-unused-vars
+62:6  Warning: React Hook React.useEffect has missing dependencies: 'fetchDriverData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+89:5  Warning: React Hook React.useCallback has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/driver/management/index.tsx
+4:3  Warning: 'GetServerSideProps' is defined but never used.  @typescript-eslint/no-unused-vars
+8:25  Warning: 'Spinner' is defined but never used.  @typescript-eslint/no-unused-vars
+8:34  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'ParsedUrlQuery' is defined but never used.  @typescript-eslint/no-unused-vars
+14:10  Warning: 'useDriverStore' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'updateDriver' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Warning: 'NoData' is defined but never used.  @typescript-eslint/no-unused-vars
+29:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:10  Warning: 'driverData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+50:6  Warning: React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/driver/training/create/index.tsx
+4:3  Warning: 'GetServerSideProps' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'InferGetServerSidePropsType' is defined but never used.  @typescript-eslint/no-unused-vars
+14:10  Warning: 'useDriverStore' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'updateDriver' is defined but never used.  @typescript-eslint/no-unused-vars
+33:10  Warning: 'isEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+52:6  Warning: React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+192:11  Warning: 'Props' is defined but never used.  @typescript-eslint/no-unused-vars
+195:11  Warning: 'Params' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/driver/training/[id].tsx
+14:10  Warning: 'useDriverStore' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'updateDriver' is defined but never used.  @typescript-eslint/no-unused-vars
+56:6  Warning: React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/driver_management/index.tsx
+4:3  Warning: 'GetServerSideProps' is defined but never used.  @typescript-eslint/no-unused-vars
+8:25  Warning: 'Spinner' is defined but never used.  @typescript-eslint/no-unused-vars
+8:34  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'ParsedUrlQuery' is defined but never used.  @typescript-eslint/no-unused-vars
+14:10  Warning: 'useDriverStore' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'updateDriver' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Warning: 'NoData' is defined but never used.  @typescript-eslint/no-unused-vars
+29:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:10  Warning: 'driverData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+50:6  Warning: React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/employee/detail/[id].tsx
+28:3  Warning: 'editPage' is defined but never used.  @typescript-eslint/no-unused-vars
+32:11  Warning: 'mainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+42:6  Warning: React Hook useEffect has a missing dependency: 'updateMainFilter'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+50:9  Warning: 'onCancelHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/employee/edit/[id].tsx
+2:3  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+32:9  Warning: 'submitRef' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+114:9  Warning: 'handleSaveAll' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/employee/index.tsx
+15:8  Warning: 'EmployeeCreateForm' is defined but never used.  @typescript-eslint/no-unused-vars
+42:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+42:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+49:5  Warning: 'isDrawerOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+54:6  Warning: React Hook useEffect has a missing dependency: 'updateMainFilter'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+66:30  Warning: 'res' is defined but never used.  @typescript-eslint/no-unused-vars
+70:37  Warning: 'id' is defined but never used.  @typescript-eslint/no-unused-vars
+118:6  Warning: React Hook React.useEffect has missing dependencies: 'fetchEmployeeData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/forget-password/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'LoginForm' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'LoginError' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'login' is defined but never used.  @typescript-eslint/no-unused-vars
+16:22  Warning: 'locale' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+16:37  Warning: 'setLocale' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/index.tsx
+13:8  Warning: 'EntranceList' is defined but never used.  @typescript-eslint/no-unused-vars
+36:7  Warning: 'routerList' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/login/index.tsx
+13:22  Warning: 'locale' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+13:37  Warning: 'setLocale' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/maintenance/detail/[id].tsx
+44:6  Warning: React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/maintenance/[[...slug]].tsx
+34:6  Warning: React Hook useEffect has a missing dependency: 'updateMainFilter'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/orders/detail/create/index.tsx
+3:3  Warning: 'GetServerSideProps' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'InferGetServerSidePropsType' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/orders/detail/[id].tsx
+1:28  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+1:57  Warning: 'use' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'updateBus' is defined but never used.  @typescript-eslint/no-unused-vars
+15:8  Warning: 'LoadingSpinner' is defined but never used.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'BusDetail' is defined but never used.  @typescript-eslint/no-unused-vars
+17:10  Warning: 'getBusById' is defined but never used.  @typescript-eslint/no-unused-vars
+18:10  Warning: 'getCreateBusOptions' is defined but never used.  @typescript-eslint/no-unused-vars
+24:8  Warning: 'OrderDetail' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/orders/doc/create/index.tsx
+27:10  Warning: 'isEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+45:6  Warning: React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+137:11  Warning: 'Props' is defined but never used.  @typescript-eslint/no-unused-vars
+140:11  Warning: 'Params' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/orders/index.tsx
+57:6  Warning: React Hook React.useEffect has missing dependencies: 'fetchDriverData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+84:5  Warning: React Hook React.useCallback has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/org/index.tsx
+12:3  Warning: 'getOrgList' is defined but never used.  @typescript-eslint/no-unused-vars
+33:10  Warning: 'isInitialRenderEnd' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+33:30  Warning: 'setIsInitialRenderEnd' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+35:10  Warning: 'pageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+36:10  Warning: 'testStatus' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+36:22  Warning: 'setTestStatus' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+42:11  Warning: 'uk' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+110:6  Warning: React Hook React.useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+114:6  Warning: React Hook React.useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+147:11  Warning: 'query' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/role/detail/[id].tsx
+12:3  Warning: 'getOneRole' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'I_RoleReq' is defined but never used.  @typescript-eslint/no-unused-vars
+18:10  Warning: 'I_CreateRoleReq' is defined but never used.  @typescript-eslint/no-unused-vars
+18:27  Warning: 'DUMMY_CREATE_ROLE' is defined but never used.  @typescript-eslint/no-unused-vars
+19:10  Warning: 'DUMMY_UPDATE_ROLE' is defined but never used.  @typescript-eslint/no-unused-vars
+27:31  Warning: 'showModal' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+34:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+151:6  Warning: React Hook React.useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+156:6  Warning: React Hook React.useEffect has a missing dependency: 'isEdit'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+202:7  Warning: 'getFlattenAuthDataArr' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/role/index.tsx
+10:8  Warning: 'TabsWrapper' is defined but never used.  @typescript-eslint/no-unused-vars
+14:10  Warning: 'getRoleList' is defined but never used.  @typescript-eslint/no-unused-vars
+23:9  Warning: 'mainFilterArray' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:10  Warning: 'nowTab' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+33:9  Warning: 'changeMainFilterHandler' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+42:5  Warning: 'mainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+43:5  Warning: 'updateMainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+46:5  Warning: 'isDrawerOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+47:5  Warning: 'setDrawerOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+49:26  Warning: 'status' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+52:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+95:9  Warning: 'handlePageChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+105:5  Warning: React Hook React.useCallback has missing dependencies: 'pageInfo.Page_Index' and 'pageInfo.Page_Size'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+112:6  Warning: React Hook React.useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/schedule/approval/index.tsx
+7:10  Warning: 'MonthlyData' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'UIProvider' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'getScheduleList' is defined but never used.  @typescript-eslint/no-unused-vars
+18:10  Warning: 'Truculenta' is defined but never used.  @typescript-eslint/no-unused-vars
+22:15  Warning: 'cur' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:21  Warning: 'setIsLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/schedule/detail/[id]/index.tsx
+20:8  Warning: 'LoadingSpinner' is defined but never used.  @typescript-eslint/no-unused-vars
+38:10  Warning: 'monthlyData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+38:23  Warning: 'setMonthlyData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+39:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+42:18  Warning: 'setIsEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+54:9  Warning: 'DUMMY_driverData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+105:6  Warning: React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/schedule/index.tsx
+6:10  Warning: 'useRouter' is defined but never used.  @typescript-eslint/no-unused-vars
+26:5  Warning: 'updateMainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+111:5  Warning: React Hook React.useCallback has missing dependencies: 'pageInfo.Page_Index', 'pageInfo.Page_Size', and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+116:6  Warning: React Hook React.useEffect has missing dependencies: 'fetchData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+116:51  Warning: The 0 literal is not a valid dependency because it never changes. You can safely remove it.  react-hooks/exhaustive-deps
+
+./pages/set-password/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'LoginForm' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'LoginError' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'login' is defined but never used.  @typescript-eslint/no-unused-vars
+16:22  Warning: 'locale' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+16:37  Warning: 'setLocale' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/setting/password/index.tsx
+27:34  Warning: 'data' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/setting/password/style.ts
+1:10  Warning: 'InlineAlert' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/shift/index.tsx
+35:16  Warning: 'setData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+36:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+49:8  Warning: 'res' is defined but never used.  @typescript-eslint/no-unused-vars
+86:5  Warning: React Hook React.useCallback has missing dependencies: 'pageInfo.Page_Index', 'pageInfo.Page_Size', and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+102:6  Warning: React Hook React.useEffect has a missing dependency: 'updateMainFilter'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+106:6  Warning: React Hook React.useEffect has missing dependencies: 'fetchData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/shift/[id]/index.tsx
+25:23  Warning: 'setMonthlyData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:10  Warning: 'selectedIndex' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+31:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+46:9  Warning: 'handleSelectTab' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+53:13  Warning: 'result' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+66:6  Warning: React Hook React.useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/test/components-render.tsx
+1:8  Warning: 'FlowList' is defined but never used.  @typescript-eslint/no-unused-vars
+2:8  Warning: 'ServerEntry' is defined but never used.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'NavigationList' is defined but never used.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'ProgressList' is defined but never used.  @typescript-eslint/no-unused-vars
+5:8  Warning: 'HookFormMultiSelect' is defined but never used.  @typescript-eslint/no-unused-vars
+6:19  Warning: 'useWatch' is defined but never used.  @typescript-eslint/no-unused-vars
+7:8  Warning: 'StepArragement' is defined but never used.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'CounterInput' is defined but never used.  @typescript-eslint/no-unused-vars
+10:7  Warning: 'DummyFlowListData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+33:7  Warning: 'DummyNavigationListData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+54:7  Warning: 'DummyProgressListData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+89:7  Warning: 'DummyMultiSelectOptions' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+96:7  Warning: 'DummyExpenseDetailData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+133:5  Warning: 'control' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+134:5  Warning: 'register' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+135:5  Warning: 'setValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+136:5  Warning: 'getValues' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+137:18  Warning: 'errors' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+138:5  Warning: 'handleSubmit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+148:9  Warning: 'formButtonRef' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/test/dirty.tsx
+21:5  Warning: 'getValues' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:18  Warning: 'errors' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:26  Warning: 'isDirty' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/test/hook-form.tsx
+1:17  Warning: 'useId' is defined but never used.  @typescript-eslint/no-unused-vars
+10:6  Warning: 'SelectOption' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/test/index.tsx
+13:8  Warning: 'DetailsHistory' is defined but never used.  @typescript-eslint/no-unused-vars
+17:7  Warning: 'isFullWidth' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+21:10  Warning: 'lightBoxIsOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:9  Warning: 'openLightBox' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+23:9  Warning: 'closeLightBox' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+24:10  Warning: 'visibleForm' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+24:23  Warning: 'setVisibleForm' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/test/next-auth/index.tsx
+2:10  Warning: 'GetServerSideProps' is defined but never used.  @typescript-eslint/no-unused-vars
+44:7  Warning: 'Divider' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+65:7  Warning: 'LoginForm' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./pages/test/radiotest.tsx
+1:8  Warning: 'ExpenseForm' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./pages/vendor/detail/[id].tsx
+3:10  Warning: 'useForm' is defined but never used.  @typescript-eslint/no-unused-vars
+3:19  Warning: 'FormProvider' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+5:16  Warning: 'Icon' is defined but never used.  @typescript-eslint/no-unused-vars
+5:22  Warning: 'FloppyDiskIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+5:38  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'FilterWrapper' is defined but never used.  @typescript-eslint/no-unused-vars
+37:11  Warning: 'initializeSubFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:32  Warning: 'subFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:43  Warning: 'updateSubFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+90:6  Warning: React Hook useEffect has a missing dependency: 'getDefaultData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/vendor/index.tsx
+2:3  Warning: 'I_Add_Vendors_Type' is defined but never used.  @typescript-eslint/no-unused-vars
+7:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'FormattedMessage' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Warning: 'VendorCreateForm' is defined but never used.  @typescript-eslint/no-unused-vars
+37:9  Warning: 'locale' is defined but never used.  @typescript-eslint/no-unused-vars
+44:29  Warning: 'setIsDrawerFullWidth' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+47:5  Warning: 'mainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+48:5  Warning: 'updateMainFilter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+51:5  Warning: 'isDrawerOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+193:6  Warning: React Hook React.useEffect has missing dependencies: 'fetchVendorsData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+223:5  Warning: React Hook React.useCallback has missing dependencies: 'initializeSubFilter', 'returnTableItem', 'router.query.codeType', and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./pages/_app.tsx
+3:21  Warning: 'Router' is defined but never used.  @typescript-eslint/no-unused-vars
+49:26  Warning: 'url' is defined but never used.  @typescript-eslint/no-unused-vars
+52:29  Warning: 'url' is defined but never used.  @typescript-eslint/no-unused-vars
+77:20  Warning: 'setMessages' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+78:10  Warning: 'pageType' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+82:10  Warning: 'langJSONData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+82:24  Warning: 'setLangJSONData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/Accordion/AccordionItem/index.tsx
+3:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+63:11  Warning: 'I_Props' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/Accordion/index.tsx
+2:10  Warning: 'CaretRightIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+2:26  Warning: 'CaretDownIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+90:11  Warning: 'I_ItemProps' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/ButtonSet/index.tsx
+21:3  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+31:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/Collapse/index.tsx
+37:6  Warning: React Hook React.useEffect has a missing dependency: 'OnToggle'. Either include it or remove the dependency array. If 'OnToggle' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/components/ConditionCard/index.tsx
+2:20  Warning: 'Overlay' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/ConditionCard/style.ts
+1:10  Warning: 'Heading' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/ContactList/index.tsx
+2:10  Warning: 'SubFromProps' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'FieldArrayPath' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'FieldError' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'FieldValues' is defined but never used.  @typescript-eslint/no-unused-vars
+16:26  Warning: 'emailValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'hide' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'errors' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/CounterInput/index.tsx
+3:8  Warning: 'cx' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/DataOverview/index.tsx
+1:10  Warning: 'Group' is defined but never used.  @typescript-eslint/no-unused-vars
+1:17  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+21:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/FileCard/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+1:27  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'InlineAlert' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'ExportIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'toaster' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'SmallTickIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'SecondaryButton' is defined but never used.  @typescript-eslint/no-unused-vars
+21:11  Warning: 'existedFiles' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/FormGenerator/index.tsx
+1:10  Warning: 'CrossIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+1:21  Warning: 'SmallPlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+2:21  Warning: 'useId' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/CheckBox/MutipleCheckBox/index.tsx
+1:31  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'styled' is defined but never used.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'errorMessage' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'hint' is defined but never used.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'description' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/CheckBox/SingleCheckBox/index.tsx
+33:3  Warning: 'description' is defined but never used.  @typescript-eslint/no-unused-vars
+34:3  Warning: 'errorMessage' is defined but never used.  @typescript-eslint/no-unused-vars
+35:3  Warning: 'hint' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Input/HorizontalInput/index.tsx
+15:14  Warning: 'description' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Input/HorizontalInputDate/index.tsx
+15:14  Warning: 'description' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Input/HorizontalTextArea/index.tsx
+15:14  Warning: 'description' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Input/VerticalInput/index.tsx
+15:14  Warning: 'description' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Radio/style.ts
+1:8  Warning: 'theme' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/RadioSimple/index.tsx
+15:7  Warning: 'RadioItem' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+42:3  Warning: 'errorMessage' is defined but never used.  @typescript-eslint/no-unused-vars
+43:3  Warning: 'hint' is defined but never used.  @typescript-eslint/no-unused-vars
+44:3  Warning: 'description' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Select/HorizontalSelect/index.tsx
+83:37  Warning: 'state' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Select/MultiSelect/index.tsx
+9:18  Warning: 'MultiValue' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'TName' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Select/MultiSelect/style.ts
+27:44  Warning: 'isFocused' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HookForm/Select/VerticalSelect/index.tsx
+83:37  Warning: 'state' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/InfoBox/index.tsx
+2:47  Warning: 'FileCard' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/InfoCard/index.tsx
+2:16  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Warning: 'has' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/InfoCard/InfoItem/index.tsx
+1:17  Warning: 'useId' is defined but never used.  @typescript-eslint/no-unused-vars
+2:10  Warning: 'Text' is defined but never used.  @typescript-eslint/no-unused-vars
+2:16  Warning: 'UnorderedList' is defined but never used.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/InputGenerator/index.tsx
+1:10  Warning: 'CrossIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+1:21  Warning: 'SmallPlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+2:21  Warning: 'useId' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/NewUploader/index.tsx
+1:28  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+28:5  Warning: 'isEditable' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/PaginationField/index.tsx
+31:9  Warning: 'endItem' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/ProgressList/index.tsx
+2:25  Warning: 'SmallCrossIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/ScheduleList/index.tsx
+9:3  Warning: 'ErrorIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/StepArragement/index.tsx
+41:9  Warning: 'startPointValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/Table/CollapseTable/index.tsx
+19:3  Warning: 'hasControlAllBtns' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:5  Warning: 'onCheck' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+26:5  Warning: 'noData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+29:5  Warning: 'footerNode' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:5  Warning: 'className' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+68:6  Warning: React Hook React.useEffect has a missing dependency: 'getInitCollapse'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/Table/TableWithEdit/index.tsx
+2:10  Warning: 'ErrorIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+2:41  Warning: 'Spinner' is defined but never used.  @typescript-eslint/no-unused-vars
+71:3  Warning: 'checkboxData' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/TermOfUse/index.tsx
+2:20  Warning: 'Overlay' is defined but never used.  @typescript-eslint/no-unused-vars
+2:37  Warning: 'Text' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/VerticalDetail/index.tsx
+2:10  Warning: 'Textarea' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/ZoomBar/index.tsx
+18:9  Warning: 'numSteps' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+19:9  Warning: 'limitMovement' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:6  Warning: React Hook React.useEffect has a missing dependency: 'handleMouseMove'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Account/AccountDetail/BasicInfoBox/index.tsx
+7:8  Warning: 'InfoCard' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Account/AccountDetail/EmployeeInfoBox/index.tsx
+2:10  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+2:29  Warning: 'Textarea' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Controller' is defined but never used.  @typescript-eslint/no-unused-vars
+18:3  Warning: 'textValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+51:9  Warning: 'customStyles' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+61:9  Warning: 'values' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Account/AccountDetail/index.tsx
+6:19  Warning: 'SubmitHandler' is defined but never used.  @typescript-eslint/no-unused-vars
+6:34  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+17:23  Warning: 'I_UpdateReqBody' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Account/AccountDetail/RoleInfoBox/index.tsx
+3:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+11:25  Warning: 'I_RoleItem' is defined but never used.  @typescript-eslint/no-unused-vars
+15:10  Warning: 'getValue' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'get' is defined but never used.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'register' is defined but never used.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Account/AccountDetail/RoleInfoBox/RoleModule/index.tsx
+36:6  Warning: React Hook React.useEffect has a missing dependency: 'data.roles'. Either include it or remove the dependency array. If 'setCheckedList' needs the current value of 'data.roles', you can also switch to useReducer instead of useState and read 'data.roles' in the reducer.  react-hooks/exhaustive-deps
+
+./src/contents/Account/AccountList/index.tsx
+2:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+46:40  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrderCreateForm/FieldInput/index.tsx
+1:20  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+1:30  Warning: 'ErrorIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'classNames' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrderCreateForm/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+66:13  Warning: 'res' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/AirlineShuttle.tsx
+5:8  Warning: 'LabelTag' is defined but never used.  @typescript-eslint/no-unused-vars
+36:18  Warning: 'errors' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/CustomBus.tsx
+5:8  Warning: 'LabelTag' is defined but never used.  @typescript-eslint/no-unused-vars
+35:18  Warning: 'errors' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/FlightInfo/FlightInfoEdit/index.tsx
+2:27  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'CustomSelect' is defined but never used.  @typescript-eslint/no-unused-vars
+9:21  Warning: 'control' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/index.tsx
+2:33  Warning: 'useFormContext' is defined but never used.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'useRouter' is defined but never used.  @typescript-eslint/no-unused-vars
+4:16  Warning: 'Icon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:22  Warning: 'FloppyDiskIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:38  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:48  Warning: 'TextInput' is defined but never used.  @typescript-eslint/no-unused-vars
+50:32  Warning: 'data' is defined but never used.  @typescript-eslint/no-unused-vars
+136:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+136:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+150:6  Warning: React Hook React.useEffect has a missing dependency: 'methods'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/AdminOrders/AdminOrdersDetail/PassengerInfo/PassengerInfoEdit/index.tsx
+2:27  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+9:21  Warning: 'control' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/PaymentInfo/PaymentInfoEdit/index.tsx
+59:29  Warning: 'selectName' is defined but never used.  @typescript-eslint/no-unused-vars
+59:50  Warning: 'inputName' is defined but never used.  @typescript-eslint/no-unused-vars
+106:6  Warning: React Hook React.useEffect has missing dependencies: 'getValues' and 'setValue'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+113:6  Warning: React Hook React.useEffect has missing dependencies: 'deposit_percent' and 'setValue'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/AdminOrders/AdminOrdersDetail/PaymentInfo/PaymentInfoView/index.tsx
+12:5  Warning: 'deposit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+13:5  Warning: 'final_payment' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+14:5  Warning: 'full_payment_amount' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+18:5  Warning: 'full_payment_history' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:5  Warning: 'deposit_percent' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:5  Warning: 'deposit_history' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:5  Warning: 'balance_history' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/PriceInfo/PriceInfoEdit/index.tsx
+6:3  Warning: 'emailValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'numberValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'textValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+24:3  Warning: 'full_payment_period' is defined but never used.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'deposit_period' is defined but never used.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'status' is defined but never used.  @typescript-eslint/no-unused-vars
+27:3  Warning: 'priceList' is defined but never used.  @typescript-eslint/no-unused-vars
+73:47  Warning: 'type' is defined but never used.  @typescript-eslint/no-unused-vars
+86:6  Warning: React Hook React.useEffect has missing dependencies: 'getValues' and 'setValue'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+88:9  Warning: 'isFullPayment' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/PriceInfo/PriceInfoView/index.tsx
+14:10  Warning: 'updateFEStatusLog' is defined but never used.  @typescript-eslint/no-unused-vars
+21:5  Warning: 'register' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+23:5  Warning: 'watch' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+24:5  Warning: 'setValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+26:5  Warning: 'trigger' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+27:18  Warning: 'errors' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+98:13  Warning: 'res' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+99:13  Warning: 'res_assignmentClosed' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/ShuttleInfo/index.tsx
+8:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+44:6  Warning: React Hook React.useEffect has a missing dependency: 'onchange_date'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+80:32  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/AdminOrders/AdminOrdersDetail/SpecialInfo/SpecialInfoView/index.tsx
+57:5  Warning: 'remark' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/AssignManualCreate/FieldInput/index.tsx
+1:20  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/AssignManualCreate/SecondCarManualCreate/index.tsx
+55:9  Warning: 'dateStr' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+56:9  Warning: 'dateStrStart' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+57:9  Warning: 'dateStrEnd' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+59:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+89:6  Warning: React Hook useEffect has a missing dependency: 'curAssignment'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+138:9  Warning: 'handleTimeChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/AssignManualCreate/SecondDriverManualCreate/index.tsx
+7:3  Warning: 'Spinner' is defined but never used.  @typescript-eslint/no-unused-vars
+55:9  Warning: 'dateStr' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+56:9  Warning: 'dateStrStart' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+57:9  Warning: 'dateStrEnd' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+59:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+68:9  Warning: 'handleTimeChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+102:6  Warning: React Hook useEffect has a missing dependency: 'curAssignment'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Assignment/AssignManualEdit/CarEdit/index.tsx
+17:10  Warning: 'dashDate' is defined but never used.  @typescript-eslint/no-unused-vars
+29:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+48:9  Warning: 'dateStrEnd' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+79:6  Warning: React Hook useEffect has a missing dependency: 'editData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+101:9  Warning: 'handleTimeChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+108:5  Warning: React Hook React.useCallback has a missing dependency: 'updateData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Assignment/AssignManualEdit/DriverEdit/index.tsx
+9:10  Warning: 'dashDate' is defined but never used.  @typescript-eslint/no-unused-vars
+21:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+32:9  Warning: 'dateStrEnd' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+68:6  Warning: React Hook useEffect has a missing dependency: 'editData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+78:9  Warning: 'handleTimeChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+85:5  Warning: React Hook React.useCallback has a missing dependency: 'updateData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Assignment/assignment.data.tsx
+2:3  Warning: 'TimelineEventsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+3:3  Warning: 'WarningSignIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'TickCircleIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'ClipboardIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'TagIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+16:11  Warning: 'I_BUSSTATUS' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/AssignmentAdditional/DriverForm/index.tsx
+95:6  Warning: React Hook useEffect has missing dependencies: 'setLoading' and 'setValue'. Either include them or remove the dependency array. If 'setLoading' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+131:21  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+142:9  Warning: 'handleTimeChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/AssignmentAdditional/index.tsx
+33:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+84:6  Warning: React Hook React.useCallback has a missing dependency: 'refetch'. Either include it or remove the dependency array. If 'refetch' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Assignment/AssignmentAdditional/VehicleForm/index.tsx
+95:6  Warning: React Hook useEffect has missing dependencies: 'setLoading' and 'setValue'. Either include them or remove the dependency array. If 'setLoading' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+131:21  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+143:9  Warning: 'handleTimeChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/BusTable/BusTable/index.tsx
+1:17  Warning: 'useMemo' is defined but never used.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+3:20  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+3:27  Warning: 'TimelineEventsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+7:23  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'EventTag' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'getDayStart' is defined but never used.  @typescript-eslint/no-unused-vars
+10:23  Warning: 'TotalMS' is defined but never used.  @typescript-eslint/no-unused-vars
+24:9  Warning: 'UI' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+26:9  Warning: 'containerRef' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+69:27  Warning: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+92:36  Warning: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/Dispatch/DispatchEdit/index.tsx
+5:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+5:20  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+5:27  Warning: 'TimelineEventsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'UIContext' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'WKDAY_LABEL' is defined but never used.  @typescript-eslint/no-unused-vars
+9:23  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'EventTag' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'getDayStart' is defined but never used.  @typescript-eslint/no-unused-vars
+12:23  Warning: 'TotalMS' is defined but never used.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'DispatchData' is defined but never used.  @typescript-eslint/no-unused-vars
+15:8  Warning: 'timeUtil' is defined but never used.  @typescript-eslint/no-unused-vars
+15:25  Warning: 'I_MonthItem' is defined but never used.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'BusStatusTag' is defined but never used.  @typescript-eslint/no-unused-vars
+17:10  Warning: 'BUS_STATUS' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'PaginationField' is defined but never used.  @typescript-eslint/no-unused-vars
+19:8  Warning: 'SecondaryBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'ChevronDownIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+20:27  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+20:37  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+22:8  Warning: 'CustomTextInput' is defined but never used.  @typescript-eslint/no-unused-vars
+29:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/Dispatch/DispatchEdit/recommendation/index.tsx
+1:38  Warning: 'ReactNode' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'I_BusData' is defined but never used.  @typescript-eslint/no-unused-vars
+21:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+36:38  Warning: 'pageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+62:6  Warning: React Hook useEffect has a missing dependency: 'fetchBusData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Assignment/ManualDispatch/DispatchCreate/index.tsx
+5:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+5:20  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+5:27  Warning: 'TimelineEventsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'UIContext' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'WKDAY_LABEL' is defined but never used.  @typescript-eslint/no-unused-vars
+9:23  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'EventTag' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'getDayStart' is defined but never used.  @typescript-eslint/no-unused-vars
+12:23  Warning: 'TotalMS' is defined but never used.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'DispatchData' is defined but never used.  @typescript-eslint/no-unused-vars
+15:8  Warning: 'timeUtil' is defined but never used.  @typescript-eslint/no-unused-vars
+15:25  Warning: 'I_MonthItem' is defined but never used.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'BusStatusTag' is defined but never used.  @typescript-eslint/no-unused-vars
+17:10  Warning: 'BUS_STATUS' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'PaginationField' is defined but never used.  @typescript-eslint/no-unused-vars
+19:8  Warning: 'SecondaryBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'ChevronDownIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+20:27  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+20:37  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+21:8  Warning: 'CustomTextInput' is defined but never used.  @typescript-eslint/no-unused-vars
+29:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/ManualDispatch/DispatchCreate/recommendation/index.tsx
+1:38  Warning: 'ReactNode' is defined but never used.  @typescript-eslint/no-unused-vars
+10:35  Warning: 'I_BusData' is defined but never used.  @typescript-eslint/no-unused-vars
+17:22  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+32:42  Warning: 'pageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+60:8  Warning: React Hook useEffect has a missing dependency: 'fetchBusData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Assignment/Mission/CreateMission/index.tsx
+4:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'CustomSelect' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'NewUploader' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'FileCard' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/Mission/CreateMission/style.ts
+2:10  Warning: 'ThemeType' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/Mission/EditMission/index.tsx
+4:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'CustomSelect' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'NewUploader' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'FileCard' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/Mission/EditMission/style.ts
+2:10  Warning: 'ThemeType' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/MissionTable/BusStatusRow/style.ts
+2:10  Warning: 'ThemeType' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/MissionTable/DispatchArea/index.tsx
+3:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+3:20  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+3:27  Warning: 'TimelineEventsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'UIContext' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'WKDAY_LABEL' is defined but never used.  @typescript-eslint/no-unused-vars
+7:23  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'EventTag' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'getDayStart' is defined but never used.  @typescript-eslint/no-unused-vars
+10:23  Warning: 'TotalMS' is defined but never used.  @typescript-eslint/no-unused-vars
+13:8  Warning: 'timeUtil' is defined but never used.  @typescript-eslint/no-unused-vars
+13:25  Warning: 'I_MonthItem' is defined but never used.  @typescript-eslint/no-unused-vars
+14:8  Warning: 'BusStatusTag' is defined but never used.  @typescript-eslint/no-unused-vars
+15:10  Warning: 'BUS_STATUS' is defined but never used.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'PaginationField' is defined but never used.  @typescript-eslint/no-unused-vars
+18:10  Warning: 'ChevronDownIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/MissionTable/MissionArea/index.tsx
+3:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+3:20  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+3:27  Warning: 'TimelineEventsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'UIContext' is defined but never used.  @typescript-eslint/no-unused-vars
+7:23  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'EventTag' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'getDayStart' is defined but never used.  @typescript-eslint/no-unused-vars
+10:23  Warning: 'TotalMS' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'DriverData' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'ScheduleInfoData' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'DateItem' is defined but never used.  @typescript-eslint/no-unused-vars
+17:8  Warning: 'timeUtil' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'BusStatusTag' is defined but never used.  @typescript-eslint/no-unused-vars
+19:10  Warning: 'BUS_STATUS' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Warning: 'PaginationField' is defined but never used.  @typescript-eslint/no-unused-vars
+21:8  Warning: 'SecondaryBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+23:10  Warning: 'ChevronDownIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+23:27  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+23:37  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+36:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:10  Warning: 'isOpenDispatch' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:26  Warning: 'setIsOpenDispatch' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/MissionTable/MissionRow/index.tsx
+3:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+3:20  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+3:27  Warning: 'TimelineEventsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'UIContext' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'WKDAY_LABEL' is defined but never used.  @typescript-eslint/no-unused-vars
+7:23  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'EventTag' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'getDayStart' is defined but never used.  @typescript-eslint/no-unused-vars
+10:23  Warning: 'TotalMS' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'DriverData' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'ScheduleInfoData' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'DateItem' is defined but never used.  @typescript-eslint/no-unused-vars
+17:8  Warning: 'timeUtil' is defined but never used.  @typescript-eslint/no-unused-vars
+17:25  Warning: 'I_MonthItem' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'BusStatusTag' is defined but never used.  @typescript-eslint/no-unused-vars
+19:10  Warning: 'BUS_STATUS' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Warning: 'PaginationField' is defined but never used.  @typescript-eslint/no-unused-vars
+23:37  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Assignment/MissionTable/MissionTable/index.tsx
+2:10  Warning: 'useRouter' is defined but never used.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+3:20  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+3:27  Warning: 'TimelineEventsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'UIContext' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'WKDAY_LABEL' is defined but never used.  @typescript-eslint/no-unused-vars
+7:23  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'EventTag' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'getDayStart' is defined but never used.  @typescript-eslint/no-unused-vars
+10:23  Warning: 'TotalMS' is defined but never used.  @typescript-eslint/no-unused-vars
+14:8  Warning: 'BusStatusTag' is defined but never used.  @typescript-eslint/no-unused-vars
+15:10  Warning: 'BUS_STATUS' is defined but never used.  @typescript-eslint/no-unused-vars
+17:8  Warning: 'SecondaryBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/bus.type.ts
+1:10  Warning: 'deepClone' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusCreateForm/index.tsx
+5:3  Warning: 'Group' is defined but never used.  @typescript-eslint/no-unused-vars
+57:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+58:10  Warning: 'busGroup' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/CreateDetail/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+2:16  Warning: 'Group' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+22:37  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+22:45  Warning: 'className' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/CreateDetail/SubTabs/Finance/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/CreateDetail/SubTabs/MainDetail/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/CreateDetail/SubTabs/Maintenance/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/CreateDetail/SubTabs/Specification/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/index.tsx
+10:8  Warning: 'EditHistory' is defined but never used.  @typescript-eslint/no-unused-vars
+62:6  Warning: React Hook React.useEffect has missing dependencies: 'fetchDDL' and 'getValues'. Either include them or remove the dependency array. If 'fetchDDL' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Bus/BusDetail/SubForm/Detail/index.tsx
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+3:16  Warning: 'Group' is defined but never used.  @typescript-eslint/no-unused-vars
+34:3  Warning: 'register' is defined but never used.  @typescript-eslint/no-unused-vars
+35:3  Warning: 'errors' is defined but never used.  @typescript-eslint/no-unused-vars
+36:3  Warning: 'getValues' is defined but never used.  @typescript-eslint/no-unused-vars
+38:3  Warning: 'control' is defined but never used.  @typescript-eslint/no-unused-vars
+40:3  Warning: 'busOptions' is defined but never used.  @typescript-eslint/no-unused-vars
+42:3  Warning: 'className' is defined but never used.  @typescript-eslint/no-unused-vars
+44:10  Warning: 'imageFile' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+44:21  Warning: 'setImageFile' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+45:10  Warning: 'isDriverDDLLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+47:9  Warning: 'handleDriverGroupChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/SubForm/Detail/SubTabs/Finance/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/SubForm/Detail/SubTabs/MainDetail/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/SubForm/Detail/SubTabs/Maintenance/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/SubForm/Detail/SubTabs/Specification/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'FieldErrors' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'UseFormGetValues' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Control' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Bus/BusDetail/SubForm/EditHistory/index.tsx
+10:8  Warning: 'styled' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'busMaintenaceParser' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'busMaintenacePattern' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'I_Maintenance' is defined but never used.  @typescript-eslint/no-unused-vars
+18:10  Warning: 'mappingQueryData' is defined but never used.  @typescript-eslint/no-unused-vars
+24:8  Warning: 'IconBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+26:10  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+91:3  Warning: 'register' is defined but never used.  @typescript-eslint/no-unused-vars
+92:3  Warning: 'errors' is defined but never used.  @typescript-eslint/no-unused-vars
+93:3  Warning: 'getValues' is defined but never used.  @typescript-eslint/no-unused-vars
+94:3  Warning: 'control' is defined but never used.  @typescript-eslint/no-unused-vars
+95:3  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+106:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+113:51  Warning: 'res' is defined but never used.  @typescript-eslint/no-unused-vars
+145:6  Warning: React Hook useEffect has missing dependencies: 'fetchMaintenanceData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Bus/BusDetail/SubForm/Equipment/index.tsx
+11:3  Warning: 'getMaintenanceByFilter' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'busMaintenaceParser' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'busMaintenacePattern' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'mappingQueryData' is defined but never used.  @typescript-eslint/no-unused-vars
+52:7  Warning: 'DUMMY_FILTER' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+106:3  Warning: 'register' is defined but never used.  @typescript-eslint/no-unused-vars
+107:3  Warning: 'errors' is defined but never used.  @typescript-eslint/no-unused-vars
+108:3  Warning: 'getValues' is defined but never used.  @typescript-eslint/no-unused-vars
+109:3  Warning: 'control' is defined but never used.  @typescript-eslint/no-unused-vars
+110:3  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+111:3  Warning: 'busId' is defined but never used.  @typescript-eslint/no-unused-vars
+114:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+161:6  Warning: React Hook useEffect has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Bus/BusDetail/SubForm/FuelRecord/index.tsx
+10:8  Warning: 'styled' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'busMaintenaceParser' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'busMaintenacePattern' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'I_Maintenance' is defined but never used.  @typescript-eslint/no-unused-vars
+18:10  Warning: 'mappingQueryData' is defined but never used.  @typescript-eslint/no-unused-vars
+108:3  Warning: 'register' is defined but never used.  @typescript-eslint/no-unused-vars
+109:3  Warning: 'errors' is defined but never used.  @typescript-eslint/no-unused-vars
+110:3  Warning: 'getValues' is defined but never used.  @typescript-eslint/no-unused-vars
+111:3  Warning: 'control' is defined but never used.  @typescript-eslint/no-unused-vars
+112:3  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+130:51  Warning: 'res' is defined but never used.  @typescript-eslint/no-unused-vars
+180:6  Warning: React Hook useEffect has missing dependencies: 'fetchMaintenanceData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Bus/BusDetail/SubForm/Maintenance/index.tsx
+10:8  Warning: 'styled' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'busMaintenaceParser' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'busMaintenacePattern' is defined but never used.  @typescript-eslint/no-unused-vars
+18:10  Warning: 'mappingQueryData' is defined but never used.  @typescript-eslint/no-unused-vars
+101:3  Warning: 'register' is defined but never used.  @typescript-eslint/no-unused-vars
+102:3  Warning: 'errors' is defined but never used.  @typescript-eslint/no-unused-vars
+103:3  Warning: 'getValues' is defined but never used.  @typescript-eslint/no-unused-vars
+104:3  Warning: 'control' is defined but never used.  @typescript-eslint/no-unused-vars
+105:3  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+116:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+156:6  Warning: React Hook useEffect has missing dependencies: 'fetchMaintenanceData' and 'pageInfo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Bus/BusList/index.tsx
+3:8  Warning: 'StatusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+9:39  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Client/Quote/ContactInformation/index.tsx
+5:8  Warning: 'CustomSelect' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'phoneValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'tellValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Client/Quote/CustomPickup/index.tsx
+50:6  Warning: React Hook useEffect has missing dependencies: 'departureDate', 'purpose', 'returnDate', and 'setValue'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Client/Quote/Detail/ContactInfoView/index.tsx
+2:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Client/Quote/Detail/index.tsx
+9:8  Warning: 'SummaryInfoView' is defined but never used.  @typescript-eslint/no-unused-vars
+24:10  Warning: 'convertMap' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Client/Quote/Detail/ShuttleInfo/index.tsx
+2:10  Warning: 'TimeIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'Collapse' is defined but never used.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'DetailItem' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'BodySTY' is defined but never used.  @typescript-eslint/no-unused-vars
+5:19  Warning: 'ContainerSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+5:33  Warning: 'HeaderSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'ScheduleListView' is defined but never used.  @typescript-eslint/no-unused-vars
+7:8  Warning: 'dayjs' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Client/Quote/Detail/SpecialInfoView/index.tsx
+3:8  Warning: 'DetailGrid' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Client/Quote/Detail/SummaryInfoView/index.tsx
+8:28  Warning: 'purpose' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Client/Quote/Detail/TakeBusInfoView/index.tsx
+2:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'VerticalDetail' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Client/Quote/FlightInformation/index.tsx
+57:6  Warning: React Hook useEffect has missing dependencies: 'flightTime', 'type', and 'validateSubForm'. Either include them or remove the dependency array. If 'validateSubForm' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Client/Quote/FlightPickup/index.tsx
+86:6  Warning: React Hook useEffect has a missing dependency: 'updateIsFilled'. Either include it or remove the dependency array. If 'updateIsFilled' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+95:6  Warning: React Hook useEffect has missing dependencies: 'airline', 'airport', 'flightDate', 'flightNo', 'flightTime', 'setValue', and 'terminal'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Client/Quote/RidingInformation/index.tsx
+6:41  Warning: 'useWatch' is defined but never used.  @typescript-eslint/no-unused-vars
+53:6  Warning: React Hook useEffect has missing dependencies: 'getValues', 'validateSubForm', and 'watch'. Either include them or remove the dependency array. If 'validateSubForm' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Client/Quote/SpecialNeeds/index.tsx
+4:19  Warning: 'ItemSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyList/Basic/index.tsx
+1:17  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+1:42  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyList/CompanyRule/index.tsx
+2:35  Warning: 'Text' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyList/Contact/index.tsx
+1:29  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+19:11  Warning: 'getRegionsData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'ddlData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+20:19  Warning: 'setDdlData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyList/CountrySet/index.tsx
+1:29  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+1:40  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+17:11  Warning: 'getRegionsData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyList/DateTime/index.tsx
+1:29  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyList/index.tsx
+1:17  Warning: 'useContext' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyList/Unit/index.tsx
+1:29  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyUpdate/Basic/index.tsx
+18:50  Warning: 'errMsg' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyUpdate/CompanyRule/index.tsx
+1:17  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'Icon' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Text' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'TextInput' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'TrashIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+47:6  Warning: React Hook useEffect has a missing dependency: 'workingHoursArr.length'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+74:6  Warning: React Hook useEffect has missing dependencies: 'companyData' and 'setCompanyData'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Company/CompanyUpdate/Contact/index.tsx
+20:10  Warning: 'getAllRegions' is defined but never used.  @typescript-eslint/no-unused-vars
+25:8  Warning: 'LoadingSpinner' is defined but never used.  @typescript-eslint/no-unused-vars
+31:30  Warning: 'handleCountryChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+31:51  Warning: 'handleCityChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+49:6  Warning: React Hook useEffect has a missing dependency: 'companyData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+49:7  Warning: React Hook useEffect has a complex expression in the dependency array. Extract it to a separate variable so it can be statically checked.  react-hooks/exhaustive-deps
+
+./src/contents/Company/CompanyUpdate/CountrySet/index.tsx
+34:22  Warning: 'handleCountryChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:10  Warning: 'editLangData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+39:10  Warning: 'editCurData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+40:20  Warning: 'setLangData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+41:24  Warning: 'setCurrencyData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+42:10  Warning: 'ddlLanguage' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+45:10  Warning: 'ddlCurrency' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+120:6  Warning: React Hook useEffect has missing dependencies: 'companyData' and 'setCompanyData'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Company/CompanyUpdate/DateTime/index.tsx
+1:29  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+1:40  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+10:16  Warning: 'uuid' is defined but never used.  @typescript-eslint/no-unused-vars
+13:24  Warning: 'setCompanyData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyUpdate/index.tsx
+1:29  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'IconButton' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'FullscreenIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'majorScale' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'SmallCrossIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+25:10  Warning: 'numberValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+25:28  Warning: 'phoneValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+28:10  Warning: 'replaceKeysInArray' is defined but never used.  @typescript-eslint/no-unused-vars
+35:38  Warning: 'onCancel' is defined but never used.  @typescript-eslint/no-unused-vars
+37:18  Warning: 'setErrMsg' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyUpdate/LeaveSet/index.tsx
+1:17  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+55:40  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+79:29  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Company/CompanyUpdate/Unit/index.tsx
+1:29  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+1:40  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'I_Region_Context' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'RegionContext' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Customer/CustomerCreateForm/FieldInput/index.tsx
+1:20  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Customer/CustomerCreateForm/index.tsx
+71:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+77:13  Warning: 'res' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Customer/CustomerDetail/index.tsx
+53:5  Warning: 'getRegionsData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+61:6  Warning: React Hook useEffect has missing dependencies: 'customerDefaultData?.customer_country' and 'initOptions'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Driver/Detail/DriverInfo/index.tsx
+24:3  Warning: 'I_DsphAreaDDL' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Driver/Detail/EditHistory/index.tsx
+6:10  Warning: 'getHealthById' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'mappingQueryData' is defined but never used.  @typescript-eslint/no-unused-vars
+61:3  Warning: 'userName' is defined but never used.  @typescript-eslint/no-unused-vars
+84:6  Warning: React Hook React.useEffect has missing dependencies: 'initializeSubFilter', 'pageInfo', and 'subFilter'. Either include them or remove the dependency array. You can also do a functional update 'setPageInfo(p => ...)' if you only need 'pageInfo' in the 'setPageInfo' call.  react-hooks/exhaustive-deps
+
+./src/contents/Driver/Detail/HealthRecords/index.tsx
+1:10  Warning: 'I_Health_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'Heading' is defined but never used.  @typescript-eslint/no-unused-vars
+4:19  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+4:25  Warning: 'DocumentIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:39  Warning: 'CogIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:48  Warning: 'Tooltip' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'mappingQueryData' is defined but never used.  @typescript-eslint/no-unused-vars
+29:3  Warning: 'userName' is defined but never used.  @typescript-eslint/no-unused-vars
+68:6  Warning: React Hook React.useEffect has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Driver/Detail/index.tsx
+2:10  Warning: 'useForm' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'UpdateDriverInfoPayload' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'DriverInfo' is defined but never used.  @typescript-eslint/no-unused-vars
+10:18  Warning: 'TextInput' is defined but never used.  @typescript-eslint/no-unused-vars
+10:29  Warning: 'SmallPlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'SecondaryButton' is defined but never used.  @typescript-eslint/no-unused-vars
+14:8  Warning: 'CustomTextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+55:5  Warning: 'submitRef' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+56:5  Warning: 'asyncSubmitForm' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+59:5  Warning: 'refetch' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Driver/Detail/LicenseForm/index.tsx
+45:18  Warning: 'errors' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+76:10  Warning: 'isUploadFile' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+79:9  Warning: 'handleUploadClick' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Driver/Detail/TrainingList/index.tsx
+3:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+3:48  Warning: 'Dialog' is defined but never used.  @typescript-eslint/no-unused-vars
+7:8  Warning: 'LicenseForm' is defined but never used.  @typescript-eslint/no-unused-vars
+53:25  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+53:33  Warning: 'userName' is defined but never used.  @typescript-eslint/no-unused-vars
+54:10  Warning: 'isLightBoxOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+55:10  Warning: 'editNo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+127:9  Warning: 'orderedLicensesData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+134:9  Warning: 'handleCreate' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+139:9  Warning: 'handleEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+144:9  Warning: 'handleCancel' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+148:9  Warning: 'handleConfirm' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+152:9  Warning: 'handlePageChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+156:5  Warning: React Hook React.useCallback has a missing dependency: 'fetchLicenseData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+159:9  Warning: 'asyncSubmitCreateForm' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+175:9  Warning: 'asyncSubmitEditForm' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+192:9  Warning: 'handleDelete' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+229:6  Warning: React Hook React.useEffect has a missing dependency: 'fetchLicenseData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Driver/DriverList/index.tsx
+4:10  Warning: 'getDriverTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+23:3  Warning: 'handleDeleteDriver' is defined but never used.  @typescript-eslint/no-unused-vars
+24:3  Warning: 'handleRecoverDriver' is defined but never used.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'handlePageChange' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Driver/DriverList/old_index.tsx
+6:8  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+32:9  Warning: 'handleView' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Driver/SearchEmployee/style.ts
+1:10  Warning: 'Heading' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Employee/Charactor/index.tsx
+13:10  Warning: 'charactor_DATA' is defined but never used.  @typescript-eslint/no-unused-vars
+13:26  Warning: 'charactor_Card' is defined but never used.  @typescript-eslint/no-unused-vars
+43:6  Warning: React Hook useEffect has a missing dependency: 'insertData'. Either include it or remove the dependency array. If 'setCharactorArr' needs the current value of 'insertData', you can also switch to useReducer instead of useState and read 'insertData' in the reducer.  react-hooks/exhaustive-deps
+84:6  Warning: React Hook useEffect has missing dependencies: 'newData' and 'setInsertData'. Either include them or remove the dependency array. If 'setInsertData' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+89:6  Warning: React Hook useEffect has missing dependencies: 'newData' and 'setInsertData'. Either include them or remove the dependency array. If 'setInsertData' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+99:36  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+145:37  Warning: 'idx' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Employee/Contact/index.tsx
+5:3  Warning: 'Paragraph' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'getValue' is defined but never used.  @typescript-eslint/no-unused-vars
+31:6  Warning: React Hook useEffect has missing dependencies: 'initOptions' and 'insertData?.dt_country'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Employee/EmployeeCreateForm/FieldInput/index.tsx
+1:20  Warning: 'PlusIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Employee/EmployeeCreateForm/index.tsx
+1:19  Warning: 'Controller' is defined but never used.  @typescript-eslint/no-unused-vars
+2:10  Warning: 'ItemSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+25:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+29:13  Warning: 'res' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Employee/EmployeeDetail/index.tsx
+27:8  Warning: 'Address' is defined but never used.  @typescript-eslint/no-unused-vars
+29:52  Warning: 'submitForm' is defined but never used.  @typescript-eslint/no-unused-vars
+257:43  Warning: 'data' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Employee/EmployeeInfo/index.tsx
+15:10  Warning: 'class_DATA' is defined but never used.  @typescript-eslint/no-unused-vars
+15:22  Warning: 'department_DATA' is defined but never used.  @typescript-eslint/no-unused-vars
+15:39  Warning: 'formatDate' is defined but never used.  @typescript-eslint/no-unused-vars
+46:6  Warning: React Hook useEffect has a missing dependency: 'insertData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+73:32  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+88:48  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+256:31  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Employee/HealthFirst/index.tsx
+49:6  Warning: React Hook useEffect has missing dependencies: 'insertData' and 'setInsertData'. Either include them or remove the dependency array. If 'setInsertData' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Employee/HealthInfo/EditHealth/index.tsx
+84:6  Warning: React Hook useEffect has missing dependencies: 'healthData' and 'healthNo'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+213:25  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Employee/HealthInfo/index.tsx
+1:17  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+137:6  Warning: React Hook React.useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Employee/index.tsx
+6:8  Warning: 'Router' is defined but never used.  @typescript-eslint/no-unused-vars
+7:17  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+7:28  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Employee/LanguageAbility/index.tsx
+71:6  Warning: React Hook useEffect has a missing dependency: 'insertData?.languages'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+91:42  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+136:6  Warning: React Hook useEffect has a missing dependency: 'insertData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Login/LoginForm/index.tsx
+12:10  Warning: 'emailValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Login/PasswordInputField/style.ts
+3:7  Warning: 'gap' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+4:7  Warning: 'inputH' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+5:7  Warning: 'labelH' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Login/SetPasswordForm/index.tsx
+5:10  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Maintenance/Detail/index.tsx
+18:5  Warning: 'maitenanceData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Maintenance/Mission/index.tsx
+1:20  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+27:11  Warning: 'Props' is defined but never used.  @typescript-eslint/no-unused-vars
+37:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+53:6  Warning: React Hook useEffect has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Maintenance/Notice/index.tsx
+1:20  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+24:11  Warning: 'Props' is defined but never used.  @typescript-eslint/no-unused-vars
+34:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+50:6  Warning: React Hook useEffect has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Maintenance/Record/index.tsx
+1:20  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+24:11  Warning: 'Props' is defined but never used.  @typescript-eslint/no-unused-vars
+34:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+50:6  Warning: React Hook useEffect has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Orders/OrderContent/Detail/ExpenseCard/index.tsx
+2:10  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Orders/OrderContent/Detail/index.tsx
+2:10  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'InfoCard' is defined but never used.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'Collapse' is defined but never used.  @typescript-eslint/no-unused-vars
+5:16  Warning: 'ArrowRightIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Orders/OrderContent/Detail/MainDetail/index.tsx
+76:16  Warning: 'setData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Orders/OrderContent/Docs/index.tsx
+1:20  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+25:11  Warning: 'Props' is defined but never used.  @typescript-eslint/no-unused-vars
+33:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+47:6  Warning: React Hook useEffect has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Orders/OrderContent/index.tsx
+15:43  Warning: 'orderId' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Orders/OrderContent/Missions/index.tsx
+1:20  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'CommentIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+23:11  Warning: 'Props' is defined but never used.  @typescript-eslint/no-unused-vars
+31:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+44:6  Warning: React Hook useEffect has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Orders/OrderContent/Records/index.tsx
+1:20  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+22:11  Warning: 'Props' is defined but never used.  @typescript-eslint/no-unused-vars
+30:20  Warning: 'setPageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+43:6  Warning: React Hook useEffect has missing dependencies: 'initializeSubFilter' and 'subFilter'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Orders/OrderDetail/index.tsx
+3:8  Warning: 'dayjs' is defined but never used.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'QUOTE_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+13:22  Warning: 'PURPOSE' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Orders/OrderDetail/OrderModifyInfo/index.tsx
+2:10  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+2:16  Warning: 'Ul' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Orders/OrdersList/OrderListItem/index.tsx
+6:25  Warning: 'I_Order' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Orders/PaymentBtn/index.tsx
+2:16  Warning: 'Dialog' is defined but never used.  @typescript-eslint/no-unused-vars
+78:6  Warning: React Hook React.useCallback has a missing dependency: 'handleRefetch'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Orders/PaymentMethod/index.tsx
+3:8  Warning: 'dayjs' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'Collapse' is defined but never used.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'DetailItem' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'DetailList' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'PAYMENT_HISTORY' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Orders/Quote/index.tsx
+13:3  Warning: 'setData' is defined but never used.  @typescript-eslint/no-unused-vars
+20:9  Warning: 'expenseList' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Org/FormModal/index.tsx
+2:25  Warning: 'Text' is defined but never used.  @typescript-eslint/no-unused-vars
+3:19  Warning: 'SubmitHandler' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'ErrorMessage' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'createOrg' is defined but never used.  @typescript-eslint/no-unused-vars
+10:21  Warning: 'I_CreateOrgReq' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'updateOrg' is defined but never used.  @typescript-eslint/no-unused-vars
+11:21  Warning: 'I_EditOrgReq' is defined but never used.  @typescript-eslint/no-unused-vars
+13:8  Warning: 'CustomTextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'refetch' is defined but never used.  @typescript-eslint/no-unused-vars
+26:17  Warning: 'session' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+44:5  Warning: 'getValues' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Org/OrgList/index.tsx
+24:13  Warning: 'padingNumber' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Roles/AuthPanel/AuthModule/index.tsx
+20:3  Warning: 'getValues' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Roles/AuthPanel/index.tsx
+2:10  Warning: 'useForm' is defined but never used.  @typescript-eslint/no-unused-vars
+2:19  Warning: 'SubmitHandler' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+12:26  Warning: 'I_AuthFuncElement' is defined but never used.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'I_FuncAuthElemReq' is defined but never used.  @typescript-eslint/no-unused-vars
+71:9  Warning: 'noData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Roles/BusRoleEditForm/index.tsx
+3:8  Warning: 'StyledCheckBox' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Roles/RoleDetail/AuthPanel/AuthModule/index.tsx
+4:3  Warning: 'RadioGroup' is defined but never used.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'getValue' is defined but never used.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'register' is defined but never used.  @typescript-eslint/no-unused-vars
+33:10  Warning: 'isChecked' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+41:9  Warning: 'handleValueChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+41:30  Warning: 'value' is defined but never used.  @typescript-eslint/no-unused-vars
+75:6  Warning: React Hook React.useEffect has a missing dependency: 'isAuthFuncDisabled'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Roles/RoleDetail/AuthPanel/index.tsx
+2:10  Warning: 'useForm' is defined but never used.  @typescript-eslint/no-unused-vars
+2:19  Warning: 'SubmitHandler' is defined but never used.  @typescript-eslint/no-unused-vars
+11:26  Warning: 'I_AuthFuncElement' is defined but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'I_FuncAuthElemReq' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Roles/RoleDetail/DetailPanel/index.tsx
+7:3  Warning: 'UseFormSetValue' is defined but never used.  @typescript-eslint/no-unused-vars
+11:18  Warning: 'TextInput' is defined but never used.  @typescript-eslint/no-unused-vars
+17:26  Warning: 'emailValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'CustomTextArea' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Warning: 'CustomSelect' is defined but never used.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'getValues' is defined but never used.  @typescript-eslint/no-unused-vars
+138:52  Warning: 'ref' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Roles/RoleDetail/index.tsx
+2:19  Warning: 'SubmitHandler' is defined but never used.  @typescript-eslint/no-unused-vars
+2:34  Warning: 'UseFormRegister' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'I_AuthFuncItem' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'I_AuthFuncElement' is defined but never used.  @typescript-eslint/no-unused-vars
+17:29  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Roles/RoleEditForm/index.tsx
+3:8  Warning: 'StyledCheckBox' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Roles/RoleList/index.tsx
+2:10  Warning: 'Tooltip' is defined but never used.  @typescript-eslint/no-unused-vars
+2:19  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+25:40  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Schedule/ApprovalTable/index.tsx
+3:8  Warning: 'timeUtil' is defined but never used.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'WKDAY_LABEL' is defined but never used.  @typescript-eslint/no-unused-vars
+5:23  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+7:8  Warning: 'NewUploader' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Schedule/ApprovalTable/style.ts
+2:10  Warning: 'ThemeType' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Schedule/EventBtn/index.tsx
+2:10  Warning: 'TagIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'MonthlyData' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'SCHD_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+5:21  Warning: 'LEAVE_CODE' is defined but never used.  @typescript-eslint/no-unused-vars
+5:33  Warning: 'CHECK_STATUS' is defined but never used.  @typescript-eslint/no-unused-vars
+5:47  Warning: 'EVENT_TYPE' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Schedule/MonthPicker/index.tsx
+22:9  Warning: 'UI' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Schedule/OverviewTable/index.tsx
+2:3  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+3:3  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'ReactNode' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'useMemo' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+10:20  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'EventBtn' is defined but never used.  @typescript-eslint/no-unused-vars
+17:10  Warning: 'getDayStart' is defined but never used.  @typescript-eslint/no-unused-vars
+17:23  Warning: 'TotalMS' is defined but never used.  @typescript-eslint/no-unused-vars
+34:9  Warning: 'UI' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+36:9  Warning: 'containerRef' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+137:30  Warning: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Schedule/OverviewTable/style.ts
+3:7  Warning: 'checkboxWidth' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+4:7  Warning: 'freezeColWidth' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Schedule/ScheduleTable/index.tsx
+1:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+1:27  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Schedule/ScheduleTable/style.ts
+2:10  Warning: 'ThemeType' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/setting/ChangePasswordInfoBox/index.tsx
+19:5  Warning: 'register' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+38:41  Warning: 'value' is defined but never used.  @typescript-eslint/no-unused-vars
+57:41  Warning: 'value' is defined but never used.  @typescript-eslint/no-unused-vars
+76:41  Warning: 'value' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/setting/PasswordInput/style.ts
+3:7  Warning: 'gap' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+4:7  Warning: 'inputH' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+5:7  Warning: 'labelH' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Shift/DailyView/index.tsx
+41:6  Warning: React Hook React.useEffect has a missing dependency: 'initInsertData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+49:6  Warning: React Hook React.useEffect has a missing dependency: 'renderCreateForm'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Shift/DailyView/style.ts
+1:10  Warning: 'translation' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Shift/DrawerContent/CreateForm.tsx
+20:3  Warning: 'view' is defined but never used.  @typescript-eslint/no-unused-vars
+37:5  Warning: React Hook React.useCallback has a missing dependency: 'scheduleUI'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+67:5  Warning: React Hook React.useCallback has missing dependencies: 'id', 'refetch', 'scheduleUI', and 'setIsOpenDrawer'. Either include them or remove the dependency array. If 'refetch' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Shift/DrawerContent/EditForm.tsx
+36:5  Warning: React Hook React.useCallback has a missing dependency: 'scheduleUI'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+44:5  Warning: React Hook React.useCallback has a missing dependency: 'scheduleUI'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+83:5  Warning: React Hook React.useCallback has missing dependencies: 'refetch' and 'scheduleUI'. Either include them or remove the dependency array. If 'refetch' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Shift/DrawerContent/EventStatus.tsx
+71:5  Warning: React Hook React.useCallback has missing dependencies: 'refetch', 'scheduleUI', and 'setIsOpenDrawer'. Either include them or remove the dependency array. If 'setIsOpenDrawer' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Shift/DrawerContent/index.tsx
+15:3  Warning: 'isOpenDrawer' is defined but never used.  @typescript-eslint/no-unused-vars
+22:9  Warning: 'renderContent' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+55:9  Warning: 'handleCloseDrawer' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Shift/LeaveTypePicker/index.tsx
+5:3  Warning: 'LEAVE_CODE' is defined but never used.  @typescript-eslint/no-unused-vars
+18:10  Warning: 'showLeaveCode' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Shift/MonthlyView/EventList/index.tsx
+100:6  Warning: React Hook React.useEffect has missing dependencies: 'placeholderEvents.length', 'setEventCount', and 'shownEvents.length'. Either include them or remove the dependency array. If 'setEventCount' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+
+./src/contents/Shift/MonthlyView/index.tsx
+80:6  Warning: React Hook React.useEffect has a missing dependency: 'initInsertData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+89:6  Warning: React Hook React.useEffect has a missing dependency: 'renderCreateForm'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contents/Shift/TableTitle/index.tsx
+3:20  Warning: 'ChevronLeftIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+3:37  Warning: 'ChevronRightIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Vendor/VendorCreateForm/index.tsx
+10:3  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'Label' is defined but never used.  @typescript-eslint/no-unused-vars
+29:8  Warning: 'InfoBox' is defined but never used.  @typescript-eslint/no-unused-vars
+82:29  Warning: 'data' is defined but never used.  @typescript-eslint/no-unused-vars
+94:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+95:21  Warning: 'setFuelValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+100:13  Warning: 'res' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Vendor/VendorDetail/index.tsx
+28:3  Warning: 'emailValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+61:5  Warning: 'handleCityChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+62:5  Warning: 'getRegionsData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+78:5  Warning: 'address2' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+79:5  Warning: 'vendor_City' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+81:5  Warning: 'vendor_Area' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+83:5  Warning: 'vendor_Country' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+91:5  Warning: 'vendor_Code_List' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+92:5  Warning: 'vendor_Contact_List' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+111:6  Warning: React Hook useEffect has missing dependencies: 'initOptions' and 'methods'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+162:54  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Vendor/VendorEditForm/index.tsx
+2:16  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+2:32  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+2:45  Warning: 'TagInput' is defined but never used.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'CheckboxField' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'MOCK_FUEL_DATA' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'emailValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'numberValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'textValidation' is defined but never used.  @typescript-eslint/no-unused-vars
+40:5  Warning: 'register' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+47:9  Warning: 'toggleFuelValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+59:10  Warning: 'tags' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+59:16  Warning: 'setTags' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Vendor/VendorList/index.tsx
+2:10  Warning: 'getVendorTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+42:9  Warning: 'vendorTitleArrI18' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/contents/Vendor/VendorSubPoint/index.tsx
+3:16  Warning: 'Heading' is defined but never used.  @typescript-eslint/no-unused-vars
+3:25  Warning: 'CogIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+5:8  Warning: 'Table' is defined but never used.  @typescript-eslint/no-unused-vars
+7:8  Warning: 'PaginationField' is defined but never used.  @typescript-eslint/no-unused-vars
+49:27  Warning: 'isEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/contexts/companyContext/companyProvider.tsx
+125:6  Warning: React Hook useEffect has a missing dependency: 'ddlLanguage'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/contexts/regionContext/regionProvider.tsx
+35:29  Warning: 'area_nos' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/equipment/AddEquipment.tsx
+3:3  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'Label' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'FilePicker' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'Textarea' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/fuel-history/new-fuel-entry.tsx
+4:3  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'Textarea' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'DetailBlock' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/issues/issues/AddIssue.tsx
+2:16  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+2:32  Warning: 'TextareaField' is defined but never used.  @typescript-eslint/no-unused-vars
+2:47  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/reminders/Contact-Renewals/VehicleReminderForm.tsx
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+3:26  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+3:36  Warning: 'Label' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'AvatarSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'SelectFieldSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'TextInputFieldSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'CheckBoxSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'TextareaFieldSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+29:32  Warning: 'title' is defined but never used.  @typescript-eslint/no-unused-vars
+29:39  Warning: 'selectOptions' is defined but never used.  @typescript-eslint/no-unused-vars
+30:10  Warning: 'checked' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:19  Warning: 'setChecked' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/reminders/service-reminders/DetailsHistory.tsx
+3:10  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+3:26  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+3:36  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+3:44  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'checked' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+8:19  Warning: 'setChecked' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/reminders/vehicle-renewals/VehicleReminderForm.tsx
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+3:26  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+3:36  Warning: 'Label' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'AvatarSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'SelectFieldSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'TextInputFieldSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'CheckBoxSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'TextareaFieldSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+29:32  Warning: 'title' is defined but never used.  @typescript-eslint/no-unused-vars
+29:39  Warning: 'selectOptions' is defined but never used.  @typescript-eslint/no-unused-vars
+30:10  Warning: 'checked' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+30:19  Warning: 'setChecked' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/vehicles/expense-history/ExpenseForm.tsx
+2:3  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+3:3  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'Radio' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'Label' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'Textarea' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'TextInputFieldSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+9:29  Warning: 'RadioContainerSTY' is defined but never used.  @typescript-eslint/no-unused-vars
+27:24  Warning: 'title' is defined but never used.  @typescript-eslint/no-unused-vars
+27:31  Warning: 'selectOptions' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/vehicles/vehicle-list/Dimensions.tsx
+2:10  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+2:26  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/vehicles/vehicle-list/Financial.tsx
+4:3  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'TextareaField' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'financingTab' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+13:9  Warning: 'handleFinancingTabChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/vehicles/vehicle-list/Indentification.tsx
+3:3  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'Pane' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'FilePicker' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'vehicleNameValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'VINValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+14:9  Warning: 'handleChangevehicleNameValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+20:9  Warning: 'handleChangeVINValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/vehicles/vehicle-list/Lifecycle.tsx
+2:16  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/vehicles/vehicle-list/Maintenance.tsx
+2:10  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'schedule' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+5:20  Warning: 'setSchedule' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/vehicles/vehicle-list/Settings.tsx
+2:16  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+2:32  Warning: 'RadioGroup' is defined but never used.  @typescript-eslint/no-unused-vars
+2:44  Warning: 'Checkbox' is defined but never used.  @typescript-eslint/no-unused-vars
+4:7  Warning: 'primaryMeterOptions' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+16:7  Warning: 'fuelUnitOptions' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+28:7  Warning: 'measurementUnitsOptions' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:10  Warning: 'primaryMeter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:24  Warning: 'setPrimaryMeter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+38:10  Warning: 'fuelUnit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+38:20  Warning: 'setFuelUnit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+39:10  Warning: 'measurementUnits' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+39:28  Warning: 'setMeasurementUnits' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/vendors/AddVendor.tsx
+2:16  Warning: 'TextInputField' is defined but never used.  @typescript-eslint/no-unused-vars
+2:32  Warning: 'SelectField' is defined but never used.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'CheckboxField' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Warning: 'MOCK_FUEL_DATA' is defined but never used.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'tagValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+13:20  Warning: 'setTagValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+14:10  Warning: 'countryValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+14:24  Warning: 'setCountryValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+34:9  Warning: 'handleChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+68:9  Warning: 'toggleFuelValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/ClientLayout/Header/index.tsx
+2:3  Warning: 'Avatar' is defined but never used.  @typescript-eslint/no-unused-vars
+3:3  Warning: 'MoonIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'FlashIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'PersonIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+16:9  Warning: 'handleLangChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+19:9  Warning: 'handleToggleTheme' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/FilterWrapper/ContentFrame/index.tsx
+32:18  Warning: 'setValues' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+60:9  Warning: 'stopPropagation' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/FilterWrapper/FilterSelect/index.tsx
+2:10  Warning: 'ChevronDownIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'Label' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'value' is defined but never used.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'updateFilter' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'active' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'setActive' is defined but never used.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'filterTag' is defined but never used.  @typescript-eslint/no-unused-vars
+24:10  Warning: 'filterValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+24:23  Warning: 'setFilterValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/FilterWrapper/index.tsx
+1:34  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+23:10  Warning: 'filterIsOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+45:66  Warning: '_' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/LoginLayout/Header/index.tsx
+3:3  Warning: 'ListIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'NotificationsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'MoonIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+14:8  Warning: 'Head' is defined but never used.  @typescript-eslint/no-unused-vars
+15:19  Warning: 'StyledButton' is defined but never used.  @typescript-eslint/no-unused-vars
+63:9  Warning: 'handleLangChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/LoginLayout/index.tsx
+14:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+14:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/MainLayout/Header/index.tsx
+3:3  Warning: 'ListIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+4:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'NotificationsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'MoonIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'HelpIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+14:8  Warning: 'Head' is defined but never used.  @typescript-eslint/no-unused-vars
+15:19  Warning: 'StyledButton' is defined but never used.  @typescript-eslint/no-unused-vars
+63:9  Warning: 'handleLangChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/MainLayout/index.tsx
+19:17  Warning: 'session' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+21:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+29:6  Warning: React Hook React.useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/layout/MainLayout/SideBar/index.tsx
+1:17  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'MenuDataType' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'FooterItem' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/MainLayout/SideBar/MenuList/GroupList/index.tsx
+45:9  Warning: 'currentUrl' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/MainLayout/SideBar/MenuList/ListItem/index.tsx
+2:10  Warning: 'TickIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/MainLayout/SideBar/UserInfo/index.tsx
+3:22  Warning: 'signIn' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'LogInIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'IconButton' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/layout/TabsWrapper/index.tsx
+17:3  Warning: 'children' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/account/apiPath.ts
+1:10  Warning: 'createUrlPath' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/account/createAccount.ts
+1:10  Warning: 'I_KeyValue' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/account/getAccountList.ts
+3:54  Warning: 'reqBody' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/account/login.ts
+41:9  Warning: 'reqHeaders' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+62:7  Warning: 'DUMMY_DATA' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/assignment/getAllAssignment.ts
+1:8  Warning: 'API_Path' is defined but never used.  @typescript-eslint/no-unused-vars
+2:10  Warning: 'createElement' is defined but never used.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'convertDateAndTimeFormat' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'PatternType' is defined but never used.  @typescript-eslint/no-unused-vars
+142:41  Warning: 'pageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/assignment/getAllMission.ts
+1:8  Warning: 'API_Path' is defined but never used.  @typescript-eslint/no-unused-vars
+2:10  Warning: 'createElement' is defined but never used.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'convertDateAndTimeFormat' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'PatternType' is defined but never used.  @typescript-eslint/no-unused-vars
+112:37  Warning: 'pageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/assignment/getRecommendCar.ts
+1:8  Warning: 'API_Path' is defined but never used.  @typescript-eslint/no-unused-vars
+2:10  Warning: 'PatternType' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'filter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'bus_status' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/client/mappingQuotationData.tsx
+4:8  Warning: 'SpecialInfoEdit' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/driver/getAllDrivers.ts
+1:8  Warning: 'API_Path' is defined but never used.  @typescript-eslint/no-unused-vars
+129:3  Warning: 'pageQuery' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/driver/getAllOrders.ts
+1:8  Warning: 'API_Path' is defined but never used.  @typescript-eslint/no-unused-vars
+129:3  Warning: 'pageQuery' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/driver/getAreaDDL.ts
+38:11  Warning: 'I_response' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/driver/getHealthById.ts
+83:9  Warning: 'result' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/driver/getLicenseById.ts
+94:9  Warning: 'result' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/driver/updateDriverInfo.ts
+1:8  Warning: 'API_Path' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/employee/getAllEmployee.ts
+5:10  Warning: 'createElement' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/maintenance/getMaintenanceById.ts
+73:42  Warning: 'maintenance_no' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/maintenance/updateMaintenance.ts
+14:9  Warning: 'newMaintenanceDts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/org/createOrg.ts
+24:7  Warning: 'DUMMY_RES' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+33:7  Warning: 'DUMMY_REQ' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+40:7  Warning: 'DUMMY_NEW_ORG' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/org/getOrgList.ts
+28:11  Warning: 'I_response' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/org/updateOrg.ts
+24:7  Warning: 'DUMMY_DATA' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/role/apiPath.ts
+1:10  Warning: 'createUrlPath' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/role/createRole.ts
+35:7  Warning: 'DUMMY_DATA' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/role/updateRole.ts
+44:7  Warning: 'DUMMY_DATA' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/schedule/getAllDriverScheduleListFiltered.ts
+1:8  Warning: 'API_Path' is defined but never used.  @typescript-eslint/no-unused-vars
+496:3  Warning: 'filter' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+497:3  Warning: 'pageInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/schedule/getScheduleList.ts
+1:8  Warning: 'API_Path' is defined but never used.  @typescript-eslint/no-unused-vars
+117:39  Warning: 'id' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/services/sys/getMenu.ts
+28:7  Warning: 'DUMMY_DATA' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/utils/convertDate.ts
+1:10  Warning: 'formatToDBDate' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/utils/schedule.timeUtil.ts
+3:3  Warning: 'BusScheduleData' is defined but never used.  @typescript-eslint/no-unused-vars
+51:5  Warning: '_type' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+87:31  Warning: 'hideOthersDate' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Collecting page data ...
+   Generating static pages (0/49) ...
+===== {
+  locale: 'zh-tw',
+  setLocale: [Function: bound Jc],
+  breadcrumbs: {
+    '$$typeof': Symbol(react.element),
+    type: [Function (anonymous)],
+    key: null,
+    ref: null,
+    props: { className: 'main-layout', splitEle: [Object], routes: [] },
+    _owner: null
+  },
+  title: '前台首頁'
+}
+===== {
+  locale: 'zh-tw',
+  setLocale: [Function: bound Jc],
+  breadcrumbs: {
+    '$$typeof': Symbol(react.element),
+    type: [Function (anonymous)],
+    key: null,
+    ref: null,
+    props: { className: 'main-layout', splitEle: [Object], routes: [] },
+    _owner: null
+  },
+  title: '前台首頁'
+}
+===== {
+  locale: 'zh-tw',
+  setLocale: [Function: bound Jc],
+  breadcrumbs: {
+    '$$typeof': Symbol(react.element),
+    type: [Function (anonymous)],
+    key: null,
+    ref: null,
+    props: { className: 'main-layout', splitEle: [Object], routes: [Array] },
+    _owner: null
+  },
+  title: 'EldPlat 前台'
+}
+===== {
+  locale: 'zh-tw',
+  setLocale: [Function: bound Jc],
+  breadcrumbs: {
+    '$$typeof': Symbol(react.element),
+    type: [Function (anonymous)],
+    key: null,
+    ref: null,
+    props: { className: 'main-layout', splitEle: [Object], routes: [Array] },
+    _owner: null
+  },
+  title: 'EldPlat 前台'
+}
+1️⃣langData []
+2️⃣currencyData []
+companyDDL null
+1️⃣langData []
+2️⃣currencyData []
+companyDDL null
+===== {
+  title: '訂單管理',
+  locale: 'zh-tw',
+  setLocale: [Function: bound Jc],
+  breadcrumbs: {
+    '$$typeof': Symbol(react.element),
+    type: [Function (anonymous)],
+    key: null,
+    ref: null,
+    props: { className: 'main-layout', splitEle: [Object], routes: [Array] },
+    _owner: null
+  }
+}
+===== {
+  title: '訂單管理',
+  locale: 'zh-tw',
+  setLocale: [Function: bound Jc],
+  breadcrumbs: {
+    '$$typeof': Symbol(react.element),
+    type: [Function (anonymous)],
+    key: null,
+    ref: null,
+    props: { className: 'main-layout', splitEle: [Object], routes: [Array] },
+    _owner: null
+  }
+}
+   Generating static pages (12/49) 
+🈶companyData {
+  address1: '',
+  address2: '',
+  administrator_no: '',
+  administrator_name: '',
+  administrator_photo_link: '',
+  agent_no: '',
+  company_area: '',
+  area_name: '',
+  company_city: '',
+  city_name: '',
+  company_contact: [
+    {
+      contact_name: '',
+      contact_phone_code: '',
+      contact_phone: '',
+      contact_tel_code: '',
+      contact_tel: '',
+      contact_email: '',
+      contact_sort: ''
+    }
+  ],
+  company_country: '',
+  country_name: '',
+  company_country2: '',
+  country2_name: '',
+  company_district_code: '',
+  company_email: '',
+  company_fax: '',
+  company_fax_code: '',
+  company_gui_no: '',
+  date_format: '',
+  time_zone: '',
+  time_format: '',
+  milage: '',
+  fuel_unit: '',
+  measurement_units: '',
+  date_format_name: '',
+  time_format_name: '',
+  milage_name: '',
+  fuel_unit_name: '',
+  measurement_units_name: '',
+  company_currency: [ { currency_code: '', currency_name: '' } ],
+  company_language: [ { language_code: '', language_name: '' } ],
+  company_leave: [ { leave_code: '', leave_name: '' } ],
+  company_logo_link: '',
+  company_name: '',
+  company_no: '',
+  company_owner: '',
+  company_tel: '',
+  company_tel_code: '',
+  company_typ: '',
+  company_working_hours: [],
+  no: 1,
+  user_name: ''
+}
+checkedHours []
+🈶companyData {
+  address1: '',
+  address2: '',
+  administrator_no: '',
+  administrator_name: '',
+  administrator_photo_link: '',
+  agent_no: '',
+  company_area: '',
+  area_name: '',
+  company_city: '',
+  city_name: '',
+  company_contact: [
+    {
+      contact_name: '',
+      contact_phone_code: '',
+      contact_phone: '',
+      contact_tel_code: '',
+      contact_tel: '',
+      contact_email: '',
+      contact_sort: ''
+    }
+  ],
+  company_country: '',
+  country_name: '',
+  company_country2: '',
+  country2_name: '',
+  company_district_code: '',
+  company_email: '',
+  company_fax: '',
+  company_fax_code: '',
+  company_gui_no: '',
+  date_format: '',
+  time_zone: '',
+  time_format: '',
+  milage: '',
+  fuel_unit: '',
+  measurement_units: '',
+  date_format_name: '',
+  time_format_name: '',
+  milage_name: '',
+  fuel_unit_name: '',
+  measurement_units_name: '',
+  company_currency: [ { currency_code: '', currency_name: '' } ],
+  company_language: [ { language_code: '', language_name: '' } ],
+  company_leave: [ { leave_code: '', leave_name: '' } ],
+  company_logo_link: '',
+  company_name: '',
+  company_no: '',
+  company_owner: '',
+  company_tel: '',
+  company_tel_code: '',
+  company_typ: '',
+  company_working_hours: [],
+  no: 1,
+  user_name: ''
+}
+checkedHours []
+   Generating static pages (24/49) 
+   Generating static pages (36/49) 
+value 01
+value 01
+ ✓ Generating static pages (49/49) 
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (pages)                                   Size     First Load JS
+┌ ○ /                                           994 B           213 kB
+├   /_app                                       0 B             164 kB
+├ ○ /404                                        184 B           164 kB
+├ ○ /account (1484 ms)                          9.26 kB         228 kB
+├ λ /account/detail/[id]                        1.64 kB         284 kB
+├ ○ /account/detail/create (523 ms)             3.9 kB          290 kB
+├ λ /admin_orders                               6.99 kB         228 kB
+├ λ /admin_orders/detail/[id]                   20.3 kB         250 kB
+├ λ /api/auth/[...nextauth]                     0 B             164 kB
+├ λ /api/getData                                0 B             164 kB
+├ λ /api/getEmployeeById                        0 B             164 kB
+├ λ /api/getsidemenubackend                     0 B             164 kB
+├ λ /api/getsidemenupersonal                    0 B             164 kB
+├ λ /api/restricted                             0 B             164 kB
+├ ○ /assignment (733 ms)                        13.2 kB         228 kB
+├ ○ /assignment/detail/[id]                     6.69 kB         278 kB
+├ ○ /assignment/detail/create                   6.61 kB         278 kB
+├ ○ /assignment/dispatch (1402 ms)              5.66 kB         228 kB
+├ ○ /assignment/dispatch/create (1492 ms)       3 kB            240 kB
+├ ○ /assignment/dispatch/detail/[id] (1002 ms)  3.03 kB         240 kB
+├ ○ /bus (884 ms)                               3.49 kB         227 kB
+├ ○ /bus_management (912 ms)                    3.15 kB         229 kB
+├ λ /bus/detail/[id]                            3.02 kB         309 kB
+├ λ /bus/detail/create                          13.1 kB         285 kB
+├ λ /bus/detail/old_[id]                        1.33 kB         304 kB
+├ λ /bus/equipment/[id]                         5.84 kB         281 kB
+├ λ /bus/equipment/create                       5.77 kB         281 kB
+├ λ /bus/fuel/[id]                              5.89 kB         281 kB
+├ λ /bus/fuel/create                            5.82 kB         281 kB
+├ ○ /bus/old_index (741 ms)                     4.2 kB          228 kB
+├ ○ /client (601 ms)                            2.76 kB         170 kB
+├ ○ /client/orders (922 ms)                     8.36 kB         192 kB
+├ λ /client/orders/detail/[id]                  9.04 kB         206 kB
+├ ○ /client/orders/inquire                      7.25 kB         173 kB
+├ ○ /client/quote (965 ms)                      4.43 kB         172 kB
+├ λ /client/quote/confirm                       10.1 kB         188 kB
+├ λ /client/quote/edit                          16.1 kB         209 kB
+├ ○ /company (349 ms)                           6.88 kB         222 kB
+├ ○ /company/edit (1384 ms)                     10.1 kB         241 kB
+├ ○ /customer (858 ms)                          7.29 kB         228 kB
+├ λ /customer/detail/[id]                       8.99 kB         239 kB
+├ ○ /driver (880 ms)                            5.13 kB         228 kB
+├ ○ /driver_management (671 ms)                 2.75 kB         229 kB
+├ λ /driver/detail/[id]                         15.1 kB         299 kB
+├ ○ /driver/detail/create (404 ms)              7.75 kB         283 kB
+├ ○ /driver/management (931 ms)                 2.75 kB         229 kB
+├ λ /driver/training/[id]                       8.23 kB         283 kB
+├ ○ /driver/training/create                     7.72 kB         283 kB
+├ ○ /employee                                   7.64 kB         231 kB
+├ λ /employee/detail/[id]                       4.87 kB         276 kB
+├ λ /employee/edit/[id]                         6.97 kB         280 kB
+├ ○ /forget-password                            4.76 kB         175 kB
+├ ○ /login (313 ms)                             3.79 kB         207 kB
+├ ○ /maintenance/[[...slug]] (370 ms)           7.64 kB         226 kB
+├ λ /maintenance/detail/[id]                    7.97 kB         283 kB
+├ ○ /maintenance/detail/create (415 ms)         7.36 kB         282 kB
+├ ○ /orders                                     4.49 kB         228 kB
+├ λ /orders/detail/[id]                         20.2 kB         305 kB
+├ ○ /orders/detail/create (668 ms)              11.2 kB         285 kB
+├ ○ /orders/doc/create                          6.19 kB         232 kB
+├ λ /org                                        11.2 kB         236 kB
+├   └ css/695f9f38c9e2931c.css                  4.73 kB
+├ ○ /role                                       7.36 kB         226 kB
+├ λ /role/detail/[id]                           12.9 kB         235 kB
+├ ○ /schedule (431 ms)                          8.23 kB         228 kB
+├ ○ /schedule/approval                          7.79 kB         227 kB
+├ ○ /schedule/detail/[id]                       8.94 kB         232 kB
+├ ○ /set-password                               1.71 kB         206 kB
+├ ○ /setting/password                           8.77 kB         237 kB
+├ ○ /shift                                      8.54 kB         250 kB
+├ ○ /shift/[id] (498 ms)                        14.6 kB         234 kB
+├ ○ /tag_select                                 299 B           164 kB
+├ ○ /test                                       7.08 kB         247 kB
+├ ○ /test/components-render                     509 B           174 kB
+├ ○ /test/dirty                                 1.08 kB         175 kB
+├ ○ /test/hook-form (670 ms)                    6.79 kB         210 kB
+├ ○ /test/next-auth                             5.96 kB         170 kB
+├ ○ /test/radiotest                             492 B           164 kB
+├ λ /vendor                                     10.7 kB         232 kB
+└ λ /vendor/detail/[id]                         7.92 kB         250 kB
++ First Load JS shared by all                   164 kB
+  ├ chunks/framework-f211a704e11e65a7.js        45.4 kB
+  ├ chunks/main-4fe21237206465d1.js             33 kB
+  ├ chunks/pages/_app-1615cb474f0fb1b9.js       83.3 kB
+  ├ chunks/webpack-dd58639ed429e91e.js          1.95 kB
+  └ css/164c3d2dca77fc50.css                    794 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+

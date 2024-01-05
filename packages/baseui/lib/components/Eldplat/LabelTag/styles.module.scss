@@ -1,0 +1,12 @@
+@import "../../Basic/colors.scss";
+@import "../../Basic/global.scss";
+
+
+// chip variant & sizes
+.vendor-label {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: $gray;
+    color: $blue;
+}
